@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import { useBasketAssets, useBasketFees, useMaxPerpAllocation, useSetMaxPerpAllocation } from "@/hooks/useBasketVault";
+import { useOracleAssetMetaMap } from "@/hooks/useOracle";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
@@ -22,6 +23,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const { data: info } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
   const { depositFee, redeemFee } = useBasketFees(vault);
+  const { data: assetMeta } = useOracleAssetMetaMap();
   const { data: assetsData } = useBasketAssets(vault);
 
   const basketInfo = info as {
@@ -83,14 +85,22 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
         <h2 className="mb-4 text-lg font-semibold text-app-text">Composition</h2>
         <Card>
           <div className="divide-y divide-app-border">
-            {assets.map((a) => (
-              <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
-                <span className="font-medium text-app-text">
-                  {formatAssetId(a.assetId)}
-                </span>
-                <span className="text-sm text-app-muted">{formatBps(a.weightBps)}</span>
-              </div>
-            ))}
+            {assets.map((a) => {
+              const meta = assetMeta.get(a.assetId);
+              return (
+                <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
+                  <div>
+                    <p className="font-medium text-app-text">
+                      {meta?.name ?? formatAssetId(a.assetId)}
+                    </p>
+                    <p className="font-mono text-xs text-app-muted">
+                      {meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
+                    </p>
+                  </div>
+                  <span className="text-sm text-app-muted">{formatBps(a.weightBps)}</span>
+                </div>
+              );
+            })}
             {assets.length === 0 && (
               <div className="px-6 py-4 text-center text-sm text-app-muted">No assets</div>
             )}

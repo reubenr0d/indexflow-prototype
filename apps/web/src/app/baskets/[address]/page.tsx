@@ -2,21 +2,21 @@
 
 import { use } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import { useBasketInfo } from "@/hooks/usePerpReader";
 import { useBasketAssets, useBasketFees } from "@/hooks/useBasketVault";
-import { useOracleAssetPrice, useOracleIsStale } from "@/hooks/useOracle";
+import { useOracleAssetPrice, useOracleIsStale, useOracleAssetMetaMap } from "@/hooks/useOracle";
 import { useAccount } from "wagmi";
 import { useReadContract } from "wagmi";
 import { BasketShareTokenABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAddress, formatAssetId, formatPrice } from "@/lib/format";
 import { type Address } from "viem";
 import { motion } from "framer-motion";
-import { Copy, ExternalLink } from "lucide-react";
+import { Copy } from "lucide-react";
 
 export default function BasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -25,6 +25,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const { data: info, isLoading } = useBasketInfo(vault);
   const { data: assetsData } = useBasketAssets(vault);
+  const { data: assetMeta } = useOracleAssetMetaMap();
   const { depositFee, redeemFee } = useBasketFees(vault);
 
   const basketInfo = info as {
@@ -119,9 +120,18 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             </h2>
             <Card>
               <div className="divide-y divide-app-border">
-                {assets.map((asset) => (
-                  <AssetRow key={asset.assetId} assetId={asset.assetId} weightBps={asset.weightBps} />
-                ))}
+                {assets.map((asset) => {
+                  const meta = assetMeta.get(asset.assetId);
+                  return (
+                    <AssetRow
+                      key={asset.assetId}
+                      assetId={asset.assetId}
+                      assetName={meta?.name ?? formatAssetId(asset.assetId)}
+                      assetAddress={meta?.address}
+                      weightBps={asset.weightBps}
+                    />
+                  );
+                })}
                 {assets.length === 0 && (
                   <div className="p-6 text-center text-sm text-app-muted">
                     No assets configured
@@ -167,7 +177,17 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   );
 }
 
-function AssetRow({ assetId, weightBps }: { assetId: `0x${string}`; weightBps: bigint }) {
+function AssetRow({
+  assetId,
+  assetName,
+  assetAddress,
+  weightBps,
+}: {
+  assetId: `0x${string}`;
+  assetName: string;
+  assetAddress?: Address;
+  weightBps: bigint;
+}) {
   const { data: priceData } = useOracleAssetPrice(assetId);
   const { data: isStale } = useOracleIsStale(assetId);
 
@@ -179,9 +199,12 @@ function AssetRow({ assetId, weightBps }: { assetId: `0x${string}`; weightBps: b
     <div className="flex items-center justify-between px-6 py-4">
       <div className="flex items-center gap-3">
         <StatusDot status={status} />
-        <span className="font-medium text-app-text">
-          {formatAssetId(assetId)}
-        </span>
+        <div>
+          <p className="font-medium text-app-text">{assetName}</p>
+          <p className="font-mono text-xs text-app-muted">
+            {assetAddress ? formatAddress(assetAddress) : formatAssetId(assetId)}
+          </p>
+        </div>
       </div>
       <div className="flex items-center gap-6">
         <div className="w-32">

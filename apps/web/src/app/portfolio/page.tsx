@@ -73,13 +73,13 @@ export default function PortfolioPage() {
         className="mb-12 text-center"
       >
         <p className="text-sm font-medium text-app-muted">Portfolio Value</p>
-        <p className="mt-1 text-5xl font-semibold tracking-tight text-app-text">
+        <div className="mt-1 text-5xl font-semibold tracking-tight text-app-text">
           {isLoading ? (
             <Skeleton className="mx-auto h-14 w-48" />
           ) : (
             formatCompact(Number(totalValue / USDC_PRECISION))
           )}
-        </p>
+        </div>
       </motion.div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">

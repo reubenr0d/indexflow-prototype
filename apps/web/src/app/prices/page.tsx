@@ -10,7 +10,13 @@ import { useReadContract } from "wagmi";
 import { useChainId } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
-import { useOracleAssetPrice, useOracleIsStale } from "@/hooks/useOracle";
+import {
+  useOracleAssetPrice,
+  useOracleIsStale,
+  useOracleAssetLabelMap,
+  useOracleAssetConfig,
+  getOracleSourceLabel,
+} from "@/hooks/useOracle";
 import { usePoolLiquidityUsd1e30, usePricingExecutionQuoteBothSides } from "@/hooks/usePricingQuote";
 import { formatPrice, formatRelativeTime, formatAssetId, formatBps, parseUSDCInput } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
@@ -23,6 +29,7 @@ export default function PricesPage() {
   const chainId = useChainId();
   const { oracleAdapter } = getContracts(chainId);
   const { liquidityUsd1e30, poolLoading } = usePoolLiquidityUsd1e30();
+  const { data: assetLabels } = useOracleAssetLabelMap();
   const notionalAtoms = notional ? parseUSDCInput(notional) : 0n;
 
   const { data: assetCount, isLoading } = useReadContract({
@@ -94,6 +101,7 @@ export default function PricesPage() {
                 key={i}
                 index={i}
                 search={search}
+                assetLabels={assetLabels}
                 notionalUsdcAtoms={notionalAtoms}
                 liquidityUsd1e30={liquidityUsd1e30}
               />
@@ -112,11 +120,13 @@ export default function PricesPage() {
 function AssetPriceRow({
   index,
   search,
+  assetLabels,
   notionalUsdcAtoms,
   liquidityUsd1e30,
 }: {
   index: number;
   search: string;
+  assetLabels: Map<`0x${string}`, string>;
   notionalUsdcAtoms: bigint;
   liquidityUsd1e30: bigint;
 }) {
@@ -132,8 +142,11 @@ function AssetPriceRow({
   });
 
   const id = assetId as `0x${string}` | undefined;
-  const { data: priceData } = useOracleAssetPrice(id ?? "0x0000000000000000000000000000000000000000000000000000000000000000");
-  const { data: isStale } = useOracleIsStale(id ?? "0x0000000000000000000000000000000000000000000000000000000000000000");
+  const zeroBytes32 = "0x0000000000000000000000000000000000000000000000000000000000000000" as `0x${string}`;
+  const queryId = id ?? zeroBytes32;
+  const { data: priceData } = useOracleAssetPrice(queryId);
+  const { data: isStale } = useOracleIsStale(queryId);
+  const { data: config } = useOracleAssetConfig(queryId);
 
   const pe = usePricingExecutionQuoteBothSides({
     assetId: id,
@@ -144,12 +157,14 @@ function AssetPriceRow({
 
   if (!id) return null;
 
-  const name = formatAssetId(id);
+  const name = assetLabels.get(id) ?? formatAssetId(id);
   if (search && !name.toLowerCase().includes(search.toLowerCase())) return null;
 
   const price = (priceData as [bigint, bigint] | undefined)?.[0] ?? 0n;
   const timestamp = Number((priceData as [bigint, bigint] | undefined)?.[1] ?? 0n);
   const status = getOracleStatus(isStale as boolean ?? false, timestamp);
+  const feedType = (config as { feedType: number | bigint } | undefined)?.feedType;
+  const sourceLabel = getOracleSourceLabel(feedType);
 
   return (
     <motion.div
@@ -159,7 +174,12 @@ function AssetPriceRow({
     >
       <div className="flex items-center gap-3">
         <StatusDot status={status} />
-        <span className="font-medium text-app-text">{name}</span>
+        <div className="flex items-center gap-2">
+          <span className="font-medium text-app-text">{name}</span>
+          <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 text-[10px] font-semibold tracking-wide text-app-muted">
+            {sourceLabel}
+          </span>
+        </div>
       </div>
       <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
         <span className="text-xs text-app-muted">

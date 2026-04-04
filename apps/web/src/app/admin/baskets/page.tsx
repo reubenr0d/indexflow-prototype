@@ -8,12 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch } from "@/hooks/usePerpReader";
-import { formatUSDC, formatBps, formatAddress } from "@/lib/format";
+import { useSupportedOracleAssets } from "@/hooks/useOracle";
+import { formatUSDC, formatAddress } from "@/lib/format";
 import { showToast } from "@/components/ui/toast";
 import { Plus, X } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
-import { stringToHex } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 
@@ -110,13 +110,20 @@ export default function AdminBasketsPage() {
 
 function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
   const [name, setName] = useState("");
-  const [assets, setAssets] = useState([{ id: "", weight: "" }]);
+  const [assets, setAssets] = useState<Array<{ assetIdHex: `0x${string}` | ""; assetQuery: string; weight: string }>>([
+    { assetIdHex: "", assetQuery: "", weight: "" },
+  ]);
   const [depositFee, setDepositFee] = useState("10");
   const [redeemFee, setRedeemFee] = useState("10");
 
   const { createBasket, receipt, isPending } = useCreateBasket();
+  const { data: supportedAssets, isLoading: supportedAssetsLoading } = useSupportedOracleAssets();
 
   const totalWeight = assets.reduce((sum, a) => sum + (parseInt(a.weight) || 0), 0);
+  const selectedAssets = assets.map((a) => a.assetIdHex).filter((id): id is `0x${string}` => id !== "");
+  const hasDuplicateAssets = new Set(selectedAssets).size !== selectedAssets.length;
+  const hasEmptyAssetSelection = assets.some((a) => a.assetIdHex === "");
+  const noSupportedAssets = !supportedAssetsLoading && supportedAssets.length === 0;
 
   useEffect(() => {
     if (receipt.isSuccess) {
@@ -126,11 +133,9 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
   }, [receipt.isSuccess, onSuccess]);
 
   const handleSubmit = () => {
-    if (!name || totalWeight !== 10000) return;
+    if (!name || totalWeight !== 10000 || hasEmptyAssetSelection || hasDuplicateAssets || noSupportedAssets) return;
 
-    const assetIds = assets.map((a) =>
-      stringToHex(a.id, { size: 32 }) as `0x${string}`
-    );
+    const assetIds = assets.map((a) => a.assetIdHex as `0x${string}`);
     const weights = assets.map((a) => BigInt(a.weight));
     createBasket(name, assetIds, weights, BigInt(depositFee), BigInt(redeemFee));
     showToast("pending", "Creating basket...");
@@ -149,14 +154,50 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
         <label className="mb-2 block text-sm font-medium text-app-muted">Assets & Weights (bps)</label>
         {assets.map((asset, i) => (
           <div key={i} className="mb-2 flex gap-2">
+            <datalist id={`supported-assets-${i}`}>
+              {supportedAssets
+                .filter((option) => {
+                  const isCurrent = option.idHex === asset.assetIdHex;
+                  const selectedElsewhere = selectedAssets.includes(option.idHex) && !isCurrent;
+                  return !selectedElsewhere;
+                })
+                .map((option) => (
+                  <option key={option.idHex} value={option.label}>
+                    {option.idHex}
+                  </option>
+                ))}
+            </datalist>
             <Input
-              placeholder="Asset ID (e.g. GOLD)"
-              value={asset.id}
+              list={`supported-assets-${i}`}
+              placeholder={supportedAssetsLoading ? "Loading supported assets..." : "Select supported asset"}
+              value={asset.assetQuery}
               onChange={(e) => {
+                const query = e.target.value;
+                const match = supportedAssets.find(
+                  (option) =>
+                    option.label.toLowerCase() === query.toLowerCase() ||
+                    option.idHex.toLowerCase() === query.toLowerCase()
+                );
                 const next = [...assets];
-                next[i] = { ...next[i], id: e.target.value };
+                if (match) {
+                  const selectedElsewhere = next.some((row, rowIndex) => rowIndex !== i && row.assetIdHex === match.idHex);
+                  if (selectedElsewhere) {
+                    next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
+                  } else {
+                    next[i] = { ...next[i], assetIdHex: match.idHex, assetQuery: match.label };
+                  }
+                } else {
+                  next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
+                }
                 setAssets(next);
               }}
+              onBlur={() => {
+                if (assets[i].assetIdHex !== "") return;
+                const next = [...assets];
+                next[i] = { ...next[i], assetQuery: "" };
+                setAssets(next);
+              }}
+              disabled={supportedAssetsLoading || noSupportedAssets}
               className="flex-1"
             />
             <Input
@@ -182,13 +223,24 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
           </div>
         ))}
         <div className="mt-2 flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => setAssets([...assets, { id: "", weight: "" }])}>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setAssets([...assets, { assetIdHex: "", assetQuery: "", weight: "" }])}
+            disabled={supportedAssetsLoading || noSupportedAssets}
+          >
             <Plus className="mr-1 h-3 w-3" /> Add Asset
           </Button>
           <span className={`text-sm font-medium ${totalWeight === 10000 ? "text-app-success" : "text-app-danger"}`}>
             {totalWeight} / 10,000 bps
           </span>
         </div>
+        {hasDuplicateAssets && (
+          <p className="mt-2 text-xs text-app-danger">Duplicate assets are not allowed.</p>
+        )}
+        {noSupportedAssets && (
+          <p className="mt-2 text-xs text-app-danger">No active supported assets found in the oracle.</p>
+        )}
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-4">
@@ -205,7 +257,7 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
       <Button
         size="lg"
         className="w-full"
-        disabled={!name || totalWeight !== 10000 || isPending}
+        disabled={!name || totalWeight !== 10000 || hasEmptyAssetSelection || hasDuplicateAssets || isPending || supportedAssetsLoading || noSupportedAssets}
         onClick={handleSubmit}
       >
         {isPending ? "Creating..." : "Create Basket"}

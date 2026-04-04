@@ -79,6 +79,12 @@ Basket and other layers that call `OracleAdapter` in views see fresh Chainlink d
 
 Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replaces manually sending the same transactions.
 
+**Run one-shot sync for all supported assets (local deployment config)**
+
+```bash
+forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast
+```
+
 ## Documentation
 
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.

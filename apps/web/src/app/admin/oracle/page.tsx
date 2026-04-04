@@ -7,8 +7,14 @@ import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { useReadContract, useChainId } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
-import { useOracleAssetPrice, useOracleIsStale, useOracleAssetConfig } from "@/hooks/useOracle";
-import { formatPrice, formatRelativeTime, formatAssetId, formatAddress } from "@/lib/format";
+import {
+  useOracleAssetPrice,
+  useOracleIsStale,
+  useOracleAssetConfig,
+  useOracleAssetLabelMap,
+  getOracleSourceLabel,
+} from "@/hooks/useOracle";
+import { formatPrice, formatRelativeTime, formatAssetId } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
@@ -25,6 +31,7 @@ export default function AdminOraclePage() {
   });
 
   const count = assetCount ? Number(assetCount) : 0;
+  const { data: assetLabels } = useOracleAssetLabelMap();
 
   return (
     <PageWrapper>
@@ -54,7 +61,7 @@ export default function AdminOraclePage() {
       ) : count > 0 ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: count }).map((_, i) => (
-            <OracleAssetCard key={i} index={i} />
+            <OracleAssetCard key={i} index={i} assetLabels={assetLabels} />
           ))}
         </div>
       ) : (
@@ -66,7 +73,13 @@ export default function AdminOraclePage() {
   );
 }
 
-function OracleAssetCard({ index }: { index: number }) {
+function OracleAssetCard({
+  index,
+  assetLabels,
+}: {
+  index: number;
+  assetLabels: Map<`0x${string}`, string>;
+}) {
   const chainId = useChainId();
   const { oracleAdapter } = getContracts(chainId);
 
@@ -93,14 +106,15 @@ function OracleAssetCard({ index }: { index: number }) {
   const status = getOracleStatus(isStale as boolean ?? false, timestamp);
 
   const assetConfig = config as {
+    feedAddress: `0x${string}`;
     feedType: number;
-    chainlinkFeed: string;
     stalenessThreshold: bigint;
-    deviationThresholdBps: bigint;
+    deviationBps: bigint;
+    decimals: number;
     active: boolean;
   } | undefined;
 
-  const feedTypeName = assetConfig?.feedType === 0 ? "Chainlink" : "Relayer";
+  const feedTypeName = getOracleSourceLabel(assetConfig?.feedType);
 
   return (
     <motion.div
@@ -117,7 +131,7 @@ function OracleAssetCard({ index }: { index: number }) {
           <div className="flex items-center gap-2">
             <StatusDot status={status} className="h-2.5 w-2.5" />
             <h3 className="font-semibold text-app-text">
-              {formatAssetId(id)}
+              {assetLabels.get(id) ?? formatAssetId(id)}
             </h3>
           </div>
           <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-app-muted">
@@ -134,7 +148,7 @@ function OracleAssetCard({ index }: { index: number }) {
           {assetConfig && (
             <>
               <p>Staleness: {String(assetConfig.stalenessThreshold)}s</p>
-              <p>Deviation: {Number(assetConfig.deviationThresholdBps) / 100}%</p>
+              <p>Deviation: {Number(assetConfig.deviationBps) / 100}%</p>
             </>
           )}
         </div>

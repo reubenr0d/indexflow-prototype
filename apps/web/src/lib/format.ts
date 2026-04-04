@@ -46,10 +46,15 @@ export function formatAddress(addr: string): string {
 export function formatAssetId(id: string): string {
   try {
     const hex = id.replace(/^0x/, "").replace(/00+$/, "");
-    const bytes = [];
+    if (!hex || hex.length % 2 !== 0) return formatAddress(id);
+    const bytes: number[] = [];
     for (let i = 0; i < hex.length; i += 2) {
-      bytes.push(parseInt(hex.slice(i, i + 2), 16));
+      const b = parseInt(hex.slice(i, i + 2), 16);
+      if (Number.isNaN(b)) return formatAddress(id);
+      bytes.push(b);
     }
+    const isPrintableAscii = bytes.every((b) => b >= 32 && b <= 126);
+    if (!isPrintableAscii) return `${id.slice(0, 10)}...${id.slice(-8)}`;
     return String.fromCharCode(...bytes);
   } catch {
     return formatAddress(id);

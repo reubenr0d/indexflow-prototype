@@ -26,7 +26,12 @@ export function ToastContainer() {
 
   useEffect(() => {
     const listener = (toast: ToastData) => {
-      setToasts((prev) => [...prev, toast]);
+      setToasts((prev) => {
+        if (toast.type === "pending") {
+          return [...prev, toast];
+        }
+        return [...prev.filter((t) => t.type !== "pending"), toast];
+      });
       if (toast.type !== "pending") {
         setTimeout(() => {
           setToasts((prev) => prev.filter((t) => t.id !== toast.id));

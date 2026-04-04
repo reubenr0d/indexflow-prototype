@@ -52,7 +52,9 @@ contract DeployLocal is Script {
         priceFeed.setPrice(address(gold), 2000e30);
         priceFeed.setPrice(address(silver), 25e30);
 
-        address vaultAddr = deployCode("Vault.sol:Vault");
+        // Vault uses linked VaultMath; vm.getCode("Vault.sol:Vault") fails (wrong path + unlinked placeholders).
+        address vaultMath = deployCode("VaultMath.sol:VaultMath");
+        address vaultAddr = _deployVaultWithLinkedVaultMath(vaultMath);
         IGMXVault gmxVault = IGMXVault(vaultAddr);
 
         address usdgAddr = deployCode("USDG.sol:USDG", abi.encode(vaultAddr));
@@ -137,6 +139,33 @@ contract DeployLocal is Script {
 
         console2.log("Wrote", outPath);
         console2.log("Demo basket:", demoBasket);
+    }
+
+    /// @dev `vm.getCode` cannot load `Vault` while `VaultMath` is unlinked. Deploy the library, patch
+    ///      creation bytecode from the compiled artifact, then `CREATE`.
+    function _deployVaultWithLinkedVaultMath(address mathLib) internal returns (address addr) {
+        string memory json = vm.readFile("out/Vault.sol/Vault.json");
+        string memory obj = vm.parseJsonString(json, ".bytecode.object");
+        // Marker from `bytecode.linkReferences` (changes if the qualified library path changes).
+        string memory ph = "__$36c87766e6d22a740de7496ef4a84155d7$__";
+        string memory libHex = _addressToHex40NoPrefix(mathLib);
+        string memory linked = vm.replace(obj, ph, libHex);
+        bytes memory bytecode = vm.parseBytes(linked);
+        assembly ("memory-safe") {
+            addr := create(0, add(bytecode, 0x20), mload(bytecode))
+        }
+        require(addr != address(0), "DeployLocal: Vault create failed");
+    }
+
+    function _addressToHex40NoPrefix(address a) private pure returns (string memory) {
+        bytes memory alphabet = "0123456789abcdef";
+        bytes memory str = new bytes(40);
+        bytes20 data = bytes20(a);
+        for (uint256 i; i < 20; ++i) {
+            str[2 * i] = alphabet[uint8(data[i] >> 4)];
+            str[2 * i + 1] = alphabet[uint8(data[i] & 0x0f)];
+        }
+        return string(str);
     }
 
     function _buildJson(

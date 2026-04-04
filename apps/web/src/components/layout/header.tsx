@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useChainId, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { anvil } from "viem/chains";
+import { getContracts } from "@/config/contracts";
+import { ERC20ABI } from "@/abi/erc20";
+import { showToast } from "@/components/ui/toast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X } from "lucide-react";
@@ -26,8 +31,39 @@ export function Header() {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { address } = useAccount();
+  const chainId = useChainId();
+  const { usdc } = getContracts(chainId);
+  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+  const isLocalChain = chainId === anvil.id;
 
   const onHome = pathname === "/";
+  const canMint = Boolean(address) && !isPending;
+
+  useEffect(() => {
+    if (receipt.isSuccess) {
+      showToast("success", "Minted 10,000 USDC");
+    }
+  }, [receipt.isSuccess]);
+
+  useEffect(() => {
+    if (isError || receipt.isError) {
+      const message = error?.message || receipt.error?.message || "Mint failed";
+      showToast("error", message);
+    }
+  }, [isError, error?.message, receipt.isError, receipt.error?.message]);
+
+  const handleMint = () => {
+    if (!address || !isLocalChain) return;
+    writeContract({
+      address: usdc,
+      abi: ERC20ABI,
+      functionName: "mint",
+      args: [address, 10_000n * 1_000_000n],
+    });
+    showToast("pending", "Minting 10,000 USDC...");
+  };
 
   return (
     <>
@@ -93,6 +129,16 @@ export function Header() {
             </nav>
           </div>
           <div className="flex items-center gap-2">
+            {isLocalChain && (
+              <button
+                type="button"
+                onClick={handleMint}
+                disabled={!canMint}
+                className="hidden h-9 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover disabled:pointer-events-none disabled:opacity-45 sm:inline-flex sm:items-center"
+              >
+                {isPending ? "Minting..." : "Mint 10k USDC"}
+              </button>
+            )}
             <button
               type="button"
               onClick={toggle}
@@ -124,6 +170,16 @@ export function Header() {
             className="fixed inset-x-0 top-14 z-30 overflow-hidden border-b border-app-border bg-app-surface md:hidden"
           >
             <nav className="space-y-0.5 p-3">
+              {isLocalChain && (
+                <button
+                  type="button"
+                  onClick={handleMint}
+                  disabled={!canMint}
+                  className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
+                >
+                  {isPending ? "Minting..." : "Mint 10k USDC"}
+                </button>
+              )}
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}
