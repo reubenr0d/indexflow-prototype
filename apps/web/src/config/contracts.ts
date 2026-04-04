@@ -1,5 +1,7 @@
 import { type Address } from "viem";
+import { anvil } from "viem/chains";
 import { arbitrum, arbitrumSepolia } from "wagmi/chains";
+import localDeployment from "./local-deployment.json";
 
 type ContractAddresses = {
   basketFactory: Address;
@@ -11,7 +13,28 @@ type ContractAddresses = {
   usdc: Address;
 };
 
+type LocalDeploymentFile = {
+  basketFactory: string;
+  vaultAccounting: string;
+  oracleAdapter: string;
+  perpReader: string;
+  pricingEngine: string;
+  fundingRateManager: string;
+  usdc: string;
+};
+
+const ld = localDeployment as LocalDeploymentFile;
+
 export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
+  [anvil.id]: {
+    basketFactory: ld.basketFactory as Address,
+    vaultAccounting: ld.vaultAccounting as Address,
+    oracleAdapter: ld.oracleAdapter as Address,
+    perpReader: ld.perpReader as Address,
+    pricingEngine: ld.pricingEngine as Address,
+    fundingRateManager: ld.fundingRateManager as Address,
+    usdc: ld.usdc as Address,
+  },
   [arbitrum.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
     vaultAccounting: "0x0000000000000000000000000000000000000002" as Address,

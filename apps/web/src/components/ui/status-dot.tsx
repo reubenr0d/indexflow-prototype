@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 type Status = "fresh" | "aging" | "stale";
 
 const statusColors: Record<Status, string> = {
-  fresh: "bg-emerald-500",
-  aging: "bg-amber-500",
-  stale: "bg-red-500",
+  fresh: "bg-app-success",
+  aging: "bg-app-warning",
+  stale: "bg-app-danger",
 };
 
 interface StatusDotProps {

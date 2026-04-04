@@ -7,7 +7,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
-import { useBasketAssets, useBasketFees } from "@/hooks/useBasketVault";
+import { useBasketAssets, useBasketFees, useMaxPerpAllocation, useSetMaxPerpAllocation } from "@/hooks/useBasketVault";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
@@ -54,10 +54,10 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   return (
     <PageWrapper>
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <h1 className="text-3xl font-semibold tracking-tight text-app-text">
           {basketInfo?.name || "Basket"}
         </h1>
-        <p className="mt-1 font-mono text-sm text-neutral-400">{formatAddress(vault)}</p>
+        <p className="mt-1 font-mono text-sm text-app-muted">{formatAddress(vault)}</p>
       </div>
 
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -80,19 +80,19 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       )}
 
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">Composition</h2>
+        <h2 className="mb-4 text-lg font-semibold text-app-text">Composition</h2>
         <Card>
-          <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+          <div className="divide-y divide-app-border">
             {assets.map((a) => (
               <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
-                <span className="font-medium text-neutral-900 dark:text-white">
+                <span className="font-medium text-app-text">
                   {formatAssetId(a.assetId)}
                 </span>
-                <span className="text-sm text-neutral-500">{formatBps(a.weightBps)}</span>
+                <span className="text-sm text-app-muted">{formatBps(a.weightBps)}</span>
               </div>
             ))}
             {assets.length === 0 && (
-              <div className="px-6 py-4 text-center text-sm text-neutral-400">No assets</div>
+              <div className="px-6 py-4 text-center text-sm text-app-muted">No assets</div>
             )}
           </div>
         </Card>
@@ -100,6 +100,9 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
 
       <div className="grid gap-6 lg:grid-cols-2">
         <PerpAllocationCard vault={vault} currentAllocation={basketInfo?.perpAllocated ?? 0n} />
+        <MaxPerpAllocationCard vault={vault} />
+      </div>
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <FeeCollectionCard vault={vault} />
       </div>
     </PageWrapper>
@@ -120,8 +123,8 @@ function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; curr
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-neutral-900 dark:text-white">Perp Allocation</h3>
-      <p className="mb-4 text-sm text-neutral-400">Current: {formatUSDC(currentAllocation)}</p>
+      <h3 className="mb-4 text-base font-semibold text-app-text">Perp Allocation</h3>
+      <p className="mb-4 text-sm text-app-muted">Current: {formatUSDC(currentAllocation)}</p>
       <Input
         type="number"
         placeholder="USDC amount"
@@ -166,6 +169,67 @@ function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; curr
   );
 }
 
+function MaxPerpAllocationCard({ vault }: { vault: Address }) {
+  const [amount, setAmount] = useState("");
+  const { data: currentCap } = useMaxPerpAllocation(vault);
+  const { setMaxPerpAllocation, receipt, isPending } = useSetMaxPerpAllocation();
+
+  const capValue = currentCap as bigint | undefined;
+
+  useEffect(() => {
+    if (receipt.isSuccess) {
+      showToast("success", "Max perp allocation updated");
+      setAmount("");
+    }
+  }, [receipt.isSuccess]);
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-2 text-base font-semibold text-app-text">
+        Max Perp Allocation
+      </h3>
+      <p className="mb-4 text-sm text-app-muted">
+        Current:{" "}
+        {capValue === undefined
+          ? "--"
+          : capValue === 0n
+            ? "Unlimited"
+            : formatUSDC(capValue)}
+      </p>
+      <Input
+        type="number"
+        placeholder="USDC cap (0 = unlimited)"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="mb-3"
+      />
+      <div className="flex gap-2">
+        <Button
+          size="sm"
+          disabled={!amount || isPending}
+          onClick={() => {
+            setMaxPerpAllocation(vault, parseUSDCInput(amount));
+            showToast("pending", "Setting cap...");
+          }}
+        >
+          Set Cap
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          disabled={isPending}
+          onClick={() => {
+            setMaxPerpAllocation(vault, 0n);
+            showToast("pending", "Removing cap...");
+          }}
+        >
+          Clear
+        </Button>
+      </div>
+    </Card>
+  );
+}
+
 function FeeCollectionCard({ vault }: { vault: Address }) {
   const { writeContract, data: hash, isPending } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -179,7 +243,7 @@ function FeeCollectionCard({ vault }: { vault: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-neutral-900 dark:text-white">Collect Fees</h3>
+      <h3 className="mb-4 text-base font-semibold text-app-text">Collect Fees</h3>
       <Input
         placeholder="Recipient address"
         value={recipient}

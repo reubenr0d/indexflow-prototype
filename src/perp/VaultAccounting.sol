@@ -31,6 +31,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         bool isLong;
         uint256 size;
         uint256 collateral;
+        uint256 collateralUsdc;
         uint256 averagePrice;
         uint256 entryFundingRate;
         bool exists;
@@ -44,7 +45,14 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
 
     uint256 public totalDeposited;
 
+    mapping(address => uint256) public maxOpenInterest;
+    mapping(address => uint256) public maxPositionSize;
+    bool public paused;
+
     event AssetTokenMapped(bytes32 indexed assetId, address indexed token);
+    event MaxOpenInterestSet(address vault, uint256 cap);
+    event MaxPositionSizeSet(address vault, uint256 cap);
+    event PauseToggled(bool paused);
 
     error VaultNotRegistered(address vault);
     error VaultAlreadyRegistered(address vault);
@@ -54,6 +62,11 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
 
     modifier onlyRegisteredVault(address vault) {
         if (!_vaultStates[vault].registered) revert VaultNotRegistered(vault);
+        _;
+    }
+
+    modifier whenNotPaused() {
+        require(!paused, "Paused");
         _;
     }
 
@@ -78,6 +91,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             depositedCapital: 0,
             realisedPnL: 0,
             openInterest: 0,
+            collateralLocked: 0,
             positionCount: 0,
             registered: true
         });
@@ -105,12 +119,29 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         emit AssetTokenMapped(assetId, token);
     }
 
+    // ─── Risk Limits ─────────────────────────────────────────────
+
+    function setMaxOpenInterest(address vault, uint256 cap) external onlyOwner {
+        maxOpenInterest[vault] = cap;
+        emit MaxOpenInterestSet(vault, cap);
+    }
+
+    function setMaxPositionSize(address vault, uint256 cap) external onlyOwner {
+        maxPositionSize[vault] = cap;
+        emit MaxPositionSizeSet(vault, cap);
+    }
+
+    function setPaused(bool _paused) external onlyOwner {
+        paused = _paused;
+        emit PauseToggled(_paused);
+    }
+
     // ─── Capital Management ──────────────────────────────────────
 
     function depositCapital(
         address vault,
         uint256 amount
-    ) external override nonReentrant onlyRegisteredVault(vault) {
+    ) external override nonReentrant onlyRegisteredVault(vault) whenNotPaused {
         require(amount > 0, "Amount required");
 
         usdc.safeTransferFrom(msg.sender, address(this), amount);
@@ -124,7 +155,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     function withdrawCapital(
         address vault,
         uint256 amount
-    ) external override nonReentrant onlyRegisteredVault(vault) {
+    ) external override nonReentrant onlyRegisteredVault(vault) whenNotPaused {
         VaultState storage vs = _vaultStates[vault];
         uint256 available = _availableCapital(vault);
         if (amount > available) {
@@ -147,7 +178,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         bool isLong,
         uint256 size,
         uint256 collateral
-    ) external override nonReentrant onlyRegisteredVault(vault) {
+    ) external override nonReentrant onlyRegisteredVault(vault) whenNotPaused {
         _checkCaller(vault);
 
         address indexToken = assetTokens[asset];
@@ -156,6 +187,13 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         VaultState storage vs = _vaultStates[vault];
         uint256 available = _availableCapital(vault);
         require(collateral <= available, "Insufficient capital for collateral");
+
+        if (maxOpenInterest[vault] > 0) {
+            require(vs.openInterest + size <= maxOpenInterest[vault], "Exceeds max open interest");
+        }
+        if (maxPositionSize[vault] > 0) {
+            require(size <= maxPositionSize[vault], "Exceeds max position size");
+        }
 
         // Transfer collateral to GMX vault
         usdc.safeIncreaseAllowance(address(gmxVault), collateral);
@@ -180,12 +218,14 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             isLong: isLong,
             size: posSize,
             collateral: posCollateral,
+            collateralUsdc: collateral,
             averagePrice: avgPrice,
             entryFundingRate: entryFunding,
             exists: true
         });
 
         vs.openInterest += size;
+        vs.collateralLocked += collateral;
         vs.positionCount++;
 
         emit PositionOpened(vault, asset, isLong, size, collateral);
@@ -197,7 +237,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         bool isLong,
         uint256 sizeDelta,
         uint256 collateralDelta
-    ) external override nonReentrant onlyRegisteredVault(vault) {
+    ) external override nonReentrant onlyRegisteredVault(vault) whenNotPaused {
         _checkCaller(vault);
 
         bytes32 posKey = _positionKey(vault, asset, isLong);
@@ -219,23 +259,32 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         );
 
         uint256 balAfter = usdc.balanceOf(address(this));
-        int256 pnl = int256(balAfter) - int256(balBefore) - int256(collateralDelta);
+        uint256 returned = balAfter - balBefore;
 
         VaultState storage vs = _vaultStates[vault];
-        vs.realisedPnL += pnl;
         vs.openInterest -= sizeDelta;
 
         // Update or remove position tracking
         (uint256 remaining,,,,,,,) =
             gmxVault.getPosition(address(this), collateralToken, indexToken, isLong);
 
+        // PnL = returned USDC - proportional collateral that was at risk
+        uint256 collateralAtRisk;
         if (remaining == 0) {
+            collateralAtRisk = pos.collateralUsdc;
             pos.exists = false;
             vs.positionCount--;
+            vs.collateralLocked -= pos.collateralUsdc;
         } else {
+            collateralAtRisk = (pos.collateralUsdc * sizeDelta) / pos.size;
             pos.size = remaining;
+            pos.collateralUsdc -= collateralAtRisk;
             pos.collateral -= collateralDelta;
+            vs.collateralLocked -= collateralAtRisk;
         }
+
+        int256 pnl = int256(returned) - int256(collateralAtRisk);
+        vs.realisedPnL += pnl;
 
         emit PositionClosed(vault, asset, isLong, pnl);
         emit PnLRealized(vault, pnl);
@@ -274,7 +323,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
 
     function _availableCapital(address vault) internal view returns (uint256) {
         VaultState memory vs = _vaultStates[vault];
-        int256 total = int256(vs.depositedCapital) + vs.realisedPnL - int256(vs.openInterest);
+        int256 total = int256(vs.depositedCapital) + vs.realisedPnL - int256(vs.collateralLocked);
         return total > 0 ? uint256(total) : 0;
     }
 

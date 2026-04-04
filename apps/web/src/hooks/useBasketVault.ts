@@ -134,3 +134,28 @@ export function useUSDCAllowance(token: Address, owner: Address | undefined, spe
     query: { enabled: !!owner, refetchInterval: REFETCH_INTERVAL },
   });
 }
+
+export function useMaxPerpAllocation(vault: Address) {
+  return useReadContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "maxPerpAllocation",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useSetMaxPerpAllocation() {
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setMaxPerpAllocation = (vault: Address, cap: bigint) => {
+    writeContract({
+      address: vault,
+      abi: BasketVaultABI,
+      functionName: "setMaxPerpAllocation",
+      args: [cap],
+    });
+  };
+
+  return { setMaxPerpAllocation, hash, receipt, ...rest };
+}

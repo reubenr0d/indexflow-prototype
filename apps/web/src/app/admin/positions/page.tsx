@@ -33,7 +33,7 @@ export default function AdminPositionsPage() {
   return (
     <PageWrapper>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <h1 className="text-3xl font-semibold tracking-tight text-app-text">
           Position Management
         </h1>
         <div className="flex gap-2">
@@ -69,11 +69,11 @@ export default function AdminPositionsPage() {
         )}
       </AnimatePresence>
 
-      <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">Vault Overview</h2>
+      <h2 className="mb-4 text-lg font-semibold text-app-text">Vault Overview</h2>
       {isLoading ? (
         <Card>
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center justify-between border-b border-neutral-100 px-6 py-4 last:border-0 dark:border-neutral-800">
+            <div key={i} className="flex items-center justify-between border-b border-app-border px-6 py-4 last:border-0">
               <Skeleton className="h-5 w-32" />
               <Skeleton className="h-5 w-20" />
             </div>
@@ -81,8 +81,8 @@ export default function AdminPositionsPage() {
         </Card>
       ) : (
         <Card>
-          <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-            <div className="flex items-center gap-4 px-6 py-3 text-xs font-medium uppercase tracking-wider text-neutral-400">
+          <div className="divide-y divide-app-border">
+            <div className="flex items-center gap-4 px-6 py-3 text-xs font-medium uppercase tracking-wider text-app-muted">
               <span className="flex-1">Vault</span>
               <span className="w-28 text-right">Deposited</span>
               <span className="w-28 text-right">Realised PnL</span>
@@ -111,18 +111,18 @@ function VaultRow({ vault, name }: { vault: Address; name: string }) {
 
   if (!state?.registered) {
     return (
-      <div className="flex items-center gap-4 px-6 py-4 text-neutral-400">
+      <div className="flex items-center gap-4 px-6 py-4 text-app-muted">
         <span className="flex-1">{name || "Basket"}</span>
         <span className="text-sm">Not registered</span>
       </div>
     );
   }
 
-  const pnlColor = state.realisedPnL >= 0n ? "text-emerald-500" : "text-red-500";
+  const pnlColor = state.realisedPnL >= 0n ? "text-app-success" : "text-app-danger";
 
   return (
     <div className="flex items-center gap-4 px-6 py-4">
-      <span className="flex-1 font-medium text-neutral-900 dark:text-white">{name || "Basket"}</span>
+      <span className="flex-1 font-medium text-app-text">{name || "Basket"}</span>
       <span className="w-28 text-right text-sm">{formatUSDC(state.depositedCapital)}</span>
       <span className={`w-28 text-right text-sm font-medium ${pnlColor}`}>{formatUSDC(state.realisedPnL)}</span>
       <span className="w-28 text-right text-sm">{formatUSDC(state.openInterest)}</span>
@@ -149,14 +149,14 @@ function OpenPositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addres
 
   return (
     <Card className="p-6">
-      <h2 className="mb-6 text-lg font-semibold text-neutral-900 dark:text-white">Open Position</h2>
+      <h2 className="mb-6 text-lg font-semibold text-app-text">Open Position</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Vault</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Vault</label>
           <select
             value={selectedVault}
             onChange={(e) => setSelectedVault(e.target.value)}
-            className="h-12 w-full rounded-xl border-0 bg-neutral-50 px-4 text-base dark:bg-neutral-800 dark:text-white"
+            className="h-12 w-full rounded-xl border-0 border border-app-border bg-app-bg px-4 text-base text-app-text dark:bg-app-bg-subtle"
           >
             <option value="">Select vault...</option>
             {vaults.map((v) => (
@@ -165,11 +165,11 @@ function OpenPositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addres
           </select>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Asset ID</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Asset ID</label>
           <Input placeholder="e.g. GOLD" value={asset} onChange={(e) => setAsset(e.target.value)} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Side</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Side</label>
           <SegmentedControl
             options={[
               { value: "long", label: "Long" },
@@ -181,11 +181,11 @@ function OpenPositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addres
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Size (USDC)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Size (USDC)</label>
           <Input type="number" placeholder="0.00" value={size} onChange={(e) => setSize(e.target.value)} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Collateral (USDC)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Collateral (USDC)</label>
           <Input type="number" placeholder="0.00" value={collateral} onChange={(e) => setCollateral(e.target.value)} />
         </div>
       </div>
@@ -228,14 +228,14 @@ function ClosePositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addre
 
   return (
     <Card className="p-6">
-      <h2 className="mb-6 text-lg font-semibold text-neutral-900 dark:text-white">Close Position</h2>
+      <h2 className="mb-6 text-lg font-semibold text-app-text">Close Position</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Vault</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Vault</label>
           <select
             value={selectedVault}
             onChange={(e) => setSelectedVault(e.target.value)}
-            className="h-12 w-full rounded-xl border-0 bg-neutral-50 px-4 text-base dark:bg-neutral-800 dark:text-white"
+            className="h-12 w-full rounded-xl border-0 border border-app-border bg-app-bg px-4 text-base text-app-text dark:bg-app-bg-subtle"
           >
             <option value="">Select vault...</option>
             {vaults.map((v) => (
@@ -244,11 +244,11 @@ function ClosePositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addre
           </select>
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Asset ID</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Asset ID</label>
           <Input placeholder="e.g. GOLD" value={asset} onChange={(e) => setAsset(e.target.value)} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Side</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Side</label>
           <SegmentedControl
             options={[
               { value: "long", label: "Long" },
@@ -260,11 +260,11 @@ function ClosePositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addre
           />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Size Delta (USDC)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Size Delta (USDC)</label>
           <Input type="number" placeholder="0.00" value={sizeDelta} onChange={(e) => setSizeDelta(e.target.value)} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Collateral Delta (USDC)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Collateral Delta (USDC)</label>
           <Input type="number" placeholder="0.00" value={collateralDelta} onChange={(e) => setCollateralDelta(e.target.value)} />
         </div>
       </div>

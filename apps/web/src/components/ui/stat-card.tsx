@@ -3,7 +3,6 @@
 import { Card } from "./card";
 import { Skeleton } from "./skeleton";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface StatCardProps {
   label: string;
@@ -16,28 +15,18 @@ interface StatCardProps {
 export function StatCard({ label, value, subValue, className, isLoading }: StatCardProps) {
   if (isLoading) {
     return (
-      <Card className={cn("p-6", className)}>
-        <Skeleton className="mb-2 h-4 w-20" />
-        <Skeleton className="h-10 w-32" />
+      <Card className={cn("p-5", className)}>
+        <Skeleton className="mb-2 h-3 w-20" />
+        <Skeleton className="h-8 w-28" />
       </Card>
     );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-    >
-      <Card className={cn("p-6", className)}>
-        <p className="text-sm font-medium text-neutral-400">{label}</p>
-        <p className="mt-1 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
-          {value}
-        </p>
-        {subValue && (
-          <p className="mt-1 text-sm text-neutral-500">{subValue}</p>
-        )}
-      </Card>
-    </motion.div>
+    <Card className={cn("p-5", className)}>
+      <p className="font-mono text-xs font-medium uppercase tracking-wider text-app-muted">{label}</p>
+      <p className="mt-2 font-mono text-2xl font-semibold tracking-tight text-app-text">{value}</p>
+      {subValue && <p className="mt-1 text-xs text-app-muted">{subValue}</p>}
+    </Card>
   );
 }

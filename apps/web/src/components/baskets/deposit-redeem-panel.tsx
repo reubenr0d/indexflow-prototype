@@ -100,7 +100,7 @@ export function DepositRedeemPanel({
   const balance = mode === "deposit" ? usdcBalance : shareBalance;
 
   return (
-    <Card className="sticky top-24 p-6">
+    <Card className="sticky top-20 p-5">
       <SegmentedControl
         options={[
           { value: "deposit", label: "Deposit" },
@@ -113,17 +113,18 @@ export function DepositRedeemPanel({
 
       <div className="mb-4">
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-neutral-500">
-            {mode === "deposit" ? "USDC Amount" : "Shares"}
+          <label className="text-sm font-medium text-app-muted">
+            {mode === "deposit" ? "USDC amount" : "Shares"}
           </label>
           {balance !== undefined && (
             <button
+              type="button"
               onClick={() => setAmount(
                 mode === "deposit"
                   ? (Number(balance) / 1e6).toString()
                   : (Number(balance) / 1e6).toString()
               )}
-              className="text-xs font-medium text-blue-500 hover:text-blue-600"
+              className="font-mono text-xs font-semibold text-app-accent hover:underline"
             >
               Max: {mode === "deposit" ? formatUSDC(balance) : formatShares(balance)}
             </button>
@@ -139,20 +140,18 @@ export function DepositRedeemPanel({
       </div>
 
       {parsedAmount > 0n && (
-        <div className="mb-6 rounded-xl bg-neutral-50 p-4 dark:bg-neutral-800/50">
+        <div className="mb-6 rounded-md border border-app-border bg-app-bg-subtle p-4">
           <div className="flex items-center justify-between text-sm">
-            <span className="text-neutral-500">
-              {mode === "deposit" ? "You receive" : "You receive"}
-            </span>
-            <span className="font-medium text-neutral-900 dark:text-white">
+            <span className="text-app-muted">You receive</span>
+            <span className="font-mono font-medium text-app-text">
               {mode === "deposit"
                 ? `${formatShares(estimatedShares)} shares`
                 : `${formatUSDC(estimatedUSDC)} USDC`}
             </span>
           </div>
           <div className="mt-2 flex items-center justify-between text-sm">
-            <span className="text-neutral-500">Fee</span>
-            <span className="text-neutral-500">
+            <span className="text-app-muted">Fee</span>
+            <span className="font-mono text-app-muted">
               {mode === "deposit"
                 ? `${Number(depositFeeBps) / 100}%`
                 : `${Number(redeemFeeBps) / 100}%`}

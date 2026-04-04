@@ -34,31 +34,37 @@ export function ToastContainer() {
       }
     };
     listeners.add(listener);
-    return () => { listeners.delete(listener); };
+    return () => {
+      listeners.delete(listener);
+    };
   }, []);
 
   const dismiss = (id: string) => setToasts((prev) => prev.filter((t) => t.id !== id));
 
   return (
-    <div className="fixed right-4 top-4 z-50 flex flex-col gap-2">
+    <div className="fixed right-4 top-16 z-50 flex flex-col gap-2">
       <AnimatePresence>
         {toasts.map((t) => (
           <motion.div
             key={t.id}
-            initial={{ opacity: 0, y: -12, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            initial={{ opacity: 0, x: 16 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 16 }}
             className={cn(
-              "flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-lg ring-1 ring-neutral-100 dark:bg-neutral-900 dark:ring-neutral-800",
-              t.type === "error" && "bg-red-50 ring-red-100 dark:bg-red-950/40 dark:ring-red-900"
+              "flex items-center gap-3 rounded-md border border-app-border bg-app-surface px-4 py-3 shadow-[var(--shadow)]",
+              t.type === "error" && "border-app-danger/40 bg-app-danger/5"
             )}
           >
-            {t.type === "pending" && <Loader2 className="h-4 w-4 animate-spin text-blue-500" />}
-            {t.type === "success" && <Check className="h-4 w-4 text-emerald-500" />}
-            {t.type === "error" && <X className="h-4 w-4 text-red-500" />}
-            <span className="text-sm font-medium text-neutral-900 dark:text-white">{t.message}</span>
-            <button onClick={() => dismiss(t.id)} className="ml-2 text-neutral-400 hover:text-neutral-600">
-              <X className="h-3 w-3" />
+            {t.type === "pending" && <Loader2 className="h-4 w-4 animate-spin text-app-accent" />}
+            {t.type === "success" && <Check className="h-4 w-4 text-app-success" />}
+            {t.type === "error" && <X className="h-4 w-4 text-app-danger" />}
+            <span className="text-sm font-medium text-app-text">{t.message}</span>
+            <button
+              type="button"
+              onClick={() => dismiss(t.id)}
+              className="ml-1 text-app-muted hover:text-app-text"
+            >
+              <X className="h-3.5 w-3.5" />
             </button>
           </motion.div>
         ))}

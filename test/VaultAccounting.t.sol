@@ -9,7 +9,25 @@ import "../src/perp/interfaces/IPerp.sol";
 import "../src/vault/MockUSDC.sol";
 
 contract MockGMXVault {
-    // Minimal mock for testing VaultAccounting without full GMX Vault
+    function increasePosition(
+        address, address, address, uint256, bool
+    ) external {}
+
+    function decreasePosition(
+        address, address, address, uint256, uint256, bool, address
+    ) external returns (uint256) {
+        return 0;
+    }
+
+    function getPosition(
+        address, address, address, bool
+    ) external pure returns (
+        uint256 size, uint256 collateral, uint256 averagePrice,
+        uint256 entryFundingRate, uint256 reserveAmount,
+        uint256 realisedPnl, bool hasRealisedProfit, uint256 lastIncreasedTime
+    ) {
+        return (1000e6, 100e6, 2000e30, 0, 0, 0, false, 0);
+    }
 }
 
 contract VaultAccountingTest is Test {
@@ -154,5 +172,64 @@ contract VaultAccountingTest is Test {
 
         IPerp.VaultState memory state = accounting.getVaultState(vault1);
         assertEq(state.depositedCapital, depositAmt - withdrawAmt);
+    }
+
+    // ─── Risk Limit Tests ────────────────────────────────────────
+
+    function _depositAndPrepare(address vault, uint256 amount) internal {
+        vm.startPrank(vault);
+        usdc.approve(address(accounting), amount);
+        accounting.depositCapital(vault, amount);
+        vm.stopPrank();
+
+        bytes32 xau = keccak256("XAU");
+        address xauToken = address(0xAA);
+        accounting.mapAssetToken(xau, xauToken);
+    }
+
+    function test_maxOpenInterest_enforced() public {
+        _depositAndPrepare(vault1, 100_000e6);
+
+        bytes32 xau = keccak256("XAU");
+        accounting.setMaxOpenInterest(vault1, 5_000e6);
+
+        vm.prank(vault1);
+        vm.expectRevert("Exceeds max open interest");
+        accounting.openPosition(vault1, xau, true, 10_000e6, 1_000e6);
+    }
+
+    function test_maxPositionSize_enforced() public {
+        _depositAndPrepare(vault1, 100_000e6);
+
+        bytes32 xau = keccak256("XAU");
+        accounting.setMaxPositionSize(vault1, 500e6);
+
+        vm.prank(vault1);
+        vm.expectRevert("Exceeds max position size");
+        accounting.openPosition(vault1, xau, true, 1_000e6, 100e6);
+    }
+
+    function test_pause_blocks_operations() public {
+        accounting.setPaused(true);
+
+        vm.startPrank(vault1);
+        usdc.approve(address(accounting), 100_000e6);
+
+        vm.expectRevert("Paused");
+        accounting.depositCapital(vault1, 100_000e6);
+        vm.stopPrank();
+    }
+
+    function test_unpause_resumes_operations() public {
+        accounting.setPaused(true);
+        accounting.setPaused(false);
+
+        vm.startPrank(vault1);
+        usdc.approve(address(accounting), 100_000e6);
+        accounting.depositCapital(vault1, 100_000e6);
+        vm.stopPrank();
+
+        IPerp.VaultState memory state = accounting.getVaultState(vault1);
+        assertEq(state.depositedCapital, 100_000e6);
     }
 }

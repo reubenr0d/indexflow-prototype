@@ -1,0 +1,38 @@
+---
+description: Update CHANGELOG.md when making substantive code or config changes
+alwaysApply: true
+---
+
+# Changelog maintenance
+
+When you change **application or library code**, **build/deploy config**, **scripts**, or **dependencies** in ways that matter to users or operators, update `CHANGELOG.md` in the same edit session.
+
+## What to log
+
+- **Added**: new features, endpoints, contracts, scripts, or capabilities
+- **Changed**: behavior changes, refactors that affect usage, performance or security improvements users should know about
+- **Deprecated**: features marked for removal
+- **Removed**: deleted APIs, scripts, or options
+- **Fixed**: bug fixes
+- **Security**: vulnerability fixes
+
+## What to skip
+
+- Typo-only or comment-only edits, formatting-only changes, or internal refactors with no observable effect
+- Changes already fully described by an adjacent entry you are adding in the same PR/session (avoid duplicate noise)
+
+## Format
+
+- Keep entries under **`## [Unreleased]`** until a release is tagged; then move them under a dated `## [x.y.z] - YYYY-MM-DD` section.
+- Use bullet points, present tense or imperative mood, one idea per bullet.
+- Reference issue or PR numbers when the user provides them.
+
+## Example entry
+
+```markdown
+### Fixed
+
+- Deploy script no longer assumes a fixed chain id when estimating gas.
+```
+
+If `CHANGELOG.md` is missing, create it using [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) structure.

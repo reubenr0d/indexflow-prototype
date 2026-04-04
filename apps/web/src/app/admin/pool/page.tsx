@@ -29,7 +29,7 @@ export default function AdminPoolPage() {
 
   return (
     <PageWrapper>
-      <h1 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+      <h1 className="mb-8 text-3xl font-semibold tracking-tight text-app-text">
         Pool Health
       </h1>
 
@@ -77,28 +77,28 @@ export default function AdminPoolPage() {
       </div>
 
       <div className="mt-10">
-        <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">
+        <h2 className="mb-4 text-lg font-semibold text-app-text">
           Pool Details
         </h2>
         <Card className="p-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-neutral-500">Utilization Rate</span>
-              <span className="font-medium text-neutral-900 dark:text-white">
+              <span className="text-sm text-app-muted">Utilization Rate</span>
+              <span className="font-medium text-app-text">
                 {utilizationPct.toFixed(2)}%
               </span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-app-bg-subtle">
               <div
                 className={`h-full rounded-full transition-all duration-700 ${
-                  utilizationPct < 50 ? "bg-emerald-500" :
-                  utilizationPct < 80 ? "bg-amber-500" :
-                  "bg-red-500"
+                  utilizationPct < 50 ? "bg-app-success" :
+                  utilizationPct < 80 ? "bg-app-warning" :
+                  "bg-app-danger"
                 }`}
                 style={{ width: `${Math.min(utilizationPct, 100)}%` }}
               />
             </div>
-            <div className="flex justify-between text-xs text-neutral-400">
+            <div className="flex justify-between text-xs text-app-muted">
               <span>0%</span>
               <span>50%</span>
               <span>100%</span>

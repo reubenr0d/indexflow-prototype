@@ -6,7 +6,9 @@
   "scripts": {
     "build": "forge build",
     "test": "forge test",
-    "test:v": "forge test -vvv"
+    "test:v": "forge test -vvv",
+    "anvil": "anvil",
+    "deploy:local": "forge script script/DeployLocal.s.sol:DeployLocal --rpc-url http://127.0.0.1:8545 --broadcast -vvv"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0"

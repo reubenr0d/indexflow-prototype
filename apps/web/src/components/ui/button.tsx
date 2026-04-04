@@ -3,19 +3,23 @@ import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent/40 disabled:pointer-events-none disabled:opacity-45",
   {
     variants: {
       variant: {
-        primary: "rounded-full bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700",
-        secondary: "rounded-full bg-neutral-100 text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700",
-        ghost: "rounded-xl text-neutral-600 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:bg-neutral-800",
-        danger: "rounded-full bg-red-500 text-white hover:bg-red-600",
+        primary:
+          "rounded-md bg-app-accent text-app-accent-fg hover:opacity-90 active:opacity-80",
+        secondary:
+          "rounded-md border border-app-border bg-app-surface text-app-text hover:border-app-border-strong hover:bg-app-surface-hover",
+        ghost:
+          "rounded-md text-app-muted hover:bg-app-bg-subtle hover:text-app-text",
+        danger:
+          "rounded-md bg-app-danger text-white hover:opacity-90 dark:text-app-bg",
       },
       size: {
-        sm: "h-8 px-4 text-sm",
-        md: "h-10 px-6 text-sm",
-        lg: "h-12 px-8 text-base",
+        sm: "h-8 px-3 text-xs",
+        md: "h-10 px-4 text-sm",
+        lg: "h-11 px-5 text-sm",
         icon: "h-10 w-10",
       },
     },

@@ -37,6 +37,7 @@ contract BasketVault is ReentrancyGuard, Ownable {
     uint256 public collectedFees;
 
     uint256 public perpAllocated;
+    uint256 public maxPerpAllocation;
 
     string public name;
 
@@ -100,6 +101,10 @@ contract BasketVault is ReentrancyGuard, Ownable {
         oracleAdapter = IOracleAdapter(_oracleAdapter);
     }
 
+    function setMaxPerpAllocation(uint256 cap) external onlyOwner {
+        maxPerpAllocation = cap;
+    }
+
     // ─── Deposit / Redeem ────────────────────────────────────────
 
     /// @notice Deposit USDC and receive basket shares at current oracle basket price.
@@ -156,6 +161,10 @@ contract BasketVault is ReentrancyGuard, Ownable {
         require(address(vaultAccounting) != address(0), "VaultAccounting not set");
         uint256 available = usdc.balanceOf(address(this)) - collectedFees;
         require(amount <= available, "Insufficient balance");
+
+        if (maxPerpAllocation > 0) {
+            require(perpAllocated + amount <= maxPerpAllocation, "Exceeds max perp allocation");
+        }
 
         usdc.safeIncreaseAllowance(address(vaultAccounting), amount);
         vaultAccounting.depositCapital(address(this), amount);

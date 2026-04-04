@@ -54,9 +54,9 @@ export default function PortfolioPage() {
     return (
       <PageWrapper>
         <div className="flex flex-col items-center justify-center py-32">
-          <Wallet className="mb-4 h-12 w-12 text-neutral-300" />
-          <p className="text-lg font-medium text-neutral-400">Connect your wallet</p>
-          <p className="mt-2 text-sm text-neutral-400">
+          <Wallet className="mb-4 h-12 w-12 text-app-border-strong" />
+          <p className="text-lg font-medium text-app-muted">Connect your wallet</p>
+          <p className="mt-2 text-sm text-app-muted">
             View your basket holdings by connecting a wallet.
           </p>
         </div>
@@ -72,8 +72,8 @@ export default function PortfolioPage() {
         transition={{ duration: 0.5 }}
         className="mb-12 text-center"
       >
-        <p className="text-sm font-medium text-neutral-400">Portfolio Value</p>
-        <p className="mt-1 text-5xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <p className="text-sm font-medium text-app-muted">Portfolio Value</p>
+        <p className="mt-1 text-5xl font-semibold tracking-tight text-app-text">
           {isLoading ? (
             <Skeleton className="mx-auto h-14 w-48" />
           ) : (
@@ -82,7 +82,7 @@ export default function PortfolioPage() {
         </p>
       </motion.div>
 
-      <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">
+      <h2 className="mb-4 text-lg font-semibold text-app-text">
         Holdings
       </h2>
 
@@ -109,23 +109,23 @@ export default function PortfolioPage() {
               <Link href={`/baskets/${h.vault}`}>
                 <Card className="flex items-center justify-between p-6 transition-shadow hover:shadow-md">
                   <div>
-                    <p className="font-semibold text-neutral-900 dark:text-white">
+                    <p className="font-semibold text-app-text">
                       {h.name || "Basket"}
                     </p>
-                    <p className="mt-0.5 text-sm text-neutral-400">
+                    <p className="mt-0.5 text-sm text-app-muted">
                       {formatShares(h.balance)} shares
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <p className="font-semibold text-neutral-900 dark:text-white">
+                      <p className="font-semibold text-app-text">
                         {formatUSDC(h.value)}
                       </p>
-                      <p className="text-sm text-neutral-400">
+                      <p className="text-sm text-app-muted">
                         {formatUSDC(h.sharePrice)} / share
                       </p>
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-neutral-400" />
+                    <ArrowUpRight className="h-4 w-4 text-app-muted" />
                   </div>
                 </Card>
               </Link>
@@ -134,8 +134,8 @@ export default function PortfolioPage() {
         </div>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-lg font-medium text-neutral-400">No baskets yet</p>
-          <p className="mt-2 text-sm text-neutral-400">
+          <p className="text-lg font-medium text-app-muted">No baskets yet</p>
+          <p className="mt-2 text-sm text-app-muted">
             Deposit into a basket to start building your portfolio.
           </p>
           <Link href="/baskets">

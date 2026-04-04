@@ -56,7 +56,7 @@ export default function BasketsPage() {
   return (
     <PageWrapper>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <h1 className="text-3xl font-semibold tracking-tight text-app-text">
           Baskets
         </h1>
         <Link href="/admin/baskets">
@@ -69,12 +69,12 @@ export default function BasketsPage() {
 
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-app-muted" />
           <Input
             placeholder="Search baskets..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-full pl-10 sm:w-72"
+            className="w-full pl-10 sm:w-72"
           />
         </div>
         <SegmentedControl
@@ -118,8 +118,8 @@ export default function BasketsPage() {
         </div>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-lg font-medium text-neutral-400">No baskets found</p>
-          <p className="mt-2 text-sm text-neutral-400">
+          <p className="text-lg font-medium text-app-muted">No baskets found</p>
+          <p className="mt-2 text-sm text-app-muted">
             {search ? "Try a different search term." : "Create your first basket to get started."}
           </p>
         </div>

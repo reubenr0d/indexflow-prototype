@@ -34,54 +34,48 @@ export function BasketCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.05 }}
+      transition={{ duration: 0.22, delay: index * 0.04 }}
     >
       <Link href={`/baskets/${vault}`}>
-        <Card className="group p-6 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
-          <div className="mb-4 flex items-start justify-between">
-            <h3 className="text-base font-semibold text-neutral-900 dark:text-white">
-              {name || "Basket"}
-            </h3>
+        <Card className="group h-full p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
+          <div className="mb-3 flex items-start justify-between gap-2">
+            <h3 className="text-sm font-semibold text-app-text">{name || "Basket"}</h3>
             {depositFee !== undefined && (
-              <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+              <span className="shrink-0 rounded-md bg-app-accent-dim px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide text-app-accent">
                 {formatBps(depositFee)} fee
               </span>
             )}
           </div>
 
-          <p className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+          <p className="font-mono text-2xl font-semibold tracking-tight text-app-text">
             {formatUSDC(tvl)}
           </p>
-          <p className="mt-0.5 text-sm text-neutral-400">TVL</p>
+          <p className="mt-0.5 font-mono text-xs text-app-muted">TVL</p>
 
-          <div className="mt-4 flex items-center gap-4">
+          <div className="mt-4 flex gap-6">
             <div>
-              <p className="text-sm font-medium text-neutral-900 dark:text-white">
-                {formatUSDC(sharePrice)}
-              </p>
-              <p className="text-xs text-neutral-400">Share Price</p>
+              <p className="font-mono text-sm font-medium text-app-text">{formatUSDC(sharePrice)}</p>
+              <p className="text-xs text-app-muted">Share price</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-neutral-900 dark:text-white">
-                {assetCount}
-              </p>
-              <p className="text-xs text-neutral-400">Assets</p>
+              <p className="font-mono text-sm font-medium text-app-text">{assetCount}</p>
+              <p className="text-xs text-app-muted">Assets</p>
             </div>
           </div>
 
-          <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+          <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
             <div
-              className="h-full rounded-full bg-blue-500 transition-all"
+              className="h-full rounded-full bg-app-accent transition-all"
               style={{
                 width: perpAllocated > 0n ? `${Number((perpAllocated * 100n) / (tvl || 1n))}%` : "0%",
               }}
             />
           </div>
-          <p className="mt-1 text-xs text-neutral-400">
+          <p className="mt-1 text-xs text-app-muted">
             {perpAllocated > 0n
-              ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% allocated to perp`
+              ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
               : "No perp allocation"}
           </p>
         </Card>

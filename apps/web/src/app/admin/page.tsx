@@ -39,7 +39,7 @@ export default function AdminOverview() {
 
   return (
     <PageWrapper>
-      <h1 className="mb-8 text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+      <h1 className="mb-8 text-3xl font-semibold tracking-tight text-app-text">
         Admin Dashboard
       </h1>
 
@@ -49,19 +49,19 @@ export default function AdminOverview() {
         <StatCard label="Perp Allocated" value={formatUSDC(totalPerp)} />
       </div>
 
-      <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">Quick Actions</h2>
+      <h2 className="mb-4 text-lg font-semibold text-app-text">Quick Actions</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         {quickLinks.map(({ href, label, icon: Icon, desc }) => (
           <Link key={href} href={href}>
             <Card className="flex items-center gap-4 p-6 transition-shadow hover:shadow-md">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/40">
-                <Icon className="h-5 w-5 text-blue-500" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-app-accent-dim">
+                <Icon className="h-5 w-5 text-app-accent" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-neutral-900 dark:text-white">{label}</p>
-                <p className="text-sm text-neutral-400">{desc}</p>
+                <p className="font-semibold text-app-text">{label}</p>
+                <p className="text-sm text-app-muted">{desc}</p>
               </div>
-              <ArrowUpRight className="h-4 w-4 text-neutral-400" />
+              <ArrowUpRight className="h-4 w-4 text-app-muted" />
             </Card>
           </Link>
         ))}

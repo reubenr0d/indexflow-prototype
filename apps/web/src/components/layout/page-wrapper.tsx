@@ -11,10 +11,10 @@ interface PageWrapperProps {
 export function PageWrapper({ children, className }: PageWrapperProps) {
   return (
     <motion.main
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={cn("mx-auto max-w-7xl px-6 py-12", className)}
+      transition={{ duration: 0.22, ease: "easeOut" }}
+      className={cn("mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12", className)}
     >
       {children}
     </motion.main>

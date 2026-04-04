@@ -9,6 +9,7 @@ interface IPerp {
         uint256 depositedCapital;
         int256 realisedPnL;
         uint256 openInterest;
+        uint256 collateralLocked;
         uint256 positionCount;
         bool registered;
     }

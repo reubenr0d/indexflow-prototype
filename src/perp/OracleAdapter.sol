@@ -86,9 +86,9 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         if (cfg.feedType != FeedType.CustomRelayer) revert Unauthorized();
         if (price == 0) revert InvalidPrice();
 
-        _validateDeviation(assetId, price, cfg.deviationBps);
-
         uint256 normalizedPrice = _normalize(price, cfg.decimals);
+
+        _validateDeviation(assetId, normalizedPrice, cfg.deviationBps);
 
         _prices[assetId] = PriceData({
             price: normalizedPrice,
@@ -111,9 +111,9 @@ contract OracleAdapter is IOracleAdapter, Ownable {
             if (cfg.feedType != FeedType.CustomRelayer) revert Unauthorized();
             if (prices_[i] == 0) revert InvalidPrice();
 
-            _validateDeviation(assetIds[i], prices_[i], cfg.deviationBps);
-
             uint256 normalizedPrice = _normalize(prices_[i], cfg.decimals);
+
+            _validateDeviation(assetIds[i], normalizedPrice, cfg.deviationBps);
 
             _prices[assetIds[i]] = PriceData({
                 price: normalizedPrice,

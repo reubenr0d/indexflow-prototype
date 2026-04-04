@@ -3,7 +3,6 @@ pragma solidity ^0.8.24;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {BasketVault} from "./BasketVault.sol";
-import {IOracleAdapter} from "../perp/interfaces/IOracleAdapter.sol";
 
 /// @title BasketFactory
 /// @notice Deploys new BasketVault instances with asset configurations.
@@ -53,7 +52,7 @@ contract BasketFactory is Ownable {
             _name,
             usdc,
             oracleAdapter,
-            msg.sender
+            address(this)
         );
 
         vault.setAssets(assetIds, weightsBps);

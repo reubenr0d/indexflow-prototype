@@ -89,6 +89,7 @@ All math, token, and utility libraries kept unchanged for GMX contract compatibi
 | `PricingEngine.sol` | Enforces `executionPrice = oraclePrice + deterministic slippage`. Size-based, proportional to trade/liquidity ratio. |
 | `VaultAccounting.sol` | Bridge between BasketVault and GMX Vault. Per-vault capital tracking, PnL attribution, position management. |
 | `FundingRateManager.sol` | Adapts GMX funding rates for oracle-anchored, long/short imbalance-based rates. |
+| `PriceSync.sol` | Propagates OracleAdapter prices to SimplePriceFeed (0.6.12), ensuring a single source of truth across 0.8.24 and 0.6.12 layers. |
 | `PerpReader.sol` | Read-only aggregator for positions, vault PnL, pool utilization, oracle prices, basket state. |
 
 ### Interfaces (`src/perp/interfaces/`)
@@ -118,7 +119,7 @@ All math, token, and utility libraries kept unchanged for GMX contract compatibi
 └─────────────────────────────┘     └─────────────────────────────┘
 ```
 
-Foundry compiles each file with the Solidity version specified in its pragma. Cross-version calls work via ABI-compatible interfaces at the EVM level.
+Foundry compiles each file with the Solidity version specified in its pragma. Cross-version calls work via ABI-compatible interfaces at the EVM level. `PriceSync` bridges prices from `OracleAdapter` (0.8.24) to `SimplePriceFeed` (0.6.12) so the GMX Vault always reads the same economic price.
 
 ---
 

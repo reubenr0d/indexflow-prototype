@@ -87,15 +87,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+            <h1 className="text-3xl font-semibold tracking-tight text-app-text">
               {basketInfo?.name || "Basket"}
             </h1>
             {basketInfo?.shareToken && (
-              <p className="mt-1 flex items-center gap-2 font-mono text-sm text-neutral-400">
+              <p className="mt-1 flex items-center gap-2 font-mono text-sm text-app-muted">
                 {formatAddress(basketInfo.shareToken)}
                 <button
                   onClick={() => navigator.clipboard.writeText(basketInfo.shareToken)}
-                  className="text-neutral-400 hover:text-neutral-600"
+                  className="text-app-muted hover:text-app-text"
                 >
                   <Copy className="h-3.5 w-3.5" />
                 </button>
@@ -103,27 +103,27 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             )}
 
             <div className="mt-6 flex items-baseline gap-3">
-              <p className="text-4xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+              <p className="text-4xl font-semibold tracking-tight text-app-text">
                 {formatPrice(basketInfo?.sharePrice ?? 0n)}
               </p>
-              <span className="text-sm text-neutral-400">share price</span>
+              <span className="text-sm text-app-muted">share price</span>
             </div>
-            <p className="mt-1 text-sm text-neutral-500">
+            <p className="mt-1 text-sm text-app-muted">
               Basket price: {formatPrice(basketInfo?.basketPrice ?? 0n)}
             </p>
           </motion.div>
 
           <div className="mt-10">
-            <h2 className="mb-4 text-lg font-semibold text-neutral-900 dark:text-white">
+            <h2 className="mb-4 text-lg font-semibold text-app-text">
               Composition
             </h2>
             <Card>
-              <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+              <div className="divide-y divide-app-border">
                 {assets.map((asset) => (
                   <AssetRow key={asset.assetId} assetId={asset.assetId} weightBps={asset.weightBps} />
                 ))}
                 {assets.length === 0 && (
-                  <div className="p-6 text-center text-sm text-neutral-400">
+                  <div className="p-6 text-center text-sm text-app-muted">
                     No assets configured
                   </div>
                 )}
@@ -179,21 +179,21 @@ function AssetRow({ assetId, weightBps }: { assetId: `0x${string}`; weightBps: b
     <div className="flex items-center justify-between px-6 py-4">
       <div className="flex items-center gap-3">
         <StatusDot status={status} />
-        <span className="font-medium text-neutral-900 dark:text-white">
+        <span className="font-medium text-app-text">
           {formatAssetId(assetId)}
         </span>
       </div>
       <div className="flex items-center gap-6">
         <div className="w-32">
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
             <div
-              className="h-full rounded-full bg-blue-500"
+              className="h-full rounded-full bg-app-accent"
               style={{ width: `${Number(weightBps) / 100}%` }}
             />
           </div>
-          <p className="mt-1 text-xs text-neutral-400">{formatBps(weightBps)}</p>
+          <p className="mt-1 text-xs text-app-muted">{formatBps(weightBps)}</p>
         </div>
-        <p className="w-24 text-right font-mono text-sm text-neutral-900 dark:text-white">
+        <p className="w-24 text-right font-mono text-sm text-app-text">
           {formatPrice(price)}
         </p>
       </div>

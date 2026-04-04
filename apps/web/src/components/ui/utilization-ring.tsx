@@ -23,10 +23,10 @@ export function UtilizationRing({
 
   const color =
     percentage < 50
-      ? "stroke-emerald-500"
+      ? "stroke-app-success"
       : percentage < 80
-        ? "stroke-amber-500"
-        : "stroke-red-500";
+        ? "stroke-app-warning"
+        : "stroke-app-danger";
 
   return (
     <div className={cn("relative flex flex-col items-center", className)} style={{ width: size, height: size }}>
@@ -37,7 +37,7 @@ export function UtilizationRing({
           r={radius}
           fill="none"
           strokeWidth={strokeWidth}
-          className="stroke-neutral-100 dark:stroke-neutral-800"
+          className="stroke-app-border"
         />
         <circle
           cx={size / 2}
@@ -52,10 +52,8 @@ export function UtilizationRing({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-semibold text-neutral-900 dark:text-white">
-          {percentage.toFixed(1)}%
-        </span>
-        {label && <span className="text-xs text-neutral-400">{label}</span>}
+        <span className="font-mono text-2xl font-semibold text-app-text">{percentage.toFixed(1)}%</span>
+        {label && <span className="text-xs text-app-muted">{label}</span>}
       </div>
     </div>
   );

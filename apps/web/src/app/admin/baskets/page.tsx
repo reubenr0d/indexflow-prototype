@@ -34,7 +34,7 @@ export default function AdminBasketsPage() {
   return (
     <PageWrapper>
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <h1 className="text-3xl font-semibold tracking-tight text-app-text">
           Basket Management
         </h1>
         <Button onClick={() => setShowCreate(!showCreate)}>
@@ -59,7 +59,7 @@ export default function AdminBasketsPage() {
       {isLoading ? (
         <Card>
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center justify-between border-b border-neutral-100 px-6 py-4 last:border-0 dark:border-neutral-800">
+            <div key={i} className="flex items-center justify-between border-b border-app-border px-6 py-4 last:border-0">
               <Skeleton className="h-5 w-32" />
               <Skeleton className="h-5 w-20" />
             </div>
@@ -67,8 +67,8 @@ export default function AdminBasketsPage() {
         </Card>
       ) : (
         <Card>
-          <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-            <div className="flex items-center gap-4 px-6 py-3 text-xs font-medium uppercase tracking-wider text-neutral-400">
+          <div className="divide-y divide-app-border">
+            <div className="flex items-center gap-4 px-6 py-3 text-xs font-medium uppercase tracking-wider text-app-muted">
               <span className="flex-1">Name</span>
               <span className="w-24 text-right">TVL</span>
               <span className="w-16 text-right">Assets</span>
@@ -77,27 +77,27 @@ export default function AdminBasketsPage() {
             </div>
             {infos.map((info) => (
               <Link key={info.vault} href={`/admin/baskets/${info.vault}`}>
-                <div className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-800/50">
-                  <span className="flex-1 font-medium text-neutral-900 dark:text-white">
+                <div className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-app-surface-hover">
+                  <span className="flex-1 font-medium text-app-text">
                     {info.name || "Basket"}
                   </span>
-                  <span className="w-24 text-right text-sm text-neutral-600 dark:text-neutral-300">
+                  <span className="w-24 text-right text-sm text-app-muted">
                     {formatUSDC((info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n))}
                   </span>
-                  <span className="w-16 text-right text-sm text-neutral-500">
+                  <span className="w-16 text-right text-sm text-app-muted">
                     {String(info.assetCount ?? 0n)}
                   </span>
-                  <span className="w-24 text-right text-sm text-neutral-500">
+                  <span className="w-24 text-right text-sm text-app-muted">
                     {formatUSDC(info.perpAllocated ?? 0n)}
                   </span>
-                  <span className="w-20 text-right font-mono text-xs text-neutral-400">
+                  <span className="w-20 text-right font-mono text-xs text-app-muted">
                     {formatAddress(info.vault)}
                   </span>
                 </div>
               </Link>
             ))}
             {infos.length === 0 && (
-              <div className="px-6 py-8 text-center text-sm text-neutral-400">
+              <div className="px-6 py-8 text-center text-sm text-app-muted">
                 No baskets created yet.
               </div>
             )}
@@ -138,15 +138,15 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <Card className="p-6">
-      <h2 className="mb-6 text-lg font-semibold text-neutral-900 dark:text-white">Create New Basket</h2>
+      <h2 className="mb-6 text-lg font-semibold text-app-text">Create New Basket</h2>
 
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-neutral-500">Basket Name</label>
+        <label className="mb-2 block text-sm font-medium text-app-muted">Basket Name</label>
         <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Mining Majors" />
       </div>
 
       <div className="mb-6">
-        <label className="mb-2 block text-sm font-medium text-neutral-500">Assets & Weights (bps)</label>
+        <label className="mb-2 block text-sm font-medium text-app-muted">Assets & Weights (bps)</label>
         {assets.map((asset, i) => (
           <div key={i} className="mb-2 flex gap-2">
             <Input
@@ -185,7 +185,7 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
           <Button variant="ghost" size="sm" onClick={() => setAssets([...assets, { id: "", weight: "" }])}>
             <Plus className="mr-1 h-3 w-3" /> Add Asset
           </Button>
-          <span className={`text-sm font-medium ${totalWeight === 10000 ? "text-emerald-500" : "text-red-500"}`}>
+          <span className={`text-sm font-medium ${totalWeight === 10000 ? "text-app-success" : "text-app-danger"}`}>
             {totalWeight} / 10,000 bps
           </span>
         </div>
@@ -193,11 +193,11 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="mb-6 grid grid-cols-2 gap-4">
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Deposit Fee (bps)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Deposit Fee (bps)</label>
           <Input type="number" value={depositFee} onChange={(e) => setDepositFee(e.target.value)} />
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium text-neutral-500">Redeem Fee (bps)</label>
+          <label className="mb-2 block text-sm font-medium text-app-muted">Redeem Fee (bps)</label>
           <Input type="number" value={redeemFee} onChange={(e) => setRedeemFee(e.target.value)} />
         </div>
       </div>

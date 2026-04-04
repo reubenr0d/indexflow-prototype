@@ -30,14 +30,14 @@ export default function AdminOraclePage() {
     <PageWrapper>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+          <h1 className="text-3xl font-semibold tracking-tight text-app-text">
             Oracle Status
           </h1>
-          <p className="mt-1 text-sm text-neutral-400">{count} assets configured</p>
+          <p className="mt-1 text-sm text-app-muted">{count} assets configured</p>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 dark:bg-emerald-950/40">
-          <Radio className="h-3 w-3 text-emerald-500" />
-          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Monitoring</span>
+        <div className="flex items-center gap-2 rounded-md border border-app-border bg-app-accent-dim px-3 py-1.5">
+          <Radio className="h-3 w-3 text-app-accent" />
+          <span className="text-xs font-semibold uppercase tracking-wide text-app-accent">Monitoring</span>
         </div>
       </div>
 
@@ -59,7 +59,7 @@ export default function AdminOraclePage() {
         </div>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-lg font-medium text-neutral-400">No oracle assets configured</p>
+          <p className="text-lg font-medium text-app-muted">No oracle assets configured</p>
         </div>
       )}
     </PageWrapper>
@@ -109,27 +109,27 @@ function OracleAssetCard({ index }: { index: number }) {
       transition={{ duration: 0.3, delay: index * 0.05 }}
     >
       <Card className={`p-6 ring-2 ${
-        status === "stale" ? "ring-red-200 dark:ring-red-900" :
-        status === "aging" ? "ring-amber-200 dark:ring-amber-900" :
-        "ring-emerald-100 dark:ring-emerald-900/50"
+        status === "stale" ? "ring-app-danger/50" :
+        status === "aging" ? "ring-app-warning/50" :
+        "ring-app-success/40"
       }`}>
         <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <StatusDot status={status} className="h-2.5 w-2.5" />
-            <h3 className="font-semibold text-neutral-900 dark:text-white">
+            <h3 className="font-semibold text-app-text">
               {formatAssetId(id)}
             </h3>
           </div>
-          <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+          <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-app-muted">
             {feedTypeName}
           </span>
         </div>
 
-        <p className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+        <p className="text-2xl font-semibold tracking-tight text-app-text">
           {formatPrice(price)}
         </p>
 
-        <div className="mt-3 space-y-1 text-xs text-neutral-400">
+        <div className="mt-3 space-y-1 text-xs text-app-muted">
           <p>Updated: {timestamp > 0 ? formatRelativeTime(timestamp) : "never"}</p>
           {assetConfig && (
             <>

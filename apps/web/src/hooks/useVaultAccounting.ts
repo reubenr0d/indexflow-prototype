@@ -84,3 +84,103 @@ export function useRegisterVault() {
 
   return { registerVault, hash, receipt, ...rest };
 }
+
+// ─── Risk Controls ───────────────────────────────────────────
+
+export function usePaused() {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+
+  return useReadContract({
+    address: vaultAccounting,
+    abi: VaultAccountingABI,
+    functionName: "paused",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useMaxOpenInterest(vault: Address | undefined) {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+
+  return useReadContract({
+    address: vaultAccounting,
+    abi: VaultAccountingABI,
+    functionName: "maxOpenInterest",
+    args: vault ? [vault] : undefined,
+    query: {
+      enabled: !!vault,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+}
+
+export function useMaxPositionSize(vault: Address | undefined) {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+
+  return useReadContract({
+    address: vaultAccounting,
+    abi: VaultAccountingABI,
+    functionName: "maxPositionSize",
+    args: vault ? [vault] : undefined,
+    query: {
+      enabled: !!vault,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+}
+
+export function useSetPaused() {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setPaused = (paused: boolean) => {
+    writeContract({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "setPaused",
+      args: [paused],
+    });
+  };
+
+  return { setPaused, hash, receipt, ...rest };
+}
+
+export function useSetMaxOpenInterest() {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setMaxOpenInterest = (vault: Address, cap: bigint) => {
+    writeContract({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "setMaxOpenInterest",
+      args: [vault, cap],
+    });
+  };
+
+  return { setMaxOpenInterest, hash, receipt, ...rest };
+}
+
+export function useSetMaxPositionSize() {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setMaxPositionSize = (vault: Address, cap: bigint) => {
+    writeContract({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "setMaxPositionSize",
+      args: [vault, cap],
+    });
+  };
+
+  return { setMaxPositionSize, hash, receipt, ...rest };
+}

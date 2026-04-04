@@ -86,11 +86,12 @@ contract OracleAdapterTest is Test {
         oracle.submitPrice(BHP, 1_000_000_000); // $10
 
         // 50% jump should revert (max deviation 1000 bps = 10%)
+        // After fix: deviation is checked on normalized prices (both 1e30 precision)
         vm.expectRevert(abi.encodeWithSelector(
             OracleAdapter.DeviationTooLarge.selector,
             BHP,
             1_000_000_000 * 1e22,
-            1_500_000_000,
+            1_500_000_000 * 1e22,
             1000
         ));
         vm.prank(keeper);

@@ -8,8 +8,10 @@ import {VaultAccounting} from "../src/perp/VaultAccounting.sol";
 import {OracleAdapter} from "../src/perp/OracleAdapter.sol";
 import {IOracleAdapter} from "../src/perp/interfaces/IOracleAdapter.sol";
 import {IPerp} from "../src/perp/interfaces/IPerp.sol";
+import {PriceSync} from "../src/perp/PriceSync.sol";
 import {BasketVault} from "../src/vault/BasketVault.sol";
 import {BasketShareToken} from "../src/vault/BasketShareToken.sol";
+import {BasketFactory} from "../src/vault/BasketFactory.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 
 /// @dev Mock ERC20 with configurable decimals for index tokens (GOLD, SILVER, etc.)
@@ -96,6 +98,7 @@ contract IntegrationTest is Test {
     // Perp stack (0.8.24)
     OracleAdapter oracleAdapter;
     VaultAccounting vaultAccounting;
+    PriceSync priceSync;
 
     // Test addresses
     address deployer;
@@ -217,6 +220,15 @@ contract IntegrationTest is Test {
 
         // Map GOLD asset ID to the GOLD token address for VaultAccounting
         vaultAccounting.mapAssetToken(GOLD_ID, address(gold));
+
+        // ─── Deploy PriceSync (oracle → SimplePriceFeed bridge) ──
+        priceSync = new PriceSync(
+            address(oracleAdapter),
+            address(priceFeed),
+            deployer
+        );
+        priceFeed.setKeeper(address(priceSync), true);
+        priceSync.addMapping(GOLD_ID, address(gold));
 
         // ─── Mint tokens to test addresses ───────────────────────
         usdc.mint(trader, 100_000e6);
@@ -545,6 +557,466 @@ contract IntegrationTest is Test {
         (uint256 remaining,,,,,,, ) =
             gmxVault.getPosition(trader, address(usdc), address(gold), true);
         assertEq(remaining, 5_000e30, "Half the position should remain");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: VaultAccounting openPosition — long via real GMX Vault
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_vaultAccounting_openLong_profitable() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 50_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 50_000e6);
+        vaultAccounting.depositCapital(basketVault, 50_000e6);
+        vm.stopPrank();
+
+        uint256 collateral = 10_000e6;
+        uint256 sizeDelta = 20_000e30;
+
+        // Owner opens a long position on behalf of the basket vault
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, sizeDelta, collateral);
+
+        // Verify position exists in GMX Vault under VaultAccounting's address
+        (uint256 posSize, uint256 posColl, uint256 avgPrice,,,,, ) =
+            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
+        assertEq(posSize, sizeDelta, "GMX position size");
+        assertEq(posColl, 10_000e30, "GMX position collateral ($10K)");
+        assertEq(avgPrice, 2000e30, "Average price $2000");
+
+        // Verify VaultAccounting tracking
+        IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
+        assertEq(state.openInterest, sizeDelta, "OI should match size");
+        assertEq(state.positionCount, 1, "One position");
+
+        // Price goes up 10%: GOLD $2000 → $2200
+        priceFeed.setPrice(address(gold), 2200e30);
+
+        // Close full position
+        uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
+        vaultAccounting.closePosition(basketVault, GOLD_ID, true, sizeDelta, 0);
+        uint256 vaAfter = usdc.balanceOf(address(vaultAccounting));
+
+        // VaultAccounting should have received collateral + profit
+        uint256 returned = vaAfter - vaBefore;
+        // profit = $20K * 10% = $2K → payout = $10K + $2K = $12K
+        assertApproxEqAbs(returned, 12_000e6, 1e3, "Returned should be ~$12K");
+
+        // Verify PnL tracked
+        state = vaultAccounting.getVaultState(basketVault);
+        assertEq(state.openInterest, 0, "OI should be zero");
+        assertEq(state.positionCount, 0, "No positions");
+        // pnl = returned - collateralDelta(0) - balBefore => profit tracked as realised
+        assertTrue(state.realisedPnL > 0, "Realised PnL should be positive");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: VaultAccounting openPosition — short with loss
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_vaultAccounting_openShort_loss() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 50_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 50_000e6);
+        vaultAccounting.depositCapital(basketVault, 50_000e6);
+        vm.stopPrank();
+
+        uint256 collateral = 10_000e6;
+        uint256 sizeDelta = 20_000e30;
+
+        vaultAccounting.openPosition(basketVault, GOLD_ID, false, sizeDelta, collateral);
+
+        // Verify short position in GMX
+        (uint256 posSize,,,,,,,) =
+            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), false);
+        assertEq(posSize, sizeDelta, "Short position size");
+
+        // Price goes UP 10%: bad for shorts
+        priceFeed.setPrice(address(gold), 2200e30);
+
+        uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
+        vaultAccounting.closePosition(basketVault, GOLD_ID, false, sizeDelta, 0);
+        uint256 vaAfter = usdc.balanceOf(address(vaultAccounting));
+
+        // loss = $20K * 10% = $2K → payout = $10K - $2K = $8K
+        uint256 returned = vaAfter - vaBefore;
+        assertApproxEqAbs(returned, 8_000e6, 1e3, "Should get ~$8K back (loss)");
+
+        IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
+        assertTrue(state.realisedPnL < 0, "Realised PnL should be negative");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: VaultAccounting partial close
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_vaultAccounting_partialClose() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 50_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 50_000e6);
+        vaultAccounting.depositCapital(basketVault, 50_000e6);
+        vm.stopPrank();
+
+        uint256 collateral = 10_000e6;
+        uint256 sizeDelta = 20_000e30;
+
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, sizeDelta, collateral);
+
+        // Close half the position
+        vaultAccounting.closePosition(basketVault, GOLD_ID, true, 10_000e30, 0);
+
+        // Remaining position in GMX
+        (uint256 remaining,,,,,,, ) =
+            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
+        assertEq(remaining, 10_000e30, "Half should remain");
+
+        IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
+        assertEq(state.openInterest, 10_000e30, "OI should be halved");
+        assertEq(state.positionCount, 1, "Position still exists");
+
+        // Close the rest
+        vaultAccounting.closePosition(basketVault, GOLD_ID, true, 10_000e30, 0);
+
+        (remaining,,,,,,, ) =
+            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
+        assertEq(remaining, 0, "Position fully closed");
+
+        state = vaultAccounting.getVaultState(basketVault);
+        assertEq(state.openInterest, 0, "OI should be zero");
+        assertEq(state.positionCount, 0, "No positions");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: VaultAccounting — multiple vaults, independent PnL
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_vaultAccounting_multiVault_independentPnL() public {
+        address vault1 = address(0xBA5E1);
+        address vault2 = address(0xBA5E2);
+        vaultAccounting.registerVault(vault1);
+        vaultAccounting.registerVault(vault2);
+
+        usdc.mint(vault1, 30_000e6);
+        usdc.mint(vault2, 30_000e6);
+
+        vm.startPrank(vault1);
+        usdc.approve(address(vaultAccounting), 30_000e6);
+        vaultAccounting.depositCapital(vault1, 30_000e6);
+        vm.stopPrank();
+
+        vm.startPrank(vault2);
+        usdc.approve(address(vaultAccounting), 30_000e6);
+        vaultAccounting.depositCapital(vault2, 30_000e6);
+        vm.stopPrank();
+
+        // Vault1: long $10K
+        vaultAccounting.openPosition(vault1, GOLD_ID, true, 10_000e30, 5_000e6);
+        // Vault2: short $10K
+        vaultAccounting.openPosition(vault2, GOLD_ID, false, 10_000e30, 5_000e6);
+
+        // Price rises 10%: vault1 profits, vault2 loses
+        priceFeed.setPrice(address(gold), 2200e30);
+
+        vaultAccounting.closePosition(vault1, GOLD_ID, true, 10_000e30, 0);
+        vaultAccounting.closePosition(vault2, GOLD_ID, false, 10_000e30, 0);
+
+        IPerp.VaultState memory s1 = vaultAccounting.getVaultState(vault1);
+        IPerp.VaultState memory s2 = vaultAccounting.getVaultState(vault2);
+
+        assertTrue(s1.realisedPnL > 0, "Vault1 (long) should profit");
+        assertTrue(s2.realisedPnL < 0, "Vault2 (short) should lose");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: PriceSync — oracle to SimplePriceFeed sync
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_priceSync_oracleToGmx() public {
+        // Update oracle price
+        oracleAdapter.submitPrice(GOLD_ID, 210_000_000_000); // $2100
+
+        // Before sync, GMX still has old price
+        assertEq(priceFeed.prices(address(gold)), 2000e30, "GMX price not yet synced");
+
+        // Sync prices
+        priceSync.syncAll();
+
+        // After sync, GMX reads new price
+        assertEq(priceFeed.prices(address(gold)), 2100e30, "GMX price should be synced");
+        assertEq(gmxVault.getMaxPrice(address(gold)), 2100e30, "Vault reads synced price");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: Oracle-driven position — full flow via OracleAdapter → PriceSync → GMX
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_oracleDrivenPosition_longProfitable() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 50_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 50_000e6);
+        vaultAccounting.depositCapital(basketVault, 50_000e6);
+        vm.stopPrank();
+
+        uint256 collateral = 10_000e6;
+        uint256 sizeDelta = 20_000e30;
+
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, sizeDelta, collateral);
+
+        // ── Oracle price goes up 10%: $2000 → $2200 ──────────────
+        oracleAdapter.submitPrice(GOLD_ID, 220_000_000_000); // $2200
+
+        // GMX Vault still sees old price before sync
+        assertEq(priceFeed.prices(address(gold)), 2000e30, "GMX price unchanged before sync");
+
+        // Sync oracle → SimplePriceFeed
+        priceSync.syncAll();
+
+        // GMX Vault now sees $2200
+        assertEq(priceFeed.prices(address(gold)), 2200e30, "GMX price updated via oracle sync");
+
+        // Close — profit should be calculated at the synced price
+        uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
+        vaultAccounting.closePosition(basketVault, GOLD_ID, true, sizeDelta, 0);
+        uint256 vaAfter = usdc.balanceOf(address(vaultAccounting));
+
+        uint256 returned = vaAfter - vaBefore;
+        // profit = $20K * 10% = $2K → payout = $10K + $2K = $12K
+        assertApproxEqAbs(returned, 12_000e6, 1e3, "Oracle-driven: returned ~$12K");
+
+        IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
+        assertTrue(state.realisedPnL > 0, "Oracle-driven: positive PnL");
+        assertEq(state.openInterest, 0, "OI cleared");
+    }
+
+    function test_oracleDrivenPosition_shortLoss() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 50_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 50_000e6);
+        vaultAccounting.depositCapital(basketVault, 50_000e6);
+        vm.stopPrank();
+
+        uint256 collateral = 10_000e6;
+        uint256 sizeDelta = 20_000e30;
+
+        vaultAccounting.openPosition(basketVault, GOLD_ID, false, sizeDelta, collateral);
+
+        // ── Oracle price goes up 10%: bad for shorts ─────────────
+        oracleAdapter.submitPrice(GOLD_ID, 220_000_000_000); // $2200
+        priceSync.syncAll();
+
+        assertEq(priceFeed.prices(address(gold)), 2200e30, "GMX price synced from oracle");
+
+        uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
+        vaultAccounting.closePosition(basketVault, GOLD_ID, false, sizeDelta, 0);
+        uint256 vaAfter = usdc.balanceOf(address(vaultAccounting));
+
+        uint256 returned = vaAfter - vaBefore;
+        // loss = $20K * 10% = $2K → payout = $10K - $2K = $8K
+        assertApproxEqAbs(returned, 8_000e6, 1e3, "Oracle-driven short: returned ~$8K");
+
+        IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
+        assertTrue(state.realisedPnL < 0, "Oracle-driven short: negative PnL");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: Full Basket E2E — deposit → allocate → perp → withdraw → redeem
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_basketE2E_fullRoundTrip() public {
+        // ── Setup basket vault ──────────────────────────────────────
+        BasketVault basket = new BasketVault(
+            "Gold Basket",
+            address(usdc),
+            address(oracleAdapter),
+            deployer
+        );
+
+        bytes32[] memory assetIds = new bytes32[](1);
+        assetIds[0] = GOLD_ID;
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 10_000;
+        basket.setAssets(assetIds, weights);
+        basket.setVaultAccounting(address(vaultAccounting));
+
+        vaultAccounting.registerVault(address(basket));
+
+        // ── Investor deposits USDC ──────────────────────────────────
+        address investor = address(0x1A2B3C);
+        usdc.mint(investor, 100_000e6);
+
+        vm.startPrank(investor);
+        usdc.approve(address(basket), 100_000e6);
+        uint256 shares = basket.deposit(100_000e6);
+        vm.stopPrank();
+
+        assertTrue(shares > 0, "Should receive shares");
+        assertEq(usdc.balanceOf(address(basket)), 100_000e6, "Basket holds USDC");
+
+        // ── Owner allocates to perp pool ────────────────────────────
+        basket.allocateToPerp(50_000e6);
+        assertEq(basket.perpAllocated(), 50_000e6, "50K allocated to perp");
+
+        IPerp.VaultState memory perpState = vaultAccounting.getVaultState(address(basket));
+        assertEq(perpState.depositedCapital, 50_000e6, "VaultAccounting has 50K from basket");
+
+        // ── Owner opens a long position through VaultAccounting ─────
+        vaultAccounting.openPosition(address(basket), GOLD_ID, true, 20_000e30, 10_000e6);
+
+        perpState = vaultAccounting.getVaultState(address(basket));
+        assertEq(perpState.openInterest, 20_000e30, "OI = $20K");
+
+        // ── GMX price goes up 10% (only price feed, not oracle) ─────
+        // Keep oracle price at $2000 so basket share price stays stable.
+        // Only the GMX price feed changes, affecting position PnL.
+        priceFeed.setPrice(address(gold), 2200e30);
+
+        // ── Close the position ──────────────────────────────────────
+        vaultAccounting.closePosition(address(basket), GOLD_ID, true, 20_000e30, 0);
+
+        perpState = vaultAccounting.getVaultState(address(basket));
+        assertEq(perpState.openInterest, 0, "OI cleared");
+        assertTrue(perpState.realisedPnL > 0, "Profitable trade");
+
+        // ── Withdraw from perp back to basket ───────────────────────
+        basket.withdrawFromPerp(50_000e6);
+        assertEq(basket.perpAllocated(), 0, "perpAllocated cleared");
+
+        // ── Investor redeems shares ─────────────────────────────────
+        uint256 investorShares = basket.shareToken().balanceOf(investor);
+        uint256 investorUsdcBefore = usdc.balanceOf(investor);
+
+        vm.startPrank(investor);
+        basket.shareToken().approve(address(basket), investorShares);
+        basket.redeem(investorShares);
+        vm.stopPrank();
+
+        uint256 investorUsdcAfter = usdc.balanceOf(investor);
+        uint256 redeemed = investorUsdcAfter - investorUsdcBefore;
+
+        // Investor gets back their $100K (oracle price unchanged, so share price stable)
+        assertEq(redeemed, 100_000e6, "Investor gets back full deposit");
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: Basket E2E — deposit → allocate → perp loss → withdraw → redeem
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_basketE2E_perpLoss() public {
+        BasketVault basket = new BasketVault(
+            "Gold Basket",
+            address(usdc),
+            address(oracleAdapter),
+            deployer
+        );
+
+        bytes32[] memory assetIds = new bytes32[](1);
+        assetIds[0] = GOLD_ID;
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 10_000;
+        basket.setAssets(assetIds, weights);
+        basket.setVaultAccounting(address(vaultAccounting));
+
+        vaultAccounting.registerVault(address(basket));
+
+        address investor = address(0x1A2B3C);
+        usdc.mint(investor, 100_000e6);
+
+        vm.startPrank(investor);
+        usdc.approve(address(basket), 100_000e6);
+        basket.deposit(100_000e6);
+        vm.stopPrank();
+
+        // Allocate and open a long
+        basket.allocateToPerp(50_000e6);
+        vaultAccounting.openPosition(address(basket), GOLD_ID, true, 20_000e30, 10_000e6);
+
+        // GMX price drops 10% (keep oracle stable)
+        priceFeed.setPrice(address(gold), 1800e30);
+
+        // Close — realize loss
+        vaultAccounting.closePosition(address(basket), GOLD_ID, true, 20_000e30, 0);
+
+        IPerp.VaultState memory perpState = vaultAccounting.getVaultState(address(basket));
+        assertTrue(perpState.realisedPnL < 0, "Should have loss");
+
+        // Withdraw remaining from perp
+        // The deposited capital is 50K, but some was used as collateral.
+        // After the loss, VaultAccounting's USDC balance includes remaining capital.
+        // withdrawCapital checks available = deposited + realised - OI
+        // deposited=50K, realisedPnL=negative, OI=0
+        // The basket can withdraw whatever is available
+        IPerp.VaultState memory vs = vaultAccounting.getVaultState(address(basket));
+        int256 available = int256(vs.depositedCapital) + vs.realisedPnL;
+        if (available > 0) {
+            basket.withdrawFromPerp(uint256(available));
+        }
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: Risk limits — OI cap blocks excessive positions
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_riskLimits_oiCap() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 100_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 100_000e6);
+        vaultAccounting.depositCapital(basketVault, 100_000e6);
+        vm.stopPrank();
+
+        // Set OI cap at $15K
+        vaultAccounting.setMaxOpenInterest(basketVault, 15_000e30);
+
+        // First position within cap: OK
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, 10_000e30, 5_000e6);
+
+        // Second position would exceed cap ($10K + $10K > $15K)
+        vm.expectRevert("Exceeds max open interest");
+        vaultAccounting.openPosition(basketVault, GOLD_ID, false, 10_000e30, 5_000e6);
+
+        // Smaller position within remaining cap: OK ($10K + $5K = $15K)
+        vaultAccounting.openPosition(basketVault, GOLD_ID, false, 5_000e30, 3_000e6);
+    }
+
+    // ═════════════════════════════════════════════════════════════════
+    //  Test: Risk limits — position size cap
+    // ═════════════════════════════════════════════════════════════════
+
+    function test_riskLimits_positionSizeCap() public {
+        address basketVault = address(0xBA5E7);
+        vaultAccounting.registerVault(basketVault);
+
+        usdc.mint(basketVault, 100_000e6);
+        vm.startPrank(basketVault);
+        usdc.approve(address(vaultAccounting), 100_000e6);
+        vaultAccounting.depositCapital(basketVault, 100_000e6);
+        vm.stopPrank();
+
+        // Set single-position size cap at $15K
+        vaultAccounting.setMaxPositionSize(basketVault, 15_000e30);
+
+        // Position exceeding cap
+        vm.expectRevert("Exceeds max position size");
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, 20_000e30, 10_000e6);
+
+        // Position within cap: OK
+        vaultAccounting.openPosition(basketVault, GOLD_ID, true, 15_000e30, 8_000e6);
     }
 
     // ═════════════════════════════════════════════════════════════════

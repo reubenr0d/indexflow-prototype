@@ -34,27 +34,27 @@ export default function PricesPage() {
     <PageWrapper>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 dark:text-white">
+          <h1 className="text-3xl font-semibold tracking-tight text-app-text">
             Live Prices
           </h1>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 text-sm text-app-muted">
             Oracle prices refreshed every 15 seconds
           </p>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 dark:bg-emerald-950/40">
-          <Radio className="h-3 w-3 text-emerald-500" />
-          <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Live</span>
+        <div className="flex items-center gap-2 rounded-md border border-app-border bg-app-accent-dim px-3 py-1.5">
+          <Radio className="h-3 w-3 text-app-accent" />
+          <span className="text-xs font-semibold uppercase tracking-wide text-app-accent">Live</span>
         </div>
       </div>
 
       <div className="mb-6">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-app-muted" />
           <Input
             placeholder="Search assets..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="rounded-full pl-10"
+            className="pl-10"
           />
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function PricesPage() {
       {isLoading ? (
         <Card>
           {Array.from({ length: 5 }).map((_, i) => (
-            <div key={i} className="flex items-center justify-between border-b border-neutral-100 px-6 py-4 last:border-0 dark:border-neutral-800">
+            <div key={i} className="flex items-center justify-between border-b border-app-border px-6 py-4 last:border-0">
               <Skeleton className="h-5 w-24" />
               <Skeleton className="h-5 w-20" />
             </div>
@@ -70,7 +70,7 @@ export default function PricesPage() {
         </Card>
       ) : count > 0 ? (
         <Card>
-          <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+          <div className="divide-y divide-app-border">
             {Array.from({ length: count }).map((_, i) => (
               <AssetPriceRow key={i} index={i} search={search} />
             ))}
@@ -78,7 +78,7 @@ export default function PricesPage() {
         </Card>
       ) : (
         <div className="py-20 text-center">
-          <p className="text-lg font-medium text-neutral-400">No oracle assets configured</p>
+          <p className="text-lg font-medium text-app-muted">No oracle assets configured</p>
         </div>
       )}
     </PageWrapper>
@@ -118,13 +118,13 @@ function AssetPriceRow({ index, search }: { index: number; search: string }) {
     >
       <div className="flex items-center gap-3">
         <StatusDot status={status} />
-        <span className="font-medium text-neutral-900 dark:text-white">{name}</span>
+        <span className="font-medium text-app-text">{name}</span>
       </div>
       <div className="flex items-center gap-4">
-        <span className="text-xs text-neutral-400">
+        <span className="text-xs text-app-muted">
           {timestamp > 0 ? formatRelativeTime(timestamp) : "--"}
         </span>
-        <span className="w-28 text-right font-mono text-sm font-medium text-neutral-900 dark:text-white">
+        <span className="w-28 text-right font-mono text-sm font-medium text-app-text">
           {formatPrice(price)}
         </span>
       </div>
