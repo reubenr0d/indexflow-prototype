@@ -4,28 +4,28 @@ overview: Fork GMX v1 contracts into a Foundry project on Arbitrum. Build oracle
 todos:
   - id: phase-0-scaffold
     content: "Phase 0: Initialize Foundry project with multi-version Solidity (0.6.12 for forked GMX, ^0.8.24 for vault + new contracts), clone GMX v1, bring in BasketVault contracts, set up dependencies"
-    status: pending
+    status: completed
   - id: phase-1-audit-strip
     content: "Phase 1: Strip GMX (staking/token/GLP/OrderBook/referrals/vesting), compile baseline, build IGMXVault.sol cross-version interface, build GLP-style BasketVault + BasketFactory (no NAV/DCF)"
-    status: pending
+    status: completed
   - id: phase-2-oracle
     content: "Phase 2: Build OracleAdapter.sol replacing VaultPriceFeed + FastPriceFeed -- Chainlink integration for commodities, custom relayer interface for equities, staleness checks, median aggregation"
-    status: pending
+    status: completed
   - id: phase-3-vault-accounting
     content: "Phase 3: Build VaultAccounting.sol + IPerp.sol -- vault-level capital tracking, PnL attribution, position netting, interface for BasketVault to connect inward"
-    status: pending
+    status: completed
   - id: phase-4-pricing
     content: "Phase 4: Build PricingEngine.sol -- oracle price + deterministic size-based slippage, strip AMM/spread logic from GMX"
-    status: pending
+    status: completed
   - id: phase-5-funding
     content: "Phase 5: Adapt funding mechanism -- oracle-anchored rates, long/short imbalance-based, configurable intervals"
-    status: pending
+    status: completed
   - id: phase-6-integration
     content: "Phase 6: Wire BasketVault <-> OracleAdapter <-> VaultAccounting, build PerpReader, manual position management"
-    status: pending
+    status: completed
   - id: phase-7-testing-docs
     content: "Phase 7: Foundry tests (unit, integration, fuzz, fork), MODIFICATIONS.md documentation, NatSpec, integration guide"
-    status: pending
+    status: completed
 isProject: false
 ---
 
@@ -151,9 +151,9 @@ src/
 
 Rewritten from hackmoney2026 BasketVault. **All NAV/DCF logic, fundraising mechanics, and company stage tracking are removed.** Replaced with GLP-style oracle-priced basket model.
 
-- **`BasketShareToken.sol`** -- ERC20 with vault-only mint/burn, 6 decimals. Carried over as-is.
-- **`MockUSDC.sol`** -- Carried over as-is for testing.
-- **`BasketVault.sol`** -- **Rewritten:**
+- `**BasketShareToken.sol`** -- ERC20 with vault-only mint/burn, 6 decimals. Carried over as-is.
+- `**MockUSDC.sol`** -- Carried over as-is for testing.
+- `**BasketVault.sol**` -- **Rewritten:**
   - Each basket has a list of assets (bytes32 IDs) with weights (bps, sum to 10000)
   - **Basket price** = `sum(weight_i * OracleAdapter.getPrice(asset_i)) / 10000`
   - **Deposit:** user sends USDC, receives shares = `depositAmount / basketPrice`. Continuous, no deadlines.
@@ -162,7 +162,7 @@ Rewritten from hackmoney2026 BasketVault. **All NAV/DCF logic, fundraising mecha
   - Config: `oracleAdapter` address, `vaultAccounting` address, asset list + weights (owner-settable)
   - No fundraising stages, no deadlines, no minimum raise, no refund mechanism
   - Fees: configurable deposit/redeem fee in bps
-- **`BasketFactory.sol`** -- **Simplified** (replaces MinestartersFactory):
+- `**BasketFactory.sol`** -- **Simplified** (replaces MinestartersFactory):
   - `createBasket(name, assets[], weights[], oracleAdapter, vaultAccounting)` -> deploys BasketVault + BasketShareToken
   - Tracks deployed baskets
   - Registers new baskets in VaultAccounting

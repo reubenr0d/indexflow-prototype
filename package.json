@@ -1,0 +1,14 @@
+{
+  "name": "snx-prototype",
+  "version": "1.0.0",
+  "description": "Perp infrastructure via GMX v1 fork with oracle-priced basket vaults",
+  "private": true,
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "test:v": "forge test -vvv"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0"
+  }
+}
