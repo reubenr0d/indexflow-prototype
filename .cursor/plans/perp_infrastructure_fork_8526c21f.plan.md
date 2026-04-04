@@ -1,12 +1,12 @@
 ---
 name: Perp Infrastructure Fork
-overview: Fork GMX v1 contracts into a Foundry project on Arbitrum, strip unnecessary modules, and adapt the oracle, liquidity pool, pricing engine, and funding mechanism for mining equities/commodities with vault-level accounting. Expose interfaces for the existing hackmoney2026 BasketVault system to connect inward.
+overview: Fork GMX v1 contracts into a Foundry project on Arbitrum. Build oracle-priced basket vaults (GLP-style open deposit/redeem, multiple baskets) backed by a shared perp liquidity pool. No NAV/DCF -- basket price is purely weighted oracle prices.
 todos:
   - id: phase-0-scaffold
     content: "Phase 0: Initialize Foundry project with multi-version Solidity (0.6.12 for forked GMX, ^0.8.24 for vault + new contracts), clone GMX v1, bring in BasketVault contracts, set up dependencies"
     status: pending
   - id: phase-1-audit-strip
-    content: "Phase 1: Strip GMX (staking/token/GLP/OrderBook/referrals/vesting), compile baseline, build IGMXVault.sol cross-version interface, adapt BasketVault to support perp capital allocation"
+    content: "Phase 1: Strip GMX (staking/token/GLP/OrderBook/referrals/vesting), compile baseline, build IGMXVault.sol cross-version interface, build GLP-style BasketVault + BasketFactory (no NAV/DCF)"
     status: pending
   - id: phase-2-oracle
     content: "Phase 2: Build OracleAdapter.sol replacing VaultPriceFeed + FastPriceFeed -- Chainlink integration for commodities, custom relayer interface for equities, staleness checks, median aggregation"
@@ -21,7 +21,7 @@ todos:
     content: "Phase 5: Adapt funding mechanism -- oracle-anchored rates, long/short imbalance-based, configurable intervals"
     status: pending
   - id: phase-6-integration
-    content: "Phase 6: Build integration interfaces -- IPerp interface for BasketVault system to connect inward, manual vault/position management functions, events + getters"
+    content: "Phase 6: Wire BasketVault <-> OracleAdapter <-> VaultAccounting, build PerpReader, manual position management"
     status: pending
   - id: phase-7-testing-docs
     content: "Phase 7: Foundry tests (unit, integration, fuzz, fork), MODIFICATIONS.md documentation, NatSpec, integration guide"
@@ -58,32 +58,29 @@ graph TB
         OA[OracleAdapter.sol]
     end
 
-    subgraph pricingLayer [Pricing Engine]
+    subgraph basketLayer [Basket Vaults]
+        BV[BasketVault.sol]
+        BST[BasketShareToken.sol]
+        BF[BasketFactory.sol]
+    end
+
+    subgraph perpLayer [Perp Infrastructure]
         PE[PricingEngine.sol]
-    end
-
-    subgraph liquidityLayer [Liquidity Pool]
-        GP[GlobalPool USDC]
         VA[VaultAccounting.sol]
+        GP[GMX Vault Global Pool]
+        FM[FundingManager]
     end
 
-    subgraph positionLayer [Position Management]
-        PM[PositionManager.sol]
-        FM[FundingManager.sol]
-    end
-
-    subgraph externalSystems [External Systems]
-        BV[BasketVault hackmoney2026]
-    end
-
+    INV[Investor] -->|"deposit USDC"| BV
+    BV -->|"mint shares"| BST
+    BV -->|"allocate capital"| VA
     CL --> OA
     CR --> OA
-    OA --> PE
-    PE --> PM
-    GP --> PM
+    OA -->|"basket price = weighted oracle"| BV
+    OA -->|"trade pricing"| PE
+    PE --> GP
     VA --> GP
-    FM --> PM
-    BV -->|"deposit/withdraw capital via IPerp"| VA
+    BF -->|"deploy"| BV
 ```
 
 
@@ -107,19 +104,19 @@ src/
 │   ├── oracle/             # FastPriceFeed.sol (reference, replaced by OracleAdapter)
 │   ├── peripherals/        # Reader.sol
 │   └── libraries/          # Math, token utils
-├── vault/                  # BasketVault system (Solidity ^0.8.24)
-│   ├── BasketVault.sol     # Adapted: add perp capital allocation
-│   ├── BasketShareToken.sol# As-is from hackmoney2026
-│   ├── MinestartersFactory.sol # Adapted: deploys with perp integration
-│   ├── NAVEngine.sol       # Adapted: wire oracle to OracleAdapter
+├── vault/                  # Basket vault system (Solidity ^0.8.24)
+│   ├── BasketVault.sol     # GLP-style: deposit/redeem USDC, oracle-priced basket
+│   ├── BasketShareToken.sol# ERC20 vault shares (mint on deposit, burn on redeem)
+│   ├── BasketFactory.sol   # Deploy new basket vaults with asset configs
 │   └── MockUSDC.sol        # For testing
-├── perp/                   # New perp infrastructure (Solidity ^0.8.24)
+├── perp/                   # Perp infrastructure (Solidity ^0.8.24)
 │   ├── OracleAdapter.sol
 │   ├── PricingEngine.sol
 │   ├── VaultAccounting.sol
 │   ├── PerpReader.sol
 │   └── interfaces/
 │       ├── IPerp.sol
+│       ├── IOracleAdapter.sol
 │       └── IGMXVault.sol   # 0.8.24 interface for cross-version calls to GMX Vault
 └── test/
 ```
@@ -150,38 +147,37 @@ src/
 - Governance timelock (use simple Ownable for now)
 - `PositionRouter.sol` -- Async keeper execution not needed; simplify to direct calls
 
-### BasketVault contracts -- INCLUDE in `src/vault/` (^0.8.24, adapted)
+### Basket vault contracts -- BUILD in `src/vault/` (^0.8.24)
 
-Brought into this repo directly (not cloned), adapted for perp integration:
+Rewritten from hackmoney2026 BasketVault. **All NAV/DCF logic, fundraising mechanics, and company stage tracking are removed.** Replaced with GLP-style oracle-priced basket model.
 
-- `**BasketShareToken.sol`** -- Include as-is. No changes needed.
-- `**MockUSDC.sol`** -- Include as-is for testing.
-- `**BasketVault.sol`** -- Adapt:
-  - Add `allocateToPerp(uint256 amount)` -- transfers USDC from vault to the perp global pool via `VaultAccounting.depositCapital()`
-  - Add `withdrawFromPerp(uint256 amount)` -- pulls USDC back from perp pool
-  - Add `perpVaultAccounting` state variable (address of VaultAccounting contract)
-  - Add `Stage.PerpActive` or similar to track when capital is deployed to perp
-  - Keep all existing fundraising/refund/withdraw logic intact
-- `**NAVEngine.sol`** -- Adapt:
-  - Replace manual `updateGoldPrice()` with read from `OracleAdapter.getPrice("XAU")`
-  - Wire `oracle` address to point to `OracleAdapter` instead of a standalone keeper
-  - Keep all company/vault registration, NAV calculation, DCF logic as-is
-  - Remove `IDistributor` / `_notifyDistributor` (no MinestartersDistributor in this repo)
-  - Add `getPerpPnL(address vault)` view that reads from `VaultAccounting` to include unrealized perp PnL in NAV
-- `**MinestartersFactory.sol`** -- Adapt:
-  - Remove `NAVEngine` deployment from constructor (deploy separately or inject)
-  - Accept `navEngine` and `perpVaultAccounting` addresses as constructor params
-  - Wire new vaults to perp system on creation: set `perpVaultAccounting` on BasketVault, register in VaultAccounting
+- **`BasketShareToken.sol`** -- ERC20 with vault-only mint/burn, 6 decimals. Carried over as-is.
+- **`MockUSDC.sol`** -- Carried over as-is for testing.
+- **`BasketVault.sol`** -- **Rewritten:**
+  - Each basket has a list of assets (bytes32 IDs) with weights (bps, sum to 10000)
+  - **Basket price** = `sum(weight_i * OracleAdapter.getPrice(asset_i)) / 10000`
+  - **Deposit:** user sends USDC, receives shares = `depositAmount / basketPrice`. Continuous, no deadlines.
+  - **Redeem:** user burns shares, receives USDC = `shares * basketPrice`. Continuous.
+  - Holds USDC; can allocate portion to perp pool via `VaultAccounting`
+  - Config: `oracleAdapter` address, `vaultAccounting` address, asset list + weights (owner-settable)
+  - No fundraising stages, no deadlines, no minimum raise, no refund mechanism
+  - Fees: configurable deposit/redeem fee in bps
+- **`BasketFactory.sol`** -- **Simplified** (replaces MinestartersFactory):
+  - `createBasket(name, assets[], weights[], oracleAdapter, vaultAccounting)` -> deploys BasketVault + BasketShareToken
+  - Tracks deployed baskets
+  - Registers new baskets in VaultAccounting
+  - No NAVEngine references
 
-**Out of scope:** No `MineStarters.sol` / MINE token in this repo.
+**Removed entirely:** `NAVEngine.sol`, `MinestartersFactory.sol`, `MineStarters.sol`, all DCF/company/stage logic.
 
 ### NEW contracts in `src/perp/` (Solidity ^0.8.24)
 
-- `OracleAdapter.sol` -- Unified oracle for equities + commodities
-- `PricingEngine.sol` -- Oracle price + deterministic slippage
+- `OracleAdapter.sol` -- Unified oracle for equities + commodities (also used by BasketVault for pricing)
+- `PricingEngine.sol` -- Oracle price + deterministic slippage (for perp trades)
 - `VaultAccounting.sol` -- Vault-level PnL and allocation tracking
-- `PerpReader.sol` -- Read-only view contract for positions, PnL, pool state
+- `PerpReader.sol` -- Read-only view contract for positions, PnL, pool state, basket prices
 - `interfaces/IPerp.sol` -- Interface for BasketVault to call into perp system
+- `interfaces/IOracleAdapter.sol` -- Oracle interface used by both basket and perp layers
 - `interfaces/IGMXVault.sol` -- 0.8.24 interface mirroring GMX Vault.sol externals for cross-version calls
 
 ### Cross-version interaction
@@ -193,11 +189,13 @@ Brought into this repo directly (not cloned), adapted for perp integration:
 
 ```mermaid
 graph LR
-    User -->|"deposit USDC"| BV[BasketVault]
-    BV -->|"allocateToPerp()"| VA[VaultAccounting]
+    INV[Investor] -->|"deposit USDC"| BV[BasketVault]
+    BV -->|"mint shares at oracle basket price"| BST[BasketShareToken]
+    BV -->|"allocate capital"| VA[VaultAccounting]
     VA -->|"deposit via IGMXVault"| GV[GMX Vault Pool]
     GV -->|"position PnL"| VA
-    VA -->|"withdrawFromPerp()"| BV
+    VA -->|"withdraw capital"| BV
+    BV -->|"redeem: burn shares, return USDC"| INV
 ```
 
 
@@ -266,14 +264,14 @@ Build `VaultAccounting.sol` as the bridge between `BasketVault` and the GMX-deri
 - Mapping `vault => VaultState` tracking deposits, PnL, open interest
 - Hook into position close/liquidation to update vault-level PnL
 
-### Integration with NAVEngine:
+### Basket price integration:
 
-- `NAVEngine.getCurrentNAV()` can call `VaultAccounting.getVaultPnL()` to include unrealized perp PnL
-- Gold price in NAVEngine reads from `OracleAdapter` instead of manual updates
+- `BasketVault.getBasketPrice()` reads directly from `OracleAdapter` -- no NAVEngine intermediary
+- `PerpReader` can combine basket price + perp PnL for total vault value views
 
 ### Vault registration:
 
-- `MinestartersFactory` registers new BasketVaults in `VaultAccounting` on creation
+- `BasketFactory` registers new BasketVaults in `VaultAccounting` on creation
 - Owner can also manually register/deregister vault addresses
 
 ---
@@ -318,21 +316,20 @@ Adapt GMX's existing funding rate logic.
 
 ## Phase 6: Integration Wiring
 
+### Wire BasketVault <-> OracleAdapter
+
+- BasketVault reads asset prices from `OracleAdapter` for basket pricing on deposit/redeem
+- Basket price = weighted sum of oracle prices
+
 ### Wire BasketVault <-> VaultAccounting
 
-- Add `allocateToPerp()` / `withdrawFromPerp()` to `BasketVault.sol`
-- `MinestartersFactory` sets `perpVaultAccounting` on new vaults and registers them
-
-### Wire NAVEngine <-> OracleAdapter
-
-- `NAVEngine.getCurrentNAV()` reads gold price from `OracleAdapter.getPrice("XAU")` instead of `goldPriceUsd` state variable
-- Remove `updateGoldPrice()` manual setter (or keep as fallback)
-- Remove `IDistributor` / `_notifyDistributor` references
+- `BasketVault.allocateToPerp()` / `withdrawFromPerp()` call into `VaultAccounting`
+- `BasketFactory` sets `oracleAdapter` and `vaultAccounting` on new vaults and registers them
 
 ### `PerpReader.sol` -- read-only view contract
 
 - Aggregate position data, vault PnL, pool utilization, oracle prices
-- Combine NAVEngine NAV + perp PnL for total vault value
+- Basket price, share price, total vault value
 - Designed for off-chain consumption and monitoring
 
 ### Manual position management (initial phase)
@@ -355,7 +352,7 @@ Adapt GMX's existing funding rate logic.
 
 - `MODIFICATIONS.md` -- what changed vs upstream GMX, and why
 - Contract-level NatSpec documentation
-- Integration guide: BasketVault -> VaultAccounting -> GMX Vault flow
+- Integration guide: Investor -> BasketVault -> VaultAccounting -> GMX Vault flow
 
 ---
 
@@ -365,7 +362,10 @@ Adapt GMX's existing funding rate logic.
 - No long-tail assets (max ~20-30 active markets, configurable whitelist in OracleAdapter)
 - Optimized for internal usage (no public trading UI)
 - USDC as sole collateral/liquidity token
-- BasketVault contracts co-located and adapted for direct perp integration
+- No NAV/DCF logic -- basket price is purely weighted oracle prices
+- No fundraising mechanics (no deadlines, minimum raise, refunds)
+- GLP-style continuous deposit/redeem for basket tokens
+- Multiple baskets supported via BasketFactory
 - Manual position management initially
-- No MINE protocol token contract in this repo
+- No MINE token, no NAVEngine, no MinestartersDistributor
 
