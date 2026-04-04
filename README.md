@@ -1,5 +1,8 @@
 # Perp Infrastructure (GMX v1 Fork)
 
+[![CI](https://github.com/reubenr0d/indexflow-prototype/actions/workflows/test.yml/badge.svg)](https://github.com/reubenr0d/indexflow-prototype/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype/graph/badge.svg)](https://codecov.io/gh/reubenr0d/indexflow-prototype)
+
 Oracle-priced basket vaults backed by a shared perpetual liquidity pool, built on a GMX v1 fork.
 
 ## Architecture
@@ -80,25 +83,6 @@ Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replac
 
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
+- [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 
-### NatSpec / documentation coverage (first-party 0.8.x)
-
-**Full** means contract-level `@title` / `@notice` / `@dev` where needed, and NatSpec on external/public functions (plus structs, errors, and interfaces per the integration surface). When you add or materially change a listed contract’s API, update this row and the in-source NatSpec in the same change.
-
-| Module | Contract | Path | NatSpec |
-|--------|-----------|------|---------|
-| perp | VaultAccounting | [src/perp/VaultAccounting.sol](src/perp/VaultAccounting.sol) | Full |
-| perp | PerpReader | [src/perp/PerpReader.sol](src/perp/PerpReader.sol) | Full |
-| perp | OracleAdapter | [src/perp/OracleAdapter.sol](src/perp/OracleAdapter.sol) | Full |
-| perp | PriceSync | [src/perp/PriceSync.sol](src/perp/PriceSync.sol) | Full |
-| perp | PricingEngine | [src/perp/PricingEngine.sol](src/perp/PricingEngine.sol) | Full |
-| perp | FundingRateManager | [src/perp/FundingRateManager.sol](src/perp/FundingRateManager.sol) | Full |
-| perp | IPerp | [src/perp/interfaces/IPerp.sol](src/perp/interfaces/IPerp.sol) | Full |
-| perp | IOracleAdapter | [src/perp/interfaces/IOracleAdapter.sol](src/perp/interfaces/IOracleAdapter.sol) | Full |
-| perp | IGMXVault | [src/perp/interfaces/IGMXVault.sol](src/perp/interfaces/IGMXVault.sol) | Full |
-| vault | BasketVault | [src/vault/BasketVault.sol](src/vault/BasketVault.sol) | Full |
-| vault | BasketFactory | [src/vault/BasketFactory.sol](src/vault/BasketFactory.sol) | Full |
-| vault | BasketShareToken | [src/vault/BasketShareToken.sol](src/vault/BasketShareToken.sol) | Full |
-| vault | MockUSDC | [src/vault/MockUSDC.sol](src/vault/MockUSDC.sol) | Full |
-
-Test-only and vendored code (`src/gmx/`, `lib/`) are out of scope for this table. For **line** test coverage, run `forge coverage` locally.
+For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.

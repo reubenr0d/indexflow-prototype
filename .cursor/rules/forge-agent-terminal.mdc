@@ -1,0 +1,27 @@
+---
+description: Run Foundry forge in agent terminal without relying on cd (sandbox limitation)
+alwaysApply: true
+---
+
+# Forge / agent terminal
+
+## Problem
+
+In the Cursor agent shell, **`cd` often fails** (exit 1, sometimes with little or no output). Commands like `cd /path/to/repo && forge build` may fail **before** Forge runs, which looks like Forge or PATH is broken.
+
+## What to do
+
+1. **Do not rely on `cd` into the repo** for Forge. Prefer an absolute project path.
+2. **Use Forge’s project root flag** so the working directory does not matter:
+
+   ```bash
+   PATH="/Users/reuben/.foundry/bin:$PATH" forge build --root /Users/reuben/Desktop/minestarters/code/snx-prototype
+   ```
+
+   Use the same `--root <absolute-path-to-snx-prototype>` pattern for other `forge` subcommands that support it (`test`, `script`, etc.).
+
+3. **If `forge` is not found**, prepend Foundry to `PATH` (typical install: `~/.foundry/bin`), or invoke `/Users/reuben/.foundry/bin/forge` directly.
+
+## Diagnosis
+
+If a command exits 1 with empty output, check whether the pipeline used `cd`; retry with `--root` and explicit `PATH` before assuming the compiler or project is misconfigured.

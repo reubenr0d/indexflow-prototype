@@ -67,6 +67,40 @@ jobs:
         run: forge test -vvv
         id: tests
 
+  coverage:
+    name: Coverage
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Generate LCOV
+        run: forge coverage --ir-minimum --report lcov --report-file lcov.info
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          files: lcov.info
+          fail_ci_if_error: false
+          use_oidc: true
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
