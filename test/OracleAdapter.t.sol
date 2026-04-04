@@ -19,13 +19,11 @@ contract MockChainlinkFeed {
         decimals_ = _decimals;
     }
 
-    function latestRoundData() external view returns (
-        uint80 roundId,
-        int256 answer,
-        uint256 startedAt,
-        uint256 updatedAt_,
-        uint80 answeredInRound
-    ) {
+    function latestRoundData()
+        external
+        view
+        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt_, uint80 answeredInRound)
+    {
         return (1, price, block.timestamp, updatedAt, 1);
     }
 }
@@ -87,13 +85,11 @@ contract OracleAdapterTest is Test {
 
         // 50% jump should revert (max deviation 1000 bps = 10%)
         // After fix: deviation is checked on normalized prices (both 1e30 precision)
-        vm.expectRevert(abi.encodeWithSelector(
-            OracleAdapter.DeviationTooLarge.selector,
-            BHP,
-            1_000_000_000 * 1e22,
-            1_500_000_000 * 1e22,
-            1000
-        ));
+        vm.expectRevert(
+            abi.encodeWithSelector(
+                OracleAdapter.DeviationTooLarge.selector, BHP, 1_000_000_000 * 1e22, 1_500_000_000 * 1e22, 1000
+            )
+        );
         vm.prank(keeper);
         oracle.submitPrice(BHP, 1_500_000_000); // $15 = 50% jump
     }

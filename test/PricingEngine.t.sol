@@ -22,7 +22,7 @@ contract PricingEngineTest is Test {
         oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
 
         oracle.submitPrice(XAU, 200_000_000_000); // $2000
-        oracle.submitPrice(BHP, 4_500_000_000);   // $45
+        oracle.submitPrice(BHP, 4_500_000_000); // $45
 
         engine = new PricingEngine(address(oracle), owner);
     }
@@ -31,8 +31,8 @@ contract PricingEngineTest is Test {
         // Use larger trade relative to liquidity so impact > 0
         uint256 execPrice = engine.getExecutionPrice(
             XAU,
-            5_000_000e30,    // $5M trade size
-            10_000_000e30,   // $10M liquidity -> 15 bps impact
+            5_000_000e30, // $5M trade size
+            10_000_000e30, // $10M liquidity -> 15 bps impact
             true
         );
 
@@ -41,12 +41,7 @@ contract PricingEngineTest is Test {
     }
 
     function test_getExecutionPrice_short() public view {
-        uint256 execPrice = engine.getExecutionPrice(
-            XAU,
-            5_000_000e30,
-            10_000_000e30,
-            false
-        );
+        uint256 execPrice = engine.getExecutionPrice(XAU, 5_000_000e30, 10_000_000e30, false);
 
         (uint256 oraclePrice,) = oracle.getPrice(XAU);
         assertTrue(execPrice < oraclePrice);
@@ -62,8 +57,8 @@ contract PricingEngineTest is Test {
         // Very large trade relative to liquidity -> capped at max impact
         uint256 execPrice = engine.getExecutionPrice(
             XAU,
-            100_000_000e30,  // $100M
-            1_000_000e30,    // $1M liquidity (huge trade)
+            100_000_000e30, // $100M
+            1_000_000e30, // $1M liquidity (huge trade)
             true
         );
 
@@ -79,7 +74,7 @@ contract PricingEngineTest is Test {
         uint256 execPrice = engine.getExecutionPrice(
             BHP,
             10_000_000e30,
-            1_000_000e30,    // Very large relative to liquidity
+            1_000_000e30, // Very large relative to liquidity
             true
         );
 

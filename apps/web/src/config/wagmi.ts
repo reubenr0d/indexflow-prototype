@@ -1,7 +1,14 @@
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
+import {
+  baseAccount,
+  rainbowWallet,
+  safeWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
 import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 import { http } from "viem";
 import { anvil } from "viem/chains";
+import { metaMaskExtensionWallet } from "./metaMaskExtensionWallet";
 
 export const config = getDefaultConfig({
   appName: "IndexFlow",
@@ -13,4 +20,16 @@ export const config = getDefaultConfig({
     [arbitrum.id]: http(),
   },
   ssr: true,
+  wallets: [
+    {
+      groupName: "Popular",
+      wallets: [
+        safeWallet,
+        rainbowWallet,
+        baseAccount,
+        metaMaskExtensionWallet,
+        walletConnectWallet,
+      ],
+    },
+  ],
 });

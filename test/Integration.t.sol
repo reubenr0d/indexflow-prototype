@@ -30,7 +30,9 @@ contract MockToken is IERC20 {
         tokenDecimals = _decimals;
     }
 
-    function decimals() external view returns (uint8) { return tokenDecimals; }
+    function decimals() external view returns (uint8) {
+        return tokenDecimals;
+    }
 
     function mint(address to, uint256 amount) external {
         totalSupply += amount;
@@ -68,7 +70,10 @@ interface ISimplePriceFeed {
     function setGov(address _gov) external;
     function setKeeper(address _keeper, bool _active) external;
     function prices(address token) external view returns (uint256);
-    function getPrice(address token, bool maximise, bool includeAmmPrice, bool useSwapPricing) external view returns (uint256);
+    function getPrice(address token, bool maximise, bool includeAmmPrice, bool useSwapPricing)
+        external
+        view
+        returns (uint256);
 }
 
 /// @dev 0.8.24 interface to call VaultErrorController (0.6.12)
@@ -121,8 +126,8 @@ contract IntegrationTest is Test {
         priceFeed = ISimplePriceFeed(pfAddr);
 
         // Set prices BEFORE vault token config (vault validates price on whitelist)
-        priceFeed.setPrice(address(usdc), 1e30);        // $1
-        priceFeed.setPrice(address(gold), 2000e30);     // $2000
+        priceFeed.setPrice(address(usdc), 1e30); // $1
+        priceFeed.setPrice(address(gold), 2000e30); // $2000
 
         // 2. Vault
         address vaultAddr = deployCode("Vault.sol:Vault");
@@ -142,9 +147,9 @@ contract IntegrationTest is Test {
             routerAddr,
             usdgAddr,
             pfAddr,
-            5e30,   // liquidationFeeUsd = $5
-            600,    // fundingRateFactor
-            600     // stableFundingRateFactor
+            5e30, // liquidationFeeUsd = $5
+            600, // fundingRateFactor
+            600 // stableFundingRateFactor
         );
 
         // Attach VaultUtils (cast address to the expected interface type via setVaultUtils)
@@ -157,43 +162,43 @@ contract IntegrationTest is Test {
 
         // Zero out all fees for clean test math
         gmxVault.setFees(
-            0,      // taxBasisPoints
-            0,      // stableTaxBasisPoints
-            0,      // mintBurnFeeBasisPoints
-            0,      // swapFeeBasisPoints
-            0,      // stableSwapFeeBasisPoints
-            0,      // marginFeeBasisPoints
-            5e30,   // liquidationFeeUsd ($5)
-            0,      // minProfitTime
-            false   // hasDynamicFees
+            0, // taxBasisPoints
+            0, // stableTaxBasisPoints
+            0, // mintBurnFeeBasisPoints
+            0, // swapFeeBasisPoints
+            0, // stableSwapFeeBasisPoints
+            0, // marginFeeBasisPoints
+            5e30, // liquidationFeeUsd ($5)
+            0, // minProfitTime
+            false // hasDynamicFees
         );
 
         // ─── Whitelist tokens ─────────────────────────────────────
         // USDC: stable, not shortable
         gmxVault.setTokenConfig(
             address(usdc),
-            6,          // decimals
-            10000,      // weight
-            0,          // minProfitBps
-            0,          // maxUsdgAmount (unlimited)
-            true,       // isStable
-            false       // isShortable
+            6, // decimals
+            10000, // weight
+            0, // minProfitBps
+            0, // maxUsdgAmount (unlimited)
+            true, // isStable
+            false // isShortable
         );
 
         // GOLD: non-stable, shortable
         gmxVault.setTokenConfig(
             address(gold),
-            18,         // decimals
-            10000,      // weight
-            0,          // minProfitBps
-            0,          // maxUsdgAmount (unlimited)
-            false,      // isStable
-            true        // isShortable
+            18, // decimals
+            10000, // weight
+            0, // minProfitBps
+            0, // maxUsdgAmount (unlimited)
+            false, // isStable
+            true // isShortable
         );
 
         // ─── Seed USDC liquidity into the GMX pool ───────────────
-        usdc.mint(deployer, 10_000_000e6);  // $10M
-        usdc.transfer(address(gmxVault), 1_000_000e6);  // $1M to pool
+        usdc.mint(deployer, 10_000_000e6); // $10M
+        usdc.transfer(address(gmxVault), 1_000_000e6); // $1M to pool
         gmxVault.directPoolDeposit(address(usdc));
 
         // ─── Deploy perp stack (0.8.24) ──────────────────────────
@@ -205,28 +210,19 @@ contract IntegrationTest is Test {
             GOLD_ID,
             address(0),
             IOracleAdapter.FeedType.CustomRelayer,
-            3600,       // stalenessThreshold (1h)
-            5000,       // deviationBps (50% -- wide for testing)
-            8           // decimals
+            3600, // stalenessThreshold (1h)
+            5000, // deviationBps (50% -- wide for testing)
+            8 // decimals
         );
         oracleAdapter.submitPrice(GOLD_ID, 200_000_000_000); // $2000 in 8 decimals
 
-        vaultAccounting = new VaultAccounting(
-            address(usdc),
-            address(gmxVault),
-            address(oracleAdapter),
-            deployer
-        );
+        vaultAccounting = new VaultAccounting(address(usdc), address(gmxVault), address(oracleAdapter), deployer);
 
         // Map GOLD asset ID to the GOLD token address for VaultAccounting
         vaultAccounting.mapAssetToken(GOLD_ID, address(gold));
 
         // ─── Deploy PriceSync (oracle → SimplePriceFeed bridge) ──
-        priceSync = new PriceSync(
-            address(oracleAdapter),
-            address(priceFeed),
-            deployer
-        );
+        priceSync = new PriceSync(address(oracleAdapter), address(priceFeed), deployer);
         priceFeed.setKeeper(address(priceSync), true);
         priceSync.addMapping(GOLD_ID, address(gold));
 
@@ -240,8 +236,8 @@ contract IntegrationTest is Test {
     // ═════════════════════════════════════════════════════════════════
 
     function test_directLong_profitable() public {
-        uint256 collateral = 5_000e6;   // $5,000 USDC
-        uint256 sizeDelta = 10_000e30;  // $10,000 position
+        uint256 collateral = 5_000e6; // $5,000 USDC
+        uint256 sizeDelta = 10_000e30; // $10,000 position
 
         // Transfer USDC to vault as collateral
         vm.prank(trader);
@@ -258,7 +254,7 @@ contract IntegrationTest is Test {
         );
 
         // Verify position opened
-        (uint256 size, uint256 posCollateral, uint256 avgPrice,,,,, ) =
+        (uint256 size, uint256 posCollateral, uint256 avgPrice,,,,,) =
             gmxVault.getPosition(trader, address(usdc), address(gold), true);
         assertEq(size, sizeDelta, "Position size should match");
         assertEq(posCollateral, 5_000e30, "Collateral should be $5000 (0 fees)");
@@ -268,9 +264,7 @@ contract IntegrationTest is Test {
         priceFeed.setPrice(address(gold), 2200e30);
 
         // Verify PnL
-        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(
-            trader, address(usdc), address(gold), true
-        );
+        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(trader, address(usdc), address(gold), true);
         assertTrue(hasProfit, "Should be profitable");
         // delta = $10,000 * ($2200-$2000)/$2000 = $1000
         assertApproxEqAbs(delta, 1000e30, 1e25, "Profit should be ~$1000");
@@ -282,10 +276,10 @@ contract IntegrationTest is Test {
             trader,
             address(usdc),
             address(gold),
-            0,          // collateralDelta
-            sizeDelta,  // close full position
+            0, // collateralDelta
+            sizeDelta, // close full position
             true,
-            trader      // receiver
+            trader // receiver
         );
 
         uint256 traderBalAfter = usdc.balanceOf(trader);
@@ -295,7 +289,7 @@ contract IntegrationTest is Test {
         assertApproxEqAbs(payout, 6_000e6, 1e3, "Payout should be ~$6000 USDC");
 
         // Position should be deleted
-        (size,,,,,,, ) = gmxVault.getPosition(trader, address(usdc), address(gold), true);
+        (size,,,,,,,) = gmxVault.getPosition(trader, address(usdc), address(gold), true);
         assertEq(size, 0, "Position should be closed");
     }
 
@@ -316,9 +310,7 @@ contract IntegrationTest is Test {
         // Price drops 10%: GOLD $2000 → $1800
         priceFeed.setPrice(address(gold), 1800e30);
 
-        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(
-            trader, address(usdc), address(gold), true
-        );
+        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(trader, address(usdc), address(gold), true);
         assertFalse(hasProfit, "Should be a loss");
         assertApproxEqAbs(delta, 1000e30, 1e25, "Loss should be ~$1000");
 
@@ -346,16 +338,13 @@ contract IntegrationTest is Test {
         gmxVault.increasePosition(trader, address(usdc), address(gold), sizeDelta, false);
 
         // Verify position
-        (uint256 size,,,,,,,) =
-            gmxVault.getPosition(trader, address(usdc), address(gold), false);
+        (uint256 size,,,,,,,) = gmxVault.getPosition(trader, address(usdc), address(gold), false);
         assertEq(size, sizeDelta, "Short position size should match");
 
         // Price drops 10%: GOLD $2000 → $1800 (good for shorts)
         priceFeed.setPrice(address(gold), 1800e30);
 
-        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(
-            trader, address(usdc), address(gold), false
-        );
+        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(trader, address(usdc), address(gold), false);
         assertTrue(hasProfit, "Short should be profitable on price drop");
         assertApproxEqAbs(delta, 1000e30, 1e25, "Profit should be ~$1000");
 
@@ -423,8 +412,8 @@ contract IntegrationTest is Test {
     // ═════════════════════════════════════════════════════════════════
 
     function test_leveragedLong_5x() public {
-        uint256 collateral = 2_000e6;   // $2,000 USDC
-        uint256 sizeDelta = 10_000e30;  // $10,000 position (5x leverage)
+        uint256 collateral = 2_000e6; // $2,000 USDC
+        uint256 sizeDelta = 10_000e30; // $10,000 position (5x leverage)
 
         vm.prank(trader);
         usdc.transfer(address(gmxVault), collateral);
@@ -433,18 +422,14 @@ contract IntegrationTest is Test {
         gmxVault.increasePosition(trader, address(usdc), address(gold), sizeDelta, true);
 
         // Check leverage
-        uint256 leverage = gmxVault.getPositionLeverage(
-            trader, address(usdc), address(gold), true
-        );
+        uint256 leverage = gmxVault.getPositionLeverage(trader, address(usdc), address(gold), true);
         // leverage = size * 10000 / collateral = 10000 * 10000 / 2000 = 50000 (5x)
         assertEq(leverage, 50000, "Leverage should be 5x (50000 bps)");
 
         // GOLD goes up 5%: $2000 → $2100
         priceFeed.setPrice(address(gold), 2100e30);
 
-        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(
-            trader, address(usdc), address(gold), true
-        );
+        (bool hasProfit, uint256 delta) = gmxVault.getPositionDelta(trader, address(usdc), address(gold), true);
         assertTrue(hasProfit, "5x long should profit on 5% move");
         // profit = $10000 * 5% = $500
         assertApproxEqAbs(delta, 500e30, 1e25, "Profit should be ~$500");
@@ -479,14 +464,13 @@ contract IntegrationTest is Test {
         vm.prank(trader);
         gmxVault.increasePosition(
             trader,
-            address(gold),  // collateral = GOLD
-            address(gold),  // index = GOLD
-            4000e30,        // $4000 position (2x leverage)
+            address(gold), // collateral = GOLD
+            address(gold), // index = GOLD
+            4000e30, // $4000 position (2x leverage)
             true
         );
 
-        (uint256 size,,uint256 avgPrice,,,,,) =
-            gmxVault.getPosition(trader, address(gold), address(gold), true);
+        (uint256 size,, uint256 avgPrice,,,,,) = gmxVault.getPosition(trader, address(gold), address(gold), true);
         assertEq(size, 4000e30, "Original-style long should work");
         assertEq(avgPrice, 2000e30, "Average price should be $2000");
     }
@@ -509,10 +493,8 @@ contract IntegrationTest is Test {
         gmxVault.increasePosition(trader, address(usdc), address(gold), 6_000e30, false);
 
         // Both positions should exist
-        (uint256 longSize,,,,,,, ) =
-            gmxVault.getPosition(trader, address(usdc), address(gold), true);
-        (uint256 shortSize,,,,,,, ) =
-            gmxVault.getPosition(trader, address(usdc), address(gold), false);
+        (uint256 longSize,,,,,,,) = gmxVault.getPosition(trader, address(usdc), address(gold), true);
+        (uint256 shortSize,,,,,,,) = gmxVault.getPosition(trader, address(usdc), address(gold), false);
 
         assertEq(longSize, 6_000e30, "Long position should exist");
         assertEq(shortSize, 6_000e30, "Short position should exist");
@@ -554,8 +536,7 @@ contract IntegrationTest is Test {
         vm.prank(trader);
         gmxVault.decreasePosition(trader, address(usdc), address(gold), 0, 5_000e30, true, trader);
 
-        (uint256 remaining,,,,,,, ) =
-            gmxVault.getPosition(trader, address(usdc), address(gold), true);
+        (uint256 remaining,,,,,,,) = gmxVault.getPosition(trader, address(usdc), address(gold), true);
         assertEq(remaining, 5_000e30, "Half the position should remain");
     }
 
@@ -580,7 +561,7 @@ contract IntegrationTest is Test {
         vaultAccounting.openPosition(basketVault, GOLD_ID, true, sizeDelta, collateral);
 
         // Verify position exists in GMX Vault under VaultAccounting's address
-        (uint256 posSize, uint256 posColl, uint256 avgPrice,,,,, ) =
+        (uint256 posSize, uint256 posColl, uint256 avgPrice,,,,,) =
             gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
         assertEq(posSize, sizeDelta, "GMX position size");
         assertEq(posColl, 10_000e30, "GMX position collateral ($10K)");
@@ -593,6 +574,12 @@ contract IntegrationTest is Test {
 
         // Price goes up 10%: GOLD $2000 → $2200
         priceFeed.setPrice(address(gold), 2200e30);
+
+        (int256 unrealisedBefore,) = vaultAccounting.getVaultPnL(basketVault);
+        (bool deltaProfit, uint256 deltaUsd) =
+            gmxVault.getPositionDelta(address(vaultAccounting), address(usdc), address(gold), true);
+        assertTrue(deltaProfit, "GMX delta should show profit");
+        assertApproxEqAbs(uint256(unrealisedBefore), deltaUsd, 1e25, "Aggregate unrealised matches GMX");
 
         // Close full position
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
@@ -632,12 +619,14 @@ contract IntegrationTest is Test {
         vaultAccounting.openPosition(basketVault, GOLD_ID, false, sizeDelta, collateral);
 
         // Verify short position in GMX
-        (uint256 posSize,,,,,,,) =
-            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), false);
+        (uint256 posSize,,,,,,,) = gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), false);
         assertEq(posSize, sizeDelta, "Short position size");
 
         // Price goes UP 10%: bad for shorts
         priceFeed.setPrice(address(gold), 2200e30);
+
+        (int256 unrealisedShort,) = vaultAccounting.getVaultPnL(basketVault);
+        assertTrue(unrealisedShort < 0, "Short should have negative aggregate unrealised");
 
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
         vaultAccounting.closePosition(basketVault, GOLD_ID, false, sizeDelta, 0);
@@ -674,8 +663,7 @@ contract IntegrationTest is Test {
         vaultAccounting.closePosition(basketVault, GOLD_ID, true, 10_000e30, 0);
 
         // Remaining position in GMX
-        (uint256 remaining,,,,,,, ) =
-            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
+        (uint256 remaining,,,,,,,) = gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
         assertEq(remaining, 10_000e30, "Half should remain");
 
         IPerp.VaultState memory state = vaultAccounting.getVaultState(basketVault);
@@ -685,8 +673,7 @@ contract IntegrationTest is Test {
         // Close the rest
         vaultAccounting.closePosition(basketVault, GOLD_ID, true, 10_000e30, 0);
 
-        (remaining,,,,,,, ) =
-            gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
+        (remaining,,,,,,,) = gmxVault.getPosition(address(vaultAccounting), address(usdc), address(gold), true);
         assertEq(remaining, 0, "Position fully closed");
 
         state = vaultAccounting.getVaultState(basketVault);
@@ -724,6 +711,11 @@ contract IntegrationTest is Test {
 
         // Price rises 10%: vault1 profits, vault2 loses
         priceFeed.setPrice(address(gold), 2200e30);
+
+        (int256 u1,) = vaultAccounting.getVaultPnL(vault1);
+        (int256 u2,) = vaultAccounting.getVaultPnL(vault2);
+        assertTrue(u1 > 0, "Vault1 long aggregate unrealised positive");
+        assertTrue(u2 < 0, "Vault2 short aggregate unrealised negative");
 
         vaultAccounting.closePosition(vault1, GOLD_ID, true, 10_000e30, 0);
         vaultAccounting.closePosition(vault2, GOLD_ID, false, 10_000e30, 0);
@@ -838,12 +830,7 @@ contract IntegrationTest is Test {
 
     function test_basketE2E_fullRoundTrip() public {
         // ── Setup basket vault ──────────────────────────────────────
-        BasketVault basket = new BasketVault(
-            "Gold Basket",
-            address(usdc),
-            address(oracleAdapter),
-            deployer
-        );
+        BasketVault basket = new BasketVault("Gold Basket", address(usdc), address(oracleAdapter), deployer);
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
@@ -916,12 +903,7 @@ contract IntegrationTest is Test {
     // ═════════════════════════════════════════════════════════════════
 
     function test_basketE2E_perpLoss() public {
-        BasketVault basket = new BasketVault(
-            "Gold Basket",
-            address(usdc),
-            address(oracleAdapter),
-            deployer
-        );
+        BasketVault basket = new BasketVault("Gold Basket", address(usdc), address(oracleAdapter), deployer);
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
@@ -1025,16 +1007,16 @@ contract IntegrationTest is Test {
 
     function _setVaultErrors(address errCtrl, address vault) internal {
         string[] memory errors = new string[](56);
-        errors[0]  = "Vault: zero error";
-        errors[1]  = "Vault: already initialized";
-        errors[2]  = "Vault: invalid _maxLeverage";
-        errors[3]  = "Vault: invalid _taxBasisPoints";
-        errors[4]  = "Vault: invalid _stableTaxBasisPoints";
-        errors[5]  = "Vault: invalid _mintBurnFeeBasisPoints";
-        errors[6]  = "Vault: invalid _swapFeeBasisPoints";
-        errors[7]  = "Vault: invalid _stableSwapFeeBasisPoints";
-        errors[8]  = "Vault: invalid _marginFeeBasisPoints";
-        errors[9]  = "Vault: invalid _liquidationFeeUsd";
+        errors[0] = "Vault: zero error";
+        errors[1] = "Vault: already initialized";
+        errors[2] = "Vault: invalid _maxLeverage";
+        errors[3] = "Vault: invalid _taxBasisPoints";
+        errors[4] = "Vault: invalid _stableTaxBasisPoints";
+        errors[5] = "Vault: invalid _mintBurnFeeBasisPoints";
+        errors[6] = "Vault: invalid _swapFeeBasisPoints";
+        errors[7] = "Vault: invalid _stableSwapFeeBasisPoints";
+        errors[8] = "Vault: invalid _marginFeeBasisPoints";
+        errors[9] = "Vault: invalid _liquidationFeeUsd";
         errors[10] = "Vault: invalid _fundingInterval";
         errors[11] = "Vault: invalid _fundingRateFactor";
         errors[12] = "Vault: invalid _stableFundingRateFactor";

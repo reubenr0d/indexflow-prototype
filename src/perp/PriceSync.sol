@@ -4,21 +4,30 @@ pragma solidity ^0.8.24;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IOracleAdapter} from "./interfaces/IOracleAdapter.sol";
 
-/// @dev 0.8.24 interface for calling the 0.6.12 SimplePriceFeed
+/// @title ISimplePriceFeed
+/// @notice Minimal 0.8.x interface for the forked 0.6.12 `SimplePriceFeed` setter API.
 interface ISimplePriceFeed {
+    /// @notice Set stored price for one GMX token (keeper-gated on deployed feed).
     function setPrice(address token, uint256 price) external;
+    /// @notice Batch set stored prices.
     function setPrices(address[] calldata tokens, uint256[] calldata prices) external;
+    /// @notice Read stored price for `token`.
     function prices(address token) external view returns (uint256);
 }
 
 /// @title PriceSync
-/// @notice Propagates prices from OracleAdapter (0.8.24) to SimplePriceFeed (0.6.12)
-/// ensuring a single source of truth. Call syncPrices() after every oracle update
-/// so GMX Vault reads the same economic price as the basket/perp layers.
+/// @notice Propagates prices from `OracleAdapter` (0.8.24) to `SimplePriceFeed` (0.6.12).
+/// @dev Permissionless `syncAll` / `syncPrices`: anyone may pay gas to align GMX on-chain prices with the adapter.
+/// Run after Chainlink reads or after keeper `submitPrice` for custom assets so the perp engine matches basket oracle economics.
 contract PriceSync is Ownable {
+    /// @notice Source of normalized prices.
     IOracleAdapter public oracleAdapter;
+    /// @notice GMX-facing feed contract updated by this module.
     ISimplePriceFeed public simplePriceFeed;
 
+    /// @notice One oracle asset id mapped to a GMX pool token address.
+    /// @param assetId `OracleAdapter` key.
+    /// @param gmxToken Token address whose price is set on `SimplePriceFeed`.
     struct AssetMapping {
         bytes32 assetId;
         address gmxToken;
@@ -32,15 +41,17 @@ contract PriceSync is Ownable {
     event MappingAdded(bytes32 indexed assetId, address indexed token);
     event MappingRemoved(bytes32 indexed assetId);
 
+    /// @notice `addMapping` when id already mapped.
     error MappingAlreadyExists(bytes32 assetId);
+    /// @notice `syncPrices` or `removeMapping` for unknown id.
     error MappingNotFound(bytes32 assetId);
+    /// @notice Constructor or admin setters received zero address.
     error ZeroAddress();
 
-    constructor(
-        address _oracleAdapter,
-        address _simplePriceFeed,
-        address _owner
-    ) Ownable(_owner) {
+    /// @param _oracleAdapter Oracle adapter.
+    /// @param _simplePriceFeed GMX simple price feed.
+    /// @param _owner Owner for mapping admin.
+    constructor(address _oracleAdapter, address _simplePriceFeed, address _owner) Ownable(_owner) {
         if (_oracleAdapter == address(0) || _simplePriceFeed == address(0)) revert ZeroAddress();
         oracleAdapter = IOracleAdapter(_oracleAdapter);
         simplePriceFeed = ISimplePriceFeed(_simplePriceFeed);
@@ -48,6 +59,9 @@ contract PriceSync is Ownable {
 
     // ─── Mapping Management ──────────────────────────────────────
 
+    /// @notice Register an oracle asset id to a GMX token for syncing.
+    /// @param assetId Adapter asset key.
+    /// @param gmxToken GMX index/collateral token whose `setPrice` target applies.
     function addMapping(bytes32 assetId, address gmxToken) external onlyOwner {
         if (gmxToken == address(0)) revert ZeroAddress();
         if (_mappingExists[assetId]) revert MappingAlreadyExists(assetId);
@@ -59,6 +73,8 @@ contract PriceSync is Ownable {
         emit MappingAdded(assetId, gmxToken);
     }
 
+    /// @notice Remove a mapping entry (swap-remove internal array).
+    /// @param assetId Previously added asset id.
     function removeMapping(bytes32 assetId) external onlyOwner {
         if (!_mappingExists[assetId]) revert MappingNotFound(assetId);
 
@@ -80,7 +96,8 @@ contract PriceSync is Ownable {
 
     // ─── Price Sync ──────────────────────────────────────────────
 
-    /// @notice Sync all mapped asset prices from OracleAdapter to SimplePriceFeed.
+    /// @notice Push every mapped asset's adapter price into `SimplePriceFeed`.
+    /// @dev Callable by anyone.
     function syncAll() external {
         uint256 len = _mappings.length;
         for (uint256 i = 0; i < len; i++) {
@@ -88,7 +105,8 @@ contract PriceSync is Ownable {
         }
     }
 
-    /// @notice Sync specific asset prices.
+    /// @notice Sync a subset of mapped assets (must exist in mapping).
+    /// @param assetIds Asset ids to sync.
     function syncPrices(bytes32[] calldata assetIds) external {
         for (uint256 i = 0; i < assetIds.length; i++) {
             if (!_mappingExists[assetIds[i]]) revert MappingNotFound(assetIds[i]);
@@ -99,26 +117,39 @@ contract PriceSync is Ownable {
 
     // ─── Views ───────────────────────────────────────────────────
 
+    /// @notice Number of oracle→GMX mappings.
+    /// @return Length of internal mapping list.
     function getMappingCount() external view returns (uint256) {
         return _mappings.length;
     }
 
+    /// @notice Nth mapping entry.
+    /// @param index Index in `[0, getMappingCount())`.
+    /// @return assetId Oracle id.
+    /// @return gmxToken GMX token.
     function getMapping(uint256 index) external view returns (bytes32 assetId, address gmxToken) {
         AssetMapping memory m = _mappings[index];
         return (m.assetId, m.gmxToken);
     }
 
+    /// @notice Whether `assetId` has a mapping.
+    /// @param assetId Asset id.
+    /// @return True if registered.
     function isMapped(bytes32 assetId) external view returns (bool) {
         return _mappingExists[assetId];
     }
 
     // ─── Admin ───────────────────────────────────────────────────
 
+    /// @notice Point sync source to a new adapter.
+    /// @param _oracleAdapter New oracle adapter address.
     function setOracleAdapter(address _oracleAdapter) external onlyOwner {
         if (_oracleAdapter == address(0)) revert ZeroAddress();
         oracleAdapter = IOracleAdapter(_oracleAdapter);
     }
 
+    /// @notice Point sync sink to a new feed contract.
+    /// @param _simplePriceFeed New `SimplePriceFeed` address.
     function setSimplePriceFeed(address _simplePriceFeed) external onlyOwner {
         if (_simplePriceFeed == address(0)) revert ZeroAddress();
         simplePriceFeed = ISimplePriceFeed(_simplePriceFeed);
@@ -126,6 +157,7 @@ contract PriceSync is Ownable {
 
     // ─── Internal ────────────────────────────────────────────────
 
+    /// @dev Read `oracleAdapter.getPrice` and `setPrice` on GMX feed for `gmxToken`.
     function _syncOne(bytes32 assetId, address gmxToken) internal {
         (uint256 price,) = oracleAdapter.getPrice(assetId);
         simplePriceFeed.setPrice(gmxToken, price);

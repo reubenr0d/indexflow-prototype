@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useReadContract } from "wagmi";
+import { useChainId } from "wagmi";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +12,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultState } from "@/hooks/usePerpReader";
 import { useOpenPosition, useClosePosition } from "@/hooks/useVaultAccounting";
-import { formatUSDC, formatAddress, parseUSDCInput } from "@/lib/format";
+import { usePricingExecutionQuote, ZERO_BYTES32 } from "@/hooks/usePricingQuote";
+import { formatUSDC, formatAddress, parseUSDCInput, formatPrice, formatBps } from "@/lib/format";
+import { OracleAdapterABI } from "@/abi/contracts";
+import { getContracts } from "@/config/contracts";
+import { REFETCH_INTERVAL } from "@/lib/constants";
 import { showToast } from "@/components/ui/toast";
 import { type Address } from "viem";
 import { stringToHex } from "viem";
@@ -138,6 +144,32 @@ function OpenPositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addres
   const [size, setSize] = useState("");
   const [collateral, setCollateral] = useState("");
 
+  const chainId = useChainId();
+  const { oracleAdapter } = getContracts(chainId);
+
+  const assetId =
+    asset.trim().length > 0
+      ? (stringToHex(asset.trim(), { size: 32 }) as `0x${string}`)
+      : undefined;
+  const sizeUsdcAtoms = size ? parseUSDCInput(size) : 0n;
+
+  const { data: oracleTuple } = useReadContract({
+    address: oracleAdapter,
+    abi: OracleAdapterABI,
+    functionName: "getPrice",
+    args: [assetId ?? ZERO_BYTES32],
+    query: { enabled: Boolean(assetId), refetchInterval: REFETCH_INTERVAL },
+  });
+  const oraclePrice =
+    oracleTuple !== undefined ? (oracleTuple as [bigint, bigint])[0] : undefined;
+
+  const quote = usePricingExecutionQuote({
+    assetId,
+    sizeUsdcAtoms,
+    isLong: side === "long",
+    enabled: Boolean(assetId),
+  });
+
   const { openPosition, receipt, isPending } = useOpenPosition();
 
   useEffect(() => {
@@ -189,6 +221,42 @@ function OpenPositionForm({ vaults, onSuccess }: { vaults: Array<{ vault: Addres
           <Input type="number" placeholder="0.00" value={collateral} onChange={(e) => setCollateral(e.target.value)} />
         </div>
       </div>
+
+      {assetId && (
+        <div className="mt-6 rounded-xl border border-app-border bg-app-surface-hover/40 px-4 py-3 text-sm">
+          <p className="mb-2 font-medium text-app-text">Indicative pricing (PricingEngine)</p>
+          <p className="mb-3 text-xs text-app-muted">
+            Oracle mid vs size-scaled impact vs USDC pool liquidity. GMX may fill differently at execution.
+          </p>
+          {quote.isStale ? (
+            <p className="text-app-danger">Oracle is stale — refresh prices before trading.</p>
+          ) : quote.isLoading ? (
+            <p className="text-app-muted">Loading quote…</p>
+          ) : quote.error ? (
+            <p className="text-app-muted">Quote unavailable (check PricingEngine address on this chain).</p>
+          ) : (
+            <dl className="grid gap-2 font-mono text-xs sm:grid-cols-2">
+              <div className="flex justify-between gap-2 sm:col-span-2">
+                <dt className="text-app-muted">Oracle mid</dt>
+                <dd className="text-app-text">{oraclePrice !== undefined ? formatPrice(oraclePrice) : "—"}</dd>
+              </div>
+              {sizeUsdcAtoms > 0n && quote.impactBps !== undefined && (
+                <div className="flex justify-between gap-2 sm:col-span-2">
+                  <dt className="text-app-muted">Model impact (bps)</dt>
+                  <dd className="text-app-text">{formatBps(quote.impactBps)}</dd>
+                </div>
+              )}
+              <div className="flex justify-between gap-2 sm:col-span-2">
+                <dt className="text-app-muted">{side === "long" ? "Long" : "Short"} execution (indicative)</dt>
+                <dd className="text-app-text">
+                  {quote.executionPrice !== undefined ? formatPrice(quote.executionPrice) : "—"}
+                </dd>
+              </div>
+            </dl>
+          )}
+        </div>
+      )}
+
       <Button
         className="mt-6 w-full"
         size="lg"

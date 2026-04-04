@@ -22,15 +22,15 @@ contract YieldToken is IERC20, IYieldToken {
 
     address public gov;
 
-    mapping (address => uint256) public balances;
-    mapping (address => mapping (address => uint256)) public allowances;
+    mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowances;
 
     address[] public yieldTrackers;
-    mapping (address => bool) public nonStakingAccounts;
-    mapping (address => bool) public admins;
+    mapping(address => bool) public nonStakingAccounts;
+    mapping(address => bool) public admins;
 
     bool public inWhitelistMode;
-    mapping (address => bool) public whitelistedHandlers;
+    mapping(address => bool) public whitelistedHandlers;
 
     modifier onlyGov() {
         require(msg.sender == gov, "YieldToken: forbidden");
@@ -142,7 +142,8 @@ contract YieldToken is IERC20, IYieldToken {
     }
 
     function transferFrom(address _sender, address _recipient, uint256 _amount) external override returns (bool) {
-        uint256 nextAllowance = allowances[_sender][msg.sender].sub(_amount, "YieldToken: transfer amount exceeds allowance");
+        uint256 nextAllowance =
+            allowances[_sender][msg.sender].sub(_amount, "YieldToken: transfer amount exceeds allowance");
         _approve(_sender, msg.sender, nextAllowance);
         _transfer(_sender, _recipient, _amount);
         return true;
@@ -199,7 +200,7 @@ contract YieldToken is IERC20, IYieldToken {
             nonStakingSupply = nonStakingSupply.add(_amount);
         }
 
-        emit Transfer(_sender, _recipient,_amount);
+        emit Transfer(_sender, _recipient, _amount);
     }
 
     function _approve(address _owner, address _spender, uint256 _amount) private {

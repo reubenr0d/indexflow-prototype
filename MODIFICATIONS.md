@@ -18,29 +18,27 @@ This document tracks all changes made to the forked GMX v1 contracts and the new
 | `Vault.sol` | **Modified** | Core position logic. `_validateTokens` relaxed to allow stable-collateral longs (USDC collateral for any index token). |
 | `VaultUtils.sol` | Kept | Fee calculations and validation. |
 | `SimplePriceFeed.sol` | **New** | Minimal `IVaultPriceFeed` implementation storing per-token prices, set by gov/keeper. Bridges OracleAdapter to GMX Vault. |
-| `VaultPriceFeed.sol` | Kept as reference | Replaced by `SimplePriceFeed.sol` for production use. |
 | `ShortsTracker.sol` | Kept | Global short tracking, mostly unchanged. |
 | `Router.sol` | Kept | Trade entry point. |
 | `BasePositionManager.sol` | Kept | Position management base. |
 | `VaultErrorController.sol` | Kept | Error code management. |
 | `PositionUtils.sol` | Kept | Position utility functions. |
 
-### Oracle (`src/gmx/oracle/`)
-
-| Contract | Status | Notes |
-|---|---|---|
-| `FastPriceFeed.sol` | Kept as reference | Replaced by `OracleAdapter.sol` for production. |
-| `FastPriceEvents.sol` | Kept | Event definitions. |
-
 ### Libraries (`src/gmx/libraries/`)
 
-All math, token, and utility libraries kept unchanged for GMX contract compatibility.
+Only libraries required by kept contracts remain: `SafeMath`, `SafeERC20`, `IERC20`, `Address`, `ReentrancyGuard`, `Context`. Unused vendored OZ subtrees (ERC721, ERC20, Ownable, introspection, Strings, EnumerableMap/Set) and duplicate root-level math files were removed.
 
 ### Access (`src/gmx/access/`)
 
 | Contract | Status | Notes |
 |---|---|---|
 | `Governable.sol` | Kept | Used by GMX contracts internally. |
+
+### Peripherals (`src/gmx/peripherals/`)
+
+| Contract | Status | Notes |
+|---|---|---|
+| `Reader.sol` | **Trimmed** | Stripped functions for staking, vesting, and AMM pair info. Kept vault/position/price read helpers. |
 
 ### Tokens (`src/gmx/tokens/`)
 
@@ -50,6 +48,8 @@ All math, token, and utility libraries kept unchanged for GMX contract compatibi
 | `BaseToken.sol` | Kept | Base token implementation. |
 | `MintableBaseToken.sol` | Kept | Dependency. |
 | `YieldToken.sol` | Kept | Dependency. |
+
+Unused token implementations (`WETH.sol`, `Token.sol`) and interfaces (`IDistributor`, `IBridge`, `IGLP`) were removed. Only interfaces required by kept contracts remain.
 
 ---
 
@@ -65,6 +65,12 @@ All math, token, and utility libraries kept unchanged for GMX contract compatibi
 | Referral system | Not needed |
 | Vesting contracts | Not needed |
 | Governance Timelock | Simplified to Ownable |
+| `VaultPriceFeed.sol` | Replaced by `SimplePriceFeed.sol`; reference copy removed (see upstream repo) |
+| `FastPriceFeed.sol` / `FastPriceEvents.sol` | Replaced by `OracleAdapter.sol`; reference copies removed |
+| Oracle interfaces (`IPriceFeed`, `ISecondaryPriceFeed`, `IChainlinkFlags`, `IPyth`, `IPythEvents`, `PythStructs`, `IFastPriceFeed`, `IFastPriceEvents`) | Only used by removed reference contracts |
+| AMM interfaces (`IPancakeFactory`, `IPancakePair`, `IPancakeRouter`) | PancakeSwap integration not used |
+| Access interfaces (`IAdmin`, `IGovRequester`) | Governance simplified |
+| Staking interfaces (`IVester`, `IRewardRouterV2`, `IRewardTracker`, `IRewardDistributor`, `IExternalHandler`) | Staking stripped |
 
 ---
 

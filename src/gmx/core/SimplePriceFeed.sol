@@ -71,8 +71,13 @@ contract SimplePriceFeed is IVaultPriceFeed {
         address _token,
         bool _maximise,
         bool, /* _includeAmmPrice */
-        bool  /* _useSwapPricing */
-    ) public view override returns (uint256) {
+        bool /* _useSwapPricing */
+    )
+        public
+        view
+        override
+        returns (uint256)
+    {
         uint256 price = prices[_token];
         require(price > 0, "SimplePriceFeed: no price");
 
@@ -102,7 +107,9 @@ contract SimplePriceFeed is IVaultPriceFeed {
     function setPriceSampleSpace(uint256) external override {}
     function setMaxStrictPriceDeviation(uint256) external override {}
 
-    function getAmmPrice(address) external view override returns (uint256) { return 0; }
+    function getAmmPrice(address) external view override returns (uint256) {
+        return 0;
+    }
 
     function getLatestPrimaryPrice(address _token) external view override returns (uint256) {
         return prices[_token];

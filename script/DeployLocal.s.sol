@@ -35,8 +35,7 @@ contract DeployLocal is Script {
     bytes32 constant XAG = keccak256("XAG");
 
     function run() external {
-        uint256 deployerPrivateKey =
-            uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
+        uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
         if (vm.envExists("PRIVATE_KEY")) {
             deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         }
@@ -80,12 +79,8 @@ contract DeployLocal is Script {
         OracleAdapter oracleAdapter = new OracleAdapter(deployer);
         oracleAdapter.setKeeper(deployer, true);
 
-        oracleAdapter.configureAsset(
-            XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8
-        );
-        oracleAdapter.configureAsset(
-            XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8
-        );
+        oracleAdapter.configureAsset(XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracleAdapter.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracleAdapter.submitPrice(XAU, 200_000_000_000);
         oracleAdapter.submitPrice(XAG, 2_500_000_000);
 
@@ -101,8 +96,7 @@ contract DeployLocal is Script {
         fundingRateManager.mapAssetToken(XAU, address(gold));
         fundingRateManager.mapAssetToken(XAG, address(silver));
 
-        PerpReader perpReader =
-            new PerpReader(address(gmxVault), address(oracleAdapter), address(vaultAccounting));
+        PerpReader perpReader = new PerpReader(address(gmxVault), address(oracleAdapter), address(vaultAccounting));
 
         PriceSync priceSync = new PriceSync(address(oracleAdapter), pfAddr, deployer);
         priceFeed.setKeeper(address(priceSync), true);

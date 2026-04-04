@@ -34,9 +34,9 @@ contract RiskLimitsTest is Test {
             GOLD,
             address(0), // no feed address needed for CustomRelayer
             IOracleAdapter.FeedType.CustomRelayer,
-            3600,  // staleness threshold
-            5000,  // deviation bps (50% – generous for tests)
-            8      // decimals
+            3600, // staleness threshold
+            5000, // deviation bps (50% – generous for tests)
+            8 // decimals
         );
         oracle.submitPrice(GOLD, 2000e8); // $2000
 
@@ -56,25 +56,19 @@ contract RiskLimitsTest is Test {
 
     function test_setMaxOpenInterest_onlyOwner() public {
         vm.prank(nonOwner);
-        vm.expectRevert(
-            abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner)
-        );
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
         accounting.setMaxOpenInterest(address(basket), 1000e6);
     }
 
     function test_setMaxPositionSize_onlyOwner() public {
         vm.prank(nonOwner);
-        vm.expectRevert(
-            abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner)
-        );
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
         accounting.setMaxPositionSize(address(basket), 500e6);
     }
 
     function test_setPaused_onlyOwner() public {
         vm.prank(nonOwner);
-        vm.expectRevert(
-            abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner)
-        );
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, nonOwner));
         accounting.setPaused(true);
     }
 

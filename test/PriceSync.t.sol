@@ -38,7 +38,7 @@ contract PriceSyncTest is Test {
         oracle.configureAsset(XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracle.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracle.submitPrice(XAU, 200_000_000_000); // $2000
-        oracle.submitPrice(XAG, 2_500_000_000);   // $25
+        oracle.submitPrice(XAG, 2_500_000_000); // $25
 
         feed = new MockSimplePriceFeed();
 

@@ -11,15 +11,19 @@ import { useChainId } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { useOracleAssetPrice, useOracleIsStale } from "@/hooks/useOracle";
-import { formatPrice, formatRelativeTime, formatAssetId } from "@/lib/format";
+import { usePoolLiquidityUsd1e30, usePricingExecutionQuoteBothSides } from "@/hooks/usePricingQuote";
+import { formatPrice, formatRelativeTime, formatAssetId, formatBps, parseUSDCInput } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { Search, Radio } from "lucide-react";
 
 export default function PricesPage() {
   const [search, setSearch] = useState("");
+  const [notional, setNotional] = useState("");
   const chainId = useChainId();
   const { oracleAdapter } = getContracts(chainId);
+  const { liquidityUsd1e30, poolLoading } = usePoolLiquidityUsd1e30();
+  const notionalAtoms = notional ? parseUSDCInput(notional) : 0n;
 
   const { data: assetCount, isLoading } = useReadContract({
     address: oracleAdapter,
@@ -38,7 +42,7 @@ export default function PricesPage() {
             Live Prices
           </h1>
           <p className="mt-1 text-sm text-app-muted">
-            Oracle prices refreshed every 15 seconds
+            Oracle mid prices; optional notional shows PricingEngine execution (pool-liquidity-aware).
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-md border border-app-border bg-app-accent-dim px-3 py-1.5">
@@ -47,8 +51,8 @@ export default function PricesPage() {
         </div>
       </div>
 
-      <div className="mb-6">
-        <div className="relative">
+      <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-app-muted" />
           <Input
             placeholder="Search assets..."
@@ -57,7 +61,21 @@ export default function PricesPage() {
             className="pl-10"
           />
         </div>
+        <div className="w-full sm:w-56">
+          <label className="mb-1 block text-xs font-medium uppercase tracking-wide text-app-muted">
+            Notional (USDC)
+          </label>
+          <Input
+            placeholder="e.g. 100000"
+            value={notional}
+            onChange={(e) => setNotional(e.target.value)}
+            className="font-mono"
+          />
+        </div>
       </div>
+      {poolLoading && notionalAtoms > 0n && (
+        <p className="mb-4 text-xs text-app-muted">Loading pool liquidity for impact…</p>
+      )}
 
       {isLoading ? (
         <Card>
@@ -72,7 +90,13 @@ export default function PricesPage() {
         <Card>
           <div className="divide-y divide-app-border">
             {Array.from({ length: count }).map((_, i) => (
-              <AssetPriceRow key={i} index={i} search={search} />
+              <AssetPriceRow
+                key={i}
+                index={i}
+                search={search}
+                notionalUsdcAtoms={notionalAtoms}
+                liquidityUsd1e30={liquidityUsd1e30}
+              />
             ))}
           </div>
         </Card>
@@ -85,7 +109,17 @@ export default function PricesPage() {
   );
 }
 
-function AssetPriceRow({ index, search }: { index: number; search: string }) {
+function AssetPriceRow({
+  index,
+  search,
+  notionalUsdcAtoms,
+  liquidityUsd1e30,
+}: {
+  index: number;
+  search: string;
+  notionalUsdcAtoms: bigint;
+  liquidityUsd1e30: bigint;
+}) {
   const chainId = useChainId();
   const { oracleAdapter } = getContracts(chainId);
 
@@ -100,6 +134,13 @@ function AssetPriceRow({ index, search }: { index: number; search: string }) {
   const id = assetId as `0x${string}` | undefined;
   const { data: priceData } = useOracleAssetPrice(id ?? "0x0000000000000000000000000000000000000000000000000000000000000000");
   const { data: isStale } = useOracleIsStale(id ?? "0x0000000000000000000000000000000000000000000000000000000000000000");
+
+  const pe = usePricingExecutionQuoteBothSides({
+    assetId: id,
+    sizeUsdcAtoms: notionalUsdcAtoms,
+    liquidityUsd1e30,
+    enabled: notionalUsdcAtoms > 0n,
+  });
 
   if (!id) return null;
 
@@ -120,13 +161,29 @@ function AssetPriceRow({ index, search }: { index: number; search: string }) {
         <StatusDot status={status} />
         <span className="font-medium text-app-text">{name}</span>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
         <span className="text-xs text-app-muted">
           {timestamp > 0 ? formatRelativeTime(timestamp) : "--"}
         </span>
-        <span className="w-28 text-right font-mono text-sm font-medium text-app-text">
-          {formatPrice(price)}
-        </span>
+        <div className="text-right">
+          <span className="block font-mono text-sm font-medium text-app-text">{formatPrice(price)}</span>
+          {notionalUsdcAtoms > 0n && (
+            <span className="mt-0.5 block max-w-[14rem] text-right text-[10px] leading-tight text-app-muted sm:max-w-xs">
+              {pe.isStale ? (
+                "Stale — no model quote"
+              ) : pe.isLoading ? (
+                "Model quote…"
+              ) : pe.error || !pe.canQuery ? (
+                "Model quote n/a"
+              ) : pe.execLong !== undefined && pe.execShort !== undefined ? (
+                <>
+                  L {formatPrice(pe.execLong)} / S {formatPrice(pe.execShort)}
+                  {pe.impactBps !== undefined && ` · ${formatBps(pe.impactBps)} impact`}
+                </>
+              ) : null}
+            </span>
+          )}
+        </div>
       </div>
     </motion.div>
   );

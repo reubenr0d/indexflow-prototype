@@ -6,8 +6,7 @@ import "./interfaces/IUSDG.sol";
 import "./YieldToken.sol";
 
 contract USDG is YieldToken, IUSDG {
-
-    mapping (address => bool) public vaults;
+    mapping(address => bool) public vaults;
 
     modifier onlyVault() {
         require(vaults[msg.sender], "USDG: forbidden");

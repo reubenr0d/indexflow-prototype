@@ -6,28 +6,44 @@ import {IOracleAdapter} from "./interfaces/IOracleAdapter.sol";
 
 /// @title OracleAdapter
 /// @notice Unified oracle for equities, commodities, and crypto assets.
-/// Supports Chainlink feeds and custom keeper-relayed prices with staleness
-/// checks, deviation circuit breakers, and multi-source aggregation.
+/// @dev Supports Chainlink feeds and custom keeper-relayed prices with staleness checks and deviation limits.
+/// All returned prices are normalized to `PRICE_PRECISION` (1e30). Custom relayer submissions compare against
+/// the last stored price for deviation; Chainlink paths read `latestRoundData` each call.
 contract OracleAdapter is IOracleAdapter, Ownable {
+    /// @notice Target internal price scalar (30 decimals).
     uint256 public constant PRICE_PRECISION = 1e30;
+    /// @notice Basis points denominator for deviation math.
     uint256 public constant BPS = 10_000;
 
     mapping(bytes32 => AssetConfig) internal _assetConfigs;
+    /// @notice Last submitted price per asset (custom relayer); also used as deviation baseline after first write.
     mapping(bytes32 => PriceData) internal _prices;
+    /// @notice Addresses allowed to call `submitPrice` / `submitPrices` (owner is always allowed).
     mapping(address => bool) public keepers;
 
+    /// @notice All asset ids ever configured while active (append-only; deactivated ids remain listed).
     bytes32[] public assetList;
 
+    /// @notice Emitted when `configureAsset` creates or updates an asset.
     event AssetConfigured(bytes32 indexed assetId, FeedType feedType, address feedAddress);
+    /// @notice Emitted when `deactivateAsset` runs.
     event AssetRemoved(bytes32 indexed assetId);
+    /// @notice Emitted on successful custom relayer write.
     event PriceUpdated(bytes32 indexed assetId, uint256 price, uint256 timestamp);
+    /// @notice Emitted when `setKeeper` runs.
     event KeeperUpdated(address indexed keeper, bool active);
 
+    /// @notice Custom relayer path had no stored price yet where required.
     error AssetNotFound(bytes32 assetId);
+    /// @notice Asset missing or `active` false.
     error AssetNotActive(bytes32 assetId);
+    /// @notice Read path detected stale data (reserved for stricter modes).
     error StalePrice(bytes32 assetId, uint256 lastUpdate, uint256 threshold);
+    /// @notice Custom submission moved beyond `deviationBps` vs last stored price.
     error DeviationTooLarge(bytes32 assetId, uint256 oldPrice, uint256 newPrice, uint256 maxDeviationBps);
+    /// @notice Zero price not allowed.
     error InvalidPrice();
+    /// @notice Caller is not keeper or owner.
     error Unauthorized();
 
     modifier onlyKeeper() {
@@ -35,16 +51,26 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         _;
     }
 
+    /// @param _owner Ownable admin.
     constructor(address _owner) Ownable(_owner) {}
 
     // ─── Admin ───────────────────────────────────────────────────
 
+    /// @notice Authorize or revoke a keeper for custom price submission.
+    /// @param keeper Address to toggle.
+    /// @param active Whether keeper may submit.
     function setKeeper(address keeper, bool active) external onlyOwner {
         keepers[keeper] = active;
         emit KeeperUpdated(keeper, active);
     }
 
     /// @notice Configure or update an asset feed.
+    /// @param assetId Logical asset key used by basket and perp layers.
+    /// @param feedAddress Chainlink aggregator address, or placeholder for custom relayer.
+    /// @param feedType Chainlink (read feed) vs CustomRelayer (keeper writes).
+    /// @param stalenessThreshold Max age in seconds before `isStale` is true.
+    /// @param deviationBps Max relative change (BPS) between consecutive custom submissions.
+    /// @param decimals_ Answer decimals from the feed (or off-chain source) before normalization to 1e30.
     function configureAsset(
         bytes32 assetId,
         address feedAddress,
@@ -71,6 +97,8 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         emit AssetConfigured(assetId, feedType, feedAddress);
     }
 
+    /// @notice Mark asset inactive; reads revert `AssetNotActive`.
+    /// @param assetId Asset to deactivate.
     function deactivateAsset(bytes32 assetId) external onlyOwner {
         if (!_assetConfigs[assetId].active) revert AssetNotFound(assetId);
         _assetConfigs[assetId].active = false;
@@ -80,6 +108,9 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     // ─── Price Submission (Custom Relayer) ────────────────────────
 
     /// @notice Submit a price update for a custom-relayed asset.
+    /// @param assetId Configured custom asset id.
+    /// @param price Raw price in `decimals_` from config (then normalized).
+    /// @dev Reverts if feed type is not CustomRelayer or deviation vs last price is too large.
     function submitPrice(bytes32 assetId, uint256 price) external onlyKeeper {
         AssetConfig memory cfg = _assetConfigs[assetId];
         if (!cfg.active) revert AssetNotActive(assetId);
@@ -90,19 +121,15 @@ contract OracleAdapter is IOracleAdapter, Ownable {
 
         _validateDeviation(assetId, normalizedPrice, cfg.deviationBps);
 
-        _prices[assetId] = PriceData({
-            price: normalizedPrice,
-            timestamp: block.timestamp
-        });
+        _prices[assetId] = PriceData({price: normalizedPrice, timestamp: block.timestamp});
 
         emit PriceUpdated(assetId, normalizedPrice, block.timestamp);
     }
 
-    /// @notice Batch submit prices for multiple assets.
-    function submitPrices(
-        bytes32[] calldata assetIds,
-        uint256[] calldata prices_
-    ) external onlyKeeper {
+    /// @notice Batch submit prices for multiple custom-relayed assets.
+    /// @param assetIds Parallel array of asset ids.
+    /// @param prices_ Parallel array of raw prices.
+    function submitPrices(bytes32[] calldata assetIds, uint256[] calldata prices_) external onlyKeeper {
         require(assetIds.length == prices_.length, "Length mismatch");
 
         for (uint256 i = 0; i < assetIds.length; i++) {
@@ -115,10 +142,7 @@ contract OracleAdapter is IOracleAdapter, Ownable {
 
             _validateDeviation(assetIds[i], normalizedPrice, cfg.deviationBps);
 
-            _prices[assetIds[i]] = PriceData({
-                price: normalizedPrice,
-                timestamp: block.timestamp
-            });
+            _prices[assetIds[i]] = PriceData({price: normalizedPrice, timestamp: block.timestamp});
 
             emit PriceUpdated(assetIds[i], normalizedPrice, block.timestamp);
         }
@@ -126,7 +150,10 @@ contract OracleAdapter is IOracleAdapter, Ownable {
 
     // ─── Price Reading ───────────────────────────────────────────
 
-    /// @notice Get the latest price for an asset. Reads from Chainlink or stored keeper price.
+    /// @notice Latest price: Chainlink round data or last keeper price for custom assets.
+    /// @param assetId Asset id.
+    /// @return price Normalized to 1e30.
+    /// @return timestamp Chainlink `updatedAt` or last submission time.
     function getPrice(bytes32 assetId) external view override returns (uint256 price, uint256 timestamp) {
         AssetConfig memory cfg = _assetConfigs[assetId];
         if (!cfg.active) revert AssetNotActive(assetId);
@@ -140,6 +167,9 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         return (pd.price, pd.timestamp);
     }
 
+    /// @notice Batch read; each entry uses same rules as `getPrice`.
+    /// @param assetIds Asset ids.
+    /// @return result Populated `PriceData` array.
     function getPrices(bytes32[] calldata assetIds) external view override returns (PriceData[] memory result) {
         result = new PriceData[](assetIds.length);
         for (uint256 i = 0; i < assetIds.length; i++) {
@@ -155,6 +185,9 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         }
     }
 
+    /// @notice True if last update is older than `stalenessThreshold` or asset inactive.
+    /// @param assetId Asset id.
+    /// @return Whether data is considered stale.
     function isStale(bytes32 assetId) external view override returns (bool) {
         AssetConfig memory cfg = _assetConfigs[assetId];
         if (!cfg.active) return true;
@@ -169,20 +202,25 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         return (block.timestamp - lastUpdate) > cfg.stalenessThreshold;
     }
 
+    /// @inheritdoc IOracleAdapter
     function isAssetActive(bytes32 assetId) external view override returns (bool) {
         return _assetConfigs[assetId].active;
     }
 
+    /// @inheritdoc IOracleAdapter
     function getAssetConfig(bytes32 assetId) external view override returns (AssetConfig memory) {
         return _assetConfigs[assetId];
     }
 
+    /// @notice Length of `assetList` (includes deactivated ids that were never removed from array).
+    /// @return Count of configured entries ever pushed.
     function getAssetCount() external view returns (uint256) {
         return assetList.length;
     }
 
     // ─── Internal ────────────────────────────────────────────────
 
+    /// @dev Reads `latestRoundData`, requires positive answer, normalizes to 1e30.
     function _readChainlink(AssetConfig memory cfg) internal view returns (uint256 price, uint256 timestamp) {
         // Chainlink AggregatorV3Interface.latestRoundData()
         // Returns: (roundId, answer, startedAt, updatedAt, answeredInRound)
@@ -193,6 +231,7 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         timestamp = updatedAt;
     }
 
+    /// @dev Scale up to 30 decimals when feed uses fewer.
     function _normalize(uint256 price, uint8 feedDecimals) internal pure returns (uint256) {
         if (feedDecimals < 30) {
             return price * 10 ** (30 - feedDecimals);
@@ -200,6 +239,7 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         return price;
     }
 
+    /// @dev First custom write skips check; subsequent compares relative move in BPS.
     function _validateDeviation(bytes32 assetId, uint256 newPrice, uint256 maxDeviationBps) internal view {
         PriceData memory existing = _prices[assetId];
         if (existing.price == 0) return;
@@ -217,12 +257,10 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     }
 }
 
+/// @notice Minimal Chainlink AggregatorV3 interface for price reads.
 interface IChainlinkFeed {
-    function latestRoundData() external view returns (
-        uint80 roundId,
-        int256 answer,
-        uint256 startedAt,
-        uint256 updatedAt,
-        uint80 answeredInRound
-    );
+    function latestRoundData()
+        external
+        view
+        returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound);
 }

@@ -22,7 +22,6 @@ import "../referrals/interfaces/IReferralStorage.sol";
 import "./PositionUtils.sol";
 
 contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governable {
-
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using Address for address payable;
@@ -47,10 +46,10 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
 
     address public referralStorage;
 
-    mapping (address => uint256) public feeReserves;
+    mapping(address => uint256) public feeReserves;
 
-    mapping (address => uint256) public override maxGlobalLongSizes;
-    mapping (address => uint256) public override maxGlobalShortSizes;
+    mapping(address => uint256) public override maxGlobalLongSizes;
+    mapping(address => uint256) public override maxGlobalShortSizes;
 
     event SetDepositFee(uint256 depositFee);
     event SetEthTransferGasLimit(uint256 ethTransferGasLimit);
@@ -59,26 +58,14 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
     event SetAdmin(address admin);
     event WithdrawFees(address token, address receiver, uint256 amount);
 
-    event SetMaxGlobalSizes(
-        address[] tokens,
-        uint256[] longSizes,
-        uint256[] shortSizes
-    );
+    event SetMaxGlobalSizes(address[] tokens, uint256[] longSizes, uint256[] shortSizes);
 
     event IncreasePositionReferral(
-        address account,
-        uint256 sizeDelta,
-        uint256 marginFeeBasisPoints,
-        bytes32 referralCode,
-        address referrer
+        address account, uint256 sizeDelta, uint256 marginFeeBasisPoints, bytes32 referralCode, address referrer
     );
 
     event DecreasePositionReferral(
-        address account,
-        uint256 sizeDelta,
-        uint256 marginFeeBasisPoints,
-        bytes32 referralCode,
-        address referrer
+        address account, uint256 sizeDelta, uint256 marginFeeBasisPoints, bytes32 referralCode, address referrer
     );
 
     modifier onlyAdmin() {
@@ -86,13 +73,7 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
         _;
     }
 
-    constructor(
-        address _vault,
-        address _router,
-        address _shortsTracker,
-        address _weth,
-        uint256 _depositFee
-    ) public {
+    constructor(address _vault, address _router, address _shortsTracker, address _weth, uint256 _depositFee) public {
         vault = _vault;
         router = _router;
         weth = _weth;
@@ -131,11 +112,10 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
         emit SetReferralStorage(_referralStorage);
     }
 
-    function setMaxGlobalSizes(
-        address[] memory _tokens,
-        uint256[] memory _longSizes,
-        uint256[] memory _shortSizes
-    ) external onlyAdmin {
+    function setMaxGlobalSizes(address[] memory _tokens, uint256[] memory _longSizes, uint256[] memory _shortSizes)
+        external
+        onlyAdmin
+    {
         for (uint256 i = 0; i < _tokens.length; i++) {
             address token = _tokens[i];
             maxGlobalLongSizes[token] = _longSizes[i];
@@ -147,7 +127,7 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
 
     function withdrawFees(address _token, address _receiver) external onlyAdmin {
         uint256 amount = feeReserves[_token];
-        if (amount == 0) { return; }
+        if (amount == 0) return;
 
         feeReserves[_token] = 0;
         IERC20(_token).safeTransfer(_receiver, amount);
@@ -175,31 +155,42 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
             }
         } else {
             uint256 maxGlobalShortSize = maxGlobalShortSizes[_indexToken];
-            if (maxGlobalShortSize > 0 && IVault(vault).globalShortSizes(_indexToken).add(_sizeDelta) > maxGlobalShortSize) {
+            if (
+                maxGlobalShortSize > 0
+                    && IVault(vault).globalShortSizes(_indexToken).add(_sizeDelta) > maxGlobalShortSize
+            ) {
                 revert("max shorts exceeded");
             }
         }
     }
 
-    function _increasePosition(address _account, address _collateralToken, address _indexToken, uint256 _sizeDelta, bool _isLong, uint256 _price) internal {
+    function _increasePosition(
+        address _account,
+        address _collateralToken,
+        address _indexToken,
+        uint256 _sizeDelta,
+        bool _isLong,
+        uint256 _price
+    ) internal {
         _validateMaxGlobalSize(_indexToken, _isLong, _sizeDelta);
 
         PositionUtils.increasePosition(
-            vault,
-            router,
-            shortsTracker,
-            _account,
-            _collateralToken,
-            _indexToken,
-            _sizeDelta,
-            _isLong,
-            _price
+            vault, router, shortsTracker, _account, _collateralToken, _indexToken, _sizeDelta, _isLong, _price
         );
 
         _emitIncreasePositionReferral(_account, _sizeDelta);
     }
 
-    function _decreasePosition(address _account, address _collateralToken, address _indexToken, uint256 _collateralDelta, uint256 _sizeDelta, bool _isLong, address _receiver, uint256 _price) internal returns (uint256) {
+    function _decreasePosition(
+        address _account,
+        address _collateralToken,
+        address _indexToken,
+        uint256 _collateralDelta,
+        uint256 _sizeDelta,
+        bool _isLong,
+        address _receiver,
+        uint256 _price
+    ) internal returns (uint256) {
         address _vault = vault;
 
         uint256 markPrice = _isLong ? IVault(_vault).getMinPrice(_indexToken) : IVault(_vault).getMaxPrice(_indexToken);
@@ -212,16 +203,17 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
         address timelock = IVault(_vault).gov();
 
         // should be called strictly before position is updated in Vault
-        IShortsTracker(shortsTracker).updateGlobalShortData(_account, _collateralToken, _indexToken, _isLong, _sizeDelta, markPrice, false);
+        IShortsTracker(shortsTracker)
+            .updateGlobalShortData(_account, _collateralToken, _indexToken, _isLong, _sizeDelta, markPrice, false);
 
         ITimelock(timelock).enableLeverage(_vault);
-        uint256 amountOut = IRouter(router).pluginDecreasePosition(_account, _collateralToken, _indexToken, _collateralDelta, _sizeDelta, _isLong, _receiver);
+        uint256 amountOut = IRouter(router)
+            .pluginDecreasePosition(
+                _account, _collateralToken, _indexToken, _collateralDelta, _sizeDelta, _isLong, _receiver
+            );
         ITimelock(timelock).disableLeverage(_vault);
 
-        _emitDecreasePositionReferral(
-            _account,
-            _sizeDelta
-        );
+        _emitDecreasePositionReferral(_account, _sizeDelta);
 
         return amountOut;
     }
@@ -233,7 +225,10 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
         revert("invalid _path.length");
     }
 
-    function _vaultSwap(address _tokenIn, address _tokenOut, uint256 _minOut, address _receiver) internal returns (uint256) {
+    function _vaultSwap(address _tokenIn, address _tokenOut, uint256 _minOut, address _receiver)
+        internal
+        returns (uint256)
+    {
         uint256 amountOut = IVault(vault).swap(_tokenIn, _tokenOut, _receiver);
         require(amountOut >= _minOut, "insufficient amountOut");
         return amountOut;
@@ -269,10 +264,10 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
             )
         }
 
-        if (success) { return; }
+        if (success) return;
 
         // if the transfer failed, re-wrap the token and send it to the receiver
-        _weth.deposit{ value: _amountOut }();
+        _weth.deposit{value: _amountOut}();
         _weth.transfer(address(_receiver), _amountOut);
     }
 
@@ -285,14 +280,7 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
         uint256 _sizeDelta
     ) internal returns (uint256) {
         bool shouldDeductFee = PositionUtils.shouldDeductFee(
-            vault,
-            _account,
-            _path,
-            _amountIn,
-            _indexToken,
-            _isLong,
-            _sizeDelta,
-            increasePositionBufferBps
+            vault, _account, _path, _amountIn, _indexToken, _isLong, _sizeDelta, increasePositionBufferBps
         );
 
         if (shouldDeductFee) {
@@ -308,38 +296,29 @@ contract BasePositionManager is IBasePositionManager, ReentrancyGuard, Governabl
 
     function _emitIncreasePositionReferral(address _account, uint256 _sizeDelta) internal {
         address _referralStorage = referralStorage;
-        if (_referralStorage == address(0)) { return; }
-
+        if (_referralStorage == address(0)) return;
 
         (bytes32 referralCode, address referrer) = IReferralStorage(_referralStorage).getTraderReferralInfo(_account);
-        if (referralCode == bytes32(0)) { return; }
+        if (referralCode == bytes32(0)) return;
 
         address timelock = IVault(vault).gov();
 
         emit IncreasePositionReferral(
-            _account,
-            _sizeDelta,
-            ITimelock(timelock).marginFeeBasisPoints(),
-            referralCode,
-            referrer
+            _account, _sizeDelta, ITimelock(timelock).marginFeeBasisPoints(), referralCode, referrer
         );
     }
 
     function _emitDecreasePositionReferral(address _account, uint256 _sizeDelta) internal {
         address _referralStorage = referralStorage;
-        if (_referralStorage == address(0)) { return; }
+        if (_referralStorage == address(0)) return;
 
         (bytes32 referralCode, address referrer) = IReferralStorage(_referralStorage).getTraderReferralInfo(_account);
-        if (referralCode == bytes32(0)) { return; }
+        if (referralCode == bytes32(0)) return;
 
         address timelock = IVault(vault).gov();
 
         emit DecreasePositionReferral(
-            _account,
-            _sizeDelta,
-            ITimelock(timelock).marginFeeBasisPoints(),
-            referralCode,
-            referrer
+            _account, _sizeDelta, ITimelock(timelock).marginFeeBasisPoints(), referralCode, referrer
         );
     }
 }

@@ -22,15 +22,15 @@ contract BaseToken is IERC20, IBaseToken {
 
     address public gov;
 
-    mapping (address => uint256) public balances;
-    mapping (address => mapping (address => uint256)) public allowances;
+    mapping(address => uint256) public balances;
+    mapping(address => mapping(address => uint256)) public allowances;
 
     address[] public yieldTrackers;
-    mapping (address => bool) public nonStakingAccounts;
-    mapping (address => bool) public admins;
+    mapping(address => bool) public nonStakingAccounts;
+    mapping(address => bool) public admins;
 
     bool public inPrivateTransferMode;
-    mapping (address => bool) public isHandler;
+    mapping(address => bool) public isHandler;
 
     modifier onlyGov() {
         require(msg.sender == gov, "BaseToken: forbidden");
@@ -145,7 +145,8 @@ contract BaseToken is IERC20, IBaseToken {
             _transfer(_sender, _recipient, _amount);
             return true;
         }
-        uint256 nextAllowance = allowances[_sender][msg.sender].sub(_amount, "BaseToken: transfer amount exceeds allowance");
+        uint256 nextAllowance =
+            allowances[_sender][msg.sender].sub(_amount, "BaseToken: transfer amount exceeds allowance");
         _approve(_sender, msg.sender, nextAllowance);
         _transfer(_sender, _recipient, _amount);
         return true;
@@ -202,7 +203,7 @@ contract BaseToken is IERC20, IBaseToken {
             nonStakingSupply = nonStakingSupply.add(_amount);
         }
 
-        emit Transfer(_sender, _recipient,_amount);
+        emit Transfer(_sender, _recipient, _amount);
     }
 
     function _approve(address _owner, address _spender, uint256 _amount) private {

@@ -43,7 +43,16 @@ export function Header() {
               href="/"
               className="flex items-center gap-2 font-semibold tracking-tight text-app-text"
             >
-              <span className="h-2 w-2 rounded-sm bg-app-accent ring-4 ring-app-accent/25" aria-hidden />
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 32 32"
+                className="shrink-0"
+                aria-hidden
+              >
+                <circle cx="16" cy="16" r="16" fill="currentColor" className="text-app-text" />
+                <polygon points="16,8 8,24 24,24" fill="currentColor" className="text-app-bg" />
+              </svg>
               IndexFlow
             </Link>
             <nav className="hidden items-center gap-0.5 md:flex">
