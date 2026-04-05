@@ -79,6 +79,18 @@ Basket and other layers that call `OracleAdapter` in views see fresh Chainlink d
 
 Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replaces manually sending the same transactions.
 
+**Reserve liquidity controls**
+
+- Basket owners can set a reserve target via `setMinReserveBps` to keep idle USDC available for redemptions.
+- `allocateToPerp` is reserve-aware and only allows allocations up to `getAvailableForPerpUsdc()`.
+- Anyone can add non-dilutive reserve cash via `topUpReserve(amount)` (USDC transfer, no share mint).
+
+**GMX `bufferAmounts` policy (this repo)**
+
+- `bufferAmounts` remains in the fork for compatibility.
+- This integration treats it as mostly unused and expects values to remain `0` unless you intentionally adopt swap-buffer constraints.
+- Local deploy now seeds a USDC buffer (`200,000 USDC`) in `DeployLocal.s.sol` to keep explicit swap headroom during testing.
+
 **Run one-shot sync for all supported assets (local deployment config)**
 
 ```bash

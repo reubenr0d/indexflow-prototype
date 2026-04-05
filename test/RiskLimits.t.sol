@@ -146,4 +146,28 @@ contract RiskLimitsTest is Test {
         basket.allocateToPerp(500e6);
         assertEq(basket.perpAllocated(), 500e6, "unlimited allocation should work");
     }
+
+    function test_reserveFloor_blocks_thenTopUp_enablesAllocation() public {
+        basket.setFees(0, 0);
+        basket.setMinReserveBps(8_000); // 80%
+        _fundBasket(100e6);
+
+        // Available for perp = 20e6
+        assertEq(basket.getRequiredReserveUsdc(), 80e6);
+        assertEq(basket.getAvailableForPerpUsdc(), 20e6);
+
+        vm.expectRevert("Insufficient balance");
+        basket.allocateToPerp(30e6);
+
+        // Top up reserve pool without minting shares; increases allocatable headroom
+        usdc.mint(owner, 50e6);
+        usdc.approve(address(basket), 50e6);
+        basket.topUpReserve(50e6);
+
+        assertEq(basket.getRequiredReserveUsdc(), 120e6);
+        assertEq(basket.getAvailableForPerpUsdc(), 30e6);
+
+        basket.allocateToPerp(30e6);
+        assertEq(basket.perpAllocated(), 30e6);
+    }
 }

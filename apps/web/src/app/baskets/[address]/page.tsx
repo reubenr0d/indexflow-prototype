@@ -8,7 +8,14 @@ import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import { useBasketInfo } from "@/hooks/usePerpReader";
-import { useBasketAssets, useBasketFees } from "@/hooks/useBasketVault";
+import {
+  useBasketAssets,
+  useBasketFees,
+  useMinReserveBps,
+  useRequiredReserveUsdc,
+  useAvailableForPerpUsdc,
+  useCollectedFees,
+} from "@/hooks/useBasketVault";
 import { useOracleAssetPrice, useOracleIsStale, useOracleAssetMetaMap } from "@/hooks/useOracle";
 import { useAccount } from "wagmi";
 import { useReadContract } from "wagmi";
@@ -27,6 +34,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const { data: assetsData } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const { depositFee, redeemFee } = useBasketFees(vault);
+  const { data: minReserveBps } = useMinReserveBps(vault);
+  const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
+  const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
+  const { data: collectedFees } = useCollectedFees(vault);
 
   const basketInfo = info as {
     vault: Address;
@@ -51,6 +62,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const tvl = basketInfo
     ? (basketInfo.usdcBalance ?? 0n) + (basketInfo.perpAllocated ?? 0n)
     : 0n;
+  const idleUsdc = (basketInfo?.usdcBalance ?? 0n) - ((collectedFees as bigint | undefined) ?? 0n);
+  const requiredReserve = (requiredReserveUsdc as bigint | undefined) ?? 0n;
+  const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
+  const reserveHealthy = idleUsdc >= requiredReserve;
 
   const assets = assetsData
     ? (assetsData as unknown as Array<{ result?: [string, bigint]; status: string }>)
@@ -159,6 +174,23 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               label="Redeem Fee"
               value={redeemFee !== undefined ? formatBps(redeemFee) : "--"}
             />
+          </div>
+
+          <div className="mt-6">
+            <Card className="p-5">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-app-text">Reserve Status</h3>
+                <span className={`text-xs font-semibold ${reserveHealthy ? "text-app-success" : "text-app-danger"}`}>
+                  {reserveHealthy ? "Healthy" : "Below Target"}
+                </span>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <StatCard label="Target Reserve" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} />
+                <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} />
+                <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} />
+                <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} />
+              </div>
+            </Card>
           </div>
         </div>
 

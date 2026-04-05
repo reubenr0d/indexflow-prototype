@@ -91,6 +91,8 @@ interface IGMXVault {
     function setIsLeverageEnabled(bool _isLeverageEnabled) external;
     /// @notice Enable or disable swaps.
     function setIsSwapEnabled(bool _isSwapEnabled) external;
+    /// @notice Set swap buffer amount for token (excluded from available pool for swaps).
+    function setBufferAmount(address _token, uint256 _amount) external;
 
     /// @notice Grant or revoke manager role.
     function setManager(address _manager, bool _isManager) external;
@@ -222,6 +224,8 @@ interface IGMXVault {
     function tokenBalances(address _token) external view returns (uint256);
     /// @notice USDG debt attributed to token pool.
     function usdgAmounts(address _token) external view returns (uint256);
+    /// @notice Amount reserved from swaps for token.
+    function bufferAmounts(address _token) external view returns (uint256);
 
     // ─── Pricing ──────────────────────────────────────────────────
 

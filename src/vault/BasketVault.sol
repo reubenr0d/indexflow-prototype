@@ -55,6 +55,8 @@ contract BasketVault is ReentrancyGuard, Ownable {
     uint256 public perpAllocated;
     /// @notice Max `perpAllocated`; 0 means no cap.
     uint256 public maxPerpAllocation;
+    /// @notice Minimum idle reserve target in basis points over total vault value.
+    uint256 public minReserveBps;
 
     /// @notice Human-readable basket name.
     string public name;
@@ -65,6 +67,8 @@ contract BasketVault is ReentrancyGuard, Ownable {
     event WithdrawnFromPerp(uint256 amount);
     event AssetsUpdated(uint256 assetCount);
     event FeesCollected(address indexed to, uint256 amount);
+    event ReservePolicyUpdated(uint256 minReserveBps);
+    event ReserveToppedUp(address indexed from, uint256 amount);
 
     /// @param _name Basket display name (also used for share token name).
     /// @param _usdc USDC address.
@@ -134,6 +138,14 @@ contract BasketVault is ReentrancyGuard, Ownable {
         maxPerpAllocation = cap;
     }
 
+    /// @notice Set minimum idle reserve target used to gate `allocateToPerp`.
+    /// @param bps Reserve target in basis points (0..10000).
+    function setMinReserveBps(uint256 bps) external onlyOwner {
+        require(bps <= BPS_DENOMINATOR, "Invalid reserve bps");
+        minReserveBps = bps;
+        emit ReservePolicyUpdated(bps);
+    }
+
     // ─── Deposit / Redeem ────────────────────────────────────────
 
     /// @notice Deposit USDC and receive basket shares at current oracle basket price.
@@ -194,7 +206,7 @@ contract BasketVault is ReentrancyGuard, Ownable {
     /// @dev Requires `vaultAccounting` set; respects `maxPerpAllocation` if nonzero.
     function allocateToPerp(uint256 amount) external onlyOwner nonReentrant {
         require(address(vaultAccounting) != address(0), "VaultAccounting not set");
-        uint256 available = usdc.balanceOf(address(this)) - collectedFees;
+        uint256 available = getAvailableForPerpUsdc();
         require(amount <= available, "Insufficient balance");
 
         if (maxPerpAllocation > 0) {
@@ -218,6 +230,14 @@ contract BasketVault is ReentrancyGuard, Ownable {
         perpAllocated -= amount;
 
         emit WithdrawnFromPerp(amount);
+    }
+
+    /// @notice Add USDC to basket reserve without minting shares.
+    /// @param amount USDC amount to transfer in.
+    function topUpReserve(uint256 amount) external nonReentrant {
+        require(amount > 0, "Amount required");
+        usdc.safeTransferFrom(msg.sender, address(this), amount);
+        emit ReserveToppedUp(msg.sender, amount);
     }
 
     // ─── Fee Collection ──────────────────────────────────────────
@@ -254,6 +274,21 @@ contract BasketVault is ReentrancyGuard, Ownable {
         return (totalValue * PRICE_PRECISION) / totalSupply;
     }
 
+    /// @notice Required idle reserve based on current vault value and `minReserveBps`.
+    /// @return Reserve target in USDC units (6 decimals).
+    function getRequiredReserveUsdc() public view returns (uint256) {
+        return (_totalVaultValue() * minReserveBps) / BPS_DENOMINATOR;
+    }
+
+    /// @notice Max additional USDC that may be allocated to perp while preserving reserve target.
+    /// @return Amount in USDC units (6 decimals).
+    function getAvailableForPerpUsdc() public view returns (uint256) {
+        uint256 idleUsdc = _idleUsdcExcludingFees();
+        uint256 requiredReserve = getRequiredReserveUsdc();
+        if (idleUsdc <= requiredReserve) return 0;
+        return idleUsdc - requiredReserve;
+    }
+
     /// @notice Number of basket constituents.
     /// @return Length of `assets`.
     function getAssetCount() external view returns (uint256) {
@@ -271,7 +306,13 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     /// @dev USDC balance not reserved as fees plus book value sent to perp.
     function _totalVaultValue() internal view returns (uint256) {
-        uint256 usdcBalance = usdc.balanceOf(address(this)) - collectedFees + perpAllocated;
-        return usdcBalance;
+        return _idleUsdcExcludingFees() + perpAllocated;
+    }
+
+    /// @dev Idle USDC held by the basket excluding fee reserve.
+    function _idleUsdcExcludingFees() internal view returns (uint256) {
+        uint256 balance = usdc.balanceOf(address(this));
+        if (balance <= collectedFees) return 0;
+        return balance - collectedFees;
     }
 }

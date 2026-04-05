@@ -11,6 +11,7 @@ type ContractAddresses = {
   pricingEngine: Address;
   fundingRateManager: Address;
   usdc: Address;
+  gmxVault: Address;
 };
 
 type LocalDeploymentFile = {
@@ -21,6 +22,7 @@ type LocalDeploymentFile = {
   pricingEngine: string;
   fundingRateManager: string;
   usdc: string;
+  gmxVault: string;
 };
 
 const ld = localDeployment as LocalDeploymentFile;
@@ -34,6 +36,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     pricingEngine: ld.pricingEngine as Address,
     fundingRateManager: ld.fundingRateManager as Address,
     usdc: ld.usdc as Address,
+    gmxVault: ld.gmxVault as Address,
   },
   [arbitrum.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -43,6 +46,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
     fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
     usdc: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" as Address,
+    gmxVault: "0x0000000000000000000000000000000000000008" as Address,
   },
   [arbitrumSepolia.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -52,6 +56,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
     fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
     usdc: "0x0000000000000000000000000000000000000007" as Address,
+    gmxVault: "0x0000000000000000000000000000000000000008" as Address,
   },
 };
 

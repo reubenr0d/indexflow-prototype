@@ -159,3 +159,71 @@ export function useSetMaxPerpAllocation() {
 
   return { setMaxPerpAllocation, hash, receipt, ...rest };
 }
+
+export function useMinReserveBps(vault: Address) {
+  return useReadContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "minReserveBps",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useRequiredReserveUsdc(vault: Address) {
+  return useReadContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "getRequiredReserveUsdc",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useAvailableForPerpUsdc(vault: Address) {
+  return useReadContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "getAvailableForPerpUsdc",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useCollectedFees(vault: Address) {
+  return useReadContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "collectedFees",
+    query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useSetMinReserveBps() {
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setMinReserveBps = (vault: Address, bps: bigint) => {
+    writeContract({
+      address: vault,
+      abi: BasketVaultABI,
+      functionName: "setMinReserveBps",
+      args: [bps],
+    });
+  };
+
+  return { setMinReserveBps, hash, receipt, ...rest };
+}
+
+export function useTopUpReserve() {
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const topUpReserve = (vault: Address, amount: bigint) => {
+    writeContract({
+      address: vault,
+      abi: BasketVaultABI,
+      functionName: "topUpReserve",
+      args: [amount],
+    });
+  };
+
+  return { topUpReserve, hash, receipt, ...rest };
+}

@@ -7,14 +7,28 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
-import { useBasketAssets, useBasketFees, useMaxPerpAllocation, useSetMaxPerpAllocation } from "@/hooks/useBasketVault";
+import {
+  useBasketAssets,
+  useBasketFees,
+  useMaxPerpAllocation,
+  useSetMaxPerpAllocation,
+  useMinReserveBps,
+  useRequiredReserveUsdc,
+  useAvailableForPerpUsdc,
+  useCollectedFees,
+  useSetMinReserveBps,
+  useTopUpReserve,
+  useUSDCAllowance,
+  useApproveUSDC,
+} from "@/hooks/useBasketVault";
 import { useOracleAssetMetaMap } from "@/hooks/useOracle";
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId } from "wagmi";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
 import { showToast } from "@/components/ui/toast";
 import { type Address } from "viem";
 import { parseUSDCInput } from "@/lib/format";
+import { getContracts } from "@/config/contracts";
 
 export default function AdminBasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -23,8 +37,14 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const { data: info } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
   const { depositFee, redeemFee } = useBasketFees(vault);
+  const { data: minReserveBps } = useMinReserveBps(vault);
+  const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
+  const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
+  const { data: collectedFees } = useCollectedFees(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const { data: assetsData } = useBasketAssets(vault);
+  const chainId = useChainId();
+  const { usdc } = getContracts(chainId);
 
   const basketInfo = info as {
     name: string;
@@ -43,6 +63,10 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   } | undefined;
 
   const tvl = (basketInfo?.usdcBalance ?? 0n) + (basketInfo?.perpAllocated ?? 0n);
+  const idleUsdc = (basketInfo?.usdcBalance ?? 0n) - ((collectedFees as bigint | undefined) ?? 0n);
+  const requiredReserve = (requiredReserveUsdc as bigint | undefined) ?? 0n;
+  const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
+  const reserveHealthy = idleUsdc >= requiredReserve;
 
   const assets = assetsData
     ? (assetsData as unknown as Array<{ result?: [string, bigint]; status: string }>)
@@ -68,6 +92,16 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
         <StatCard label="Deposit Fee" value={depositFee !== undefined ? formatBps(depositFee) : "--"} />
         <StatCard label="Redeem Fee" value={redeemFee !== undefined ? formatBps(redeemFee) : "--"} />
       </div>
+
+      <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard label="Reserve Target" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} />
+        <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} />
+        <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} />
+        <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} />
+      </div>
+      <p className={`mb-8 text-sm font-medium ${reserveHealthy ? "text-app-success" : "text-app-danger"}`}>
+        Reserve Health: {reserveHealthy ? "Healthy" : "Below Target"}
+      </p>
 
       {state?.registered && (
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -113,6 +147,10 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
         <MaxPerpAllocationCard vault={vault} />
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <ReservePolicyCard vault={vault} />
+        <ReserveTopUpCard vault={vault} usdc={usdc} />
+      </div>
+      <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <FeeCollectionCard vault={vault} />
       </div>
     </PageWrapper>
@@ -127,7 +165,6 @@ function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; curr
   useEffect(() => {
     if (receipt.isSuccess) {
       showToast("success", "Allocation updated");
-      setAmount("");
     }
   }, [receipt.isSuccess]);
 
@@ -274,6 +311,101 @@ function FeeCollectionCard({ vault }: { vault: Address }) {
         }}
       >
         Collect Fees
+      </Button>
+    </Card>
+  );
+}
+
+function ReservePolicyCard({ vault }: { vault: Address }) {
+  const [bpsInput, setBpsInput] = useState("");
+  const { data: currentBps } = useMinReserveBps(vault);
+  const { setMinReserveBps, receipt, isPending } = useSetMinReserveBps();
+
+  useEffect(() => {
+    if (receipt.isSuccess) {
+      showToast("success", "Reserve policy updated");
+    }
+  }, [receipt.isSuccess]);
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-2 text-base font-semibold text-app-text">Reserve Policy</h3>
+      <p className="mb-4 text-sm text-app-muted">
+        Current target: {formatBps((currentBps as bigint | undefined) ?? 0n)}
+      </p>
+      <Input
+        type="number"
+        min="0"
+        max="10000"
+        placeholder="BPS (0 - 10000)"
+        value={bpsInput}
+        onChange={(e) => setBpsInput(e.target.value)}
+        className="mb-3"
+      />
+      <Button
+        size="sm"
+        disabled={!bpsInput || isPending}
+        onClick={() => {
+          setMinReserveBps(vault, BigInt(bpsInput));
+          showToast("pending", "Updating reserve policy...");
+        }}
+      >
+        Set Reserve Target
+      </Button>
+    </Card>
+  );
+}
+
+function ReserveTopUpCard({ vault, usdc }: { vault: Address; usdc: Address }) {
+  const [amount, setAmount] = useState("");
+  const { address } = useAccount();
+  const { data: allowance } = useUSDCAllowance(usdc, address, vault);
+  const { approve, receipt: approveReceipt, isPending: isApproving } = useApproveUSDC();
+  const { topUpReserve, receipt: topUpReceipt, isPending: isToppingUp } = useTopUpReserve();
+
+  const parsedAmount = amount ? parseUSDCInput(amount) : 0n;
+  const needsApproval = parsedAmount > 0n && (allowance ?? 0n) < parsedAmount;
+  const isProcessing = isApproving || isToppingUp;
+
+  useEffect(() => {
+    if (approveReceipt.isSuccess) {
+      showToast("success", "USDC approved");
+    }
+  }, [approveReceipt.isSuccess]);
+
+  useEffect(() => {
+    if (topUpReceipt.isSuccess) {
+      showToast("success", "Reserve topped up");
+    }
+  }, [topUpReceipt.isSuccess]);
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-2 text-base font-semibold text-app-text">Top Up Reserve</h3>
+      <p className="mb-4 text-sm text-app-muted">
+        Transfer USDC into the vault without minting shares.
+      </p>
+      <Input
+        type="number"
+        placeholder="USDC amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="mb-3"
+      />
+      <Button
+        size="sm"
+        disabled={!address || parsedAmount === 0n || isProcessing}
+        onClick={() => {
+          if (needsApproval) {
+            approve(usdc, vault, parsedAmount);
+            showToast("pending", "Approving USDC...");
+            return;
+          }
+          topUpReserve(vault, parsedAmount);
+          showToast("pending", "Topping up reserve...");
+        }}
+      >
+        {isProcessing ? "Processing..." : needsApproval ? "Approve USDC" : "Top Up Reserve"}
       </Button>
     </Card>
   );

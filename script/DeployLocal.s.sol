@@ -10,6 +10,7 @@ import {PricingEngine} from "../src/perp/PricingEngine.sol";
 import {FundingRateManager} from "../src/perp/FundingRateManager.sol";
 import {PerpReader} from "../src/perp/PerpReader.sol";
 import {BasketFactory} from "../src/vault/BasketFactory.sol";
+import {BasketVault} from "../src/vault/BasketVault.sol";
 import {PriceSync} from "../src/perp/PriceSync.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
@@ -33,6 +34,7 @@ interface IVaultErrorController {
 contract DeployLocal is Script {
     bytes32 constant XAU = keccak256("XAU");
     bytes32 constant XAG = keccak256("XAG");
+    uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
 
     function run() external {
         uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
@@ -77,6 +79,7 @@ contract DeployLocal is Script {
         usdc.mint(deployer, 10_000_000e6);
         usdc.transfer(address(gmxVault), 1_000_000e6);
         gmxVault.directPoolDeposit(address(usdc));
+        gmxVault.setBufferAmount(address(usdc), INITIAL_USDC_BUFFER);
 
         OracleAdapter oracleAdapter = new OracleAdapter(deployer);
         oracleAdapter.setKeeper(deployer, true);
@@ -116,6 +119,7 @@ contract DeployLocal is Script {
         weights[0] = 7000;
         weights[1] = 3000;
         address demoBasket = basketFactory.createBasket("Demo Basket", assetIds, weights, 10, 10);
+        BasketVault(demoBasket).setMinReserveBps(2000); // 20%
 
         vaultAccounting.registerVault(demoBasket);
 

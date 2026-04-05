@@ -168,6 +168,69 @@ contract BasketVaultTest is Test {
         assertTrue(shares > 0);
     }
 
+    function test_setMinReserveBps_onlyOwner() public {
+        vm.prank(alice);
+        vm.expectRevert();
+        vault.setMinReserveBps(2_000);
+    }
+
+    function test_setMinReserveBps_bounds() public {
+        vm.expectRevert("Invalid reserve bps");
+        vault.setMinReserveBps(10_001);
+
+        vault.setMinReserveBps(2_000);
+        assertEq(vault.minReserveBps(), 2_000);
+    }
+
+    function test_reserveMathViews() public {
+        vault.setFees(0, 0);
+
+        vm.startPrank(alice);
+        usdc.approve(address(vault), 200e6);
+        vault.deposit(200e6);
+        vm.stopPrank();
+
+        vault.setMinReserveBps(2_000); // 20%
+
+        assertEq(vault.getRequiredReserveUsdc(), 40e6, "reserve target should be 20%");
+        assertEq(vault.getAvailableForPerpUsdc(), 160e6, "remaining idle allocation headroom");
+    }
+
+    function test_topUpReserve_increasesBalance_noShareMint() public {
+        uint256 beforeSupply = vault.shareToken().totalSupply();
+        uint256 beforeBalance = usdc.balanceOf(address(vault));
+
+        vm.startPrank(bob);
+        usdc.approve(address(vault), 1_000e6);
+        vault.topUpReserve(1_000e6);
+        vm.stopPrank();
+
+        assertEq(vault.shareToken().totalSupply(), beforeSupply, "no share mint on top-up");
+        assertEq(usdc.balanceOf(address(vault)), beforeBalance + 1_000e6, "vault receives top-up");
+    }
+
+    function test_topUpReserve_revertsWithoutAllowance() public {
+        vm.startPrank(bob);
+        vm.expectRevert();
+        vault.topUpReserve(1e6);
+        vm.stopPrank();
+    }
+
+    function test_allocateToPerp_enforcesReserveFloor() public {
+        vault.setFees(0, 0);
+
+        vm.startPrank(alice);
+        usdc.approve(address(vault), 200e6);
+        vault.deposit(200e6);
+        vm.stopPrank();
+
+        vault.setVaultAccounting(address(0x1234));
+        vault.setMinReserveBps(2_000); // 20%, max alloc 160e6
+
+        vm.expectRevert("Insufficient balance");
+        vault.allocateToPerp(161e6);
+    }
+
     function testFuzz_depositRedeem_roundTrip(uint256 amount) public {
         amount = bound(amount, 1e6, 100_000_000e6); // $1 to $100M
 

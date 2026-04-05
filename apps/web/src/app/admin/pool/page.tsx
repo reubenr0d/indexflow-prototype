@@ -6,15 +6,78 @@ import { StatCard } from "@/components/ui/stat-card";
 import { UtilizationRing } from "@/components/ui/utilization-ring";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePoolUtilization } from "@/hooks/usePerpReader";
-import { useChainId } from "wagmi";
+import { useChainId, useReadContract, useReadContracts } from "wagmi";
 import { getContracts } from "@/config/contracts";
-import { formatUSDC } from "@/lib/format";
+import { formatUSDC, formatAddress } from "@/lib/format";
 import { motion } from "framer-motion";
+import { PerpReaderABI } from "@/abi/contracts";
+import { type Address } from "viem";
+
+const GMX_VAULT_ABI = [
+  {
+    type: "function",
+    name: "allWhitelistedTokensLength",
+    stateMutability: "view",
+    inputs: [],
+    outputs: [{ type: "uint256" }],
+  },
+  {
+    type: "function",
+    name: "allWhitelistedTokens",
+    stateMutability: "view",
+    inputs: [{ type: "uint256" }],
+    outputs: [{ type: "address" }],
+  },
+  {
+    type: "function",
+    name: "bufferAmounts",
+    stateMutability: "view",
+    inputs: [{ type: "address" }],
+    outputs: [{ type: "uint256" }],
+  },
+] as const;
 
 export default function AdminPoolPage() {
   const chainId = useChainId();
-  const { usdc } = getContracts(chainId);
+  const { usdc, gmxVault, perpReader } = getContracts(chainId);
   const { data, isLoading } = usePoolUtilization(usdc);
+  const { data: tokenCount } = useReadContract({
+    address: gmxVault,
+    abi: GMX_VAULT_ABI,
+    functionName: "allWhitelistedTokensLength",
+  });
+  const count = tokenCount ? Number(tokenCount) : 0;
+  const indices = Array.from({ length: count }, (_, i) => i);
+  const { data: tokenListData, isLoading: tokenListLoading } = useReadContracts({
+    contracts: indices.map((i) => ({
+      address: gmxVault,
+      abi: GMX_VAULT_ABI,
+      functionName: "allWhitelistedTokens" as const,
+      args: [BigInt(i)] as const,
+    })),
+    query: { enabled: count > 0 },
+  });
+  const tokens = (tokenListData ?? [])
+    .map((entry) => entry.result as Address | undefined)
+    .filter((token): token is Address => Boolean(token));
+  const { data: utilData, isLoading: utilLoading } = useReadContracts({
+    contracts: tokens.map((token) => ({
+      address: perpReader,
+      abi: PerpReaderABI,
+      functionName: "getPoolUtilization" as const,
+      args: [token] as const,
+    })),
+    query: { enabled: tokens.length > 0 },
+  });
+  const { data: bufferData, isLoading: bufferLoading } = useReadContracts({
+    contracts: tokens.map((token) => ({
+      address: gmxVault,
+      abi: GMX_VAULT_ABI,
+      functionName: "bufferAmounts" as const,
+      args: [token] as const,
+    })),
+    query: { enabled: tokens.length > 0 },
+  });
 
   const pool = data as {
     token: string;
@@ -104,6 +167,44 @@ export default function AdminPoolPage() {
               <span>100%</span>
             </div>
           </div>
+        </Card>
+      </div>
+
+      <div className="mt-10">
+        <h2 className="mb-4 text-lg font-semibold text-app-text">Buffer Amounts (Read-Only)</h2>
+        <Card className="divide-y divide-app-border">
+          {(tokenListLoading || utilLoading || bufferLoading) && (
+            <div className="px-6 py-4 text-sm text-app-muted">Loading token buffer status...</div>
+          )}
+          {!tokenListLoading && tokens.length === 0 && (
+            <div className="px-6 py-4 text-sm text-app-muted">No whitelisted tokens found.</div>
+          )}
+          {tokens.map((token, i) => {
+            const util = utilData?.[i]?.result as
+              | {
+                  poolAmount: bigint;
+                  utilizationBps: bigint;
+                }
+              | undefined;
+            const buffer = (bufferData?.[i]?.result as bigint | undefined) ?? 0n;
+            const unused = buffer === 0n;
+            return (
+              <div key={token} className="flex items-center justify-between px-6 py-4">
+                <div>
+                  <p className="font-mono text-sm text-app-text">{formatAddress(token)}</p>
+                  <p className="text-xs text-app-muted">
+                    Pool: {formatUSDC(util?.poolAmount ?? 0n)} · Util: {Number((util?.utilizationBps ?? 0n)) / 100}%
+                  </p>
+                </div>
+                <div className="text-right">
+                  <p className="font-mono text-sm text-app-text">{formatUSDC(buffer)}</p>
+                  <p className={`text-xs font-semibold ${unused ? "text-app-success" : "text-app-warning"}`}>
+                    {unused ? "unused (0)" : "configured"}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </Card>
       </div>
     </PageWrapper>

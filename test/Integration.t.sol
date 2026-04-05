@@ -837,6 +837,7 @@ contract IntegrationTest is Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 10_000;
         basket.setAssets(assetIds, weights);
+        basket.setMinReserveBps(2_000); // keep 20% idle reserve
         basket.setVaultAccounting(address(vaultAccounting));
 
         vaultAccounting.registerVault(address(basket));
@@ -910,6 +911,7 @@ contract IntegrationTest is Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 10_000;
         basket.setAssets(assetIds, weights);
+        basket.setMinReserveBps(2_000); // keep 20% idle reserve
         basket.setVaultAccounting(address(vaultAccounting));
 
         vaultAccounting.registerVault(address(basket));
@@ -946,6 +948,43 @@ contract IntegrationTest is Test {
         if (available > 0) {
             basket.withdrawFromPerp(uint256(available));
         }
+    }
+
+    function test_basketE2E_reserveBlocks_thenTopUp_allowsAllocation() public {
+        BasketVault basket = new BasketVault("Gold Basket", address(usdc), address(oracleAdapter), deployer);
+
+        bytes32[] memory assetIds = new bytes32[](1);
+        assetIds[0] = GOLD_ID;
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 10_000;
+        basket.setAssets(assetIds, weights);
+        basket.setMinReserveBps(8_000); // keep 80% reserve
+        basket.setVaultAccounting(address(vaultAccounting));
+        vaultAccounting.registerVault(address(basket));
+
+        address investor = address(0x1A2B3C);
+        usdc.mint(investor, 100_000e6);
+
+        vm.startPrank(investor);
+        usdc.approve(address(basket), 100_000e6);
+        basket.deposit(100_000e6);
+        vm.stopPrank();
+
+        assertEq(basket.getRequiredReserveUsdc(), 80_000e6);
+        assertEq(basket.getAvailableForPerpUsdc(), 20_000e6);
+
+        vm.expectRevert("Insufficient balance");
+        basket.allocateToPerp(30_000e6);
+
+        // Top up reserve without minting shares, then allocation headroom should increase.
+        usdc.approve(address(basket), 50_000e6);
+        basket.topUpReserve(50_000e6);
+
+        assertEq(basket.getRequiredReserveUsdc(), 120_000e6);
+        assertEq(basket.getAvailableForPerpUsdc(), 30_000e6);
+
+        basket.allocateToPerp(30_000e6);
+        assertEq(basket.perpAllocated(), 30_000e6);
     }
 
     // ═════════════════════════════════════════════════════════════════
