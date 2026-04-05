@@ -35,13 +35,10 @@ contract BasketVaultTest is Test {
         vault = new BasketVault("Gold Silver Basket", address(usdc), address(oracle), owner);
 
         bytes32[] memory assets_ = new bytes32[](2);
-        uint256[] memory weights = new uint256[](2);
         assets_[0] = XAU;
         assets_[1] = XAG;
-        weights[0] = 7000; // 70% gold
-        weights[1] = 3000; // 30% silver
 
-        vault.setAssets(assets_, weights);
+        vault.setAssets(assets_);
         vault.setFees(50, 50); // 0.5% deposit/redeem
 
         // Mint USDC to users
@@ -49,12 +46,9 @@ contract BasketVaultTest is Test {
         usdc.mint(bob, 500_000e6);
     }
 
-    function test_basketPrice() public view {
-        uint256 price = vault.getBasketPrice();
-        // 70% * $2000 + 30% * $25 = $1400 + $7.5 = $1407.5
-        // In 1e30: (200_000_000_000 * 1e22 * 7000 + 2_500_000_000 * 1e22 * 3000) / 10000
-        uint256 expected = (200_000_000_000 * 1e22 * 7000 + 2_500_000_000 * 1e22 * 3000) / 10_000;
-        assertEq(price, expected);
+    function test_bootstrapSharePrice() public view {
+        uint256 sharePrice = vault.getSharePrice();
+        assertEq(sharePrice, vault.PRICE_PRECISION());
     }
 
     function test_deposit() public {
@@ -114,27 +108,25 @@ contract BasketVaultTest is Test {
         assertApproxEqRel(aliceShares, bobShares * 2, 0.01e18); // ~2x within 1%
     }
 
-    function test_setAssets_weightsValidation() public {
+    function test_setAssets_requiresNonEmpty() public {
         bytes32[] memory assets_ = new bytes32[](2);
-        uint256[] memory weights = new uint256[](2);
         assets_[0] = XAU;
         assets_[1] = XAG;
-        weights[0] = 5000;
-        weights[1] = 4000; // Sum = 9000, not 10000
 
-        vm.expectRevert("Weights must sum to 10000");
-        vault.setAssets(assets_, weights);
+        vault.setAssets(assets_);
+
+        bytes32[] memory empty = new bytes32[](0);
+        vm.expectRevert("No assets");
+        vault.setAssets(empty);
     }
 
     function test_setAssets_onlyOwner() public {
         bytes32[] memory assets_ = new bytes32[](1);
-        uint256[] memory weights = new uint256[](1);
         assets_[0] = XAU;
-        weights[0] = 10000;
 
         vm.prank(alice);
         vm.expectRevert();
-        vault.setAssets(assets_, weights);
+        vault.setAssets(assets_);
     }
 
     function test_collectFees() public {
@@ -153,7 +145,7 @@ contract BasketVaultTest is Test {
 
     function test_getSharePrice_noSupply() public view {
         uint256 sharePrice = vault.getSharePrice();
-        assertEq(sharePrice, vault.getBasketPrice());
+        assertEq(sharePrice, vault.PRICE_PRECISION());
     }
 
     function test_redeemInsufficientLiquidity() public {

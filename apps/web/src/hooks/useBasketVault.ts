@@ -6,15 +6,6 @@ import { ERC20ABI } from "@/abi/erc20";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { type Address } from "viem";
 
-export function useBasketPrice(vault: Address) {
-  return useReadContract({
-    address: vault,
-    abi: BasketVaultABI,
-    functionName: "getBasketPrice",
-    query: { refetchInterval: REFETCH_INTERVAL },
-  });
-}
-
 export function useSharePrice(vault: Address) {
   return useReadContract({
     address: vault,
@@ -158,6 +149,22 @@ export function useSetMaxPerpAllocation() {
   };
 
   return { setMaxPerpAllocation, hash, receipt, ...rest };
+}
+
+export function useSetAssets() {
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const setAssets = (vault: Address, assetIds: `0x${string}`[]) => {
+    writeContract({
+      address: vault,
+      abi: BasketVaultABI,
+      functionName: "setAssets",
+      args: [assetIds],
+    });
+  };
+
+  return { setAssets, hash, receipt, ...rest };
 }
 
 export function useMinReserveBps(vault: Address) {

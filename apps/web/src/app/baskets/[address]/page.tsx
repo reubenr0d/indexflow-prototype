@@ -1,30 +1,47 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
-import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
-  useBasketAssets,
   useBasketFees,
   useMinReserveBps,
   useRequiredReserveUsdc,
   useAvailableForPerpUsdc,
   useCollectedFees,
 } from "@/hooks/useBasketVault";
-import { useOracleAssetPrice, useOracleIsStale, useOracleAssetMetaMap } from "@/hooks/useOracle";
-import { useAccount } from "wagmi";
-import { useReadContract } from "wagmi";
+import {
+  type BasketActivityRow,
+  useBasketActivitiesQuery,
+  useBasketDetailQuery,
+} from "@/hooks/subgraph/useSubgraphQueries";
+import { useAccount, useChainId, useConfig, usePublicClient, useReadContract } from "wagmi";
 import { BasketShareTokenABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAddress, formatAssetId, formatPrice } from "@/lib/format";
-import { computeBlendedComposition } from "@/lib/blendedComposition";
-import { type Address } from "viem";
+import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
+import { type Address, parseAbiItem } from "viem";
 import { motion } from "framer-motion";
 import { Copy } from "lucide-react";
+import { getContracts } from "@/config/contracts";
+
+const HISTORY_PAGE_SIZE = 20;
+
+type HistoryRow = {
+  id: string;
+  activityType: string;
+  timestamp: bigint;
+  txHash: `0x${string}`;
+  amountUsdc?: bigint;
+  size?: bigint;
+  pnl?: bigint;
+  assetId?: `0x${string}`;
+  isLong?: boolean;
+};
 
 export default function BasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -33,13 +50,16 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const { data: info, isLoading } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
-  const { data: assetsData } = useBasketAssets(vault);
-  const { data: assetMeta } = useOracleAssetMetaMap();
   const { depositFee, redeemFee } = useBasketFees(vault);
   const { data: minReserveBps } = useMinReserveBps(vault);
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
   const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
   const { data: collectedFees } = useCollectedFees(vault);
+
+  const basketDetail = useBasketDetailQuery(vault, 1, 0);
+  const [historySkip, setHistorySkip] = useState(0);
+  const subgraphHistory = useBasketActivitiesQuery(vault, HISTORY_PAGE_SIZE, historySkip);
+  const fallbackHistory = useVaultHistoryFallback(vault, !subgraphHistory.data && !subgraphHistory.isLoading);
 
   const basketInfo = info as {
     vault: Address;
@@ -52,7 +72,9 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     perpAllocated: bigint;
     assetCount: bigint;
   } | undefined;
+
   const state = vaultState as { openInterest: bigint } | undefined;
+  const exposures = (basketDetail.data?.basket?.exposures ?? []) as PerpExposureAsset[];
 
   const { data: shareBalance } = useReadContract({
     address: basketInfo?.shareToken,
@@ -70,21 +92,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
   const reserveHealthy = idleUsdc >= requiredReserve;
 
-  const assets = assetsData
-    ? (assetsData as unknown as Array<{ result?: [string, bigint]; status: string }>)
-        .filter((a) => a.status === "success" && a.result)
-        .map((a) => ({
-          assetId: a.result![0] as `0x${string}`,
-          weightBps: a.result![1],
-        }))
-    : [];
-
   const blended = computeBlendedComposition(
     basketInfo?.usdcBalance ?? 0n,
     basketInfo?.perpAllocated ?? 0n,
     state?.openInterest ?? 0n,
-    assets
+    exposures
   );
+
+  const historyRows = (subgraphHistory.data ?? fallbackHistory.data ?? []) as HistoryRow[];
+  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
 
   if (isLoading) {
     return (
@@ -134,43 +150,55 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               </p>
               <span className="text-sm text-app-muted">share price</span>
             </div>
-            <p className="mt-1 text-sm text-app-muted">
-              Basket price: {formatPrice(basketInfo?.basketPrice ?? 0n)}
-            </p>
           </motion.div>
 
-          <div className="mt-10">
-            <h2 className="mb-4 text-lg font-semibold text-app-text">Blended Composition</h2>
-            <Card>
-              <div className="divide-y divide-app-border">
-                {assets.map((asset, i) => {
-                  const meta = assetMeta.get(asset.assetId);
-                  return (
-                    <AssetRow
-                      key={asset.assetId}
-                      assetId={asset.assetId}
-                      assetName={meta?.name ?? formatAssetId(asset.assetId)}
-                      assetAddress={meta?.address}
-                      weightBps={asset.weightBps}
-                      blendedWeightBps={blended.assetBlend[i]?.blendBps ?? 0n}
-                    />
-                  );
-                })}
-                <div className="flex items-center justify-between px-6 py-4">
-                  <div>
-                    <p className="font-medium text-app-text">Perp Exposure</p>
-                    <p className="text-xs text-app-muted">Open interest sleeve</p>
+          {exposures.length > 0 ? (
+            <div className="mt-10">
+              <h2 className="mb-4 text-lg font-semibold text-app-text">Perp-Driven Composition</h2>
+              <Card>
+                <div className="divide-y divide-app-border">
+                  {blended.assetBlend.map((asset) => (
+                    <div key={asset.assetId} className="flex items-center justify-between px-6 py-4">
+                      <div>
+                        <p className="font-medium text-app-text">{formatAssetId(asset.assetId)}</p>
+                        <p className="text-xs text-app-muted">
+                          Net: {formatUSDC(asset.netSize >= 0n ? asset.netSize : -asset.netSize)} ({asset.netSize >= 0n ? "Long" : "Short"})
+                        </p>
+                        <p className="text-xs text-app-muted">
+                          Long {formatUSDC(asset.longSize)} / Short {formatUSDC(asset.shortSize)}
+                        </p>
+                      </div>
+                      <div className="w-36">
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+                          <div
+                            className="h-full rounded-full bg-app-accent"
+                            style={{ width: `${Number(asset.blendBps) / 100}%` }}
+                          />
+                        </div>
+                        <p className="mt-1 text-right text-xs text-app-muted">{formatBps(asset.blendBps)}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-between px-6 py-4">
+                    <div>
+                      <p className="font-medium text-app-text">Aggregate Perp Exposure</p>
+                      <p className="text-xs text-app-muted">Open interest sleeve</p>
+                    </div>
+                    <p className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</p>
                   </div>
-                  <p className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</p>
                 </div>
-                {assets.length === 0 && (
-                  <div className="p-6 text-center text-sm text-app-muted">
-                    No assets configured
-                  </div>
-                )}
-              </div>
-            </Card>
-          </div>
+              </Card>
+            </div>
+          ) : (
+            <div className="mt-10">
+              <Card className="p-6">
+                <p className="font-medium text-app-text">Composition pending perp activity</p>
+                <p className="mt-1 text-sm text-app-muted">
+                  Per-asset composition appears after positions are opened and indexed.
+                </p>
+              </Card>
+            </div>
+          )}
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <StatCard label="TVL" value={formatUSDC(tvl)} />
@@ -208,12 +236,36 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               </div>
             </Card>
           </div>
+
+          <div className="mt-6">
+            <Card className="p-5">
+              <div className="mb-3 flex items-center justify-between">
+                <h3 className="text-base font-semibold text-app-text">Vault History</h3>
+                <span className="text-xs text-app-muted">{historyRows.length} shown</span>
+              </div>
+              <div className="divide-y divide-app-border">
+                {historyRows.length === 0 && (
+                  <div className="py-4 text-sm text-app-muted">No vault activity indexed yet.</div>
+                )}
+                {historyRows.map((row) => (
+                  <HistoryRowView key={row.id} row={row} />
+                ))}
+              </div>
+              {subgraphHistory.data && canLoadMore && (
+                <button
+                  className="mt-4 text-sm font-medium text-app-accent hover:underline"
+                  onClick={() => setHistorySkip((s) => s + HISTORY_PAGE_SIZE)}
+                >
+                  Load more
+                </button>
+              )}
+            </Card>
+          </div>
         </div>
 
         <div className="lg:col-span-2">
           <DepositRedeemPanel
             vault={vault}
-            basketPrice={basketInfo?.basketPrice ?? 0n}
             sharePrice={basketInfo?.sharePrice ?? 0n}
             depositFeeBps={depositFee ?? 0n}
             redeemFeeBps={redeemFee ?? 0n}
@@ -225,51 +277,201 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   );
 }
 
-function AssetRow({
-  assetId,
-  assetName,
-  assetAddress,
-  weightBps,
-  blendedWeightBps,
-}: {
-  assetId: `0x${string}`;
-  assetName: string;
-  assetAddress?: Address;
-  weightBps: bigint;
-  blendedWeightBps: bigint;
-}) {
-  const { data: priceData } = useOracleAssetPrice(assetId);
-  const { data: isStale } = useOracleIsStale(assetId);
+function useVaultHistoryFallback(vault: Address, enabled: boolean) {
+  const publicClient = usePublicClient();
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
 
-  const price = (priceData as [bigint, bigint] | undefined)?.[0] ?? 0n;
-  const timestamp = Number((priceData as [bigint, bigint] | undefined)?.[1] ?? 0n);
-  const status = getOracleStatus(isStale as boolean ?? false, timestamp);
+  return useQuery({
+    queryKey: ["vault-history-rpc", chainId, vault],
+    enabled: enabled && !!publicClient,
+    queryFn: async (): Promise<HistoryRow[]> => {
+      if (!publicClient) return [];
+
+      const [deposits, redeems, allocations, withdrawals, opens, closes, pnls] = await Promise.all([
+        publicClient.getLogs({
+          address: vault,
+          event: parseAbiItem("event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted)"),
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vault,
+          event: parseAbiItem("event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned)"),
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vault,
+          event: parseAbiItem("event AllocatedToPerp(uint256 amount)"),
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vault,
+          event: parseAbiItem("event WithdrawnFromPerp(uint256 amount)"),
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vaultAccounting,
+          event: parseAbiItem(
+            "event PositionOpened(address indexed vault, bytes32 indexed asset, bool isLong, uint256 size, uint256 collateral)"
+          ),
+          args: { vault },
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vaultAccounting,
+          event: parseAbiItem(
+            "event PositionClosed(address indexed vault, bytes32 indexed asset, bool isLong, int256 realisedPnL)"
+          ),
+          args: { vault },
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+        publicClient.getLogs({
+          address: vaultAccounting,
+          event: parseAbiItem("event PnLRealized(address indexed vault, int256 amount)"),
+          args: { vault },
+          fromBlock: 0n,
+          toBlock: "latest",
+        }),
+      ]);
+
+      const rows: HistoryRow[] = [];
+
+      for (const l of deposits) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "deposit",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          amountUsdc: l.args.usdcAmount,
+        });
+      }
+      for (const l of redeems) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "redeem",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          amountUsdc: l.args.usdcReturned,
+        });
+      }
+      for (const l of allocations) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "allocateToPerp",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          amountUsdc: l.args.amount,
+        });
+      }
+      for (const l of withdrawals) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "withdrawFromPerp",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          amountUsdc: l.args.amount,
+        });
+      }
+      for (const l of opens) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "positionOpened",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          size: l.args.size,
+          amountUsdc: l.args.collateral,
+          assetId: l.args.asset,
+          isLong: l.args.isLong,
+        });
+      }
+      for (const l of closes) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "positionClosed",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          pnl: l.args.realisedPnL,
+          assetId: l.args.asset,
+          isLong: l.args.isLong,
+        });
+      }
+      for (const l of pnls) {
+        rows.push({
+          id: `${l.transactionHash}-${l.logIndex}`,
+          activityType: "pnlRealized",
+          timestamp: 0n,
+          txHash: l.transactionHash,
+          pnl: l.args.amount,
+        });
+      }
+
+      const blockNumbers = Array.from(new Set([...deposits, ...redeems, ...allocations, ...withdrawals, ...opens, ...closes, ...pnls].map((l) => l.blockNumber)));
+      const blocks = await Promise.all(blockNumbers.map((blockNumber) => publicClient.getBlock({ blockNumber })));
+      const tsByBlock = new Map(blocks.map((b) => [b.number, b.timestamp]));
+
+      const logMap = new Map([
+        ...deposits.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...redeems.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...allocations.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...withdrawals.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...opens.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...closes.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+        ...pnls.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
+      ]);
+
+      for (const row of rows) {
+        const log = logMap.get(row.id);
+        if (log) {
+          row.timestamp = tsByBlock.get(log.blockNumber) ?? 0n;
+        }
+      }
+
+      rows.sort((a, b) => Number(b.timestamp - a.timestamp));
+      return rows.slice(0, HISTORY_PAGE_SIZE);
+    },
+    staleTime: 15_000,
+    retry: 1,
+  });
+}
+
+function HistoryRowView({ row }: { row: HistoryRow | BasketActivityRow }) {
+  const config = useConfig();
+  const chainId = useChainId();
+  const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
+  const txHref = explorer ? `${explorer}/tx/${row.txHash}` : "#";
 
   return (
-    <div className="flex items-center justify-between px-6 py-4">
-      <div className="flex items-center gap-3">
-        <StatusDot status={status} />
-        <div>
-          <p className="font-medium text-app-text">{assetName}</p>
-          <p className="font-mono text-xs text-app-muted">
-            {assetAddress ? formatAddress(assetAddress) : formatAssetId(assetId)}
-          </p>
-        </div>
-      </div>
-      <div className="flex items-center gap-6">
-        <div className="w-32">
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
-            <div
-              className="h-full rounded-full bg-app-accent"
-              style={{ width: `${Number(blendedWeightBps) / 100}%` }}
-            />
-          </div>
-          <p className="mt-1 text-xs text-app-muted">{formatBps(blendedWeightBps)}</p>
-          <p className="text-[10px] text-app-muted">Base {formatBps(weightBps)}</p>
-        </div>
-        <p className="w-24 text-right font-mono text-sm text-app-text">
-          {formatPrice(price)}
+    <div className="flex items-center justify-between py-3 text-sm">
+      <div>
+        <p className="font-medium text-app-text">{row.activityType}</p>
+        <p className="text-xs text-app-muted">
+          {new Date(Number(row.timestamp) * 1000).toLocaleString()} {row.assetId ? `• ${formatAssetId(row.assetId)}` : ""}
         </p>
+      </div>
+      <div className="text-right">
+        <p className="font-mono text-app-text">
+          {row.amountUsdc !== undefined
+            ? formatUSDC(row.amountUsdc)
+            : row.size !== undefined
+              ? formatUSDC(row.size)
+              : row.pnl !== undefined
+                ? formatUSDC(row.pnl >= 0n ? row.pnl : -row.pnl)
+                : "--"}
+        </p>
+        <a
+          className="font-mono text-xs text-app-accent hover:underline"
+          href={txHref}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {`${row.txHash.slice(0, 6)}...${row.txHash.slice(-4)}`}
+        </a>
       </div>
     </div>
   );

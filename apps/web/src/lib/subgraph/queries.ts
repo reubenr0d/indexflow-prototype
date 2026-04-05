@@ -21,7 +21,7 @@ export const GET_BASKETS_OVERVIEW = gql`
 `;
 
 export const GET_BASKET_DETAIL = gql`
-  query GetBasketDetail($id: ID!, $activityFirst: Int!) {
+  query GetBasketDetail($id: ID!, $activityFirst: Int!, $activitySkip: Int!) {
     basket(id: $id) {
       id
       name
@@ -38,14 +38,21 @@ export const GET_BASKET_DETAIL = gql`
       redeemFeeBps
       minReserveBps
       maxPerpAllocation
+      exposures(orderBy: netSize, orderDirection: desc) {
+        id
+        assetId
+        longSize
+        shortSize
+        netSize
+        updatedAt
+      }
       assets(where: { active: true }, orderBy: updatedAt, orderDirection: desc) {
         id
         assetId
-        weightBps
         active
         updatedAt
       }
-      activities(first: $activityFirst, orderBy: timestamp, orderDirection: desc) {
+      activities(first: $activityFirst, skip: $activitySkip, orderBy: timestamp, orderDirection: desc) {
         id
         activityType
         user {
@@ -73,6 +80,34 @@ export const GET_BASKET_DETAIL = gql`
       positionCount
       collateralLocked
       updatedAt
+    }
+  }
+`;
+
+export const GET_BASKET_ACTIVITIES = gql`
+  query GetBasketActivities($id: String!, $first: Int!, $skip: Int!) {
+    basketActivities(
+      where: { basket_: { id: $id } }
+      first: $first
+      skip: $skip
+      orderBy: timestamp
+      orderDirection: desc
+    ) {
+      id
+      activityType
+      user {
+        id
+      }
+      assetId
+      isLong
+      amountUsdc
+      shares
+      size
+      collateral
+      pnl
+      recipient
+      timestamp
+      txHash
     }
   }
 `;

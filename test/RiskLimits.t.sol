@@ -43,9 +43,7 @@ contract RiskLimitsTest is Test {
         // Set basket assets (100% GOLD)
         bytes32[] memory ids = new bytes32[](1);
         ids[0] = GOLD;
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 10_000;
-        basket.setAssets(ids, weights);
+        basket.setAssets(ids);
 
         // Wire BasketVault -> VaultAccounting and register
         basket.setVaultAccounting(address(accounting));

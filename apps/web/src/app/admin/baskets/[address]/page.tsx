@@ -8,11 +8,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
+import { useBasketDetailQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import {
-  useBasketAssets,
   useBasketFees,
   useMaxPerpAllocation,
   useSetMaxPerpAllocation,
+  useSetAssets,
   useMinReserveBps,
   useRequiredReserveUsdc,
   useAvailableForPerpUsdc,
@@ -26,7 +27,7 @@ import { useOracleAssetMetaMap, useSupportedOracleAssets } from "@/hooks/useOrac
 import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId } from "wagmi";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
-import { computeBlendedComposition } from "@/lib/blendedComposition";
+import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
 import { type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
@@ -60,7 +61,6 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
   const { data: collectedFees } = useCollectedFees(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
-  const { data: assetsData } = useBasketAssets(vault);
   const chainId = useChainId();
   const { usdc } = getContracts(chainId);
 
@@ -87,20 +87,14 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
   const reserveHealthy = idleUsdc >= requiredReserve;
 
-  const assets = assetsData
-    ? (assetsData as unknown as Array<{ result?: [string, bigint]; status: string }>)
-        .filter((a) => a.status === "success" && a.result)
-        .map((a) => ({
-          assetId: a.result![0] as `0x${string}`,
-          weightBps: a.result![1],
-        }))
-    : [];
+  const basketDetail = useBasketDetailQuery(vault, 1, 0);
+  const exposures = (basketDetail.data?.basket?.exposures ?? []) as PerpExposureAsset[];
 
   const blended = computeBlendedComposition(
     basketInfo?.usdcBalance ?? 0n,
     basketInfo?.perpAllocated ?? 0n,
     state?.openInterest ?? 0n,
-    assets
+    exposures
   );
 
   return (
@@ -141,45 +135,55 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
         </div>
       )}
 
-      <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-app-text">Blended Composition</h2>
-        <Card>
-          <div className="divide-y divide-app-border">
-            {assets.map((a, i) => {
-              const meta = assetMeta.get(a.assetId);
-              const blendedBps = blended.assetBlend[i]?.blendBps ?? 0n;
-              return (
-                <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
-                  <div>
-                    <p className="font-medium text-app-text">
-                      {meta?.name ?? formatAssetId(a.assetId)}
-                    </p>
-                    <p className="font-mono text-xs text-app-muted">
-                      {meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
-                    </p>
+      {exposures.length > 0 ? (
+        <div className="mb-8">
+          <h2 className="mb-4 text-lg font-semibold text-app-text">Perp-Driven Composition</h2>
+          <Card>
+            <div className="divide-y divide-app-border">
+              {blended.assetBlend.map((a) => {
+                const meta = assetMeta.get(a.assetId);
+                return (
+                  <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
+                    <div>
+                      <p className="font-medium text-app-text">
+                        {meta?.name ?? formatAssetId(a.assetId)}
+                      </p>
+                      <p className="font-mono text-xs text-app-muted">
+                        {meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm text-app-text">{formatBps(a.blendBps)}</p>
+                      <p className="text-xs text-app-muted">
+                        Net {formatUSDC(a.netSize >= 0n ? a.netSize : -a.netSize)} {a.netSize >= 0n ? "Long" : "Short"}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm text-app-text">{formatBps(blendedBps)}</p>
-                    <p className="text-xs text-app-muted">Base {formatBps(a.weightBps)}</p>
-                  </div>
+                );
+              })}
+              <div className="flex items-center justify-between px-6 py-4">
+                <div>
+                  <p className="font-medium text-app-text">Perp Exposure</p>
+                  <p className="text-xs text-app-muted">Open interest sleeve</p>
                 </div>
-              );
-            })}
-            <div className="flex items-center justify-between px-6 py-4">
-              <div>
-                <p className="font-medium text-app-text">Perp Exposure</p>
-                <p className="text-xs text-app-muted">Open interest sleeve</p>
+                <span className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</span>
               </div>
-              <span className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</span>
             </div>
-            {assets.length === 0 && (
-              <div className="px-6 py-4 text-center text-sm text-app-muted">No assets</div>
-            )}
-          </div>
-        </Card>
-      </div>
+          </Card>
+        </div>
+      ) : (
+        <div className="mb-8">
+          <Card className="p-6">
+            <p className="font-medium text-app-text">Composition pending perp activity</p>
+            <p className="mt-1 text-sm text-app-muted">
+              Per-asset composition appears after positions are opened and indexed.
+            </p>
+          </Card>
+        </div>
+      )}
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-3">
+        <SetAssetsCard vault={vault} />
         <PerpAllocationCard vault={vault} currentAllocation={basketInfo?.perpAllocated ?? 0n} />
         <MaxPerpAllocationCard vault={vault} />
       </div>
@@ -428,6 +432,121 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
           </div>
         </div>
       </div>
+    </Card>
+  );
+}
+
+function SetAssetsCard({ vault }: { vault: Address }) {
+  const refreshAfterTx = usePostTxRefresh();
+  const { data: supportedAssets } = useSupportedOracleAssets();
+  const supported = supportedAssets ?? [];
+  const { setAssets, receipt, isPending, error, isError } = useSetAssets();
+  const [rows, setRows] = useState<Array<{ assetIdHex: `0x${string}` | ""; assetQuery: string }>>([
+    { assetIdHex: "", assetQuery: "" },
+  ]);
+
+  const selectedAssets = rows.map((row) => row.assetIdHex).filter((id): id is `0x${string}` => id !== "");
+  const hasDuplicateAssets = new Set(selectedAssets).size !== selectedAssets.length;
+  const hasEmptyAssetSelection = rows.some((row) => row.assetIdHex === "");
+
+  useEffect(() => {
+    if (receipt.isSuccess) {
+      showToast("success", "Assets updated");
+      refreshAfterTx();
+    }
+  }, [receipt.isSuccess, refreshAfterTx]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Set assets failed",
+  });
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-4 text-base font-semibold text-app-text">Set Assets</h3>
+      {rows.map((row, i) => (
+        <div key={i} className="mb-2 flex gap-2">
+          <datalist id={`set-assets-${i}`}>
+            {supported
+              .filter((asset) => {
+                const isCurrent = asset.idHex === row.assetIdHex;
+                const selectedElsewhere = selectedAssets.includes(asset.idHex) && !isCurrent;
+                return !selectedElsewhere;
+              })
+              .map((asset) => (
+                <option key={asset.idHex} value={asset.label}>
+                  {asset.idHex}
+                </option>
+              ))}
+          </datalist>
+          <Input
+            list={`set-assets-${i}`}
+            placeholder="Select supported asset"
+            value={row.assetQuery}
+            onChange={(e) => {
+              const query = e.target.value;
+              const match = supported.find(
+                (asset) =>
+                  asset.label.toLowerCase() === query.toLowerCase() ||
+                  asset.idHex.toLowerCase() === query.toLowerCase()
+              );
+              const next = [...rows];
+              if (match) {
+                const selectedElsewhere = next.some((entry, idx) => idx !== i && entry.assetIdHex === match.idHex);
+                if (selectedElsewhere) {
+                  next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
+                } else {
+                  next[i] = { ...next[i], assetIdHex: match.idHex, assetQuery: match.label };
+                }
+              } else {
+                next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
+              }
+              setRows(next);
+            }}
+            onBlur={() => {
+              if (rows[i].assetIdHex !== "") return;
+              const next = [...rows];
+              next[i] = { ...next[i], assetQuery: "" };
+              setRows(next);
+            }}
+            className="flex-1"
+          />
+          {rows.length > 1 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setRows(rows.filter((_, idx) => idx !== i))}
+            >
+              Remove
+            </Button>
+          )}
+        </div>
+      ))}
+      <div className="mt-2 flex items-center justify-between">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setRows([...rows, { assetIdHex: "", assetQuery: "" }])}
+        >
+          Add Asset
+        </Button>
+      </div>
+      {hasDuplicateAssets && <p className="mt-2 text-xs text-app-danger">Duplicate assets are not allowed.</p>}
+      <Button
+        size="sm"
+        className="mt-4"
+        disabled={isPending || hasEmptyAssetSelection || hasDuplicateAssets}
+        onClick={() => {
+          const assetIds = rows.map((row) => row.assetIdHex as `0x${string}`);
+          setAssets(vault, assetIds);
+          showToast("pending", "Updating assets...");
+        }}
+      >
+        {isPending ? "Processing..." : "Set Assets"}
+      </Button>
     </Card>
   );
 }

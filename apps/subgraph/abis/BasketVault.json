@@ -79,11 +79,6 @@
         "name": "assetId",
         "type": "bytes32",
         "internalType": "bytes32"
-      },
-      {
-        "name": "weightBps",
-        "type": "uint256",
-        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -161,11 +156,6 @@
         "name": "assetId",
         "type": "bytes32",
         "internalType": "bytes32"
-      },
-      {
-        "name": "weightBps",
-        "type": "uint256",
-        "internalType": "uint256"
       }
     ],
     "stateMutability": "view"
@@ -198,11 +188,11 @@
   },
   {
     "type": "function",
-    "name": "getBasketPrice",
+    "name": "getPricingNav",
     "inputs": [],
     "outputs": [
       {
-        "name": "price",
+        "name": "nav",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -360,11 +350,6 @@
         "name": "assetIds",
         "type": "bytes32[]",
         "internalType": "bytes32[]"
-      },
-      {
-        "name": "weightsBps",
-        "type": "uint256[]",
-        "internalType": "uint256[]"
       }
     ],
     "outputs": [],
@@ -465,19 +450,6 @@
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
-  },
-  {
-    "type": "function",
-    "name": "totalWeightBps",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
   },
   {
     "type": "function",

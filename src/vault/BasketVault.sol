@@ -10,10 +10,9 @@ import {IOracleAdapter} from "../perp/interfaces/IOracleAdapter.sol";
 import {IPerp} from "../perp/interfaces/IPerp.sol";
 
 /// @title BasketVault
-/// @notice GLP-style basket vault: deposit USDC, mint shares priced by weighted oracle prices.
-/// @dev Continuous deposit/redeem. `deposit`/`redeem` use `getBasketPrice()` (oracle basket).
-/// `getSharePrice` uses on-balance USDC (minus reserved fees) plus `perpAllocated` book entry—
-/// not the same as basket oracle when perp PnL exists; use off-chain or `PerpReader.getTotalVaultValue` for full NAV.
+/// @notice Basket vault with perp-driven pricing: deposit USDC, mint shares priced from mark-to-market NAV.
+/// @dev Continuous deposit/redeem. Share pricing uses on-vault USDC (excluding reserved fees), `perpAllocated`,
+/// and perp PnL from `VaultAccounting` when available.
 contract BasketVault is ReentrancyGuard, Ownable {
     using SafeERC20 for IERC20;
 
@@ -22,12 +21,10 @@ contract BasketVault is ReentrancyGuard, Ownable {
     /// @notice Price scalar matching oracle adapter (1e30 per 1e6 USDC share).
     uint256 public constant PRICE_PRECISION = 1e30;
 
-    /// @notice One basket constituent.
+    /// @notice One configured basket asset id.
     /// @param assetId Oracle asset id.
-    /// @param weightBps Weight in basis points; all weights must sum to `BPS_DENOMINATOR`.
     struct AssetAllocation {
         bytes32 assetId;
-        uint256 weightBps;
     }
 
     /// @notice Collateral token (USDC).
@@ -41,8 +38,6 @@ contract BasketVault is ReentrancyGuard, Ownable {
     IPerp public vaultAccounting;
 
     AssetAllocation[] public assets;
-    /// @notice Sum of weights; must equal `BPS_DENOMINATOR` after `setAssets`.
-    uint256 public totalWeightBps;
 
     /// @notice Deposit fee in bps taken from gross USDC.
     uint256 public depositFeeBps;
@@ -88,23 +83,16 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     // ─── Configuration ───────────────────────────────────────────
 
-    /// @notice Replace basket composition; each asset must be active on the oracle; weights sum to 10000 bps.
+    /// @notice Replace configured basket assets; each asset must be active on the oracle.
     /// @param assetIds Oracle asset ids.
-    /// @param weightsBps Parallel weights.
-    function setAssets(bytes32[] calldata assetIds, uint256[] calldata weightsBps) external onlyOwner {
-        require(assetIds.length == weightsBps.length, "Length mismatch");
+    function setAssets(bytes32[] calldata assetIds) external onlyOwner {
         require(assetIds.length > 0, "No assets");
 
         delete assets;
-        uint256 total;
         for (uint256 i = 0; i < assetIds.length; i++) {
-            require(weightsBps[i] > 0, "Zero weight");
             require(oracleAdapter.isAssetActive(assetIds[i]), "Asset not active in oracle");
-            assets.push(AssetAllocation({assetId: assetIds[i], weightBps: weightsBps[i]}));
-            total += weightsBps[i];
+            assets.push(AssetAllocation({assetId: assetIds[i]}));
         }
-        require(total == BPS_DENOMINATOR, "Weights must sum to 10000");
-        totalWeightBps = total;
 
         emit AssetsUpdated(assetIds.length);
     }
@@ -148,12 +136,15 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     // ─── Deposit / Redeem ────────────────────────────────────────
 
-    /// @notice Deposit USDC and receive basket shares at current oracle basket price.
+    /// @notice Deposit USDC and receive basket shares at current NAV-based share price.
     /// @param usdcAmount Gross USDC to deposit (fee deducted before minting).
     /// @return sharesMinted Shares minted to `msg.sender` (6 decimals).
     function deposit(uint256 usdcAmount) external nonReentrant returns (uint256 sharesMinted) {
         require(usdcAmount > 0, "Amount required");
         require(assets.length > 0, "No assets configured");
+
+        uint256 totalSupply = shareToken.totalSupply();
+        uint256 navBefore = _pricingNav();
 
         uint256 fee = (usdcAmount * depositFeeBps) / BPS_DENOMINATOR;
         uint256 netAmount = usdcAmount - fee;
@@ -161,12 +152,13 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
         usdc.safeTransferFrom(msg.sender, address(this), usdcAmount);
 
-        uint256 basketPrice = getBasketPrice();
-        require(basketPrice > 0, "Invalid basket price");
-
-        // shares = netAmount * PRICE_PRECISION / basketPrice
-        // Both USDC (6 dec) and shares (6 dec) -- basketPrice is in PRICE_PRECISION
-        sharesMinted = (netAmount * PRICE_PRECISION) / basketPrice;
+        if (totalSupply == 0) {
+            // Bootstrap at 1 USDC per share (both use 6 decimals).
+            sharesMinted = netAmount;
+        } else {
+            require(navBefore > 0, "Invalid NAV");
+            sharesMinted = (netAmount * totalSupply) / navBefore;
+        }
         require(sharesMinted > 0, "Shares too small");
 
         shareToken.mint(msg.sender, sharesMinted);
@@ -174,18 +166,17 @@ contract BasketVault is ReentrancyGuard, Ownable {
         emit Deposited(msg.sender, usdcAmount, sharesMinted);
     }
 
-    /// @notice Redeem basket shares for USDC at current oracle basket price.
+    /// @notice Redeem basket shares for USDC at current NAV-based share price.
     /// @param sharesToBurn Shares to burn from `msg.sender`.
     /// @return usdcReturned Net USDC after redeem fee.
     function redeem(uint256 sharesToBurn) external nonReentrant returns (uint256 usdcReturned) {
         require(sharesToBurn > 0, "Amount required");
         require(shareToken.balanceOf(msg.sender) >= sharesToBurn, "Insufficient shares");
 
-        uint256 basketPrice = getBasketPrice();
-        require(basketPrice > 0, "Invalid basket price");
+        uint256 totalSupply = shareToken.totalSupply();
+        require(totalSupply > 0, "No supply");
 
-        // usdcAmount = shares * basketPrice / PRICE_PRECISION
-        uint256 grossAmount = (sharesToBurn * basketPrice) / PRICE_PRECISION;
+        uint256 grossAmount = (sharesToBurn * _pricingNav()) / totalSupply;
         uint256 fee = (grossAmount * redeemFeeBps) / BPS_DENOMINATOR;
         usdcReturned = grossAmount - fee;
         collectedFees += fee;
@@ -224,10 +215,12 @@ contract BasketVault is ReentrancyGuard, Ownable {
     /// @param amount USDC to withdraw; decreases `perpAllocated`.
     function withdrawFromPerp(uint256 amount) external onlyOwner nonReentrant {
         require(address(vaultAccounting) != address(0), "VaultAccounting not set");
-        require(amount <= perpAllocated, "Exceeds allocated");
-
         vaultAccounting.withdrawCapital(address(this), amount);
-        perpAllocated -= amount;
+        if (amount >= perpAllocated) {
+            perpAllocated = 0;
+        } else {
+            perpAllocated -= amount;
+        }
 
         emit WithdrawnFromPerp(amount);
     }
@@ -254,24 +247,12 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     // ─── Views ───────────────────────────────────────────────────
 
-    /// @notice Basket price = sum(weight_i * oraclePrice_i) / 10000.
-    /// @return price In `PRICE_PRECISION` (1e30) per 1 USDC unit (1e6).
-    function getBasketPrice() public view returns (uint256 price) {
-        for (uint256 i = 0; i < assets.length; i++) {
-            (uint256 assetPrice,) = oracleAdapter.getPrice(assets[i].assetId);
-            price += (assetPrice * assets[i].weightBps) / BPS_DENOMINATOR;
-        }
-    }
-
-    /// @notice Implied share value from vault USDC (excl. reserved fees) plus `perpAllocated` over supply.
-    /// @return Price in `PRICE_PRECISION` per share; if zero supply, returns `getBasketPrice()`.
-    /// @dev Does not include unrealised perp PnL; not full mark-to-market NAV.
+    /// @notice Share value from pricing NAV over total supply.
+    /// @return Price in `PRICE_PRECISION` per share; if zero supply, returns `PRICE_PRECISION` (1 USDC/share).
     function getSharePrice() external view returns (uint256) {
         uint256 totalSupply = shareToken.totalSupply();
-        if (totalSupply == 0) return getBasketPrice();
-
-        uint256 totalValue = _totalVaultValue();
-        return (totalValue * PRICE_PRECISION) / totalSupply;
+        if (totalSupply == 0) return PRICE_PRECISION;
+        return (_pricingNav() * PRICE_PRECISION) / totalSupply;
     }
 
     /// @notice Required idle reserve based on current vault value and `minReserveBps`.
@@ -295,18 +276,33 @@ contract BasketVault is ReentrancyGuard, Ownable {
         return assets.length;
     }
 
-    /// @notice Nth asset in the basket.
+    /// @notice Nth configured asset id.
     /// @param index Array index.
     /// @return assetId Asset id.
-    /// @return weightBps Weight in bps.
-    function getAssetAt(uint256 index) external view returns (bytes32 assetId, uint256 weightBps) {
+    function getAssetAt(uint256 index) external view returns (bytes32 assetId) {
         AssetAllocation memory a = assets[index];
-        return (a.assetId, a.weightBps);
+        return a.assetId;
+    }
+
+    /// @notice Pricing NAV used by share valuation.
+    /// @return nav Current mark-to-market NAV in USDC units (floored at zero).
+    function getPricingNav() external view returns (uint256 nav) {
+        return _pricingNav();
     }
 
     /// @dev USDC balance not reserved as fees plus book value sent to perp.
     function _totalVaultValue() internal view returns (uint256) {
         return _idleUsdcExcludingFees() + perpAllocated;
+    }
+
+    /// @dev Mark-to-market NAV = on-vault value + realised + unrealised perp PnL (if accounting is wired).
+    function _pricingNav() internal view returns (uint256) {
+        uint256 base = _totalVaultValue();
+        if (address(vaultAccounting) == address(0)) return base;
+
+        (int256 unrealisedPnL, int256 realisedPnL) = vaultAccounting.getVaultPnL(address(this));
+        int256 total = int256(base) + realisedPnL + unrealisedPnL;
+        return total > 0 ? uint256(total) : 0;
     }
 
     /// @dev Idle USDC held by the basket excluding fee reserve.

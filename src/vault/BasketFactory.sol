@@ -5,7 +5,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {BasketVault} from "./BasketVault.sol";
 
 /// @title BasketFactory
-/// @notice Deploys new BasketVault instances with asset configurations.
+/// @notice Deploys new BasketVault instances.
 /// @dev New vaults are deployed with factory as owner; ownership is transferred to `msg.sender` after setup.
 contract BasketFactory is Ownable {
     /// @notice USDC address passed to every new basket.
@@ -43,23 +43,18 @@ contract BasketFactory is Ownable {
         oracleAdapter = _oracleAdapter;
     }
 
-    /// @notice Deploy a new basket vault, configure assets/fees, optionally wire perp, transfer ownership to caller.
+    /// @notice Deploy a new basket vault, configure fees, optionally wire perp, transfer ownership to caller.
     /// @param _name Basket name.
-    /// @param assetIds Oracle asset ids (weights must sum to 10000 bps).
-    /// @param weightsBps Parallel weights.
     /// @param depositFeeBps Deposit fee for the new vault.
     /// @param redeemFeeBps Redeem fee for the new vault.
     /// @return vault Address of the new `BasketVault`.
     function createBasket(
         string calldata _name,
-        bytes32[] calldata assetIds,
-        uint256[] calldata weightsBps,
         uint256 depositFeeBps,
         uint256 redeemFeeBps
     ) external returns (address) {
         BasketVault basket = new BasketVault(_name, usdc, oracleAdapter, address(this));
 
-        basket.setAssets(assetIds, weightsBps);
         basket.setFees(depositFeeBps, redeemFeeBps);
 
         if (vaultAccounting != address(0)) {

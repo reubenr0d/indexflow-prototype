@@ -49,16 +49,6 @@
         "internalType": "string"
       },
       {
-        "name": "assetIds",
-        "type": "bytes32[]",
-        "internalType": "bytes32[]"
-      },
-      {
-        "name": "weightsBps",
-        "type": "uint256[]",
-        "internalType": "uint256[]"
-      },
-      {
         "name": "depositFeeBps",
         "type": "uint256",
         "internalType": "uint256"

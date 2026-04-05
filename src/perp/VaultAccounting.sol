@@ -17,6 +17,7 @@ import {IOracleAdapter} from "./interfaces/IOracleAdapter.sol";
 /// Unrealised PnL from `getVaultPnL` uses GMX `getPositionDelta` and excludes funding accrual.
 contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     using SafeERC20 for IERC20;
+    uint256 private constant FUNDING_RATE_PRECISION = 1_000_000;
 
     /// @notice Collateral ERC20 (USDC) pulled from callers and forwarded to the GMX vault.
     IERC20 public immutable usdc;
@@ -224,8 +225,15 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             revert InsufficientCapital(vault, amount, available);
         }
 
-        vs.depositedCapital -= amount;
-        totalDeposited -= amount;
+        uint256 principalToWithdraw = amount > vs.depositedCapital ? vs.depositedCapital : amount;
+        if (principalToWithdraw > 0) {
+            vs.depositedCapital -= principalToWithdraw;
+            totalDeposited -= principalToWithdraw;
+        }
+        uint256 pnlToWithdraw = amount - principalToWithdraw;
+        if (pnlToWithdraw > 0) {
+            vs.realisedPnL -= int256(pnlToWithdraw);
+        }
 
         usdc.safeTransfer(vault, amount);
 
@@ -373,7 +381,8 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @param vault Basket vault address.
     /// @return unrealised Sum of signed `getPositionDelta` across open legs.
     /// @return realised Cumulative realised PnL stored on the vault state.
-    /// @dev Unrealised excludes accrued funding; price PnL only. Skips legs with unmapped `assetTokens`.
+    /// @dev Unrealised includes price delta and accrued funding estimate from cumulative funding rates.
+    /// Skips legs with unmapped `assetTokens`.
     function getVaultPnL(address vault) external view override returns (int256 unrealised, int256 realised) {
         realised = _vaultStates[vault].realisedPnL;
 
@@ -393,6 +402,13 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
                 unrealised += int256(delta);
             } else {
                 unrealised -= int256(delta);
+            }
+
+            uint256 cumulativeFundingRate = _safeCumulativeFundingRate(collateralToken);
+            if (cumulativeFundingRate > p.entryFundingRate && p.size > 0) {
+                uint256 fundingRateDelta = cumulativeFundingRate - p.entryFundingRate;
+                uint256 fundingFee = (p.size * fundingRateDelta) / FUNDING_RATE_PRECISION;
+                unrealised -= int256(fundingFee);
             }
         }
     }
@@ -465,5 +481,14 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @dev Position-changing calls must come from the basket vault or the owner.
     function _checkCaller(address vault) internal view {
         require(msg.sender == vault || msg.sender == owner(), "Not authorized");
+    }
+
+    /// @dev Best-effort cumulative funding read; returns zero if GMX implementation does not expose the view.
+    function _safeCumulativeFundingRate(address token) internal view returns (uint256 rate) {
+        (bool ok, bytes memory data) =
+            address(gmxVault).staticcall(abi.encodeWithSelector(gmxVault.cumulativeFundingRates.selector, token));
+        if (ok && data.length >= 32) {
+            rate = abi.decode(data, (uint256));
+        }
     }
 }

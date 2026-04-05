@@ -834,9 +834,7 @@ contract IntegrationTest is Test {
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 10_000;
-        basket.setAssets(assetIds, weights);
+        basket.setAssets(assetIds);
         basket.setMinReserveBps(2_000); // keep 20% idle reserve
         basket.setVaultAccounting(address(vaultAccounting));
 
@@ -879,8 +877,12 @@ contract IntegrationTest is Test {
         assertEq(perpState.openInterest, 0, "OI cleared");
         assertTrue(perpState.realisedPnL > 0, "Profitable trade");
 
-        // ── Withdraw from perp back to basket ───────────────────────
-        basket.withdrawFromPerp(50_000e6);
+        // ── Withdraw from perp back to basket (principal + realised PnL headroom) ─────────────
+        IPerp.VaultState memory withdrawState = vaultAccounting.getVaultState(address(basket));
+        int256 available = int256(withdrawState.depositedCapital) + withdrawState.realisedPnL;
+        if (available > 0) {
+            basket.withdrawFromPerp(uint256(available));
+        }
         assertEq(basket.perpAllocated(), 0, "perpAllocated cleared");
 
         // ── Investor redeems shares ─────────────────────────────────
@@ -908,9 +910,7 @@ contract IntegrationTest is Test {
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 10_000;
-        basket.setAssets(assetIds, weights);
+        basket.setAssets(assetIds);
         basket.setMinReserveBps(2_000); // keep 20% idle reserve
         basket.setVaultAccounting(address(vaultAccounting));
 
@@ -955,9 +955,7 @@ contract IntegrationTest is Test {
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 10_000;
-        basket.setAssets(assetIds, weights);
+        basket.setAssets(assetIds);
         basket.setMinReserveBps(8_000); // keep 80% reserve
         basket.setVaultAccounting(address(vaultAccounting));
         vaultAccounting.registerVault(address(basket));

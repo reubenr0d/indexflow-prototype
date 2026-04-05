@@ -10,7 +10,6 @@ import {PricingEngine} from "../src/perp/PricingEngine.sol";
 import {FundingRateManager} from "../src/perp/FundingRateManager.sol";
 import {PerpReader} from "../src/perp/PerpReader.sol";
 import {BasketFactory} from "../src/vault/BasketFactory.sol";
-import {BasketVault} from "../src/vault/BasketVault.sol";
 import {PriceSync} from "../src/perp/PriceSync.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
@@ -112,17 +111,6 @@ contract DeployLocal is Script {
         BasketFactory basketFactory = new BasketFactory(address(usdc), address(oracleAdapter), deployer);
         basketFactory.setVaultAccounting(address(vaultAccounting));
 
-        bytes32[] memory assetIds = new bytes32[](2);
-        assetIds[0] = XAU;
-        assetIds[1] = XAG;
-        uint256[] memory weights = new uint256[](2);
-        weights[0] = 7000;
-        weights[1] = 3000;
-        address demoBasket = basketFactory.createBasket("Demo Basket", assetIds, weights, 10, 10);
-        BasketVault(demoBasket).setMinReserveBps(2000); // 20%
-
-        vaultAccounting.registerVault(demoBasket);
-
         vm.stopBroadcast();
 
         string memory json = _buildJson(
@@ -134,15 +122,13 @@ contract DeployLocal is Script {
             address(fundingRateManager),
             address(priceSync),
             address(usdc),
-            address(gmxVault),
-            demoBasket
+            address(gmxVault)
         );
 
         string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
         vm.writeFile(outPath, json);
 
         console2.log("Wrote", outPath);
-        console2.log("Demo basket:", demoBasket);
     }
 
     /// @dev `vm.getCode` cannot load `Vault` while `VaultMath` is unlinked. Deploy the library, patch
@@ -181,8 +167,7 @@ contract DeployLocal is Script {
         address fundingRateManager,
         address priceSync,
         address usdc,
-        address gmxVault,
-        address demoBasket
+        address gmxVault
     ) internal view returns (string memory) {
         return string.concat(
             "{\n",
@@ -212,9 +197,6 @@ contract DeployLocal is Script {
             '",\n',
             '  "gmxVault": "',
             vm.toString(gmxVault),
-            '",\n',
-            '  "demoBasket": "',
-            vm.toString(demoBasket),
             '"\n',
             "}\n"
         );

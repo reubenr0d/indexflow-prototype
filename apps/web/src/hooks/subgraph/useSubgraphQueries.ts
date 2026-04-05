@@ -7,6 +7,7 @@ import { getSubgraphClient, getSubgraphUrl } from "@/lib/subgraph/client";
 import { parseBigInt, toBasketOverviewRows, toUserPortfolioRows } from "@/lib/subgraph/transform";
 import {
   GET_ADMIN_VAULT_STATES,
+  GET_BASKET_ACTIVITIES,
   GET_BASKET_DETAIL,
   GET_BASKETS_OVERVIEW,
   GET_USER_PORTFOLIO,
@@ -17,8 +18,16 @@ const DEFAULT_PAGE_SIZE = 100;
 type RawBasketAsset = {
   id: string;
   assetId: string;
-  weightBps: string;
   active: boolean;
+  updatedAt: string;
+};
+
+type RawBasketExposure = {
+  id: string;
+  assetId: string;
+  longSize: string;
+  shortSize: string;
+  netSize: string;
   updatedAt: string;
 };
 
@@ -55,6 +64,7 @@ type RawBasketDetail = {
   minReserveBps: string;
   maxPerpAllocation: string;
   assets?: RawBasketAsset[] | null;
+  exposures?: RawBasketExposure[] | null;
   activities?: RawBasketActivity[] | null;
 };
 
@@ -162,8 +172,15 @@ export type BasketDetail = {
     assets: Array<{
       id: string;
       assetId: `0x${string}`;
-      weightBps: bigint;
       active: boolean;
+      updatedAt: bigint;
+    }>;
+    exposures: Array<{
+      id: string;
+      assetId: `0x${string}`;
+      longSize: bigint;
+      shortSize: bigint;
+      netSize: bigint;
       updatedAt: bigint;
     }>;
     activities: Array<{
@@ -195,12 +212,28 @@ export type BasketDetail = {
   } | null;
 };
 
-export function useBasketDetailQuery(vault: Address | undefined, activityFirst = 20) {
+export type BasketActivityRow = {
+  id: string;
+  activityType: string;
+  userId?: Address;
+  assetId?: `0x${string}`;
+  isLong?: boolean;
+  amountUsdc?: bigint;
+  shares?: bigint;
+  size?: bigint;
+  collateral?: bigint;
+  pnl?: bigint;
+  recipient?: Address;
+  timestamp: bigint;
+  txHash: `0x${string}`;
+};
+
+export function useBasketDetailQuery(vault: Address | undefined, activityFirst = 20, activitySkip = 0) {
   const client = useMemo(() => getSubgraphClient(), []);
   const isAvailable = Boolean(getSubgraphUrl());
 
   return useQuery({
-    queryKey: ["subgraph", "basketDetail", vault, activityFirst],
+    queryKey: ["subgraph", "basketDetail", vault, activityFirst, activitySkip],
     queryFn: async (): Promise<BasketDetail | null> => {
       if (!client || !vault) return null;
 
@@ -210,6 +243,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
       }>(GET_BASKET_DETAIL, {
         id: vault.toLowerCase(),
         activityFirst,
+        activitySkip,
       });
 
       if (!result.basket) {
@@ -236,11 +270,18 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
           assets: (result.basket.assets ?? []).map((a: RawBasketAsset) => ({
             id: a.id,
             assetId: a.assetId as `0x${string}`,
-            weightBps: parseBigInt(a.weightBps),
             active: Boolean(a.active),
             updatedAt: parseBigInt(a.updatedAt),
           })),
-          activities: (result.basket.activities ?? []).map((a: RawBasketActivity) => ({
+          exposures: (result.basket.exposures ?? []).map((e: RawBasketExposure) => ({
+            id: e.id,
+            assetId: e.assetId as `0x${string}`,
+            longSize: parseBigInt(e.longSize),
+            shortSize: parseBigInt(e.shortSize),
+            netSize: parseBigInt(e.netSize),
+            updatedAt: parseBigInt(e.updatedAt),
+          })),
+          activities: (result.basket.activities ?? []).map((a: RawBasketActivity): BasketActivityRow => ({
             id: a.id,
             activityType: a.activityType,
             userId: a.user?.id as Address | undefined,
@@ -270,6 +311,42 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
             }
           : null,
       };
+    },
+    enabled: isAvailable && Boolean(vault),
+    staleTime: 15_000,
+    retry: 1,
+  });
+}
+
+export function useBasketActivitiesQuery(vault: Address | undefined, first = 20, skip = 0) {
+  const client = useMemo(() => getSubgraphClient(), []);
+  const isAvailable = Boolean(getSubgraphUrl());
+
+  return useQuery({
+    queryKey: ["subgraph", "basketActivities", vault, first, skip],
+    queryFn: async (): Promise<BasketActivityRow[] | null> => {
+      if (!client || !vault) return null;
+      const result = await client.request<{ basketActivities: RawBasketActivity[] }>(GET_BASKET_ACTIVITIES, {
+        id: vault.toLowerCase(),
+        first,
+        skip,
+      });
+
+      return result.basketActivities.map((a: RawBasketActivity): BasketActivityRow => ({
+        id: a.id,
+        activityType: a.activityType,
+        userId: a.user?.id as Address | undefined,
+        assetId: a.assetId as `0x${string}` | undefined,
+        isLong: a.isLong ?? undefined,
+        amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,
+        shares: a.shares ? parseBigInt(a.shares) : undefined,
+        size: a.size ? parseBigInt(a.size) : undefined,
+        collateral: a.collateral ? parseBigInt(a.collateral) : undefined,
+        pnl: a.pnl ? parseBigInt(a.pnl) : undefined,
+        recipient: a.recipient as Address | undefined,
+        timestamp: parseBigInt(a.timestamp),
+        txHash: a.txHash as `0x${string}`,
+      }));
     },
     enabled: isAvailable && Boolean(vault),
     staleTime: 15_000,

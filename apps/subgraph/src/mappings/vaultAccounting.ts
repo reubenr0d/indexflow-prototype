@@ -1,4 +1,4 @@
-import { Address, ethereum } from "@graphprotocol/graph-ts";
+import { Address, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import {
   CapitalDeposited,
   CapitalWithdrawn,
@@ -15,8 +15,10 @@ import {
 import {
   createActivity,
   ensureVaultState,
+  getOrCreateBasketExposure,
   getOrCreateBasket,
   getOrCreateProtocolState,
+  ZERO,
 } from "./helpers";
 
 function syncVaultState(vault: Address, contractAddress: Address, event: ethereum.Event): void {
@@ -40,6 +42,29 @@ function syncVaultState(vault: Address, contractAddress: Address, event: ethereu
   stateEntity.updatedAt = event.block.timestamp;
   stateEntity.updatedBlock = event.block.number;
   stateEntity.save();
+}
+
+function syncExposure(vault: Address, asset: Bytes, isLong: boolean, contractAddress: Address, event: ethereum.Event): void {
+  const basket = getOrCreateBasket(vault, event);
+  const contract = VaultAccounting.bind(contractAddress);
+  const keyCall = contract.try_getPositionKey(vault, asset, isLong);
+  if (keyCall.reverted) return;
+
+  const trackingCall = contract.try_getPositionTracking(keyCall.value);
+  if (trackingCall.reverted) return;
+
+  const exposure = getOrCreateBasketExposure(basket, asset, event);
+  const size = trackingCall.value.exists ? trackingCall.value.size : ZERO;
+
+  if (isLong) {
+    exposure.longSize = size;
+  } else {
+    exposure.shortSize = size;
+  }
+  exposure.netSize = exposure.longSize.minus(exposure.shortSize);
+  exposure.updatedAt = event.block.timestamp;
+  exposure.updatedBlock = event.block.number;
+  exposure.save();
 }
 
 export function handleVaultRegistered(event: VaultRegistered): void {
@@ -78,6 +103,7 @@ export function handleCapitalWithdrawn(event: CapitalWithdrawn): void {
 
 export function handlePositionOpened(event: PositionOpened): void {
   syncVaultState(event.params.vault, event.address, event);
+  syncExposure(event.params.vault, event.params.asset, event.params.isLong, event.address, event);
 
   const basket = getOrCreateBasket(event.params.vault, event);
   const activity = createActivity(event, basket, "positionOpened");
@@ -90,6 +116,7 @@ export function handlePositionOpened(event: PositionOpened): void {
 
 export function handlePositionClosed(event: PositionClosed): void {
   syncVaultState(event.params.vault, event.address, event);
+  syncExposure(event.params.vault, event.params.asset, event.params.isLong, event.address, event);
 
   const basket = getOrCreateBasket(event.params.vault, event);
   const activity = createActivity(event, basket, "positionClosed");

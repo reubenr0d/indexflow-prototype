@@ -27,7 +27,7 @@ contract PerpReader {
     /// @param vault Basket vault address.
     /// @param shareToken ERC20 share token for the basket.
     /// @param name Human-readable basket name.
-    /// @param basketPrice Oracle-weighted basket price from the vault (1e30).
+    /// @param basketPrice Backward-compatible price field; mirrors `sharePrice`.
     /// @param sharePrice Implied value per share: (USDC on hand + perp allocated) / supply, or basket price if zero supply.
     /// @param totalSupply Outstanding basket shares (6 decimals).
     /// @param usdcBalance USDC held in the basket vault contract.
@@ -107,17 +107,13 @@ contract PerpReader {
         info.vault = basketVault;
         info.shareToken = address(st);
         info.name = bv.name();
-        info.basketPrice = bv.getBasketPrice();
+        info.basketPrice = bv.getSharePrice();
         info.totalSupply = st.totalSupply();
         info.usdcBalance = IERC20(address(bv.usdc())).balanceOf(basketVault);
         info.perpAllocated = bv.perpAllocated();
         info.assetCount = bv.getAssetCount();
 
-        if (info.totalSupply > 0) {
-            info.sharePrice = ((info.usdcBalance + info.perpAllocated) * PRICE_PRECISION) / info.totalSupply;
-        } else {
-            info.sharePrice = info.basketPrice;
-        }
+        info.sharePrice = bv.getSharePrice();
     }
 
     /// @notice Batch variant of `getBasketInfo` preserving calldata order.
@@ -132,18 +128,13 @@ contract PerpReader {
             infos[i].vault = basketVaults[i];
             infos[i].shareToken = address(st);
             infos[i].name = bv.name();
-            infos[i].basketPrice = bv.getBasketPrice();
+            infos[i].basketPrice = bv.getSharePrice();
             infos[i].totalSupply = st.totalSupply();
             infos[i].usdcBalance = IERC20(address(bv.usdc())).balanceOf(basketVaults[i]);
             infos[i].perpAllocated = bv.perpAllocated();
             infos[i].assetCount = bv.getAssetCount();
 
-            if (infos[i].totalSupply > 0) {
-                infos[i].sharePrice =
-                    ((infos[i].usdcBalance + infos[i].perpAllocated) * PRICE_PRECISION) / infos[i].totalSupply;
-            } else {
-                infos[i].sharePrice = infos[i].basketPrice;
-            }
+            infos[i].sharePrice = bv.getSharePrice();
         }
     }
 

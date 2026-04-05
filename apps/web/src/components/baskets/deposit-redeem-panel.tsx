@@ -19,7 +19,6 @@ type Mode = "deposit" | "redeem";
 
 interface DepositRedeemPanelProps {
   vault: Address;
-  basketPrice: bigint;
   sharePrice: bigint;
   depositFeeBps: bigint;
   redeemFeeBps: bigint;
@@ -28,7 +27,6 @@ interface DepositRedeemPanelProps {
 
 export function DepositRedeemPanel({
   vault,
-  basketPrice,
   sharePrice,
   depositFeeBps,
   redeemFeeBps,
@@ -69,8 +67,8 @@ export function DepositRedeemPanel({
   const needsApproval = mode === "deposit" && parsedAmount > 0n && (allowance ?? 0n) < parsedAmount;
 
   const estimatedShares =
-    mode === "deposit" && basketPrice > 0n
-      ? (parsedAmount * (10000n - depositFeeBps) * PRICE_PRECISION) / (10000n * basketPrice)
+    mode === "deposit" && sharePrice > 0n
+      ? (parsedAmount * (10000n - depositFeeBps) * PRICE_PRECISION) / (10000n * sharePrice)
       : 0n;
 
   const estimatedUSDC =

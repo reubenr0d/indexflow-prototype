@@ -3,6 +3,7 @@ import {
   Basket,
   BasketActivity,
   BasketAsset,
+  BasketExposure,
   ProtocolState,
   User,
   UserBasketPosition,
@@ -82,11 +83,11 @@ export function refreshBasketFromChain(vault: Address, event: ethereum.Event): B
   const perpCall = contract.try_perpAllocated();
   if (!perpCall.reverted) basket.perpAllocatedUsdc = perpCall.value;
 
-  const priceCall = contract.try_getBasketPrice();
-  if (!priceCall.reverted) basket.basketPrice = priceCall.value;
-
   const sharePriceCall = contract.try_getSharePrice();
-  if (!sharePriceCall.reverted) basket.sharePrice = sharePriceCall.value;
+  if (!sharePriceCall.reverted) {
+    basket.sharePrice = sharePriceCall.value;
+    basket.basketPrice = sharePriceCall.value;
+  }
 
   const assetCountCall = contract.try_getAssetCount();
   if (!assetCountCall.reverted) basket.assetCount = assetCountCall.value;
@@ -144,13 +145,28 @@ export function syncBasketAssets(vault: Address, event: ethereum.Event): void {
       asset.basket = basket.id;
     }
 
-    asset.assetId = data.value.value0 as Bytes;
-    asset.weightBps = data.value.value1;
+    asset.assetId = data.value as Bytes;
     asset.active = true;
     asset.updatedAt = event.block.timestamp;
     asset.updatedBlock = event.block.number;
     asset.save();
   }
+}
+
+export function getOrCreateBasketExposure(basket: Basket, assetId: Bytes, event: ethereum.Event): BasketExposure {
+  const id = basket.id.concat("-").concat(assetId.toHexString().toLowerCase());
+  let exposure = BasketExposure.load(id);
+  if (exposure == null) {
+    exposure = new BasketExposure(id);
+    exposure.basket = basket.id;
+    exposure.assetId = assetId;
+    exposure.longSize = ZERO;
+    exposure.shortSize = ZERO;
+    exposure.netSize = ZERO;
+    exposure.updatedAt = event.block.timestamp;
+    exposure.updatedBlock = event.block.number;
+  }
+  return exposure as BasketExposure;
 }
 
 export function getOrCreateUser(account: Address, event: ethereum.Event): User {

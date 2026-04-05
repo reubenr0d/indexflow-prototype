@@ -5,7 +5,6 @@ import { useChainId } from "wagmi";
 import { BasketFactoryABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { REFETCH_INTERVAL } from "@/lib/constants";
-import { type Address } from "viem";
 
 export function useAllBaskets() {
   const chainId = useChainId();
@@ -39,8 +38,6 @@ export function useCreateBasket() {
 
   const createBasket = (
     name: string,
-    assetIds: `0x${string}`[],
-    weightsBps: bigint[],
     depositFeeBps: bigint,
     redeemFeeBps: bigint
   ) => {
@@ -48,7 +45,7 @@ export function useCreateBasket() {
       address: basketFactory,
       abi: BasketFactoryABI,
       functionName: "createBasket",
-      args: [name, assetIds, weightsBps, depositFeeBps, redeemFeeBps],
+      args: [name, depositFeeBps, redeemFeeBps],
     });
   };
 

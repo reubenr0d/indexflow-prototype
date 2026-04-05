@@ -54,18 +54,30 @@ export function useContractErrorToast({
   receiptIsError = false,
   fallbackMessage,
 }: UseContractErrorToastParams) {
-  const lastToastKeyRef = useRef<string>("");
+  const lastWriteErrorRef = useRef<unknown>(undefined);
+  const lastReceiptErrorRef = useRef<unknown>(undefined);
 
   useEffect(() => {
-    if (!writeIsError && !receiptIsError) return;
+    if (!writeIsError) {
+      lastWriteErrorRef.current = undefined;
+      return;
+    }
+    if (writeError === undefined) return;
+    if (lastWriteErrorRef.current === writeError) return;
 
-    const errorSource = writeIsError ? writeError : receiptError;
-    const message = getContractErrorMessage(errorSource, fallbackMessage);
-    const toastKey = `${writeIsError ? "write" : "receipt"}:${message}`;
-
-    if (lastToastKeyRef.current === toastKey) return;
-    lastToastKeyRef.current = toastKey;
-
-    showToast("error", message);
+    lastWriteErrorRef.current = writeError;
+    showToast("error", getContractErrorMessage(writeError, fallbackMessage));
   }, [writeError, writeIsError, receiptError, receiptIsError, fallbackMessage]);
+
+  useEffect(() => {
+    if (!receiptIsError) {
+      lastReceiptErrorRef.current = undefined;
+      return;
+    }
+    if (receiptError === undefined) return;
+    if (lastReceiptErrorRef.current === receiptError) return;
+
+    lastReceiptErrorRef.current = receiptError;
+    showToast("error", getContractErrorMessage(receiptError, fallbackMessage));
+  }, [receiptError, receiptIsError, fallbackMessage]);
 }
