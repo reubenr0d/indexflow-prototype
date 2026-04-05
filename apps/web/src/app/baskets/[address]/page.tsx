@@ -415,18 +415,18 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
       const blocks = await Promise.all(blockNumbers.map((blockNumber) => publicClient.getBlock({ blockNumber })));
       const tsByBlock = new Map(blocks.map((b) => [b.number, b.timestamp]));
 
-      const logMap = new Map([
-        ...deposits.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...redeems.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...allocations.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...withdrawals.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...opens.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...closes.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-        ...pnls.map((l) => [`${l.transactionHash}-${l.logIndex}`, l]),
-      ]);
+      const logEntries = [
+        ...deposits,
+        ...redeems,
+        ...allocations,
+        ...withdrawals,
+        ...opens,
+        ...closes,
+        ...pnls,
+      ];
 
       for (const row of rows) {
-        const log = logMap.get(row.id);
+        const log = logEntries.find((entry) => `${entry.transactionHash}-${entry.logIndex}` === row.id);
         if (log) {
           row.timestamp = tsByBlock.get(log.blockNumber) ?? 0n;
         }

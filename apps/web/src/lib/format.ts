@@ -77,3 +77,36 @@ export function parseUSDCInput(value: string): bigint {
   const fracStr = (parts[1] || "").padEnd(6, "0").slice(0, 6);
   return whole + BigInt(fracStr);
 }
+
+export function parseTokenAmountInput(value: string, decimals: number): bigint | undefined {
+  const trimmed = value.trim();
+  if (!trimmed) return undefined;
+  if (!Number.isInteger(decimals) || decimals < 0) return undefined;
+  if (!/^\d+(\.\d+)?$/.test(trimmed)) return undefined;
+
+  const [wholePart, fracPart = ""] = trimmed.split(".");
+  if (fracPart.length > decimals) return undefined;
+
+  const whole = BigInt(wholePart || "0");
+  const scale = 10n ** BigInt(decimals);
+  if (decimals === 0) {
+    return whole;
+  }
+
+  const frac = fracPart ? BigInt(fracPart.padEnd(decimals, "0")) : 0n;
+  return whole * scale + frac;
+}
+
+export function formatTokenAmount(amount: bigint, decimals: number, maxFractionDigits = 4): string {
+  if (!Number.isInteger(decimals) || decimals < 0) return amount.toString();
+
+  const scale = 10n ** BigInt(decimals);
+  const whole = amount / scale;
+  if (decimals === 0) return whole.toLocaleString();
+
+  const frac = amount % scale;
+  const raw = frac.toString().padStart(decimals, "0").replace(/0+$/, "");
+  if (raw.length === 0) return whole.toLocaleString();
+
+  return `${whole.toLocaleString()}.${raw.slice(0, maxFractionDigits)}`;
+}

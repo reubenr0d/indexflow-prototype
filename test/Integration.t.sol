@@ -897,8 +897,8 @@ contract IntegrationTest is Test {
         uint256 investorUsdcAfter = usdc.balanceOf(investor);
         uint256 redeemed = investorUsdcAfter - investorUsdcBefore;
 
-        // Investor gets back their $100K (oracle price unchanged, so share price stable)
-        assertEq(redeemed, 100_000e6, "Investor gets back full deposit");
+        // Investor captures perp PnL via NAV-based redemption.
+        assertTrue(redeemed > 100_000e6, "Investor should receive deposit plus realised perp gains");
     }
 
     // ═════════════════════════════════════════════════════════════════

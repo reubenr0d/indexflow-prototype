@@ -99,6 +99,13 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 - `setOracleAdapter(oracleAdapter)` — Default oracle adapter for newly created baskets.
 - `createBasket(...)` — Deploy/configure basket, optional VA wiring, transfer ownership to creator.
 
+## Global pool operator controls (GMX vault)
+
+- Admin UI route **`/admin/pool`** includes per-whitelisted-token controls for:
+  - `setBufferAmount(token, amount)` (gov-only)
+  - direct pool funding flow: token `transfer(gmxVault, amount)` followed by `directPoolDeposit(token)`
+- These controls affect GMX pool-level liquidity configuration and are distinct from basket-level `allocateToPerp` / `withdrawFromPerp`.
+
 ## Operational caveats (current implementation)
 
 - `VaultAccounting.withdrawCapital` checks available capital with:
