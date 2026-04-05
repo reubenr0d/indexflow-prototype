@@ -6,10 +6,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { useAccount, useReadContracts } from "wagmi";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch } from "@/hooks/usePerpReader";
+import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useUserPortfolioQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import { BasketShareTokenABI } from "@/abi/contracts";
-import { formatUSDC, formatShares, formatCompact } from "@/lib/format";
+import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Wallet, ArrowUpRight } from "lucide-react";
@@ -17,15 +19,19 @@ import { type Address } from "viem";
 
 export default function PortfolioPage() {
   const { address, isConnected } = useAccount();
+  const subgraph = useUserPortfolioQuery(address);
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
+  const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
   const infos = (basketInfos as unknown as Array<{
     vault: Address;
     shareToken: Address;
     name: string;
     sharePrice: bigint;
+    usdcBalance: bigint;
+    perpAllocated: bigint;
   }>) ?? [];
 
   const balanceQueries = useReadContracts({
@@ -38,17 +44,46 @@ export default function PortfolioPage() {
     query: { enabled: isConnected && infos.length > 0 },
   });
 
-  const isLoading = basketsLoading || infosLoading || balanceQueries.isLoading;
+  const hasSubgraphData = Boolean(subgraph.data && !subgraph.isError);
+  const subgraphData = hasSubgraphData ? subgraph.data : null;
+  const rpcIsLoading = basketsLoading || infosLoading || balanceQueries.isLoading;
 
-  const holdings = infos.map((info, i) => {
-    const balance = balanceQueries.data?.[i]?.result as bigint | undefined;
-    const value = balance && info.sharePrice
-      ? (balance * info.sharePrice) / PRICE_PRECISION
-      : 0n;
-    return { ...info, balance: balance ?? 0n, value };
-  }).filter((h) => h.balance > 0n);
+  const rpcHoldings = infos
+    .map((info, i) => {
+      const balance = balanceQueries.data?.[i]?.result as bigint | undefined;
+      const value = balance && info.sharePrice ? (balance * info.sharePrice) / PRICE_PRECISION : 0n;
+      return { ...info, balance: balance ?? 0n, value };
+    })
+    .filter((h) => h.balance > 0n);
 
-  const totalValue = holdings.reduce((sum, h) => sum + h.value, 0n);
+  const hasRpcHoldings = rpcHoldings.length > 0;
+  const isLoading = hasRpcHoldings ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
+
+  const holdings = hasRpcHoldings
+    ? rpcHoldings
+    : hasSubgraphData
+    ? (subgraphData?.holdings ?? []).map((h) => ({
+        vault: h.vault,
+        name: h.name,
+        sharePrice: h.sharePrice,
+        balance: h.shareBalance,
+        value: h.valueUsdc,
+      }))
+    : rpcHoldings;
+
+  const totalValue = hasRpcHoldings
+    ? rpcHoldings.reduce((sum, h) => sum + h.value, 0n)
+    : hasSubgraphData
+      ? (subgraphData?.totalValueUsdc ?? 0n)
+      : rpcHoldings.reduce((sum, h) => sum + h.value, 0n);
+
+  const infoByVault = new Map(infos.map((info) => [info.vault, info]));
+  const openInterestByVault = new Map(
+    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
+      vaultAddresses[i],
+      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
+    ])
+  );
 
   if (!isConnected) {
     return (
@@ -100,6 +135,15 @@ export default function PortfolioPage() {
       ) : holdings.length > 0 ? (
         <div className="space-y-3">
           {holdings.map((h, i) => (
+            (() => {
+              const info = infoByVault.get(h.vault as Address);
+              const perpBlendBps = computeBlendedComposition(
+                info?.usdcBalance ?? 0n,
+                info?.perpAllocated ?? 0n,
+                openInterestByVault.get(h.vault as Address) ?? 0n,
+                []
+              ).perpBlendBps;
+              return (
             <motion.div
               key={h.vault}
               initial={{ opacity: 0, y: 8 }}
@@ -124,12 +168,15 @@ export default function PortfolioPage() {
                       <p className="text-sm text-app-muted">
                         {formatUSDC(h.sharePrice)} / share
                       </p>
+                      <p className="text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
                     </div>
                     <ArrowUpRight className="h-4 w-4 text-app-muted" />
                   </div>
                 </Card>
               </Link>
             </motion.div>
+              );
+            })()
           ))}
         </div>
       ) : (

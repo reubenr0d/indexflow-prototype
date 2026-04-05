@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SegmentedControl } from "@/components/ui/segmented-control";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
   useBasketAssets,
@@ -21,14 +22,31 @@ import {
   useUSDCAllowance,
   useApproveUSDC,
 } from "@/hooks/useBasketVault";
-import { useOracleAssetMetaMap } from "@/hooks/useOracle";
+import { useOracleAssetMetaMap, useSupportedOracleAssets } from "@/hooks/useOracle";
 import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId } from "wagmi";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
-import { type Address } from "viem";
+import { type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
 import { getContracts } from "@/config/contracts";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
+import {
+  useClosePosition,
+  useMaxOpenInterest,
+  useMaxPositionSize,
+  useOpenPosition,
+  usePositionTracking,
+} from "@/hooks/useVaultAccounting";
+
+function usdcToInputValue(amount: bigint): string {
+  const whole = amount / 1_000_000n;
+  const frac = amount % 1_000_000n;
+  if (frac === 0n) return whole.toString();
+  return `${whole.toString()}.${frac.toString().padStart(6, "0").replace(/0+$/, "")}`;
+}
 
 export default function AdminBasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -58,6 +76,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     depositedCapital: bigint;
     realisedPnL: bigint;
     openInterest: bigint;
+    collateralLocked: bigint;
     positionCount: bigint;
     registered: boolean;
   } | undefined;
@@ -76,6 +95,13 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
           weightBps: a.result![1],
         }))
     : [];
+
+  const blended = computeBlendedComposition(
+    basketInfo?.usdcBalance ?? 0n,
+    basketInfo?.perpAllocated ?? 0n,
+    state?.openInterest ?? 0n,
+    assets
+  );
 
   return (
     <PageWrapper>
@@ -116,11 +142,12 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       )}
 
       <div className="mb-8">
-        <h2 className="mb-4 text-lg font-semibold text-app-text">Composition</h2>
+        <h2 className="mb-4 text-lg font-semibold text-app-text">Blended Composition</h2>
         <Card>
           <div className="divide-y divide-app-border">
-            {assets.map((a) => {
+            {assets.map((a, i) => {
               const meta = assetMeta.get(a.assetId);
+              const blendedBps = blended.assetBlend[i]?.blendBps ?? 0n;
               return (
                 <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
                   <div>
@@ -131,10 +158,20 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
                       {meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
                     </p>
                   </div>
-                  <span className="text-sm text-app-muted">{formatBps(a.weightBps)}</span>
+                  <div className="text-right">
+                    <p className="text-sm text-app-text">{formatBps(blendedBps)}</p>
+                    <p className="text-xs text-app-muted">Base {formatBps(a.weightBps)}</p>
+                  </div>
                 </div>
               );
             })}
+            <div className="flex items-center justify-between px-6 py-4">
+              <div>
+                <p className="font-medium text-app-text">Perp Exposure</p>
+                <p className="text-xs text-app-muted">Open interest sleeve</p>
+              </div>
+              <span className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</span>
+            </div>
             {assets.length === 0 && (
               <div className="px-6 py-4 text-center text-sm text-app-muted">No assets</div>
             )}
@@ -153,20 +190,268 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <FeeCollectionCard vault={vault} />
       </div>
+      <div className="mt-6">
+        <BasketPositionManagerCard vault={vault} />
+      </div>
     </PageWrapper>
+  );
+}
+
+function BasketPositionManagerCard({ vault }: { vault: Address }) {
+  const refreshAfterTx = usePostTxRefresh();
+  const { data: supportedAssets } = useSupportedOracleAssets();
+  const { data: vaultState } = useVaultState(vault);
+
+  const [openAssetFilter, setOpenAssetFilter] = useState("");
+  const [closeAssetFilter, setCloseAssetFilter] = useState("");
+  const [openAsset, setOpenAsset] = useState<Hex | "">("");
+  const [openSide, setOpenSide] = useState<"long" | "short">("long");
+  const [openSize, setOpenSize] = useState("");
+  const [openCollateral, setOpenCollateral] = useState("");
+  const [closeAsset, setCloseAsset] = useState<Hex | "">("");
+  const [closeSide, setCloseSide] = useState<"long" | "short">("long");
+  const [closeSize, setCloseSize] = useState("");
+  const [closeCollateral, setCloseCollateral] = useState("");
+
+  const { data: maxOpenInterest } = useMaxOpenInterest(vault);
+  const { data: maxPositionSize } = useMaxPositionSize(vault);
+  const { data: closeTracking } = usePositionTracking(vault, closeAsset || undefined, closeSide === "long");
+  const { openPosition, receipt: openReceipt, isPending: isOpenPending } = useOpenPosition();
+  const { closePosition, receipt: closeReceipt, isPending: isClosePending } = useClosePosition();
+
+  const filteredAssets = (supportedAssets ?? []).filter((asset) =>
+    asset.label.toLowerCase().includes(openAssetFilter.toLowerCase())
+  );
+  const closeFilteredAssets = (supportedAssets ?? []).filter((asset) =>
+    asset.label.toLowerCase().includes(closeAssetFilter.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (!openAsset && filteredAssets.length > 0) {
+      setOpenAsset(filteredAssets[0].idHex as Hex);
+    }
+  }, [openAsset, filteredAssets]);
+
+  useEffect(() => {
+    if (!closeAsset && closeFilteredAssets.length > 0) {
+      setCloseAsset(closeFilteredAssets[0].idHex as Hex);
+    }
+  }, [closeAsset, closeFilteredAssets]);
+
+  useEffect(() => {
+    if (openReceipt.isSuccess) {
+      showToast("success", "Position opened");
+      refreshAfterTx();
+    }
+  }, [openReceipt.isSuccess, refreshAfterTx]);
+
+  useEffect(() => {
+    if (closeReceipt.isSuccess) {
+      showToast("success", "Position closed");
+      refreshAfterTx();
+    }
+  }, [closeReceipt.isSuccess, refreshAfterTx]);
+
+  const state = vaultState as {
+    depositedCapital: bigint;
+    realisedPnL: bigint;
+    openInterest: bigint;
+    collateralLocked: bigint;
+  } | undefined;
+
+  const availableCapital = state
+    ? (() => {
+        const total = state.depositedCapital + state.realisedPnL - state.collateralLocked;
+        return total > 0n ? total : 0n;
+      })()
+    : 0n;
+
+  const openInterestCap = (maxOpenInterest as bigint | undefined) ?? 0n;
+  const positionSizeCap = (maxPositionSize as bigint | undefined) ?? 0n;
+  const openInterest = state?.openInterest ?? 0n;
+  const remainingOpenInterest = openInterestCap > 0n && openInterestCap > openInterest ? openInterestCap - openInterest : 0n;
+
+  const openSizeMax =
+    openInterestCap > 0n && positionSizeCap > 0n
+      ? (remainingOpenInterest < positionSizeCap ? remainingOpenInterest : positionSizeCap)
+      : openInterestCap > 0n
+        ? remainingOpenInterest
+        : positionSizeCap > 0n
+          ? positionSizeCap
+          : 0n;
+
+  const closePos = closeTracking as {
+    size: bigint;
+    collateralUsdc: bigint;
+    exists: boolean;
+  } | undefined;
+
+  const closeSizeMax = closePos?.exists ? closePos.size : 0n;
+  const closeCollateralMax = closePos?.exists ? closePos.collateralUsdc : 0n;
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-4 text-base font-semibold text-app-text">Perp Position Management</h3>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-lg border border-app-border p-4">
+          <p className="mb-3 text-sm font-semibold text-app-text">Open Position</p>
+          <div className="grid gap-3">
+            <Input
+              placeholder="Filter assets..."
+              value={openAssetFilter}
+              onChange={(e) => setOpenAssetFilter(e.target.value)}
+            />
+            <select
+              value={openAsset}
+              onChange={(e) => setOpenAsset(e.target.value as Hex)}
+              className="h-11 w-full rounded-xl border border-app-border bg-app-bg px-3 text-app-text"
+            >
+              {filteredAssets.map((asset) => (
+                <option key={asset.idHex} value={asset.idHex}>
+                  {asset.label}
+                </option>
+              ))}
+            </select>
+            <SegmentedControl
+              options={[
+                { value: "long", label: "Long" },
+                { value: "short", label: "Short" },
+              ]}
+              value={openSide}
+              onChange={(value) => setOpenSide(value as "long" | "short")}
+            />
+            <Input type="number" placeholder="Size (USDC)" value={openSize} onChange={(e) => setOpenSize(e.target.value)} />
+            <div className="flex items-center justify-between text-xs text-app-muted">
+              <span>Max Size: {openSizeMax > 0n ? formatUSDC(openSizeMax) : "Unlimited"}</span>
+              {openSizeMax > 0n && (
+                <button className="underline" onClick={() => setOpenSize(usdcToInputValue(openSizeMax))}>
+                  Use max
+                </button>
+              )}
+            </div>
+            <Input
+              type="number"
+              placeholder="Collateral (USDC)"
+              value={openCollateral}
+              onChange={(e) => setOpenCollateral(e.target.value)}
+            />
+            <div className="flex items-center justify-between text-xs text-app-muted">
+              <span>Max Collateral: {formatUSDC(availableCapital)}</span>
+              <button className="underline" onClick={() => setOpenCollateral(usdcToInputValue(availableCapital))}>
+                Use max
+              </button>
+            </div>
+            <Button
+              disabled={!openAsset || !openSize || !openCollateral || isOpenPending}
+              onClick={() => {
+                openPosition(
+                  vault,
+                  openAsset as Hex,
+                  openSide === "long",
+                  parseUSDCInput(openSize),
+                  parseUSDCInput(openCollateral)
+                );
+                showToast("pending", "Opening position...");
+              }}
+            >
+              {isOpenPending ? "Processing..." : "Open"}
+            </Button>
+          </div>
+        </div>
+
+        <div className="rounded-lg border border-app-border p-4">
+          <p className="mb-3 text-sm font-semibold text-app-text">Close Position</p>
+          <div className="grid gap-3">
+            <Input
+              placeholder="Filter assets..."
+              value={closeAssetFilter}
+              onChange={(e) => setCloseAssetFilter(e.target.value)}
+            />
+            <select
+              value={closeAsset}
+              onChange={(e) => setCloseAsset(e.target.value as Hex)}
+              className="h-11 w-full rounded-xl border border-app-border bg-app-bg px-3 text-app-text"
+            >
+              {closeFilteredAssets.map((asset) => (
+                <option key={asset.idHex} value={asset.idHex}>
+                  {asset.label}
+                </option>
+              ))}
+            </select>
+            <SegmentedControl
+              options={[
+                { value: "long", label: "Long" },
+                { value: "short", label: "Short" },
+              ]}
+              value={closeSide}
+              onChange={(value) => setCloseSide(value as "long" | "short")}
+            />
+            <Input type="number" placeholder="Size Delta (USDC)" value={closeSize} onChange={(e) => setCloseSize(e.target.value)} />
+            <div className="flex items-center justify-between text-xs text-app-muted">
+              <span>Max Size Delta: {formatUSDC(closeSizeMax)}</span>
+              {closeSizeMax > 0n && (
+                <button className="underline" onClick={() => setCloseSize(usdcToInputValue(closeSizeMax))}>
+                  Use max
+                </button>
+              )}
+            </div>
+            <Input
+              type="number"
+              placeholder="Collateral Delta (USDC)"
+              value={closeCollateral}
+              onChange={(e) => setCloseCollateral(e.target.value)}
+            />
+            <div className="flex items-center justify-between text-xs text-app-muted">
+              <span>Max Collateral Delta: {formatUSDC(closeCollateralMax)}</span>
+              {closeCollateralMax > 0n && (
+                <button className="underline" onClick={() => setCloseCollateral(usdcToInputValue(closeCollateralMax))}>
+                  Use max
+                </button>
+              )}
+            </div>
+            <Button
+              variant="danger"
+              disabled={!closeAsset || !closeSize || isClosePending}
+              onClick={() => {
+                closePosition(
+                  vault,
+                  closeAsset as Hex,
+                  closeSide === "long",
+                  parseUSDCInput(closeSize),
+                  parseUSDCInput(closeCollateral || "0")
+                );
+                showToast("pending", "Closing position...");
+              }}
+            >
+              {isClosePending ? "Processing..." : "Close"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 }
 
 function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; currentAllocation: bigint }) {
   const [amount, setAmount] = useState("");
-  const { writeContract, data: hash, isPending } = useWriteContract();
+  const refreshAfterTx = usePostTxRefresh();
+  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   useEffect(() => {
     if (receipt.isSuccess) {
       showToast("success", "Allocation updated");
+      refreshAfterTx();
     }
-  }, [receipt.isSuccess]);
+  }, [receipt.isSuccess, refreshAfterTx]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Perp allocation update failed",
+  });
 
   return (
     <Card className="p-6">
@@ -219,7 +504,7 @@ function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; curr
 function MaxPerpAllocationCard({ vault }: { vault: Address }) {
   const [amount, setAmount] = useState("");
   const { data: currentCap } = useMaxPerpAllocation(vault);
-  const { setMaxPerpAllocation, receipt, isPending } = useSetMaxPerpAllocation();
+  const { setMaxPerpAllocation, receipt, isPending, error, isError } = useSetMaxPerpAllocation();
 
   const capValue = currentCap as bigint | undefined;
 
@@ -229,6 +514,14 @@ function MaxPerpAllocationCard({ vault }: { vault: Address }) {
       setAmount("");
     }
   }, [receipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Max perp allocation update failed",
+  });
 
   return (
     <Card className="p-6">
@@ -278,7 +571,7 @@ function MaxPerpAllocationCard({ vault }: { vault: Address }) {
 }
 
 function FeeCollectionCard({ vault }: { vault: Address }) {
-  const { writeContract, data: hash, isPending } = useWriteContract();
+  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
   const [recipient, setRecipient] = useState("");
 
@@ -287,6 +580,14 @@ function FeeCollectionCard({ vault }: { vault: Address }) {
       showToast("success", "Fees collected");
     }
   }, [receipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Fee collection failed",
+  });
 
   return (
     <Card className="p-6">
@@ -319,13 +620,21 @@ function FeeCollectionCard({ vault }: { vault: Address }) {
 function ReservePolicyCard({ vault }: { vault: Address }) {
   const [bpsInput, setBpsInput] = useState("");
   const { data: currentBps } = useMinReserveBps(vault);
-  const { setMinReserveBps, receipt, isPending } = useSetMinReserveBps();
+  const { setMinReserveBps, receipt, isPending, error, isError } = useSetMinReserveBps();
 
   useEffect(() => {
     if (receipt.isSuccess) {
       showToast("success", "Reserve policy updated");
     }
   }, [receipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Reserve policy update failed",
+  });
 
   return (
     <Card className="p-6">
@@ -360,8 +669,20 @@ function ReserveTopUpCard({ vault, usdc }: { vault: Address; usdc: Address }) {
   const [amount, setAmount] = useState("");
   const { address } = useAccount();
   const { data: allowance } = useUSDCAllowance(usdc, address, vault);
-  const { approve, receipt: approveReceipt, isPending: isApproving } = useApproveUSDC();
-  const { topUpReserve, receipt: topUpReceipt, isPending: isToppingUp } = useTopUpReserve();
+  const {
+    approve,
+    receipt: approveReceipt,
+    isPending: isApproving,
+    error: approveError,
+    isError: isApproveError,
+  } = useApproveUSDC();
+  const {
+    topUpReserve,
+    receipt: topUpReceipt,
+    isPending: isToppingUp,
+    error: topUpError,
+    isError: isTopUpError,
+  } = useTopUpReserve();
 
   const parsedAmount = amount ? parseUSDCInput(amount) : 0n;
   const needsApproval = parsedAmount > 0n && (allowance ?? 0n) < parsedAmount;
@@ -378,6 +699,21 @@ function ReserveTopUpCard({ vault, usdc }: { vault: Address; usdc: Address }) {
       showToast("success", "Reserve topped up");
     }
   }, [topUpReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: approveError,
+    writeIsError: isApproveError,
+    receiptError: approveReceipt.error,
+    receiptIsError: approveReceipt.isError,
+    fallbackMessage: "USDC approval failed",
+  });
+  useContractErrorToast({
+    writeError: topUpError,
+    writeIsError: isTopUpError,
+    receiptError: topUpReceipt.error,
+    receiptIsError: topUpReceipt.isError,
+    fallbackMessage: "Reserve top up failed",
+  });
 
   return (
     <Card className="p-6">

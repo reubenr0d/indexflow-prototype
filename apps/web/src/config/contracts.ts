@@ -1,7 +1,8 @@
 import { type Address } from "viem";
 import { anvil } from "viem/chains";
-import { arbitrum, arbitrumSepolia } from "wagmi/chains";
+import { arbitrum, arbitrumSepolia, sepolia } from "wagmi/chains";
 import localDeployment from "./local-deployment.json";
+import sepoliaDeployment from "./sepolia-deployment.json";
 
 type ContractAddresses = {
   basketFactory: Address;
@@ -26,6 +27,7 @@ type LocalDeploymentFile = {
 };
 
 const ld = localDeployment as LocalDeploymentFile;
+const sd = sepoliaDeployment as LocalDeploymentFile;
 
 export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
   [anvil.id]: {
@@ -37,6 +39,16 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     fundingRateManager: ld.fundingRateManager as Address,
     usdc: ld.usdc as Address,
     gmxVault: ld.gmxVault as Address,
+  },
+  [sepolia.id]: {
+    basketFactory: sd.basketFactory as Address,
+    vaultAccounting: sd.vaultAccounting as Address,
+    oracleAdapter: sd.oracleAdapter as Address,
+    perpReader: sd.perpReader as Address,
+    pricingEngine: sd.pricingEngine as Address,
+    fundingRateManager: sd.fundingRateManager as Address,
+    usdc: sd.usdc as Address,
+    gmxVault: sd.gmxVault as Address,
   },
   [arbitrum.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -61,5 +73,5 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
 };
 
 export function getContracts(chainId: number): ContractAddresses {
-  return CONTRACT_ADDRESSES[chainId] ?? CONTRACT_ADDRESSES[arbitrumSepolia.id];
+  return CONTRACT_ADDRESSES[chainId] ?? CONTRACT_ADDRESSES[sepolia.id];
 }

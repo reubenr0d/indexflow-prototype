@@ -26,7 +26,9 @@ interface IOracleAdapterPriceView {
 }
 
 /// @notice Sync all configured oracle asset prices into GMX SimplePriceFeed via PriceSync.
-/// @dev Reads addresses from apps/web/src/config/local-deployment.json.
+/// @dev Reads addresses from a deployment config file.
+///      - Default: apps/web/src/config/local-deployment.json
+///      - Override: DEPLOYMENT_CONFIG=/abs/or/relative/path.json
 contract SyncAllOraclePrices is Script {
     function run() external {
         uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
@@ -34,7 +36,7 @@ contract SyncAllOraclePrices is Script {
             deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         }
 
-        string memory configPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
+        string memory configPath = _resolveConfigPath();
         string memory json = vm.readFile(configPath);
         address oracleAdapter = vm.parseJsonAddress(json, ".oracleAdapter");
         address priceSync = vm.parseJsonAddress(json, ".priceSync");
@@ -92,5 +94,12 @@ contract SyncAllOraclePrices is Script {
             console2.log("GMX token:", gmxToken);
             console2.log("Feed price after sync:", afterPrice);
         }
+    }
+
+    function _resolveConfigPath() internal view returns (string memory) {
+        if (vm.envExists("DEPLOYMENT_CONFIG")) {
+            return vm.envString("DEPLOYMENT_CONFIG");
+        }
+        return string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
     }
 }

@@ -32,7 +32,9 @@ interface ISimplePriceFeedView {
 }
 
 /// @notice Submit custom-relayer prices to OracleAdapter, then sync them into SimplePriceFeed.
-/// @dev Reads addresses from apps/web/src/config/local-deployment.json.
+/// @dev Reads addresses from a deployment config file.
+///      - Default: apps/web/src/config/local-deployment.json
+///      - Override: DEPLOYMENT_CONFIG=/abs/or/relative/path.json
 ///      For XAU/XAG, optional env overrides are supported:
 ///      - XAU_PRICE_RAW (8-decimal raw feed value)
 ///      - XAG_PRICE_RAW (8-decimal raw feed value)
@@ -48,7 +50,7 @@ contract SubmitAndSyncOraclePrices is Script {
             deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         }
 
-        string memory configPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
+        string memory configPath = _resolveConfigPath();
         string memory json = vm.readFile(configPath);
         address oracleAdapter = vm.parseJsonAddress(json, ".oracleAdapter");
         address priceSync = vm.parseJsonAddress(json, ".priceSync");
@@ -136,5 +138,12 @@ contract SubmitAndSyncOraclePrices is Script {
             return normalizedPrice / divisor;
         }
         return normalizedPrice * (10 ** (decimals - 30));
+    }
+
+    function _resolveConfigPath() internal view returns (string memory) {
+        if (vm.envExists("DEPLOYMENT_CONFIG")) {
+            return vm.envString("DEPLOYMENT_CONFIG");
+        }
+        return string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
     }
 }

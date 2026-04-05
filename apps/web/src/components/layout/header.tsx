@@ -9,6 +9,7 @@ import { anvil } from "viem/chains";
 import { getContracts } from "@/config/contracts";
 import { ERC20ABI } from "@/abi/erc20";
 import { showToast } from "@/components/ui/toast";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X } from "lucide-react";
@@ -47,12 +48,13 @@ export function Header() {
     }
   }, [receipt.isSuccess]);
 
-  useEffect(() => {
-    if (isError || receipt.isError) {
-      const message = error?.message || receipt.error?.message || "Mint failed";
-      showToast("error", message);
-    }
-  }, [isError, error?.message, receipt.isError, receipt.error?.message]);
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Mint failed",
+  });
 
   const handleMint = () => {
     if (!address || !isLocalChain) return;

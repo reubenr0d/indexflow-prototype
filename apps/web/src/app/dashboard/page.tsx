@@ -5,37 +5,71 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch } from "@/hooks/usePerpReader";
-import { formatUSDC, formatCompact } from "@/lib/format";
+import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { formatUSDC, formatCompact, formatBps } from "@/lib/format";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { USDC_PRECISION } from "@/lib/constants";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { type Address } from "viem";
 
 export default function DashboardPage() {
+  const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
+
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
+  const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const isLoading = basketsLoading || infosLoading;
+  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
+  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const rpcInfos = ((basketInfos as unknown as Array<{
+    vault: Address;
+    name: string;
+    basketPrice: bigint;
+    sharePrice: bigint;
+    totalSupply: bigint;
+    usdcBalance: bigint;
+    perpAllocated: bigint;
+  }>) ?? []);
+  const hasRpcData = rpcInfos.length > 0;
+  const rpcIsLoading = basketsLoading || infosLoading;
+  const isLoading = hasRpcData ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
 
-  const totalTVL = basketInfos
-    ? (basketInfos as unknown as Array<{ usdcBalance: bigint; perpAllocated: bigint }>).reduce(
-        (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
-        0n
-      )
-    : 0n;
+  const infos = hasRpcData
+    ? rpcInfos
+    : hasSubgraphData
+      ? subgraphData.map((item) => ({
+        vault: item.vault,
+        name: item.name,
+        basketPrice: item.basketPrice,
+        sharePrice: item.sharePrice,
+        totalSupply: item.totalSupply,
+        usdcBalance: item.usdcBalance,
+        perpAllocated: item.perpAllocated,
+      }))
+      : [];
 
-  const sortedBaskets = basketInfos
-    ? [...(basketInfos as unknown as Array<{ vault: Address; name: string; basketPrice: bigint; sharePrice: bigint; totalSupply: bigint; usdcBalance: bigint; perpAllocated: bigint }>)]
-        .sort((a, b) => {
-          const tvlA = (a.usdcBalance ?? 0n) + (a.perpAllocated ?? 0n);
-          const tvlB = (b.usdcBalance ?? 0n) + (b.perpAllocated ?? 0n);
-          return tvlB > tvlA ? 1 : -1;
-        })
-        .slice(0, 6)
-    : [];
+  const openInterestByVault = new Map(
+    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
+      vaultAddresses[i],
+      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
+    ])
+  );
+
+  const totalTVL = infos.reduce(
+    (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
+    0n
+  );
+
+  const sortedBaskets = [...infos]
+    .sort((a, b) => {
+      const tvlA = (a.usdcBalance ?? 0n) + (a.perpAllocated ?? 0n);
+      const tvlB = (b.usdcBalance ?? 0n) + (b.perpAllocated ?? 0n);
+      return tvlB > tvlA ? 1 : -1;
+    })
+    .slice(0, 6);
 
   return (
     <PageWrapper>
@@ -60,12 +94,12 @@ export default function DashboardPage() {
       <div className="mb-10 grid gap-3 sm:grid-cols-3">
         <StatCard
           label="Active baskets"
-          value={String(vaultAddresses.length)}
+          value={String(infos.length)}
           isLoading={isLoading}
         />
         <StatCard
           label="Vaults tracked"
-          value={String(vaultAddresses.length)}
+          value={String(infos.length)}
           subValue="Factory index"
           isLoading={isLoading}
         />
@@ -99,19 +133,30 @@ export default function DashboardPage() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {sortedBaskets.map((info) => (
             <Link key={info.vault} href={`/baskets/${info.vault}`}>
+              {(() => {
+                const perpBlendBps = computeBlendedComposition(
+                  info.usdcBalance ?? 0n,
+                  info.perpAllocated ?? 0n,
+                  openInterestByVault.get(info.vault as Address) ?? 0n,
+                  []
+                ).perpBlendBps;
+                return (
               <Card className="h-full p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
                 <p className="text-sm font-medium text-app-muted">{info.name || "Basket"}</p>
                 <p className="mt-2 font-mono text-xl font-semibold text-app-text">
                   {formatUSDC((info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n))}
                 </p>
                 <p className="mt-1 font-mono text-xs text-app-muted">TVL</p>
+                <p className="mt-1 text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
               </Card>
+                );
+              })()}
             </Link>
           ))}
         </div>
       )}
 
-      {!isLoading && vaultAddresses.length === 0 && (
+      {!isLoading && infos.length === 0 && (
         <div className="rounded-lg border border-dashed border-app-border bg-app-surface py-16 text-center">
           <p className="font-medium text-app-text">No baskets deployed</p>
           <p className="mt-2 text-sm text-app-muted">

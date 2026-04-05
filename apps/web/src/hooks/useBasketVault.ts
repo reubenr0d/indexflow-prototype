@@ -187,6 +187,17 @@ export function useAvailableForPerpUsdc(vault: Address) {
   });
 }
 
+export function useAvailableForPerpBatch(vaults: Address[]) {
+  return useReadContracts({
+    contracts: vaults.map((vault) => ({
+      address: vault,
+      abi: BasketVaultABI,
+      functionName: "getAvailableForPerpUsdc" as const,
+    })),
+    query: { enabled: vaults.length > 0, refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
 export function useCollectedFees(vault: Address) {
   return useReadContract({
     address: vault,

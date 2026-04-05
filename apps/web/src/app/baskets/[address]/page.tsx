@@ -7,7 +7,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
-import { useBasketInfo } from "@/hooks/usePerpReader";
+import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
   useBasketAssets,
   useBasketFees,
@@ -21,6 +21,7 @@ import { useAccount } from "wagmi";
 import { useReadContract } from "wagmi";
 import { BasketShareTokenABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAddress, formatAssetId, formatPrice } from "@/lib/format";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { type Address } from "viem";
 import { motion } from "framer-motion";
 import { Copy } from "lucide-react";
@@ -31,6 +32,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const { address: userAddress } = useAccount();
 
   const { data: info, isLoading } = useBasketInfo(vault);
+  const { data: vaultState } = useVaultState(vault);
   const { data: assetsData } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const { depositFee, redeemFee } = useBasketFees(vault);
@@ -50,6 +52,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     perpAllocated: bigint;
     assetCount: bigint;
   } | undefined;
+  const state = vaultState as { openInterest: bigint } | undefined;
 
   const { data: shareBalance } = useReadContract({
     address: basketInfo?.shareToken,
@@ -75,6 +78,13 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
           weightBps: a.result![1],
         }))
     : [];
+
+  const blended = computeBlendedComposition(
+    basketInfo?.usdcBalance ?? 0n,
+    basketInfo?.perpAllocated ?? 0n,
+    state?.openInterest ?? 0n,
+    assets
+  );
 
   if (isLoading) {
     return (
@@ -130,12 +140,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
           </motion.div>
 
           <div className="mt-10">
-            <h2 className="mb-4 text-lg font-semibold text-app-text">
-              Composition
-            </h2>
+            <h2 className="mb-4 text-lg font-semibold text-app-text">Blended Composition</h2>
             <Card>
               <div className="divide-y divide-app-border">
-                {assets.map((asset) => {
+                {assets.map((asset, i) => {
                   const meta = assetMeta.get(asset.assetId);
                   return (
                     <AssetRow
@@ -144,9 +152,17 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                       assetName={meta?.name ?? formatAssetId(asset.assetId)}
                       assetAddress={meta?.address}
                       weightBps={asset.weightBps}
+                      blendedWeightBps={blended.assetBlend[i]?.blendBps ?? 0n}
                     />
                   );
                 })}
+                <div className="flex items-center justify-between px-6 py-4">
+                  <div>
+                    <p className="font-medium text-app-text">Perp Exposure</p>
+                    <p className="text-xs text-app-muted">Open interest sleeve</p>
+                  </div>
+                  <p className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</p>
+                </div>
                 {assets.length === 0 && (
                   <div className="p-6 text-center text-sm text-app-muted">
                     No assets configured
@@ -214,11 +230,13 @@ function AssetRow({
   assetName,
   assetAddress,
   weightBps,
+  blendedWeightBps,
 }: {
   assetId: `0x${string}`;
   assetName: string;
   assetAddress?: Address;
   weightBps: bigint;
+  blendedWeightBps: bigint;
 }) {
   const { data: priceData } = useOracleAssetPrice(assetId);
   const { data: isStale } = useOracleIsStale(assetId);
@@ -243,10 +261,11 @@ function AssetRow({
           <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
             <div
               className="h-full rounded-full bg-app-accent"
-              style={{ width: `${Number(weightBps) / 100}%` }}
+              style={{ width: `${Number(blendedWeightBps) / 100}%` }}
             />
           </div>
-          <p className="mt-1 text-xs text-app-muted">{formatBps(weightBps)}</p>
+          <p className="mt-1 text-xs text-app-muted">{formatBps(blendedWeightBps)}</p>
+          <p className="text-[10px] text-app-muted">Base {formatBps(weightBps)}</p>
         </div>
         <p className="w-24 text-right font-mono text-sm text-app-text">
           {formatPrice(price)}

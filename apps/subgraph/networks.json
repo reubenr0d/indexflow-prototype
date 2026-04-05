@@ -1,0 +1,30 @@
+{
+  "anvil": {
+    "basketFactory": {
+      "address": "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf",
+      "startBlock": 0
+    },
+    "vaultAccounting": {
+      "address": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+      "startBlock": 0
+    },
+    "oracleAdapter": {
+      "address": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      "startBlock": 0
+    }
+  },
+  "arbitrum-sepolia": {
+    "basketFactory": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "vaultAccounting": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "oracleAdapter": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    }
+  }
+}

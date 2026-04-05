@@ -38,7 +38,7 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 - **Solidity** -- 0.6.12 (GMX fork) + ^0.8.24 (new contracts)
 - **Foundry** -- Build, test, deploy
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
-- **Target chain** -- Arbitrum
+- **Target chains** -- Arbitrum, Ethereum Sepolia (testnet)
 
 ## Setup
 
@@ -59,9 +59,21 @@ forge test -vv
 Copy `.env.example` to `.env` and set:
 
 ```
+SEPOLIA_RPC_URL=
 ARBITRUM_RPC_URL=
 ARBITRUM_SEPOLIA_RPC_URL=
+ETHERSCAN_API_KEY=
 ARBISCAN_API_KEY=
+```
+
+## Deployment
+
+```bash
+# Local (Anvil)
+npm run deploy:local
+
+# Ethereum Sepolia (writes apps/web/src/config/sepolia-deployment.json)
+npm run deploy:sepolia
 ```
 
 ## Operations
@@ -74,6 +86,8 @@ The GMX vault reads prices from **SimplePriceFeed**, not from **OracleAdapter** 
 - **Custom relayer assets** — A keeper must call **`OracleAdapter.submitPrice`** / **`submitPrices`** first (requires `setKeeper` on the adapter), then run **`PriceSync.sync*`** as above.
 
 Basket and other layers that call `OracleAdapter` in views see fresh Chainlink data on read; the perp path only updates on-chain when **PriceSync** runs.
+
+For basket/perp operator responsibilities (capital allocation, position management controls, and investor liquidity implications), see [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md).
 
 **Funding** — Keepers authorized on **FundingRateManager** call **`updateFundingRate`** so the GMX vault’s funding parameters stay in line with your policy (often on a schedule tied to `fundingInterval`).
 
@@ -97,10 +111,18 @@ Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replac
 forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast
 ```
 
+**Sepolia sync helpers (uses `apps/web/src/config/sepolia-deployment.json`)**
+
+```bash
+npm run sync:sepolia
+npm run submit-sync:sepolia
+```
+
 ## Documentation
 
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
+- [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md) — Basket/perp manager flow: setup, capital allocation, positions, risk controls, and implementation caveats.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 
 For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.

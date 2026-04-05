@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Subgraph Configuration
+
+Set the subgraph endpoint to enable hybrid GraphQL + RPC reads:
+
+```bash
+NEXT_PUBLIC_SUBGRAPH_URL=
+```
+
+When the URL is unset or the query fails, pages automatically fall back to existing RPC hooks.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

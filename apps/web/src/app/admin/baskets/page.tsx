@@ -7,29 +7,56 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch } from "@/hooks/usePerpReader";
+import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import { useSupportedOracleAssets } from "@/hooks/useOracle";
-import { formatUSDC, formatAddress } from "@/lib/format";
+import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
 import { Plus, X } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 
 export default function AdminBasketsPage() {
   const [showCreate, setShowCreate] = useState(false);
-  const { data: baskets, isLoading } = useAllBaskets();
+  const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
+  const { data: baskets, isLoading: rpcLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
+  const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const infos = (basketInfos as unknown as Array<{
+  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
+  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const rpcInfos = ((basketInfos as unknown as Array<{
     vault: Address;
     name: string;
     usdcBalance: bigint;
     perpAllocated: bigint;
     assetCount: bigint;
-  }>) ?? [];
+  }>) ?? []);
+  const hasRpcData = rpcInfos.length > 0;
+  const isLoading = hasRpcData ? rpcLoading : hasSubgraphData ? subgraph.isLoading : rpcLoading;
+  const infos = hasRpcData
+    ? rpcInfos
+    : hasSubgraphData
+      ? subgraphData.map((item) => ({
+        vault: item.vault,
+        name: item.name,
+        usdcBalance: item.usdcBalance,
+        perpAllocated: item.perpAllocated,
+        assetCount: item.assetCount,
+      }))
+      : [];
+
+  const openInterestByVault = new Map(
+    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
+      vaultAddresses[i],
+      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
+    ])
+  );
 
   return (
     <PageWrapper>
@@ -73,6 +100,7 @@ export default function AdminBasketsPage() {
               <span className="w-24 text-right">TVL</span>
               <span className="w-16 text-right">Assets</span>
               <span className="w-24 text-right">Perp</span>
+              <span className="w-20 text-right">Blend</span>
               <span className="w-20 text-right">Address</span>
             </div>
             {infos.map((info) => (
@@ -89,6 +117,16 @@ export default function AdminBasketsPage() {
                   </span>
                   <span className="w-24 text-right text-sm text-app-muted">
                     {formatUSDC(info.perpAllocated ?? 0n)}
+                  </span>
+                  <span className="w-20 text-right text-sm text-app-muted">
+                    {formatBps(
+                      computeBlendedComposition(
+                        info.usdcBalance ?? 0n,
+                        info.perpAllocated ?? 0n,
+                        openInterestByVault.get(info.vault as Address) ?? 0n,
+                        []
+                      ).perpBlendBps
+                    )}
                   </span>
                   <span className="w-20 text-right font-mono text-xs text-app-muted">
                     {formatAddress(info.vault)}
@@ -116,7 +154,7 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
   const [depositFee, setDepositFee] = useState("10");
   const [redeemFee, setRedeemFee] = useState("10");
 
-  const { createBasket, receipt, isPending } = useCreateBasket();
+  const { createBasket, receipt, isPending, error, isError } = useCreateBasket();
   const { data: supportedAssets, isLoading: supportedAssetsLoading } = useSupportedOracleAssets();
 
   const totalWeight = assets.reduce((sum, a) => sum + (parseInt(a.weight) || 0), 0);
@@ -131,6 +169,14 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
       onSuccess();
     }
   }, [receipt.isSuccess, onSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Basket creation failed",
+  });
 
   const handleSubmit = () => {
     if (!name || totalWeight !== 10000 || hasEmptyAssetSelection || hasDuplicateAssets || noSupportedAssets) return;

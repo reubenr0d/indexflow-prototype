@@ -1,0 +1,118 @@
+type Basket @entity(immutable: false) {
+  id: ID!
+  creator: Bytes!
+  vault: Bytes!
+  shareToken: Bytes!
+  name: String!
+  createdAt: BigInt!
+  createdBlock: BigInt!
+
+  assetCount: BigInt!
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  maxPerpAllocation: BigInt!
+
+  usdcBalanceUsdc: BigInt!
+  basketPrice: BigInt!
+  sharePrice: BigInt!
+  tvlBookUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  totalSupplyShares: BigInt!
+
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  totalDepositCount: BigInt!
+  totalRedeemCount: BigInt!
+  cumulativeTopUpUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+
+  assets: [BasketAsset!]! @derivedFrom(field: "basket")
+  activities: [BasketActivity!]! @derivedFrom(field: "basket")
+}
+
+type BasketAsset @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  assetId: Bytes!
+  weightBps: BigInt!
+  active: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type User @entity(immutable: false) {
+  id: ID!
+  address: Bytes!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  positions: [UserBasketPosition!]! @derivedFrom(field: "user")
+}
+
+type UserBasketPosition @entity(immutable: false) {
+  id: ID!
+  user: User!
+  basket: Basket!
+  shareBalance: BigInt!
+  netDepositedUsdc: BigInt!
+  netRedeemedUsdc: BigInt!
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  lastActivityAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type BasketActivity @entity(immutable: true) {
+  id: ID!
+  basket: Basket!
+  activityType: String!
+  user: User
+  assetId: Bytes
+  isLong: Boolean
+  amountUsdc: BigInt
+  shares: BigInt
+  size: BigInt
+  collateral: BigInt
+  pnl: BigInt
+  recipient: Bytes
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type VaultStateCurrent @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  registered: Boolean!
+  paused: Boolean!
+  depositedCapital: BigInt!
+  realisedPnl: BigInt!
+  openInterest: BigInt!
+  positionCount: BigInt!
+  collateralLocked: BigInt!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type AssetMeta @entity(immutable: false) {
+  id: ID!
+  assetId: Bytes!
+  feedType: Int!
+  feedAddress: Bytes!
+  active: Boolean!
+  latestPrice: BigInt
+  latestPriceTimestamp: BigInt
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type ProtocolState @entity(immutable: false) {
+  id: ID!
+  paused: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}

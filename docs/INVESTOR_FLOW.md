@@ -10,9 +10,15 @@ This document describes what **basket share holders** interact with and how valu
 ## Deposit and redeem (typical investor path)
 
 1. **Deposit** — You approve USDC and call `BasketVault.deposit(amount)`. The vault takes a **deposit fee** (if configured), then mints shares using the **oracle basket price**: a weighted sum of configured asset prices from **OracleAdapter** (same economic definition the vault uses for mint/burn).
-2. **Redeem** — You call `redeem(shares)`. The vault burns shares and sends USDC using that same **basket oracle price**, minus any **redeem fee**, subject to **USDC liquidity** actually held in the vault (it cannot send what it does not have on hand).
+2. **Redeem** — You call `redeem(shares)`. The vault burns shares and sends USDC using that same **basket oracle price**, minus any **redeem fee**, subject to **idle USDC liquidity actually held in the basket vault** (computed from on-hand USDC and excluding reserved fees in `collectedFees`).
 
 So entry and exit pricing for shares is tied to the **basket oracle**, not necessarily to full mark-to-market NAV if the vault has open perp legs.
+
+## Liquidity model (as implemented)
+
+- **Liquid for investor redeem** — Idle USDC in `BasketVault` that can be paid out on `redeem`, net of reserved fees (`collectedFees`).
+- **Non-liquid to investor until owner action** — Capital recorded as `perpAllocated` and funds currently in `VaultAccounting` / GMX position path.
+- **Direct investor withdrawal from perp allocation is not available** — investors do not call `withdrawFromPerp`; that function is `onlyOwner` on the basket vault.
 
 ## How basket price differs from “full NAV”
 
@@ -24,7 +30,7 @@ Investors should treat oracle basket price as the **mint/redeem exchange rate**,
 
 ## Perp allocation (operator / vault owner path)
 
-Moving USDC into the shared perp pool is **not** something passive shareholders do on-chain; it is **`onlyOwner`** on the basket vault.
+Moving USDC into or out of the shared perp pool is **not** something passive shareholders do on-chain; both flows are **`onlyOwner`** on the basket vault.
 
 ```mermaid
 sequenceDiagram
@@ -49,6 +55,7 @@ sequenceDiagram
 
 - **`allocateToPerp` / `withdrawFromPerp`** — Move USDC between the basket vault and **VaultAccounting** (subject to `maxPerpAllocation` if set).
 - **Positions** — Opened in **VaultAccounting**’s name on GMX; PnL flows back as USDC when positions are reduced. The basket vault’s **`perpAllocated`** is an accounting entry; actual balances live in **VaultAccounting** / GMX until withdrawn.
+- **Investor implication** — If more capital is allocated to perp, investor redemption headroom falls until the owner pulls funds back with `withdrawFromPerp` (or new reserve USDC is added).
 
 ## What investors do **not** control
 
@@ -64,4 +71,5 @@ sequenceDiagram
 ## Related reading
 
 - [README.md](../README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).
+- [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md) — Basket/perp manager runbook: setup, allocation, position operations, risk controls, and caveats.
 - [MODIFICATIONS.md](../MODIFICATIONS.md) — Changes versus upstream GMX.

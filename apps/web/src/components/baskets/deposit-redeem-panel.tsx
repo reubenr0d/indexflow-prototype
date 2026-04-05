@@ -10,8 +10,9 @@ import { useChainId } from "wagmi";
 import { useDeposit, useRedeem, useApproveUSDC, useUSDCBalance, useUSDCAllowance } from "@/hooks/useBasketVault";
 import { getContracts } from "@/config/contracts";
 import { formatUSDC, formatShares, parseUSDCInput } from "@/lib/format";
-import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
+import { PRICE_PRECISION } from "@/lib/constants";
 import { showToast } from "@/components/ui/toast";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { type Address } from "viem";
 
 type Mode = "deposit" | "redeem";
@@ -42,9 +43,27 @@ export function DepositRedeemPanel({
   const { data: usdcBalance } = useUSDCBalance(usdc, address);
   const { data: allowance } = useUSDCAllowance(usdc, address, vault);
 
-  const { approve, receipt: approveReceipt, isPending: isApproving } = useApproveUSDC();
-  const { deposit, receipt: depositReceipt, isPending: isDepositing } = useDeposit();
-  const { redeem, receipt: redeemReceipt, isPending: isRedeeming } = useRedeem();
+  const {
+    approve,
+    receipt: approveReceipt,
+    isPending: isApproving,
+    error: approveError,
+    isError: isApproveError,
+  } = useApproveUSDC();
+  const {
+    deposit,
+    receipt: depositReceipt,
+    isPending: isDepositing,
+    error: depositError,
+    isError: isDepositError,
+  } = useDeposit();
+  const {
+    redeem,
+    receipt: redeemReceipt,
+    isPending: isRedeeming,
+    error: redeemError,
+    isError: isRedeemError,
+  } = useRedeem();
 
   const parsedAmount = amount ? parseUSDCInput(amount) : 0n;
   const needsApproval = mode === "deposit" && parsedAmount > 0n && (allowance ?? 0n) < parsedAmount;
@@ -78,6 +97,28 @@ export function DepositRedeemPanel({
       setAmount("");
     }
   }, [redeemReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: approveError,
+    writeIsError: isApproveError,
+    receiptError: approveReceipt.error,
+    receiptIsError: approveReceipt.isError,
+    fallbackMessage: "USDC approval failed",
+  });
+  useContractErrorToast({
+    writeError: depositError,
+    writeIsError: isDepositError,
+    receiptError: depositReceipt.error,
+    receiptIsError: depositReceipt.isError,
+    fallbackMessage: "Deposit failed",
+  });
+  useContractErrorToast({
+    writeError: redeemError,
+    writeIsError: isRedeemError,
+    receiptError: redeemReceipt.error,
+    receiptIsError: redeemReceipt.isError,
+    fallbackMessage: "Redemption failed",
+  });
 
   const handleSubmit = () => {
     if (!address) return;

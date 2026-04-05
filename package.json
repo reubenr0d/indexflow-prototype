@@ -8,7 +8,12 @@
     "test": "forge test",
     "test:v": "forge test -vvv",
     "anvil": "anvil",
-    "deploy:local": "forge script script/DeployLocal.s.sol:DeployLocal --rpc-url http://127.0.0.1:8545 --broadcast -vvv"
+    "deploy:local": "forge script script/DeployLocal.s.sol:DeployLocal --rpc-url http://127.0.0.1:8545 --broadcast -vvv",
+    "deploy:sepolia": "forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --broadcast -vvv",
+    "sync:local": "forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast",
+    "sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url sepolia --broadcast",
+    "submit-sync:local": "forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url local --broadcast",
+    "submit-sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url sepolia --broadcast"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0"

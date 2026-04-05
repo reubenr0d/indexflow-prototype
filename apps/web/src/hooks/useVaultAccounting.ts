@@ -5,7 +5,7 @@ import { useChainId } from "wagmi";
 import { VaultAccountingABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { REFETCH_INTERVAL } from "@/lib/constants";
-import { type Address } from "viem";
+import { encodePacked, keccak256, type Address, type Hex } from "viem";
 
 export function useRegisteredVaults() {
   const chainId = useChainId();
@@ -83,6 +83,40 @@ export function useRegisterVault() {
   };
 
   return { registerVault, hash, receipt, ...rest };
+}
+
+export function useDeregisterVault() {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const receipt = useWaitForTransactionReceipt({ hash });
+
+  const deregisterVault = (vault: Address) => {
+    writeContract({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "deregisterVault",
+      args: [vault],
+    });
+  };
+
+  return { deregisterVault, hash, receipt, ...rest };
+}
+
+export function useIsVaultRegistered(vault: Address | undefined) {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+
+  return useReadContract({
+    address: vaultAccounting,
+    abi: VaultAccountingABI,
+    functionName: "isVaultRegistered",
+    args: vault ? [vault] : undefined,
+    query: {
+      enabled: !!vault,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
 }
 
 // ─── Risk Controls ───────────────────────────────────────────
@@ -183,4 +217,25 @@ export function useSetMaxPositionSize() {
   };
 
   return { setMaxPositionSize, hash, receipt, ...rest };
+}
+
+export function usePositionTracking(vault: Address | undefined, asset: Hex | undefined, isLong: boolean) {
+  const chainId = useChainId();
+  const { vaultAccounting } = getContracts(chainId);
+
+  const key =
+    vault && asset
+      ? keccak256(encodePacked(["address", "bytes32", "bool"], [vault, asset, isLong]))
+      : undefined;
+
+  return useReadContract({
+    address: vaultAccounting,
+    abi: VaultAccountingABI,
+    functionName: "getPositionTracking",
+    args: key ? [key] : undefined,
+    query: {
+      enabled: !!key,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
 }

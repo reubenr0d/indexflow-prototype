@@ -9,7 +9,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch } from "@/hooks/usePerpReader";
+import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { Search, Plus } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
@@ -19,14 +21,16 @@ type SortKey = "tvl" | "price" | "newest";
 export default function BasketsPage() {
   const [sort, setSort] = useState<SortKey>("tvl");
   const [search, setSearch] = useState("");
+  const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
 
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
+  const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const isLoading = basketsLoading || infosLoading;
-
-  const infos = (basketInfos as unknown as Array<{
+  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
+  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const rpcInfos = ((basketInfos as unknown as Array<{
     vault: Address;
     name: string;
     sharePrice: bigint;
@@ -35,7 +39,31 @@ export default function BasketsPage() {
     usdcBalance: bigint;
     perpAllocated: bigint;
     assetCount: bigint;
-  }>) ?? [];
+  }>) ?? []);
+  const hasRpcData = rpcInfos.length > 0;
+  const isLoading = hasRpcData ? basketsLoading || infosLoading : hasSubgraphData ? subgraph.isLoading : basketsLoading || infosLoading;
+
+  const infos = hasRpcData
+    ? rpcInfos
+    : hasSubgraphData
+      ? subgraphData.map((item) => ({
+        vault: item.vault,
+        name: item.name,
+        sharePrice: item.sharePrice,
+        basketPrice: item.basketPrice,
+        totalSupply: item.totalSupply,
+        usdcBalance: item.usdcBalance,
+        perpAllocated: item.perpAllocated,
+        assetCount: item.assetCount,
+      }))
+      : [];
+
+  const openInterestByVault = new Map(
+    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
+      vaultAddresses[i],
+      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
+    ])
+  );
 
   const filtered = infos.filter((info) =>
     !search || (info.name || "").toLowerCase().includes(search.toLowerCase())
@@ -112,6 +140,14 @@ export default function BasketsPage() {
               perpAllocated={info.perpAllocated ?? 0n}
               totalSupply={info.totalSupply ?? 0n}
               assetCount={Number(info.assetCount ?? 0n)}
+              perpBlendBps={
+                computeBlendedComposition(
+                  info.usdcBalance ?? 0n,
+                  info.perpAllocated ?? 0n,
+                  openInterestByVault.get(info.vault as Address) ?? 0n,
+                  []
+                ).perpBlendBps
+              }
               index={i}
             />
           ))}

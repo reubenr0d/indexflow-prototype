@@ -15,6 +15,7 @@ interface BasketCardProps {
   perpAllocated: bigint;
   totalSupply: bigint;
   assetCount: number;
+  perpBlendBps?: bigint;
   depositFee?: bigint;
   redeemFee?: bigint;
   index?: number;
@@ -27,6 +28,7 @@ export function BasketCard({
   usdcBalance,
   perpAllocated,
   assetCount,
+  perpBlendBps,
   depositFee,
   index = 0,
 }: BasketCardProps) {
@@ -74,9 +76,11 @@ export function BasketCard({
             />
           </div>
           <p className="mt-1 text-xs text-app-muted">
-            {perpAllocated > 0n
-              ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
-              : "No perp allocation"}
+            {perpBlendBps !== undefined
+              ? `${formatBps(perpBlendBps)} perp sleeve`
+              : perpAllocated > 0n
+                ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
+                : "No perp allocation"}
           </p>
         </Card>
       </Link>

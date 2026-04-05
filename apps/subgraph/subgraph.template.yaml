@@ -1,0 +1,141 @@
+specVersion: 1.3.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: BasketFactory
+    network: {{network}}
+    source:
+      address: '{{basketFactoryAddress}}'
+      abi: BasketFactory
+      startBlock: {{basketFactoryStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Basket
+        - VaultStateCurrent
+      abis:
+        - name: BasketFactory
+          file: ./abis/BasketFactory.json
+        - name: BasketVault
+          file: ./abis/BasketVault.json
+        - name: BasketShareToken
+          file: ./abis/BasketShareToken.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: BasketCreated(indexed address,indexed address,address,string)
+          handler: handleBasketCreated
+      file: ./src/mappings/basketFactory.ts
+
+  - kind: ethereum/contract
+    name: VaultAccounting
+    network: {{network}}
+    source:
+      address: '{{vaultAccountingAddress}}'
+      abi: VaultAccounting
+      startBlock: {{vaultAccountingStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - BasketActivity
+        - VaultStateCurrent
+        - ProtocolState
+      abis:
+        - name: VaultAccounting
+          file: ./abis/VaultAccounting.json
+      eventHandlers:
+        - event: VaultRegistered(indexed address)
+          handler: handleVaultRegistered
+        - event: VaultDeregistered(indexed address)
+          handler: handleVaultDeregistered
+        - event: CapitalDeposited(indexed address,uint256)
+          handler: handleCapitalDeposited
+        - event: CapitalWithdrawn(indexed address,uint256)
+          handler: handleCapitalWithdrawn
+        - event: PositionOpened(indexed address,indexed bytes32,bool,uint256,uint256)
+          handler: handlePositionOpened
+        - event: PositionClosed(indexed address,indexed bytes32,bool,int256)
+          handler: handlePositionClosed
+        - event: PnLRealized(indexed address,int256)
+          handler: handlePnlRealized
+        - event: MaxOpenInterestSet(address,uint256)
+          handler: handleMaxOpenInterestSet
+        - event: MaxPositionSizeSet(address,uint256)
+          handler: handleMaxPositionSizeSet
+        - event: PauseToggled(bool)
+          handler: handlePauseToggled
+      file: ./src/mappings/vaultAccounting.ts
+
+  - kind: ethereum/contract
+    name: OracleAdapter
+    network: {{network}}
+    source:
+      address: '{{oracleAdapterAddress}}'
+      abi: OracleAdapter
+      startBlock: {{oracleAdapterStartBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AssetMeta
+      abis:
+        - name: OracleAdapter
+          file: ./abis/OracleAdapter.json
+      eventHandlers:
+        - event: AssetConfigured(indexed bytes32,uint8,address)
+          handler: handleAssetConfigured
+        - event: AssetRemoved(indexed bytes32)
+          handler: handleAssetRemoved
+        - event: PriceUpdated(indexed bytes32,uint256,uint256)
+          handler: handlePriceUpdated
+      file: ./src/mappings/oracleAdapter.ts
+
+templates:
+  - kind: ethereum/contract
+    name: BasketVaultTemplate
+    network: {{network}}
+    source:
+      abi: BasketVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Basket
+        - BasketAsset
+        - User
+        - UserBasketPosition
+        - BasketActivity
+      abis:
+        - name: BasketVault
+          file: ./abis/BasketVault.json
+        - name: BasketShareToken
+          file: ./abis/BasketShareToken.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Deposited(indexed address,uint256,uint256)
+          handler: handleDeposited
+        - event: Redeemed(indexed address,uint256,uint256)
+          handler: handleRedeemed
+        - event: AllocatedToPerp(uint256)
+          handler: handleAllocatedToPerp
+        - event: WithdrawnFromPerp(uint256)
+          handler: handleWithdrawnFromPerp
+        - event: AssetsUpdated(uint256)
+          handler: handleAssetsUpdated
+        - event: FeesCollected(indexed address,uint256)
+          handler: handleFeesCollected
+        - event: ReservePolicyUpdated(uint256)
+          handler: handleReservePolicyUpdated
+        - event: ReserveToppedUp(indexed address,uint256)
+          handler: handleReserveToppedUp
+      file: ./src/mappings/basketVault.ts

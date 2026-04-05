@@ -3,13 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutGrid, Layers, Crosshair, Radio, Activity, ShieldAlert } from "lucide-react";
+import {
+  LayoutGrid,
+  Layers,
+  Radio,
+  Activity,
+  ShieldAlert,
+  Gauge,
+} from "lucide-react";
 
 const adminNav = [
   { href: "/admin", label: "Overview", icon: LayoutGrid },
   { href: "/admin/baskets", label: "Baskets", icon: Layers },
-  { href: "/admin/positions", label: "Positions", icon: Crosshair },
   { href: "/admin/risk", label: "Risk Controls", icon: ShieldAlert },
+  { href: "/admin/funding", label: "Funding", icon: Gauge },
   { href: "/admin/oracle", label: "Oracle", icon: Radio },
   { href: "/admin/pool", label: "Pool", icon: Activity },
 ];

@@ -1,28 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { isAddress, type Address } from "viem";
+import { motion } from "framer-motion";
+import { Pause, Play, ShieldAlert, ShieldCheck } from "lucide-react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { StatCard } from "@/components/ui/stat-card";
+import { showToast } from "@/components/ui/toast";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch } from "@/hooks/usePerpReader";
+import { useBasketInfoBatch, useVaultState } from "@/hooks/usePerpReader";
 import {
-  usePaused,
-  useSetPaused,
-  useSetMaxOpenInterest,
-  useSetMaxPositionSize,
+  useDeregisterVault,
+  useIsVaultRegistered,
   useMaxOpenInterest,
   useMaxPositionSize,
+  usePaused,
+  useRegisterVault,
+  useSetMaxOpenInterest,
+  useSetMaxPositionSize,
+  useSetPaused,
 } from "@/hooks/useVaultAccounting";
-import { formatUSDC, formatAddress, parseUSDCInput } from "@/lib/format";
+import { formatAddress, formatUSDC, parseUSDCInput } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
-import { showToast } from "@/components/ui/toast";
-import { type Address } from "viem";
-import { motion } from "framer-motion";
-import { ShieldAlert, ShieldCheck, Pause, Play } from "lucide-react";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 
 export default function AdminRiskPage() {
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
@@ -68,6 +72,41 @@ export default function AdminRiskPage() {
       </div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">
+        Vault Registration
+      </h2>
+      {basketsLoading ? (
+        <Card className="p-6">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-between border-b border-app-border px-0 py-4 last:border-0"
+            >
+              <Skeleton className="h-5 w-40" />
+              <Skeleton className="h-8 w-24" />
+            </div>
+          ))}
+        </Card>
+      ) : infos.length === 0 ? (
+        <Card className="p-8 text-center text-sm text-app-muted">
+          No baskets found
+        </Card>
+      ) : (
+        <Card className="divide-y divide-app-border">
+          {infos.map((info) => (
+            <VaultRegistrationRow
+              key={info.vault}
+              vault={info.vault}
+              name={info.name}
+            />
+          ))}
+        </Card>
+      )}
+
+      <div className="mt-4 mb-10">
+        <ManualVaultRegistrationCard />
+      </div>
+
+      <h2 className="mb-4 text-lg font-semibold text-app-text">
         Per-Vault Risk Limits
       </h2>
       {basketsLoading ? (
@@ -98,7 +137,7 @@ export default function AdminRiskPage() {
 }
 
 function PauseStatus({ paused }: { paused: boolean }) {
-  const { setPaused, receipt, isPending } = useSetPaused();
+  const { setPaused, receipt, isPending, error, isError } = useSetPaused();
 
   useEffect(() => {
     if (receipt.isSuccess) {
@@ -106,9 +145,22 @@ function PauseStatus({ paused }: { paused: boolean }) {
     }
   }, [receipt.isSuccess, paused]);
 
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "System pause update failed",
+  });
+
   return (
     <Button
       variant={paused ? "primary" : "danger"}
+      title={
+        paused
+          ? "Unpause trading and capital operations."
+          : "Pause trading and capital operations."
+      }
       onClick={() => {
         setPaused(!paused);
         showToast("pending", paused ? "Unpausing..." : "Pausing...");
@@ -125,6 +177,200 @@ function PauseStatus({ paused }: { paused: boolean }) {
         </>
       )}
     </Button>
+  );
+}
+
+function VaultRegistrationRow({ vault, name }: { vault: Address; name: string }) {
+  const { data } = useVaultState(vault);
+  const state = data as { registered: boolean } | undefined;
+  const registered = !!state?.registered;
+
+  const {
+    registerVault,
+    receipt: registerReceipt,
+    isPending: isRegisterPending,
+    error: registerError,
+    isError: isRegisterError,
+  } =
+    useRegisterVault();
+  const {
+    deregisterVault,
+    receipt: deregisterReceipt,
+    isPending: isDeregisterPending,
+    error: deregisterError,
+    isError: isDeregisterError,
+  } = useDeregisterVault();
+
+  useEffect(() => {
+    if (registerReceipt.isSuccess) showToast("success", "Vault registered");
+  }, [registerReceipt.isSuccess]);
+
+  useEffect(() => {
+    if (deregisterReceipt.isSuccess) showToast("success", "Vault deregistered");
+  }, [deregisterReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: registerError,
+    writeIsError: isRegisterError,
+    receiptError: registerReceipt.error,
+    receiptIsError: registerReceipt.isError,
+    fallbackMessage: "Vault registration failed",
+  });
+  useContractErrorToast({
+    writeError: deregisterError,
+    writeIsError: isDeregisterError,
+    receiptError: deregisterReceipt.error,
+    receiptIsError: deregisterReceipt.isError,
+    fallbackMessage: "Vault deregistration failed",
+  });
+
+  return (
+    <div className="flex items-center justify-between gap-4 px-6 py-4">
+      <div>
+        <p className="font-medium text-app-text">{name || "Basket"}</p>
+        <p className="font-mono text-xs text-app-muted">{formatAddress(vault)}</p>
+      </div>
+      <div className="flex items-center gap-2">
+        <span
+          className={`rounded-md px-2 py-1 text-xs font-semibold ${
+            registered
+              ? "bg-app-success/20 text-app-success"
+              : "bg-app-warning/20 text-app-warning"
+          }`}
+        >
+          {registered ? "Registered" : "Not Registered"}
+        </span>
+        {registered ? (
+          <Button
+            size="sm"
+            variant="secondary"
+            title="Deregister vault from VaultAccounting. Requires zero open interest."
+            disabled={isDeregisterPending}
+            onClick={() => {
+              deregisterVault(vault);
+              showToast("pending", "Deregistering vault...");
+            }}
+          >
+            Deregister
+          </Button>
+        ) : (
+          <Button
+            size="sm"
+            title="Register vault in VaultAccounting to enable position operations."
+            disabled={isRegisterPending}
+            onClick={() => {
+              registerVault(vault);
+              showToast("pending", "Registering vault...");
+            }}
+          >
+            Register
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ManualVaultRegistrationCard() {
+  const [vaultInput, setVaultInput] = useState("");
+  const parsedVault = useMemo(
+    () => (isAddress(vaultInput.trim()) ? (vaultInput.trim() as Address) : undefined),
+    [vaultInput]
+  );
+
+  const { data: isRegistered } = useIsVaultRegistered(parsedVault);
+  const {
+    registerVault,
+    receipt: registerReceipt,
+    isPending: isRegisterPending,
+    error: registerError,
+    isError: isRegisterError,
+  } =
+    useRegisterVault();
+  const {
+    deregisterVault,
+    receipt: deregisterReceipt,
+    isPending: isDeregisterPending,
+    error: deregisterError,
+    isError: isDeregisterError,
+  } = useDeregisterVault();
+
+  useEffect(() => {
+    if (registerReceipt.isSuccess) showToast("success", "Vault registered");
+  }, [registerReceipt.isSuccess]);
+
+  useEffect(() => {
+    if (deregisterReceipt.isSuccess) showToast("success", "Vault deregistered");
+  }, [deregisterReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: registerError,
+    writeIsError: isRegisterError,
+    receiptError: registerReceipt.error,
+    receiptIsError: registerReceipt.isError,
+    fallbackMessage: "Vault registration failed",
+  });
+  useContractErrorToast({
+    writeError: deregisterError,
+    writeIsError: isDeregisterError,
+    receiptError: deregisterReceipt.error,
+    receiptIsError: deregisterReceipt.isError,
+    fallbackMessage: "Vault deregistration failed",
+  });
+
+  const disabled = !parsedVault || isRegisterPending || isDeregisterPending;
+  const statusLabel =
+    parsedVault === undefined
+      ? "Enter a valid address to check status"
+      : isRegistered
+        ? "Registered"
+        : "Not Registered";
+
+  return (
+    <Card className="p-6">
+      <h3 className="mb-2 text-base font-semibold text-app-text">
+        Manual Vault Registration Check
+      </h3>
+      <p className="mb-4 text-sm text-app-muted">
+        Check and manage registration for any vault address.
+      </p>
+      <Input
+        placeholder="0x..."
+        value={vaultInput}
+        onChange={(e) => setVaultInput(e.target.value)}
+        title="Vault address to check in VaultAccounting."
+      />
+      <p className="mt-3 text-sm text-app-muted">
+        Status: <span className="font-semibold text-app-text">{statusLabel}</span>
+      </p>
+      <div className="mt-4 flex gap-2">
+        <Button
+          size="sm"
+          disabled={disabled}
+          title="Register this vault in VaultAccounting."
+          onClick={() => {
+            if (!parsedVault) return;
+            registerVault(parsedVault);
+            showToast("pending", "Registering vault...");
+          }}
+        >
+          Register
+        </Button>
+        <Button
+          size="sm"
+          variant="secondary"
+          disabled={disabled}
+          title="Deregister this vault. Requires zero open interest."
+          onClick={() => {
+            if (!parsedVault) return;
+            deregisterVault(parsedVault);
+            showToast("pending", "Deregistering vault...");
+          }}
+        >
+          Deregister
+        </Button>
+      </div>
+    </Card>
   );
 }
 
@@ -192,7 +438,7 @@ function VaultRiskCard({ vault, name }: { vault: Address; name: string }) {
 
 function MaxOIForm({ vault }: { vault: Address }) {
   const [value, setValue] = useState("");
-  const { setMaxOpenInterest, receipt, isPending } = useSetMaxOpenInterest();
+  const { setMaxOpenInterest, receipt, isPending, error, isError } = useSetMaxOpenInterest();
 
   useEffect(() => {
     if (receipt.isSuccess) {
@@ -200,6 +446,14 @@ function MaxOIForm({ vault }: { vault: Address }) {
       setValue("");
     }
   }, [receipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Max OI update failed",
+  });
 
   const submit = (cap: bigint) => {
     setMaxOpenInterest(vault, cap);
@@ -218,9 +472,11 @@ function MaxOIForm({ vault }: { vault: Address }) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           className="h-9 text-xs"
+          title="USD cap for total open interest on this vault."
         />
         <Button
           size="sm"
+          title="Apply max open interest cap for this vault."
           disabled={!value || isPending}
           onClick={() => {
             const usdcVal = parseUSDCInput(value);
@@ -236,7 +492,7 @@ function MaxOIForm({ vault }: { vault: Address }) {
           variant="ghost"
           disabled={isPending}
           onClick={() => submit(0n)}
-          title="Remove cap (unlimited)"
+          title="Clear max open interest cap (unlimited)."
         >
           Clear
         </Button>
@@ -247,7 +503,7 @@ function MaxOIForm({ vault }: { vault: Address }) {
 
 function MaxPositionSizeForm({ vault }: { vault: Address }) {
   const [value, setValue] = useState("");
-  const { setMaxPositionSize, receipt, isPending } = useSetMaxPositionSize();
+  const { setMaxPositionSize, receipt, isPending, error, isError } = useSetMaxPositionSize();
 
   useEffect(() => {
     if (receipt.isSuccess) {
@@ -255,6 +511,14 @@ function MaxPositionSizeForm({ vault }: { vault: Address }) {
       setValue("");
     }
   }, [receipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: error,
+    writeIsError: isError,
+    receiptError: receipt.error,
+    receiptIsError: receipt.isError,
+    fallbackMessage: "Max position size update failed",
+  });
 
   const submit = (cap: bigint) => {
     setMaxPositionSize(vault, cap);
@@ -273,9 +537,11 @@ function MaxPositionSizeForm({ vault }: { vault: Address }) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           className="h-9 text-xs"
+          title="USD cap for a single position size on this vault."
         />
         <Button
           size="sm"
+          title="Apply max single-position size cap for this vault."
           disabled={!value || isPending}
           onClick={() => {
             const usdcVal = parseUSDCInput(value);
@@ -291,7 +557,7 @@ function MaxPositionSizeForm({ vault }: { vault: Address }) {
           variant="ghost"
           disabled={isPending}
           onClick={() => submit(0n)}
-          title="Remove cap (unlimited)"
+          title="Clear max position size cap (unlimited)."
         >
           Clear
         </Button>

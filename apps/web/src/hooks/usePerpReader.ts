@@ -46,6 +46,21 @@ export function useVaultState(vault: Address) {
   });
 }
 
+export function useVaultStateBatch(vaults: Address[]) {
+  const chainId = useChainId();
+  const { perpReader } = getContracts(chainId);
+
+  return useReadContracts({
+    contracts: vaults.map((vault) => ({
+      address: perpReader,
+      abi: PerpReaderABI,
+      functionName: "getVaultState" as const,
+      args: [vault] as const,
+    })),
+    query: { enabled: vaults.length > 0, refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
 export function useVaultPnL(vault: Address) {
   const chainId = useChainId();
   const { perpReader } = getContracts(chainId);
