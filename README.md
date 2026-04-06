@@ -89,6 +89,12 @@ Basket configuration still validates asset ids through `OracleAdapter`, but shar
 
 For basket/perp operator responsibilities (capital allocation, position management controls, and investor liquidity implications), see [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md).
 
+**Perp leverage risk**
+
+- Effective leverage is approximately `size / collateral` for each opened leg.
+- Example: `size = 10,000` and `collateral = 2,000` is about `5x`, so an approximately `10%` favorable/adverse move is about `+/-50%` on collateral before fees/funding and execution effects.
+- For full mechanics and operator caveats, see [docs/SHARE_PRICE_AND_OPERATIONS.md](docs/SHARE_PRICE_AND_OPERATIONS.md) and [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md).
+
 **Funding** — Keepers authorized on **FundingRateManager** call **`updateFundingRate`** so the GMX vault’s funding parameters stay in line with your policy (often on a schedule tied to `fundingInterval`).
 
 Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replaces manually sending the same transactions.
@@ -128,6 +134,8 @@ npm run submit-sync:sepolia
   - `/docs/overview`
   - `/docs/investor`
   - `/docs/operator`
+  - `/docs/perp-risk-math`
+  - `/docs/operator-interactions`
   - `/docs/oracle-price-sync`
   - `/docs/pool-management`
   - `/docs/contracts-reference`
@@ -136,6 +144,8 @@ npm run submit-sync:sepolia
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
 - [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md) — Basket/perp manager flow: setup, capital allocation, positions, risk controls, and implementation caveats.
+- [docs/PERP_RISK_MATH.md](docs/PERP_RISK_MATH.md) — Leverage formulas, unit conventions, and liquidation caveats for operator sizing decisions.
+- [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md) — Per-contract interaction matrix with inputs, checks, state deltas, and post-tx verification steps.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 - [docs/README.md](docs/README.md) — Maintainer-facing docs map mirroring in-app wiki IA and canonical markdown sources.

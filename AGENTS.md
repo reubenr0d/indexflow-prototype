@@ -14,6 +14,9 @@ After each task, ensure documentation is current for any user/operator-visible c
 
 - Update `README.md` for command, setup, config, deployment, or workflow changes.
 - Update relevant files under `docs/` when behavior, architecture, or operational flow changes.
+- For web-app-visible behavior, also update in-app docs content in `apps/web/src/lib/wiki.ts` (and `apps/web/src/lib/tooltip-copy.ts` when labels/tooltips change).
+- Keep `docs/README.md` (in-app wiki map) aligned when adding/removing/relabeling `/docs` routes or sections.
+- If markdown docs and in-app docs describe the same workflow, update both in the same session.
 - If no documentation impact exists, explicitly verify no doc changes are needed before finishing.
 
 ## Foundry Command Reliability In Agent Shell

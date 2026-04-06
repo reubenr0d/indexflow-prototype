@@ -25,7 +25,7 @@ import {
   useSetMaxPositionSize,
   useSetPaused,
 } from "@/hooks/useVaultAccounting";
-import { formatAddress, formatUSDC, parseUSDCInput } from "@/lib/format";
+import { formatAddress, formatUsd1e30, parseUSDCInput } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 
@@ -387,7 +387,7 @@ function VaultRiskCard({ vault, name }: { vault: Address; name: string }) {
   const formatCap = (val: bigint | undefined) => {
     if (val === undefined) return "--";
     if (val === 0n) return "Unlimited";
-    return formatUSDC(val / (PRICE_PRECISION / USDC_PRECISION));
+    return formatUsd1e30(val);
   };
 
   return (

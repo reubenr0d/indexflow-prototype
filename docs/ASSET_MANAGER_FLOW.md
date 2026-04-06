@@ -61,6 +61,7 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
    - Internal: resolves `indexToken = assetTokens[asset]` and validates mapping.
    - Internal: checks collateral against `_availableCapital(vault)`.
    - Internal: enforces `maxOpenInterest` / `maxPositionSize` if configured.
+   - Internal: opens/increases the GMX leg in `VaultAccounting`'s GMX account (`address(this)`), not in the basket owner's EOA.
    - Internal: transfers collateral to GMX vault and calls `gmxVault.increasePosition(...)`.
    - Internal: reads GMX position and updates local tracking/open keys.
 
@@ -70,6 +71,29 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
    - Internal: computes USDC returned and collateral at risk.
    - Internal: updates open interest / collateral lock / position list.
    - Internal: updates `realisedPnL` on the vault state.
+
+### Interaction value checklist (operator quick reference)
+
+- Before `openPosition`, check:
+  - leverage plan (`size / collateral`),
+  - available capital after locks,
+  - remaining cap headroom (`maxOpenInterest`, `maxPositionSize`).
+- After `openPosition`, verify:
+  - position tracking for `(vault, asset, side)`,
+  - expected `openInterest` and `collateralLocked` deltas.
+- After `closePosition`, verify:
+  - expected `openInterest` decrease,
+  - `realisedPnL` direction/magnitude sanity,
+  - resulting available capital for withdrawal or redeploy.
+
+### Liquidation semantics (operator note)
+
+- Liquidation checks come from GMX `validateLiquidation` logic and include:
+  - loss versus collateral,
+  - fee burden (margin fees + liquidation fee),
+  - leverage constraints.
+- As a result, simple thresholds (for example, "about 20% adverse at 5x") are only approximations and can trigger earlier in live conditions.
+- Practical implication for this system: losses from liquidated legs are borne by vault perp capital tracked in `VaultAccounting`, then flow into basket NAV/share price through realised and unrealised PnL accounting.
 
 ## Investor liquidity constraints
 
@@ -89,6 +113,11 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 - `setMaxPerpAllocation(cap)` — Cap total `perpAllocated` (0 = no cap).
 - `setMinReserveBps(bps)` — Reserve target that gates `allocateToPerp`.
 - `collectFees(to)` — Withdraw accumulated fees in `collectedFees`.
+
+## Deep operator references
+
+- [PERP_RISK_MATH.md](PERP_RISK_MATH.md) — formulas, units, and liquidation caveats used in position sizing.
+- [OPERATOR_INTERACTIONS.md](OPERATOR_INTERACTIONS.md) — per-contract interaction matrix for operator write flows.
 
 ### Reserve operation
 

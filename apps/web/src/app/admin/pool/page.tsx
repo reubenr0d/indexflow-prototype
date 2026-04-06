@@ -22,7 +22,7 @@ import {
   useWriteContract,
 } from "wagmi";
 import { getContracts } from "@/config/contracts";
-import { formatAddress, formatTokenAmount, formatUSDC, parseTokenAmountInput } from "@/lib/format";
+import { formatAddress, formatTokenAmount, formatUSDC, formatUsd1e30, parseTokenAmountInput } from "@/lib/format";
 import { motion } from "framer-motion";
 import { PerpReaderABI } from "@/abi/contracts";
 import { type Address, zeroAddress } from "viem";
@@ -281,13 +281,13 @@ export default function AdminPoolPage() {
         />
         <StatCard
           label="Global Short Size"
-          value={pool ? formatUSDC(pool.globalShortSize) : "--"}
+          value={pool ? formatUsd1e30(pool.globalShortSize) : "--"}
           isLoading={isLoading}
           tooltipKey="globalShortSize"
         />
         <StatCard
           label="Guaranteed USD"
-          value={pool ? formatUSDC(pool.guaranteedUsd) : "--"}
+          value={pool ? formatUsd1e30(pool.guaranteedUsd) : "--"}
           isLoading={isLoading}
           tooltipKey="guaranteedUsd"
         />

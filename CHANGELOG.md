@@ -9,13 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Web app: normalized GMX USD `1e30` notional displays to full-dollar formatting across exposure surfaces, fixing corrupted outputs like `Net: $1000000000000000000.0B` in composition rows and correcting open-interest / pool notional stat rendering.
 - Web app: admin basket `Perp Allocation` card now shows `Available to Deposit` (remaining USDC available for perp allocation) alongside current allocation.
 - Web app: portfolio page wraps the value / loading skeleton in a `<div>` instead of `<p>` so `Skeleton` (a `<div>`) is not nested inside a paragraph, avoiding invalid HTML and React hydration warnings.
 - `DeployLocal` local deploy script: deploy `VaultMath` and link `Vault` creation bytecode from `out/Vault.sol/Vault.json` so `forge script` no longer fails on `vm.getCode("Vault.sol:Vault")` (wrong artifact id and unlinked `VaultMath` placeholders). `foundry.toml` grants read access to `./out` for `vm.readFile`.
+- Web app: admin basket `Perp Position Management` now treats size inputs as USD notional and converts to onchain `1e30` before calling `openPosition` / `closePosition` (collateral remains USDC `1e6`), fixing reverted GOLD-long attempts like `size=10`, `collateral=999` (`Vault: _size must be more than _collateral`). Max-size labels/use-max now display USD-notional values, and open/close errors are surfaced via toasts.
+- Web app: basket and admin composition cards now fallback to onchain `VaultAccounting.getPositionTracking` exposure reads per configured asset when subgraph exposure rows are missing/stale, so allocation updates appear immediately after position opens/closes.
 
 ### Added
 
 - Web app: in-app docs/wiki under `/docs` with searchable section metadata, role filters, start-here paths, stable subsection routes (`/docs/overview`, `/docs/investor`, `/docs/operator`, `/docs/oracle-price-sync`, `/docs/pool-management`, `/docs/contracts-reference`, `/docs/troubleshooting`, `/docs/security-risk`), reusable per-page template sections (`Who is this for`, `What this section covers`, `Required permissions`, `Step-by-step flow`, `Failure modes`, `Related pages`), role badges, network context callouts, and in-page table-of-contents anchors.
+- Web app docs IA expansion: new in-app routes `/docs/perp-risk-math` and `/docs/operator-interactions` with leverage formulas, unit glossary, operator preflight/postflight checklists, and per-contract interaction matrix data (inputs, preconditions, state deltas, failure risks, post-tx checks). Added canonical markdown companions: [docs/PERP_RISK_MATH.md](docs/PERP_RISK_MATH.md) and [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md).
 - Web navigation now links to docs from the main header and admin sidebar; admin overview quick actions include `Docs Wiki`.
 - [docs/README.md](docs/README.md): maintainer-facing documentation index mirroring the in-app wiki IA and canonical markdown sources.
 - [docs/SHARE_PRICE_AND_OPERATIONS.md](docs/SHARE_PRICE_AND_OPERATIONS.md): share-price calculation reference, dry-run oracle update commands, admin position/PnL update flow, and investor withdrawal-with-profit walkthrough.
@@ -30,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Web app: SVG favicon (`icon.svg`) and matching inline header logo — white triangle on a black circle.
 - `VaultAccounting.getVaultPnL` aggregate **unrealised** mark-to-market PnL per basket vault (sum of GMX `getPositionDelta` over open legs; GMX USD precision; price PnL only, not funding), with per-vault `_openPositionKeys` enumeration. In-place upgrades need a backfill of that list for already-open legs (or redeploy).
 - Unit tests for aggregate unrealised PnL (`test/VaultAccounting.t.sol`) and integration checks vs GMX deltas (`test/Integration.t.sol`, `test/VaultAccountingIntegration.t.sol`).
+- Web tests: `apps/web/src/lib/wiki.test.ts` validates slug/page registry integrity, docs home start-path route resolution, and non-empty structured docs sections.
 - README **Operations** section: PriceSync vs OracleAdapter, keeper setup, Chainlink vs custom relayer price flow, and funding keeper calls.
 - Web app: liquidity-aware indicative quotes from `PricingEngine` on Admin → Position Management (open form) and on Live Prices when a USDC notional is entered; uses GMX USDC `poolAmount` as liquidity input (GMX fills may still differ).
 - Integration test suite (`test/VaultAccountingIntegration.t.sol`) covering VaultAccounting `openPosition` / `closePosition` against the real GMX Vault: long profitable, long loss, short profitable, and full deposit→open→close→withdraw pipeline with PnL verification.
@@ -51,6 +56,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Web app UI: added reusable information popups (`InfoTooltip` + `InfoLabel`) across titled cards and table-like headers, including stat cards and admin basket list headers, with centralized tooltip copy keys for consistent operator-facing explanations.
 - Web docs and landing page copy: rewrote in-app wiki language and homepage messaging for a more beginner-friendly explanation of deposits, basket shares, shared perp trading, operator roles, and liquidity constraints.
 - Web app basket/admin composition cards now use a four-state matrix: allocated composition, assets-added-without-perp-activity, no-assets-allocated-yet (`0.00%` rows), and no-assets-listed-yet; configured assets prefer onchain `getAssetCount/getAssetAt` reads with subgraph fallback to avoid indexing-lag gaps, and configured-asset rows show asset name + address subtext + latest oracle price + last update time.
+- Web app basket/admin composition section now keeps one stable card/table layout (same heading, row geometry, allocation rail, and aggregate row) across allocated/zero-alloc/loading/empty states, with compact per-state notes and placeholder/skeleton rows to reduce CLS.
+- Web app `Perp-Driven Composition` allocated rows now consistently render asset name + address on both public/admin pages (instead of raw asset ids on public), with aligned net/long/short detail hierarchy while preserving the stable low-CLS layout.
+- Web app `Perp-Driven Composition` allocated rows now use a shared public/admin renderer with a diverging long-vs-short graphic, net-direction badge, full-dollar notional labels (`Net`, `Long`, `Short`), and subordinated allocation rail so exposure skew is immediately visible.
 - Web app home page (`/`) redesigned to a high-energy, proof-first landing flow: stronger hero hierarchy, live protocol metrics strip (TVL/open interest/active baskets/perp utilization), tighter capital-flow narrative, explicit trust surface, and CTA priority toward opening baskets.
 - Basket contracts are now weightless and fully perp-driven for pricing:
   - `BasketFactory.createBasket` no longer accepts initial `assetIds/weights`.

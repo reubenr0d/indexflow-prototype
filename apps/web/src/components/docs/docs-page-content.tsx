@@ -43,6 +43,9 @@ export function DocsPageContent({ page }: { page: DocsPage }) {
     { id: "required-permissions", title: "Who Can Do What" },
     { id: "step-by-step-flow", title: "How It Works" },
     ...flowAnchors,
+    ...(page.formulas || page.unitsGlossary ? [{ id: "formula-units", title: "Formula + Units" }] : []),
+    ...(page.interactionMatrix ? [{ id: "interaction-matrix", title: "Interaction Matrix" }] : []),
+    ...(page.preflightChecklist || page.postflightChecklist ? [{ id: "operator-checklists", title: "Operator Checklists" }] : []),
     { id: "failure-modes", title: "What Can Go Wrong" },
     { id: "related-pages", title: "Related Pages" },
     { id: "source-docs", title: "Source Docs" },
@@ -130,6 +133,132 @@ export function DocsPageContent({ page }: { page: DocsPage }) {
             </div>
           ))}
         </section>
+
+        {(page.formulas || page.unitsGlossary) && (
+          <section id="formula-units" className="space-y-4">
+            <h2 className="text-xl font-semibold text-app-text">Formula + Units</h2>
+            {page.formulas && page.formulas.length > 0 && (
+              <div className="rounded-lg border border-app-border bg-app-surface p-4">
+                <h3 className="text-base font-semibold text-app-text">Core Formulas</h3>
+                <ul className="mt-3 space-y-2 text-sm text-app-muted">
+                  {page.formulas.map((formula) => (
+                    <li key={`${formula.name}-${formula.expression}`}>
+                      <span className="font-semibold text-app-text">{formula.name}:</span>{" "}
+                      <code className="rounded bg-app-bg px-1 py-0.5 font-mono text-xs text-app-text">{formula.expression}</code>{" "}
+                      — {formula.notes}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {page.unitsGlossary && page.unitsGlossary.length > 0 && (
+              <div className="rounded-lg border border-app-border bg-app-surface p-4">
+                <h3 className="text-base font-semibold text-app-text">Units Glossary</h3>
+                <ul className="mt-3 space-y-2 text-sm text-app-muted">
+                  {page.unitsGlossary.map((unit) => (
+                    <li key={`${unit.term}-${unit.value}`}>
+                      <span className="font-semibold text-app-text">{unit.term}:</span>{" "}
+                      <code className="rounded bg-app-bg px-1 py-0.5 font-mono text-xs text-app-text">{unit.value}</code>{" "}
+                      — {unit.notes}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
+        )}
+
+        {page.interactionMatrix && page.interactionMatrix.length > 0 && (
+          <section id="interaction-matrix" className="space-y-4">
+            <h2 className="text-xl font-semibold text-app-text">Interaction Matrix</h2>
+            <div className="space-y-4">
+              {page.interactionMatrix.map((interaction) => (
+                <article
+                  key={`${interaction.contract}-${interaction.fn}`}
+                  className="rounded-lg border border-app-border bg-app-surface p-4"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded bg-app-bg px-2 py-1 font-mono text-xs text-app-text">{interaction.contract}</span>
+                    <code className="rounded bg-app-bg px-2 py-1 font-mono text-xs text-app-text">{interaction.fn}</code>
+                  </div>
+                  <p className="mt-2 text-sm text-app-muted">
+                    <span className="font-semibold text-app-text">Caller:</span> {interaction.caller}
+                  </p>
+                  <div className="mt-3 grid gap-3 lg:grid-cols-2">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">Inputs + Units</p>
+                      <ul className="mt-2 space-y-1 text-sm text-app-muted">
+                        {interaction.inputs.map((item) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">Preconditions</p>
+                      <ul className="mt-2 space-y-1 text-sm text-app-muted">
+                        {interaction.preconditions.map((item) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">State Deltas</p>
+                      <ul className="mt-2 space-y-1 text-sm text-app-muted">
+                        {interaction.stateDeltas.map((item) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">Failure / Revert Risks</p>
+                      <ul className="mt-2 space-y-1 text-sm text-app-muted">
+                        {interaction.failureRisks.map((item) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">Post-tx Checks</p>
+                    <ul className="mt-2 space-y-1 text-sm text-app-muted">
+                      {interaction.postTxChecks.map((item) => (
+                        <li key={item}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {(page.preflightChecklist || page.postflightChecklist) && (
+          <section id="operator-checklists" className="space-y-4">
+            <h2 className="text-xl font-semibold text-app-text">Operator Checklists</h2>
+            <div className="grid gap-4 md:grid-cols-2">
+              {page.preflightChecklist && page.preflightChecklist.length > 0 && (
+                <div className="rounded-lg border border-app-border bg-app-surface p-4">
+                  <h3 className="text-base font-semibold text-app-text">Preflight</h3>
+                  <ul className="mt-2 space-y-2 text-sm text-app-muted">
+                    {page.preflightChecklist.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {page.postflightChecklist && page.postflightChecklist.length > 0 && (
+                <div className="rounded-lg border border-app-border bg-app-surface p-4">
+                  <h3 className="text-base font-semibold text-app-text">Postflight</h3>
+                  <ul className="mt-2 space-y-2 text-sm text-app-muted">
+                    {page.postflightChecklist.map((item) => (
+                      <li key={item}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
 
         <section id="failure-modes" className="space-y-3">
           <h2 className="text-xl font-semibold text-app-text">What Can Go Wrong</h2>

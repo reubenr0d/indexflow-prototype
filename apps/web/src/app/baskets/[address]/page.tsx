@@ -8,6 +8,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
+import { PerpCompositionRow } from "@/components/baskets/perp-composition-row";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
   useBasketFees,
@@ -24,7 +25,7 @@ import {
   useBasketDetailQuery,
 } from "@/hooks/subgraph/useSubgraphQueries";
 import { useAccount, useChainId, useConfig, usePublicClient, useReadContract, useReadContracts } from "wagmi";
-import { BasketShareTokenABI, OracleAdapterABI } from "@/abi/contracts";
+import { BasketShareTokenABI, OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
 import {
   formatUSDC,
   formatBps,
@@ -32,9 +33,11 @@ import {
   formatAssetId,
   formatPrice,
   formatRelativeTime,
+  formatSignedUsd1e30,
+  formatUsd1e30,
 } from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
-import { type Address, parseAbiItem } from "viem";
+import { encodePacked, keccak256, type Address, parseAbiItem } from "viem";
 import { motion } from "framer-motion";
 import { Copy } from "lucide-react";
 import { getContracts } from "@/config/contracts";
@@ -59,7 +62,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const vault = vaultAddress as Address;
   const { address: userAddress } = useAccount();
   const chainId = useChainId();
-  const { oracleAdapter } = getContracts(chainId);
+  const { oracleAdapter, vaultAccounting } = getContracts(chainId);
 
   const { data: info, isLoading } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
@@ -159,14 +162,79 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
   const reserveHealthy = idleUsdc >= requiredReserve;
 
+  const positionTrackingKeys = useMemo(
+    () =>
+      configuredAssetIds.flatMap((assetId) => [
+        {
+          assetId,
+          isLong: true,
+          key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, assetId, true])),
+        },
+        {
+          assetId,
+          isLong: false,
+          key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, assetId, false])),
+        },
+      ]),
+    [configuredAssetIds, vault]
+  );
+  const { data: trackingRows } = useReadContracts({
+    contracts: positionTrackingKeys.map((entry) => ({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "getPositionTracking" as const,
+      args: [entry.key] as const,
+    })),
+    query: {
+      enabled: positionTrackingKeys.length > 0,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+  const onchainExposureRows = useMemo(() => {
+    const byAsset = new Map<`0x${string}`, { longSize: bigint; shortSize: bigint }>();
+    positionTrackingKeys.forEach((entry, i) => {
+      const raw = trackingRows?.[i]?.result;
+      if (!raw) return;
+
+      const tracking = raw as
+        | { size?: bigint; exists?: boolean }
+        | [Address, `0x${string}`, boolean, bigint, bigint, bigint, bigint, bigint, boolean];
+      const exists = Array.isArray(tracking) ? Boolean(tracking[8]) : Boolean(tracking.exists);
+      const size = Array.isArray(tracking) ? (tracking[3] ?? 0n) : (tracking.size ?? 0n);
+      const effectiveSize = exists ? size : 0n;
+
+      const current = byAsset.get(entry.assetId) ?? { longSize: 0n, shortSize: 0n };
+      byAsset.set(entry.assetId, {
+        longSize: entry.isLong ? effectiveSize : current.longSize,
+        shortSize: entry.isLong ? current.shortSize : effectiveSize,
+      });
+    });
+
+    return Array.from(byAsset.entries())
+      .map(([assetId, sizes]) => ({
+        assetId,
+        longSize: sizes.longSize,
+        shortSize: sizes.shortSize,
+        netSize: sizes.longSize - sizes.shortSize,
+      }))
+      .filter((row) => row.longSize > 0n || row.shortSize > 0n || row.netSize !== 0n) as PerpExposureAsset[];
+  }, [positionTrackingKeys, trackingRows]);
+  const subgraphHasLiveExposure = exposures.some(
+    (row) => row.longSize > 0n || row.shortSize > 0n || row.netSize !== 0n
+  );
+  const effectiveExposures =
+    subgraphHasLiveExposure || (exposures.length > 0 && onchainExposureRows.length === 0)
+      ? exposures
+      : onchainExposureRows;
+
   const blended = computeBlendedComposition(
     basketInfo?.usdcBalance ?? 0n,
     basketInfo?.perpAllocated ?? 0n,
     state?.openInterest ?? 0n,
-    exposures
+    effectiveExposures
   );
   const hasListedAssets = configuredAssetIds.length > 0;
-  const hasExposureRows = exposures.length > 0;
+  const hasExposureRows = effectiveExposures.length > 0;
   const hasNonZeroAllocation = blended.assetBlend.some((asset) => asset.blendBps > 0n);
   const hasPerpActivitySignal =
     (state?.openInterest ?? 0n) > 0n ||
@@ -177,6 +245,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const showNoAssetsAllocatedYet =
     hasListedAssets && !showAllocatedComposition && !showAssetsAddedNoPerpActivity;
   const showNoAssetsListedYet = !hasListedAssets && !isConfiguredAssetsLoading;
+  const compositionNote = showAssetsAddedNoPerpActivity
+    ? "Assets are configured, but perp activity has not started yet."
+    : showNoAssetsAllocatedYet
+      ? "Assets are configured, but current composition allocation is 0.00%."
+      : showNoAssetsListedYet
+        ? "No assets listed yet. Add assets to enable per-asset composition tracking."
+        : isConfiguredAssetsLoading
+          ? "Syncing latest onchain asset configuration..."
+          : null;
 
   const historyRows = (subgraphHistory.data ?? fallbackHistory.data ?? []) as HistoryRow[];
   const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
@@ -231,132 +308,99 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             </div>
           </motion.div>
 
-          {showAllocatedComposition ? (
-            <div className="mt-10">
-              <h2 className="mb-4 text-lg font-semibold text-app-text">
-                <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
-              </h2>
-              <Card>
-                <div className="divide-y divide-app-border">
-                  {blended.assetBlend.map((asset) => (
-                    <div key={asset.assetId} className="flex items-center justify-between px-6 py-4">
-                      <div>
-                        <p className="font-medium text-app-text">{formatAssetId(asset.assetId)}</p>
-                        <p className="text-xs text-app-muted">
-                          Net: {formatUSDC(asset.netSize >= 0n ? asset.netSize : -asset.netSize)} ({asset.netSize >= 0n ? "Long" : "Short"})
-                        </p>
-                        <p className="text-xs text-app-muted">
-                          Long {formatUSDC(asset.longSize)} / Short {formatUSDC(asset.shortSize)}
-                        </p>
+          <div className="mt-10">
+            <h2 className="mb-4 text-lg font-semibold text-app-text">
+              <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
+            </h2>
+            <Card>
+              <div className="min-h-[280px] divide-y divide-app-border">
+                {compositionNote && (
+                  <div className="px-6 py-3 text-sm text-app-muted">{compositionNote}</div>
+                )}
+                {isConfiguredAssetsLoading
+                  ? Array.from({ length: 3 }).map((_, i) => (
+                      <div key={`comp-loading-${i}`} className="flex items-center justify-between px-6 py-4">
+                        <div>
+                          <Skeleton className="h-4 w-36" />
+                          <Skeleton className="mt-2 h-3 w-24" />
+                          <Skeleton className="mt-2 h-3 w-44" />
+                        </div>
+                        <div className="w-36">
+                          <Skeleton className="h-1.5 w-full rounded-full" />
+                          <Skeleton className="mt-2 ml-auto h-3 w-12" />
+                        </div>
                       </div>
-                      <div className="w-36">
-                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
-                          <div
-                            className="h-full rounded-full bg-app-accent"
-                            style={{ width: `${Number(asset.blendBps) / 100}%` }}
+                    ))
+                  : showAllocatedComposition
+                    ? blended.assetBlend.map((asset) => {
+                        const meta = assetMeta.get(asset.assetId);
+                        return (
+                          <PerpCompositionRow
+                            key={asset.assetId}
+                            assetName={meta?.name ?? formatAssetId(asset.assetId)}
+                            assetAddressLabel={meta?.address ? formatAddress(meta.address) : formatAssetId(asset.assetId)}
+                            netSize1e30={asset.netSize}
+                            longSize1e30={asset.longSize}
+                            shortSize1e30={asset.shortSize}
+                            blendBps={asset.blendBps}
                           />
+                        );
+                      })
+                    : hasListedAssets
+                      ? configuredAssetIds.map((assetId) => {
+                          const meta = assetMeta.get(assetId);
+                          const priceRow = configuredAssetPriceById.get(assetId);
+                          const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                          return (
+                            <div key={assetId} className="flex items-center justify-between px-6 py-4">
+                              <div>
+                                <p className="font-medium text-app-text">
+                                  {meta?.name ?? formatAssetId(assetId)}
+                                </p>
+                                <p className="font-mono text-xs text-app-muted">
+                                  {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                                </p>
+                                <p className="text-xs text-app-muted">
+                                  Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                                  {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                                </p>
+                              </div>
+                              <div className="w-36">
+                                <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+                                  <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
+                                </div>
+                                <p className="mt-1 text-right text-xs text-app-muted">{formatBps(0n)}</p>
+                              </div>
+                            </div>
+                          );
+                        })
+                      : (
+                        <div className="flex items-center justify-between px-6 py-4">
+                          <div>
+                            <p className="font-medium text-app-text">--</p>
+                            <p className="font-mono text-xs text-app-muted">--</p>
+                            <p className="text-xs text-app-muted">Price: -- · Updated: --</p>
+                          </div>
+                          <div className="w-36">
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+                              <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
+                            </div>
+                            <p className="mt-1 text-right text-xs text-app-muted">{formatBps(0n)}</p>
+                          </div>
                         </div>
-                        <p className="mt-1 text-right text-xs text-app-muted">{formatBps(asset.blendBps)}</p>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="flex items-center justify-between px-6 py-4">
-                    <div>
-                      <p className="font-medium text-app-text">
-                        <InfoLabel label="Aggregate Perp Exposure" tooltipKey="perpExposure" />
-                      </p>
-                      <p className="text-xs text-app-muted">Open interest sleeve</p>
-                    </div>
-                    <p className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</p>
+                      )}
+                <div className="flex items-center justify-between px-6 py-4">
+                  <div>
+                    <p className="font-medium text-app-text">
+                      <InfoLabel label="Aggregate Perp Exposure" tooltipKey="perpExposure" />
+                    </p>
+                    <p className="text-xs text-app-muted">Open interest sleeve</p>
                   </div>
+                  <p className="text-sm text-app-text">{formatBps(showAllocatedComposition ? blended.perpBlendBps : 0n)}</p>
                 </div>
-              </Card>
-            </div>
-          ) : showAssetsAddedNoPerpActivity ? (
-            <div className="mt-10">
-              <Card className="p-6">
-                <p className="font-medium text-app-text">Assets added, no perp activity yet</p>
-                <p className="mt-1 text-sm text-app-muted">
-                  This basket already has configured assets. Perp activity has not started yet.
-                </p>
-                <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
-                  {configuredAssetIds.map((assetId) => {
-                    const meta = assetMeta.get(assetId);
-                    const priceRow = configuredAssetPriceById.get(assetId);
-                    const updatedTs = Number(priceRow?.timestamp ?? 0n);
-                    return (
-                      <div key={assetId} className="flex items-center justify-between px-4 py-3">
-                        <div>
-                          <p className="font-medium text-app-text">
-                            {meta?.name ?? formatAssetId(assetId)}
-                          </p>
-                          <p className="font-mono text-xs text-app-muted">
-                            {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
-                          </p>
-                          <p className="text-xs text-app-muted">
-                            Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
-                            {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
-                          </p>
-                        </div>
-                        <p className="text-sm text-app-text">{formatBps(0n)}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Card>
-            </div>
-          ) : showNoAssetsAllocatedYet ? (
-            <div className="mt-10">
-              <Card className="p-6">
-                <p className="font-medium text-app-text">No assets allocated yet</p>
-                <p className="mt-1 text-sm text-app-muted">
-                  Assets are configured, but current composition allocation is {formatBps(0n)}.
-                </p>
-                <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
-                  {configuredAssetIds.map((assetId) => {
-                    const meta = assetMeta.get(assetId);
-                    const priceRow = configuredAssetPriceById.get(assetId);
-                    const updatedTs = Number(priceRow?.timestamp ?? 0n);
-                    return (
-                      <div key={assetId} className="flex items-center justify-between px-4 py-3">
-                        <div>
-                          <p className="font-medium text-app-text">
-                            {meta?.name ?? formatAssetId(assetId)}
-                          </p>
-                          <p className="font-mono text-xs text-app-muted">
-                            {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
-                          </p>
-                          <p className="text-xs text-app-muted">
-                            Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
-                            {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
-                          </p>
-                        </div>
-                        <p className="text-sm text-app-text">{formatBps(0n)}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Card>
-            </div>
-          ) : showNoAssetsListedYet ? (
-            <div className="mt-10">
-              <Card className="p-6">
-                <p className="font-medium text-app-text">No assets listed yet</p>
-                <p className="mt-1 text-sm text-app-muted">
-                  Add assets to this basket to enable per-asset composition tracking.
-                </p>
-              </Card>
-            </div>
-          ) : (
-            <div className="mt-10">
-              <Card className="p-6">
-                <p className="font-medium text-app-text">Loading latest asset configuration...</p>
-                <p className="mt-1 text-sm text-app-muted">
-                  Syncing onchain basket assets before determining composition state.
-                </p>
-              </Card>
-            </div>
-          )}
+              </div>
+            </Card>
+          </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             <StatCard label="TVL" value={formatUSDC(tvl)} tooltipKey="tvl" />
@@ -624,9 +668,9 @@ function HistoryRowView({ row }: { row: HistoryRow | BasketActivityRow }) {
           {row.amountUsdc !== undefined
             ? formatUSDC(row.amountUsdc)
             : row.size !== undefined
-              ? formatUSDC(row.size)
+              ? formatUsd1e30(row.size)
               : row.pnl !== undefined
-                ? formatUSDC(row.pnl >= 0n ? row.pnl : -row.pnl)
+                ? formatSignedUsd1e30(row.pnl)
                 : "--"}
         </p>
         <a

@@ -17,8 +17,10 @@ export const TOOLTIP_COPY = {
   totalShares: "Total basket share token supply currently minted.",
   positions: "Open perp positions currently tracked for this vault.",
   depositedCapital: "Net capital deposited from basket vault into the perp accounting system.",
-  openInterest: "Current notional exposure of active perp positions for the vault.",
-  realisedPnl: "PnL already realized from closed or partially closed positions.",
+  openInterest:
+    "Current active perp notional exposure for the vault, displayed as full-dollar USD values (PRICE_PRECISION / 1e30 normalized).",
+  realisedPnl:
+    "PnL already realized from closed or partially closed positions, shown as signed full-dollar USD notionals.",
 
   // Fees and reserve policy
   depositFee: "Fee applied when users deposit USDC into the basket vault.",
@@ -35,7 +37,8 @@ export const TOOLTIP_COPY = {
   largestBaskets: "Top baskets ranked by TVL for a quick concentration snapshot.",
   holdings: "Wallet positions across basket share tokens and their current estimated values.",
   vaultHistory: "Recent onchain vault actions including deposits, redemptions, allocations, and position events.",
-  perpDrivenComposition: "Exposure breakdown showing how perp positions influence basket composition.",
+  perpDrivenComposition:
+    "Exposure breakdown showing how perp positions influence basket composition, including a diverging long-vs-short bar and net direction by asset.",
   perpExposure: "Aggregate perp sleeve exposure derived from current position notional.",
   owner: "Current owner account with authority over funding manager admin functions.",
   fundingInterval: "Interval in seconds used to pace funding-rate updates.",
@@ -47,8 +50,10 @@ export const TOOLTIP_COPY = {
   perAssetFundingConfiguration: "Asset-level funding curve parameters and token mapping controls.",
   poolAmount: "Total token liquidity currently present in the selected GMX pool.",
   reservedAmount: "Portion of pool liquidity reserved by existing open positions.",
-  globalShortSize: "Aggregate short-side notional currently open against this pool.",
-  guaranteedUsd: "Guaranteed USD accounting value tracked by the GMX vault.",
+  globalShortSize:
+    "Aggregate short-side USD notional currently open against this pool (full-dollar display from 1e30 precision).",
+  guaranteedUsd:
+    "Guaranteed USD accounting value tracked by the GMX vault (full-dollar display from 1e30 precision).",
   poolDetails: "Health snapshot for utilization and liquidity pressure in the shared pool.",
   poolControls: "Operator and gov controls for buffer policy and direct pool top-ups.",
   setBufferAmount: "Gov-only action to set the minimum liquidity buffer retained for a token.",
@@ -58,8 +63,10 @@ export const TOOLTIP_COPY = {
   vaultRegistration: "Whether vaults are registered and eligible for position operations.",
   perVaultRiskLimits: "Per-vault caps for open interest and maximum single position size.",
   manualVaultRegistrationCheck: "Direct lookup and registration controls for a specific vault address.",
-  maxOpenInterest: "Upper bound on total open interest allowed for a vault.",
-  maxPositionSize: "Upper bound on any individual position size for a vault.",
+  maxOpenInterest:
+    "Upper bound on total open interest allowed for a vault, shown in USD notional (full-dollar display from 1e30 precision).",
+  maxPositionSize:
+    "Upper bound on any individual position size for a vault, shown in USD notional (full-dollar display from 1e30 precision).",
   createNewBasket: "Create a new basket vault with configured name and entry/exit fees.",
   setAssets: "Define which supported oracle assets this basket can trade.",
   perpAllocation: "Move capital between idle vault liquidity and the perp sleeve.",
@@ -67,7 +74,8 @@ export const TOOLTIP_COPY = {
   collectFees: "Transfer accumulated basket fees to a designated recipient address.",
   reservePolicy: "Configure the target reserve ratio that protects redemption liquidity.",
   topUpReserve: "Add USDC directly to basket reserve without minting new shares.",
-  perpPositionManagement: "Open and close perp positions with vault-level limits and available collateral checks.",
+  perpPositionManagement:
+    "Open and close perp positions with vault-level limits and available collateral checks. Size uses USD notional; collateral uses USDC.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;

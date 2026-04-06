@@ -59,6 +59,10 @@ Position operations run through `VaultAccounting` (`src/perp/VaultAccounting.sol
   - Increases `collateralLocked`
   - Tracks/updates position key state
 
+Admin UI input units (`/admin/baskets/[address]`):
+- `Size` is USD notional (converted to onchain `1e30`).
+- `Collateral` is USDC amount (onchain `1e6` token units).
+
 ### Close position
 
 - `closePosition(vault, asset, isLong, sizeDelta, collateralDelta)`

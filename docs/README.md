@@ -8,6 +8,8 @@ This index mirrors the in-app wiki information architecture used at `/docs` in t
 - `/docs/overview` — protocol mental model and system paths.
 - `/docs/investor` — deposit/redeem mechanics and liquidity behavior.
 - `/docs/operator` — basket/perp setup and daily operations runbook.
+- `/docs/perp-risk-math` — leverage formulas, units, and liquidation caveats for operators.
+- `/docs/operator-interactions` — transaction-level interaction matrix for operator write flows.
 - `/docs/oracle-price-sync` — keeper and feed synchronization operations.
 - `/docs/pool-management` — GMX pool controls (`setBufferAmount`, `directPoolDeposit`).
 - `/docs/contracts-reference` — contract capability and permissions map.
@@ -18,6 +20,8 @@ This index mirrors the in-app wiki information architecture used at `/docs` in t
 
 - [INVESTOR_FLOW.md](./INVESTOR_FLOW.md)
 - [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md)
+- [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)
+- [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md)
 - [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
 - [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md)
 - [../README.md](../README.md) (Operations + deployment workflow)

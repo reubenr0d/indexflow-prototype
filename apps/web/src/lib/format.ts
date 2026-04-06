@@ -20,6 +20,39 @@ export function formatPriceFull(price: bigint): string {
   return `$${whole.toLocaleString()}.${frac.toString().padStart(2, "0")}`;
 }
 
+function formatScaledUsd(value: bigint, scale: bigint, fractionDigits: number): string {
+  const abs = value >= 0n ? value : -value;
+  const pow10 = 10n ** BigInt(fractionDigits);
+  const rounded = (abs * pow10 + (scale / 2n)) / scale;
+  const whole = rounded / pow10;
+  const frac = rounded % pow10;
+  return `$${whole.toLocaleString()}.${frac.toString().padStart(fractionDigits, "0")}`;
+}
+
+export function formatUsd1e30(value: bigint, fractionDigits = 2): string {
+  return formatScaledUsd(value, PRICE_PRECISION, fractionDigits);
+}
+
+export function formatSignedUsd1e30(value: bigint, fractionDigits = 2): string {
+  if (value === 0n) return formatUsd1e30(0n, fractionDigits);
+  const sign = value > 0n ? "+" : "-";
+  return `${sign}${formatScaledUsd(value, PRICE_PRECISION, fractionDigits)}`;
+}
+
+export type ExposureDirection = "Long" | "Short" | "Flat";
+
+export function formatNetExposure1e30(netSize: bigint, fractionDigits = 2): {
+  direction: ExposureDirection;
+  amount: string;
+} {
+  const direction: ExposureDirection = netSize > 0n ? "Long" : netSize < 0n ? "Short" : "Flat";
+  const abs = netSize >= 0n ? netSize : -netSize;
+  return {
+    direction,
+    amount: formatUsd1e30(abs, fractionDigits),
+  };
+}
+
 export function formatCompact(value: number): string {
   if (value >= 1_000_000_000) return `$${(value / 1_000_000_000).toFixed(1)}B`;
   if (value >= 1_000_000) return `$${(value / 1_000_000).toFixed(1)}M`;

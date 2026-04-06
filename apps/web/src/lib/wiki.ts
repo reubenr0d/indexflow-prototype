@@ -1,4 +1,4 @@
-export const DOCS_LAST_UPDATED = "2026-04-05";
+export const DOCS_LAST_UPDATED = "2026-04-06";
 
 export type DocsRoleTag = "Investor" | "Operator" | "Gov" | "Keeper";
 
@@ -6,6 +6,8 @@ export type DocsSlug =
   | "overview"
   | "investor"
   | "operator"
+  | "perp-risk-math"
+  | "operator-interactions"
   | "oracle-price-sync"
   | "pool-management"
   | "contracts-reference"
@@ -16,6 +18,29 @@ export interface DocsSection {
   id: string;
   title: string;
   items: string[];
+}
+
+export interface DocsFormula {
+  name: string;
+  expression: string;
+  notes: string;
+}
+
+export interface DocsUnitTerm {
+  term: string;
+  value: string;
+  notes: string;
+}
+
+export interface DocsInteraction {
+  contract: string;
+  fn: string;
+  caller: string;
+  inputs: string[];
+  preconditions: string[];
+  stateDeltas: string[];
+  failureRisks: string[];
+  postTxChecks: string[];
 }
 
 export interface DocsPage {
@@ -32,6 +57,11 @@ export interface DocsPage {
   reference: string[];
   permissions: string[];
   flow: DocsSection[];
+  formulas?: DocsFormula[];
+  unitsGlossary?: DocsUnitTerm[];
+  interactionMatrix?: DocsInteraction[];
+  preflightChecklist?: string[];
+  postflightChecklist?: string[];
   failureModes: string[];
   callouts: Array<{
     tone: "info" | "warning";
@@ -46,6 +76,8 @@ export const DOCS_SLUGS: DocsSlug[] = [
   "overview",
   "investor",
   "operator",
+  "perp-risk-math",
+  "operator-interactions",
   "oracle-price-sync",
   "pool-management",
   "contracts-reference",
@@ -212,11 +244,14 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "Think of setup as a checklist: create the basket, connect it to the trading side, confirm the markets it can use, then set safety limits.",
       "Day to day, operators mostly move capital in or out, manage exposure, and make sure enough liquidity remains for redemptions.",
       "Risk limits and pause controls should be treated as tools you may genuinely need, not just settings to fill in once.",
+      "Use Perp Risk Math and Operator Interactions pages as transaction-level references before sending writes.",
     ],
     reference: [
       "Basket-level controls cover things like asset setup, fees, reserve policy, and how much capital can be sent to trading.",
       "Trading-system controls cover which baskets are allowed in, which markets they can use, and how much risk they can take.",
-      "Opening and closing positions is restricted to approved operator paths.",
+      "Opening and closing positions is restricted to approved operator paths; size is entered as USD notional while collateral is entered as USDC.",
+      "Composition views use indexed exposure first and fallback to onchain position tracking when indexing lags.",
+      "Interaction-level inputs, units, preconditions, and post-tx checks are documented in the interaction matrix page.",
     ],
     permissions: [
       "The basket owner controls basket-specific settings.",
@@ -257,8 +292,308 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
         body: "The biggest operator mistake is sending too much capital into perps and leaving too little USDC available for redemptions.",
       },
     ],
-    relatedSlugs: ["overview", "investor", "pool-management", "security-risk"],
-    sourceDocs: ["docs/ASSET_MANAGER_FLOW.md", "README.md"],
+    relatedSlugs: ["overview", "investor", "perp-risk-math", "operator-interactions", "pool-management", "security-risk"],
+    sourceDocs: ["docs/ASSET_MANAGER_FLOW.md", "docs/SHARE_PRICE_AND_OPERATIONS.md", "README.md"],
+  },
+  "perp-risk-math": {
+    slug: "perp-risk-math",
+    title: "Perp Risk Math",
+    summary:
+      "Operator-facing leverage math, unit conventions, and liquidation caveats for long and short position management.",
+    audience: "Operators and risk reviewers who need quick but precise math before opening, resizing, or closing positions.",
+    roleTags: ["Operator", "Gov"],
+    order: 4,
+    lastUpdated: DOCS_LAST_UPDATED,
+    networkContext:
+      "Math examples are intentionally approximate. Live outcomes vary with fees, funding, execution path, and mark-price conditions.",
+    overview: [
+      "Leverage in this stack is set by how large `size` is relative to posted `collateral`.",
+      "At the same leverage, long and short have symmetric risk: direction flips, not the magnitude logic.",
+      "Liquidation thresholds should be treated as ranges, not exact percentages.",
+    ],
+    guides: [
+      "Compute leverage and downside first, then decide size and collateral.",
+      "Treat fee and funding drag as part of risk budget, especially on held positions.",
+      "Re-check available capital and caps before any increase action.",
+    ],
+    reference: [
+      "Effective leverage approximation: `size / collateral`.",
+      "PnL approximation: `size * priceMovePercent` (signed by direction).",
+      "Collateral return approximation: `leverage * priceMovePercent`.",
+    ],
+    permissions: [
+      "Opening and closing positions still requires authorized caller paths.",
+      "Risk cap and pause controls remain owner-governed controls.",
+      "Math guidance does not override onchain checks and revert conditions.",
+    ],
+    flow: [
+      {
+        id: "risk-sizing",
+        title: "Risk Sizing Before Opening",
+        items: [
+          "Pick target leverage from strategy limits and current market volatility.",
+          "Choose `size` and `collateral` pair that matches that leverage target.",
+          "Estimate downside impact from expected adverse move before submitting the transaction.",
+          "Validate cap headroom and available capital in admin state cards.",
+        ],
+      },
+      {
+        id: "live-monitoring",
+        title: "Monitoring After Opening",
+        items: [
+          "Track open interest, collateral locked, and pool utilization context.",
+          "Watch liquidation-risk conditions during fast moves or stale-sync windows.",
+          "Reduce size or pull exposure down when margin cushion shrinks.",
+        ],
+      },
+    ],
+    formulas: [
+      {
+        name: "Effective leverage (approx)",
+        expression: "leverage ≈ size / collateral",
+        notes: "Uses position notional versus posted collateral for one leg.",
+      },
+      {
+        name: "PnL by move (approx)",
+        expression: "pnl ≈ size * priceMovePercent",
+        notes: "Sign depends on side: long profits on up moves, short profits on down moves.",
+      },
+      {
+        name: "Collateral return (approx)",
+        expression: "returnOnCollateral ≈ leverage * priceMovePercent",
+        notes: "Excludes fees, funding, and execution effects.",
+      },
+    ],
+    unitsGlossary: [
+      {
+        term: "USDC atoms",
+        value: "1 USDC = 1e6 base units",
+        notes: "Most basket-side amounts in UI are entered as USDC and converted to 6-decimal atoms.",
+      },
+      {
+        term: "GMX USD precision",
+        value: "USD values often use PRICE_PRECISION (1e30)",
+        notes:
+          "Comparisons should normalize units before applying formulas. UI notional metrics (open interest, position size, composition net/long/short) are normalized to full-dollar display before rendering.",
+      },
+      {
+        term: "size",
+        value: "Position notional exposure",
+        notes: "Represents exposure, not cash paid.",
+      },
+      {
+        term: "collateral",
+        value: "USDC margin posted for that leg",
+        notes: "Margin buffer that absorbs losses before liquidation conditions trigger.",
+      },
+    ],
+    preflightChecklist: [
+      "Confirm vault registration and mapped asset token for target market.",
+      "Confirm `availableCapital` comfortably exceeds intended collateral plus buffer.",
+      "Confirm remaining headroom for `maxOpenInterest` and `maxPositionSize` caps.",
+      "Compute leverage and adverse-move loss estimate before opening.",
+    ],
+    postflightChecklist: [
+      "Verify position tracking exists for `(vault, asset, side)` and size/collateral look correct.",
+      "Verify expected increases in open interest and collateral locked.",
+      "Record tx hash with intended leverage and rationale for auditability.",
+      "Set monitoring thresholds for risk reduction triggers.",
+    ],
+    failureModes: [
+      "Simple leverage thresholds can be misleading when fees/funding are non-trivial.",
+      "Unit mismatch between USDC atoms and GMX USD precision causes incorrect risk estimates.",
+      "Assuming exact liquidation percentages can delay risk reduction and increase drawdown.",
+    ],
+    callouts: [
+      {
+        tone: "warning",
+        title: "5x rule of thumb",
+        body: "At 5x, a ~10% adverse move is roughly -50% on collateral and ~20% adverse is a rough wipeout zone, but liquidation can occur earlier due to fee and margin conditions.",
+      },
+    ],
+    relatedSlugs: ["operator", "operator-interactions", "security-risk", "troubleshooting"],
+    sourceDocs: [
+      "docs/SHARE_PRICE_AND_OPERATIONS.md",
+      "docs/ASSET_MANAGER_FLOW.md",
+      "docs/PERP_RISK_MATH.md",
+    ],
+  },
+  "operator-interactions": {
+    slug: "operator-interactions",
+    title: "Operator Interactions",
+    summary:
+      "Contract-by-contract interaction matrix with values, units, preconditions, state deltas, and verification checks.",
+    audience: "Operators, automation engineers, and reviewers executing basket and perp write flows.",
+    roleTags: ["Operator", "Gov"],
+    order: 5,
+    lastUpdated: DOCS_LAST_UPDATED,
+    networkContext:
+      "Values shown are workflow defaults and examples. Always validate environment-specific addresses, balances, and caps before writes.",
+    overview: [
+      "This page maps each common operator transaction to exact inputs, checks, and expected state changes.",
+      "Use it as a runbook before high-impact writes and during incident triage.",
+      "The matrix focuses on operator-run flows, not every read-only or governance edge function.",
+    ],
+    guides: [
+      "Start with capital movement interactions, then position interactions.",
+      "Use preflight checks to avoid avoidable revert costs.",
+      "Complete post-tx checks to confirm accounting state is consistent.",
+    ],
+    reference: [
+      "BasketVault controls basket liquidity and allocation boundaries.",
+      "VaultAccounting controls capital accounting, position lifecycle, and risk caps.",
+      "GMX effects are indirect via VaultAccounting forwarding calls.",
+    ],
+    permissions: [
+      "Basket owner handles basket-level capital/risk controls.",
+      "VaultAccounting owner handles registration, mappings, caps, and pause state.",
+      "Position-changing calls require approved caller path (`vault` or accounting owner path).",
+    ],
+    flow: [
+      {
+        id: "capital-interactions",
+        title: "Capital Interactions",
+        items: [
+          "Allocate to perp only when reserve policy and redemption liquidity remain healthy.",
+          "Withdraw from perp to restore basket liquidity or de-risk strategy.",
+          "Confirm principal and realised PnL buckets after larger withdrawals.",
+        ],
+      },
+      {
+        id: "position-interactions",
+        title: "Position Interactions",
+        items: [
+          "Open with explicit size/collateral plan and cap headroom validation.",
+          "Close with intended size and collateral deltas and verify resulting tracking state.",
+          "Adjust risk caps or pause state if operating conditions deteriorate.",
+        ],
+      },
+    ],
+    interactionMatrix: [
+      {
+        contract: "BasketVault",
+        fn: "allocateToPerp(amount)",
+        caller: "Basket owner",
+        inputs: ["amount (USDC atoms, 1e6)"],
+        preconditions: [
+          "VaultAccounting address configured",
+          "Reserve-aware `getAvailableForPerpUsdc()` headroom >= amount",
+          "Optional `maxPerpAllocation` cap not exceeded",
+        ],
+        stateDeltas: [
+          "Basket `perpAllocated` increases",
+          "VaultAccounting `depositedCapital` increases after `depositCapital`",
+        ],
+        failureRisks: ["Reserve or cap checks fail", "Allowance/transfer path issues", "Perp side paused"],
+        postTxChecks: ["`perpAllocated` changed as expected", "VaultAccounting capital reflects deposit", "Idle reserve remains healthy"],
+      },
+      {
+        contract: "BasketVault",
+        fn: "withdrawFromPerp(amount)",
+        caller: "Basket owner",
+        inputs: ["amount (USDC atoms, 1e6)"],
+        preconditions: ["VaultAccounting configured", "Perp-side available capital >= amount"],
+        stateDeltas: [
+          "USDC returns to basket vault",
+          "`perpAllocated` decreases, clamped at zero when withdrawal exceeds remaining principal",
+        ],
+        failureRisks: ["Insufficient available capital due to locked collateral", "Paused state blocks operation"],
+        postTxChecks: ["Basket idle USDC increased", "Perp allocation and available capital updated", "Redeem headroom improved"],
+      },
+      {
+        contract: "VaultAccounting",
+        fn: "openPosition(vault, asset, isLong, size, collateral)",
+        caller: "Authorized position caller",
+        inputs: [
+          "vault (address)",
+          "asset (bytes32 id)",
+          "isLong (bool)",
+          "size (notional exposure)",
+          "collateral (USDC atoms, 1e6)",
+        ],
+        preconditions: [
+          "Vault registered and not paused",
+          "Asset mapped to index token",
+          "Collateral <= available capital",
+          "`maxOpenInterest` and `maxPositionSize` headroom available",
+        ],
+        stateDeltas: [
+          "GMX `increasePosition` called by VA account",
+          "Vault `openInterest` increases",
+          "Vault `collateralLocked` increases",
+          "Position tracking key updated/created",
+        ],
+        failureRisks: [
+          "Unmapped asset, unauthorized caller, or paused state",
+          "Collateral availability check fails",
+          "Risk cap exceeded",
+        ],
+        postTxChecks: [
+          "Position tracking exists and reflects intended side",
+          "`openInterest` and `collateralLocked` deltas match intent",
+          "Leverage outcome (`size/collateral`) matches risk budget",
+        ],
+      },
+      {
+        contract: "VaultAccounting",
+        fn: "closePosition(vault, asset, isLong, sizeDelta, collateralDelta)",
+        caller: "Authorized position caller",
+        inputs: [
+          "sizeDelta (exposure reduction)",
+          "collateralDelta (GMX collateral withdrawal parameter)",
+        ],
+        preconditions: ["Tracked position exists for `(vault, asset, side)`", "Vault registered and not paused"],
+        stateDeltas: [
+          "GMX `decreasePosition` called by VA account",
+          "`openInterest` decreases by sizeDelta",
+          "Position tracking reduced or removed",
+          "`realisedPnL` updated from returned USDC minus collateral-at-risk estimate",
+        ],
+        failureRisks: ["Position not found", "Invalid delta values", "Execution conditions degrade return outcome"],
+        postTxChecks: [
+          "Expected realised PnL sign and magnitude sanity-checked",
+          "Remaining size/collateral tracking correct or position removed",
+          "Available capital and redemption-liquidity plans updated",
+        ],
+      },
+      {
+        contract: "VaultAccounting",
+        fn: "setMaxOpenInterest / setMaxPositionSize / setPaused",
+        caller: "VaultAccounting owner",
+        inputs: [
+          "cap values (notional units for open interest and size limits)",
+          "paused flag (bool)",
+        ],
+        preconditions: ["Owner authority on VaultAccounting"],
+        stateDeltas: ["Risk envelope and/or global write availability changes"],
+        failureRisks: ["Unauthorized caller", "Operational confusion from uncommunicated cap changes"],
+        postTxChecks: ["New limits visible in admin reads", "Operator runbooks updated for new policy"],
+      },
+    ],
+    preflightChecklist: [
+      "Verify chain, deployment config, and role authority for target function.",
+      "Verify units and decimals before entering values.",
+      "Verify expected state-delta outcome before signing.",
+    ],
+    postflightChecklist: [
+      "Verify emitted events and state fields aligned with intended action.",
+      "Verify no downstream liquidity or cap boundary was unintentionally breached.",
+      "Record tx hash, changed values, and rationale in operator log.",
+    ],
+    failureModes: [
+      "Wrong caller role triggers authorization reverts.",
+      "Incorrect units produce oversized/undersized actions.",
+      "Missing preconditions (mapping, registration, pause, caps) cause avoidable failures.",
+    ],
+    callouts: [
+      {
+        tone: "info",
+        title: "Use as transaction checklist",
+        body: "Treat the interaction matrix as a pre-sign checklist and a post-confirm verification script for every high-impact write.",
+      },
+    ],
+    relatedSlugs: ["operator", "perp-risk-math", "troubleshooting", "contracts-reference"],
+    sourceDocs: ["docs/ASSET_MANAGER_FLOW.md", "docs/OPERATOR_INTERACTIONS.md", "README.md"],
   },
   "oracle-price-sync": {
     slug: "oracle-price-sync",
@@ -267,7 +602,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "How prices move through the system, and why the GMX side needs its own sync step.",
     audience: "Keepers, operators, and newcomers trying to understand how price data reaches trading logic.",
     roleTags: ["Keeper", "Operator", "Gov"],
-    order: 4,
+    order: 6,
     lastUpdated: DOCS_LAST_UPDATED,
     networkContext: "Keeper and gov addresses differ by deployment, so price automation must be checked separately in each environment.",
     overview: [
@@ -333,7 +668,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "Global GMX pool liquidity controls exposed in admin, including buffer policy and direct pool deposits.",
     audience: "Gov and operator wallets responsible for the shared liquidity pool behind every basket.",
     roleTags: ["Gov", "Operator"],
-    order: 5,
+    order: 7,
     lastUpdated: DOCS_LAST_UPDATED,
     networkContext: "Pool controls affect shared GMX liquidity, so one change can affect every basket using that token pool.",
     overview: [
@@ -398,7 +733,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "What each core contract is responsible for, and which parts of the system it controls.",
     audience: "Engineers and integrators who need to understand the contract surface before building against it.",
     roleTags: ["Operator", "Keeper", "Gov"],
-    order: 6,
+    order: 8,
     lastUpdated: DOCS_LAST_UPDATED,
     networkContext: "Always resolve addresses from the active deployment config before sending reads or writes.",
     overview: [
@@ -464,7 +799,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "Common failures, quick checks, and simple recovery steps for the issues operators hit most often.",
     audience: "Operators, keepers, and integrators debugging failed transactions, stale prices, or broken jobs.",
     roleTags: ["Operator", "Keeper", "Gov"],
-    order: 7,
+    order: 9,
     lastUpdated: DOCS_LAST_UPDATED,
     networkContext: "Most failures come from simple mismatch problems: wrong chain, wrong config, or missing permissions.",
     overview: [
@@ -529,7 +864,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "The main risk boundaries in the system, who holds power, and what should be watched closely in day-to-day operation.",
     audience: "Operators, governance participants, and reviewers who need the practical risk picture in plain language.",
     roleTags: ["Gov", "Operator", "Keeper"],
-    order: 8,
+    order: 10,
     lastUpdated: DOCS_LAST_UPDATED,
     networkContext: "Risk posture should tighten as the environment becomes more real. Local habits are not good enough for shared testnets or production-like deployments.",
     overview: [

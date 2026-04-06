@@ -58,6 +58,14 @@ sequenceDiagram
 - **Positions** — Opened in **VaultAccounting**’s name on GMX; PnL flows back as USDC when positions are reduced. The basket vault’s **`perpAllocated`** is an accounting entry; actual balances live in **VaultAccounting** / GMX until withdrawn.
 - **Investor implication** — If more capital is allocated to perp, investor redemption headroom falls until the owner pulls funds back with `withdrawFromPerp` (or new reserve USDC is added).
 
+## Leverage risk in plain language
+
+- Position size can be larger than posted collateral, so gains and losses are magnified versus the collateral amount.
+- If price moves sharply against a leveraged leg, the vault's perp position can be liquidated.
+- Liquidation and adverse perp PnL reduce vault value, which can lower basket NAV/share price.
+- For operator-level mechanics and risk controls, see [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md) and [SHARE_PRICE_AND_OPERATIONS.md](SHARE_PRICE_AND_OPERATIONS.md).
+- For full formulas and interaction-level checks used by operators, see [PERP_RISK_MATH.md](PERP_RISK_MATH.md) and [OPERATOR_INTERACTIONS.md](OPERATOR_INTERACTIONS.md).
+
 ## What investors do **not** control
 
 | Area | Who controls it |

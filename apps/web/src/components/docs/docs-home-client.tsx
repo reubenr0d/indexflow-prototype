@@ -8,11 +8,11 @@ import { cn } from "@/lib/utils";
 
 const roleOptions: Array<"All" | DocsRoleTag> = ["All", "Investor", "Operator", "Gov", "Keeper"];
 
-const startPaths = [
+export const DOCS_START_PATHS = [
   {
     title: "Operator path",
     description: "Start with the system basics, then move into setup, price updates, and pool controls.",
-    slugs: ["overview", "operator", "oracle-price-sync", "pool-management"] as const,
+    slugs: ["overview", "operator", "perp-risk-math", "operator-interactions", "oracle-price-sync", "pool-management"] as const,
   },
   {
     title: "Integrator path",
@@ -43,6 +43,24 @@ export function DocsHomeClient() {
         page.guides.join(" "),
         page.reference.join(" "),
         page.flow.map((section) => `${section.title} ${section.items.join(" ")}`).join(" "),
+        (page.formulas ?? []).map((item) => `${item.name} ${item.expression} ${item.notes}`).join(" "),
+        (page.unitsGlossary ?? []).map((item) => `${item.term} ${item.value} ${item.notes}`).join(" "),
+        (page.interactionMatrix ?? [])
+          .map((item) =>
+            [
+              item.contract,
+              item.fn,
+              item.caller,
+              item.inputs.join(" "),
+              item.preconditions.join(" "),
+              item.stateDeltas.join(" "),
+              item.failureRisks.join(" "),
+              item.postTxChecks.join(" "),
+            ].join(" ")
+          )
+          .join(" "),
+        (page.preflightChecklist ?? []).join(" "),
+        (page.postflightChecklist ?? []).join(" "),
       ]
         .join(" ")
         .toLowerCase();
@@ -62,7 +80,7 @@ export function DocsHomeClient() {
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
-        {startPaths.map((path) => (
+        {DOCS_START_PATHS.map((path) => (
           <article key={path.title} className="rounded-xl border border-app-border bg-app-surface p-5">
             <h2 className="text-lg font-semibold text-app-text">{path.title}</h2>
             <p className="mt-1 text-sm text-app-muted">{path.description}</p>

@@ -4,10 +4,12 @@ import { use, useState, useEffect, useMemo } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { InfoLabel } from "@/components/ui/info-tooltip";
+import { PerpCompositionRow } from "@/components/baskets/perp-composition-row";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import { useBasketDetailQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import {
@@ -27,14 +29,14 @@ import {
 } from "@/hooks/useBasketVault";
 import { useOracleAssetMetaMap, useSupportedOracleAssets } from "@/hooks/useOracle";
 import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId, useReadContracts } from "wagmi";
-import { BasketVaultABI, OracleAdapterABI } from "@/abi/contracts";
-import { formatUSDC, formatBps, formatAssetId, formatAddress, formatPrice, formatRelativeTime } from "@/lib/format";
+import { BasketVaultABI, OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
+import { formatUSDC, formatBps, formatAssetId, formatAddress, formatPrice, formatRelativeTime, formatUsd1e30, formatSignedUsd1e30 } from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
-import { type Address, type Hex } from "viem";
+import { encodePacked, keccak256, type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
 import { getContracts } from "@/config/contracts";
-import { REFETCH_INTERVAL } from "@/lib/constants";
+import { PRICE_PRECISION, REFETCH_INTERVAL, USDC_PRECISION } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import {
@@ -50,6 +52,16 @@ function usdcToInputValue(amount: bigint): string {
   const frac = amount % 1_000_000n;
   if (frac === 0n) return whole.toString();
   return `${whole.toString()}.${frac.toString().padStart(6, "0").replace(/0+$/, "")}`;
+}
+
+function usd1e30ToInputValue(amount: bigint): string {
+  const usdcAtoms = (amount * USDC_PRECISION) / PRICE_PRECISION;
+  return usdcToInputValue(usdcAtoms);
+}
+
+function parseUsdInputTo1e30(value: string): bigint {
+  const usdcAtoms = parseUSDCInput(value);
+  return (usdcAtoms * PRICE_PRECISION) / USDC_PRECISION;
 }
 
 export default function AdminBasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
@@ -70,7 +82,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const chainId = useChainId();
-  const { usdc, oracleAdapter } = getContracts(chainId);
+  const { usdc, oracleAdapter, vaultAccounting } = getContracts(chainId);
 
   const basketInfo = info as {
     name: string;
@@ -146,14 +158,79 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     return m;
   }, [configuredAssetIds, configuredAssetPriceRows]);
 
+  const positionTrackingKeys = useMemo(
+    () =>
+      configuredAssetIds.flatMap((assetId) => [
+        {
+          assetId,
+          isLong: true,
+          key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, assetId, true])),
+        },
+        {
+          assetId,
+          isLong: false,
+          key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, assetId, false])),
+        },
+      ]),
+    [configuredAssetIds, vault]
+  );
+  const { data: trackingRows } = useReadContracts({
+    contracts: positionTrackingKeys.map((entry) => ({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "getPositionTracking" as const,
+      args: [entry.key] as const,
+    })),
+    query: {
+      enabled: positionTrackingKeys.length > 0,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+  const onchainExposureRows = useMemo(() => {
+    const byAsset = new Map<`0x${string}`, { longSize: bigint; shortSize: bigint }>();
+    positionTrackingKeys.forEach((entry, i) => {
+      const raw = trackingRows?.[i]?.result;
+      if (!raw) return;
+
+      const tracking = raw as
+        | { size?: bigint; exists?: boolean }
+        | [Address, `0x${string}`, boolean, bigint, bigint, bigint, bigint, bigint, boolean];
+      const exists = Array.isArray(tracking) ? Boolean(tracking[8]) : Boolean(tracking.exists);
+      const size = Array.isArray(tracking) ? (tracking[3] ?? 0n) : (tracking.size ?? 0n);
+      const effectiveSize = exists ? size : 0n;
+
+      const current = byAsset.get(entry.assetId) ?? { longSize: 0n, shortSize: 0n };
+      byAsset.set(entry.assetId, {
+        longSize: entry.isLong ? effectiveSize : current.longSize,
+        shortSize: entry.isLong ? current.shortSize : effectiveSize,
+      });
+    });
+
+    return Array.from(byAsset.entries())
+      .map(([assetId, sizes]) => ({
+        assetId,
+        longSize: sizes.longSize,
+        shortSize: sizes.shortSize,
+        netSize: sizes.longSize - sizes.shortSize,
+      }))
+      .filter((row) => row.longSize > 0n || row.shortSize > 0n || row.netSize !== 0n) as PerpExposureAsset[];
+  }, [positionTrackingKeys, trackingRows]);
+  const subgraphHasLiveExposure = exposures.some(
+    (row) => row.longSize > 0n || row.shortSize > 0n || row.netSize !== 0n
+  );
+  const effectiveExposures =
+    subgraphHasLiveExposure || (exposures.length > 0 && onchainExposureRows.length === 0)
+      ? exposures
+      : onchainExposureRows;
+
   const blended = computeBlendedComposition(
     basketInfo?.usdcBalance ?? 0n,
     basketInfo?.perpAllocated ?? 0n,
     state?.openInterest ?? 0n,
-    exposures
+    effectiveExposures
   );
   const hasListedAssets = configuredAssetIds.length > 0;
-  const hasExposureRows = exposures.length > 0;
+  const hasExposureRows = effectiveExposures.length > 0;
   const hasNonZeroAllocation = blended.assetBlend.some((asset) => asset.blendBps > 0n);
   const hasPerpActivitySignal =
     (state?.openInterest ?? 0n) > 0n ||
@@ -164,6 +241,15 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const showNoAssetsAllocatedYet =
     hasListedAssets && !showAllocatedComposition && !showAssetsAddedNoPerpActivity;
   const showNoAssetsListedYet = !hasListedAssets && !isConfiguredAssetsLoading;
+  const compositionNote = showAssetsAddedNoPerpActivity
+    ? "Assets are configured, but perp activity has not started yet."
+    : showNoAssetsAllocatedYet
+      ? "Assets are configured, but current composition allocation is 0.00%."
+      : showNoAssetsListedYet
+        ? "No assets listed yet. Add assets to enable per-asset composition tracking."
+        : isConfiguredAssetsLoading
+          ? "Syncing latest onchain asset configuration..."
+          : null;
 
   return (
     <PageWrapper>
@@ -194,141 +280,109 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       {state?.registered && (
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <StatCard label="Deposited Capital" value={formatUSDC(state.depositedCapital)} tooltipKey="depositedCapital" />
-          <StatCard
-            label="Realised PnL"
-            value={formatUSDC(state.realisedPnL)}
-            tooltipKey="realisedPnl"
-          />
-          <StatCard label="Open Interest" value={formatUSDC(state.openInterest)} tooltipKey="openInterest" />
+        <StatCard
+          label="Realised PnL"
+          value={formatSignedUsd1e30(state.realisedPnL)}
+          tooltipKey="realisedPnl"
+        />
+          <StatCard label="Open Interest" value={formatUsd1e30(state.openInterest)} tooltipKey="openInterest" />
           <StatCard label="Positions" value={String(state.positionCount)} tooltipKey="positions" />
         </div>
       )}
 
-      {showAllocatedComposition ? (
-        <div className="mb-8">
-          <h2 className="mb-4 text-lg font-semibold text-app-text">
-            <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
-          </h2>
-          <Card>
-            <div className="divide-y divide-app-border">
-              {blended.assetBlend.map((a) => {
-                const meta = assetMeta.get(a.assetId);
-                return (
-                  <div key={a.assetId} className="flex items-center justify-between px-6 py-4">
+      <div className="mb-8">
+        <h2 className="mb-4 text-lg font-semibold text-app-text">
+          <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
+        </h2>
+        <Card>
+          <div className="min-h-[280px] divide-y divide-app-border">
+            {compositionNote && (
+              <div className="px-6 py-3 text-sm text-app-muted">{compositionNote}</div>
+            )}
+            {isConfiguredAssetsLoading
+              ? Array.from({ length: 3 }).map((_, i) => (
+                  <div key={`comp-loading-${i}`} className="flex items-center justify-between px-6 py-4">
                     <div>
-                      <p className="font-medium text-app-text">
-                        {meta?.name ?? formatAssetId(a.assetId)}
-                      </p>
-                      <p className="font-mono text-xs text-app-muted">
-                        {meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
-                      </p>
+                      <Skeleton className="h-4 w-36" />
+                      <Skeleton className="mt-2 h-3 w-24" />
+                      <Skeleton className="mt-2 h-3 w-44" />
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm text-app-text">{formatBps(a.blendBps)}</p>
-                      <p className="text-xs text-app-muted">
-                        Net {formatUSDC(a.netSize >= 0n ? a.netSize : -a.netSize)} {a.netSize >= 0n ? "Long" : "Short"}
-                      </p>
+                    <div className="w-36">
+                      <Skeleton className="h-1.5 w-full rounded-full" />
+                      <Skeleton className="mt-2 ml-auto h-3 w-12" />
                     </div>
                   </div>
-                );
-              })}
-              <div className="flex items-center justify-between px-6 py-4">
-                <div>
-                  <p className="font-medium text-app-text">
-                    <InfoLabel label="Perp Exposure" tooltipKey="perpExposure" />
-                  </p>
-                  <p className="text-xs text-app-muted">Open interest sleeve</p>
-                </div>
-                <span className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</span>
+                ))
+              : showAllocatedComposition
+                ? blended.assetBlend.map((a) => {
+                    const meta = assetMeta.get(a.assetId);
+                    return (
+                      <PerpCompositionRow
+                        key={a.assetId}
+                        assetName={meta?.name ?? formatAssetId(a.assetId)}
+                        assetAddressLabel={meta?.address ? formatAddress(meta.address) : formatAssetId(a.assetId)}
+                        netSize1e30={a.netSize}
+                        longSize1e30={a.longSize}
+                        shortSize1e30={a.shortSize}
+                        blendBps={a.blendBps}
+                      />
+                    );
+                  })
+                : hasListedAssets
+                  ? configuredAssetIds.map((assetId) => {
+                      const meta = assetMeta.get(assetId);
+                      const priceRow = configuredAssetPriceById.get(assetId);
+                      const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                      return (
+                        <div key={assetId} className="flex items-center justify-between px-6 py-4">
+                          <div>
+                            <p className="font-medium text-app-text">
+                              {meta?.name ?? formatAssetId(assetId)}
+                            </p>
+                            <p className="font-mono text-xs text-app-muted">
+                              {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                            </p>
+                            <p className="text-xs text-app-muted">
+                              Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                              {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                            </p>
+                          </div>
+                          <div className="w-36">
+                            <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+                              <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
+                            </div>
+                            <p className="mt-1 text-right text-xs text-app-muted">{formatBps(0n)}</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : (
+                    <div className="flex items-center justify-between px-6 py-4">
+                      <div>
+                        <p className="font-medium text-app-text">--</p>
+                        <p className="font-mono text-xs text-app-muted">--</p>
+                        <p className="text-xs text-app-muted">Price: -- · Updated: --</p>
+                      </div>
+                      <div className="w-36">
+                        <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+                          <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
+                        </div>
+                        <p className="mt-1 text-right text-xs text-app-muted">{formatBps(0n)}</p>
+                      </div>
+                    </div>
+                  )}
+            <div className="flex items-center justify-between px-6 py-4">
+              <div>
+                <p className="font-medium text-app-text">
+                  <InfoLabel label="Perp Exposure" tooltipKey="perpExposure" />
+                </p>
+                <p className="text-xs text-app-muted">Open interest sleeve</p>
               </div>
+              <span className="text-sm text-app-text">{formatBps(showAllocatedComposition ? blended.perpBlendBps : 0n)}</span>
             </div>
-          </Card>
-        </div>
-      ) : showAssetsAddedNoPerpActivity ? (
-        <div className="mb-8">
-          <Card className="p-6">
-            <p className="font-medium text-app-text">Assets added, no perp activity yet</p>
-            <p className="mt-1 text-sm text-app-muted">
-              This basket already has configured assets. Perp activity has not started yet.
-            </p>
-            <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
-              {configuredAssetIds.map((assetId) => {
-                const meta = assetMeta.get(assetId);
-                const priceRow = configuredAssetPriceById.get(assetId);
-                const updatedTs = Number(priceRow?.timestamp ?? 0n);
-                return (
-                  <div key={assetId} className="flex items-center justify-between px-4 py-3">
-                    <div>
-                      <p className="font-medium text-app-text">
-                        {meta?.name ?? formatAssetId(assetId)}
-                      </p>
-                      <p className="font-mono text-xs text-app-muted">
-                        {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
-                      </p>
-                      <p className="text-xs text-app-muted">
-                        Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
-                        {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
-                      </p>
-                    </div>
-                    <p className="text-sm text-app-text">{formatBps(0n)}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        </div>
-      ) : showNoAssetsAllocatedYet ? (
-        <div className="mb-8">
-          <Card className="p-6">
-            <p className="font-medium text-app-text">No assets allocated yet</p>
-            <p className="mt-1 text-sm text-app-muted">
-              Assets are configured, but current composition allocation is {formatBps(0n)}.
-            </p>
-            <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
-              {configuredAssetIds.map((assetId) => {
-                const meta = assetMeta.get(assetId);
-                const priceRow = configuredAssetPriceById.get(assetId);
-                const updatedTs = Number(priceRow?.timestamp ?? 0n);
-                return (
-                  <div key={assetId} className="flex items-center justify-between px-4 py-3">
-                    <div>
-                      <p className="font-medium text-app-text">
-                        {meta?.name ?? formatAssetId(assetId)}
-                      </p>
-                      <p className="font-mono text-xs text-app-muted">
-                        {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
-                      </p>
-                      <p className="text-xs text-app-muted">
-                        Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
-                        {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
-                      </p>
-                    </div>
-                    <p className="text-sm text-app-text">{formatBps(0n)}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-        </div>
-      ) : showNoAssetsListedYet ? (
-        <div className="mb-8">
-          <Card className="p-6">
-            <p className="font-medium text-app-text">No assets listed yet</p>
-            <p className="mt-1 text-sm text-app-muted">
-              Add assets to this basket to enable per-asset composition tracking.
-            </p>
-          </Card>
-        </div>
-      ) : (
-        <div className="mb-8">
-          <Card className="p-6">
-            <p className="font-medium text-app-text">Loading latest asset configuration...</p>
-            <p className="mt-1 text-sm text-app-muted">
-              Syncing onchain basket assets before determining composition state.
-            </p>
-          </Card>
-        </div>
-      )}
+          </div>
+        </Card>
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <SetAssetsCard vault={vault} />
@@ -372,8 +426,10 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
   const { data: maxOpenInterest } = useMaxOpenInterest(vault);
   const { data: maxPositionSize } = useMaxPositionSize(vault);
   const { data: closeTracking } = usePositionTracking(vault, closeAsset || undefined, closeSide === "long");
-  const { openPosition, receipt: openReceipt, isPending: isOpenPending } = useOpenPosition();
-  const { closePosition, receipt: closeReceipt, isPending: isClosePending } = useClosePosition();
+  const openTx = useOpenPosition();
+  const closeTx = useClosePosition();
+  const { openPosition, receipt: openReceipt, isPending: isOpenPending } = openTx;
+  const { closePosition, receipt: closeReceipt, isPending: isClosePending } = closeTx;
 
   const filteredAssets = (supportedAssets ?? []).filter((asset) =>
     asset.label.toLowerCase().includes(openAssetFilter.toLowerCase())
@@ -407,6 +463,22 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
       refreshAfterTx();
     }
   }, [closeReceipt.isSuccess, refreshAfterTx]);
+
+  useContractErrorToast({
+    writeError: openTx.error,
+    writeIsError: openTx.isError,
+    receiptError: openReceipt.error,
+    receiptIsError: openReceipt.isError,
+    fallbackMessage: "Open position failed",
+  });
+
+  useContractErrorToast({
+    writeError: closeTx.error,
+    writeIsError: closeTx.isError,
+    receiptError: closeReceipt.error,
+    receiptIsError: closeReceipt.isError,
+    fallbackMessage: "Close position failed",
+  });
 
   const state = vaultState as {
     depositedCapital: bigint;
@@ -478,11 +550,16 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               value={openSide}
               onChange={(value) => setOpenSide(value as "long" | "short")}
             />
-            <Input type="number" placeholder="Size (USDC)" value={openSize} onChange={(e) => setOpenSize(e.target.value)} />
+            <Input
+              type="number"
+              placeholder="Size (USD notional)"
+              value={openSize}
+              onChange={(e) => setOpenSize(e.target.value)}
+            />
             <div className="flex items-center justify-between text-xs text-app-muted">
-              <span>Max Size: {openSizeMax > 0n ? formatUSDC(openSizeMax) : "Unlimited"}</span>
+              <span>Max Size: {openSizeMax > 0n ? formatPrice(openSizeMax) : "Unlimited"}</span>
               {openSizeMax > 0n && (
-                <button className="underline" onClick={() => setOpenSize(usdcToInputValue(openSizeMax))}>
+                <button className="underline" onClick={() => setOpenSize(usd1e30ToInputValue(openSizeMax))}>
                   Use max
                 </button>
               )}
@@ -506,7 +583,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
                   vault,
                   openAsset as Hex,
                   openSide === "long",
-                  parseUSDCInput(openSize),
+                  parseUsdInputTo1e30(openSize),
                   parseUSDCInput(openCollateral)
                 );
                 showToast("pending", "Opening position...");
@@ -544,11 +621,16 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               value={closeSide}
               onChange={(value) => setCloseSide(value as "long" | "short")}
             />
-            <Input type="number" placeholder="Size Delta (USDC)" value={closeSize} onChange={(e) => setCloseSize(e.target.value)} />
+            <Input
+              type="number"
+              placeholder="Size Delta (USD notional)"
+              value={closeSize}
+              onChange={(e) => setCloseSize(e.target.value)}
+            />
             <div className="flex items-center justify-between text-xs text-app-muted">
-              <span>Max Size Delta: {formatUSDC(closeSizeMax)}</span>
+              <span>Max Size Delta: {formatPrice(closeSizeMax)}</span>
               {closeSizeMax > 0n && (
-                <button className="underline" onClick={() => setCloseSize(usdcToInputValue(closeSizeMax))}>
+                <button className="underline" onClick={() => setCloseSize(usd1e30ToInputValue(closeSizeMax))}>
                   Use max
                 </button>
               )}
@@ -575,7 +657,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
                   vault,
                   closeAsset as Hex,
                   closeSide === "long",
-                  parseUSDCInput(closeSize),
+                  parseUsdInputTo1e30(closeSize),
                   parseUSDCInput(closeCollateral || "0")
                 );
                 showToast("pending", "Closing position...");
