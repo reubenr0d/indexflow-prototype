@@ -1,4 +1,4 @@
-export const DOCS_LAST_UPDATED = "2026-04-06";
+export const DOCS_LAST_UPDATED = "2026-04-07";
 
 export type DocsRoleTag = "Investor" | "Operator" | "Gov" | "Keeper";
 
@@ -197,6 +197,8 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
           "Approve USDC to BasketVault.",
           "Call deposit; shares mint after fee logic.",
           "Call redeem to burn shares for USDC output based on vault pricing logic.",
+          "The basket UI now shows a quote preview, explicit action icons, and an inline transaction rail so the user sees approval, submit, and confirmation states in one place.",
+          "In the basket UI, switching between Deposit and Redeem clears the typed amount to avoid accidental cross-mode submits.",
           "If liquidity is tight, owner must withdraw perp capital or reserve must be topped up.",
         ],
       },

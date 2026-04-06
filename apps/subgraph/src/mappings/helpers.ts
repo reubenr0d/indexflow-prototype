@@ -4,6 +4,7 @@ import {
   BasketActivity,
   BasketAsset,
   BasketExposure,
+  BasketSnapshot,
   ProtocolState,
   User,
   UserBasketPosition,
@@ -12,9 +13,14 @@ import {
 import { BasketVault as BasketVaultContract } from "../../generated/BasketFactory/BasketVault";
 import { BasketShareToken as BasketShareTokenContract } from "../../generated/BasketFactory/BasketShareToken";
 import { ERC20 as ERC20Contract } from "../../generated/BasketFactory/ERC20";
+import { VaultAccounting as VaultAccountingContract } from "../../generated/VaultAccounting/VaultAccounting";
 
 export const ZERO = BigInt.zero();
 const PROTOCOL_STATE_ID = "protocol";
+const SNAPSHOT_PERIOD_1D = "1d";
+const SNAPSHOT_PERIOD_7D = "7d";
+const DAY_SECONDS = BigInt.fromI32(24 * 60 * 60);
+const WEEK_SECONDS = BigInt.fromI32(7 * 24 * 60 * 60);
 
 export function activityId(event: ethereum.Event): string {
   return event.transaction.hash.toHexString().concat("-").concat(event.logIndex.toString());
@@ -116,7 +122,69 @@ export function refreshBasketFromChain(vault: Address, event: ethereum.Event): B
   basket.updatedAt = event.block.timestamp;
   basket.updatedBlock = event.block.number;
   basket.save();
+  syncBasketSnapshots(basket, event);
   return basket;
+}
+
+export function syncBasketSnapshots(basket: Basket, event: ethereum.Event): void {
+  syncBasketSnapshot(basket, event, SNAPSHOT_PERIOD_1D, DAY_SECONDS);
+  syncBasketSnapshot(basket, event, SNAPSHOT_PERIOD_7D, WEEK_SECONDS);
+}
+
+function syncBasketSnapshot(basket: Basket, event: ethereum.Event, period: string, periodSeconds: BigInt): void {
+  const vault = Address.fromBytes(basket.vault);
+  const bucketStart = event.block.timestamp.div(periodSeconds).times(periodSeconds);
+  const bucketEnd = bucketStart.plus(periodSeconds).minus(BigInt.fromI32(1));
+  const id = basket.id.concat("-").concat(period).concat("-").concat(bucketStart.toString());
+  let snapshot = BasketSnapshot.load(id);
+  if (snapshot == null) {
+    snapshot = new BasketSnapshot(id);
+    snapshot.basket = basket.id;
+    snapshot.period = period;
+    snapshot.bucketStart = bucketStart;
+    snapshot.bucketEnd = bucketEnd;
+    snapshot.createdAt = event.block.timestamp;
+  }
+
+  const vaultAccountingCall = BasketVaultContract.bind(vault).try_vaultAccounting();
+  let openInterest = ZERO;
+  let collateralLocked = ZERO;
+  let positionCount = ZERO;
+  if (!vaultAccountingCall.reverted) {
+    const stateCall = VaultAccountingContract.bind(vaultAccountingCall.value).try_getVaultState(vault);
+    if (!stateCall.reverted) {
+      openInterest = stateCall.value.openInterest;
+      collateralLocked = stateCall.value.collateralLocked;
+      positionCount = stateCall.value.positionCount;
+    }
+  }
+
+  const requiredReserveCall = BasketVaultContract.bind(vault).try_getRequiredReserveUsdc();
+  const availableForPerpCall = BasketVaultContract.bind(vault).try_getAvailableForPerpUsdc();
+  const collectedFeesCall = BasketVaultContract.bind(vault).try_collectedFees();
+
+  snapshot.period = period;
+  snapshot.bucketStart = bucketStart;
+  snapshot.bucketEnd = bucketEnd;
+  snapshot.updatedAt = event.block.timestamp;
+  snapshot.sharePrice = basket.sharePrice;
+  snapshot.basketPrice = basket.basketPrice;
+  snapshot.usdcBalanceUsdc = basket.usdcBalanceUsdc;
+  snapshot.perpAllocatedUsdc = basket.perpAllocatedUsdc;
+  snapshot.tvlBookUsdc = basket.tvlBookUsdc;
+  snapshot.totalSupplyShares = basket.totalSupplyShares;
+  snapshot.assetCount = basket.assetCount;
+  snapshot.depositFeeBps = basket.depositFeeBps;
+  snapshot.redeemFeeBps = basket.redeemFeeBps;
+  snapshot.minReserveBps = basket.minReserveBps;
+  snapshot.requiredReserveUsdc = requiredReserveCall.reverted ? ZERO : requiredReserveCall.value;
+  snapshot.availableForPerpUsdc = availableForPerpCall.reverted ? ZERO : availableForPerpCall.value;
+  snapshot.collectedFeesUsdc = collectedFeesCall.reverted ? ZERO : collectedFeesCall.value;
+  snapshot.cumulativeFeesCollectedUsdc = basket.cumulativeFeesCollectedUsdc;
+  snapshot.openInterest = openInterest;
+  snapshot.collateralLocked = collateralLocked;
+  snapshot.positionCount = positionCount;
+  snapshot.save();
 }
 
 export function syncBasketAssets(vault: Address, event: ethereum.Event): void {

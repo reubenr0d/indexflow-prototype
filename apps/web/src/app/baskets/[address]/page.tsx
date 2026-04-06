@@ -4,11 +4,22 @@ import { use, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
-import { StatCard } from "@/components/ui/stat-card";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import { PerpCompositionRow } from "@/components/baskets/perp-composition-row";
+import {
+  ActivityBadge,
+  BasketHistoryRow,
+  MetricTile,
+  SectionHeader,
+  StatusChip,
+  formatHistoryLabel,
+  formatHistoryTime,
+  getBasketActivityMeta,
+  groupHistoryRowsByDay,
+} from "@/components/baskets/basket-detail-ui";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
   useBasketFees,
@@ -39,23 +50,28 @@ import {
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { encodePacked, keccak256, type Address, parseAbiItem } from "viem";
 import { motion } from "framer-motion";
-import { Copy } from "lucide-react";
+import {
+  Activity,
+  ArrowDownToLine,
+  ArrowUpFromLine,
+  CalendarDays,
+  ChevronDown,
+  ChevronUp,
+  Clock3,
+  Coins,
+  Copy,
+  Gauge,
+  Layers3,
+  ShieldAlert,
+  ShieldCheck,
+  TrendingUp,
+  Wallet,
+} from "lucide-react";
 import { getContracts } from "@/config/contracts";
 import { REFETCH_INTERVAL } from "@/lib/constants";
+import { showToast } from "@/components/ui/toast";
 
 const HISTORY_PAGE_SIZE = 20;
-
-type HistoryRow = {
-  id: string;
-  activityType: string;
-  timestamp: bigint;
-  txHash: `0x${string}`;
-  amountUsdc?: bigint;
-  size?: bigint;
-  pnl?: bigint;
-  assetId?: `0x${string}`;
-  isLong?: boolean;
-};
 
 export default function BasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -80,6 +96,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const basketDetail = useBasketDetailQuery(vault, 1, 0);
   const [historySkip, setHistorySkip] = useState(0);
+  const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
   const subgraphHistory = useBasketActivitiesQuery(vault, HISTORY_PAGE_SIZE, historySkip);
   const fallbackHistory = useVaultHistoryFallback(vault, !subgraphHistory.data && !subgraphHistory.isLoading);
 
@@ -255,8 +272,25 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
           ? "Syncing latest onchain asset configuration..."
           : null;
 
-  const historyRows = (subgraphHistory.data ?? fallbackHistory.data ?? []) as HistoryRow[];
+  const historyRows = useMemo(
+    () => (subgraphHistory.data ?? fallbackHistory.data ?? []) as BasketHistoryRow[],
+    [subgraphHistory.data, fallbackHistory.data]
+  );
   const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
+  const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
+  const recentActivityCount = historyRows.length;
+  const latestActivityLabel = historyRows[0]?.timestamp ? formatRelativeTime(Number(historyRows[0].timestamp)) : "--";
+  const latestActivityMeta = historyRows[0] ? getBasketActivityMeta(historyRows[0]) : undefined;
+
+  const handleCopyShareToken = async () => {
+    if (!basketInfo?.shareToken || typeof navigator === "undefined") return;
+    try {
+      await navigator.clipboard.writeText(basketInfo.shareToken);
+      showToast("success", "Share token address copied");
+    } catch {
+      showToast("error", "Failed to copy share token address");
+    }
+  };
 
   if (isLoading) {
     return (
@@ -279,44 +313,94 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   return (
     <PageWrapper>
       <div className="grid gap-8 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="space-y-6 lg:col-span-3">
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <h1 className="text-3xl font-semibold tracking-tight text-app-text">
-              {basketInfo?.name || "Basket"}
-            </h1>
-            {basketInfo?.shareToken && (
-              <p className="mt-1 flex items-center gap-2 font-mono text-sm text-app-muted">
-                {formatAddress(basketInfo.shareToken)}
-                <button
-                  onClick={() => navigator.clipboard.writeText(basketInfo.shareToken)}
-                  className="text-app-muted hover:text-app-text"
-                >
-                  <Copy className="h-3.5 w-3.5" />
-                </button>
-              </p>
-            )}
+            <Card className="overflow-hidden border border-app-border shadow-[var(--shadow)]">
+              <div className="relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(13,148,136,0.12),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(12,74,110,0.08),transparent_42%)]" />
+                <div className="relative flex flex-col gap-6 p-6 xl:flex-row xl:items-start xl:justify-between">
+                  <div className="max-w-2xl">
+                    <div className="inline-flex items-center rounded-full border border-app-border bg-app-bg-subtle px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-app-muted">
+                      Basket snapshot
+                    </div>
+                    <h1 className="mt-3 text-3xl font-semibold tracking-tight text-app-text">
+                      {basketInfo?.name || "Basket"}
+                    </h1>
+                    <p className="mt-2 max-w-xl text-sm text-app-muted">
+                      Capital, perp exposure, reserve health, and recent activity at a glance.
+                    </p>
+                    {basketInfo?.shareToken && (
+                      <div className="mt-4 flex flex-wrap items-center gap-3">
+                        <span className="font-mono text-sm text-app-muted">{formatAddress(basketInfo.shareToken)}</span>
+                        <button
+                          type="button"
+                          onClick={handleCopyShareToken}
+                          className="inline-flex items-center gap-2 rounded-md border border-app-border bg-app-surface px-3 py-1.5 text-xs font-semibold text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover"
+                        >
+                          <Copy className="h-3.5 w-3.5" />
+                          Copy
+                        </button>
+                      </div>
+                    )}
+                  </div>
 
-            <div className="mt-6 flex items-baseline gap-3">
-              <p className="text-4xl font-semibold tracking-tight text-app-text">
-                {formatPrice(basketInfo?.sharePrice ?? 0n)}
-              </p>
-              <span className="text-sm text-app-muted">share price</span>
-            </div>
+                  <div className="flex flex-wrap items-center gap-2 xl:justify-end">
+                    <StatusChip
+                      icon={reserveHealthy ? ShieldCheck : ShieldAlert}
+                      label={reserveHealthy ? "Healthy" : "Below target"}
+                      tone={reserveHealthy ? "success" : "danger"}
+                    />
+                    <StatusChip
+                      icon={latestActivityMeta?.icon ?? Activity}
+                      label={latestActivityMeta ? latestActivityMeta.title : "No recent activity"}
+                      tone={latestActivityMeta?.tone ?? "muted"}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid gap-3 border-t border-app-border bg-app-bg-subtle/60 p-4 sm:grid-cols-2 xl:grid-cols-4">
+                <MetricTile
+                  icon={Wallet}
+                  label={<InfoLabel label="TVL" tooltipKey="tvl" />}
+                  value={formatUSDC(tvl)}
+                  subValue="Idle USDC plus perp-allocated capital"
+                />
+                <MetricTile
+                  icon={TrendingUp}
+                  label="Share price"
+                  value={formatPrice(basketInfo?.sharePrice ?? 0n)}
+                  subValue={latestActivityLabel !== "--" ? `Last update ${latestActivityLabel}` : "Live basket price"}
+                />
+                <MetricTile
+                  icon={Coins}
+                  label={<InfoLabel label="Total shares" tooltipKey="totalShares" />}
+                  value={basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0"}
+                  subValue="Outstanding basket shares"
+                />
+                <MetricTile
+                  icon={Activity}
+                  label={<InfoLabel label="Recent activity" tooltipKey="vaultHistory" />}
+                  value={recentActivityCount.toString()}
+                  subValue={latestActivityMeta ? latestActivityMeta.title : "No indexed activity"}
+                />
+              </div>
+            </Card>
           </motion.div>
 
-          <div className="mt-10">
-            <h2 className="mb-4 text-lg font-semibold text-app-text">
-              <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
-            </h2>
-            <Card>
+          <Card className="p-5">
+            <SectionHeader
+              icon={Layers3}
+              title={<InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />}
+              meta="Current per-asset perp blend, net exposure, and sleeve allocation."
+            />
+            <div className="overflow-hidden rounded-xl border border-app-border">
               <div className="min-h-[280px] divide-y divide-app-border">
-                {compositionNote && (
-                  <div className="px-6 py-3 text-sm text-app-muted">{compositionNote}</div>
-                )}
+                {compositionNote && <div className="px-6 py-3 text-sm text-app-muted">{compositionNote}</div>}
                 {isConfiguredAssetsLoading
                   ? Array.from({ length: 3 }).map((_, i) => (
                       <div key={`comp-loading-${i}`} className="flex items-center justify-between px-6 py-4">
@@ -352,11 +436,14 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                           const priceRow = configuredAssetPriceById.get(assetId);
                           const updatedTs = Number(priceRow?.timestamp ?? 0n);
                           return (
-                            <div key={assetId} className="flex items-center justify-between px-6 py-4">
-                              <div>
-                                <p className="font-medium text-app-text">
-                                  {meta?.name ?? formatAssetId(assetId)}
-                                </p>
+                            <div key={assetId} className="flex items-center justify-between gap-4 px-6 py-4">
+                              <div className="min-w-0">
+                                <div className="flex items-center gap-2">
+                                  <span className="inline-flex h-2.5 w-2.5 shrink-0 rounded-full bg-app-accent shadow-[0_0_0_4px_rgba(13,148,136,0.12)]" />
+                                  <p className="truncate font-medium text-app-text">
+                                    {meta?.name ?? formatAssetId(assetId)}
+                                  </p>
+                                </div>
                                 <p className="font-mono text-xs text-app-muted">
                                   {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
                                 </p>
@@ -365,7 +452,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                                   {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
                                 </p>
                               </div>
-                              <div className="w-36">
+                              <div className="w-36 shrink-0">
                                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
                                   <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
                                 </div>
@@ -375,13 +462,13 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                           );
                         })
                       : (
-                        <div className="flex items-center justify-between px-6 py-4">
+                        <div className="flex items-center justify-between gap-4 px-6 py-4">
                           <div>
                             <p className="font-medium text-app-text">--</p>
                             <p className="font-mono text-xs text-app-muted">--</p>
                             <p className="text-xs text-app-muted">Price: -- · Updated: --</p>
                           </div>
-                          <div className="w-36">
+                          <div className="w-36 shrink-0">
                             <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
                               <div className="h-full rounded-full bg-app-accent" style={{ width: "0%" }} />
                             </div>
@@ -396,80 +483,121 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                     </p>
                     <p className="text-xs text-app-muted">Open interest sleeve</p>
                   </div>
-                  <p className="text-sm text-app-text">{formatBps(showAllocatedComposition ? blended.perpBlendBps : 0n)}</p>
+                  <p className="text-sm text-app-text">
+                    {formatBps(showAllocatedComposition ? blended.perpBlendBps : 0n)}
+                  </p>
                 </div>
               </div>
-            </Card>
-          </div>
+            </div>
+          </Card>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            <StatCard label="TVL" value={formatUSDC(tvl)} tooltipKey="tvl" />
-            <StatCard
-              label="Total Shares"
-              value={
-                basketInfo?.totalSupply
-                  ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString()
-                  : "0"
-              }
-              tooltipKey="totalShares"
-            />
-            <StatCard
-              label="Deposit Fee"
-              value={depositFee !== undefined ? formatBps(depositFee) : "--"}
-              tooltipKey="depositFee"
-            />
-            <StatCard
-              label="Redeem Fee"
-              value={redeemFee !== undefined ? formatBps(redeemFee) : "--"}
-              tooltipKey="redeemFee"
-            />
-          </div>
-
-          <div className="mt-6">
-            <Card className="p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-base font-semibold text-app-text">
-                  <InfoLabel label="Reserve Status" tooltipKey="reserveStatus" />
-                </h3>
-                <span className={`text-xs font-semibold ${reserveHealthy ? "text-app-success" : "text-app-danger"}`}>
-                  {reserveHealthy ? "Healthy" : "Below Target"}
-                </span>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2">
-                <StatCard label="Target Reserve" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} tooltipKey="targetReserve" />
-                <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} tooltipKey="requiredReserve" />
-                <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} tooltipKey="idleUsdcExFees" />
-                <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} tooltipKey="availableForPerp" />
-              </div>
-            </Card>
-          </div>
-
-          <div className="mt-6">
-            <Card className="p-5">
-              <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-base font-semibold text-app-text">
-                  <InfoLabel label="Vault History" tooltipKey="vaultHistory" />
-                </h3>
-                <span className="text-xs text-app-muted">{historyRows.length} shown</span>
-              </div>
-              <div className="divide-y divide-app-border">
-                {historyRows.length === 0 && (
-                  <div className="py-4 text-sm text-app-muted">No vault activity indexed yet.</div>
-                )}
-                {historyRows.map((row) => (
-                  <HistoryRowView key={row.id} row={row} />
-                ))}
-              </div>
-              {subgraphHistory.data && canLoadMore && (
-                <button
-                  className="mt-4 text-sm font-medium text-app-accent hover:underline"
-                  onClick={() => setHistorySkip((s) => s + HISTORY_PAGE_SIZE)}
+          <Card className="p-5">
+            <SectionHeader
+              icon={ShieldCheck}
+              title="Advanced Metrics"
+              meta="Collapsed by default to keep the page focused on the snapshot."
+              action={
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setShowAdvancedMetrics((open) => !open)}
+                  aria-expanded={showAdvancedMetrics}
+                  aria-controls="advanced-metrics-panel"
                 >
-                  Load more
-                </button>
+                  {showAdvancedMetrics ? <ChevronUp className="mr-2 h-4 w-4" /> : <ChevronDown className="mr-2 h-4 w-4" />}
+                  {showAdvancedMetrics ? "Hide" : "Show"}
+                </Button>
+              }
+            />
+            {showAdvancedMetrics ? (
+              <div id="advanced-metrics-panel" className="grid gap-3 sm:grid-cols-2">
+                <MetricTile
+                  icon={Gauge}
+                  label={<InfoLabel label="Target Reserve" tooltipKey="targetReserve" />}
+                  value={formatBps((minReserveBps as bigint | undefined) ?? 0n)}
+                />
+                <MetricTile
+                  icon={Wallet}
+                  label={<InfoLabel label="Required Reserve" tooltipKey="requiredReserve" />}
+                  value={formatUSDC(requiredReserve)}
+                />
+                <MetricTile
+                  icon={ArrowDownToLine}
+                  label={<InfoLabel label="Idle USDC (ex fees)" tooltipKey="idleUsdcExFees" />}
+                  value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)}
+                />
+                <MetricTile
+                  icon={ArrowUpFromLine}
+                  label={<InfoLabel label="Available For Perp" tooltipKey="availableForPerp" />}
+                  value={formatUSDC(availableForPerp)}
+                />
+                <MetricTile
+                  icon={Coins}
+                  label={<InfoLabel label="Deposit Fee" tooltipKey="depositFee" />}
+                  value={depositFee !== undefined ? formatBps(depositFee) : "--"}
+                />
+                <MetricTile
+                  icon={Coins}
+                  label={<InfoLabel label="Redeem Fee" tooltipKey="redeemFee" />}
+                  value={redeemFee !== undefined ? formatBps(redeemFee) : "--"}
+                />
+              </div>
+            ) : (
+              <div className="rounded-xl border border-dashed border-app-border bg-app-bg-subtle/60 p-4 text-sm text-app-muted">
+                Reserve policy, fee schedule, and perp headroom are available in the advanced panel.
+              </div>
+            )}
+          </Card>
+
+          <Card className="p-5">
+            <SectionHeader
+              icon={Clock3}
+              title={<InfoLabel label="Vault History" tooltipKey="vaultHistory" />}
+              meta={`${historyRows.length} shown across ${historyGroups.length} day bucket${historyGroups.length === 1 ? "" : "s"}`}
+            />
+            <div className="overflow-hidden rounded-xl border border-app-border">
+              {historyRows.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-2 px-6 py-10 text-center text-sm text-app-muted">
+                  <CalendarDays className="h-5 w-5 text-app-muted" />
+                  No vault activity indexed yet.
+                </div>
+              ) : (
+                <div className="divide-y divide-app-border">
+                  {historyGroups.map((group) => (
+                    <div key={group.key} className="bg-app-surface">
+                      <div className="flex items-center justify-between gap-3 border-b border-app-border bg-app-bg-subtle/60 px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-app-border bg-app-surface text-app-text">
+                            <CalendarDays className="h-3.5 w-3.5" />
+                          </span>
+                          <div>
+                            <p className="text-sm font-semibold text-app-text">{group.label}</p>
+                            <p className="text-xs text-app-muted">
+                              {group.rows.length} event{group.rows.length === 1 ? "" : "s"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="divide-y divide-app-border">
+                        {group.rows.map((row) => (
+                          <HistoryRowView key={row.id} row={row} />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
-            </Card>
-          </div>
+            </div>
+            {subgraphHistory.data && canLoadMore && (
+              <button
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-app-accent hover:underline"
+                onClick={() => setHistorySkip((s) => s + HISTORY_PAGE_SIZE)}
+              >
+                Load more
+              </button>
+            )}
+          </Card>
         </div>
 
         <div className="lg:col-span-2">
@@ -494,7 +622,7 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
   return useQuery({
     queryKey: ["vault-history-rpc", chainId, vault],
     enabled: enabled && !!publicClient,
-    queryFn: async (): Promise<HistoryRow[]> => {
+    queryFn: async (): Promise<BasketHistoryRow[]> => {
       if (!publicClient) return [];
 
       const [deposits, redeems, allocations, withdrawals, opens, closes, pnls] = await Promise.all([
@@ -549,7 +677,7 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
         }),
       ]);
 
-      const rows: HistoryRow[] = [];
+      const rows: BasketHistoryRow[] = [];
 
       for (const l of deposits) {
         rows.push({
@@ -649,21 +777,25 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
   });
 }
 
-function HistoryRowView({ row }: { row: HistoryRow | BasketActivityRow }) {
+function HistoryRowView({ row }: { row: BasketHistoryRow | BasketActivityRow }) {
   const config = useConfig();
   const chainId = useChainId();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
   const txHref = explorer ? `${explorer}/tx/${row.txHash}` : "#";
+  const meta = getBasketActivityMeta(row);
 
   return (
-    <div className="flex items-center justify-between py-3 text-sm">
-      <div>
-        <p className="font-medium text-app-text">{row.activityType}</p>
-        <p className="text-xs text-app-muted">
-          {new Date(Number(row.timestamp) * 1000).toLocaleString()} {row.assetId ? `• ${formatAssetId(row.assetId)}` : ""}
+    <div className="flex items-start gap-3 px-4 py-4 text-sm">
+      <ActivityBadge meta={meta} />
+      <div className="min-w-0 flex-1">
+        <p className="font-medium text-app-text">{formatHistoryLabel(row)}</p>
+        <p className="mt-1 text-xs text-app-muted">
+          {[meta.detail, row.assetId ? formatAssetId(row.assetId) : undefined, formatHistoryTime(row.timestamp)]
+            .filter(Boolean)
+            .join(" · ")}
         </p>
       </div>
-      <div className="text-right">
+      <div className="shrink-0 text-right">
         <p className="font-mono text-app-text">
           {row.amountUsdc !== undefined
             ? formatUSDC(row.amountUsdc)

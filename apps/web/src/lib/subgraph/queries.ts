@@ -84,6 +84,71 @@ export const GET_BASKET_DETAIL = gql`
   }
 `;
 
+export const GET_BASKET_TREND_SNAPSHOTS = gql`
+  query GetBasketTrendSnapshots($id: ID!) {
+    daySnapshots: basketSnapshots(
+      where: { basket_: { id: $id }, period: "1d" }
+      first: 2
+      orderBy: bucketStart
+      orderDirection: desc
+    ) {
+      id
+      period
+      bucketStart
+      bucketEnd
+      createdAt
+      updatedAt
+      sharePrice
+      basketPrice
+      usdcBalanceUsdc
+      perpAllocatedUsdc
+      tvlBookUsdc
+      totalSupplyShares
+      assetCount
+      depositFeeBps
+      redeemFeeBps
+      minReserveBps
+      requiredReserveUsdc
+      availableForPerpUsdc
+      collectedFeesUsdc
+      cumulativeFeesCollectedUsdc
+      openInterest
+      collateralLocked
+      positionCount
+    }
+    weekSnapshots: basketSnapshots(
+      where: { basket_: { id: $id }, period: "7d" }
+      first: 2
+      orderBy: bucketStart
+      orderDirection: desc
+    ) {
+      id
+      period
+      bucketStart
+      bucketEnd
+      createdAt
+      updatedAt
+      sharePrice
+      basketPrice
+      usdcBalanceUsdc
+      perpAllocatedUsdc
+      tvlBookUsdc
+      totalSupplyShares
+      assetCount
+      depositFeeBps
+      redeemFeeBps
+      minReserveBps
+      requiredReserveUsdc
+      availableForPerpUsdc
+      collectedFeesUsdc
+      cumulativeFeesCollectedUsdc
+      openInterest
+      collateralLocked
+      positionCount
+    }
+  }
+`;
+
 export const GET_BASKET_ACTIVITIES = gql`
   query GetBasketActivities($id: String!, $first: Int!, $skip: Int!) {
     basketActivities(

@@ -8,6 +8,8 @@ interface SegmentedControlProps<T extends string> {
   value: T;
   onChange: (value: T) => void;
   className?: string;
+  equalWidth?: boolean;
+  ariaLabel?: string;
 }
 
 export function SegmentedControl<T extends string>({
@@ -15,9 +17,13 @@ export function SegmentedControl<T extends string>({
   value,
   onChange,
   className,
+  equalWidth = false,
+  ariaLabel,
 }: SegmentedControlProps<T>) {
   return (
     <div
+      role="tablist"
+      aria-label={ariaLabel}
       className={cn(
         "inline-flex items-center rounded-md border border-app-border bg-app-bg p-0.5 dark:bg-app-bg-subtle",
         className
@@ -28,8 +34,11 @@ export function SegmentedControl<T extends string>({
           key={opt.value}
           type="button"
           onClick={() => onChange(opt.value)}
+          role="tab"
+          aria-selected={value === opt.value}
           className={cn(
             "relative rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+            equalWidth && "flex-1",
             value === opt.value
               ? "text-app-text"
               : "text-app-muted hover:text-app-text"

@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
-import { motion } from "framer-motion";
-import { formatUSDC, formatBps } from "@/lib/format";
+import { TrendPill } from "@/components/ui/trend-pill";
+import { formatBps, formatUSDC } from "@/lib/format";
 import { type Address } from "viem";
+import { BasketIcon } from "./basket-icons";
 
 interface BasketCardProps {
   vault: Address;
@@ -19,6 +21,8 @@ interface BasketCardProps {
   perpBlendBps?: bigint;
   depositFee?: bigint;
   redeemFee?: bigint;
+  trend24h?: bigint | null;
+  trend7d?: bigint | null;
   index?: number;
 }
 
@@ -31,9 +35,18 @@ export function BasketCard({
   assetCount,
   perpBlendBps,
   depositFee,
+  trend24h,
+  trend7d,
   index = 0,
 }: BasketCardProps) {
   const tvl = usdcBalance + perpAllocated;
+  const perpShare = tvl > 0n ? `${Number((perpAllocated * 100n) / tvl)}% in perp` : "No perp allocation";
+  const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {
+    if (delta === undefined || delta === null) return `${label} --`;
+    const abs = delta < 0n ? -delta : delta;
+    const value = formatUSDC(abs);
+    return `${label} ${delta > 0n ? "+" : delta < 0n ? "-" : ""}${value}`;
+  };
 
   return (
     <motion.div
@@ -42,49 +55,79 @@ export function BasketCard({
       transition={{ duration: 0.22, delay: index * 0.04 }}
     >
       <Link href={`/baskets/${vault}`}>
-        <Card className="group h-full p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
-          <div className="mb-3 flex items-start justify-between gap-2">
-            <h3 className="text-sm font-semibold text-app-text">
+        <Card className="group flex h-full flex-col p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
+          <div className="mb-3 flex items-start justify-between gap-3">
+            <h3 className="min-w-0 text-sm font-semibold text-app-text">
               <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
             </h3>
-            {depositFee !== undefined && (
-              <span className="shrink-0 rounded-md bg-app-accent-dim px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide text-app-accent">
-                {formatBps(depositFee)} fee
-              </span>
-            )}
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-app-border bg-app-bg-subtle px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-muted">
+              <BasketIcon name="fee" className="text-app-accent" />
+              {depositFee !== undefined ? `${formatBps(depositFee)} fee` : "Fee --"}
+            </span>
           </div>
 
-          <p className="font-mono text-2xl font-semibold tracking-tight text-app-text">
-            {formatUSDC(tvl)}
-          </p>
-          <p className="mt-0.5 font-mono text-xs text-app-muted">TVL</p>
-
-          <div className="mt-4 flex gap-6">
-            <div>
-              <p className="font-mono text-sm font-medium text-app-text">{formatUSDC(sharePrice)}</p>
-              <p className="text-xs text-app-muted">Share price</p>
-            </div>
-            <div>
-              <p className="font-mono text-sm font-medium text-app-text">{assetCount}</p>
-              <p className="text-xs text-app-muted">Assets</p>
+          <div className="space-y-1">
+            <p className="font-mono text-2xl font-semibold tracking-tight text-app-text">
+              {formatUSDC(tvl)}
+            </p>
+            <div className="flex items-center gap-2 text-xs text-app-muted">
+              <BasketIcon name="tvl" className="text-app-accent" />
+              <span>TVL</span>
             </div>
           </div>
 
-          <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
-            <div
-              className="h-full rounded-full bg-app-accent transition-all"
-              style={{
-                width: perpAllocated > 0n ? `${Number((perpAllocated * 100n) / (tvl || 1n))}%` : "0%",
-              }}
-            />
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
+              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
+                <BasketIcon name="sharePrice" />
+                <span>Share price</span>
+              </div>
+              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{formatUSDC(sharePrice)}</p>
+            </div>
+            <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
+              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
+                <BasketIcon name="assets" />
+                <span>Assets</span>
+              </div>
+              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{assetCount}</p>
+            </div>
+            <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
+              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
+                <BasketIcon name="perp" />
+                <span>Perp sleeve</span>
+              </div>
+              <p className="mt-2 font-mono text-sm font-semibold text-app-text">
+                {perpBlendBps !== undefined ? formatBps(perpBlendBps) : perpShare}
+              </p>
+            </div>
           </div>
-          <p className="mt-1 text-xs text-app-muted">
-            {perpBlendBps !== undefined
-              ? `${formatBps(perpBlendBps)} perp sleeve`
-              : perpAllocated > 0n
-                ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
-                : "No perp allocation"}
-          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            <TrendPill direction={trend24h === undefined || trend24h === null || trend24h === 0n ? "flat" : trend24h > 0n ? "up" : "down"}>
+              {formatTrendText("24h", trend24h)}
+            </TrendPill>
+            <TrendPill direction={trend7d === undefined || trend7d === null || trend7d === 0n ? "flat" : trend7d > 0n ? "up" : "down"}>
+              {formatTrendText("7d", trend7d)}
+            </TrendPill>
+          </div>
+
+          <div className="mt-4 flex-1">
+            <div className="mb-1 h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+              <div
+                className="h-full rounded-full bg-app-accent transition-all"
+                style={{
+                  width: perpAllocated > 0n ? `${Number((perpAllocated * 100n) / (tvl || 1n))}%` : "0%",
+                }}
+              />
+            </div>
+            <p className="text-xs text-app-muted">
+              {perpBlendBps !== undefined
+                ? `${formatBps(perpBlendBps)} perp sleeve`
+                : perpAllocated > 0n
+                  ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
+                  : "No perp allocation"}
+            </p>
+          </div>
         </Card>
       </Link>
     </motion.div>

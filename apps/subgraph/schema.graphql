@@ -33,6 +33,37 @@ type Basket @entity(immutable: false) {
   assets: [BasketAsset!]! @derivedFrom(field: "basket")
   exposures: [BasketExposure!]! @derivedFrom(field: "basket")
   activities: [BasketActivity!]! @derivedFrom(field: "basket")
+  snapshots: [BasketSnapshot!]! @derivedFrom(field: "basket")
+}
+
+type BasketSnapshot @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  period: String!
+  bucketStart: BigInt!
+  bucketEnd: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+
+  sharePrice: BigInt!
+  basketPrice: BigInt!
+  usdcBalanceUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  tvlBookUsdc: BigInt!
+  totalSupplyShares: BigInt!
+  assetCount: BigInt!
+
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  requiredReserveUsdc: BigInt!
+  availableForPerpUsdc: BigInt!
+  collectedFeesUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  openInterest: BigInt!
+  collateralLocked: BigInt!
+  positionCount: BigInt!
 }
 
 type BasketAsset @entity(immutable: false) {

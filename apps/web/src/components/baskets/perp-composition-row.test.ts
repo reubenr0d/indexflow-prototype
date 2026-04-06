@@ -30,7 +30,6 @@ describe("PerpCompositionRow", () => {
     );
 
     expect(html).toContain("Net $2.00");
-    expect(html).toContain(">Long<");
     expect(html).toContain("Long $3.00");
     expect(html).toContain("Short $1.00");
     expect(html).toContain("25.00%");

@@ -76,6 +76,19 @@ export const TOOLTIP_COPY = {
   topUpReserve: "Add USDC directly to basket reserve without minting new shares.",
   perpPositionManagement:
     "Open and close perp positions with vault-level limits and available collateral checks. Size uses USD notional; collateral uses USDC.",
+
+  // Basket trade panel
+  quotePreview:
+    "Live deposit or redeem estimate showing the expected output amount and fee impact before you submit.",
+  transactionRail:
+    "Inline transaction status with step-by-step feedback, explorer links, and a retry path when a submit fails.",
+  connectWallet: "Connect a wallet before submitting basket deposits or redemptions.",
+  approveAction: "Authorize BasketVault to move the selected USDC amount before deposit submission.",
+  depositAction: "Submit USDC into the basket vault and mint basket shares.",
+  redeemAction: "Burn basket shares to withdraw USDC from the basket vault.",
+  txPending: "The current transaction is waiting to be confirmed by the network.",
+  txConfirmed: "The current transaction confirmed successfully.",
+  txFailed: "The current transaction failed and can be retried after checking the error.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;

@@ -18,12 +18,12 @@ import {
   getOrCreateBasketExposure,
   getOrCreateBasket,
   getOrCreateProtocolState,
+  refreshBasketFromChain,
   ZERO,
 } from "./helpers";
 
 function syncVaultState(vault: Address, contractAddress: Address, event: ethereum.Event): void {
-  const basket = getOrCreateBasket(vault, event);
-  basket.save();
+  const basket = refreshBasketFromChain(vault, event);
 
   const stateEntity = ensureVaultState(basket, event);
   const contract = VaultAccounting.bind(contractAddress);
