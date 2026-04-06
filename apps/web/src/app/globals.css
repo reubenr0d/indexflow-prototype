@@ -19,6 +19,9 @@
   --radius: 10px;
   --radius-sm: 6px;
   --shadow: 0 1px 2px rgba(10, 14, 18, 0.06), 0 4px 16px rgba(10, 14, 18, 0.04);
+  --landing-grad-a: rgba(13, 148, 136, 0.22);
+  --landing-grad-b: rgba(14, 116, 144, 0.16);
+  --landing-grad-c: rgba(12, 74, 110, 0.11);
 }
 
 .dark {
@@ -37,6 +40,9 @@
   --border: rgba(255, 255, 255, 0.1);
   --border-strong: rgba(255, 255, 255, 0.18);
   --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 8px 32px rgba(0, 0, 0, 0.35);
+  --landing-grad-a: rgba(45, 212, 191, 0.2);
+  --landing-grad-b: rgba(56, 189, 248, 0.14);
+  --landing-grad-c: rgba(16, 185, 129, 0.08);
 }
 
 @theme inline {
@@ -101,4 +107,51 @@ body {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+@keyframes landing-shift {
+  0% {
+    transform: translate3d(-2%, -2%, 0) scale(1.02);
+  }
+  50% {
+    transform: translate3d(2%, 2%, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(-2%, -2%, 0) scale(1.02);
+  }
+}
+
+.landing-hero {
+  background:
+    radial-gradient(1000px 380px at 90% -8%, var(--landing-grad-a), transparent 62%),
+    radial-gradient(900px 360px at -8% 4%, var(--landing-grad-b), transparent 58%),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface) 94%, var(--accent) 6%), var(--bg));
+}
+
+.landing-hero-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(180deg, black 24%, rgba(0, 0, 0, 0.35) 72%, transparent 100%);
+}
+
+.dark .landing-hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+}
+
+.landing-hero-glow {
+  background:
+    radial-gradient(46% 40% at 92% 14%, var(--landing-grad-a), transparent 64%),
+    radial-gradient(30% 34% at 8% 16%, var(--landing-grad-c), transparent 72%);
+  filter: blur(8px);
+  animation: landing-shift 13s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-glow {
+    animation: none;
+  }
 }

@@ -16,7 +16,7 @@ This document describes how oracle prices flow through the system, how the GMX f
 | **PriceSync** | [`src/perp/PriceSync.sol`](../src/perp/PriceSync.sol) | Copies adapter prices into `SimplePriceFeed` per `assetId → gmxToken` mappings. `syncAll` / `syncPrices` are **permissionless**. **Ownable** owner for mappings and pointer updates. |
 | **SimplePriceFeed** | [`src/gmx/core/SimplePriceFeed.sol`](../src/gmx/core/SimplePriceFeed.sol) | Minimal **`IVaultPriceFeed`**: per-token stored price, optional spread for min/max. **gov** + **keepers** may set prices. |
 | **Vault (GMX)** | [`src/gmx/core/VaultAdmin.sol`](../src/gmx/core/VaultAdmin.sol), [`VaultPricing.sol`](../src/gmx/core/VaultPricing.sol) | **`priceFeed`** address; `getMinPrice` / `getMaxPrice` delegate to `IVaultPriceFeed`. **gov** for `setPriceFeed` and `initialize`. |
-| **BasketVault** | [`src/vault/BasketVault.sol`](../src/vault/BasketVault.sol) | Share NAV uses **`OracleAdapter`** (`assetId` keys). Owner: `setOracleAdapter`, `setAssets`, etc. |
+| **BasketVault** | [`src/vault/BasketVault.sol`](../src/vault/BasketVault.sol) | Share pricing is NAV-based and perp-driven; `setAssets` validates asset ids against **`OracleAdapter`**. Owner: `setOracleAdapter`, `setAssets`, etc. |
 | **PricingEngine** | [`src/perp/PricingEngine.sol`](../src/perp/PricingEngine.sol) | Execution price = oracle mid + slippage; **`OracleAdapter`**. Owner: `setOracleAdapter`. |
 | **VaultAccounting** | [`src/perp/VaultAccounting.sol`](../src/perp/VaultAccounting.sol) | Perp accounting; **`OracleAdapter`** fixed at deploy. Owner: **`registerVault`**, **`mapAssetToken(assetId, gmxToken)`** (required to open positions), risk/pause setters. |
 | **PerpReader** | [`src/perp/PerpReader.sol`](../src/perp/PerpReader.sol) | Read-only aggregation: GMX vault + adapter. |
@@ -67,7 +67,7 @@ sequenceDiagram
   participant PE as PricingEngine
 
   BO->>BV: setOracleAdapter(oracleAdapter)
-  BO->>BV: setAssets(assetIds, weightsBps)
+  BO->>BV: setAssets(assetIds)
 
   PO->>PE: setOracleAdapter(oracleAdapter)
 ```
@@ -190,7 +190,7 @@ sequenceDiagram
   participant OA as OracleAdapter
 
   U->>BV: deposit / redeem (internal NAV)
-  Note over BV: Uses oracleAdapter getPrice per assetId
+  Note over BV: NAV includes VaultAccounting PnL; adapter is used for asset validation/config context
 
   U->>PE: getExecutionPrice(assetId, size, isLong)
   PE->>OA: getPrice(assetId) isStale

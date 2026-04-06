@@ -1,11 +1,12 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import {
@@ -14,20 +15,30 @@ import {
   useRequiredReserveUsdc,
   useAvailableForPerpUsdc,
   useCollectedFees,
+  useBasketAssets,
 } from "@/hooks/useBasketVault";
+import { useOracleAssetMetaMap } from "@/hooks/useOracle";
 import {
   type BasketActivityRow,
   useBasketActivitiesQuery,
   useBasketDetailQuery,
 } from "@/hooks/subgraph/useSubgraphQueries";
-import { useAccount, useChainId, useConfig, usePublicClient, useReadContract } from "wagmi";
-import { BasketShareTokenABI } from "@/abi/contracts";
-import { formatUSDC, formatBps, formatAddress, formatAssetId, formatPrice } from "@/lib/format";
+import { useAccount, useChainId, useConfig, usePublicClient, useReadContract, useReadContracts } from "wagmi";
+import { BasketShareTokenABI, OracleAdapterABI } from "@/abi/contracts";
+import {
+  formatUSDC,
+  formatBps,
+  formatAddress,
+  formatAssetId,
+  formatPrice,
+  formatRelativeTime,
+} from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { type Address, parseAbiItem } from "viem";
 import { motion } from "framer-motion";
 import { Copy } from "lucide-react";
 import { getContracts } from "@/config/contracts";
+import { REFETCH_INTERVAL } from "@/lib/constants";
 
 const HISTORY_PAGE_SIZE = 20;
 
@@ -47,6 +58,8 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const { address: vaultAddress } = use(params);
   const vault = vaultAddress as Address;
   const { address: userAddress } = useAccount();
+  const chainId = useChainId();
+  const { oracleAdapter } = getContracts(chainId);
 
   const { data: info, isLoading } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
@@ -55,6 +68,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
   const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
   const { data: collectedFees } = useCollectedFees(vault);
+  const { data: assetMeta } = useOracleAssetMetaMap();
+  const {
+    data: onchainBasketAssets,
+    isLoading: isOnchainAssetsLoading,
+    isFetching: isOnchainAssetsFetching,
+  } = useBasketAssets(vault);
 
   const basketDetail = useBasketDetailQuery(vault, 1, 0);
   const [historySkip, setHistorySkip] = useState(0);
@@ -74,7 +93,55 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   } | undefined;
 
   const state = vaultState as { openInterest: bigint } | undefined;
+  const subgraphConfiguredAssetIds = (basketDetail.data?.basket?.assets ?? [])
+    .filter((asset) => asset.active)
+    .map((asset) => asset.assetId);
   const exposures = (basketDetail.data?.basket?.exposures ?? []) as PerpExposureAsset[];
+  const onchainConfiguredAssetIds = useMemo(
+    () =>
+      (onchainBasketAssets ?? [])
+        .map((entry) => entry.result as `0x${string}` | undefined)
+        .filter((id): id is `0x${string}` => Boolean(id)),
+    [onchainBasketAssets]
+  );
+  const configuredAssetIds = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          (onchainConfiguredAssetIds.length > 0 ? onchainConfiguredAssetIds : subgraphConfiguredAssetIds).map((id) =>
+            id.toLowerCase()
+          )
+        )
+      ) as `0x${string}`[],
+    [onchainConfiguredAssetIds, subgraphConfiguredAssetIds]
+  );
+  const isConfiguredAssetsLoading =
+    (isOnchainAssetsLoading || isOnchainAssetsFetching) &&
+    onchainConfiguredAssetIds.length === 0 &&
+    subgraphConfiguredAssetIds.length === 0;
+  const { data: configuredAssetPriceRows } = useReadContracts({
+    contracts: configuredAssetIds.map((assetId) => ({
+      address: oracleAdapter,
+      abi: OracleAdapterABI,
+      functionName: "getPrice" as const,
+      args: [assetId] as const,
+    })),
+    query: {
+      enabled: configuredAssetIds.length > 0,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+  const configuredAssetPriceById = useMemo(() => {
+    const m = new Map<`0x${string}`, { price: bigint; timestamp: bigint }>();
+    configuredAssetIds.forEach((assetId, i) => {
+      const row = configuredAssetPriceRows?.[i]?.result as [bigint, bigint] | undefined;
+      m.set(assetId, {
+        price: row?.[0] ?? 0n,
+        timestamp: row?.[1] ?? 0n,
+      });
+    });
+    return m;
+  }, [configuredAssetIds, configuredAssetPriceRows]);
 
   const { data: shareBalance } = useReadContract({
     address: basketInfo?.shareToken,
@@ -98,6 +165,18 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     state?.openInterest ?? 0n,
     exposures
   );
+  const hasListedAssets = configuredAssetIds.length > 0;
+  const hasExposureRows = exposures.length > 0;
+  const hasNonZeroAllocation = blended.assetBlend.some((asset) => asset.blendBps > 0n);
+  const hasPerpActivitySignal =
+    (state?.openInterest ?? 0n) > 0n ||
+    (basketInfo?.perpAllocated ?? 0n) > 0n ||
+    hasExposureRows;
+  const showAllocatedComposition = hasExposureRows && hasNonZeroAllocation;
+  const showAssetsAddedNoPerpActivity = hasListedAssets && !hasPerpActivitySignal;
+  const showNoAssetsAllocatedYet =
+    hasListedAssets && !showAllocatedComposition && !showAssetsAddedNoPerpActivity;
+  const showNoAssetsListedYet = !hasListedAssets && !isConfiguredAssetsLoading;
 
   const historyRows = (subgraphHistory.data ?? fallbackHistory.data ?? []) as HistoryRow[];
   const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
@@ -152,9 +231,11 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             </div>
           </motion.div>
 
-          {exposures.length > 0 ? (
+          {showAllocatedComposition ? (
             <div className="mt-10">
-              <h2 className="mb-4 text-lg font-semibold text-app-text">Perp-Driven Composition</h2>
+              <h2 className="mb-4 text-lg font-semibold text-app-text">
+                <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
+              </h2>
               <Card>
                 <div className="divide-y divide-app-border">
                   {blended.assetBlend.map((asset) => (
@@ -181,7 +262,9 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                   ))}
                   <div className="flex items-center justify-between px-6 py-4">
                     <div>
-                      <p className="font-medium text-app-text">Aggregate Perp Exposure</p>
+                      <p className="font-medium text-app-text">
+                        <InfoLabel label="Aggregate Perp Exposure" tooltipKey="perpExposure" />
+                      </p>
                       <p className="text-xs text-app-muted">Open interest sleeve</p>
                     </div>
                     <p className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</p>
@@ -189,19 +272,94 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                 </div>
               </Card>
             </div>
+          ) : showAssetsAddedNoPerpActivity ? (
+            <div className="mt-10">
+              <Card className="p-6">
+                <p className="font-medium text-app-text">Assets added, no perp activity yet</p>
+                <p className="mt-1 text-sm text-app-muted">
+                  This basket already has configured assets. Perp activity has not started yet.
+                </p>
+                <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
+                  {configuredAssetIds.map((assetId) => {
+                    const meta = assetMeta.get(assetId);
+                    const priceRow = configuredAssetPriceById.get(assetId);
+                    const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                    return (
+                      <div key={assetId} className="flex items-center justify-between px-4 py-3">
+                        <div>
+                          <p className="font-medium text-app-text">
+                            {meta?.name ?? formatAssetId(assetId)}
+                          </p>
+                          <p className="font-mono text-xs text-app-muted">
+                            {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                          </p>
+                          <p className="text-xs text-app-muted">
+                            Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                            {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                          </p>
+                        </div>
+                        <p className="text-sm text-app-text">{formatBps(0n)}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            </div>
+          ) : showNoAssetsAllocatedYet ? (
+            <div className="mt-10">
+              <Card className="p-6">
+                <p className="font-medium text-app-text">No assets allocated yet</p>
+                <p className="mt-1 text-sm text-app-muted">
+                  Assets are configured, but current composition allocation is {formatBps(0n)}.
+                </p>
+                <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
+                  {configuredAssetIds.map((assetId) => {
+                    const meta = assetMeta.get(assetId);
+                    const priceRow = configuredAssetPriceById.get(assetId);
+                    const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                    return (
+                      <div key={assetId} className="flex items-center justify-between px-4 py-3">
+                        <div>
+                          <p className="font-medium text-app-text">
+                            {meta?.name ?? formatAssetId(assetId)}
+                          </p>
+                          <p className="font-mono text-xs text-app-muted">
+                            {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                          </p>
+                          <p className="text-xs text-app-muted">
+                            Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                            {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                          </p>
+                        </div>
+                        <p className="text-sm text-app-text">{formatBps(0n)}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            </div>
+          ) : showNoAssetsListedYet ? (
+            <div className="mt-10">
+              <Card className="p-6">
+                <p className="font-medium text-app-text">No assets listed yet</p>
+                <p className="mt-1 text-sm text-app-muted">
+                  Add assets to this basket to enable per-asset composition tracking.
+                </p>
+              </Card>
+            </div>
           ) : (
             <div className="mt-10">
               <Card className="p-6">
-                <p className="font-medium text-app-text">Composition pending perp activity</p>
+                <p className="font-medium text-app-text">Loading latest asset configuration...</p>
                 <p className="mt-1 text-sm text-app-muted">
-                  Per-asset composition appears after positions are opened and indexed.
+                  Syncing onchain basket assets before determining composition state.
                 </p>
               </Card>
             </div>
           )}
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
-            <StatCard label="TVL" value={formatUSDC(tvl)} />
+            <StatCard label="TVL" value={formatUSDC(tvl)} tooltipKey="tvl" />
             <StatCard
               label="Total Shares"
               value={
@@ -209,30 +367,35 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                   ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString()
                   : "0"
               }
+              tooltipKey="totalShares"
             />
             <StatCard
               label="Deposit Fee"
               value={depositFee !== undefined ? formatBps(depositFee) : "--"}
+              tooltipKey="depositFee"
             />
             <StatCard
               label="Redeem Fee"
               value={redeemFee !== undefined ? formatBps(redeemFee) : "--"}
+              tooltipKey="redeemFee"
             />
           </div>
 
           <div className="mt-6">
             <Card className="p-5">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-base font-semibold text-app-text">Reserve Status</h3>
+                <h3 className="text-base font-semibold text-app-text">
+                  <InfoLabel label="Reserve Status" tooltipKey="reserveStatus" />
+                </h3>
                 <span className={`text-xs font-semibold ${reserveHealthy ? "text-app-success" : "text-app-danger"}`}>
                   {reserveHealthy ? "Healthy" : "Below Target"}
                 </span>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                <StatCard label="Target Reserve" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} />
-                <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} />
-                <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} />
-                <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} />
+                <StatCard label="Target Reserve" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} tooltipKey="targetReserve" />
+                <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} tooltipKey="requiredReserve" />
+                <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} tooltipKey="idleUsdcExFees" />
+                <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} tooltipKey="availableForPerp" />
               </div>
             </Card>
           </div>
@@ -240,7 +403,9 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
           <div className="mt-6">
             <Card className="p-5">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="text-base font-semibold text-app-text">Vault History</h3>
+                <h3 className="text-base font-semibold text-app-text">
+                  <InfoLabel label="Vault History" tooltipKey="vaultHistory" />
+                </h3>
                 <span className="text-xs text-app-muted">{historyRows.length} shown</span>
               </div>
               <div className="divide-y divide-app-border">

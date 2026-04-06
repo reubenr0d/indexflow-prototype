@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatCard } from "@/components/ui/stat-card";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultState } from "@/hooks/usePerpReader";
@@ -62,17 +63,19 @@ export default function AdminRiskPage() {
           label="System Status"
           value={pauseLoading ? "--" : isPaused ? "PAUSED" : "ACTIVE"}
           isLoading={pauseLoading}
+          tooltipKey="systemStatus"
         />
-        <StatCard label="Active Baskets" value={String(vaultAddresses.length)} />
+        <StatCard label="Active Baskets" value={String(vaultAddresses.length)} tooltipKey="activeBaskets" />
         <StatCard
           label="Baskets With Caps"
           value={String(infos.length)}
           isLoading={basketsLoading}
+          tooltipKey="basketsWithCaps"
         />
       </div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">
-        Vault Registration
+        <InfoLabel label="Vault Registration" tooltipKey="vaultRegistration" />
       </h2>
       {basketsLoading ? (
         <Card className="p-6">
@@ -107,7 +110,7 @@ export default function AdminRiskPage() {
       </div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">
-        Per-Vault Risk Limits
+        <InfoLabel label="Per-Vault Risk Limits" tooltipKey="perVaultRiskLimits" />
       </h2>
       {basketsLoading ? (
         <Card className="p-6">
@@ -329,7 +332,7 @@ function ManualVaultRegistrationCard() {
   return (
     <Card className="p-6">
       <h3 className="mb-2 text-base font-semibold text-app-text">
-        Manual Vault Registration Check
+        <InfoLabel label="Manual Vault Registration Check" tooltipKey="manualVaultRegistrationCheck" />
       </h3>
       <p className="mb-4 text-sm text-app-muted">
         Check and manage registration for any vault address.
@@ -397,7 +400,7 @@ function VaultRiskCard({ vault, name }: { vault: Address; name: string }) {
         <div className="mb-4 flex items-center justify-between">
           <div>
             <h3 className="text-base font-semibold text-app-text">
-              {name || "Basket"}
+              <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
             </h3>
             <p className="font-mono text-xs text-app-muted">
               {formatAddress(vault)}
@@ -414,13 +417,17 @@ function VaultRiskCard({ vault, name }: { vault: Address; name: string }) {
 
         <div className="mb-6 grid gap-3 sm:grid-cols-2">
           <div className="rounded-lg bg-app-bg-subtle p-3">
-            <p className="text-xs font-medium text-app-muted">Max Open Interest</p>
+            <p className="text-xs font-medium text-app-muted">
+              <InfoLabel label="Max Open Interest" tooltipKey="maxOpenInterest" />
+            </p>
             <p className="mt-1 text-sm font-semibold text-app-text">
               {formatCap(maxOI)}
             </p>
           </div>
           <div className="rounded-lg bg-app-bg-subtle p-3">
-            <p className="text-xs font-medium text-app-muted">Max Position Size</p>
+            <p className="text-xs font-medium text-app-muted">
+              <InfoLabel label="Max Position Size" tooltipKey="maxPositionSize" />
+            </p>
             <p className="mt-1 text-sm font-semibold text-app-text">
               {formatCap(maxPos)}
             </p>

@@ -3,7 +3,7 @@
 [![CI](https://github.com/reubenr0d/indexflow-prototype/actions/workflows/test.yml/badge.svg)](https://github.com/reubenr0d/indexflow-prototype/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype/graph/badge.svg)](https://codecov.io/gh/reubenr0d/indexflow-prototype)
 
-Oracle-priced basket vaults backed by a shared perpetual liquidity pool, built on a GMX v1 fork.
+Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on a GMX v1 fork.
 
 ## Architecture
 
@@ -11,14 +11,14 @@ Oracle-priced basket vaults backed by a shared perpetual liquidity pool, built o
 Investor ──deposit USDC──► BasketVault ──allocate──► VaultAccounting ──► GMX Vault Pool
                 │                                        │
           mint shares                              position PnL
-          (oracle-priced)                          (tracked per vault)
+          (NAV-priced)                             (tracked per vault)
 ```
 
 ### Basket Layer (`src/vault/`)
 
-- **BasketVault** -- GLP-style vault: deposit USDC, receive shares priced by weighted oracle prices
+- **BasketVault** -- GLP-style vault: deposit USDC, receive shares priced from vault NAV (including perp PnL)
 - **BasketShareToken** -- ERC20 shares (6 decimals)
-- **BasketFactory** -- Deploy new baskets with asset weight configurations
+- **BasketFactory** -- Deploy new baskets (name + fees), then register assets explicitly
 
 ### Perp Layer (`src/perp/`)
 
@@ -85,7 +85,7 @@ The GMX vault reads prices from **SimplePriceFeed**, not from **OracleAdapter** 
 - **Chainlink-backed assets** — `OracleAdapter.getPrice` reads the feed when called. Push that value into the vault feed by calling **`PriceSync.syncAll()`** or **`PriceSync.syncPrices(assetIds)`** on whatever cadence you need (anyone can send these txs).
 - **Custom relayer assets** — A keeper must call **`OracleAdapter.submitPrice`** / **`submitPrices`** first (requires `setKeeper` on the adapter), then run **`PriceSync.sync*`** as above.
 
-Basket and other layers that call `OracleAdapter` in views see fresh Chainlink data on read; the perp path only updates on-chain when **PriceSync** runs.
+Basket configuration still validates asset ids through `OracleAdapter`, but share mint/redeem pricing is NAV-based and perp-driven. The perp path only updates GMX on-chain feed storage when **PriceSync** runs.
 
 For basket/perp operator responsibilities (capital allocation, position management controls, and investor liquidity implications), see [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md).
 
@@ -123,10 +123,21 @@ npm run submit-sync:sepolia
 
 ## Documentation
 
+- In-app wiki (web app):
+  - `/docs` — Searchable docs hub with role filters and start-here paths.
+  - `/docs/overview`
+  - `/docs/investor`
+  - `/docs/operator`
+  - `/docs/oracle-price-sync`
+  - `/docs/pool-management`
+  - `/docs/contracts-reference`
+  - `/docs/troubleshooting`
+  - `/docs/security-risk`
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
 - [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md) — Basket/perp manager flow: setup, capital allocation, positions, risk controls, and implementation caveats.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
+- [docs/README.md](docs/README.md) — Maintainer-facing docs map mirroring in-app wiki IA and canonical markdown sources.
 
 For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.

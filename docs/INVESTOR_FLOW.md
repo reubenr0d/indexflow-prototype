@@ -9,10 +9,10 @@ This document describes what **basket share holders** interact with and how valu
 
 ## Deposit and redeem (typical investor path)
 
-1. **Deposit** — You approve USDC and call `BasketVault.deposit(amount)`. The vault takes a **deposit fee** (if configured), then mints shares using the **oracle basket price**: a weighted sum of configured asset prices from **OracleAdapter** (same economic definition the vault uses for mint/burn).
-2. **Redeem** — You call `redeem(shares)`. The vault burns shares and sends USDC using that same **basket oracle price**, minus any **redeem fee**, subject to **idle USDC liquidity actually held in the basket vault** (computed from on-hand USDC and excluding reserved fees in `collectedFees`).
+1. **Deposit** — You approve USDC and call `BasketVault.deposit(amount)`. The vault takes a **deposit fee** (if configured), then mints shares using **NAV-based pricing**.
+2. **Redeem** — You call `redeem(shares)`. The vault burns shares and returns USDC from the same **NAV-based pricing path**, minus any **redeem fee**, subject to **idle USDC liquidity actually held in the basket vault** (computed from on-hand USDC and excluding reserved fees in `collectedFees`).
 
-So entry and exit pricing for shares is tied to the **basket oracle**, not necessarily to full mark-to-market NAV if the vault has open perp legs.
+Entry and exit pricing for shares is tied to mark-to-market vault NAV.
 
 ## Liquidity model (as implemented)
 
@@ -20,13 +20,14 @@ So entry and exit pricing for shares is tied to the **basket oracle**, not neces
 - **Non-liquid to investor until owner action** — Capital recorded as `perpAllocated` and funds currently in `VaultAccounting` / GMX position path.
 - **Direct investor withdrawal from perp allocation is not available** — investors do not call `withdrawFromPerp`; that function is `onlyOwner` on the basket vault.
 
-## How basket price differs from “full NAV”
+## Pricing and valuation views
 
-- **`getBasketPrice()`** — Weighted oracle composition only (no perp PnL).
-- **`getSharePrice()`** — Uses USDC in the vault (excluding fees reserved in `collectedFees`) plus the **`perpAllocated` bookkeeping** over total supply. It does **not** include unrealised perp PnL.
-- **Mark-to-market basket value** — For a fuller picture, off-chain tooling can use **PerpReader.getTotalVaultValue**, which adds unrealised and realised PnL from **VaultAccounting.getVaultPnL** to on-vault USDC and `perpAllocated`.
-
-Investors should treat oracle basket price as the **mint/redeem exchange rate**, and NAV-style metrics as **separate** unless the product UI explicitly combines them.
+- **`getSharePrice()`** — Uses mark-to-market NAV:
+  - idle USDC (excluding reserved fees),
+  - `perpAllocated` bookkeeping,
+  - realised + unrealised PnL from `VaultAccounting.getVaultPnL`.
+- **PerpReader.getTotalVaultValue** — Also returns mark-to-market vault value and is useful for monitoring.
+- There is no weighted-base `getBasketPrice()` dependency in mint/redeem pricing.
 
 ## Perp allocation (operator / vault owner path)
 
@@ -61,7 +62,7 @@ sequenceDiagram
 
 | Area | Who controls it |
 |------|------------------|
-| Basket composition and fees | Basket vault **owner** (`setAssets`, `setFees`, …) |
+| Basket asset registration and fees | Basket vault **owner** (`setAssets`, `setFees`, …) |
 | Oracle assets and feeds | **OracleAdapter** owner / keepers (custom relayer) |
 | Whether GMX sees the same prices as the oracle | **Keepers / anyone** running **PriceSync** + feed permissions (see README) |
 | Funding parameters on GMX | **FundingRateManager** keepers / owner |
@@ -73,3 +74,7 @@ sequenceDiagram
 - [README.md](../README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).
 - [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md) — Basket/perp manager runbook: setup, allocation, position operations, risk controls, and caveats.
 - [MODIFICATIONS.md](../MODIFICATIONS.md) — Changes versus upstream GMX.
+
+## UI visibility
+
+- `/baskets/[address]` includes a **Vault History** timeline (deposits, redeems, allocations, position activity, and related tx links).

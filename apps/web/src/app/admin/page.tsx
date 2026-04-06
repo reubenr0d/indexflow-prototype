@@ -3,6 +3,7 @@
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { StatCard } from "@/components/ui/stat-card";
 import { Card } from "@/components/ui/card";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
@@ -10,7 +11,7 @@ import { formatCompact, formatUSDC, formatBps } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import Link from "next/link";
-import { ArrowUpRight, Layers, Radio, Activity, Gauge } from "lucide-react";
+import { ArrowUpRight, Layers, Radio, Activity, Gauge, BookOpenText } from "lucide-react";
 import { type Address } from "viem";
 
 const quickLinks = [
@@ -18,6 +19,7 @@ const quickLinks = [
   { href: "/admin/funding", label: "Funding", icon: Gauge, desc: "Manage funding owner and keeper controls" },
   { href: "/admin/oracle", label: "Oracle Status", icon: Radio, desc: "Monitor oracle health" },
   { href: "/admin/pool", label: "Pool Health", icon: Activity, desc: "View pool utilization" },
+  { href: "/docs", label: "Docs Wiki", icon: BookOpenText, desc: "Runbooks and integration reference" },
 ];
 
 export default function AdminOverview() {
@@ -64,12 +66,19 @@ export default function AdminOverview() {
       </h1>
 
       <div className="mb-10 grid gap-4 sm:grid-cols-3">
-        <StatCard label="Total TVL" value={formatCompact(Number(totalTVL / USDC_PRECISION))} />
-        <StatCard label="Active Baskets" value={String(infos.length)} />
-        <StatCard label="Perp Allocated" value={formatUSDC(totalPerp)} subValue={`Perp sleeve ${formatBps(aggregatePerpBlendBps)}`} />
+        <StatCard label="Total TVL" value={formatCompact(Number(totalTVL / USDC_PRECISION))} tooltipKey="totalTvl" />
+        <StatCard label="Active Baskets" value={String(infos.length)} tooltipKey="activeBaskets" />
+        <StatCard
+          label="Perp Allocated"
+          value={formatUSDC(totalPerp)}
+          subValue={`Perp sleeve ${formatBps(aggregatePerpBlendBps)}`}
+          tooltipKey="perpAllocated"
+        />
       </div>
 
-      <h2 className="mb-4 text-lg font-semibold text-app-text">Quick Actions</h2>
+      <h2 className="mb-4 text-lg font-semibold text-app-text">
+        <InfoLabel label="Quick Actions" tooltipKey="quickActions" />
+      </h2>
       <div className="grid gap-4 sm:grid-cols-2">
         {quickLinks.map(({ href, label, icon: Icon, desc }) => (
           <Link key={href} href={href}>
@@ -78,7 +87,9 @@ export default function AdminOverview() {
                 <Icon className="h-5 w-5 text-app-accent" />
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-app-text">{label}</p>
+                <p className="font-semibold text-app-text">
+                  <InfoLabel label={label} tooltip={desc} />
+                </p>
                 <p className="text-sm text-app-muted">{desc}</p>
               </div>
               <ArrowUpRight className="h-4 w-4 text-app-muted" />

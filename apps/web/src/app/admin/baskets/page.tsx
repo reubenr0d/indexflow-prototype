@@ -12,6 +12,8 @@ import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
+import { InfoLabel } from "@/components/ui/info-tooltip";
+import { AdminBasketsHeaderRow } from "@/components/baskets/admin-baskets-header";
 import { Plus, X } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
@@ -94,19 +96,12 @@ export default function AdminBasketsPage() {
       ) : (
         <Card>
           <div className="divide-y divide-app-border">
-            <div className="flex items-center gap-4 px-6 py-3 text-xs font-medium uppercase tracking-wider text-app-muted">
-              <span className="flex-1">Name</span>
-              <span className="w-24 text-right">TVL</span>
-              <span className="w-16 text-right">Assets</span>
-              <span className="w-24 text-right">Perp</span>
-              <span className="w-20 text-right">Blend</span>
-              <span className="w-20 text-right">Address</span>
-            </div>
+            <AdminBasketsHeaderRow />
             {infos.map((info) => (
               <Link key={info.vault} href={`/admin/baskets/${info.vault}`}>
                 <div className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-app-surface-hover">
                   <span className="flex-1 font-medium text-app-text">
-                    {info.name || "Basket"}
+                    <InfoLabel label={info.name || "Basket"} tooltipKey="tableName" />
                   </span>
                   <span className="w-24 text-right text-sm text-app-muted">
                     {formatUSDC((info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n))}
@@ -175,7 +170,9 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <Card className="p-6">
-      <h2 className="mb-6 text-lg font-semibold text-app-text">Create New Basket</h2>
+      <h2 className="mb-6 text-lg font-semibold text-app-text">
+        <InfoLabel label="Create New Basket" tooltipKey="createNewBasket" />
+      </h2>
 
       <div className="mb-6">
         <label className="mb-2 block text-sm font-medium text-app-muted">Basket Name</label>

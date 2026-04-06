@@ -4,6 +4,7 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { StatCard } from "@/components/ui/stat-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
@@ -96,22 +97,27 @@ export default function DashboardPage() {
           label="Active baskets"
           value={String(infos.length)}
           isLoading={isLoading}
+          tooltipKey="activeBaskets"
         />
         <StatCard
           label="Vaults tracked"
           value={String(infos.length)}
           subValue="Factory index"
           isLoading={isLoading}
+          tooltipKey="vaultsTracked"
         />
         <StatCard
           label="Aggregate TVL"
           value={formatCompact(Number(totalTVL / USDC_PRECISION))}
           isLoading={isLoading}
+          tooltipKey="aggregateTvl"
         />
       </div>
 
       <div className="mb-4 flex items-end justify-between gap-4">
-        <h2 className="text-lg font-semibold text-app-text">Largest baskets</h2>
+        <h2 className="text-lg font-semibold text-app-text">
+          <InfoLabel label="Largest baskets" tooltipKey="largestBaskets" />
+        </h2>
         <Link
           href="/baskets"
           className="inline-flex items-center gap-1 font-mono text-sm font-medium text-app-accent hover:underline"
@@ -142,7 +148,9 @@ export default function DashboardPage() {
                 ).perpBlendBps;
                 return (
               <Card className="h-full p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
-                <p className="text-sm font-medium text-app-muted">{info.name || "Basket"}</p>
+                <p className="text-sm font-medium text-app-muted">
+                  <InfoLabel label={info.name || "Basket"} tooltipKey="tableName" />
+                </p>
                 <p className="mt-2 font-mono text-xl font-semibold text-app-text">
                   {formatUSDC((info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n))}
                 </p>

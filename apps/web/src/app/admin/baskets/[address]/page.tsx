@@ -1,12 +1,13 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { use, useState, useEffect, useMemo } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
 import { useBasketDetailQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import {
@@ -22,16 +23,18 @@ import {
   useTopUpReserve,
   useUSDCAllowance,
   useApproveUSDC,
+  useBasketAssets,
 } from "@/hooks/useBasketVault";
 import { useOracleAssetMetaMap, useSupportedOracleAssets } from "@/hooks/useOracle";
-import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId } from "wagmi";
-import { BasketVaultABI } from "@/abi/contracts";
-import { formatUSDC, formatBps, formatAssetId, formatAddress } from "@/lib/format";
+import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId, useReadContracts } from "wagmi";
+import { BasketVaultABI, OracleAdapterABI } from "@/abi/contracts";
+import { formatUSDC, formatBps, formatAssetId, formatAddress, formatPrice, formatRelativeTime } from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
 import { type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
 import { getContracts } from "@/config/contracts";
+import { REFETCH_INTERVAL } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import {
@@ -60,9 +63,14 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
   const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
   const { data: collectedFees } = useCollectedFees(vault);
+  const {
+    data: onchainBasketAssets,
+    isLoading: isOnchainAssetsLoading,
+    isFetching: isOnchainAssetsFetching,
+  } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const chainId = useChainId();
-  const { usdc } = getContracts(chainId);
+  const { usdc, oracleAdapter } = getContracts(chainId);
 
   const basketInfo = info as {
     name: string;
@@ -88,7 +96,55 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const reserveHealthy = idleUsdc >= requiredReserve;
 
   const basketDetail = useBasketDetailQuery(vault, 1, 0);
+  const subgraphConfiguredAssetIds = (basketDetail.data?.basket?.assets ?? [])
+    .filter((asset) => asset.active)
+    .map((asset) => asset.assetId);
   const exposures = (basketDetail.data?.basket?.exposures ?? []) as PerpExposureAsset[];
+  const onchainConfiguredAssetIds = useMemo(
+    () =>
+      (onchainBasketAssets ?? [])
+        .map((entry) => entry.result as `0x${string}` | undefined)
+        .filter((id): id is `0x${string}` => Boolean(id)),
+    [onchainBasketAssets]
+  );
+  const configuredAssetIds = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          (onchainConfiguredAssetIds.length > 0 ? onchainConfiguredAssetIds : subgraphConfiguredAssetIds).map((id) =>
+            id.toLowerCase()
+          )
+        )
+      ) as `0x${string}`[],
+    [onchainConfiguredAssetIds, subgraphConfiguredAssetIds]
+  );
+  const isConfiguredAssetsLoading =
+    (isOnchainAssetsLoading || isOnchainAssetsFetching) &&
+    onchainConfiguredAssetIds.length === 0 &&
+    subgraphConfiguredAssetIds.length === 0;
+  const { data: configuredAssetPriceRows } = useReadContracts({
+    contracts: configuredAssetIds.map((assetId) => ({
+      address: oracleAdapter,
+      abi: OracleAdapterABI,
+      functionName: "getPrice" as const,
+      args: [assetId] as const,
+    })),
+    query: {
+      enabled: configuredAssetIds.length > 0,
+      refetchInterval: REFETCH_INTERVAL,
+    },
+  });
+  const configuredAssetPriceById = useMemo(() => {
+    const m = new Map<`0x${string}`, { price: bigint; timestamp: bigint }>();
+    configuredAssetIds.forEach((assetId, i) => {
+      const row = configuredAssetPriceRows?.[i]?.result as [bigint, bigint] | undefined;
+      m.set(assetId, {
+        price: row?.[0] ?? 0n,
+        timestamp: row?.[1] ?? 0n,
+      });
+    });
+    return m;
+  }, [configuredAssetIds, configuredAssetPriceRows]);
 
   const blended = computeBlendedComposition(
     basketInfo?.usdcBalance ?? 0n,
@@ -96,6 +152,18 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     state?.openInterest ?? 0n,
     exposures
   );
+  const hasListedAssets = configuredAssetIds.length > 0;
+  const hasExposureRows = exposures.length > 0;
+  const hasNonZeroAllocation = blended.assetBlend.some((asset) => asset.blendBps > 0n);
+  const hasPerpActivitySignal =
+    (state?.openInterest ?? 0n) > 0n ||
+    (basketInfo?.perpAllocated ?? 0n) > 0n ||
+    hasExposureRows;
+  const showAllocatedComposition = hasExposureRows && hasNonZeroAllocation;
+  const showAssetsAddedNoPerpActivity = hasListedAssets && !hasPerpActivitySignal;
+  const showNoAssetsAllocatedYet =
+    hasListedAssets && !showAllocatedComposition && !showAssetsAddedNoPerpActivity;
+  const showNoAssetsListedYet = !hasListedAssets && !isConfiguredAssetsLoading;
 
   return (
     <PageWrapper>
@@ -107,17 +175,17 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       </div>
 
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="TVL" value={formatUSDC(tvl)} />
-        <StatCard label="Perp Allocated" value={formatUSDC(basketInfo?.perpAllocated ?? 0n)} />
-        <StatCard label="Deposit Fee" value={depositFee !== undefined ? formatBps(depositFee) : "--"} />
-        <StatCard label="Redeem Fee" value={redeemFee !== undefined ? formatBps(redeemFee) : "--"} />
+        <StatCard label="TVL" value={formatUSDC(tvl)} tooltipKey="tvl" />
+        <StatCard label="Perp Allocated" value={formatUSDC(basketInfo?.perpAllocated ?? 0n)} tooltipKey="perpAllocated" />
+        <StatCard label="Deposit Fee" value={depositFee !== undefined ? formatBps(depositFee) : "--"} tooltipKey="depositFee" />
+        <StatCard label="Redeem Fee" value={redeemFee !== undefined ? formatBps(redeemFee) : "--"} tooltipKey="redeemFee" />
       </div>
 
       <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Reserve Target" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} />
-        <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} />
-        <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} />
-        <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} />
+        <StatCard label="Reserve Target" value={formatBps((minReserveBps as bigint | undefined) ?? 0n)} tooltipKey="reserveTarget" />
+        <StatCard label="Required Reserve" value={formatUSDC(requiredReserve)} tooltipKey="requiredReserve" />
+        <StatCard label="Idle USDC (ex fees)" value={formatUSDC(idleUsdc > 0n ? idleUsdc : 0n)} tooltipKey="idleUsdcExFees" />
+        <StatCard label="Available For Perp" value={formatUSDC(availableForPerp)} tooltipKey="availableForPerp" />
       </div>
       <p className={`mb-8 text-sm font-medium ${reserveHealthy ? "text-app-success" : "text-app-danger"}`}>
         Reserve Health: {reserveHealthy ? "Healthy" : "Below Target"}
@@ -125,19 +193,22 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
 
       {state?.registered && (
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard label="Deposited Capital" value={formatUSDC(state.depositedCapital)} />
+          <StatCard label="Deposited Capital" value={formatUSDC(state.depositedCapital)} tooltipKey="depositedCapital" />
           <StatCard
             label="Realised PnL"
             value={formatUSDC(state.realisedPnL)}
+            tooltipKey="realisedPnl"
           />
-          <StatCard label="Open Interest" value={formatUSDC(state.openInterest)} />
-          <StatCard label="Positions" value={String(state.positionCount)} />
+          <StatCard label="Open Interest" value={formatUSDC(state.openInterest)} tooltipKey="openInterest" />
+          <StatCard label="Positions" value={String(state.positionCount)} tooltipKey="positions" />
         </div>
       )}
 
-      {exposures.length > 0 ? (
+      {showAllocatedComposition ? (
         <div className="mb-8">
-          <h2 className="mb-4 text-lg font-semibold text-app-text">Perp-Driven Composition</h2>
+          <h2 className="mb-4 text-lg font-semibold text-app-text">
+            <InfoLabel label="Perp-Driven Composition" tooltipKey="perpDrivenComposition" />
+          </h2>
           <Card>
             <div className="divide-y divide-app-border">
               {blended.assetBlend.map((a) => {
@@ -163,7 +234,9 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
               })}
               <div className="flex items-center justify-between px-6 py-4">
                 <div>
-                  <p className="font-medium text-app-text">Perp Exposure</p>
+                  <p className="font-medium text-app-text">
+                    <InfoLabel label="Perp Exposure" tooltipKey="perpExposure" />
+                  </p>
                   <p className="text-xs text-app-muted">Open interest sleeve</p>
                 </div>
                 <span className="text-sm text-app-text">{formatBps(blended.perpBlendBps)}</span>
@@ -171,12 +244,87 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
             </div>
           </Card>
         </div>
+      ) : showAssetsAddedNoPerpActivity ? (
+        <div className="mb-8">
+          <Card className="p-6">
+            <p className="font-medium text-app-text">Assets added, no perp activity yet</p>
+            <p className="mt-1 text-sm text-app-muted">
+              This basket already has configured assets. Perp activity has not started yet.
+            </p>
+            <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
+              {configuredAssetIds.map((assetId) => {
+                const meta = assetMeta.get(assetId);
+                const priceRow = configuredAssetPriceById.get(assetId);
+                const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                return (
+                  <div key={assetId} className="flex items-center justify-between px-4 py-3">
+                    <div>
+                      <p className="font-medium text-app-text">
+                        {meta?.name ?? formatAssetId(assetId)}
+                      </p>
+                      <p className="font-mono text-xs text-app-muted">
+                        {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                      </p>
+                      <p className="text-xs text-app-muted">
+                        Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                        {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                      </p>
+                    </div>
+                    <p className="text-sm text-app-text">{formatBps(0n)}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        </div>
+      ) : showNoAssetsAllocatedYet ? (
+        <div className="mb-8">
+          <Card className="p-6">
+            <p className="font-medium text-app-text">No assets allocated yet</p>
+            <p className="mt-1 text-sm text-app-muted">
+              Assets are configured, but current composition allocation is {formatBps(0n)}.
+            </p>
+            <div className="mt-4 divide-y divide-app-border rounded-lg border border-app-border">
+              {configuredAssetIds.map((assetId) => {
+                const meta = assetMeta.get(assetId);
+                const priceRow = configuredAssetPriceById.get(assetId);
+                const updatedTs = Number(priceRow?.timestamp ?? 0n);
+                return (
+                  <div key={assetId} className="flex items-center justify-between px-4 py-3">
+                    <div>
+                      <p className="font-medium text-app-text">
+                        {meta?.name ?? formatAssetId(assetId)}
+                      </p>
+                      <p className="font-mono text-xs text-app-muted">
+                        {meta?.address ? formatAddress(meta.address) : formatAssetId(assetId)}
+                      </p>
+                      <p className="text-xs text-app-muted">
+                        Price: {formatPrice(priceRow?.price ?? 0n)} · Updated:{" "}
+                        {updatedTs > 0 ? formatRelativeTime(updatedTs) : "--"}
+                      </p>
+                    </div>
+                    <p className="text-sm text-app-text">{formatBps(0n)}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </Card>
+        </div>
+      ) : showNoAssetsListedYet ? (
+        <div className="mb-8">
+          <Card className="p-6">
+            <p className="font-medium text-app-text">No assets listed yet</p>
+            <p className="mt-1 text-sm text-app-muted">
+              Add assets to this basket to enable per-asset composition tracking.
+            </p>
+          </Card>
+        </div>
       ) : (
         <div className="mb-8">
           <Card className="p-6">
-            <p className="font-medium text-app-text">Composition pending perp activity</p>
+            <p className="font-medium text-app-text">Loading latest asset configuration...</p>
             <p className="mt-1 text-sm text-app-muted">
-              Per-asset composition appears after positions are opened and indexed.
+              Syncing onchain basket assets before determining composition state.
             </p>
           </Card>
         </div>
@@ -184,7 +332,11 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
 
       <div className="grid gap-6 lg:grid-cols-3">
         <SetAssetsCard vault={vault} />
-        <PerpAllocationCard vault={vault} currentAllocation={basketInfo?.perpAllocated ?? 0n} />
+        <PerpAllocationCard
+          vault={vault}
+          currentAllocation={basketInfo?.perpAllocated ?? 0n}
+          availableToDeposit={availableForPerp}
+        />
         <MaxPerpAllocationCard vault={vault} />
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -295,7 +447,9 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-app-text">Perp Position Management</h3>
+      <h3 className="mb-4 text-base font-semibold text-app-text">
+        <InfoLabel label="Perp Position Management" tooltipKey="perpPositionManagement" />
+      </h3>
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-lg border border-app-border p-4">
           <p className="mb-3 text-sm font-semibold text-app-text">Open Position</p>
@@ -466,7 +620,9 @@ function SetAssetsCard({ vault }: { vault: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-app-text">Set Assets</h3>
+      <h3 className="mb-4 text-base font-semibold text-app-text">
+        <InfoLabel label="Set Assets" tooltipKey="setAssets" />
+      </h3>
       {rows.map((row, i) => (
         <div key={i} className="mb-2 flex gap-2">
           <datalist id={`set-assets-${i}`}>
@@ -551,7 +707,15 @@ function SetAssetsCard({ vault }: { vault: Address }) {
   );
 }
 
-function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; currentAllocation: bigint }) {
+function PerpAllocationCard({
+  vault,
+  currentAllocation,
+  availableToDeposit,
+}: {
+  vault: Address;
+  currentAllocation: bigint;
+  availableToDeposit: bigint;
+}) {
   const [amount, setAmount] = useState("");
   const refreshAfterTx = usePostTxRefresh();
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
@@ -574,8 +738,11 @@ function PerpAllocationCard({ vault, currentAllocation }: { vault: Address; curr
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-app-text">Perp Allocation</h3>
-      <p className="mb-4 text-sm text-app-muted">Current: {formatUSDC(currentAllocation)}</p>
+      <h3 className="mb-4 text-base font-semibold text-app-text">
+        <InfoLabel label="Perp Allocation" tooltipKey="perpAllocation" />
+      </h3>
+      <p className="text-sm text-app-muted">Current: {formatUSDC(currentAllocation)}</p>
+      <p className="mb-4 text-sm text-app-muted">Available to Deposit: {formatUSDC(availableToDeposit)}</p>
       <Input
         type="number"
         placeholder="USDC amount"
@@ -645,7 +812,7 @@ function MaxPerpAllocationCard({ vault }: { vault: Address }) {
   return (
     <Card className="p-6">
       <h3 className="mb-2 text-base font-semibold text-app-text">
-        Max Perp Allocation
+        <InfoLabel label="Max Perp Allocation" tooltipKey="maxPerpAllocation" />
       </h3>
       <p className="mb-4 text-sm text-app-muted">
         Current:{" "}
@@ -710,7 +877,9 @@ function FeeCollectionCard({ vault }: { vault: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-4 text-base font-semibold text-app-text">Collect Fees</h3>
+      <h3 className="mb-4 text-base font-semibold text-app-text">
+        <InfoLabel label="Collect Fees" tooltipKey="collectFees" />
+      </h3>
       <Input
         placeholder="Recipient address"
         value={recipient}
@@ -757,7 +926,9 @@ function ReservePolicyCard({ vault }: { vault: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-2 text-base font-semibold text-app-text">Reserve Policy</h3>
+      <h3 className="mb-2 text-base font-semibold text-app-text">
+        <InfoLabel label="Reserve Policy" tooltipKey="reservePolicy" />
+      </h3>
       <p className="mb-4 text-sm text-app-muted">
         Current target: {formatBps((currentBps as bigint | undefined) ?? 0n)}
       </p>
@@ -836,7 +1007,9 @@ function ReserveTopUpCard({ vault, usdc }: { vault: Address; usdc: Address }) {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-2 text-base font-semibold text-app-text">Top Up Reserve</h3>
+      <h3 className="mb-2 text-base font-semibold text-app-text">
+        <InfoLabel label="Top Up Reserve" tooltipKey="topUpReserve" />
+      </h3>
       <p className="mb-4 text-sm text-app-muted">
         Transfer USDC into the vault without minting shares.
       </p>

@@ -3,6 +3,7 @@
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { useReadContract, useChainId } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
@@ -131,7 +132,10 @@ function OracleAssetCard({
           <div className="flex items-center gap-2">
             <StatusDot status={status} className="h-2.5 w-2.5" />
             <h3 className="font-semibold text-app-text">
-              {assetLabels.get(id) ?? formatAssetId(id)}
+              <InfoLabel
+                label={assetLabels.get(id) ?? formatAssetId(id)}
+                tooltip="Oracle asset currently monitored for freshness and price health."
+              />
             </h3>
           </div>
           <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-app-muted">

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { motion } from "framer-motion";
 import { formatUSDC, formatBps } from "@/lib/format";
 import { type Address } from "viem";
@@ -43,7 +44,9 @@ export function BasketCard({
       <Link href={`/baskets/${vault}`}>
         <Card className="group h-full p-5 transition-colors hover:border-app-border-strong hover:bg-app-surface-hover">
           <div className="mb-3 flex items-start justify-between gap-2">
-            <h3 className="text-sm font-semibold text-app-text">{name || "Basket"}</h3>
+            <h3 className="text-sm font-semibold text-app-text">
+              <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
+            </h3>
             {depositFee !== undefined && (
               <span className="shrink-0 rounded-md bg-app-accent-dim px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide text-app-accent">
                 {formatBps(depositFee)} fee

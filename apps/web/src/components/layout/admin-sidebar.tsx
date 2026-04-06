@@ -10,6 +10,7 @@ import {
   Activity,
   ShieldAlert,
   Gauge,
+  BookOpenText,
 } from "lucide-react";
 
 const adminNav = [
@@ -19,6 +20,7 @@ const adminNav = [
   { href: "/admin/funding", label: "Funding", icon: Gauge },
   { href: "/admin/oracle", label: "Oracle", icon: Radio },
   { href: "/admin/pool", label: "Pool", icon: Activity },
+  { href: "/docs", label: "Docs", icon: BookOpenText },
 ];
 
 export function AdminSidebar() {

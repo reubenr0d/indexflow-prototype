@@ -17,22 +17,24 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 
 ### 1) Basket setup and wiring
 
-1. `BasketFactory.createBasket(name, assetIds, weightsBps, depositFeeBps, redeemFeeBps)` (optional factory path)
+1. `BasketFactory.createBasket(name, depositFeeBps, redeemFeeBps)` (optional factory path)
    - Internal: deploys `BasketVault`.
-   - Internal: calls `basket.setAssets(...)`, `basket.setFees(...)`.
+   - Internal: calls `basket.setFees(...)`.
    - Internal: if factory `vaultAccounting` is set, calls `basket.setVaultAccounting(vaultAccounting)`.
    - Internal: transfers basket ownership to creator.
 
-2. `Basket owner -> BasketVault.setVaultAccounting(vaultAccounting)`
+2. `Basket owner -> BasketVault.setAssets(assetIds)` (explicit post-create setup)
+   - Internal: validates each asset id is active in `OracleAdapter`.
+3. `Basket owner -> BasketVault.setVaultAccounting(vaultAccounting)`
    - Internal: sets perp bridge address used by `allocateToPerp` / `withdrawFromPerp`.
 
-3. `VaultAccounting owner -> VaultAccounting.registerVault(basketVault)`
+4. `VaultAccounting owner -> VaultAccounting.registerVault(basketVault)`
    - Internal: initializes vault state (`depositedCapital`, `realisedPnL`, `openInterest`, `collateralLocked`, `positionCount`, `registered`).
 
-4. `VaultAccounting owner -> VaultAccounting.mapAssetToken(assetId, gmxIndexToken)`
+5. `VaultAccounting owner -> VaultAccounting.mapAssetToken(assetId, gmxIndexToken)`
    - Internal: sets `assetTokens[assetId]` used by `openPosition`.
 
-5. Optional risk wiring by VaultAccounting owner:
+6. Optional risk wiring by VaultAccounting owner:
    - `setMaxOpenInterest(basketVault, cap)`
    - `setMaxPositionSize(basketVault, cap)`
    - `setPaused(true/false)`
@@ -48,10 +50,9 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
    - Internal (Basket): increments `perpAllocated`.
 
 2. `Basket owner -> BasketVault.withdrawFromPerp(amount)`
-   - Internal: checks `amount <= perpAllocated`.
    - Internal: calls `VaultAccounting.withdrawCapital(basketVault, amount)`.
    - Internal (VA): checks available capital and transfers USDC back to basket.
-   - Internal (Basket): decrements `perpAllocated`.
+   - Internal (Basket): decrements `perpAllocated` up to zero (profit withdrawals can exceed principal allocation).
 
 ### 3) Position lifecycle and PnL realization
 
@@ -75,13 +76,13 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 - Investor redemptions draw from **idle USDC held in BasketVault**, minus reserved fees (`collectedFees`).
 - Capital allocated via `allocateToPerp` is **not directly withdrawable by investors**.
 - Only basket owner can move funds back from perp path (`withdrawFromPerp`) to increase redeemable on-hand liquidity.
-- Redeem pricing still uses basket oracle composition (`getBasketPrice`), not full mark-to-market perp NAV.
+- Deposit/redeem pricing is NAV-based (includes realised + unrealised perp PnL from `VaultAccounting.getVaultPnL`).
 
 ## Other basket manager functions
 
 ### BasketVault controls
 
-- `setAssets(assetIds, weightsBps)` — Set basket composition; assets must be active in oracle; weights sum to `10000`.
+- `setAssets(assetIds)` — Register basket assets; ids must be active in oracle.
 - `setFees(depositFeeBps, redeemFeeBps)` — Set mint/redeem fees (max 500 bps each).
 - `setOracleAdapter(oracleAdapter)` — Repoint basket pricing source.
 - `setVaultAccounting(vaultAccounting)` — Wire perp bridge target.
@@ -97,7 +98,7 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 
 - `setVaultAccounting(vaultAccounting)` — Default VA for newly created baskets.
 - `setOracleAdapter(oracleAdapter)` — Default oracle adapter for newly created baskets.
-- `createBasket(...)` — Deploy/configure basket, optional VA wiring, transfer ownership to creator.
+- `createBasket(name, depositFeeBps, redeemFeeBps)` — Deploy/configure basket, optional VA wiring, transfer ownership to creator.
 
 ## Global pool operator controls (GMX vault)
 
@@ -110,6 +111,5 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW
 
 - `VaultAccounting.withdrawCapital` checks available capital with:
   `available = depositedCapital + realisedPnL - collateralLocked` (floored at zero).
-- `withdrawCapital` then debits `depositedCapital` directly (`uint256`) when sending funds out.
-  This is an implementation detail to be aware of when realised PnL is positive, because accounting availability and debit semantics are not identical concepts.
+- Withdrawals debit principal first (`depositedCapital`), then debit realised gains (`realisedPnL`) when withdrawal exceeds principal.
 - `deregisterVault` requires zero open interest.

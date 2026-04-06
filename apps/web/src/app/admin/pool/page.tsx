@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { UtilizationRing } from "@/components/ui/utilization-ring";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
@@ -266,26 +267,36 @@ export default function AdminPoolPage() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Pool Amount" value={pool ? formatUSDC(pool.poolAmount) : "--"} isLoading={isLoading} />
+        <StatCard
+          label="Pool Amount"
+          value={pool ? formatUSDC(pool.poolAmount) : "--"}
+          isLoading={isLoading}
+          tooltipKey="poolAmount"
+        />
         <StatCard
           label="Reserved Amount"
           value={pool ? formatUSDC(pool.reservedAmount) : "--"}
           isLoading={isLoading}
+          tooltipKey="reservedAmount"
         />
         <StatCard
           label="Global Short Size"
           value={pool ? formatUSDC(pool.globalShortSize) : "--"}
           isLoading={isLoading}
+          tooltipKey="globalShortSize"
         />
         <StatCard
           label="Guaranteed USD"
           value={pool ? formatUSDC(pool.guaranteedUsd) : "--"}
           isLoading={isLoading}
+          tooltipKey="guaranteedUsd"
         />
       </div>
 
       <div className="mt-10">
-        <h2 className="mb-4 text-lg font-semibold text-app-text">Pool Details</h2>
+        <h2 className="mb-4 text-lg font-semibold text-app-text">
+          <InfoLabel label="Pool Details" tooltipKey="poolDetails" />
+        </h2>
         <Card className="p-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -310,7 +321,9 @@ export default function AdminPoolPage() {
       </div>
 
       <div className="mt-10">
-        <h2 className="mb-2 text-lg font-semibold text-app-text">Pool Controls</h2>
+        <h2 className="mb-2 text-lg font-semibold text-app-text">
+          <InfoLabel label="Pool Controls" tooltipKey="poolControls" />
+        </h2>
         <p className="mb-4 text-sm text-app-muted">
           Direct pool deposits are non-dilutive and consume wallet token balance. `Set Buffer` requires the connected
           wallet to be GMX `gov`.
@@ -446,7 +459,9 @@ function PoolTokenControlsRow({
 
       <div className="grid gap-3 lg:grid-cols-2">
         <div className="rounded-md border border-app-border p-3">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-app-muted">Set Buffer Amount</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-app-muted">
+            <InfoLabel label="Set Buffer Amount" tooltipKey="setBufferAmount" />
+          </p>
           <Input
             type="text"
             inputMode="decimal"
@@ -464,7 +479,9 @@ function PoolTokenControlsRow({
         </div>
 
         <div className="rounded-md border border-app-border p-3">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-app-muted">Direct Pool Deposit</p>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-app-muted">
+            <InfoLabel label="Direct Pool Deposit" tooltipKey="directPoolDeposit" />
+          </p>
           <Input
             type="text"
             inputMode="decimal"

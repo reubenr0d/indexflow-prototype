@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/ui/stat-card";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
 import { formatAddress } from "@/lib/format";
 import {
@@ -70,10 +71,12 @@ export default function AdminFundingPage() {
         <StatCard
           label="Owner"
           value={owner ? formatAddress(owner as string) : "--"}
+          tooltipKey="owner"
         />
         <StatCard
           label="Funding Interval (s)"
           value={fundingInterval ? String(fundingInterval) : "--"}
+          tooltipKey="fundingInterval"
         />
         <StatCard
           label="Default Factors"
@@ -82,6 +85,7 @@ export default function AdminFundingPage() {
               ? `${String(base.data)} / ${String(max.data)}`
               : "--"
           }
+          tooltipKey="defaultFactors"
         />
       </div>
 
@@ -125,7 +129,9 @@ function OwnershipCard() {
 
   return (
     <Card className="p-6">
-      <h3 className="mb-2 text-base font-semibold text-app-text">Ownership</h3>
+      <h3 className="mb-2 text-base font-semibold text-app-text">
+        <InfoLabel label="Ownership" tooltipKey="ownership" />
+      </h3>
       <p className="mb-2 text-sm text-app-muted">
         Current owner:{" "}
         <span className="font-mono text-app-text">
@@ -179,7 +185,7 @@ function KeeperManagementCard() {
   return (
     <Card className="p-6">
       <h3 className="mb-2 text-base font-semibold text-app-text">
-        Keeper Management
+        <InfoLabel label="Keeper Management" tooltipKey="keeperManagement" />
       </h3>
       <p className="mb-3 text-sm text-app-muted">
         Keeper status:{" "}
@@ -272,7 +278,7 @@ function GlobalFundingCard() {
   return (
     <Card className="p-6">
       <h3 className="mb-4 text-base font-semibold text-app-text">
-        Global Funding Settings
+        <InfoLabel label="Global Funding Settings" tooltipKey="globalFundingSettings" />
       </h3>
       <p className="mb-4 text-sm text-app-muted">
         Current interval: {fundingInterval ? String(fundingInterval) : "--"}s
@@ -357,7 +363,7 @@ function KeeperRateUpdateCard() {
   return (
     <Card className="p-6">
       <h3 className="mb-4 text-base font-semibold text-app-text">
-        Keeper Rate Update
+        <InfoLabel label="Keeper Rate Update" tooltipKey="keeperRateUpdate" />
       </h3>
       <div className="grid gap-2">
         <Input
@@ -452,7 +458,7 @@ function PerAssetFundingCard() {
   return (
     <Card className="p-6">
       <h3 className="mb-4 text-base font-semibold text-app-text">
-        Per-Asset Funding Configuration
+        <InfoLabel label="Per-Asset Funding Configuration" tooltipKey="perAssetFundingConfiguration" />
       </h3>
       <Input
         placeholder="Asset ID (e.g. GOLD or 0x... bytes32)"

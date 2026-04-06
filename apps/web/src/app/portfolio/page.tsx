@@ -4,6 +4,7 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAccount, useReadContracts } from "wagmi";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
@@ -118,7 +119,7 @@ export default function PortfolioPage() {
       </motion.div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">
-        Holdings
+        <InfoLabel label="Holdings" tooltipKey="holdings" />
       </h2>
 
       {isLoading ? (
@@ -154,7 +155,7 @@ export default function PortfolioPage() {
                 <Card className="flex items-center justify-between p-6 transition-shadow hover:shadow-md">
                   <div>
                     <p className="font-semibold text-app-text">
-                      {h.name || "Basket"}
+                      <InfoLabel label={h.name || "Basket"} tooltipKey="tableName" />
                     </p>
                     <p className="mt-0.5 text-sm text-app-muted">
                       {formatShares(h.balance)} shares
