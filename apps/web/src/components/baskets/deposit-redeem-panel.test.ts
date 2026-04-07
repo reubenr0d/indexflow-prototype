@@ -49,7 +49,7 @@ vi.mock("@/config/contracts", () => ({
 }));
 
 describe("DepositRedeemPanel", () => {
-  it("renders quote section without inline transaction rail", () => {
+  it("renders icon tabs with the quote section and no inline transaction rail", () => {
     const html = renderToStaticMarkup(
       createElement(DepositRedeemPanel, {
         vault: "0x0000000000000000000000000000000000000002",
@@ -60,7 +60,8 @@ describe("DepositRedeemPanel", () => {
       })
     );
 
-    expect(html).toContain("Quote preview");
+    expect(html).toContain(">Deposit<");
+    expect(html).toContain(">Redeem<");
     expect(html).toContain("You receive");
     expect(html).toContain("Fee");
     expect(html).not.toContain("Transaction status");

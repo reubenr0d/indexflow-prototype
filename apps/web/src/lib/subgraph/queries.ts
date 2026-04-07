@@ -226,3 +226,23 @@ export const GET_ADMIN_VAULT_STATES = gql`
     }
   }
 `;
+
+export const GET_ORACLE_PRICE_UPDATES = gql`
+  query GetOraclePriceUpdates($assetId: Bytes!, $minTimestamp: BigInt!, $first: Int!) {
+    oraclePriceUpdates(
+      where: { assetId: $assetId, priceTimestamp_gte: $minTimestamp }
+      first: $first
+      orderBy: priceTimestamp
+      orderDirection: desc
+    ) {
+      id
+      assetId
+      price
+      priceTimestamp
+      blockNumber
+      txHash
+      logIndex
+      createdAt
+    }
+  }
+`;

@@ -1,5 +1,6 @@
 import { Address, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import {
+  AssetTokenMapped,
   CapitalDeposited,
   CapitalWithdrawn,
   MaxOpenInterestSet,
@@ -21,6 +22,7 @@ import {
   refreshBasketFromChain,
   ZERO,
 } from "./helpers";
+import { AssetTokenMapUpdate } from "../../generated/schema";
 
 function syncVaultState(vault: Address, contractAddress: Address, event: ethereum.Event): void {
   const basket = refreshBasketFromChain(vault, event);
@@ -81,6 +83,18 @@ export function handleVaultDeregistered(event: VaultDeregistered): void {
   const basket = getOrCreateBasket(event.params.vault, event);
   const activity = createActivity(event, basket, "vaultDeregistered");
   activity.save();
+}
+
+export function handleAssetTokenMapped(event: AssetTokenMapped): void {
+  const updateId = event.transaction.hash.toHexString().concat("-").concat(event.logIndex.toString());
+  const update = new AssetTokenMapUpdate(updateId);
+  update.assetId = event.params.assetId;
+  update.token = event.params.token;
+  update.blockNumber = event.block.number;
+  update.txHash = event.transaction.hash;
+  update.logIndex = event.logIndex;
+  update.createdAt = event.block.timestamp;
+  update.save();
 }
 
 export function handleCapitalDeposited(event: CapitalDeposited): void {

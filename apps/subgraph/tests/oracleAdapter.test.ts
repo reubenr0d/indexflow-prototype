@@ -33,6 +33,8 @@ function createPriceUpdated(assetId: Bytes, price: BigInt, timestamp: BigInt): P
   mock.parameters.push(new ethereum.EventParam("assetId", ethereum.Value.fromFixedBytes(assetId)));
   mock.parameters.push(new ethereum.EventParam("price", ethereum.Value.fromUnsignedBigInt(price)));
   mock.parameters.push(new ethereum.EventParam("timestamp", ethereum.Value.fromUnsignedBigInt(timestamp)));
+  mock.transaction.hash = Bytes.fromHexString("0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  mock.logIndex = BigInt.fromI32(3);
   return mock;
 }
 
@@ -57,5 +59,15 @@ describe("OracleAdapter mappings", () => {
     assert.fieldEquals("AssetMeta", id, "active", "false");
     assert.fieldEquals("AssetMeta", id, "latestPrice", "123450000");
     assert.fieldEquals("AssetMeta", id, "latestPriceTimestamp", "1710000000");
+  });
+
+  test("persists immutable OraclePriceUpdate rows", () => {
+    const id = "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-3";
+    assert.entityCount("OraclePriceUpdate", 1);
+    assert.fieldEquals("OraclePriceUpdate", id, "assetId", "0x1111111111111111111111111111111111111111111111111111111111111111");
+    assert.fieldEquals("OraclePriceUpdate", id, "price", "123450000");
+    assert.fieldEquals("OraclePriceUpdate", id, "priceTimestamp", "1710000000");
+    assert.fieldEquals("OraclePriceUpdate", id, "txHash", "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    assert.fieldEquals("OraclePriceUpdate", id, "logIndex", "3");
   });
 });

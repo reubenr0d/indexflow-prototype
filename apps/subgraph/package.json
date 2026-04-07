@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "generate:manifest": "node ./scripts/generate-manifest.js",
+    "sync:networks": "node ./scripts/sync-networks.js",
+    "generate:manifest": "npm run sync:networks && node ./scripts/generate-manifest.js",
     "codegen": "npm run generate:manifest && graph codegen",
     "build": "npm run generate:manifest && graph build",
     "test": "npm run generate:manifest && graph test",

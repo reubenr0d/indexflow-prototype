@@ -182,7 +182,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
     reference: [
       "Important functions: deposit, redeem, getBasketPrice, getSharePrice, and topUpReserve.",
       "Important concepts: idle USDC, capital allocated to perps, and fees held back by the vault.",
-      "Helpful reads: PerpReader and indexed history views for activity and exposure.",
+      "Helpful reads: PerpReader and indexed history views for activity and exposure (with RPC fallback when subgraph data is unavailable).",
     ],
     permissions: [
       "Investors can deposit and redeem.",
@@ -197,7 +197,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
           "Approve USDC to BasketVault.",
           "Call deposit; shares mint after fee logic.",
           "Call redeem to burn shares for USDC output based on vault pricing logic.",
-          "The basket UI now shows a quote preview, explicit action icons, and an inline transaction rail so the user sees approval, submit, and confirmation states in one place.",
+          "The basket UI keeps a stable quote area and uses icon tabs for Deposit/Redeem mode switching.",
           "In the basket UI, switching between Deposit and Redeem clears the typed amount to avoid accidental cross-mode submits.",
           "If liquidity is tight, owner must withdraw perp capital or reserve must be topped up.",
         ],
@@ -616,6 +616,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "Set up supported assets, keeper roles, and token mappings first, then test the full price-update loop.",
       "For Chainlink-backed assets, the main job is making sure sync runs often enough.",
       "For relayer-backed assets, the process is two-step: write the fresh price, then push it into the GMX feed.",
+      "Use `/prices` for live asset status and `/prices/[assetId]` to inspect per-asset update history and trend shape before escalating incidents.",
     ],
     reference: [
       "OracleAdapter owner functions control feed setup, asset status, and keeper access.",
@@ -816,7 +817,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
     ],
     reference: [
       "Typical failure clusters: auth, liquidity, feed sync, mapping, and pause state.",
-      "Primary operational surfaces: /admin/baskets, /admin/oracle, /admin/pool, /prices.",
+      "Primary operational surfaces: /admin/baskets, /admin/oracle, /admin/pool, /prices, /prices/[assetId].",
       "Canonical command flows: deploy scripts, sync scripts, and funding updates in README.",
     ],
     permissions: [

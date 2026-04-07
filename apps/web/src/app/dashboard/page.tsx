@@ -8,6 +8,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { formatUSDC, formatCompact, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { USDC_PRECISION } from "@/lib/constants";
@@ -17,14 +18,14 @@ import { type Address } from "viem";
 
 export default function DashboardPage() {
   const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
+  const subgraphConfigured = Boolean(getSubgraphUrl());
 
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
-  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
   const rpcInfos = ((basketInfos as unknown as Array<{
     vault: Address;
     name: string;
@@ -36,12 +37,13 @@ export default function DashboardPage() {
   }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
   const rpcIsLoading = basketsLoading || infosLoading;
-  const isLoading = hasRpcData ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
+  const shouldUseRpcFallback =
+    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+  const isLoading = shouldUseRpcFallback ? rpcIsLoading : subgraph.isLoading;
 
-  const infos = hasRpcData
+  const infos = shouldUseRpcFallback
     ? rpcInfos
-    : hasSubgraphData
-      ? subgraphData.map((item) => ({
+    : subgraphData.map((item) => ({
         vault: item.vault,
         name: item.name,
         basketPrice: item.basketPrice,
@@ -49,8 +51,7 @@ export default function DashboardPage() {
         totalSupply: item.totalSupply,
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
-      }))
-      : [];
+      }));
 
   const openInterestByVault = new Map(
     ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [

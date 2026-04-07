@@ -15,40 +15,39 @@ import {
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { formatCompact } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { type Address } from "viem";
 
 export default function HomePage() {
   const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
+  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
   const { data: vaultStates, isLoading: vaultStatesLoading } = useVaultStateBatch(vaultAddresses);
 
-  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
-  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
   const rpcInfos = ((basketInfos as unknown as Array<{
     vault: Address;
     usdcBalance: bigint;
     perpAllocated: bigint;
   }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
-  const isLoading = hasRpcData
+  const shouldUseRpcFallback =
+    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+  const isLoading = shouldUseRpcFallback
     ? basketsLoading || infosLoading || vaultStatesLoading
-    : hasSubgraphData
-      ? subgraph.isLoading
-      : basketsLoading || infosLoading || vaultStatesLoading;
+    : subgraph.isLoading || vaultStatesLoading;
 
-  const infos = hasRpcData
+  const infos = shouldUseRpcFallback
     ? rpcInfos
-    : hasSubgraphData
-      ? subgraphData.map((item) => ({
+    : subgraphData.map((item) => ({
         vault: item.vault,
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
-      }))
-      : [];
+      }));
 
   const totalTVL = infos.reduce(
     (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),

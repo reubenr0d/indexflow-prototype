@@ -152,6 +152,27 @@ type AssetMeta @entity(immutable: false) {
   updatedBlock: BigInt!
 }
 
+type OraclePriceUpdate @entity(immutable: true) {
+  id: ID!
+  assetId: Bytes!
+  price: BigInt!
+  priceTimestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type AssetTokenMapUpdate @entity(immutable: true) {
+  id: ID!
+  assetId: Bytes!
+  token: Bytes!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
 type ProtocolState @entity(immutable: false) {
   id: ID!
   paused: Boolean!

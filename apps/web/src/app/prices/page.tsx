@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,8 +21,9 @@ import {
 import { usePoolLiquidityUsd1e30, usePricingExecutionQuoteBothSides } from "@/hooks/usePricingQuote";
 import { formatPrice, formatRelativeTime, formatAssetId, formatBps, parseUSDCInput } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
+import { toAssetPricePath } from "@/lib/prices-routes";
 import { motion } from "framer-motion";
-import { Search, Radio } from "lucide-react";
+import { Search, Radio, ChevronRight } from "lucide-react";
 
 export default function PricesPage() {
   const [search, setSearch] = useState("");
@@ -167,44 +169,53 @@ function AssetPriceRow({
   const sourceLabel = getOracleSourceLabel(feedType);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="flex items-center justify-between px-6 py-4"
+    <Link
+      href={toAssetPricePath(id)}
+      className="block focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-app-accent/40"
     >
-      <div className="flex items-center gap-3">
-        <StatusDot status={status} />
-        <div className="flex items-center gap-2">
-          <span className="font-medium text-app-text">{name}</span>
-          <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 text-[10px] font-semibold tracking-wide text-app-muted">
-            {sourceLabel}
-          </span>
-        </div>
-      </div>
-      <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
-        <span className="text-xs text-app-muted">
-          {timestamp > 0 ? formatRelativeTime(timestamp) : "--"}
-        </span>
-        <div className="text-right">
-          <span className="block font-mono text-sm font-medium text-app-text">{formatPrice(price)}</span>
-          {notionalUsdcAtoms > 0n && (
-            <span className="mt-0.5 block max-w-[14rem] text-right text-[10px] leading-tight text-app-muted sm:max-w-xs">
-              {pe.isStale ? (
-                "Stale — no model quote"
-              ) : pe.isLoading ? (
-                "Model quote…"
-              ) : pe.error || !pe.canQuery ? (
-                "Model quote n/a"
-              ) : pe.execLong !== undefined && pe.execShort !== undefined ? (
-                <>
-                  L {formatPrice(pe.execLong)} / S {formatPrice(pe.execShort)}
-                  {pe.impactBps !== undefined && ` · ${formatBps(pe.impactBps)} impact`}
-                </>
-              ) : null}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex items-center justify-between px-6 py-4 transition-colors hover:bg-app-bg-subtle/60"
+      >
+        <div className="flex items-center gap-3">
+          <StatusDot status={status} />
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-app-text">{name}</span>
+            <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 text-[10px] font-semibold tracking-wide text-app-muted">
+              {sourceLabel}
             </span>
-          )}
+          </div>
         </div>
-      </div>
-    </motion.div>
+
+        <div className="flex items-center gap-3">
+          <div className="flex flex-col items-end gap-1 sm:flex-row sm:items-center sm:gap-4">
+            <span className="text-xs text-app-muted">
+              {timestamp > 0 ? formatRelativeTime(timestamp) : "--"}
+            </span>
+            <div className="text-right">
+              <span className="block font-mono text-sm font-medium text-app-text">{formatPrice(price)}</span>
+              {notionalUsdcAtoms > 0n && (
+                <span className="mt-0.5 block max-w-[14rem] text-right text-[10px] leading-tight text-app-muted sm:max-w-xs">
+                  {pe.isStale ? (
+                    "Stale — no model quote"
+                  ) : pe.isLoading ? (
+                    "Model quote…"
+                  ) : pe.error || !pe.canQuery ? (
+                    "Model quote n/a"
+                  ) : pe.execLong !== undefined && pe.execShort !== undefined ? (
+                    <>
+                      L {formatPrice(pe.execLong)} / S {formatPrice(pe.execShort)}
+                      {pe.impactBps !== undefined && ` · ${formatBps(pe.impactBps)} impact`}
+                    </>
+                  ) : null}
+                </span>
+              )}
+            </div>
+          </div>
+          <ChevronRight className="h-4 w-4 text-app-muted" aria-hidden />
+        </div>
+      </motion.div>
+    </Link>
   );
 }

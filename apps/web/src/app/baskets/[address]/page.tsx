@@ -98,7 +98,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const [historySkip, setHistorySkip] = useState(0);
   const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
   const subgraphHistory = useBasketActivitiesQuery(vault, HISTORY_PAGE_SIZE, historySkip);
-  const fallbackHistory = useVaultHistoryFallback(vault, !subgraphHistory.data && !subgraphHistory.isLoading);
+  const shouldUseHistoryRpcFallback =
+    !subgraphHistory.isLoading &&
+    (subgraphHistory.isError || !subgraphHistory.data || subgraphHistory.data.length === 0);
+  const fallbackHistory = useVaultHistoryFallback(vault, shouldUseHistoryRpcFallback);
 
   const basketInfo = info as {
     vault: Address;
@@ -273,10 +276,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
           : null;
 
   const historyRows = useMemo(
-    () => (subgraphHistory.data ?? fallbackHistory.data ?? []) as BasketHistoryRow[],
+    () =>
+      ((subgraphHistory.data && subgraphHistory.data.length > 0 ? subgraphHistory.data : fallbackHistory.data) ??
+        []) as BasketHistoryRow[],
     [subgraphHistory.data, fallbackHistory.data]
   );
-  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
+  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE && !shouldUseHistoryRpcFallback;
   const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
   const recentActivityCount = historyRows.length;
   const latestActivityLabel = historyRows[0]?.timestamp ? formatRelativeTime(Number(historyRows[0].timestamp)) : "--";

@@ -7,6 +7,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { formatCompact, formatUSDC, formatBps } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
@@ -24,24 +25,24 @@ const quickLinks = [
 
 export default function AdminOverview() {
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
+  const subgraphConfigured = Boolean(getSubgraphUrl());
 
   const { data: baskets } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
-  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
   const rpcInfos = ((basketInfos as unknown as Array<{ usdcBalance: bigint; perpAllocated: bigint }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
-  const infos = hasRpcData
+  const shouldUseRpcFallback =
+    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+  const infos = shouldUseRpcFallback
     ? rpcInfos
-    : hasSubgraphData
-      ? subgraphData.map((item) => ({
+    : subgraphData.map((item) => ({
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
-      }))
-      : [];
+      }));
 
   const totalOpenInterest = ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [])
     .reduce((sum, s) => sum + (s.status === "success" ? s.result?.openInterest ?? 0n : 0n), 0n);

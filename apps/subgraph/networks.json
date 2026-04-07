@@ -1,29 +1,29 @@
 {
   "anvil": {
     "basketFactory": {
-      "address": "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf",
+      "address": "0x9d4454B023096f34B160D6B654540c56A1F81688",
       "startBlock": 0
     },
     "vaultAccounting": {
-      "address": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+      "address": "0xc3e53F4d16Ae77Db1c982e75a937B9f60FE63690",
       "startBlock": 0
     },
     "oracleAdapter": {
-      "address": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      "address": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
       "startBlock": 0
     }
   },
   "arbitrum-sepolia": {
     "basketFactory": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xeeC398ACB8B045B9e0996Ea01f2C0Ee58411034e",
       "startBlock": 0
     },
     "vaultAccounting": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xDb7e9F905a73C4d81d26d0C2550FfFa70F4258B8",
       "startBlock": 0
     },
     "oracleAdapter": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0xBeB2E04850d1E306eb52EfC69d9B6f1550F10195",
       "startBlock": 0
     }
   }

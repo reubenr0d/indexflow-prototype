@@ -18,8 +18,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
-import { InfoLabel } from "@/components/ui/info-tooltip";
-import { StatusChip } from "@/components/ui/status-chip";
 import { TrendPill } from "@/components/ui/trend-pill";
 import {
   getPanelPrimaryActionMeta,
@@ -185,22 +183,10 @@ export function DepositRedeemPanel({
 
   return (
     <Card className="sticky top-20 p-5">
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold text-app-text">
-          <InfoLabel label="Quote preview" tooltipKey="quotePreview" />
-        </h3>
-        <StatusChip
-          tone={mode === "deposit" ? "accent" : "warning"}
-          icon={mode === "deposit" ? <ArrowDownToLine className="h-3.5 w-3.5" /> : <ArrowUpToLine className="h-3.5 w-3.5" />}
-        >
-          {mode === "deposit" ? "Deposit" : "Redeem"}
-        </StatusChip>
-      </div>
-
       <SegmentedControl
         options={[
-          { value: "deposit", label: "Deposit" },
-          { value: "redeem", label: "Redeem" },
+          { value: "deposit", label: "Deposit", icon: <ArrowDownToLine className="h-4 w-4" /> },
+          { value: "redeem", label: "Redeem", icon: <ArrowUpToLine className="h-4 w-4" /> },
         ]}
         value={mode}
         onChange={handleModeChange}

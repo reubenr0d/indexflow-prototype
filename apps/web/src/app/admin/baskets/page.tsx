@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
@@ -24,13 +25,13 @@ import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 export default function AdminBasketsPage() {
   const [showCreate, setShowCreate] = useState(false);
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
+  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: rpcLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
-  const subgraphData = hasSubgraphData ? subgraph.data ?? [] : [];
+  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
   const rpcInfos = ((basketInfos as unknown as Array<{
     vault: Address;
     name: string;
@@ -39,18 +40,18 @@ export default function AdminBasketsPage() {
     assetCount: bigint;
   }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
-  const isLoading = hasRpcData ? rpcLoading : hasSubgraphData ? subgraph.isLoading : rpcLoading;
-  const infos = hasRpcData
+  const shouldUseRpcFallback =
+    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+  const isLoading = shouldUseRpcFallback ? rpcLoading : subgraph.isLoading;
+  const infos = shouldUseRpcFallback
     ? rpcInfos
-    : hasSubgraphData
-      ? subgraphData.map((item) => ({
+    : subgraphData.map((item) => ({
         vault: item.vault,
         name: item.name,
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
         assetCount: item.assetCount,
-      }))
-      : [];
+      }));
 
   const openInterestByVault = new Map(
     ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [

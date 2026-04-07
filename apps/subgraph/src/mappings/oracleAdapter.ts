@@ -4,7 +4,7 @@ import {
   AssetRemoved,
   PriceUpdated,
 } from "../../generated/OracleAdapter/OracleAdapter";
-import { AssetMeta } from "../../generated/schema";
+import { AssetMeta, OraclePriceUpdate } from "../../generated/schema";
 
 function getOrCreateAssetMeta(assetId: Bytes, blockTimestamp: BigInt, blockNumber: BigInt): AssetMeta {
   let meta = AssetMeta.load(assetId.toHexString());
@@ -45,4 +45,15 @@ export function handlePriceUpdated(event: PriceUpdated): void {
   meta.updatedAt = event.block.timestamp;
   meta.updatedBlock = event.block.number;
   meta.save();
+
+  const updateId = event.transaction.hash.toHexString().concat("-").concat(event.logIndex.toString());
+  const update = new OraclePriceUpdate(updateId);
+  update.assetId = event.params.assetId;
+  update.price = event.params.price;
+  update.priceTimestamp = event.params.timestamp;
+  update.blockNumber = event.block.number;
+  update.txHash = event.transaction.hash;
+  update.logIndex = event.logIndex;
+  update.createdAt = event.block.timestamp;
+  update.save();
 }

@@ -45,6 +45,7 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - BasketActivity
+        - AssetTokenMapUpdate
         - VaultStateCurrent
         - ProtocolState
       abis:
@@ -55,6 +56,8 @@ dataSources:
           handler: handleVaultRegistered
         - event: VaultDeregistered(indexed address)
           handler: handleVaultDeregistered
+        - event: AssetTokenMapped(indexed bytes32,indexed address)
+          handler: handleAssetTokenMapped
         - event: CapitalDeposited(indexed address,uint256)
           handler: handleCapitalDeposited
         - event: CapitalWithdrawn(indexed address,uint256)

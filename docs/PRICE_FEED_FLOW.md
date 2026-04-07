@@ -259,4 +259,12 @@ sequenceDiagram
 
 ---
 
+## 9. Web monitoring surfaces for price operations
+
+- `/prices` shows current oracle price, freshness status, and source label for each configured asset.
+- `/prices/[assetId]` shows a per-asset `PriceUpdated` history timeline and trend chart with `24H`, `7D`, and `30D` windows.
+- Use the detail page when triaging stale-feed incidents to confirm whether updates are missing entirely or simply lagging cadence.
+
+---
+
 For narrative investor-facing context, see [INVESTOR_FLOW.md](INVESTOR_FLOW.md). For upstream GMX differences, see [MODIFICATIONS.md](../MODIFICATIONS.md).

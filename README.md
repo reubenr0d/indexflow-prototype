@@ -76,6 +76,18 @@ npm run deploy:local
 npm run deploy:sepolia
 ```
 
+## Subgraph Ops
+
+`apps/subgraph` now syncs network addresses from web deployment outputs before manifest generation.
+
+```bash
+# optional manual sync
+npm --prefix apps/subgraph run sync:networks
+
+# generate + build for local indexing
+NETWORK=anvil npm --prefix apps/subgraph run build
+```
+
 ## Operations
 
 The GMX vault reads prices from **SimplePriceFeed**, not from **OracleAdapter** directly. After deploy, wire **PriceSync** as a keeper on `SimplePriceFeed` (`setKeeper(address(priceSync), true)`) and add **PriceSync** mappings (`addMapping(assetId, gmxToken)`) for each asset the pool trades.
@@ -141,6 +153,9 @@ npm run submit-sync:sepolia
   - `/docs/contracts-reference`
   - `/docs/troubleshooting`
   - `/docs/security-risk`
+- Operator monitoring surfaces (web app):
+  - `/prices` — live oracle status and current per-asset prices.
+  - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
 - [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md) — Basket/perp manager flow: setup, capital allocation, positions, risk controls, and implementation caveats.
@@ -149,6 +164,6 @@ npm run submit-sync:sepolia
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 - [docs/README.md](docs/README.md) — Maintainer-facing docs map mirroring in-app wiki IA and canonical markdown sources.
-- Basket trade flows in the web app now include a quote preview, explicit approve/deposit/redeem affordances, and inline transaction feedback so users can verify what will happen before they submit.
+- Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
 
 For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.

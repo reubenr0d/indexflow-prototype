@@ -26,6 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { type ComponentType } from "react";
 
@@ -50,6 +51,7 @@ export default function BasketsPage() {
   const [filters, setFilters] = useState<Set<BasketListFilterKey>>(new Set());
 
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
+  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
@@ -63,10 +65,9 @@ export default function BasketsPage() {
     query: { enabled: vaultAddresses.length > 0 },
   });
 
-  const hasSubgraphData = Array.isArray(subgraph.data) && !subgraph.isError;
   const subgraphData = useMemo(
-    () => (hasSubgraphData ? subgraph.data ?? [] : []),
-    [hasSubgraphData, subgraph.data]
+    () => (Array.isArray(subgraph.data) ? subgraph.data : []),
+    [subgraph.data]
   );
 
   const rpcInfos = useMemo(
@@ -84,10 +85,12 @@ export default function BasketsPage() {
     [basketInfos]
   );
   const hasRpcData = rpcInfos.length > 0;
+  const shouldUseRpcFallback =
+    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
 
   const infoRows = useMemo<BasketInfoRow[]>(
     () =>
-      hasRpcData
+      shouldUseRpcFallback
         ? rpcInfos.map((item) => ({
             vault: item.vault,
             name: item.name,
@@ -98,21 +101,19 @@ export default function BasketsPage() {
             perpAllocated: item.perpAllocated,
             assetCount: Number(item.assetCount ?? 0n),
           }))
-        : hasSubgraphData
-          ? subgraphData.map((item) => ({
-              vault: item.vault,
-              name: item.name,
-              sharePrice: item.sharePrice,
-              basketPrice: item.basketPrice,
-              totalSupply: item.totalSupply,
-              usdcBalance: item.usdcBalance,
-              perpAllocated: item.perpAllocated,
-              assetCount: Number(item.assetCount ?? 0n),
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-            }))
-          : [],
-    [hasRpcData, hasSubgraphData, rpcInfos, subgraphData]
+        : subgraphData.map((item) => ({
+            vault: item.vault,
+            name: item.name,
+            sharePrice: item.sharePrice,
+            basketPrice: item.basketPrice,
+            totalSupply: item.totalSupply,
+            usdcBalance: item.usdcBalance,
+            perpAllocated: item.perpAllocated,
+            assetCount: Number(item.assetCount ?? 0n),
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
+          })),
+    [rpcInfos, shouldUseRpcFallback, subgraphData]
   );
 
   const openInterestByVault = useMemo(() => {
@@ -172,7 +173,7 @@ export default function BasketsPage() {
   }, [filteredRows, sort]);
 
   const isLoading =
-    (hasRpcData ? basketsLoading || infosLoading : hasSubgraphData ? subgraph.isLoading : basketsLoading || infosLoading) ||
+    (shouldUseRpcFallback ? basketsLoading || infosLoading : subgraph.isLoading) ||
     vaultStatesLoading ||
     feesLoading;
 

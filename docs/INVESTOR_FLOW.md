@@ -87,4 +87,4 @@ sequenceDiagram
 
 - `/baskets/[address]` includes a **Vault History** timeline (deposits, redeems, allocations, position activity, and related tx links).
 - On `/baskets/[address]`, the deposit/redeem panel keeps a stable quote area to reduce layout shift; switching tabs clears the typed amount.
-- The deposit/redeem card now surfaces a live quote preview, action icons, and inline transaction states for approval, submission, confirmation, and retry handling.
+- The deposit/redeem card uses icon tabs for Deposit/Redeem mode switching and keeps inline transaction feedback for approval and submission flow.

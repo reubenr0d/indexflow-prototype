@@ -28,7 +28,11 @@ Set the subgraph endpoint to enable hybrid GraphQL + RPC reads:
 NEXT_PUBLIC_SUBGRAPH_URL=
 ```
 
-When the URL is unset or the query fails, pages automatically fall back to existing RPC hooks.
+Read policy:
+
+- Subgraph URL set and healthy: indexed/list/history views use subgraph-first.
+- URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
+- Live-critical values (wallet balances and risk state) continue to read from RPC.
 
 ## Learn More
 

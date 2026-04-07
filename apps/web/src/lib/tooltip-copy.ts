@@ -10,7 +10,8 @@ export const TOOLTIP_COPY = {
   // Core metrics
   tvl: "Total value locked, combining idle vault funds and perp-allocated capital.",
   activeBaskets: "Count of basket vaults currently tracked by the app and backend reads.",
-  vaultsTracked: "Number of vaults indexed from the factory for monitoring and analytics.",
+  vaultsTracked:
+    "Number of vaults indexed from the factory for monitoring and analytics; if subgraph reads are unavailable, the UI falls back to RPC.",
   aggregateTvl: "Sum of TVL across all tracked baskets.",
   totalTvl: "Aggregate total value locked across all baskets in this environment.",
   perpAllocated: "Capital currently allocated from baskets into the shared perp sleeve.",

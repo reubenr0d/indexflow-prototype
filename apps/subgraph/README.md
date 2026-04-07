@@ -2,7 +2,10 @@
 
 ## Networks
 
-Configuration lives in `networks.json`.
+Configuration lives in `networks.json` and is auto-synced from web deployment files before manifest generation:
+
+- `apps/web/src/config/local-deployment.json` -> `anvil`
+- `apps/web/src/config/sepolia-deployment.json` -> `arbitrum-sepolia`
 
 - `anvil`
 - `arbitrum-sepolia`
@@ -14,6 +17,9 @@ Configuration lives in `networks.json`.
 ```bash
 cd apps/subgraph
 npm install
+
+# Sync network addresses from deployment outputs
+npm run sync:networks
 
 # Build manifest + generated types + wasm
 NETWORK=anvil npm run codegen
