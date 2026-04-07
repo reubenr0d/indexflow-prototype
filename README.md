@@ -47,6 +47,9 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 forge install
 npm install
 
+# Ensure git pre-commit hooks are installed (auto-runs via prepare on npm install)
+npm run hooks:install
+
 # Build
 forge build
 

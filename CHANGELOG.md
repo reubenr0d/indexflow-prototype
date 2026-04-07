@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Web app lint reliability: ESLint now ignores generated `.vercel/**` build output, preventing non-source artifacts from causing lint failures during local/CI runs.
 - Web app: enforced strict data-source fallback policy for indexed/list/history reads: when `NEXT_PUBLIC_SUBGRAPH_URL` is configured and subgraph queries succeed, subgraph data is preferred; when subgraph is unavailable/errors/returns unusable rows, affected views fully fall back to RPC instead of partial mixed sourcing.
 - Web app: fixed `/prices/[assetId]` type mismatch by normalizing invalid asset ids to `undefined` (not `null`) before `useOraclePriceHistory` calls.
 - Web app: fixed basket detail page compile issues in `/baskets/[address]` by cleaning duplicated/invalid sections and tightening history-source selection.
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Repo tooling: native git pre-commit hook at `.githooks/pre-commit` that auto-runs ESLint `--fix` on staged `apps/web` JS/TS files, re-stages fixes, and then validates lint before allowing commits (`npm run hooks:install` / `prepare` sets `core.hooksPath`).
 - Subgraph: `AssetTokenMapped` indexing support via a new immutable `AssetTokenMapUpdate` entity, plus manifest handler wiring for `VaultAccounting.AssetTokenMapped`.
 - Subgraph: `sync:networks` workflow/script to derive `apps/subgraph/networks.json` addresses from `apps/web/src/config/local-deployment.json` and `apps/web/src/config/sepolia-deployment.json`.
 - Web app prices drilldown route (`/prices/[assetId]`) with per-asset header status, historical `PriceUpdated` timeline, and price chart window controls (`24H`, `7D`, `30D`; default `7D`).

@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+cd "$ROOT_DIR"
+
+WEB_FILES=()
+while IFS= read -r file; do
+  WEB_FILES+=("$file")
+done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E '^apps/web/.*\.(js|jsx|ts|tsx)$' || true)
+
+if [ "${#WEB_FILES[@]}" -eq 0 ]; then
+  exit 0
+fi
+
+echo "Running ESLint autofix for staged web files..."
+npm --prefix apps/web exec eslint --fix "${WEB_FILES[@]}"
+
+echo "Re-staging lint-fixed files..."
+git add "${WEB_FILES[@]}"
+
+echo "Running ESLint validation..."
+npm --prefix apps/web exec eslint "${WEB_FILES[@]}"

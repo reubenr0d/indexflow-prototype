@@ -1,0 +1,8 @@
+{
+  "arbitrum-sepolia": {
+    "BasketFactory": {
+      "address": "0xeeC398ACB8B045B9e0996Ea01f2C0Ee58411034e",
+      "startBlock": 0
+    }
+  }
+}
