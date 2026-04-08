@@ -1,11 +1,14 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
-import { useReadContract, useChainId } from "wagmi";
+import { useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import {
@@ -13,16 +16,29 @@ import {
   useOracleIsStale,
   useOracleAssetConfig,
   useOracleAssetLabelMap,
+  useSupportedOracleAssets,
   getOracleSourceLabel,
 } from "@/hooks/useOracle";
 import { formatPrice, formatRelativeTime, formatAssetId } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
+import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { showToast } from "@/components/ui/toast";
 import { motion } from "framer-motion";
 import { Radio } from "lucide-react";
 
+const PRICE_SYNC_ABI = [
+  {
+    type: "function",
+    name: "syncAll",
+    stateMutability: "nonpayable",
+    inputs: [],
+    outputs: [],
+  },
+] as const;
+
 export default function AdminOraclePage() {
   const chainId = useChainId();
-  const { oracleAdapter } = getContracts(chainId);
+  const { oracleAdapter, priceSync } = getContracts(chainId);
 
   const { data: assetCount, isLoading } = useReadContract({
     address: oracleAdapter,
@@ -33,6 +49,76 @@ export default function AdminOraclePage() {
 
   const count = assetCount ? Number(assetCount) : 0;
   const { data: assetLabels } = useOracleAssetLabelMap();
+  const { data: supportedAssets, isLoading: supportedAssetsLoading } = useSupportedOracleAssets();
+
+  const [assetInput, setAssetInput] = useState("");
+  const [priceInput, setPriceInput] = useState("");
+
+  const selectedAsset = useMemo(
+    () =>
+      (supportedAssets ?? []).find(
+        (asset) =>
+          asset.label.toLowerCase() === assetInput.trim().toLowerCase() ||
+          asset.idHex.toLowerCase() === assetInput.trim().toLowerCase()
+      ),
+    [assetInput, supportedAssets]
+  );
+
+  const {
+    writeContract: submitPriceWrite,
+    data: submitPriceHash,
+    isPending: isSubmitPricePending,
+    error: submitPriceError,
+    isError: isSubmitPriceError,
+  } = useWriteContract();
+  const submitPriceReceipt = useWaitForTransactionReceipt({ hash: submitPriceHash });
+
+  const {
+    writeContract: syncAllWrite,
+    data: syncAllHash,
+    isPending: isSyncAllPending,
+    error: syncAllError,
+    isError: isSyncAllError,
+  } = useWriteContract();
+  const syncAllReceipt = useWaitForTransactionReceipt({ hash: syncAllHash });
+
+  useEffect(() => {
+    if (submitPriceReceipt.isSuccess) {
+      showToast("success", "Oracle price submitted");
+      setPriceInput("");
+    }
+  }, [submitPriceReceipt.isSuccess]);
+
+  useEffect(() => {
+    if (syncAllReceipt.isSuccess) {
+      showToast("success", "Price sync complete");
+    }
+  }, [syncAllReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: submitPriceError,
+    writeIsError: isSubmitPriceError,
+    receiptError: submitPriceReceipt.error,
+    receiptIsError: submitPriceReceipt.isError,
+    fallbackMessage: "Oracle price submit failed",
+  });
+  useContractErrorToast({
+    writeError: syncAllError,
+    writeIsError: isSyncAllError,
+    receiptError: syncAllReceipt.error,
+    receiptIsError: syncAllReceipt.isError,
+    fallbackMessage: "Oracle sync failed",
+  });
+
+  const parsedPrice = useMemo(() => {
+    if (!priceInput.trim()) return undefined;
+    if (!/^\d+(\.\d{1,8})?$/.test(priceInput.trim())) return undefined;
+    const [whole, fracRaw = ""] = priceInput.trim().split(".");
+    const frac = fracRaw.padEnd(8, "0");
+    return BigInt(whole) * 100_000_000n + BigInt(frac);
+  }, [priceInput]);
+  const canSubmitPrice = Boolean(selectedAsset?.idHex && parsedPrice && parsedPrice > 0n && !isSubmitPricePending);
+  const canSyncAll = Boolean(priceSync && priceSync !== "0x0000000000000000000000000000000000000000" && !isSyncAllPending);
 
   return (
     <PageWrapper>
@@ -48,6 +134,70 @@ export default function AdminOraclePage() {
           <span className="text-xs font-semibold uppercase tracking-wide text-app-accent">Monitoring</span>
         </div>
       </div>
+
+      <Card className="mb-6 p-6">
+        <h2 className="mb-2 text-base font-semibold text-app-text">
+          <InfoLabel label="Oracle Write Controls" tooltip="Submit custom oracle prices and sync them to GMX price feed." />
+        </h2>
+        <p className="mb-4 text-sm text-app-muted">
+          Use for relayer-fed assets (8 decimal raw price inputs, e.g. `2600` or `2600.50000000`).
+        </p>
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_220px_auto_auto]">
+          <Input
+            list="oracle-assets-list"
+            placeholder="Asset label or id"
+            value={assetInput}
+            onChange={(e) => setAssetInput(e.target.value)}
+            data-testid="oracle-asset-input"
+            disabled={supportedAssetsLoading}
+          />
+          <datalist id="oracle-assets-list">
+            {(supportedAssets ?? []).map((asset) => (
+              <option key={asset.idHex} value={asset.label}>
+                {asset.idHex}
+              </option>
+            ))}
+          </datalist>
+          <Input
+            placeholder="Price (8 decimals)"
+            value={priceInput}
+            onChange={(e) => setPriceInput(e.target.value)}
+            data-testid="oracle-price-input"
+          />
+          <Button
+            onClick={() => {
+              if (!selectedAsset || !parsedPrice) return;
+              submitPriceWrite({
+                address: oracleAdapter,
+                abi: OracleAdapterABI,
+                functionName: "submitPrice",
+                args: [selectedAsset.idHex, parsedPrice],
+              });
+              showToast("pending", "Submitting oracle price...");
+            }}
+            disabled={!canSubmitPrice}
+            data-testid="oracle-submit-price"
+          >
+            {isSubmitPricePending ? "Submitting..." : "Submit Price"}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              if (!canSyncAll) return;
+              syncAllWrite({
+                address: priceSync,
+                abi: PRICE_SYNC_ABI,
+                functionName: "syncAll",
+              });
+              showToast("pending", "Syncing prices...");
+            }}
+            disabled={!canSyncAll}
+            data-testid="oracle-sync-all"
+          >
+            {isSyncAllPending ? "Syncing..." : "Sync All"}
+          </Button>
+        </div>
+      </Card>
 
       {isLoading ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

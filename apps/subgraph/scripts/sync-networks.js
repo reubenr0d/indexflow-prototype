@@ -48,7 +48,12 @@ const targets = [
 
 for (const [deploymentKey, networkKey] of targets) {
   syncTarget(networks, "anvil", localDeployment, deploymentKey, networkKey);
-  syncTarget(networks, "arbitrum-sepolia", sepoliaDeployment, deploymentKey, networkKey);
+  syncTarget(networks, "sepolia", sepoliaDeployment, deploymentKey, networkKey);
+}
+
+// Legacy key from earlier misconfiguration. Keep output canonical on Ethereum Sepolia.
+if (networks["arbitrum-sepolia"]) {
+  delete networks["arbitrum-sepolia"];
 }
 
 fs.writeFileSync(networksPath, `${JSON.stringify(networks, null, 2)}\n`);

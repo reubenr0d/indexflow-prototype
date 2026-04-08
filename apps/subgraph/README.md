@@ -5,10 +5,10 @@
 Configuration lives in `networks.json` and is auto-synced from web deployment files before manifest generation:
 
 - `apps/web/src/config/local-deployment.json` -> `anvil`
-- `apps/web/src/config/sepolia-deployment.json` -> `arbitrum-sepolia`
+- `apps/web/src/config/sepolia-deployment.json` -> `sepolia`
 
 - `anvil`
-- `arbitrum-sepolia`
+- `sepolia`
 
 `generate-manifest` fails if any required address for the selected network is zero.
 
@@ -30,4 +30,4 @@ export SUBGRAPH_SLUG=<account>/<name>
 NETWORK=anvil npm run deploy
 ```
 
-Set `NETWORK=arbitrum-sepolia` when Arbitrum Sepolia addresses/start blocks are filled.
+Set `NETWORK=sepolia` for Ethereum Sepolia indexing using `apps/web/src/config/sepolia-deployment.json`.

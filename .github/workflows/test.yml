@@ -123,3 +123,55 @@ jobs:
 
       - name: Check formatting
         run: forge fmt --check
+
+  e2e:
+    name: E2E (Web + Anvil)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            apps/web/package-lock.json
+
+      - name: Install npm dependencies (root)
+        run: npm ci
+
+      - name: Install npm dependencies (web)
+        run: npm ci --prefix apps/web
+
+      - name: Install Playwright browser
+        run: npx --prefix apps/web playwright install --with-deps chromium
+
+      - name: Start Anvil
+        run: nohup anvil --host 127.0.0.1 --port 8545 > /tmp/anvil.log 2>&1 &
+
+      - name: Deploy local contracts for E2E
+        run: npm run deploy:local
+
+      - name: Run E2E tests
+        env:
+          NEXT_PUBLIC_E2E_TEST_MODE: "1"
+          E2E_RPC_URL: "http://127.0.0.1:8545"
+        run: npm run test:e2e:ci
+
+      - name: Upload E2E artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-e2e-artifacts
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+            /tmp/anvil.log

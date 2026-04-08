@@ -24,6 +24,8 @@ This index mirrors the in-app wiki information architecture used at `/docs` in t
 - [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md)
 - [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
 - [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md)
+- [DEPLOYMENTS.md](./DEPLOYMENTS.md)
+- [E2E_TESTING.md](./E2E_TESTING.md)
 - [../README.md](../README.md) (Operations + deployment workflow)
 - [../MODIFICATIONS.md](../MODIFICATIONS.md) (upstream GMX diffs)
 

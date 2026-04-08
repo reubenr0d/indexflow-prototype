@@ -249,6 +249,7 @@ function VaultRegistrationRow({ vault, name }: { vault: Address; name: string })
             variant="secondary"
             title="Deregister vault from VaultAccounting. Requires zero open interest."
             disabled={isDeregisterPending}
+            data-testid={`risk-deregister-${vault.toLowerCase()}`}
             onClick={() => {
               deregisterVault(vault);
               showToast("pending", "Deregistering vault...");
@@ -261,6 +262,7 @@ function VaultRegistrationRow({ vault, name }: { vault: Address; name: string })
             size="sm"
             title="Register vault in VaultAccounting to enable position operations."
             disabled={isRegisterPending}
+            data-testid={`risk-register-${vault.toLowerCase()}`}
             onClick={() => {
               registerVault(vault);
               showToast("pending", "Registering vault...");

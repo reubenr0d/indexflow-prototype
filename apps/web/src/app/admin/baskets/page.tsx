@@ -66,7 +66,7 @@ export default function AdminBasketsPage() {
         <h1 className="text-3xl font-semibold tracking-tight text-app-text">
           Basket Management
         </h1>
-        <Button onClick={() => setShowCreate(!showCreate)}>
+        <Button onClick={() => setShowCreate(!showCreate)} data-testid="admin-create-basket-toggle">
           {showCreate ? <X className="mr-2 h-4 w-4" /> : <Plus className="mr-2 h-4 w-4" />}
           {showCreate ? "Cancel" : "Create Basket"}
         </Button>
@@ -177,17 +177,32 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
 
       <div className="mb-6">
         <label className="mb-2 block text-sm font-medium text-app-muted">Basket Name</label>
-        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Mining Majors" />
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="e.g. Mining Majors"
+          data-testid="admin-create-basket-name"
+        />
       </div>
 
       <div className="mb-6 grid grid-cols-2 gap-4">
         <div>
           <label className="mb-2 block text-sm font-medium text-app-muted">Deposit Fee (bps)</label>
-          <Input type="number" value={depositFee} onChange={(e) => setDepositFee(e.target.value)} />
+          <Input
+            type="number"
+            value={depositFee}
+            onChange={(e) => setDepositFee(e.target.value)}
+            data-testid="admin-create-basket-deposit-fee"
+          />
         </div>
         <div>
           <label className="mb-2 block text-sm font-medium text-app-muted">Redeem Fee (bps)</label>
-          <Input type="number" value={redeemFee} onChange={(e) => setRedeemFee(e.target.value)} />
+          <Input
+            type="number"
+            value={redeemFee}
+            onChange={(e) => setRedeemFee(e.target.value)}
+            data-testid="admin-create-basket-redeem-fee"
+          />
         </div>
       </div>
 
@@ -196,6 +211,7 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
         className="w-full"
         disabled={!name || isPending}
         onClick={handleSubmit}
+        data-testid="admin-create-basket-submit"
       >
         {isPending ? "Creating..." : "Create Basket"}
       </Button>

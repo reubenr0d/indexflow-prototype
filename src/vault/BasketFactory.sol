@@ -48,11 +48,10 @@ contract BasketFactory is Ownable {
     /// @param depositFeeBps Deposit fee for the new vault.
     /// @param redeemFeeBps Redeem fee for the new vault.
     /// @return vault Address of the new `BasketVault`.
-    function createBasket(
-        string calldata _name,
-        uint256 depositFeeBps,
-        uint256 redeemFeeBps
-    ) external returns (address) {
+    function createBasket(string calldata _name, uint256 depositFeeBps, uint256 redeemFeeBps)
+        external
+        returns (address)
+    {
         BasketVault basket = new BasketVault(_name, usdc, oracleAdapter, address(this));
 
         basket.setFees(depositFeeBps, redeemFeeBps);

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Subgraph network targeting corrected from `arbitrum-sepolia` to `sepolia` for Ethereum Sepolia deployments: `apps/subgraph` sync/manifest/deploy flow now uses `NETWORK=sepolia`, docs/scripts were updated accordingly, and the legacy `apps/subgraph/indexflow-prototype` Studio manifest now also targets `sepolia` with the current `sepolia-deployment.json` BasketFactory address.
 - Web app lint reliability: ESLint now ignores generated `.vercel/**` build output, preventing non-source artifacts from causing lint failures during local/CI runs.
 - Web app: enforced strict data-source fallback policy for indexed/list/history reads: when `NEXT_PUBLIC_SUBGRAPH_URL` is configured and subgraph queries succeed, subgraph data is preferred; when subgraph is unavailable/errors/returns unusable rows, affected views fully fall back to RPC instead of partial mixed sourcing.
 - Web app: fixed `/prices/[assetId]` type mismatch by normalizing invalid asset ids to `undefined` (not `null`) before `useOraclePriceHistory` calls.
@@ -24,7 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Repo tooling: native git pre-commit hook at `.githooks/pre-commit` that auto-runs ESLint `--fix` on staged `apps/web` JS/TS files, re-stages fixes, and then validates lint before allowing commits (`npm run hooks:install` / `prepare` sets `core.hooksPath`).
+- Web app E2E stack (Playwright + Chromium) under `apps/web/e2e` with deterministic CI wallet mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), smoke coverage, and a full user lifecycle gate from deposit to redeem-with-profit with admin basket/oracle/pool writes and onchain net-profit assertions.
+- CI: new `e2e` job in `.github/workflows/test.yml` for PR/push branches (`main`, `develop`, `feature/**`) that starts Anvil, runs `deploy:local`, executes Playwright, and uploads trace/screenshot/video/report artifacts on failures.
+- Web app admin oracle surface: manual write controls on `/admin/oracle` for `OracleAdapter.submitPrice` and `PriceSync.syncAll` (real onchain tx path for relayer price updates).
+- Docs: [docs/E2E_TESTING.md](docs/E2E_TESTING.md) runbook covering local and CI E2E setup/assumptions, plus README/docs index updates.
+- Integration coverage: new `test/GlobalLiquiditySharingIntegration.t.sol` suite for shared GMX liquidity across multiple vaults/baskets, including multi-vault happy-path assertions, an explicit equal-profit/equal-loss no-global-pool-drain check, constrained-liquidity stress (`Vault: poolAmount exceeded` on second close), and basket-level coupling under shared pool pressure.
+- Documentation: new [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) deployment registry with per-network status (local/Sepolia/Arbitrum), canonical contract addresses, Sepolia Etherscan links, sender context, and refresh/verification commands.
+- Repo tooling: native git pre-commit hook at `.githooks/pre-commit` now runs `forge fmt` for staged Solidity files and ESLint validation for staged `apps/web` JS/TS files before allowing commits (`npm run hooks:install` / `prepare` sets `core.hooksPath`).
 - Subgraph: `AssetTokenMapped` indexing support via a new immutable `AssetTokenMapUpdate` entity, plus manifest handler wiring for `VaultAccounting.AssetTokenMapped`.
 - Subgraph: `sync:networks` workflow/script to derive `apps/subgraph/networks.json` addresses from `apps/web/src/config/local-deployment.json` and `apps/web/src/config/sepolia-deployment.json`.
 - Web app prices drilldown route (`/prices/[assetId]`) with per-asset header status, historical `PriceUpdated` timeline, and price chart window controls (`24H`, `7D`, `30D`; default `7D`).
@@ -65,6 +72,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Web app wallet UX: added a global MetaMask network guard that auto-prompts `wallet_switchEthereumChain` to Ethereum Sepolia when a connected MetaMask session is on the wrong chain (including Anvil), with cooldown/in-flight protection and error toast fallback to avoid prompt loops.
+- Web app contract config wiring (`apps/web/src/config/contracts.ts`): `anvil` runtime mapping now points to `sepolia-deployment.json` addresses (same source as Sepolia), so local app sessions read from the existing Sepolia deployment JSON instead of `local-deployment.json`.
 - Web app: basket deposit/redeem panel now shows a live quote preview, action icons, inline transaction rail states, and clearer submit/approval status feedback; shared status/trend pill primitives and basket icon helpers were added for consistency.
 - Web app UI: added reusable information popups (`InfoTooltip` + `InfoLabel`) across titled cards and table-like headers, including stat cards and admin basket list headers, with centralized tooltip copy keys for consistent operator-facing explanations.
 - Web docs and landing page copy: rewrote in-app wiki language and homepage messaging for a more beginner-friendly explanation of deposits, basket shares, shared perp trading, operator roles, and liquidity constraints.

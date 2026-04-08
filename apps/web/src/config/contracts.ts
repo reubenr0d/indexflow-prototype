@@ -11,34 +11,38 @@ type ContractAddresses = {
   perpReader: Address;
   pricingEngine: Address;
   fundingRateManager: Address;
+  priceSync: Address;
   usdc: Address;
   gmxVault: Address;
 };
 
-type LocalDeploymentFile = {
+type DeploymentFile = {
   basketFactory: string;
   vaultAccounting: string;
   oracleAdapter: string;
   perpReader: string;
   pricingEngine: string;
   fundingRateManager: string;
+  priceSync?: string;
   usdc: string;
   gmxVault: string;
 };
 
-const ld = localDeployment as LocalDeploymentFile;
-const sd = sepoliaDeployment as LocalDeploymentFile;
+const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
+const ld = localDeployment as DeploymentFile;
+const sd = sepoliaDeployment as DeploymentFile;
 
 export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
   [anvil.id]: {
-    basketFactory: ld.basketFactory as Address,
-    vaultAccounting: ld.vaultAccounting as Address,
-    oracleAdapter: ld.oracleAdapter as Address,
-    perpReader: ld.perpReader as Address,
-    pricingEngine: ld.pricingEngine as Address,
-    fundingRateManager: ld.fundingRateManager as Address,
-    usdc: ld.usdc as Address,
-    gmxVault: ld.gmxVault as Address,
+    basketFactory: (isE2ETestMode ? ld.basketFactory : sd.basketFactory) as Address,
+    vaultAccounting: (isE2ETestMode ? ld.vaultAccounting : sd.vaultAccounting) as Address,
+    oracleAdapter: (isE2ETestMode ? ld.oracleAdapter : sd.oracleAdapter) as Address,
+    perpReader: (isE2ETestMode ? ld.perpReader : sd.perpReader) as Address,
+    pricingEngine: (isE2ETestMode ? ld.pricingEngine : sd.pricingEngine) as Address,
+    fundingRateManager: (isE2ETestMode ? ld.fundingRateManager : sd.fundingRateManager) as Address,
+    priceSync: ((isE2ETestMode ? ld.priceSync : sd.priceSync) ?? "0x0000000000000000000000000000000000000000") as Address,
+    usdc: (isE2ETestMode ? ld.usdc : sd.usdc) as Address,
+    gmxVault: (isE2ETestMode ? ld.gmxVault : sd.gmxVault) as Address,
   },
   [sepolia.id]: {
     basketFactory: sd.basketFactory as Address,
@@ -47,6 +51,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     perpReader: sd.perpReader as Address,
     pricingEngine: sd.pricingEngine as Address,
     fundingRateManager: sd.fundingRateManager as Address,
+    priceSync: (sd.priceSync ?? "0x0000000000000000000000000000000000000000") as Address,
     usdc: sd.usdc as Address,
     gmxVault: sd.gmxVault as Address,
   },
@@ -57,6 +62,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     perpReader: "0x0000000000000000000000000000000000000004" as Address,
     pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
     fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
+    priceSync: "0x0000000000000000000000000000000000000007" as Address,
     usdc: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" as Address,
     gmxVault: "0x0000000000000000000000000000000000000008" as Address,
   },
@@ -67,8 +73,9 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     perpReader: "0x0000000000000000000000000000000000000004" as Address,
     pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
     fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
-    usdc: "0x0000000000000000000000000000000000000007" as Address,
-    gmxVault: "0x0000000000000000000000000000000000000008" as Address,
+    priceSync: "0x0000000000000000000000000000000000000007" as Address,
+    usdc: "0x0000000000000000000000000000000000000008" as Address,
+    gmxVault: "0x0000000000000000000000000000000000000009" as Address,
   },
 };
 

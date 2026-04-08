@@ -616,6 +616,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
       "Set up supported assets, keeper roles, and token mappings first, then test the full price-update loop.",
       "For Chainlink-backed assets, the main job is making sure sync runs often enough.",
       "For relayer-backed assets, the process is two-step: write the fresh price, then push it into the GMX feed.",
+      "Use `/admin/oracle` write controls to submit relayer prices and trigger `syncAll` in one operator workflow when testing or recovering stale feeds.",
       "Use `/prices` for live asset status and `/prices/[assetId]` to inspect per-asset update history and trend shape before escalating incidents.",
     ],
     reference: [
@@ -831,7 +832,7 @@ export const DOCS_PAGES: Record<DocsSlug, DocsPage> = {
         title: "Preflight Checks",
         items: [
           "Verify wallet role ownership against target contract.",
-          "Verify active chain and deployment config addresses.",
+          "Verify active chain and deployment config addresses. If MetaMask is connected on a non-Sepolia chain, the app now auto-prompts a switch to Sepolia.",
           "Read pause flags, mappings, and balances before retry.",
         ],
       },

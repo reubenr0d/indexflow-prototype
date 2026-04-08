@@ -221,6 +221,7 @@ export function DepositRedeemPanel({
           placeholder="0.00"
           value={amount}
           onChange={(e) => handleAmountChange(e.target.value)}
+          data-testid="deposit-redeem-amount"
           className="text-xl font-semibold"
         />
       </div>
@@ -266,6 +267,7 @@ export function DepositRedeemPanel({
           className="w-full"
           disabled={parsedAmount === 0n || isProcessing}
           onClick={handleSubmit}
+          data-testid="deposit-redeem-submit"
         >
           <span className="inline-flex items-center gap-2">
             {actionMeta.icon}

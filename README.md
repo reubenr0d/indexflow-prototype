@@ -47,7 +47,8 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 forge install
 npm install
 
-# Ensure git pre-commit hooks are installed (auto-runs via prepare on npm install)
+# Ensure git pre-commit hooks are installed (auto-runs via prepare on npm install).
+# The hook runs `forge fmt` on staged Solidity files and ESLint validation on staged web files (no auto-fix).
 npm run hooks:install
 
 # Build
@@ -79,6 +80,13 @@ npm run deploy:local
 npm run deploy:sepolia
 ```
 
+Web app runtime contract wiring:
+
+- `apps/web/src/config/sepolia-deployment.json` is the active source for Sepolia.
+- Local app sessions on `anvil` also use the same Sepolia deployment mapping in `apps/web/src/config/contracts.ts`.
+- In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), the web app switches Anvil contract addresses to `apps/web/src/config/local-deployment.json` and uses a deterministic mock wallet connector for CI-stable signing.
+- When MetaMask is connected on the wrong network, the app auto-requests a switch to Ethereum Sepolia.
+
 ## Subgraph Ops
 
 `apps/subgraph` now syncs network addresses from web deployment outputs before manifest generation.
@@ -89,6 +97,9 @@ npm --prefix apps/subgraph run sync:networks
 
 # generate + build for local indexing
 NETWORK=anvil npm --prefix apps/subgraph run build
+
+# generate + build for Ethereum Sepolia indexing
+NETWORK=sepolia npm --prefix apps/subgraph run build
 ```
 
 ## Operations
@@ -166,7 +177,22 @@ npm run submit-sync:sepolia
 - [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md) — Per-contract interaction matrix with inputs, checks, state deltas, and post-tx verification steps.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
+- [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
+- [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/README.md](docs/README.md) — Maintainer-facing docs map mirroring in-app wiki IA and canonical markdown sources.
 - Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
+
+## E2E Tests
+
+```bash
+# Start an Anvil node
+anvil --host 127.0.0.1 --port 8545
+
+# Deploy local contracts to the running node
+PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 npm run deploy:local
+
+# Run Playwright suite in deterministic E2E mode
+NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:ci
+```
 
 For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.

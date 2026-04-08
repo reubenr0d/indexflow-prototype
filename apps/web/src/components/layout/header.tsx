@@ -4,7 +4,13 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useChainId, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import {
+  useAccount,
+  useChainId,
+  useConnect,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
 import { anvil } from "viem/chains";
 import { getContracts } from "@/config/contracts";
 import { ERC20ABI } from "@/abi/erc20";
@@ -34,11 +40,13 @@ export function Header() {
   const { theme, toggle } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { address } = useAccount();
+  const { connect, connectors, isPending: isConnectPending } = useConnect();
   const chainId = useChainId();
   const { usdc } = getContracts(chainId);
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
   const isLocalChain = chainId === anvil.id;
+  const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
   const onHome = pathname === "/";
   const canMint = Boolean(address) && !isPending;
@@ -66,6 +74,15 @@ export function Header() {
       args: [address, 10_000n * 1_000_000n],
     });
     showToast("pending", "Minting 10,000 USDC...");
+  };
+
+  const handleE2EConnect = () => {
+    const preferred =
+      connectors.find((c) => c.id === "metaMask") ??
+      connectors.find((c) => c.id === "injected") ??
+      connectors[0];
+    if (!preferred) return;
+    connect({ connector: preferred });
   };
 
   return (
@@ -137,9 +154,21 @@ export function Header() {
                 type="button"
                 onClick={handleMint}
                 disabled={!canMint}
+                data-testid="mint-10k-usdc"
                 className="hidden h-9 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover disabled:pointer-events-none disabled:opacity-45 sm:inline-flex sm:items-center"
               >
                 {isPending ? "Minting..." : "Mint 10k USDC"}
+              </button>
+            )}
+            {isE2ETestMode && !address && (
+              <button
+                type="button"
+                onClick={handleE2EConnect}
+                disabled={isConnectPending}
+                data-testid="e2e-connect-wallet"
+                className="hidden h-9 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover disabled:pointer-events-none disabled:opacity-45 sm:inline-flex sm:items-center"
+              >
+                {isConnectPending ? "Connecting..." : "E2E Connect"}
               </button>
             )}
             <button
@@ -178,9 +207,21 @@ export function Header() {
                   type="button"
                   onClick={handleMint}
                   disabled={!canMint}
+                  data-testid="mint-10k-usdc-mobile"
                   className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
                 >
                   {isPending ? "Minting..." : "Mint 10k USDC"}
+                </button>
+              )}
+              {isE2ETestMode && !address && (
+                <button
+                  type="button"
+                  onClick={handleE2EConnect}
+                  disabled={isConnectPending}
+                  data-testid="e2e-connect-wallet-mobile"
+                  className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
+                >
+                  {isConnectPending ? "Connecting..." : "E2E Connect"}
                 </button>
               )}
               <Link

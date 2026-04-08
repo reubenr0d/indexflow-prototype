@@ -529,10 +529,12 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
             <Input
               placeholder="Filter assets..."
               value={openAssetFilter}
+              data-testid="open-position-filter"
               onChange={(e) => setOpenAssetFilter(e.target.value)}
             />
             <select
               value={openAsset}
+              data-testid="open-position-asset"
               onChange={(e) => setOpenAsset(e.target.value as Hex)}
               className="h-11 w-full rounded-xl border border-app-border bg-app-bg px-3 text-app-text"
             >
@@ -554,6 +556,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               type="number"
               placeholder="Size (USD notional)"
               value={openSize}
+              data-testid="open-position-size"
               onChange={(e) => setOpenSize(e.target.value)}
             />
             <div className="flex items-center justify-between text-xs text-app-muted">
@@ -568,6 +571,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               type="number"
               placeholder="Collateral (USDC)"
               value={openCollateral}
+              data-testid="open-position-collateral"
               onChange={(e) => setOpenCollateral(e.target.value)}
             />
             <div className="flex items-center justify-between text-xs text-app-muted">
@@ -578,6 +582,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
             </div>
             <Button
               disabled={!openAsset || !openSize || !openCollateral || isOpenPending}
+              data-testid="open-position-submit"
               onClick={() => {
                 openPosition(
                   vault,
@@ -600,10 +605,12 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
             <Input
               placeholder="Filter assets..."
               value={closeAssetFilter}
+              data-testid="close-position-filter"
               onChange={(e) => setCloseAssetFilter(e.target.value)}
             />
             <select
               value={closeAsset}
+              data-testid="close-position-asset"
               onChange={(e) => setCloseAsset(e.target.value as Hex)}
               className="h-11 w-full rounded-xl border border-app-border bg-app-bg px-3 text-app-text"
             >
@@ -625,6 +632,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               type="number"
               placeholder="Size Delta (USD notional)"
               value={closeSize}
+              data-testid="close-position-size"
               onChange={(e) => setCloseSize(e.target.value)}
             />
             <div className="flex items-center justify-between text-xs text-app-muted">
@@ -639,6 +647,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
               type="number"
               placeholder="Collateral Delta (USDC)"
               value={closeCollateral}
+              data-testid="close-position-collateral"
               onChange={(e) => setCloseCollateral(e.target.value)}
             />
             <div className="flex items-center justify-between text-xs text-app-muted">
@@ -652,6 +661,7 @@ function BasketPositionManagerCard({ vault }: { vault: Address }) {
             <Button
               variant="danger"
               disabled={!closeAsset || !closeSize || isClosePending}
+              data-testid="close-position-submit"
               onClick={() => {
                 closePosition(
                   vault,
@@ -724,6 +734,7 @@ function SetAssetsCard({ vault }: { vault: Address }) {
             list={`set-assets-${i}`}
             placeholder="Select supported asset"
             value={row.assetQuery}
+            data-testid={`set-assets-input-${i}`}
             onChange={(e) => {
               const query = e.target.value;
               const match = supported.find(
@@ -777,6 +788,7 @@ function SetAssetsCard({ vault }: { vault: Address }) {
         size="sm"
         className="mt-4"
         disabled={isPending || hasEmptyAssetSelection || hasDuplicateAssets}
+        data-testid="set-assets-submit"
         onClick={() => {
           const assetIds = rows.map((row) => row.assetIdHex as `0x${string}`);
           setAssets(vault, assetIds);
@@ -829,6 +841,7 @@ function PerpAllocationCard({
         type="number"
         placeholder="USDC amount"
         value={amount}
+        data-testid="perp-allocation-amount"
         onChange={(e) => setAmount(e.target.value)}
         className="mb-3"
       />
@@ -836,6 +849,7 @@ function PerpAllocationCard({
         <Button
           size="sm"
           disabled={!amount || isPending}
+          data-testid="perp-allocate-submit"
           onClick={() => {
             writeContract({
               address: vault,
@@ -852,6 +866,7 @@ function PerpAllocationCard({
           variant="secondary"
           size="sm"
           disabled={!amount || isPending}
+          data-testid="perp-withdraw-submit"
           onClick={() => {
             writeContract({
               address: vault,
@@ -1020,12 +1035,14 @@ function ReservePolicyCard({ vault }: { vault: Address }) {
         max="10000"
         placeholder="BPS (0 - 10000)"
         value={bpsInput}
+        data-testid="reserve-target-input"
         onChange={(e) => setBpsInput(e.target.value)}
         className="mb-3"
       />
       <Button
         size="sm"
         disabled={!bpsInput || isPending}
+        data-testid="reserve-target-submit"
         onClick={() => {
           setMinReserveBps(vault, BigInt(bpsInput));
           showToast("pending", "Updating reserve policy...");
@@ -1099,12 +1116,14 @@ function ReserveTopUpCard({ vault, usdc }: { vault: Address; usdc: Address }) {
         type="number"
         placeholder="USDC amount"
         value={amount}
+        data-testid="reserve-topup-amount"
         onChange={(e) => setAmount(e.target.value)}
         className="mb-3"
       />
       <Button
         size="sm"
         disabled={!address || parsedAmount === 0n || isProcessing}
+        data-testid="reserve-topup-submit"
         onClick={() => {
           if (needsApproval) {
             approve(usdc, vault, parsedAmount);

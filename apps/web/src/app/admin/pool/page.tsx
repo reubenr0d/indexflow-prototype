@@ -468,12 +468,18 @@ function PoolTokenControlsRow({
             placeholder={`Amount (${row.symbol})`}
             value={bufferInput}
             onChange={(e) => setBufferInput(e.target.value)}
+            data-testid={`pool-buffer-input-${row.symbol.toLowerCase()}`}
             className="mb-2"
           />
           {!canSetBuffer && (
             <p className="mb-2 text-xs text-app-warning">Only GMX gov can set buffer amounts.</p>
           )}
-          <Button size="sm" disabled={!canSubmitBuffer} onClick={handleSetBuffer}>
+          <Button
+            size="sm"
+            disabled={!canSubmitBuffer}
+            onClick={handleSetBuffer}
+            data-testid={`pool-buffer-submit-${row.symbol.toLowerCase()}`}
+          >
             Set Buffer
           </Button>
         </div>
@@ -488,12 +494,18 @@ function PoolTokenControlsRow({
             placeholder={`Amount (${row.symbol})`}
             value={depositInput}
             onChange={(e) => setDepositInput(e.target.value)}
+            data-testid={`pool-deposit-input-${row.symbol.toLowerCase()}`}
             className="mb-2"
           />
           {parsedDeposit !== undefined && parsedDeposit > row.balance && (
             <p className="mb-2 text-xs text-app-warning">Insufficient wallet balance for this deposit.</p>
           )}
-          <Button size="sm" disabled={!canSubmitDeposit} onClick={handleDirectDeposit}>
+          <Button
+            size="sm"
+            disabled={!canSubmitDeposit}
+            onClick={handleDirectDeposit}
+            data-testid={`pool-deposit-submit-${row.symbol.toLowerCase()}`}
+          >
             Deposit To Pool
           </Button>
         </div>
