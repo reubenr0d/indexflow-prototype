@@ -1,14 +1,14 @@
 "use client";
 
 import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
-import { useChainId } from "wagmi";
 import { VaultAccountingABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { encodePacked, keccak256, type Address, type Hex } from "viem";
 
 export function useRegisteredVaults() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   return useReadContract({
@@ -20,7 +20,7 @@ export function useRegisteredVaults() {
 }
 
 export function useOpenPosition() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -44,7 +44,7 @@ export function useOpenPosition() {
 }
 
 export function useClosePosition() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -68,7 +68,7 @@ export function useClosePosition() {
 }
 
 export function useRegisterVault() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -86,7 +86,7 @@ export function useRegisterVault() {
 }
 
 export function useDeregisterVault() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -104,7 +104,7 @@ export function useDeregisterVault() {
 }
 
 export function useIsVaultRegistered(vault: Address | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   return useReadContract({
@@ -122,7 +122,7 @@ export function useIsVaultRegistered(vault: Address | undefined) {
 // ─── Risk Controls ───────────────────────────────────────────
 
 export function usePaused() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   return useReadContract({
@@ -134,7 +134,7 @@ export function usePaused() {
 }
 
 export function useMaxOpenInterest(vault: Address | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   return useReadContract({
@@ -150,7 +150,7 @@ export function useMaxOpenInterest(vault: Address | undefined) {
 }
 
 export function useMaxPositionSize(vault: Address | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   return useReadContract({
@@ -166,7 +166,7 @@ export function useMaxPositionSize(vault: Address | undefined) {
 }
 
 export function useSetPaused() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -184,7 +184,7 @@ export function useSetPaused() {
 }
 
 export function useSetMaxOpenInterest() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -202,7 +202,7 @@ export function useSetMaxOpenInterest() {
 }
 
 export function useSetMaxPositionSize() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -220,7 +220,7 @@ export function useSetMaxPositionSize() {
 }
 
 export function usePositionTracking(vault: Address | undefined, asset: Hex | undefined, isLong: boolean) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
 
   const key =

@@ -1,13 +1,13 @@
 "use client";
 
 import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
-import { useChainId } from "wagmi";
 import { BasketFactoryABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 
 export function useAllBaskets() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { basketFactory } = getContracts(chainId);
 
   return useReadContract({
@@ -19,7 +19,7 @@ export function useAllBaskets() {
 }
 
 export function useBasketCount() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { basketFactory } = getContracts(chainId);
 
   return useReadContract({
@@ -31,7 +31,7 @@ export function useBasketCount() {
 }
 
 export function useCreateBasket() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { basketFactory } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });

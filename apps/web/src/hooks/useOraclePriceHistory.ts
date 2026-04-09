@@ -3,8 +3,9 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { parseAbiItem, type Address } from "viem";
-import { useChainId, usePublicClient } from "wagmi";
+import { usePublicClient } from "wagmi";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
   PRICE_HISTORY_WINDOW_SECONDS,
   type PriceHistoryWindow,
@@ -17,9 +18,9 @@ import { useOraclePriceUpdatesQuery } from "@/hooks/subgraph/useSubgraphQueries"
 const MAX_HISTORY_ROWS = 500;
 
 export function useOraclePriceHistory(assetId: `0x${string}` | undefined, window: PriceHistoryWindow) {
-  const chainId = useChainId();
+  const { chainId, isSubgraphEnabled } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
-  const publicClient = usePublicClient();
+  const publicClient = usePublicClient({ chainId });
   const minTimestamp = useMemo(
     () => BigInt(Math.floor(Date.now() / 1000)) - PRICE_HISTORY_WINDOW_SECONDS[window],
     [window]
@@ -28,7 +29,8 @@ export function useOraclePriceHistory(assetId: `0x${string}` | undefined, window
   const subgraphQuery = useOraclePriceUpdatesQuery(assetId, minTimestamp, MAX_HISTORY_ROWS);
   const subgraphRows = useMemo(() => subgraphQuery.data ?? [], [subgraphQuery.data]);
   const shouldUseRpcFallback =
-    Boolean(assetId) && (subgraphQuery.isError || (subgraphQuery.isSuccess && subgraphRows.length === 0));
+    Boolean(assetId) &&
+    (!isSubgraphEnabled || subgraphQuery.isError || (subgraphQuery.isSuccess && subgraphRows.length === 0));
 
   const rpcQuery = useQuery({
     queryKey: ["oraclePriceHistoryRpc", chainId, oracleAdapter, assetId, minTimestamp.toString()],

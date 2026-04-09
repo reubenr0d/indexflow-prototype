@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { useReadContract } from "wagmi";
-import { useChainId } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
   useOracleAssetPrice,
   useOracleIsStale,
@@ -28,7 +28,7 @@ import { Search, Radio, ChevronRight } from "lucide-react";
 export default function PricesPage() {
   const [search, setSearch] = useState("");
   const [notional, setNotional] = useState("");
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
   const { liquidityUsd1e30, poolLoading } = usePoolLiquidityUsd1e30();
   const { data: assetLabels } = useOracleAssetLabelMap();
@@ -132,7 +132,7 @@ function AssetPriceRow({
   notionalUsdcAtoms: bigint;
   liquidityUsd1e30: bigint;
 }) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   const { data: assetId } = useReadContract({

@@ -2,13 +2,13 @@
 
 Canonical deployment references for each supported network.
 
-Last updated: 2026-04-07
+Last updated: 2026-04-09
 
 ## Network summary
 
 | Network | Chain ID | Status | Config source |
 | --- | --- | --- | --- |
-| Local (Anvil) | `31337` | Deployed | app runtime uses `apps/web/src/config/sepolia-deployment.json` |
+| Local (Anvil) | `31337` | Deployed | `apps/web/src/config/local-deployment.json` |
 | Ethereum Sepolia | `11155111` | Deployed + verified | `apps/web/src/config/sepolia-deployment.json` |
 | Arbitrum One | `42161` | Not deployed in this repo snapshot | N/A |
 | Arbitrum Sepolia | `421614` | Not deployed in this repo snapshot | N/A |
@@ -17,17 +17,20 @@ Last updated: 2026-04-07
 
 Config file: `apps/web/src/config/local-deployment.json`
 
-Runtime note: `anvil` in `apps/web/src/config/contracts.ts` is currently mapped to Sepolia addresses from `sepolia-deployment.json`. The local file remains as deployment output/reference.
+Runtime note: the web app maps `anvil` to local deployment addresses, persists the selected target in browser `localStorage`, and keeps it aligned with the wallet chain selector in the connect button.
 
-- `basketFactory`: `0x9d4454B023096f34B160D6B654540c56A1F81688`
-- `vaultAccounting`: `0xc3e53F4d16Ae77Db1c982e75a937B9f60FE63690`
-- `oracleAdapter`: `0x4A679253410272dd5232B3Ff7cF5dbB88f295319`
-- `perpReader`: `0x998abeb3E57409262aE5b751f60747921B33613E`
-- `pricingEngine`: `0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9`
-- `fundingRateManager`: `0x1613beB3B2C4f22Ee086B2b38C1476A3cE7f78E8`
-- `priceSync`: `0x70e0bA845a1A0F2DA3359C97E0285013525FFC49`
-- `usdc`: `0x5FbDB2315678afecb367f032d93F642f64180aa3`
-- `gmxVault`: `0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6`
+Subgraph note: when target is `anvil`, subgraph queries are disabled and the app runs RPC-only data paths/fallbacks.
+This applies across the main basket discovery/overview surfaces (`/`, `/dashboard`, `/admin`, `/baskets`, `/admin/baskets`), so local creations are shown from RPC reads immediately on Anvil.
+
+- `basketFactory`: `0xD5ac451B0c50B9476107823Af206eD814a2e2580`
+- `vaultAccounting`: `0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9`
+- `oracleAdapter`: `0xfbC22278A96299D91d41C453234d97b4F5Eb9B2d`
+- `perpReader`: `0x720472c8ce72c2A2D711333e064ABD3E6BbEAdd3`
+- `pricingEngine`: `0x86A2EE8FAf9A840F7a2c64CA3d51209F9A02081D`
+- `fundingRateManager`: `0xA4899D35897033b927acFCf422bc745916139776`
+- `priceSync`: `0xe8D2A1E88c91DCd5433208d4152Cc4F399a7e91d`
+- `usdc`: `0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc`
+- `gmxVault`: `0x04C89607413713Ec9775E14b954286519d836FEf`
 
 ## Ethereum Sepolia
 

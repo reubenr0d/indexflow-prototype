@@ -3,9 +3,10 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
-import { useChainId, usePublicClient } from "wagmi";
+import { usePublicClient } from "wagmi";
 import { BasketShareTokenABI, BasketVaultABI } from "@/abi/contracts";
-import { getSubgraphClient, getSubgraphUrl } from "@/lib/subgraph/client";
+import { getSubgraphClient } from "@/lib/subgraph/client";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { parseBigInt, toBasketOverviewRows, toUserPortfolioRows } from "@/lib/subgraph/transform";
 import {
   GET_ADMIN_VAULT_STATES,
@@ -27,6 +28,15 @@ const ERC20_BALANCE_OF_ABI = [
     outputs: [{ name: "", type: "uint256" }],
   },
 ] as const;
+
+function useAvailableSubgraph() {
+  const { isSubgraphEnabled } = useDeploymentTarget();
+  const client = useMemo(
+    () => (isSubgraphEnabled ? getSubgraphClient() : null),
+    [isSubgraphEnabled]
+  );
+  return { client, isAvailable: isSubgraphEnabled && Boolean(client) };
+}
 
 type RawBasketAsset = {
   id: string;
@@ -180,8 +190,7 @@ export type BasketOverview = {
 };
 
 export function useBasketsOverviewQuery(params?: { first?: number; skip?: number }) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
   const first = params?.first ?? DEFAULT_PAGE_SIZE;
   const skip = params?.skip ?? 0;
 
@@ -290,8 +299,7 @@ export type OraclePriceUpdateRow = {
 };
 
 export function useBasketDetailQuery(vault: Address | undefined, activityFirst = 20, activitySkip = 0) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
 
   return useQuery({
     queryKey: ["subgraph", "basketDetail", vault, activityFirst, activitySkip],
@@ -380,8 +388,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
 }
 
 export function useBasketActivitiesQuery(vault: Address | undefined, first = 20, skip = 0) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
 
   return useQuery({
     queryKey: ["subgraph", "basketActivities", vault, first, skip],
@@ -416,8 +423,7 @@ export function useBasketActivitiesQuery(vault: Address | undefined, first = 20,
 }
 
 export function useOraclePriceUpdatesQuery(assetId: `0x${string}` | undefined, minTimestamp: bigint, first = 500) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
 
   return useQuery({
     queryKey: ["subgraph", "oraclePriceUpdates", assetId, minTimestamp.toString(), first],
@@ -496,9 +502,12 @@ const TREND_PERIODS: Record<BasketSnapshotPeriod, bigint> = {
 };
 
 export function useBasketTrendSnapshots(vault: Address | undefined) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const publicClient = usePublicClient();
-  const chainId = useChainId();
+  const { chainId, isSubgraphEnabled } = useDeploymentTarget();
+  const client = useMemo(
+    () => (isSubgraphEnabled ? getSubgraphClient() : null),
+    [isSubgraphEnabled]
+  );
+  const publicClient = usePublicClient({ chainId });
   const isAvailable = Boolean(vault);
 
   return useQuery({
@@ -852,8 +861,7 @@ export type UserPortfolioHolding = {
 };
 
 export function useUserPortfolioQuery(userAddress: Address | undefined, first = DEFAULT_PAGE_SIZE) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
 
   return useQuery({
     queryKey: ["subgraph", "userPortfolio", userAddress, first],
@@ -896,8 +904,7 @@ export type AdminVaultState = {
 };
 
 export function useVaultStatesQuery(params?: { first?: number; skip?: number }) {
-  const client = useMemo(() => getSubgraphClient(), []);
-  const isAvailable = Boolean(getSubgraphUrl());
+  const { client, isAvailable } = useAvailableSubgraph();
   const first = params?.first ?? DEFAULT_PAGE_SIZE;
   const skip = params?.skip ?? 0;
 

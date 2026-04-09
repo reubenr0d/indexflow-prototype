@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount } from "wagmi";
 import {
   useApproveUSDC,
   useDeposit,
@@ -10,6 +10,7 @@ import {
   useUSDCBalance,
 } from "@/hooks/useBasketVault";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatUSDC, formatShares, parseUSDCInput } from "@/lib/format";
 import { PRICE_PRECISION } from "@/lib/constants";
 import { showToast } from "@/components/ui/toast";
@@ -54,7 +55,7 @@ export function DepositRedeemPanel({
   const [mode, setMode] = useState<Mode>("deposit");
   const [amount, setAmount] = useState("");
   const { address } = useAccount();
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { usdc } = getContracts(chainId);
 
   const { data: usdcBalance } = useUSDCBalance(usdc, address);

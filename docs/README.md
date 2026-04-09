@@ -1,43 +1,49 @@
 # Documentation Index
 
-This index mirrors the in-app wiki information architecture used at `/docs` in the web app.
+This index mirrors the in-app docs routes at `/docs` in the web app.
 
-## In-app wiki map
+## In-app docs map (canonical routes)
 
-- `/docs` — searchable docs hub with role filters and start-here tracks.
-- `/docs/overview` — protocol mental model and system paths.
-- `/docs/investor` — deposit/redeem mechanics and liquidity behavior.
-- `/docs/operator` — basket/perp setup and daily operations runbook.
-- `/docs/perp-risk-math` — leverage formulas, units, and liquidation caveats for operators.
-- `/docs/operator-interactions` — transaction-level interaction matrix for operator write flows.
-- `/docs/oracle-price-sync` — keeper and feed synchronization operations.
-- `/docs/pool-management` — GMX pool controls (`setBufferAmount`, `directPoolDeposit`).
-- `/docs/contracts-reference` — contract capability and permissions map.
-- `/docs/troubleshooting` — common failures, diagnostics, and recovery flow.
-- `/docs/security-risk` — role boundaries, risk controls, and operational guardrails.
+- `/docs` — searchable index built from repository markdown under `docs/*.md`.
+- `/docs/readme` — source: `docs/README.md`
+- `/docs/investor-flow` — source: `docs/INVESTOR_FLOW.md`
+- `/docs/asset-manager-flow` — source: `docs/ASSET_MANAGER_FLOW.md`
+- `/docs/perp-risk-math` — source: `docs/PERP_RISK_MATH.md`
+- `/docs/operator-interactions` — source: `docs/OPERATOR_INTERACTIONS.md`
+- `/docs/price-feed-flow` — source: `docs/PRICE_FEED_FLOW.md`
+- `/docs/global-pool-management-flow` — source: `docs/GLOBAL_POOL_MANAGEMENT_FLOW.md`
+- `/docs/deployments` — source: `docs/DEPLOYMENTS.md`
+- `/docs/e2e-testing` — source: `docs/E2E_TESTING.md`
+- `/docs/share-price-and-operations` — source: `docs/SHARE_PRICE_AND_OPERATIONS.md`
+
+## Legacy route aliases
+
+These legacy in-app wiki routes are preserved for compatibility and redirect to canonical routes:
+
+- `/docs/overview` -> `/docs/readme`
+- `/docs/investor` -> `/docs/investor-flow`
+- `/docs/operator` -> `/docs/asset-manager-flow`
+- `/docs/perp-risk-math` -> `/docs/perp-risk-math`
+- `/docs/operator-interactions` -> `/docs/operator-interactions`
+- `/docs/oracle-price-sync` -> `/docs/price-feed-flow`
+- `/docs/pool-management` -> `/docs/global-pool-management-flow`
+- `/docs/contracts-reference` -> `/docs/readme`
+- `/docs/troubleshooting` -> `/docs/readme`
+- `/docs/security-risk` -> `/docs/readme`
 
 ## Canonical markdown sources
 
+- [README.md](./README.md)
 - [INVESTOR_FLOW.md](./INVESTOR_FLOW.md)
 - [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md)
 - [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)
 - [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md)
-- [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
 - [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md)
+- [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
 - [DEPLOYMENTS.md](./DEPLOYMENTS.md)
 - [E2E_TESTING.md](./E2E_TESTING.md)
-- [../README.md](../README.md) (Operations + deployment workflow)
-- [../MODIFICATIONS.md](../MODIFICATIONS.md) (upstream GMX diffs)
+- [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md)
 
-## Content template standard
+## Sync expectation
 
-Each in-app wiki page follows this normalized template:
-
-- Who is this for
-- What this section covers (`Overview / Guides / Reference`)
-- Required permissions
-- Step-by-step flow
-- Failure modes
-- Related pages
-
-When markdown docs are updated, ensure corresponding in-app wiki content stays aligned.
+When markdown files under `docs/` change, `/docs` reflects those changes automatically because content is rendered directly from repository markdown.

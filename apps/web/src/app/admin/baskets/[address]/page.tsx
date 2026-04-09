@@ -28,7 +28,7 @@ import {
   useBasketAssets,
 } from "@/hooks/useBasketVault";
 import { useOracleAssetMetaMap, useSupportedOracleAssets } from "@/hooks/useOracle";
-import { useWriteContract, useWaitForTransactionReceipt, useAccount, useChainId, useReadContracts } from "wagmi";
+import { useWriteContract, useWaitForTransactionReceipt, useAccount, useReadContracts } from "wagmi";
 import { BasketVaultABI, OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
 import { formatUSDC, formatBps, formatAssetId, formatAddress, formatPrice, formatRelativeTime, formatUsd1e30, formatSignedUsd1e30 } from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
@@ -36,6 +36,7 @@ import { showToast } from "@/components/ui/toast";
 import { encodePacked, keccak256, type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { PRICE_PRECISION, REFETCH_INTERVAL, USDC_PRECISION } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
@@ -81,7 +82,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     isFetching: isOnchainAssetsFetching,
   } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { usdc, oracleAdapter, vaultAccounting } = getContracts(chainId);
 
   const basketInfo = info as {

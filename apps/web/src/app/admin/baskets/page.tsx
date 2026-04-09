@@ -9,7 +9,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
@@ -21,11 +20,12 @@ import { type Address } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 
 export default function AdminBasketsPage() {
   const [showCreate, setShowCreate] = useState(false);
+  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
-  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: rpcLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
@@ -41,7 +41,7 @@ export default function AdminBasketsPage() {
   }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
   const shouldUseRpcFallback =
-    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
   const isLoading = shouldUseRpcFallback ? rpcLoading : subgraph.isLoading;
   const infos = shouldUseRpcFallback
     ? rpcInfos

@@ -48,6 +48,10 @@ vi.mock("@/config/contracts", () => ({
   getContracts: () => ({ usdc: "0x0000000000000000000000000000000000000001" }),
 }));
 
+vi.mock("@/providers/DeploymentProvider", () => ({
+  useDeploymentTarget: () => ({ chainId: 31337 }),
+}));
+
 describe("DepositRedeemPanel", () => {
   it("renders icon tabs with the quote section and no inline transaction rail", () => {
     const html = renderToStaticMarkup(

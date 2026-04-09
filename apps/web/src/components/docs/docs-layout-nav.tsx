@@ -1,12 +1,17 @@
+"use client";
+
 import Link from "next/link";
-import { DOCS_PAGES_SORTED } from "@/lib/wiki";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import type { DocsManifestEntry } from "@/lib/docs-types";
 
 export function docsHref(slug: string) {
-  return slug === "overview" ? "/docs/overview" : `/docs/${slug}`;
+  return `/docs/${slug}`;
 }
 
-export function DocsLayoutNav({ pathname }: { pathname: string }) {
+export function DocsLayoutNav({ docs }: { docs: DocsManifestEntry[] }) {
+  const pathname = usePathname();
+
   return (
     <>
       <aside className="hidden w-64 shrink-0 border-r border-app-border bg-app-bg-subtle/70 lg:block">
@@ -20,7 +25,7 @@ export function DocsLayoutNav({ pathname }: { pathname: string }) {
           >
             Docs Home
           </Link>
-          {DOCS_PAGES_SORTED.map((page) => {
+          {docs.map((page) => {
             const href = docsHref(page.slug);
             const active = pathname === href;
             return (
@@ -52,7 +57,7 @@ export function DocsLayoutNav({ pathname }: { pathname: string }) {
           >
             Home
           </Link>
-          {DOCS_PAGES_SORTED.map((page) => {
+          {docs.map((page) => {
             const href = docsHref(page.slug);
             const active = pathname === href;
             return (

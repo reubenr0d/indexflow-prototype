@@ -13,6 +13,7 @@ import {
 } from "wagmi";
 import { anvil } from "viem/chains";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { ERC20ABI } from "@/abi/erc20";
 import { showToast } from "@/components/ui/toast";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
@@ -41,11 +42,12 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { address } = useAccount();
   const { connect, connectors, isPending: isConnectPending } = useConnect();
-  const chainId = useChainId();
-  const { usdc } = getContracts(chainId);
+  const walletChainId = useChainId();
+  const { chainId: deploymentChainId } = useDeploymentTarget();
+  const { usdc } = getContracts(deploymentChainId);
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
-  const isLocalChain = chainId === anvil.id;
+  const isLocalChain = walletChainId === anvil.id;
   const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
   const onHome = pathname === "/";

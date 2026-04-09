@@ -7,7 +7,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { getSubgraphUrl } from "@/lib/subgraph/client";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatCompact, formatUSDC, formatBps } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
@@ -24,8 +24,8 @@ const quickLinks = [
 ];
 
 export default function AdminOverview() {
+  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
-  const subgraphConfigured = Boolean(getSubgraphUrl());
 
   const { data: baskets } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
@@ -36,7 +36,7 @@ export default function AdminOverview() {
   const rpcInfos = ((basketInfos as unknown as Array<{ usdcBalance: bigint; perpAllocated: bigint }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
   const shouldUseRpcFallback =
-    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
   const infos = shouldUseRpcFallback
     ? rpcInfos
     : subgraphData.map((item) => ({

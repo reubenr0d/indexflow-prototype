@@ -1,67 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { DOCS_PAGES, DOCS_SLUGS } from "./wiki";
-import { DOCS_START_PATHS } from "@/components/docs/docs-home-client";
+import { getAllDocsRouteSlugs, getDocsManifest, resolveCanonicalDocsSlug } from "@/lib/docs.server";
+import { LEGACY_DOCS_SLUGS } from "@/lib/wiki";
 
-describe("wiki docs registry", () => {
-  it("keeps DOCS_SLUGS and DOCS_PAGES in sync", () => {
-    const slugs = new Set(DOCS_SLUGS);
-    const pageKeys = Object.keys(DOCS_PAGES);
+describe("docs registry", () => {
+  it("exposes all markdown docs from docs/", async () => {
+    const docs = await getDocsManifest();
+    expect(docs).toHaveLength(10);
 
-    for (const slug of DOCS_SLUGS) {
-      expect(DOCS_PAGES[slug]).toBeDefined();
-    }
-
-    for (const key of pageKeys) {
-      expect(slugs.has(key as (typeof DOCS_SLUGS)[number])).toBe(true);
-    }
+    const files = docs.map((doc) => doc.fileName).sort();
+    expect(files).toEqual([
+      "ASSET_MANAGER_FLOW.md",
+      "DEPLOYMENTS.md",
+      "E2E_TESTING.md",
+      "GLOBAL_POOL_MANAGEMENT_FLOW.md",
+      "INVESTOR_FLOW.md",
+      "OPERATOR_INTERACTIONS.md",
+      "PERP_RISK_MATH.md",
+      "PRICE_FEED_FLOW.md",
+      "README.md",
+      "SHARE_PRICE_AND_OPERATIONS.md",
+    ]);
   });
 
-  it("ensures docs home start-path slugs resolve", () => {
-    for (const path of DOCS_START_PATHS) {
-      for (const slug of path.slugs) {
-        expect(DOCS_PAGES[slug]).toBeDefined();
-      }
-    }
-  });
+  it("keeps route slugs unique and includes legacy aliases", async () => {
+    const slugs = await getAllDocsRouteSlugs();
+    const unique = new Set(slugs);
 
-  it("enforces non-empty structured docs sections", () => {
-    for (const page of Object.values(DOCS_PAGES)) {
-      if (page.formulas) {
-        for (const formula of page.formulas) {
-          expect(formula.name.trim().length).toBeGreaterThan(0);
-          expect(formula.expression.trim().length).toBeGreaterThan(0);
-          expect(formula.notes.trim().length).toBeGreaterThan(0);
-        }
-      }
+    expect(unique.size).toBe(slugs.length);
 
-      if (page.unitsGlossary) {
-        for (const unit of page.unitsGlossary) {
-          expect(unit.term.trim().length).toBeGreaterThan(0);
-          expect(unit.value.trim().length).toBeGreaterThan(0);
-          expect(unit.notes.trim().length).toBeGreaterThan(0);
-        }
-      }
-
-      if (page.interactionMatrix) {
-        for (const row of page.interactionMatrix) {
-          expect(row.contract.trim().length).toBeGreaterThan(0);
-          expect(row.fn.trim().length).toBeGreaterThan(0);
-          expect(row.caller.trim().length).toBeGreaterThan(0);
-          expect(row.inputs.length).toBeGreaterThan(0);
-          expect(row.preconditions.length).toBeGreaterThan(0);
-          expect(row.stateDeltas.length).toBeGreaterThan(0);
-          expect(row.failureRisks.length).toBeGreaterThan(0);
-          expect(row.postTxChecks.length).toBeGreaterThan(0);
-        }
-      }
-
-      if (page.preflightChecklist) {
-        expect(page.preflightChecklist.length).toBeGreaterThan(0);
-      }
-
-      if (page.postflightChecklist) {
-        expect(page.postflightChecklist.length).toBeGreaterThan(0);
-      }
+    for (const legacy of LEGACY_DOCS_SLUGS) {
+      expect(slugs.includes(legacy)).toBe(true);
+      expect(resolveCanonicalDocsSlug(legacy)).not.toBeNull();
     }
   });
 });

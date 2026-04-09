@@ -82,10 +82,11 @@ npm run deploy:sepolia
 
 Web app runtime contract wiring:
 
-- `apps/web/src/config/sepolia-deployment.json` is the active source for Sepolia.
-- Local app sessions on `anvil` also use the same Sepolia deployment mapping in `apps/web/src/config/contracts.ts`.
-- In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), the web app switches Anvil contract addresses to `apps/web/src/config/local-deployment.json` and uses a deterministic mock wallet connector for CI-stable signing.
-- When MetaMask is connected on the wrong network, the app auto-requests a switch to Ethereum Sepolia.
+- Deployment target still persists in `localStorage`, but switching now follows the wallet chain selector in the connect button (single network dropdown in navbar).
+- `apps/web/src/config/sepolia-deployment.json` is used when target is `sepolia`.
+- `apps/web/src/config/local-deployment.json` is used when target is `anvil`.
+- In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), deployment target is locked to `anvil` and the deterministic mock wallet connector remains enabled for CI-stable signing.
+- When MetaMask is connected on the wrong network, the app auto-requests a switch to the selected deployment chain.
 
 ## Subgraph Ops
 
@@ -101,6 +102,12 @@ NETWORK=anvil npm --prefix apps/subgraph run build
 # generate + build for Ethereum Sepolia indexing
 NETWORK=sepolia npm --prefix apps/subgraph run build
 ```
+
+Runtime note:
+
+- The web app only uses subgraph reads when deployment target is `sepolia`.
+- When deployment target is `anvil`, subgraph queries are disabled and the app uses RPC-only data paths/fallbacks where available.
+- This target-gated behavior applies to home/dashboard/admin/baskets list surfaces, so local basket creation is visible immediately on Anvil without subgraph indexing.
 
 ## Operations
 
@@ -156,17 +163,19 @@ npm run submit-sync:sepolia
 ## Documentation
 
 - In-app wiki (web app):
-  - `/docs` — Searchable docs hub with role filters and start-here paths.
-  - `/docs/overview`
-  - `/docs/investor`
-  - `/docs/operator`
-  - `/docs/perp-risk-math`
-  - `/docs/operator-interactions`
-  - `/docs/oracle-price-sync`
-  - `/docs/pool-management`
-  - `/docs/contracts-reference`
-  - `/docs/troubleshooting`
-  - `/docs/security-risk`
+  - `/docs` — searchable index sourced directly from repository markdown under `docs/*.md`.
+  - Canonical routes:
+    - `/docs/readme`
+    - `/docs/investor-flow`
+    - `/docs/asset-manager-flow`
+    - `/docs/perp-risk-math`
+    - `/docs/operator-interactions`
+    - `/docs/price-feed-flow`
+    - `/docs/global-pool-management-flow`
+    - `/docs/deployments`
+    - `/docs/e2e-testing`
+    - `/docs/share-price-and-operations`
+  - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
 - Operator monitoring surfaces (web app):
   - `/prices` — live oracle status and current per-asset prices.
   - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
@@ -179,7 +188,7 @@ npm run submit-sync:sepolia
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
-- [docs/README.md](docs/README.md) — Maintainer-facing docs map mirroring in-app wiki IA and canonical markdown sources.
+- [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.
 - Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
 
 ## E2E Tests

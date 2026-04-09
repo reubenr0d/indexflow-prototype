@@ -5,14 +5,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { WagmiProvider, useAccount, useChainId, useSwitchChain } from "wagmi";
 import { connect as connectAction } from "wagmi/actions";
-import { sepolia } from "wagmi/chains";
 import { showToast } from "@/components/ui/toast";
+import { deploymentLabel, deploymentTargetForChainId } from "@/lib/deployment";
 import { config } from "@/config/wagmi";
+import { DeploymentProvider, useDeploymentTarget } from "@/providers/DeploymentProvider";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const queryClient = new QueryClient();
 const MM_SWITCH_COOLDOWN_MS = 30_000;
-const MM_SWITCH_COOLDOWN_KEY = "indexflow:mm-switch-sepolia-cooldown-until";
+const MM_SWITCH_COOLDOWN_KEY = "indexflow:mm-switch-deployment-cooldown-until";
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
 const rkTheme = {
@@ -42,9 +43,10 @@ function setCooldownUntil(until: number) {
   window.sessionStorage.setItem(MM_SWITCH_COOLDOWN_KEY, String(until));
 }
 
-function AutoSwitchMetaMaskToSepolia() {
+function AutoSwitchMetaMaskToDeploymentChain() {
   const { isConnected, connector, address } = useAccount();
-  const chainId = useChainId();
+  const walletChainId = useChainId();
+  const { chainId: targetChainId, target, setTarget } = useDeploymentTarget();
   const { switchChainAsync } = useSwitchChain();
   const inFlightRef = useRef(false);
 
@@ -52,7 +54,13 @@ function AutoSwitchMetaMaskToSepolia() {
     if (isE2ETestMode) return;
     if (!isConnected) return;
     if (connector?.id !== "metaMask") return;
-    if (chainId === sepolia.id) {
+    const mappedTarget = deploymentTargetForChainId(walletChainId);
+    if (mappedTarget && mappedTarget !== target) {
+      setTarget(mappedTarget);
+      setCooldownUntil(0);
+      return;
+    }
+    if (walletChainId === targetChainId) {
       setCooldownUntil(0);
       return;
     }
@@ -64,21 +72,21 @@ function AutoSwitchMetaMaskToSepolia() {
     inFlightRef.current = true;
     setCooldownUntil(now + MM_SWITCH_COOLDOWN_MS);
 
-    switchChainAsync({ chainId: sepolia.id })
+    switchChainAsync({ chainId: targetChainId })
       .then(() => {
         setCooldownUntil(0);
-        showToast("success", "Switched network to Sepolia");
+        showToast("success", `Switched network to ${deploymentLabel(target)}`);
       })
       .catch(() => {
         showToast(
           "error",
-          "Wrong MetaMask network. Please switch to Sepolia to continue."
+          `Wrong MetaMask network. Please switch to ${deploymentLabel(target)} to continue.`
         );
       })
       .finally(() => {
         inFlightRef.current = false;
       });
-  }, [address, chainId, connector?.id, isConnected, switchChainAsync]);
+  }, [address, connector?.id, isConnected, setTarget, switchChainAsync, target, targetChainId, walletChainId]);
 
   return null;
 }
@@ -105,16 +113,24 @@ function AutoConnectE2EWallet() {
   return null;
 }
 
-export function Web3Provider({ children }: { children: React.ReactNode }) {
+function Web3ProviderInner({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider theme={rkTheme} modalSize="compact">
           <AutoConnectE2EWallet />
-          <AutoSwitchMetaMaskToSepolia />
+          <AutoSwitchMetaMaskToDeploymentChain />
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
+  );
+}
+
+export function Web3Provider({ children }: { children: React.ReactNode }) {
+  return (
+    <DeploymentProvider>
+      <Web3ProviderInner>{children}</Web3ProviderInner>
+    </DeploymentProvider>
   );
 }

@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 import { useReadContract, useReadContracts } from "wagmi";
-import { useChainId } from "wagmi";
 import { OracleAdapterABI, PricingEngineABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { PRICE_PRECISION, USDC_PRECISION, REFETCH_INTERVAL } from "@/lib/constants";
 import { usePoolUtilization } from "@/hooks/usePerpReader";
 import { type Address } from "viem";
@@ -40,7 +40,7 @@ export function usePricingExecutionQuote({
   isLong,
   enabled = true,
 }: PricingQuoteArgs) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { usdc, pricingEngine, oracleAdapter } = getContracts(chainId);
   const { data: poolRaw, isLoading: poolLoading } = usePoolUtilization(usdc);
 
@@ -113,7 +113,7 @@ export type PoolLiquidityUsd = {
 
 /** Shared pool → USD 1e30 for multiple quote rows (e.g. prices page). */
 export function usePoolLiquidityUsd1e30(): PoolLiquidityUsd {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { usdc } = getContracts(chainId);
   const { data: poolRaw, isLoading: poolLoading } = usePoolUtilization(usdc);
   const pool = poolRaw as { poolAmount: bigint } | undefined;
@@ -138,7 +138,7 @@ export function usePricingExecutionQuoteBothSides({
   liquidityUsd1e30,
   enabled = true,
 }: BothSidesQuoteArgs) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { pricingEngine, oracleAdapter } = getContracts(chainId);
   const validId = useValidAssetId(assetId);
   const sizeUsd1e30 = useMemo(() => usdcAtomsToUsd1e30(sizeUsdcAtoms), [sizeUsdcAtoms]);

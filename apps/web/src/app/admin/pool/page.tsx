@@ -14,14 +14,13 @@ import { usePoolUtilization } from "@/hooks/usePerpReader";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import { getContractErrorMessage } from "@/hooks/useContractErrorToast";
 import {
-  useAccount,
-  useChainId,
-  usePublicClient,
+  useAccount,  usePublicClient,
   useReadContract,
   useReadContracts,
   useWriteContract,
 } from "wagmi";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatAddress, formatTokenAmount, formatUSDC, formatUsd1e30, parseTokenAmountInput } from "@/lib/format";
 import { motion } from "framer-motion";
 import { PerpReaderABI } from "@/abi/contracts";
@@ -123,7 +122,7 @@ type TokenRowData = {
 };
 
 export default function AdminPoolPage() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { address } = useAccount();
   const { usdc, gmxVault, perpReader } = getContracts(chainId);
   const { data, isLoading } = usePoolUtilization(usdc);
@@ -361,7 +360,8 @@ function PoolTokenControlsRow({
   canSetBuffer: boolean;
   walletConnected: boolean;
 }) {
-  const publicClient = usePublicClient();
+  const { chainId } = useDeploymentTarget();
+  const publicClient = usePublicClient({ chainId });
   const refreshAfterTx = usePostTxRefresh();
   const { writeContractAsync, isPending } = useWriteContract();
   const [bufferInput, setBufferInput] = useState("");

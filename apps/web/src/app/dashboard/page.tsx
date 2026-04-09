@@ -8,7 +8,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { getSubgraphUrl } from "@/lib/subgraph/client";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatUSDC, formatCompact, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { USDC_PRECISION } from "@/lib/constants";
@@ -17,8 +17,8 @@ import { ArrowUpRight } from "lucide-react";
 import { type Address } from "viem";
 
 export default function DashboardPage() {
+  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
-  const subgraphConfigured = Boolean(getSubgraphUrl());
 
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
@@ -38,7 +38,7 @@ export default function DashboardPage() {
   const hasRpcData = rpcInfos.length > 0;
   const rpcIsLoading = basketsLoading || infosLoading;
   const shouldUseRpcFallback =
-    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
   const isLoading = shouldUseRpcFallback ? rpcIsLoading : subgraph.isLoading;
 
   const infos = shouldUseRpcFallback

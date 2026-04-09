@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
-import { useChainId, useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import { OracleAdapterABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
   useOracleAssetPrice,
   useOracleIsStale,
@@ -37,7 +38,7 @@ const PRICE_SYNC_ABI = [
 ] as const;
 
 export default function AdminOraclePage() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter, priceSync } = getContracts(chainId);
 
   const { data: assetCount, isLoading } = useReadContract({
@@ -231,7 +232,7 @@ function OracleAssetCard({
   index: number;
   assetLabels: Map<`0x${string}`, string>;
 }) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   const { data: assetId } = useReadContract({

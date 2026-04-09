@@ -1,10 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
-import { useChainId, useReadContract, useReadContracts } from "wagmi";
+import { useReadContract, useReadContracts } from "wagmi";
 import { OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
 import { ERC20ABI } from "@/abi/erc20";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { formatAssetId } from "@/lib/format";
 import { type Address, zeroAddress } from "viem";
@@ -18,7 +19,7 @@ export function getOracleSourceLabel(feedType?: number | bigint | null): OracleS
 }
 
 export function useOracleAssetCount() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   return useReadContract({
@@ -30,7 +31,7 @@ export function useOracleAssetCount() {
 }
 
 export function useOracleAssetPrice(assetId: `0x${string}`) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   return useReadContract({
@@ -43,7 +44,7 @@ export function useOracleAssetPrice(assetId: `0x${string}`) {
 }
 
 export function useOracleIsStale(assetId: `0x${string}`) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   return useReadContract({
@@ -56,7 +57,7 @@ export function useOracleIsStale(assetId: `0x${string}`) {
 }
 
 export function useOracleAssetConfig(assetId: `0x${string}`) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
 
   return useReadContract({
@@ -69,7 +70,7 @@ export function useOracleAssetConfig(assetId: `0x${string}`) {
 }
 
 export function useSupportedOracleAssets() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter, vaultAccounting } = getContracts(chainId);
 
   const { data: assetCount, isLoading: isCountLoading } = useReadContract({

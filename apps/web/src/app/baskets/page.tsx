@@ -26,8 +26,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { getSubgraphUrl } from "@/lib/subgraph/client";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { type ComponentType } from "react";
 
 type SortKey = "tvl" | "price" | "newest";
@@ -49,9 +49,9 @@ export default function BasketsPage() {
   const [sort, setSort] = useState<SortKey>("tvl");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Set<BasketListFilterKey>>(new Set());
+  const { isSubgraphEnabled } = useDeploymentTarget();
 
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
-  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
@@ -86,7 +86,7 @@ export default function BasketsPage() {
   );
   const hasRpcData = rpcInfos.length > 0;
   const shouldUseRpcFallback =
-    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
 
   const infoRows = useMemo<BasketInfoRow[]>(
     () =>

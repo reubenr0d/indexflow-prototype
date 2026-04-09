@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Web app local-network data source selection: basket/listing surfaces now gate subgraph usage by active deployment target (`isSubgraphEnabled`) instead of raw subgraph URL presence, so Anvil sessions reliably use RPC fallback and show locally created baskets.
 - Subgraph network targeting corrected from `arbitrum-sepolia` to `sepolia` for Ethereum Sepolia deployments: `apps/subgraph` sync/manifest/deploy flow now uses `NETWORK=sepolia`, docs/scripts were updated accordingly, and the legacy `apps/subgraph/indexflow-prototype` Studio manifest now also targets `sepolia` with the current `sepolia-deployment.json` BasketFactory address.
 - Web app lint reliability: ESLint now ignores generated `.vercel/**` build output, preventing non-source artifacts from causing lint failures during local/CI runs.
 - Web app: enforced strict data-source fallback policy for indexed/list/history reads: when `NEXT_PUBLIC_SUBGRAPH_URL` is configured and subgraph queries succeed, subgraph data is preferred; when subgraph is unavailable/errors/returns unusable rows, affected views fully fall back to RPC instead of partial mixed sourcing.
@@ -25,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Web app deployment target state layer (`sepolia` / `anvil`) with persistent browser selection (`localStorage`) and wallet-chain-driven switching.
+- Web tests: new deployment helper coverage (`apps/web/src/lib/deployment.test.ts`) and deployment contract resolver coverage (`apps/web/src/config/contracts.test.ts`).
 - Web app E2E stack (Playwright + Chromium) under `apps/web/e2e` with deterministic CI wallet mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), smoke coverage, and a full user lifecycle gate from deposit to redeem-with-profit with admin basket/oracle/pool writes and onchain net-profit assertions.
 - CI: new `e2e` job in `.github/workflows/test.yml` for PR/push branches (`main`, `develop`, `feature/**`) that starts Anvil, runs `deploy:local`, executes Playwright, and uploads trace/screenshot/video/report artifacts on failures.
 - Web app admin oracle surface: manual write controls on `/admin/oracle` for `OracleAdapter.submitPrice` and `PriceSync.syncAll` (real onchain tx path for relayer price updates).
@@ -72,6 +75,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Web app runtime contract resolution now follows selected deployment target: `anvil` resolves from `apps/web/src/config/local-deployment.json`, `sepolia` resolves from `apps/web/src/config/sepolia-deployment.json`.
+- Web app wallet network guard now auto-switches MetaMask to the selected deployment chain (Anvil or Sepolia) instead of always forcing Sepolia.
+- Web app subgraph policy now disables subgraph reads when deployment target is `anvil`, using RPC-only paths/fallbacks where available.
+- Web app `/docs` migrated from hardcoded wiki JSON to direct markdown rendering from repository `docs/*.md` with canonical filename-based routes, searchable docs index built from a server manifest, legacy route alias compatibility redirects, and live Mermaid rendering for fenced `mermaid` code blocks.
 - Web app wallet UX: added a global MetaMask network guard that auto-prompts `wallet_switchEthereumChain` to Ethereum Sepolia when a connected MetaMask session is on the wrong chain (including Anvil), with cooldown/in-flight protection and error toast fallback to avoid prompt loops.
 - Web app contract config wiring (`apps/web/src/config/contracts.ts`): `anvil` runtime mapping now points to `sepolia-deployment.json` addresses (same source as Sepolia), so local app sessions read from the existing Sepolia deployment JSON instead of `local-deployment.json`.
 - Web app: basket deposit/redeem panel now shows a live quote preview, action icons, inline transaction rail states, and clearer submit/approval status feedback; shared status/trend pill primitives and basket icon helpers were added for consistency.

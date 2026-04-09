@@ -35,7 +35,7 @@ import {
   useBasketActivitiesQuery,
   useBasketDetailQuery,
 } from "@/hooks/subgraph/useSubgraphQueries";
-import { useAccount, useChainId, useConfig, usePublicClient, useReadContract, useReadContracts } from "wagmi";
+import { useAccount, useConfig, usePublicClient, useReadContract, useReadContracts } from "wagmi";
 import { BasketShareTokenABI, OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
 import {
   formatUSDC,
@@ -68,6 +68,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { showToast } from "@/components/ui/toast";
 
@@ -77,7 +78,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const { address: vaultAddress } = use(params);
   const vault = vaultAddress as Address;
   const { address: userAddress } = useAccount();
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { oracleAdapter, vaultAccounting } = getContracts(chainId);
 
   const { data: info, isLoading } = useBasketInfo(vault);
@@ -620,8 +621,8 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 }
 
 function useVaultHistoryFallback(vault: Address, enabled: boolean) {
-  const publicClient = usePublicClient();
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
+  const publicClient = usePublicClient({ chainId });
   const { vaultAccounting } = getContracts(chainId);
 
   return useQuery({
@@ -784,7 +785,7 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
 
 function HistoryRowView({ row }: { row: BasketHistoryRow | BasketActivityRow }) {
   const config = useConfig();
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
   const txHref = explorer ? `${explorer}/tx/${row.txHash}` : "#";
   const meta = getBasketActivityMeta(row);

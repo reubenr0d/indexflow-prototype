@@ -1,14 +1,14 @@
 "use client";
 
 import { useReadContract, useReadContracts } from "wagmi";
-import { useChainId } from "wagmi";
 import { PerpReaderABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { type Address } from "viem";
 
 export function useBasketInfo(vault: Address) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -21,7 +21,7 @@ export function useBasketInfo(vault: Address) {
 }
 
 export function useBasketInfoBatch(vaults: Address[]) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -34,7 +34,7 @@ export function useBasketInfoBatch(vaults: Address[]) {
 }
 
 export function useVaultState(vault: Address) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -47,7 +47,7 @@ export function useVaultState(vault: Address) {
 }
 
 export function useVaultStateBatch(vaults: Address[]) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContracts({
@@ -62,7 +62,7 @@ export function useVaultStateBatch(vaults: Address[]) {
 }
 
 export function useVaultPnL(vault: Address) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -75,7 +75,7 @@ export function useVaultPnL(vault: Address) {
 }
 
 export function useTotalVaultValue(vault: Address) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -88,7 +88,7 @@ export function useTotalVaultValue(vault: Address) {
 }
 
 export function useOraclePrice(assetId: `0x${string}`) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({
@@ -101,7 +101,7 @@ export function useOraclePrice(assetId: `0x${string}`) {
 }
 
 export function usePoolUtilization(token: Address) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { perpReader } = getContracts(chainId);
 
   return useReadContract({

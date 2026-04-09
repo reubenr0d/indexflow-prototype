@@ -1,6 +1,7 @@
 import { type Address } from "viem";
 import { anvil } from "viem/chains";
 import { arbitrum, arbitrumSepolia, sepolia } from "wagmi/chains";
+import { type DeploymentTarget } from "@/lib/deployment";
 import localDeployment from "./local-deployment.json";
 import sepoliaDeployment from "./sepolia-deployment.json";
 
@@ -28,23 +29,22 @@ type DeploymentFile = {
   gmxVault: string;
 };
 
-const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 const ld = localDeployment as DeploymentFile;
 const sd = sepoliaDeployment as DeploymentFile;
 
-export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
-  [anvil.id]: {
-    basketFactory: (isE2ETestMode ? ld.basketFactory : sd.basketFactory) as Address,
-    vaultAccounting: (isE2ETestMode ? ld.vaultAccounting : sd.vaultAccounting) as Address,
-    oracleAdapter: (isE2ETestMode ? ld.oracleAdapter : sd.oracleAdapter) as Address,
-    perpReader: (isE2ETestMode ? ld.perpReader : sd.perpReader) as Address,
-    pricingEngine: (isE2ETestMode ? ld.pricingEngine : sd.pricingEngine) as Address,
-    fundingRateManager: (isE2ETestMode ? ld.fundingRateManager : sd.fundingRateManager) as Address,
-    priceSync: ((isE2ETestMode ? ld.priceSync : sd.priceSync) ?? "0x0000000000000000000000000000000000000000") as Address,
-    usdc: (isE2ETestMode ? ld.usdc : sd.usdc) as Address,
-    gmxVault: (isE2ETestMode ? ld.gmxVault : sd.gmxVault) as Address,
+const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
+  anvil: {
+    basketFactory: ld.basketFactory as Address,
+    vaultAccounting: ld.vaultAccounting as Address,
+    oracleAdapter: ld.oracleAdapter as Address,
+    perpReader: ld.perpReader as Address,
+    pricingEngine: ld.pricingEngine as Address,
+    fundingRateManager: ld.fundingRateManager as Address,
+    priceSync: (ld.priceSync ?? "0x0000000000000000000000000000000000000000") as Address,
+    usdc: ld.usdc as Address,
+    gmxVault: ld.gmxVault as Address,
   },
-  [sepolia.id]: {
+  sepolia: {
     basketFactory: sd.basketFactory as Address,
     vaultAccounting: sd.vaultAccounting as Address,
     oracleAdapter: sd.oracleAdapter as Address,
@@ -55,6 +55,11 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     usdc: sd.usdc as Address,
     gmxVault: sd.gmxVault as Address,
   },
+};
+
+export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
+  [anvil.id]: BY_DEPLOYMENT_TARGET.anvil,
+  [sepolia.id]: BY_DEPLOYMENT_TARGET.sepolia,
   [arbitrum.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
     vaultAccounting: "0x0000000000000000000000000000000000000002" as Address,
@@ -78,6 +83,10 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     gmxVault: "0x0000000000000000000000000000000000000009" as Address,
   },
 };
+
+export function getContractsForDeploymentTarget(target: DeploymentTarget): ContractAddresses {
+  return BY_DEPLOYMENT_TARGET[target] ?? BY_DEPLOYMENT_TARGET.sepolia;
+}
 
 export function getContracts(chainId: number): ContractAddresses {
   return CONTRACT_ADDRESSES[chainId] ?? CONTRACT_ADDRESSES[sepolia.id];

@@ -15,14 +15,14 @@ import {
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { getSubgraphUrl } from "@/lib/subgraph/client";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatCompact } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { type Address } from "viem";
 
 export default function HomePage() {
+  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
-  const subgraphConfigured = Boolean(getSubgraphUrl());
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
   const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
@@ -36,7 +36,7 @@ export default function HomePage() {
   }>) ?? []);
   const hasRpcData = rpcInfos.length > 0;
   const shouldUseRpcFallback =
-    !subgraphConfigured || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
+    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
   const isLoading = shouldUseRpcFallback
     ? basketsLoading || infosLoading || vaultStatesLoading
     : subgraph.isLoading || vaultStatesLoading;

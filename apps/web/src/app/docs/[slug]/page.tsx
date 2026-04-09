@@ -1,37 +1,43 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { DocsPageContent } from "@/components/docs/docs-page-content";
-import { DOCS_SLUGS, getDocsPage } from "@/lib/wiki";
+import { getAllDocsRouteSlugs, getDocBySlug, resolveCanonicalDocsSlug } from "@/lib/docs.server";
 
 interface DocsRouteParams {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return DOCS_SLUGS.map((slug) => ({ slug }));
+  const slugs = await getAllDocsRouteSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: DocsRouteParams): Promise<Metadata> {
   const { slug } = await params;
-  const page = getDocsPage(slug);
+  const doc = await getDocBySlug(slug);
 
-  if (!page) {
+  if (!doc) {
     return {
       title: "Docs Not Found",
     };
   }
 
   return {
-    title: `IndexFlow Docs | ${page.title}`,
-    description: page.summary,
+    title: `IndexFlow Docs | ${doc.title}`,
+    description: doc.summary,
   };
 }
 
 export default async function DocsSlugPage({ params }: DocsRouteParams) {
   const { slug } = await params;
-  const page = getDocsPage(slug);
+  const doc = await getDocBySlug(slug);
 
-  if (!page) notFound();
+  if (!doc) notFound();
 
-  return <DocsPageContent page={page} />;
+  const canonical = resolveCanonicalDocsSlug(slug);
+  if (canonical && slug !== canonical) {
+    redirect(`/docs/${canonical}`);
+  }
+
+  return <DocsPageContent doc={doc} />;
 }

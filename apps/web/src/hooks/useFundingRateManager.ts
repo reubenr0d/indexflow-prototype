@@ -1,13 +1,14 @@
 "use client";
 
-import { useChainId, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { type Address } from "viem";
 import { FundingRateManagerABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 
 export function useFundingOwner() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -19,7 +20,7 @@ export function useFundingOwner() {
 }
 
 export function useFundingInterval() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -31,7 +32,7 @@ export function useFundingInterval() {
 }
 
 export function useDefaultFundingFactors() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   const base = useReadContract({
@@ -55,7 +56,7 @@ export function useDefaultFundingFactors() {
 }
 
 export function useFundingKeeperStatus(keeper: Address | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -68,7 +69,7 @@ export function useFundingKeeperStatus(keeper: Address | undefined) {
 }
 
 export function useFundingAssetToken(assetId: `0x${string}` | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -81,7 +82,7 @@ export function useFundingAssetToken(assetId: `0x${string}` | undefined) {
 }
 
 export function useFundingConfig(assetId: `0x${string}` | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -94,7 +95,7 @@ export function useFundingConfig(assetId: `0x${string}` | undefined) {
 }
 
 export function useCalculatedFundingRateFactor(assetId: `0x${string}` | undefined) {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
 
   return useReadContract({
@@ -107,7 +108,7 @@ export function useCalculatedFundingRateFactor(assetId: `0x${string}` | undefine
 }
 
 export function useSetFundingKeeper() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -125,7 +126,7 @@ export function useSetFundingKeeper() {
 }
 
 export function useSetFundingInterval() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -143,7 +144,7 @@ export function useSetFundingInterval() {
 }
 
 export function useSetDefaultFunding() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -161,7 +162,7 @@ export function useSetDefaultFunding() {
 }
 
 export function useConfigureFunding() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -184,7 +185,7 @@ export function useConfigureFunding() {
 }
 
 export function useMapFundingAssetToken() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -202,7 +203,7 @@ export function useMapFundingAssetToken() {
 }
 
 export function useTransferFundingOwnership() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
@@ -220,7 +221,7 @@ export function useTransferFundingOwnership() {
 }
 
 export function useUpdateFundingRate() {
-  const chainId = useChainId();
+  const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
   const { writeContract, data: hash, ...rest } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
