@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
-import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useConfig } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt, useConfig } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { OracleAdapterABI, AssetWiringABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -112,7 +113,7 @@ export default function AdminOraclePage() {
     isPending: isSubmitPricePending,
     error: submitPriceError,
     isError: isSubmitPriceError,
-  } = useWriteContract();
+  } = useSponsoredWriteContract();
   const submitPriceReceipt = useWaitForTransactionReceipt({ hash: submitPriceHash });
 
   const {
@@ -121,7 +122,7 @@ export default function AdminOraclePage() {
     isPending: isSyncAllPending,
     error: syncAllError,
     isError: isSyncAllError,
-  } = useWriteContract();
+  } = useSponsoredWriteContract();
   const syncAllReceipt = useWaitForTransactionReceipt({ hash: syncAllHash });
 
   useEffect(() => {
@@ -278,6 +279,7 @@ function RegisterAssetCard() {
   const { assetWiring } = getContracts(chainId);
 
   const config = useConfig();
+  const { writeContractAsync } = useSponsoredWriteContract();
   const [selected, setSelected] = useState<YFSearchSelection | null>(null);
   const [quote, setQuote] = useState<YFQuote | null>(null);
   const [isFetchingQuote, setIsFetchingQuote] = useState(false);
@@ -361,8 +363,7 @@ function RegisterAssetCard() {
           setIsWiring(true);
           showToast("pending", `Wiring ${selected.symbol}...`);
           try {
-            const { writeContract } = await import("wagmi/actions");
-            const hash = await writeContract(config, {
+            const hash = await writeContractAsync({
               address: assetWiring,
               abi: AssetWiringABI,
               functionName: "wireAsset",

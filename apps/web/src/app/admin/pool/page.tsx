@@ -18,8 +18,8 @@ import {
   useAccount,  usePublicClient,
   useReadContract,
   useReadContracts,
-  useWriteContract,
 } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatAddress, formatTokenAmount, formatUSDC, formatUsd1e30, parseTokenAmountInput } from "@/lib/format";
@@ -364,7 +364,7 @@ function PoolTokenControlsRow({
   const { chainId } = useDeploymentTarget();
   const publicClient = usePublicClient({ chainId });
   const refreshAfterTx = usePostTxRefresh();
-  const { writeContractAsync, isPending } = useWriteContract();
+  const { writeContractAsync, isPending } = useSponsoredWriteContract();
   const [bufferInput, setBufferInput] = useState("");
   const [depositInput, setDepositInput] = useState("");
   const [isSettingBuffer, setIsSettingBuffer] = useState(false);

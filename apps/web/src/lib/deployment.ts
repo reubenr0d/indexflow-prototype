@@ -34,10 +34,12 @@ const LOCAL_SUBGRAPH_URL = "http://localhost:8000/subgraphs/name/indexflow-proto
 
 /**
  * Returns the subgraph URL for a given target.
- * - anvil: always uses the local graph-node URL.
+ * - e2e test mode: always null (pure RPC, no subgraph dependency).
+ * - anvil: local graph-node URL.
  * - sepolia / other: uses NEXT_PUBLIC_SUBGRAPH_URL from env.
  */
 export function getSubgraphUrlForTarget(target: DeploymentTarget): string | null {
+  if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") return null;
   if (target === "anvil") return LOCAL_SUBGRAPH_URL;
   const envUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL?.trim() ?? "";
   return envUrl.length > 0 ? envUrl : null;

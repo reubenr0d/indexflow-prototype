@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { BasketVaultABI } from "@/abi/contracts";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
@@ -14,7 +15,7 @@ import { type Address } from "viem";
 
 export function FeeCollectionCard({ vault }: { vault: Address }) {
   const refreshAfterTx = usePostTxRefresh();
-  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
+  const { writeContract, data: hash, isPending, error, isError } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
   const [recipient, setRecipient] = useState("");
 

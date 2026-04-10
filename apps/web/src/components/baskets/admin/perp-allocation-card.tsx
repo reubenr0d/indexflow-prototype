@@ -8,7 +8,8 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
 import { BasketVaultABI } from "@/abi/contracts";
 import { formatUSDC, parseUSDCInput } from "@/lib/format";
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWaitForTransactionReceipt } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import { type Address } from "viem";
@@ -24,7 +25,7 @@ export function PerpAllocationCard({
 }) {
   const [amount, setAmount] = useState("");
   const refreshAfterTx = usePostTxRefresh();
-  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
+  const { writeContract, data: hash, isPending, error, isError } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   useEffect(() => {

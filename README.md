@@ -165,7 +165,7 @@ npm run local:down
 
 ## Subgraph Ops
 
-`apps/subgraph` now syncs network addresses from web deployment outputs before manifest generation.
+`apps/subgraph` syncs network addresses from web deployment outputs before manifest generation.
 
 ```bash
 # optional manual sync
@@ -177,6 +177,19 @@ NETWORK=anvil npm --prefix apps/subgraph run build
 # generate + build for Ethereum Sepolia indexing
 NETWORK=sepolia npm --prefix apps/subgraph run build
 ```
+
+### Deploying to Subgraph Studio (Sepolia)
+
+```bash
+# authenticate (one-time, deploy key from https://thegraph.com/studio/)
+npx graph auth <DEPLOY_KEY>
+
+# deploy
+NETWORK=sepolia SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
+```
+
+Set `NEXT_PUBLIC_SUBGRAPH_URL` in Vercel (or `.env.local`) to the Studio query URL, e.g.
+`https://api.studio.thegraph.com/query/<id>/<slug>/<version>`.
 
 Runtime note:
 
@@ -310,4 +323,4 @@ PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 n
 NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:ci
 ```
 
-For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above. The upload step is best-effort (non-blocking) and retried once on transient failure so Codecov outages do not fail overall CI. During Codecov incidents, the badge can remain stale until a later successful upload. CI also pins `foundry-rs/foundry-toolchain` to Foundry `v1.3.1` (instead of floating `stable`) to keep `forge/cast/anvil/chisel` installs deterministic across runs, and provides placeholder explorer API key env vars for non-verify local broadcast steps in CI.
+For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads Foundry LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above, with Codecov project status scoped to Solidity paths (`**/*.sol`) and upload search disabled so only `lcov.info` is processed. The upload step is best-effort (non-blocking) and retried once on transient failure so Codecov outages do not fail overall CI. During Codecov incidents, the badge can remain stale until a later successful upload. CI also pins `foundry-rs/foundry-toolchain` to Foundry `v1.3.1` (instead of floating `stable`) to keep `forge/cast/anvil/chisel` installs deterministic across runs, and provides placeholder explorer API key env vars for non-verify local broadcast steps in CI.

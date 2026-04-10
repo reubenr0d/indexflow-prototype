@@ -1,6 +1,7 @@
 "use client";
 
-import { useReadContract, useReadContracts, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useReadContracts, useWaitForTransactionReceipt } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { BasketVaultABI } from "@/abi/contracts";
 import { ERC20ABI } from "@/abi/erc20";
 import { REFETCH_INTERVAL } from "@/lib/constants";
@@ -59,7 +60,7 @@ export function useBasketFees(vault: Address) {
 }
 
 export function useDeposit() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const deposit = (vault: Address, amount: bigint) => {
@@ -75,7 +76,7 @@ export function useDeposit() {
 }
 
 export function useRedeem() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const redeem = (vault: Address, shares: bigint) => {
@@ -91,7 +92,7 @@ export function useRedeem() {
 }
 
 export function useApproveUSDC() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const approve = (token: Address, spender: Address, amount: bigint) => {
@@ -136,7 +137,7 @@ export function useMaxPerpAllocation(vault: Address) {
 }
 
 export function useSetMaxPerpAllocation() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setMaxPerpAllocation = (vault: Address, cap: bigint) => {
@@ -152,7 +153,7 @@ export function useSetMaxPerpAllocation() {
 }
 
 export function useSetAssets() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setAssets = (vault: Address, assetIds: `0x${string}`[]) => {
@@ -215,7 +216,7 @@ export function useCollectedFees(vault: Address) {
 }
 
 export function useSetMinReserveBps() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setMinReserveBps = (vault: Address, bps: bigint) => {
@@ -231,7 +232,7 @@ export function useSetMinReserveBps() {
 }
 
 export function useTopUpReserve() {
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const topUpReserve = (vault: Address, amount: bigint) => {

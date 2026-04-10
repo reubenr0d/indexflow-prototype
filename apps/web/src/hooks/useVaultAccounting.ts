@@ -1,6 +1,7 @@
 "use client";
 
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { VaultAccountingABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -22,7 +23,7 @@ export function useRegisteredVaults() {
 export function useOpenPosition() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const openPosition = (
@@ -46,7 +47,7 @@ export function useOpenPosition() {
 export function useClosePosition() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const closePosition = (
@@ -70,7 +71,7 @@ export function useClosePosition() {
 export function useRegisterVault() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const registerVault = (vault: Address) => {
@@ -88,7 +89,7 @@ export function useRegisterVault() {
 export function useDeregisterVault() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const deregisterVault = (vault: Address) => {
@@ -168,7 +169,7 @@ export function useMaxPositionSize(vault: Address | undefined) {
 export function useSetPaused() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setPaused = (paused: boolean) => {
@@ -186,7 +187,7 @@ export function useSetPaused() {
 export function useSetMaxOpenInterest() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setMaxOpenInterest = (vault: Address, cap: bigint) => {
@@ -204,7 +205,7 @@ export function useSetMaxOpenInterest() {
 export function useSetMaxPositionSize() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setMaxPositionSize = (vault: Address, cap: bigint) => {

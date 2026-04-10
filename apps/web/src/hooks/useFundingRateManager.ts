@@ -1,6 +1,7 @@
 "use client";
 
-import { useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { type Address } from "viem";
 import { FundingRateManagerABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
@@ -110,7 +111,7 @@ export function useCalculatedFundingRateFactor(assetId: `0x${string}` | undefine
 export function useSetFundingKeeper() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setKeeper = (keeper: Address, active: boolean) => {
@@ -128,7 +129,7 @@ export function useSetFundingKeeper() {
 export function useSetFundingInterval() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setFundingInterval = (interval: bigint) => {
@@ -146,7 +147,7 @@ export function useSetFundingInterval() {
 export function useSetDefaultFunding() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const setDefaultFunding = (baseFactor: bigint, maxFactor: bigint) => {
@@ -164,7 +165,7 @@ export function useSetDefaultFunding() {
 export function useConfigureFunding() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const configureFunding = (
@@ -187,7 +188,7 @@ export function useConfigureFunding() {
 export function useMapFundingAssetToken() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const mapAssetToken = (assetId: `0x${string}`, token: Address) => {
@@ -205,7 +206,7 @@ export function useMapFundingAssetToken() {
 export function useTransferFundingOwnership() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const transferOwnership = (newOwner: Address) => {
@@ -223,7 +224,7 @@ export function useTransferFundingOwnership() {
 export function useUpdateFundingRate() {
   const { chainId } = useDeploymentTarget();
   const { fundingRateManager } = getContracts(chainId);
-  const { writeContract, data: hash, ...rest } = useWriteContract();
+  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
 
   const updateFundingRate = (newFundingRateFactor: bigint, newStableFundingRateFactor: bigint) => {

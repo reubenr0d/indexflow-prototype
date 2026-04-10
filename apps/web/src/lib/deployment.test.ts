@@ -27,6 +27,23 @@ describe("deployment target helpers", () => {
     expect(url).toBe("http://localhost:8000/subgraphs/name/indexflow-prototype");
   });
 
+  it("returns null for anvil in e2e test mode", () => {
+    const originalE2E = process.env.NEXT_PUBLIC_E2E_TEST_MODE;
+    process.env.NEXT_PUBLIC_E2E_TEST_MODE = "1";
+    expect(getSubgraphUrlForTarget("anvil")).toBeNull();
+    process.env.NEXT_PUBLIC_E2E_TEST_MODE = originalE2E;
+  });
+
+  it("returns null for sepolia in e2e test mode even with subgraph URL set", () => {
+    const originalE2E = process.env.NEXT_PUBLIC_E2E_TEST_MODE;
+    const originalUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+    process.env.NEXT_PUBLIC_E2E_TEST_MODE = "1";
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "https://example.com/subgraph";
+    expect(getSubgraphUrlForTarget("sepolia")).toBeNull();
+    process.env.NEXT_PUBLIC_E2E_TEST_MODE = originalE2E;
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalUrl;
+  });
+
   it("returns env subgraph URL for sepolia when set", () => {
     const originalEnv = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
     process.env.NEXT_PUBLIC_SUBGRAPH_URL = "https://example.com/subgraph";

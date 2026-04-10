@@ -15,16 +15,16 @@
   },
   "sepolia": {
     "basketFactory": {
-      "address": "0xBaBd358731e88d5A61AaB2fb0F142bEcCd8140AE",
-      "startBlock": 0
+      "address": "0x109e0A03011d7c4c54a7073a828a07FfF2868304",
+      "startBlock": 10630646
     },
     "vaultAccounting": {
-      "address": "0xbEBc462234Ec50f95512E139B37620c2Cc0004B4",
-      "startBlock": 0
+      "address": "0x8C6B61ADfe35B1B0609D905650420F3A00f813Aa",
+      "startBlock": 10630646
     },
     "oracleAdapter": {
-      "address": "0x437709EEC882CdaD9c51Cc23aF270C016F9cC12a",
-      "startBlock": 0
+      "address": "0xBeB2E04850d1E306eb52EfC69d9B6f1550F10195",
+      "startBlock": 10630646
     }
   }
 }

@@ -8,7 +8,7 @@
     "codegen": "npm run generate:manifest && graph codegen",
     "build": "npm run generate:manifest && graph build",
     "test": "npm run generate:manifest && graph test",
-    "deploy": "npm run generate:manifest && graph deploy --product hosted-service $SUBGRAPH_SLUG",
+    "deploy": "npm run generate:manifest && graph deploy -l $npm_package_version $SUBGRAPH_SLUG",
     "deploy:anvil": "NETWORK=anvil npm run deploy",
     "deploy:sepolia": "NETWORK=sepolia npm run deploy"
   },

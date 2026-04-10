@@ -36,30 +36,33 @@ If the subgraph URL is unset, unavailable, or returns unusable rows, the app fal
 
 Config file: `apps/web/src/config/sepolia-deployment.json`
 
-- Deployment sender (latest successful run): `0x5083D5fa3690c2F6aB07f0C6E76DF4938287c7B9`
+- Deployment sender (latest successful run): `0x36716c8c5D1AE680C78bD0eCC230896556399713`
 - Broadcast status: `ONCHAIN EXECUTION COMPLETE & SUCCESSFUL`
-- Verification status: all submitted contracts verified on Etherscan
+- Verification status: all 16 contracts verified on Etherscan
+- Deployment block: `10630646`
 
 Addresses:
 
-- `basketFactory`: `0xBaBd358731e88d5A61AaB2fb0F142bEcCd8140AE`  
-  https://sepolia.etherscan.io/address/0xBaBd358731e88d5A61AaB2fb0F142bEcCd8140AE
-- `vaultAccounting`: `0xbEBc462234Ec50f95512E139B37620c2Cc0004B4`  
-  https://sepolia.etherscan.io/address/0xbEBc462234Ec50f95512E139B37620c2Cc0004B4
-- `oracleAdapter`: `0x437709EEC882CdaD9c51Cc23aF270C016F9cC12a`  
-  https://sepolia.etherscan.io/address/0x437709EEC882CdaD9c51Cc23aF270C016F9cC12a
-- `perpReader`: `0xBD019190BE59f85FA434BF8b50Ccd3Be489cfB61`  
-  https://sepolia.etherscan.io/address/0xBD019190BE59f85FA434BF8b50Ccd3Be489cfB61
-- `pricingEngine`: `0xF4bd48D20eF86A18C77aC087Ea9C3c18875cB866`  
-  https://sepolia.etherscan.io/address/0xF4bd48D20eF86A18C77aC087Ea9C3c18875cB866
-- `fundingRateManager`: `0xBb7712270772E54C30e209C4d48bb48027d123d6`  
-  https://sepolia.etherscan.io/address/0xBb7712270772E54C30e209C4d48bb48027d123d6
-- `priceSync`: `0x4f21b3b3F8DaB982b0c60582CfAbcCa7a9E39589`  
-  https://sepolia.etherscan.io/address/0x4f21b3b3F8DaB982b0c60582CfAbcCa7a9E39589
-- `usdc`: `0xa35c4A5Df6b135F67B61369756f4dCA86B99CC30`  
-  https://sepolia.etherscan.io/address/0xa35c4A5Df6b135F67B61369756f4dCA86B99CC30
-- `gmxVault`: `0xC37c372f9477b2C8324B93B4d52336400FF46f8C`  
-  https://sepolia.etherscan.io/address/0xC37c372f9477b2C8324B93B4d52336400FF46f8C
+- `basketFactory`: `0x109e0A03011d7c4c54a7073a828a07FfF2868304`  
+  https://sepolia.etherscan.io/address/0x109e0A03011d7c4c54a7073a828a07FfF2868304
+- `vaultAccounting`: `0x8C6B61ADfe35B1B0609D905650420F3A00f813Aa`  
+  https://sepolia.etherscan.io/address/0x8C6B61ADfe35B1B0609D905650420F3A00f813Aa
+- `oracleAdapter`: `0xBeB2E04850d1E306eb52EfC69d9B6f1550F10195`  
+  https://sepolia.etherscan.io/address/0xBeB2E04850d1E306eb52EfC69d9B6f1550F10195
+- `perpReader`: `0xDb7e9F905a73C4d81d26d0C2550FfFa70F4258B8`  
+  https://sepolia.etherscan.io/address/0xDb7e9F905a73C4d81d26d0C2550FfFa70F4258B8
+- `pricingEngine`: `0x81C1Fe4e8327EfD8acF0b557634485382154C02c`  
+  https://sepolia.etherscan.io/address/0x81C1Fe4e8327EfD8acF0b557634485382154C02c
+- `fundingRateManager`: `0x05AedC382F0C0EfD4E3CBa4b3B2e039ed87BB23D`  
+  https://sepolia.etherscan.io/address/0x05AedC382F0C0EfD4E3CBa4b3B2e039ed87BB23D
+- `priceSync`: `0x15ebFD9aF9f9a011ea2cD25C9C02627B960114f0`  
+  https://sepolia.etherscan.io/address/0x15ebFD9aF9f9a011ea2cD25C9C02627B960114f0
+- `usdc`: `0x8E8056412447BFf11b693263bef80B9a046f53fB`  
+  https://sepolia.etherscan.io/address/0x8E8056412447BFf11b693263bef80B9a046f53fB
+- `gmxVault`: `0x99B0Ff40C7d6CBcaEf167532e09191CA23384f7b`  
+  https://sepolia.etherscan.io/address/0x99B0Ff40C7d6CBcaEf167532e09191CA23384f7b
+- `assetWiring`: `0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C`  
+  https://sepolia.etherscan.io/address/0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C
 
 ## How to refresh
 

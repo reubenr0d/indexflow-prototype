@@ -25,9 +25,10 @@ npm run sync:networks
 NETWORK=anvil npm run codegen
 NETWORK=anvil npm run build
 
-# Deploy (Hosted Service)
-export SUBGRAPH_SLUG=<account>/<name>
-NETWORK=anvil npm run deploy
+# Deploy to Subgraph Studio
+npx graph auth <DEPLOY_KEY>
+export SUBGRAPH_SLUG=<slug>
+NETWORK=sepolia npm run deploy
 ```
 
 Set `NETWORK=sepolia` for Ethereum Sepolia indexing using `apps/web/src/config/sepolia-deployment.json`.
