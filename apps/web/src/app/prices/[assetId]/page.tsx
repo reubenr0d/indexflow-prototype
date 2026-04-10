@@ -15,7 +15,7 @@ import {
   useOracleAssetLabelMap,
   useOracleAssetPrice,
   useOracleIsStale,
-  getOracleSourceLabel,
+  getOracleSourceBadgeLabel,
 } from "@/hooks/useOracle";
 import { useOraclePriceHistory } from "@/hooks/useOraclePriceHistory";
 import { formatAssetId, formatPrice, formatPriceFull, formatRelativeTime } from "@/lib/format";
@@ -61,7 +61,7 @@ export default function AssetPriceDetailPage() {
   const timestamp = Number((priceData as [bigint, bigint] | undefined)?.[1] ?? 0n);
   const status = getOracleStatus((isStale as boolean) ?? false, timestamp);
   const feedType = (config as { feedType: number | bigint } | undefined)?.feedType;
-  const sourceLabel = getOracleSourceLabel(feedType);
+  const sourceLabel = getOracleSourceBadgeLabel(assetId, feedType);
 
   return (
     <PageWrapper className="max-w-7xl">

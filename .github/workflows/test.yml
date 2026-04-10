@@ -11,6 +11,7 @@ on:
 
 env:
   FOUNDRY_PROFILE: ci
+  FOUNDRY_VERSION: v1.3.1
 
 # npm ci requires package-lock.json in the repo root; keep it committed.
 
@@ -25,6 +26,8 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -53,6 +56,8 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -81,6 +86,8 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -95,6 +102,17 @@ jobs:
         run: forge coverage --ir-minimum --report lcov --report-file lcov.info
 
       - name: Upload coverage to Codecov
+        id: codecov_upload
+        continue-on-error: true
+        uses: codecov/codecov-action@v5
+        with:
+          files: lcov.info
+          fail_ci_if_error: false
+          use_oidc: true
+
+      - name: Retry Codecov upload once on transient failure
+        if: steps.codecov_upload.outcome == 'failure'
+        continue-on-error: true
         uses: codecov/codecov-action@v5
         with:
           files: lcov.info
@@ -111,6 +129,8 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
@@ -135,6 +155,8 @@ jobs:
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4

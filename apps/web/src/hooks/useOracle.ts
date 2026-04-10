@@ -8,13 +8,34 @@ import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { formatAssetId } from "@/lib/format";
-import { type Address, zeroAddress } from "viem";
+import { keccak256, stringToHex, type Address, zeroAddress } from "viem";
 
 export type OracleSourceLabel = "Chainlink" | "Custom Oracle" | "Unknown";
+export type OracleSourceBadgeLabel = "Chainlink" | "Custom Oracle" | "Custom Oracle (Pyth)" | "Unknown";
+
+const PYTH_RELAY_ASSET_IDS = new Set<`0x${string}`>(
+  ["XAG", "BHP", "RIO", "VALE", "NEM", "FCX", "SCCO"].map((asset) =>
+    keccak256(stringToHex(asset))
+  ) as `0x${string}`[]
+);
 
 export function getOracleSourceLabel(feedType?: number | bigint | null): OracleSourceLabel {
   if (feedType === 0 || feedType === 0n) return "Chainlink";
   if (feedType === 1 || feedType === 1n) return "Custom Oracle";
+  return "Unknown";
+}
+
+export function getOracleSourceBadgeLabel(
+  assetId: `0x${string}` | undefined,
+  feedType?: number | bigint | null
+): OracleSourceBadgeLabel {
+  if (feedType === 0 || feedType === 0n) return "Chainlink";
+  if (feedType === 1 || feedType === 1n) {
+    if (assetId && PYTH_RELAY_ASSET_IDS.has(assetId.toLowerCase() as `0x${string}`)) {
+      return "Custom Oracle (Pyth)";
+    }
+    return "Custom Oracle";
+  }
   return "Unknown";
 }
 

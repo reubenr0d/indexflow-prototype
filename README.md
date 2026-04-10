@@ -229,7 +229,7 @@ Updater safety checks:
     - `/docs/share-price-and-operations`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
 - Operator monitoring surfaces (web app):
-  - `/prices` — live oracle status and current per-asset prices.
+- `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink`, `Custom Oracle (Pyth)` for mapped Pyth-relayed assets, otherwise `Custom Oracle`).
   - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
@@ -257,4 +257,4 @@ PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 n
 NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:ci
 ```
 
-For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above.
+For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above. The upload step is best-effort (non-blocking) and retried once on transient failure so Codecov outages do not fail overall CI. During Codecov incidents, the badge can remain stale until a later successful upload. CI also pins `foundry-rs/foundry-toolchain` to Foundry `v1.3.1` (instead of floating `stable`) to keep `forge/cast/anvil/chisel` installs deterministic across runs.

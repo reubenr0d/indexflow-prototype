@@ -13,6 +13,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-10 14:26 UTC+07:00] CI Foundry toolchain install stability: `.github/workflows/test.yml` now pins `foundry-rs/foundry-toolchain@v1` to `v1.3.1` across all jobs (build/test/coverage/lint/e2e) instead of floating `stable`, avoiding upstream `foundryup` attestation/hash mismatches that were failing E2E setup.
+- [2026-04-10 14:08 UTC+07:00] CI coverage upload reliability: Codecov upload in `.github/workflows/test.yml` is explicitly non-blocking (`continue-on-error: true` plus `fail_ci_if_error: false`) and now retries once after a failed first attempt, so transient Codecov API `5xx` responses do not fail otherwise healthy workflow runs.
 - [2026-04-10 13:10 UTC+07:00] Web app deployment-target subgraph gating: `anvil` now uses subgraph reads whenever `NEXT_PUBLIC_SUBGRAPH_URL` is configured (same behavior as `sepolia`), while preserving RPC fallback when subgraph URL is unset/unavailable/returns unusable rows.
 - Web app local-network data source selection: basket/listing surfaces now gate subgraph usage by active deployment target (`isSubgraphEnabled`) instead of raw subgraph URL presence, so Anvil sessions reliably use RPC fallback and show locally created baskets.
 - Subgraph network targeting corrected from `arbitrum-sepolia` to `sepolia` for Ethereum Sepolia deployments: `apps/subgraph` sync/manifest/deploy flow now uses `NETWORK=sepolia`, docs/scripts were updated accordingly, and the legacy `apps/subgraph/indexflow-prototype` Studio manifest now also targets `sepolia` with the current `sepolia-deployment.json` BasketFactory address.
@@ -86,6 +88,10 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-10 13:52 UTC+07:00] Web app `/prices` and `/prices/[assetId]` oracle source badges are now dynamically derived from configured source metadata: `Chainlink` for Chainlink feeds, `Custom Oracle (Pyth)` for known Pyth-relayed custom assets, and `Custom Oracle` for other custom-relayer assets.
+- [2026-04-10 13:44 UTC+07:00] Web app `/prices` and `/prices/[assetId]` source badges now identify custom-relayer assets as `Custom Oracle (Pyth)` (instead of generic `Custom Oracle`) so operators can immediately see that those feeds come from the Pyth relayer path.
+- [2026-04-10 13:33 UTC+07:00] `SyncAllOraclePrices` operator table was simplified to remove low-signal identifiers: rows now show token symbol-style asset labels (for example `GOLD`, `SILVER`, `BHP`) with `Before/Adapter/After/Status`, plus a changed-only `Before -> After` section, without printing asset hash ids or token addresses.
+- [2026-04-10 13:31 UTC+07:00] `SyncAllOraclePrices` script logs were reformatted for operator readability: post-sync output now prints a single markdown-style summary table (`Before`, `Adapter`, `After`, `Status`), marks changed prices with `>>value<<`, and adds a dedicated `Changed Prices` section that lists only rows where feed price actually changed.
 - [2026-04-10 13:10 UTC+07:00] Oracle deployment profiles now use a mixed-source Sepolia/local model:
   - `XAU` configured as `FeedType.Chainlink` (`0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea` on Sepolia, mock Chainlink feed locally).
   - `XAG` plus mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) configured as `FeedType.CustomRelayer` with `stalenessThreshold=86400` and `deviationBps=2000`.

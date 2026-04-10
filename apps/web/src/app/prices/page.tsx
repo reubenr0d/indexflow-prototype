@@ -16,7 +16,7 @@ import {
   useOracleIsStale,
   useOracleAssetLabelMap,
   useOracleAssetConfig,
-  getOracleSourceLabel,
+  getOracleSourceBadgeLabel,
 } from "@/hooks/useOracle";
 import { usePoolLiquidityUsd1e30, usePricingExecutionQuoteBothSides } from "@/hooks/usePricingQuote";
 import { formatPrice, formatRelativeTime, formatAssetId, formatBps, parseUSDCInput } from "@/lib/format";
@@ -166,7 +166,7 @@ function AssetPriceRow({
   const timestamp = Number((priceData as [bigint, bigint] | undefined)?.[1] ?? 0n);
   const status = getOracleStatus(isStale as boolean ?? false, timestamp);
   const feedType = (config as { feedType: number | bigint } | undefined)?.feedType;
-  const sourceLabel = getOracleSourceLabel(feedType);
+  const sourceLabel = getOracleSourceBadgeLabel(id, feedType);
 
   return (
     <Link
