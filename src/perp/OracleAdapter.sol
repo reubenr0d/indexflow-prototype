@@ -20,12 +20,14 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     mapping(bytes32 => PriceData) internal _prices;
     /// @notice Addresses allowed to call `submitPrice` / `submitPrices` (owner is always allowed).
     mapping(address => bool) public keepers;
+    /// @notice Human-readable symbol for each asset id (set by `configureAsset`).
+    mapping(bytes32 => string) public assetSymbols;
 
     /// @notice All asset ids ever configured while active (append-only; deactivated ids remain listed).
     bytes32[] public assetList;
 
     /// @notice Emitted when `configureAsset` creates or updates an asset.
-    event AssetConfigured(bytes32 indexed assetId, FeedType feedType, address feedAddress);
+    event AssetConfigured(bytes32 indexed assetId, string symbol, FeedType feedType, address feedAddress);
     /// @notice Emitted when `deactivateAsset` runs.
     event AssetRemoved(bytes32 indexed assetId);
     /// @notice Emitted on successful custom relayer write.
@@ -65,20 +67,21 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     }
 
     /// @notice Configure or update an asset feed.
-    /// @param assetId Logical asset key used by basket and perp layers.
+    /// @param symbol Human-readable ticker (e.g. "XAU", "BHP.AX"). Hashed to derive the asset id.
     /// @param feedAddress Chainlink aggregator address, or placeholder for custom relayer.
     /// @param feedType Chainlink (read feed) vs CustomRelayer (keeper writes).
     /// @param stalenessThreshold Max age in seconds before `isStale` is true.
     /// @param deviationBps Max relative change (BPS) between consecutive custom submissions.
     /// @param decimals_ Answer decimals from the feed (or off-chain source) before normalization to 1e30.
     function configureAsset(
-        bytes32 assetId,
+        string calldata symbol,
         address feedAddress,
         FeedType feedType,
         uint256 stalenessThreshold,
         uint256 deviationBps,
         uint8 decimals_
     ) external onlyOwner {
+        bytes32 assetId = keccak256(bytes(symbol));
         bool isNew = !_assetConfigs[assetId].active;
 
         _assetConfigs[assetId] = AssetConfig({
@@ -90,11 +93,13 @@ contract OracleAdapter is IOracleAdapter, Ownable {
             active: true
         });
 
+        assetSymbols[assetId] = symbol;
+
         if (isNew) {
             assetList.push(assetId);
         }
 
-        emit AssetConfigured(assetId, feedType, feedAddress);
+        emit AssetConfigured(assetId, symbol, feedType, feedAddress);
     }
 
     /// @notice Mark asset inactive; reads revert `AssetNotActive`.
@@ -216,6 +221,13 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     /// @return Count of configured entries ever pushed.
     function getAssetCount() external view returns (uint256) {
         return assetList.length;
+    }
+
+    /// @notice Human-readable symbol stored when `configureAsset` was called.
+    /// @param assetId Asset to look up.
+    /// @return symbol The symbol string, or empty if never set.
+    function getAssetSymbol(bytes32 assetId) external view returns (string memory) {
+        return assetSymbols[assetId];
     }
 
     // ─── Internal ────────────────────────────────────────────────

@@ -48,9 +48,9 @@ contract OracleAdapterTest is Test {
         goldFeed.setPrice(200_000_000_000); // $2000 * 1e8
 
         // Configure mixed feed profile
-        oracle.configureAsset(XAU, address(goldFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
-        oracle.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
-        oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
+        oracle.configureAsset("XAU", address(goldFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
+        oracle.configureAsset("XAG", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
+        oracle.configureAsset("BHP", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
 
         vm.prank(keeper);
         oracle.submitPrice(XAG, 2_500_000_000); // $25 * 1e8

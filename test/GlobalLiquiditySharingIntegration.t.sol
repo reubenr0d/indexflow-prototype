@@ -301,8 +301,8 @@ contract GlobalLiquiditySharingIntegrationTest is Test {
 
         oracleAdapter = new OracleAdapter(deployer);
         oracleAdapter.setKeeper(deployer, true);
-        oracleAdapter.configureAsset(GOLD_ID, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
-        oracleAdapter.configureAsset(SILVER_ID, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracleAdapter.configureAsset("XAU", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracleAdapter.configureAsset("XAG", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracleAdapter.submitPrice(GOLD_ID, 200_000_000_000);
         oracleAdapter.submitPrice(SILVER_ID, 2_500_000_000);
 

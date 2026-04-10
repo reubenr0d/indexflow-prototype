@@ -19,13 +19,16 @@
     "sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url sepolia --broadcast",
     "submit-sync:local": "forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url local --broadcast",
     "submit-sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url sepolia --broadcast",
-    "update-pyth:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-pyth-relayer-prices.js",
-    "update-pyth:sepolia:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-pyth-relayer-prices.js",
+    "update-prices:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-yahoo-finance-prices.js",
+    "update-prices:sepolia:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-yahoo-finance-prices.js",
+    "update-prices:local": "DEPLOYMENT_CONFIG=apps/web/src/config/local-deployment.json RPC_URL=http://127.0.0.1:8545 node scripts/update-yahoo-finance-prices.js",
+    "update-prices:local:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/local-deployment.json RPC_URL=http://127.0.0.1:8545 node scripts/update-yahoo-finance-prices.js",
     "local:up": "docker compose -f docker-compose.local.yml up -d --build",
     "local:down": "docker compose -f docker-compose.local.yml down -v",
     "local:logs": "docker compose -f docker-compose.local.yml logs -f"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.2.0"
+    "@openzeppelin/contracts": "^5.2.0",
+    "yahoo-finance2": "^3.14.0"
   }
 }

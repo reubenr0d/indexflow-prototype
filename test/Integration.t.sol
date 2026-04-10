@@ -207,7 +207,7 @@ contract IntegrationTest is Test {
 
         // Configure GOLD in OracleAdapter as custom relayer feed
         oracleAdapter.configureAsset(
-            GOLD_ID,
+            "XAU",
             address(0),
             IOracleAdapter.FeedType.CustomRelayer,
             3600, // stalenessThreshold (1h)

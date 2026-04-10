@@ -111,13 +111,13 @@ forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices \
   --rpc-url local -vvv
 ```
 
-### Dry-run: Sepolia Pyth relayer updater (XAG + mining equities)
+### Dry-run: Yahoo Finance price relayer (all CustomRelayer assets)
 
 ```bash
-npm run update-pyth:sepolia:dry
+npm run update-prices:sepolia:dry
 ```
 
-This runs Hermes fetch, freshness checks, and raw-price conversion without broadcasting transactions.
+This enumerates on-chain assets, fetches Yahoo Finance quotes, and prints prices without broadcasting transactions.
 
 These simulate transactions and print traces without writing state.
 
@@ -132,7 +132,7 @@ forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices \
 forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices \
   --rpc-url local --broadcast -vvv
 
-PRIVATE_KEY=0x... npm run update-pyth:sepolia
+PRIVATE_KEY=0x... npm run update-prices:sepolia
 ```
 
 ## 5) Practical operator checklist

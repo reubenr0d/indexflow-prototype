@@ -93,7 +93,7 @@ dataSources:
         - name: OracleAdapter
           file: ./abis/OracleAdapter.json
       eventHandlers:
-        - event: AssetConfigured(indexed bytes32,uint8,address)
+        - event: AssetConfigured(indexed bytes32,string,uint8,address)
           handler: handleAssetConfigured
         - event: AssetRemoved(indexed bytes32)
           handler: handleAssetRemoved

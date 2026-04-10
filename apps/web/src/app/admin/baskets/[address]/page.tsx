@@ -33,10 +33,11 @@ import { BasketVaultABI, OracleAdapterABI, VaultAccountingABI } from "@/abi/cont
 import { formatUSDC, formatBps, formatAssetId, formatAddress, formatPrice, formatRelativeTime, formatUsd1e30, formatSignedUsd1e30 } from "@/lib/format";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
-import { encodePacked, keccak256, type Address, type Hex } from "viem";
+import { encodePacked, keccak256, stringToHex, type Address, type Hex } from "viem";
 import { parseUSDCInput } from "@/lib/format";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
+import { YahooFinanceSearch, type YFSearchSelection } from "@/components/yahoo-finance-search";
 import { PRICE_PRECISION, REFETCH_INTERVAL, USDC_PRECISION } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
@@ -688,13 +689,14 @@ function SetAssetsCard({ vault }: { vault: Address }) {
   const { data: supportedAssets } = useSupportedOracleAssets();
   const supported = supportedAssets ?? [];
   const { setAssets, receipt, isPending, error, isError } = useSetAssets();
-  const [rows, setRows] = useState<Array<{ assetIdHex: `0x${string}` | ""; assetQuery: string }>>([
+  const [rows, setRows] = useState<Array<{ assetIdHex: `0x${string}` | ""; assetQuery: string; unregisteredSymbol?: string }>>([
     { assetIdHex: "", assetQuery: "" },
   ]);
 
   const selectedAssets = rows.map((row) => row.assetIdHex).filter((id): id is `0x${string}` => id !== "");
   const hasDuplicateAssets = new Set(selectedAssets).size !== selectedAssets.length;
   const hasEmptyAssetSelection = rows.some((row) => row.assetIdHex === "");
+  const excludeIds = useMemo(() => new Set(selectedAssets), [selectedAssets]);
 
   useEffect(() => {
     if (receipt.isSuccess) {
@@ -717,61 +719,47 @@ function SetAssetsCard({ vault }: { vault: Address }) {
         <InfoLabel label="Set Assets" tooltipKey="setAssets" />
       </h3>
       {rows.map((row, i) => (
-        <div key={i} className="mb-2 flex gap-2">
-          <datalist id={`set-assets-${i}`}>
-            {supported
-              .filter((asset) => {
-                const isCurrent = asset.idHex === row.assetIdHex;
-                const selectedElsewhere = selectedAssets.includes(asset.idHex) && !isCurrent;
-                return !selectedElsewhere;
-              })
-              .map((asset) => (
-                <option key={asset.idHex} value={asset.label}>
-                  {asset.idHex}
-                </option>
-              ))}
-          </datalist>
-          <Input
-            list={`set-assets-${i}`}
-            placeholder="Select supported asset"
-            value={row.assetQuery}
-            data-testid={`set-assets-input-${i}`}
-            onChange={(e) => {
-              const query = e.target.value;
-              const match = supported.find(
-                (asset) =>
-                  asset.label.toLowerCase() === query.toLowerCase() ||
-                  asset.idHex.toLowerCase() === query.toLowerCase()
-              );
-              const next = [...rows];
-              if (match) {
-                const selectedElsewhere = next.some((entry, idx) => idx !== i && entry.assetIdHex === match.idHex);
-                if (selectedElsewhere) {
-                  next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
+        <div key={i} className="mb-2">
+          <div className="flex gap-2">
+            <YahooFinanceSearch
+              className="flex-1"
+              value={row.assetQuery}
+              placeholder="Search registered or Yahoo Finance assets"
+              data-testid={`set-assets-input-${i}`}
+              registeredAssets={supported}
+              excludeIds={excludeIds}
+              onSelectRegistered={(asset) => {
+                const next = [...rows];
+                next[i] = { assetIdHex: asset.idHex, assetQuery: asset.label, unregisteredSymbol: undefined };
+                setRows(next);
+              }}
+              onSelect={(result: YFSearchSelection) => {
+                const candidateId = keccak256(stringToHex(result.symbol)) as `0x${string}`;
+                const existing = supported.find((a) => a.idHex.toLowerCase() === candidateId.toLowerCase());
+                const next = [...rows];
+                if (existing) {
+                  next[i] = { assetIdHex: existing.idHex, assetQuery: existing.label, unregisteredSymbol: undefined };
                 } else {
-                  next[i] = { ...next[i], assetIdHex: match.idHex, assetQuery: match.label };
+                  next[i] = { assetIdHex: "", assetQuery: result.symbol, unregisteredSymbol: result.symbol };
                 }
-              } else {
-                next[i] = { ...next[i], assetIdHex: "", assetQuery: query };
-              }
-              setRows(next);
-            }}
-            onBlur={() => {
-              if (rows[i].assetIdHex !== "") return;
-              const next = [...rows];
-              next[i] = { ...next[i], assetQuery: "" };
-              setRows(next);
-            }}
-            className="flex-1"
-          />
-          {rows.length > 1 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setRows(rows.filter((_, idx) => idx !== i))}
-            >
-              Remove
-            </Button>
+                setRows(next);
+              }}
+            />
+            {rows.length > 1 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setRows(rows.filter((_, idx) => idx !== i))}
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+          {row.unregisteredSymbol && (
+            <p className="mt-1 text-xs text-app-warning">
+              {row.unregisteredSymbol} is not registered on-chain.{" "}
+              <a href="/admin/oracle" className="underline">Register it first</a> on the Oracle page.
+            </p>
           )}
         </div>
       ))}

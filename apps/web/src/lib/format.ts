@@ -87,8 +87,9 @@ export function formatAssetId(id: string): string {
       bytes.push(b);
     }
     const isPrintableAscii = bytes.every((b) => b >= 32 && b <= 126);
-    if (!isPrintableAscii) return `${id.slice(0, 10)}...${id.slice(-8)}`;
-    return String.fromCharCode(...bytes);
+    if (isPrintableAscii) return String.fromCharCode(...bytes);
+
+    return `${id.slice(0, 10)}...${id.slice(-8)}`;
   } catch {
     return formatAddress(id);
   }

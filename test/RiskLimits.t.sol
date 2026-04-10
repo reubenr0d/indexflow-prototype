@@ -31,7 +31,7 @@ contract RiskLimitsTest is Test {
 
         // Configure oracle with a CustomRelayer asset so BasketVault can price
         oracle.configureAsset(
-            GOLD,
+            "GOLD",
             address(0), // no feed address needed for CustomRelayer
             IOracleAdapter.FeedType.CustomRelayer,
             3600, // staleness threshold

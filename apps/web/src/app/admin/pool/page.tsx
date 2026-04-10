@@ -13,6 +13,7 @@ import { showToast } from "@/components/ui/toast";
 import { usePoolUtilization } from "@/hooks/usePerpReader";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import { getContractErrorMessage } from "@/hooks/useContractErrorToast";
+import { dismissPending } from "@/components/ui/toast";
 import {
   useAccount,  usePublicClient,
   useReadContract,
@@ -404,7 +405,8 @@ function PoolTokenControlsRow({
       setBufferInput("");
       await refreshAfterTx();
     } catch (error) {
-      showToast("error", getContractErrorMessage(error, "Buffer update failed"));
+      const msg = getContractErrorMessage(error, "Buffer update failed");
+      if (msg === null) { dismissPending(); } else { showToast("error", msg); }
     } finally {
       setIsSettingBuffer(false);
     }
@@ -436,7 +438,8 @@ function PoolTokenControlsRow({
       setDepositInput("");
       await refreshAfterTx();
     } catch (error) {
-      showToast("error", getContractErrorMessage(error, "Direct pool deposit failed"));
+      const msg = getContractErrorMessage(error, "Direct pool deposit failed");
+      if (msg === null) { dismissPending(); } else { showToast("error", msg); }
     } finally {
       setIsDepositing(false);
     }

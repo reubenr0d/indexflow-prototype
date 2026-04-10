@@ -5,7 +5,18 @@ This page lists the currently supported oracle assets and where each asset's pri
 ## Oracle architecture (Sepolia)
 
 - `Chainlink` assets: `OracleAdapter.getPrice(assetId)` reads the Chainlink feed directly, and `PriceSync.syncAll()` writes that normalized value into GMX `SimplePriceFeed`.
-- `Pyth relayed` assets: `scripts/update-pyth-relayer-prices.js` fetches Pyth Hermes prices, submits them to `OracleAdapter.submitPrices(bytes32[],uint256[])`, then calls `PriceSync.syncAll()`.
+- `Yahoo Finance relayed` assets: `scripts/update-yahoo-finance-prices.js` enumerates active `CustomRelayer` assets on-chain (via `assetList`, `getAssetConfig`, `assetSymbols`), fetches Yahoo Finance quotes, converts non-USD currencies, and submits prices to `OracleAdapter.submitPrices` then calls `PriceSync.syncAll()`. No local config file is needed.
+
+## On-chain symbol storage
+
+`OracleAdapter.configureAsset(string symbol, ...)` stores the human-readable symbol on-chain in the `assetSymbols` mapping. The asset id is derived as `keccak256(bytes(symbol))`. This means:
+
+- The relayer reads symbols directly from the contract.
+- The subgraph indexes the `symbol` field from the `AssetConfigured` event.
+- The web app reads `assetSymbols(id)` to display labels.
+- No local config or localStorage mapping is required.
+
+Duplicate tickers across exchanges are disambiguated by Yahoo Finance's suffix convention (e.g. `BHP` for US/ADR, `BHP.AX` for ASX, `BHP.L` for LSE), each producing a distinct `keccak256` hash.
 
 ## Network coverage
 
@@ -14,27 +25,34 @@ This page lists the currently supported oracle assets and where each asset's pri
 
 ## Supported assets and feed sources
 
-| Asset | OracleAdapter feed type | Provider | Network | Onchain/source identifier | Path to GMX feed |
-| --- | --- | --- | --- | --- | --- |
-| `XAU` | `FeedType.Chainlink` | Chainlink | Sepolia | `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea` | `OracleAdapter.getPrice` -> `PriceSync.syncAll` |
-| `XAG` | `FeedType.CustomRelayer` | Pyth | Sepolia | `f2fb02c32b055c805e7238d628e5e9dadef274376114eb1f012337cabe93871e` | `submitPrices` -> `PriceSync.syncAll` |
-| `BHP` | `FeedType.CustomRelayer` | Pyth | Sepolia | `191d7aac7f589ecdf86e05e349c58873eebe0c6b0101615af3a22b366a51d87d` | `submitPrices` -> `PriceSync.syncAll` |
-| `RIO` | `FeedType.CustomRelayer` | Pyth | Sepolia | `55e9d82de00129d0fb368bc89d1ee59146b80a8772f8a972febac3f65ed3151f` | `submitPrices` -> `PriceSync.syncAll` |
-| `VALE` | `FeedType.CustomRelayer` | Pyth | Sepolia | `89dd5fb5c30324f3cb11920e3e5ca7de7732abf3889f93bf3757f9509715a89f` | `submitPrices` -> `PriceSync.syncAll` |
-| `NEM` | `FeedType.CustomRelayer` | Pyth | Sepolia | `29caf4d900d3080e56306ac41a9856735b89cb4df6813dd7b83e9eb96c04700d` | `submitPrices` -> `PriceSync.syncAll` |
-| `FCX` | `FeedType.CustomRelayer` | Pyth | Sepolia | `2b5735ead9b057b3fb96a422740ab26bdfcb1f2b5d4cd9d052f45311ef0f2952` | `submitPrices` -> `PriceSync.syncAll` |
-| `SCCO` | `FeedType.CustomRelayer` | Pyth | Sepolia | `a00be224b07426d688475926b6a7a8b007f1420734629b596ae6132c75bc5976` | `submitPrices` -> `PriceSync.syncAll` |
+| Asset | OracleAdapter feed type | Provider | Network | Notes |
+| --- | --- | --- | --- | --- |
+| `XAU` | `FeedType.Chainlink` | Chainlink | Sepolia | Feed: `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea` |
+| `XAG` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `BHP` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `RIO` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `VALE` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `NEM` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `FCX` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `SCCO` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+
+Additional assets from any Yahoo Finance-supported exchange (ASX, LSE, TSX, etc.) can be registered via the admin oracle UI. They are automatically picked up by the relayer.
 
 ## Operator note
 
-To keep relayed assets fresh, run:
+To update all registered CustomRelayer asset prices:
 
 ```bash
-PRIVATE_KEY=0x... npm run update-pyth:sepolia
+# Dry-run (no broadcast)
+npm run update-prices:sepolia:dry
+
+# Broadcast (requires PRIVATE_KEY)
+PRIVATE_KEY=0x... npm run update-prices:sepolia
 ```
 
-Dry-run (no broadcast):
+For local Anvil:
 
 ```bash
-npm run update-pyth:sepolia:dry
+npm run update-prices:local:dry
+PRIVATE_KEY=0x... npm run update-prices:local
 ```

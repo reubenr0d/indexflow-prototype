@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type AnchorHTMLAttributes } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -25,7 +25,15 @@ import { REFETCH_INTERVAL } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { showToast } from "@/components/ui/toast";
 import { motion } from "framer-motion";
-import { Radio } from "lucide-react";
+import { ExternalLink, Radio } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { YahooFinanceSearch, type YFSearchSelection } from "@/components/yahoo-finance-search";
+import { fetchYahooFinanceQuote, type YFQuote } from "@/hooks/useYahooFinanceSearch";
+import { keccak256, stringToHex, zeroAddress } from "viem";
+
+function yahooFinanceQuoteUrl(symbol: string): string {
+  return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}/`;
+}
 
 const PRICE_SYNC_ABI = [
   {
@@ -36,6 +44,33 @@ const PRICE_SYNC_ABI = [
     outputs: [],
   },
 ] as const;
+
+function YahooFinanceDeepLink({
+  symbol,
+  label = "View on Yahoo Finance",
+  className,
+  ...anchorProps
+}: {
+  symbol: string;
+  label?: string;
+  className?: string;
+} & AnchorHTMLAttributes<HTMLAnchorElement>) {
+  return (
+    <a
+      href={yahooFinanceQuoteUrl(symbol)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "inline-flex items-center gap-1.5 text-sm font-medium text-app-accent underline underline-offset-2 hover:text-app-accent/80",
+        className
+      )}
+      {...anchorProps}
+    >
+      <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
+      {label}
+    </a>
+  );
+}
 
 export default function AdminOraclePage() {
   const { chainId } = useDeploymentTarget();
@@ -63,6 +98,11 @@ export default function AdminOraclePage() {
           asset.idHex.toLowerCase() === assetInput.trim().toLowerCase()
       ),
     [assetInput, supportedAssets]
+  );
+
+  const writeControlsYahooSymbol = useMemo(
+    () => selectedAsset?.name && !selectedAsset.name.startsWith("0x") ? selectedAsset.name : undefined,
+    [selectedAsset?.name]
   );
 
   const {
@@ -136,6 +176,8 @@ export default function AdminOraclePage() {
         </div>
       </div>
 
+      <RegisterAssetCard />
+
       <Card className="mb-6 p-6">
         <h2 className="mb-2 text-base font-semibold text-app-text">
           <InfoLabel label="Oracle Write Controls" tooltip="Submit custom oracle prices and sync them to GMX price feed." />
@@ -198,6 +240,11 @@ export default function AdminOraclePage() {
             {isSyncAllPending ? "Syncing..." : "Sync All"}
           </Button>
         </div>
+        {writeControlsYahooSymbol && (
+          <div className="mt-2" data-testid="oracle-write-yahoo-link">
+            <YahooFinanceDeepLink symbol={writeControlsYahooSymbol} />
+          </div>
+        )}
       </Card>
 
       {isLoading ? (
@@ -222,6 +269,159 @@ export default function AdminOraclePage() {
         </div>
       )}
     </PageWrapper>
+  );
+}
+
+const DEFAULT_STALENESS = 86400n;
+const DEFAULT_DEVIATION_BPS = 5000n;
+const DEFAULT_DECIMALS = 8;
+
+function RegisterAssetCard() {
+  const { chainId } = useDeploymentTarget();
+  const { oracleAdapter } = getContracts(chainId);
+
+  const [selected, setSelected] = useState<YFSearchSelection | null>(null);
+  const [quote, setQuote] = useState<YFQuote | null>(null);
+  const [isFetchingQuote, setIsFetchingQuote] = useState(false);
+  const pendingRef = useRef<{ symbol: string; price: number } | null>(null);
+
+  const {
+    writeContract: configureWrite,
+    data: configureHash,
+    isPending: isConfigurePending,
+    error: configureError,
+    isError: isConfigureError,
+  } = useWriteContract();
+  const configureReceipt = useWaitForTransactionReceipt({ hash: configureHash });
+
+  const {
+    writeContract: submitWrite,
+    data: submitHash,
+    isPending: isSubmitPending,
+    error: submitError,
+    isError: isSubmitError,
+  } = useWriteContract();
+  const submitReceipt = useWaitForTransactionReceipt({ hash: submitHash });
+
+  useEffect(() => {
+    if (configureReceipt.isSuccess && pendingRef.current) {
+      const { symbol, price } = pendingRef.current;
+      showToast("success", `Asset ${symbol} configured`);
+      const rawPrice = BigInt(Math.round(price * 1e8));
+      const assetId = keccak256(stringToHex(symbol));
+      submitWrite({
+        address: oracleAdapter,
+        abi: OracleAdapterABI,
+        functionName: "submitPrice",
+        args: [assetId, rawPrice],
+      });
+      pendingRef.current = null;
+      showToast("pending", "Seeding initial price...");
+    }
+  }, [configureReceipt.isSuccess, oracleAdapter, submitWrite]);
+
+  useEffect(() => {
+    if (submitReceipt.isSuccess) {
+      showToast("success", "Initial price submitted");
+    }
+  }, [submitReceipt.isSuccess]);
+
+  useContractErrorToast({
+    writeError: configureError,
+    writeIsError: isConfigureError,
+    receiptError: configureReceipt.error,
+    receiptIsError: configureReceipt.isError,
+    fallbackMessage: "Configure asset failed",
+  });
+  useContractErrorToast({
+    writeError: submitError,
+    writeIsError: isSubmitError,
+    receiptError: submitReceipt.error,
+    receiptIsError: submitReceipt.isError,
+    fallbackMessage: "Submit initial price failed",
+  });
+
+  const handleSelect = async (result: YFSearchSelection) => {
+    setSelected(result);
+    setIsFetchingQuote(true);
+    const q = await fetchYahooFinanceQuote(result.symbol);
+    setQuote(q);
+    setIsFetchingQuote(false);
+  };
+
+  const isPending = isConfigurePending || isSubmitPending;
+
+  return (
+    <Card className="mb-6 p-6">
+      <h2 className="mb-2 text-base font-semibold text-app-text">
+        <InfoLabel
+          label="Register New Asset"
+          tooltip="Search for any publicly-traded equity and register it as a custom relayer oracle asset."
+        />
+      </h2>
+      <p className="mb-4 text-sm text-app-muted">
+        Search any exchange (ASX, LSE, TSX, NYSE, etc.) and register the asset on-chain.
+      </p>
+
+      <YahooFinanceSearch
+        onSelect={handleSelect}
+        data-testid="register-asset-search"
+        className="mb-4"
+      />
+
+      {selected && (
+        <div className="mb-4 rounded-md border border-app-border bg-app-bg-subtle p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <div>
+              <span className="text-lg font-semibold text-app-text">{selected.symbol}</span>
+              <span className="ml-2 text-sm text-app-muted">{selected.name}</span>
+            </div>
+            <span className="rounded bg-app-bg px-2 py-0.5 text-xs font-semibold text-app-muted">
+              {selected.exchange}
+            </span>
+          </div>
+          {isFetchingQuote ? (
+            <p className="text-sm text-app-muted">Fetching quote...</p>
+          ) : quote ? (
+            <div className="space-y-1 text-sm text-app-muted">
+              <p>
+                Price: <span className="font-semibold text-app-text">
+                  {quote.price != null ? `${quote.price.toFixed(2)} ${quote.currency}` : "unavailable"}
+                </span>
+              </p>
+              <p>
+                Asset ID: <span className="font-mono text-xs">{keccak256(stringToHex(selected.symbol)).slice(0, 18)}...</span>
+              </p>
+              <p>Market state: {quote.marketState}</p>
+            </div>
+          ) : (
+            <p className="text-sm text-app-danger">Could not fetch quote.</p>
+          )}
+          <div className="mt-3 border-t border-app-border pt-3" data-testid="register-asset-yahoo-link">
+            <YahooFinanceDeepLink symbol={selected.symbol} />
+          </div>
+        </div>
+      )}
+
+      <Button
+        size="sm"
+        disabled={!selected || !quote?.price || isPending}
+        data-testid="register-asset-submit"
+        onClick={() => {
+          if (!selected || !quote?.price) return;
+          pendingRef.current = { symbol: selected.symbol, price: quote.price };
+          configureWrite({
+            address: oracleAdapter,
+            abi: OracleAdapterABI,
+            functionName: "configureAsset",
+            args: [selected.symbol, zeroAddress, 1, DEFAULT_STALENESS, DEFAULT_DEVIATION_BPS, DEFAULT_DECIMALS],
+          });
+          showToast("pending", `Registering ${selected.symbol}...`);
+        }}
+      >
+        {isPending ? "Processing..." : "Register Asset"}
+      </Button>
+    </Card>
   );
 }
 
@@ -267,6 +467,8 @@ function OracleAssetCard({
   } | undefined;
 
   const feedTypeName = getOracleSourceLabel(assetConfig?.feedType);
+  const label = assetLabels.get(id);
+  const yahooSymbol = label && !label.startsWith("0x") ? label : undefined;
 
   return (
     <motion.div
@@ -284,7 +486,7 @@ function OracleAssetCard({
             <StatusDot status={status} className="h-2.5 w-2.5" />
             <h3 className="font-semibold text-app-text">
               <InfoLabel
-                label={assetLabels.get(id) ?? formatAssetId(id)}
+                label={label ?? formatAssetId(id)}
                 tooltip="Oracle asset currently monitored for freshness and price health."
               />
             </h3>
@@ -305,6 +507,11 @@ function OracleAssetCard({
               <p>Staleness: {String(assetConfig.stalenessThreshold)}s</p>
               <p>Deviation: {Number(assetConfig.deviationBps) / 100}%</p>
             </>
+          )}
+          {yahooSymbol && (
+            <p className="pt-1">
+              <YahooFinanceDeepLink symbol={yahooSymbol} label="Yahoo Finance" className="text-xs" />
+            </p>
           )}
         </div>
       </Card>

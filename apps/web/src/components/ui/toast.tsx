@@ -15,10 +15,15 @@ export interface ToastData {
 
 let toastId = 0;
 const listeners = new Set<(toast: ToastData) => void>();
+const dismissPendingListeners = new Set<() => void>();
 
 export function showToast(type: ToastType, message: string) {
   const toast: ToastData = { id: String(++toastId), type, message };
   listeners.forEach((l) => l(toast));
+}
+
+export function dismissPending() {
+  dismissPendingListeners.forEach((l) => l());
 }
 
 export function ToastContainer() {
@@ -38,9 +43,14 @@ export function ToastContainer() {
         }, 5000);
       }
     };
+    const pendingDismisser = () => {
+      setToasts((prev) => prev.filter((t) => t.type !== "pending"));
+    };
     listeners.add(listener);
+    dismissPendingListeners.add(pendingDismisser);
     return () => {
       listeners.delete(listener);
+      dismissPendingListeners.delete(pendingDismisser);
     };
   }, []);
 

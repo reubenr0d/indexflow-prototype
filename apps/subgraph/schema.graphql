@@ -143,6 +143,7 @@ type VaultStateCurrent @entity(immutable: false) {
 type AssetMeta @entity(immutable: false) {
   id: ID!
   assetId: Bytes!
+  symbol: String
   feedType: Int!
   feedAddress: Bytes!
   active: Boolean!

@@ -25,8 +25,8 @@ contract BasketVaultTest is Test {
         oracle = new OracleAdapter(owner);
 
         // Set up mock Chainlink feeds via custom relayer for simplicity
-        oracle.configureAsset(XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
-        oracle.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracle.configureAsset("XAU", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracle.configureAsset("XAG", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
 
         // Gold $2000, Silver $25
         oracle.submitPrice(XAU, 200_000_000_000);

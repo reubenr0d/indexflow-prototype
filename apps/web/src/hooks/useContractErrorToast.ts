@@ -1,8 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { BaseError, ContractFunctionRevertedError } from "viem";
-import { showToast } from "@/components/ui/toast";
+import {
+  BaseError,
+  ContractFunctionRevertedError,
+  UserRejectedRequestError,
+  decodeErrorResult,
+  type Hex,
+} from "viem";
+import { showToast, dismissPending } from "@/components/ui/toast";
+import { ALL_ERRORS_ABI } from "@/abi/all-errors";
 
 function formatCustomError(errorName: string, args: readonly unknown[] | undefined) {
   if (!args || args.length === 0) return errorName;
@@ -10,10 +17,46 @@ function formatCustomError(errorName: string, args: readonly unknown[] | undefin
   return `${errorName}(${formattedArgs})`;
 }
 
-export function getContractErrorMessage(error: unknown, fallbackMessage: string) {
+function extractRevertData(error: BaseError): Hex | undefined {
+  let hex: Hex | undefined;
+  error.walk((inner) => {
+    const d = (inner as { data?: unknown }).data;
+    if (typeof d === "string" && /^0x[0-9a-f]+$/i.test(d) && d.length >= 10) {
+      hex = d as Hex;
+    }
+    return false;
+  });
+  return hex;
+}
+
+function tryDecodeWithCombinedAbi(data: Hex): string | undefined {
+  try {
+    const decoded = decodeErrorResult({ abi: ALL_ERRORS_ABI, data });
+    return formatCustomError(
+      decoded.errorName,
+      decoded.args as readonly unknown[] | undefined
+    );
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Returns a human-readable error string, or `null` if the error should be
+ * silently dismissed (e.g. user rejected the tx in their wallet).
+ */
+export function getContractErrorMessage(
+  error: unknown,
+  fallbackMessage: string
+): string | null {
   if (!error) return fallbackMessage;
 
   if (error instanceof BaseError) {
+    const rejection = error.walk(
+      (e) => e instanceof UserRejectedRequestError
+    );
+    if (rejection) return null;
+
     const revertError = error.walk(
       (innerError) => innerError instanceof ContractFunctionRevertedError
     );
@@ -26,6 +69,15 @@ export function getContractErrorMessage(error: unknown, fallbackMessage: string)
           revertError.data.args as readonly unknown[] | undefined
         );
       }
+    }
+
+    const rawData = extractRevertData(error);
+    if (rawData) {
+      const decoded = tryDecodeWithCombinedAbi(rawData);
+      if (decoded) return decoded;
+    }
+
+    if (revertError instanceof ContractFunctionRevertedError) {
       if (revertError.shortMessage) return revertError.shortMessage;
     }
 
@@ -66,7 +118,12 @@ export function useContractErrorToast({
     if (lastWriteErrorRef.current === writeError) return;
 
     lastWriteErrorRef.current = writeError;
-    showToast("error", getContractErrorMessage(writeError, fallbackMessage));
+    const msg = getContractErrorMessage(writeError, fallbackMessage);
+    if (msg === null) {
+      dismissPending();
+      return;
+    }
+    showToast("error", msg);
   }, [writeError, writeIsError, receiptError, receiptIsError, fallbackMessage]);
 
   useEffect(() => {
@@ -78,6 +135,11 @@ export function useContractErrorToast({
     if (lastReceiptErrorRef.current === receiptError) return;
 
     lastReceiptErrorRef.current = receiptError;
-    showToast("error", getContractErrorMessage(receiptError, fallbackMessage));
+    const msg = getContractErrorMessage(receiptError, fallbackMessage);
+    if (msg === null) {
+      dismissPending();
+      return;
+    }
+    showToast("error", msg);
   }, [receiptError, receiptIsError, fallbackMessage]);
 }

@@ -11,8 +11,25 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Changed
+
+- [2026-04-10] `OracleAdapter.configureAsset` now accepts a `string symbol` instead of `bytes32 assetId`; the asset id is computed as `keccak256(bytes(symbol))` internally and the symbol is stored in a new `assetSymbols` mapping. The `AssetConfigured` event now emits the symbol string. A `getAssetSymbol(bytes32)` view is also added.
+- [2026-04-10] Yahoo Finance price relayer (`scripts/update-yahoo-finance-prices.js`) is now fully on-chain driven: it enumerates active `CustomRelayer` assets and reads their symbols from the contract. No local config file (`yahoo-finance-feed-config.json`) is needed.
+- [2026-04-10] Web app asset labels are now fetched from on-chain `assetSymbols` mapping via `useReadContracts`, replacing the client-side `asset-registry.ts` localStorage approach.
+- [2026-04-10] Subgraph `AssetMeta` entity now includes a `symbol` field indexed from the updated `AssetConfigured` event.
+- [2026-04-10] Npm price scripts renamed from `update-yf:*` / `update-pyth:*` to unified `update-prices:*`.
+
+### Removed
+
+- [2026-04-10] Pyth Network integration: deleted `scripts/update-pyth-relayer-prices.js`, `scripts/pyth-feed-config.json`, and `update-pyth:*` npm scripts.
+- [2026-04-10] Local feed config file `scripts/yahoo-finance-feed-config.json` (superseded by on-chain symbol storage).
+- [2026-04-10] Client-side asset registry `apps/web/src/lib/asset-registry.ts` and all `resolveAssetSymbol` / `registerAssetSymbol` imports (superseded by on-chain reads).
+- [2026-04-10] `Custom Oracle (Pyth)` badge label from oracle source display; all custom relayer assets now show `Custom Oracle`.
+
 ### Fixed
 
+- [2026-04-10 16:30 UTC+07:00] Web app: contract revert errors now surface clean messages in toasts. Cross-contract custom errors (e.g. `VaultNotRegistered` from VaultAccounting when calling BasketVault) are decoded against a combined error ABI instead of falling through to a generic fallback. Wallet rejections silently dismiss the pending toast instead of showing an error.
+- [2026-04-10 14:34 UTC+07:00] CI E2E/local deploy env hardening: `.github/workflows/test.yml` now sets placeholder `ETHERSCAN_API_KEY` and `ARBISCAN_API_KEY` at workflow scope so `forge script ... --broadcast` for local Anvil deploys does not fail on missing explorer API key env vars when no verification is performed.
 - [2026-04-10 14:26 UTC+07:00] CI Foundry toolchain install stability: `.github/workflows/test.yml` now pins `foundry-rs/foundry-toolchain@v1` to `v1.3.1` across all jobs (build/test/coverage/lint/e2e) instead of floating `stable`, avoiding upstream `foundryup` attestation/hash mismatches that were failing E2E setup.
 - [2026-04-10 14:08 UTC+07:00] CI coverage upload reliability: Codecov upload in `.github/workflows/test.yml` is explicitly non-blocking (`continue-on-error: true` plus `fail_ci_if_error: false`) and now retries once after a failed first attempt, so transient Codecov API `5xx` responses do not fail otherwise healthy workflow runs.
 - [2026-04-10 13:10 UTC+07:00] Web app deployment-target subgraph gating: `anvil` now uses subgraph reads whenever `NEXT_PUBLIC_SUBGRAPH_URL` is configured (same behavior as `sepolia`), while preserving RPC fallback when subgraph URL is unset/unavailable/returns unusable rows.
@@ -33,6 +50,12 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- Root `package.json` dependency on `yahoo-finance2` so `scripts/update-yahoo-finance-prices.js` runs from the repo without `NODE_PATH`; npm scripts `update-yf:local` and `update-yf:local:dry` target `local-deployment.json` and `http://127.0.0.1:8545`.
+- Admin oracle tab: deep links to Yahoo Finance (`https://finance.yahoo.com/quote/...`) when a stock is selected in Register New Asset, when Oracle Write Controls has a resolved ticker, and on each oracle status card that maps to a known symbol.
+- Yahoo Finance asset search and registration: admin oracle page now includes a "Register New Asset" card that searches any publicly-traded equity via Yahoo Finance and registers it as a `CustomRelayer` oracle asset on-chain with an initial price seed. Admin basket detail `SetAssetsCard` also uses the same search dropdown alongside registered oracle assets.
+- Yahoo Finance price relayer: `scripts/update-yahoo-finance-prices.js` fetches quotes from Yahoo Finance for assets in `scripts/yahoo-finance-feed-config.json`, converts non-USD prices via FX rates (`AUDUSD`, `GBPUSD`, `CADUSD`), and submits 8-decimal USD raw prices to `OracleAdapter.submitPrices` + `PriceSync.syncAll`. Initial config includes 24 mining equities across ASX, LSE, and TSX exchanges.
+- New npm tasks: `update-yf:sepolia` (broadcast) and `update-yf:sepolia:dry` (dry-run) for Yahoo Finance relayer.
+- Next.js API routes `GET /api/yahoo-finance/search` and `GET /api/yahoo-finance/quote` wrapping `yahoo-finance2` for server-side equity search and live quotes.
 - [2026-04-10 13:10 UTC+07:00] Sepolia relayer updater path for non-Chainlink assets: `scripts/update-pyth-relayer-prices.js` fetches Hermes latest values for `XAG` and core mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`), converts `(price, expo)` to 8-decimal raw values, enforces feed freshness, submits `OracleAdapter.submitPrices`, then calls `PriceSync.syncAll`.
 - Oracle operator feed map file `scripts/pyth-feed-config.json` with pinned Pyth feed ids for `XAG` and the core six mining equities.
 - New npm tasks for Sepolia relayer operations: `update-pyth:sepolia` (broadcast) and `update-pyth:sepolia:dry` (validation-only).

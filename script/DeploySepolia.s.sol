@@ -64,15 +64,12 @@ contract DeploySepolia is Script {
 
         MockUSDC usdc = new MockUSDC();
 
+        string[8] memory symbols = ["XAU", "XAG", "BHP", "RIO", "VALE", "NEM", "FCX", "SCCO"];
+
         bytes32[] memory assetIds = new bytes32[](8);
-        assetIds[0] = XAU;
-        assetIds[1] = XAG;
-        assetIds[2] = BHP;
-        assetIds[3] = RIO;
-        assetIds[4] = VALE;
-        assetIds[5] = NEM;
-        assetIds[6] = FCX;
-        assetIds[7] = SCCO;
+        for (uint256 i = 0; i < symbols.length; i++) {
+            assetIds[i] = keccak256(bytes(symbols[i]));
+        }
 
         uint256[] memory rawPrices = new uint256[](8);
         rawPrices[0] = XAU_PRICE_RAW;
@@ -133,14 +130,14 @@ contract DeploySepolia is Script {
         oracleAdapter.setKeeper(deployer, true);
 
         oracleAdapter.configureAsset(
-            XAU, CHAINLINK_XAU_SEPOLIA, IOracleAdapter.FeedType.Chainlink, CHAINLINK_STALENESS, 5000, 8
+            symbols[0], CHAINLINK_XAU_SEPOLIA, IOracleAdapter.FeedType.Chainlink, CHAINLINK_STALENESS, 5000, 8
         );
 
         bytes32[] memory customIds = new bytes32[](assetIds.length - 1);
         uint256[] memory customPrices = new uint256[](assetIds.length - 1);
         for (uint256 i = 1; i < assetIds.length; i++) {
             oracleAdapter.configureAsset(
-                assetIds[i],
+                symbols[i],
                 address(0),
                 IOracleAdapter.FeedType.CustomRelayer,
                 RELAYER_STALENESS,

@@ -22,6 +22,7 @@ function getOrCreateAssetMeta(assetId: Bytes, blockTimestamp: BigInt, blockNumbe
 
 export function handleAssetConfigured(event: AssetConfigured): void {
   const meta = getOrCreateAssetMeta(event.params.assetId, event.block.timestamp, event.block.number);
+  meta.symbol = event.params.symbol;
   meta.feedType = event.params.feedType;
   meta.feedAddress = event.params.feedAddress;
   meta.active = true;

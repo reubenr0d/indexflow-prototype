@@ -40,7 +40,7 @@ sequenceDiagram
   participant PS as PriceSync
 
   Owner->>OA: setKeeper(keeper, true)
-  Owner->>OA: configureAsset(assetId, feedAddr, feedType, staleness, deviationBps, decimals)
+  Owner->>OA: configureAsset(symbol, feedAddr, feedType, staleness, deviationBps, decimals)
   Note over OA: Chainlink feedAddr non-zero CustomRelayer feedAddr can be zero
 
   Gov->>SPF: setKeeper(address(PriceSync), true)
@@ -250,11 +250,11 @@ Current Sepolia profile:
 - `XAU`: `FeedType.Chainlink` (`0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, `decimals=8`).
 - `XAG`, `BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`: `FeedType.CustomRelayer`, `decimals=8`, `stalenessThreshold=86400`, `deviationBps=2000`.
 
-Relayer updater path:
+Yahoo Finance relayer path (config-free, on-chain driven):
 
-1. Read feed id mapping from `scripts/pyth-feed-config.json`.
-2. Pull Hermes latest parsed updates.
-3. Convert `(price, expo)` to adapter raw 8-decimal integers.
+1. Enumerate active `CustomRelayer` assets on-chain via `getAssetCount()`, `assetList(i)`, `getAssetConfig(id)`.
+2. Read `assetSymbols(id)` for each asset to get the Yahoo Finance ticker.
+3. Fetch Yahoo Finance quotes; convert non-USD currencies via FX rates.
 4. Submit `OracleAdapter.submitPrices(bytes32[],uint256[])`.
 5. Call `PriceSync.syncAll()` to update GMX `SimplePriceFeed`.
 
@@ -262,16 +262,15 @@ Reference commands:
 
 ```bash
 # Dry-run (fetch + conversion + validation only)
-npm run update-pyth:sepolia:dry
+npm run update-prices:sepolia:dry
 
 # Broadcast transactions
-PRIVATE_KEY=0x... npm run update-pyth:sepolia
+PRIVATE_KEY=0x... npm run update-prices:sepolia
 ```
 
 Failure policy in updater:
 
-- Missing required feed in Hermes response: fail run.
-- Feed older than 24h (`MAX_AGE_SECONDS`, default `86400`): fail run.
+- Assets with empty `assetSymbols` on-chain are skipped with a warning.
 - `PRIVATE_KEY` missing while not in dry-run: fail run.
 
 ---
@@ -294,7 +293,7 @@ sequenceDiagram
 
 ## 9. Web monitoring surfaces for price operations
 
-- `/prices` shows current oracle price, freshness status, and source badge for each configured asset (`Chainlink`; `Custom Oracle (Pyth)` for mapped Pyth-relayed assets; otherwise `Custom Oracle`).
+- `/prices` shows current oracle price, freshness status, and source badge for each configured asset (`Chainlink` or `Custom Oracle`).
 - `/prices/[assetId]` shows a per-asset `PriceUpdated` history timeline and trend chart with `24H`, `7D`, and `30D` windows.
 - Use the detail page when triaging stale-feed incidents to confirm whether updates are missing entirely or simply lagging cadence.
 

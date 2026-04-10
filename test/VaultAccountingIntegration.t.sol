@@ -163,7 +163,7 @@ contract VaultAccountingIntegrationTest is Test {
         // ─── Deploy perp stack (0.8.24) ──────────────────────────
         oracleAdapter = new OracleAdapter(deployer);
         oracleAdapter.setKeeper(deployer, true);
-        oracleAdapter.configureAsset(GOLD_ID, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracleAdapter.configureAsset("XAU", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracleAdapter.submitPrice(GOLD_ID, 200_000_000_000);
 
         vaultAccounting = new VaultAccounting(address(usdc), address(gmxVault), address(oracleAdapter), deployer);

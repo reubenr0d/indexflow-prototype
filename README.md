@@ -193,23 +193,30 @@ npm run submit-sync:sepolia
 - `XAG` and mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) are configured as `FeedType.CustomRelayer`.
 - Relayed assets use `stalenessThreshold=86400` and `deviationBps=2000`.
 
-**Sepolia Pyth relayer updater (XAG + mining equities)**
+**Yahoo Finance price relayer (config-free, on-chain driven)**
 
-`scripts/update-pyth-relayer-prices.js` pulls Hermes latest prices from feed ids in `scripts/pyth-feed-config.json`, converts `(price, expo)` to 8-decimal raw values, submits `submitPrices`, then calls `PriceSync.syncAll`.
+`scripts/update-yahoo-finance-prices.js` enumerates all active `CustomRelayer` assets from the `OracleAdapter` contract on-chain, reads their stored `assetSymbols`, fetches Yahoo Finance quotes, converts non-USD currencies via FX rates, and submits 8-decimal USD prices to `submitPrices` + `syncAll`. No local config file is needed.
 
 ```bash
 # Dry-run (no tx broadcast)
-npm run update-pyth:sepolia:dry
+npm run update-prices:sepolia:dry
 
 # Broadcast submitPrices + syncAll (requires PRIVATE_KEY)
-PRIVATE_KEY=0x... npm run update-pyth:sepolia
+PRIVATE_KEY=0x... npm run update-prices:sepolia
 ```
 
-Updater safety checks:
+**Local Anvil**
 
-- Fails if any required feed is missing in Hermes response.
-- Fails if any feed `publish_time` is older than `MAX_AGE_SECONDS` (default `86400`).
-- Config/env overrides: `DEPLOYMENT_CONFIG`, `PYTH_FEED_CONFIG`, `HERMES_URL`, `RPC_URL`, `MAX_AGE_SECONDS`.
+```bash
+npm run update-prices:local:dry
+PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 npm run update-prices:local
+```
+
+Config/env overrides: `DEPLOYMENT_CONFIG`, `RPC_URL`.
+
+**Registering new assets via admin UI**
+
+The admin oracle page (`/admin/oracle`) includes a Yahoo Finance search that lets operators discover any publicly-traded equity and register it on-chain as a `CustomRelayer` asset with an initial price seed. Registered assets automatically appear in basket asset pickers.
 
 ## Documentation
 
@@ -229,7 +236,7 @@ Updater safety checks:
     - `/docs/share-price-and-operations`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
 - Operator monitoring surfaces (web app):
-- `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink`, `Custom Oracle (Pyth)` for mapped Pyth-relayed assets, otherwise `Custom Oracle`).
+- `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink` or `Custom Oracle`).
   - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
@@ -238,7 +245,7 @@ Updater safety checks:
 - [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md) — Per-contract interaction matrix with inputs, checks, state deltas, and post-tx verification steps.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
-- [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source identifier (Chainlink feed or Pyth feed ID).
+- [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source (Chainlink feed or Yahoo Finance relayer).
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.
@@ -257,4 +264,4 @@ PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 n
 NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:ci
 ```
 
-For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above. The upload step is best-effort (non-blocking) and retried once on transient failure so Codecov outages do not fail overall CI. During Codecov incidents, the badge can remain stale until a later successful upload. CI also pins `foundry-rs/foundry-toolchain` to Foundry `v1.3.1` (instead of floating `stable`) to keep `forge/cast/anvil/chisel` installs deterministic across runs.
+For a local report, run `forge coverage` (use `--ir-minimum` if the compiler reports stack-too-deep). CI uploads LCOV to [Codecov](https://codecov.io/gh/reubenr0d/indexflow-prototype) for the badge above. The upload step is best-effort (non-blocking) and retried once on transient failure so Codecov outages do not fail overall CI. During Codecov incidents, the badge can remain stale until a later successful upload. CI also pins `foundry-rs/foundry-toolchain` to Foundry `v1.3.1` (instead of floating `stable`) to keep `forge/cast/anvil/chisel` installs deterministic across runs, and provides placeholder explorer API key env vars for non-verify local broadcast steps in CI.
