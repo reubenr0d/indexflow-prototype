@@ -1,0 +1,60 @@
+name: Update Prices
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      network:
+        description: "Target network (or 'all' for every configured network)"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - sepolia
+
+env:
+  FOUNDRY_VERSION: v1.3.1
+
+jobs:
+  update-prices:
+    name: Update Prices (${{ matrix.network }})
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'schedule'
+      || github.event.inputs.network == 'all'
+      || github.event.inputs.network == matrix.network
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - network: sepolia
+            deployment_config: apps/web/src/config/sepolia-deployment.json
+            rpc_url_secret: SEPOLIA_RPC_URL
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Fetch Yahoo Finance quotes and sync on-chain prices
+        env:
+          DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
+          RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+        run: node scripts/update-yahoo-finance-prices.js

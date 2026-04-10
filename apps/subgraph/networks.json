@@ -1,15 +1,15 @@
 {
   "anvil": {
     "basketFactory": {
-      "address": "0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff",
+      "address": "0xf5059a5D33d5853360D16C683c16e67980206f36",
       "startBlock": 0
     },
     "vaultAccounting": {
-      "address": "0x202CCe504e04bEd6fC0521238dDf04Bc9E8E15aB",
+      "address": "0x59b670e9fA9D0A427751Af201D676719a970857b",
       "startBlock": 0
     },
     "oracleAdapter": {
-      "address": "0xD8a5a9b31c3C0232E196d518E89Fd8bF83AcAd43",
+      "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
       "startBlock": 0
     }
   },

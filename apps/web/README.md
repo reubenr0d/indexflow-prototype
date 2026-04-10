@@ -1,32 +1,43 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## Local Development
 
-First, run the development server:
+The recommended way to develop locally is via the Docker Compose workflow from the **repo root**:
+
+```bash
+# From repo root — start Docker infra + deploy contracts + subgraph
+npm run local:up
+
+# Start the UI dev server (hot reloads on file changes)
+npm run local:dev
+
+# After changing Solidity or subgraph code, redeploy:
+npm run redeploy:local
+```
+
+`local:dev` sets `NEXT_PUBLIC_SUBGRAPH_URL` to the local graph-node automatically. The dev server picks up contract address changes in `src/config/local-deployment.json` via HMR.
+
+See the root `README.md` **Local Development** section for full details.
+
+## Standalone Dev Server
+
+To run the dev server without the Docker stack (RPC-only, no subgraph):
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. The page auto-updates as you edit files.
 
 ## Subgraph Configuration
 
 Set the subgraph endpoint to enable hybrid GraphQL + RPC reads:
 
 ```bash
-NEXT_PUBLIC_SUBGRAPH_URL=
+NEXT_PUBLIC_SUBGRAPH_URL=http://localhost:8000/subgraphs/name/indexflow-prototype
 ```
+
+This is set automatically by `npm run local:dev`.
 
 Read policy:
 

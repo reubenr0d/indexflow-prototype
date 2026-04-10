@@ -84,37 +84,68 @@ npm run deploy:local
 npm run deploy:sepolia
 ```
 
-## Local Compose Stack (Anvil + Contracts + Subgraph + UI)
+## Local Development (Docker Compose)
 
-Use one compose entrypoint to launch a fresh local chain, deploy contracts, deploy the subgraph, and run the web UI:
+Docker Compose runs the infrastructure (Anvil chain, Postgres, IPFS, graph-node). The **UI and deploys run on the host** for native hot reload and fast iteration.
+
+### Prerequisites
+
+- Docker / Docker Compose
+- Node.js (for the web app and subgraph tooling)
+- Foundry (`forge`, `cast`) on `PATH`
+
+### Quick start
 
 ```bash
-# Start full stack
+# 1. Start infra + deploy contracts + deploy subgraph (one command)
 npm run local:up
 
-# Stream logs
+# 2. Start the UI dev server (separate terminal, hot reloads on file changes)
+npm run local:dev
+```
+
+Open `http://localhost:3000`, switch the wallet / deployment target to **Anvil**.
+
+### Redeploying after code changes
+
+After changing Solidity contracts, subgraph mappings, or schema:
+
+```bash
+npm run redeploy:local
+```
+
+This re-deploys contracts to the running Anvil, updates `local-deployment.json`, syncs the subgraph network config, rebuilds the manifest, and deploys the subgraph to graph-node. The Next.js dev server picks up the new contract addresses via HMR -- no restart needed.
+
+### Other commands
+
+```bash
+# Stream Docker service logs
 npm run local:logs
 
-# Stop and remove volumes (fresh local reset)
+# Stop all services and wipe volumes (full reset)
 npm run local:down
 ```
 
-If host port `3000` is occupied, remap UI:
+### Service endpoints
 
-```bash
-UI_PORT=3001 npm run local:up
-```
+| Service | URL |
+| --- | --- |
+| Anvil RPC | `http://127.0.0.1:8545` |
+| Graph query | `http://127.0.0.1:8000/subgraphs/name/indexflow-prototype` |
+| Graph admin | `http://127.0.0.1:8020` |
+| Graph status | `http://127.0.0.1:8030/graphql` |
+| Web UI | `http://127.0.0.1:3000` |
 
-Default service endpoints:
+### How it fits together
 
-- Anvil RPC: `http://127.0.0.1:8545`
-- Graph query: `http://127.0.0.1:8000/subgraphs/name/indexflow-prototype`
-- Graph status: `http://127.0.0.1:8030/graphql`
-- Web UI: `http://127.0.0.1:${UI_PORT:-3000}`
+- `docker-compose.local.yml` runs only infra services (Anvil, Postgres, IPFS, graph-node).
+- `scripts/local/redeploy.sh` deploys contracts and the subgraph from the host, targeting Docker services over localhost ports.
+- The UI runs on the host via `npm run local:dev`, which sets `NEXT_PUBLIC_SUBGRAPH_URL` to the local graph-node so subgraph reads work on the Anvil target.
+- `apps/web/src/config/local-deployment.json` is written by the deploy script and imported by the Next.js app at build/dev time. File changes trigger HMR.
 
-Web app runtime contract wiring:
+### Web app runtime contract wiring
 
-- Deployment target still persists in `localStorage`, but switching now follows the wallet chain selector in the connect button (single network dropdown in navbar).
+- Deployment target persists in `localStorage` and follows the wallet chain selector.
 - `apps/web/src/config/sepolia-deployment.json` is used when target is `sepolia`.
 - `apps/web/src/config/local-deployment.json` is used when target is `anvil`.
 - In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), deployment target is locked to `anvil` and the deterministic mock wallet connector remains enabled for CI-stable signing.
@@ -137,7 +168,7 @@ NETWORK=sepolia npm --prefix apps/subgraph run build
 
 Runtime note:
 
-- The web app enables subgraph reads for both `sepolia` and `anvil` when `NEXT_PUBLIC_SUBGRAPH_URL` is configured.
+- The web app enables subgraph reads for any deployment target (`sepolia` or `anvil`) when `NEXT_PUBLIC_SUBGRAPH_URL` is configured. `npm run local:dev` sets this automatically for local development.
 - When `NEXT_PUBLIC_SUBGRAPH_URL` is unset, unavailable, or subgraph rows are unusable, affected views fall back to RPC data paths.
 
 ## Operations

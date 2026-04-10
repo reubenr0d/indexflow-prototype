@@ -12,3 +12,5 @@ lcov.info
 .env
 
 node_modules/
+
+apps/web/test-results/

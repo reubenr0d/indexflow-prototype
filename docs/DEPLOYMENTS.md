@@ -63,10 +63,12 @@ Addresses:
 
 ## How to refresh
 
-- Local:
-  - `npm run deploy:local` (requires Node + network for live Yahoo `BHP` seed, or set `SEED_PRICE_RAW` to pin the initial oracle price)
-  - Full local stack (fresh Anvil + contracts + subgraph + UI): `npm run local:up`
+- Local (Docker Compose workflow):
+  - First time: `npm run local:up` (starts Docker infra + deploys contracts + subgraph)
+  - Start UI: `npm run local:dev` (Next.js dev server on host, hot reloads)
+  - Redeploy after code changes: `npm run redeploy:local` (re-deploys contracts + subgraph; UI picks up new addresses via HMR)
   - Teardown/reset volumes: `npm run local:down`
+  - Standalone contract-only deploy (bare Anvil, no Docker): `npm run deploy:local`
 - Sepolia:
   - `npm run deploy:sepolia` (same Yahoo seed behavior; optional `SEED_PRICE_RAW` override)
   - Optional verify pass:

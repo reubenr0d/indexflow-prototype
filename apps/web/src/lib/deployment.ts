@@ -31,10 +31,9 @@ export function deploymentLabel(target: DeploymentTarget): string {
 }
 
 export function isSubgraphEnabledForTarget(
-  target: DeploymentTarget,
+  _target: DeploymentTarget,
   subgraphUrl: string | null | undefined
 ): boolean {
-  if (target !== "sepolia") return false;
   const trimmed = subgraphUrl?.trim() ?? "";
   return trimmed.length > 0;
 }

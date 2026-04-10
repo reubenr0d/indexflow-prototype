@@ -46,17 +46,19 @@ for c in BasketFactory BasketVault BasketShareToken VaultAccounting OracleAdapte
 
 `ERC20.json` in `apps/subgraph/abis/` is a stable external ABI and is not regenerated from local `out/`.
 
-## Local Redeploy Rule (When Anvil Is Running)
+## Local Redeploy Rule (When Docker Compose Is Running)
 
-When contract code changes and a local Anvil node is running, redeploy contracts locally instead of leaving stale deployments.
+When contract or subgraph code changes and the local Docker stack is running (`npm run local:up`), redeploy instead of leaving stale deployments.
 
 Use:
 
 ```bash
-npm run deploy:local
+npm run redeploy:local
 ```
 
-This updates local deployment outputs (including `apps/web/src/config/local-deployment.json`) so the UI can pick up the new artifacts/config automatically.
+This deploys contracts to Docker Anvil, syncs subgraph network addresses, rebuilds and deploys the subgraph to graph-node, and updates `apps/web/src/config/local-deployment.json`. The Next.js dev server (started with `npm run local:dev`) picks up new addresses via HMR.
+
+For bare-metal Anvil without Docker (no subgraph), use `npm run deploy:local` instead.
 
 ## Scope-Specific Rule (Web App)
 

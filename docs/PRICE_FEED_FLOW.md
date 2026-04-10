@@ -190,7 +190,7 @@ sequenceDiagram
   participant OA as OracleAdapter
 
   U->>BV: deposit / redeem (internal NAV)
-  Note over BV: NAV includes VaultAccounting PnL; adapter is used for asset validation/config context
+  Note over BV: NAV uses VaultAccounting PnL and adapter for asset validation context
 
   U->>PE: getExecutionPrice(assetId, size, isLong)
   PE->>OA: getPrice(assetId) isStale
@@ -276,7 +276,57 @@ Failure policy in updater:
 
 ---
 
-## 8. Related: GMX funding parameters (not the price feed)
+## 8. CI / automated price refresh
+
+A GitHub Actions workflow (`.github/workflows/update-prices.yml`) runs `scripts/update-yahoo-finance-prices.js` on a **15-minute cron schedule** and on **manual dispatch** (Actions tab → "Update Prices" → "Run workflow").
+
+### Flow
+
+```mermaid
+sequenceDiagram
+  participant GH as GitHubActions
+  participant YF as YahooFinance
+  participant OA as OracleAdapter
+  participant PS as PriceSync
+  participant SPF as SimplePriceFeed
+
+  GH->>OA: cast call getAssetCount / assetList / getAssetConfig
+  Note over GH,OA: Enumerate active CustomRelayer assets and read assetSymbols
+  GH->>YF: yahoo-finance2 quote per symbol + FX
+  YF-->>GH: prices in USD
+  GH->>OA: cast send submitPrices(assetIds, rawPrices)
+  GH->>PS: cast send syncAll()
+  PS->>OA: getPrice(assetId)
+  PS->>SPF: setPrice(gmxToken, price)
+```
+
+### Required GitHub Secrets
+
+| Secret | Purpose |
+|--------|---------|
+| `KEEPER_PRIVATE_KEY` | Keeper wallet private key; passed as `PRIVATE_KEY` to the script. Job **fails** if unset. |
+| `SEPOLIA_RPC_URL` | Sepolia RPC endpoint; passed as `RPC_URL`. |
+
+### Adding a new network
+
+1. Add a matrix entry in `update-prices.yml`:
+
+   ```yaml
+   - network: arbitrum_sepolia
+     deployment_config: apps/web/src/config/arbitrum-sepolia-deployment.json
+     rpc_url_secret: ARBITRUM_SEPOLIA_RPC_URL
+   ```
+
+2. Add `arbitrum_sepolia` to the `workflow_dispatch` network choice list.
+3. Add the `ARBITRUM_SEPOLIA_RPC_URL` GitHub secret.
+
+### Manual trigger
+
+From the GitHub Actions tab, select **Update Prices**, click **Run workflow**, and optionally pick a specific network (default: `all`).
+
+---
+
+## 9. Related: GMX funding parameters (not the price feed)
 
 Funding updates **do not** write `OracleAdapter` or `SimplePriceFeed`. Authorized keepers push global factors into the GMX vault.
 
@@ -292,7 +342,7 @@ sequenceDiagram
 
 ---
 
-## 9. Web monitoring surfaces for price operations
+## 10. Web monitoring surfaces for price operations
 
 - `/prices` shows current oracle price, freshness status, and source badge for each configured asset (`Chainlink` or `Custom Oracle`).
 - `/prices/[assetId]` shows a per-asset `PriceUpdated` history timeline and trend chart with `24H`, `7D`, and `30D` windows.

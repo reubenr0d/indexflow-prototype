@@ -13,6 +13,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-10] CI: scheduled GitHub Actions workflow (`update-prices.yml`) fetches Yahoo Finance quotes every 15 minutes and syncs on-chain prices for all registered `CustomRelayer` assets; supports manual dispatch with per-network targeting and matrix-based multi-network parameterization.
+- [2026-04-10] `redeploy:local` npm script: single host-side command that deploys contracts to Docker Anvil, syncs subgraph networks, builds and deploys the subgraph to the local graph-node — UI picks up new addresses via Next.js HMR.
+- [2026-04-10] `local:dev` npm script: starts the Next.js dev server on host with `NEXT_PUBLIC_SUBGRAPH_URL` pointed at the local graph-node.
 - [2026-04-10] Web app: basket detail pages (investor and admin) now display unrealised, realised, and net P&L tiles via `PerpReader.getVaultPnL` (pure RPC, no subgraph dependency).
 - [2026-04-10] Web app: basket list `TrendPill` components now show live 24h / 7d share price deltas from `useBasketTrendSnapshots` (subgraph primary, RPC multi-block fallback).
 - [2026-04-10] Web app: portfolio page shows per-basket and aggregate cost basis, P&L, and ROI derived from deposit/redeem history (subgraph primary, `Deposited`/`Redeemed` log scan fallback).
@@ -26,6 +29,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-10] `docker-compose.local.yml` slimmed to infra-only (Anvil, Postgres, IPFS, graph-node); UI and deploy services removed — UI runs on host for native hot reload, deploys run via `redeploy:local`.
+- [2026-04-10] `isSubgraphEnabledForTarget` now enables the subgraph for any deployment target when `NEXT_PUBLIC_SUBGRAPH_URL` is set (previously limited to Sepolia only).
+- [2026-04-10] `local:up` now starts Docker infra then runs `redeploy:local` automatically.
 - [2026-04-10] CI lint job now also installs web dependencies and runs ESLint (`npm run lint:web`) alongside `forge fmt --check`; pre-commit hook updated to run the same full-project checks instead of only linting staged files.
 - [2026-04-10] Admin "Register New Asset" card now calls `AssetWiring.wireAsset()` in a single transaction instead of the previous two-step `configureAsset` + `submitPrice` flow.
 - [2026-04-10] Deploy scripts (`DeployLocal.s.sol`, `DeploySepolia.s.sol`) refactored: deploy `AssetWiring`, set wirer/keeper roles, transfer GMX vault governance to `AssetWiring`, wire BHP via `wireAsset`, and output `assetWiring` address to deployment JSON.
