@@ -63,6 +63,9 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @notice Maps oracle `assetId` to GMX pool index token address.
     mapping(bytes32 => address) public assetTokens;
 
+    /// @notice Addresses authorized alongside owner on guarded admin functions (e.g. `mapAssetToken`, `registerVault`).
+    mapping(address => bool) public wirers;
+
     /// @notice ERC20 passed to GMX as `_collateralToken` (typically same as `usdc`).
     address public collateralToken;
 
@@ -84,6 +87,8 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     event MaxPositionSizeSet(address vault, uint256 cap);
     /// @notice Emitted when pause flag changes.
     event PauseToggled(bool paused);
+    /// @notice Emitted when `setWirer` runs.
+    event WirerSet(address indexed account, bool active);
 
     /// @notice `vault` is not registered.
     error VaultNotRegistered(address vault);
@@ -106,6 +111,11 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         _;
     }
 
+    modifier onlyOwnerOrWirer() {
+        require(msg.sender == owner() || wirers[msg.sender], "Not authorized");
+        _;
+    }
+
     /// @notice Deploy accounting module wired to USDC, GMX vault, and oracle adapter.
     /// @param _usdc USDC (or test collateral) ERC20 address.
     /// @param _gmxVault GMX core `Vault` contract.
@@ -118,12 +128,22 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         collateralToken = _usdc;
     }
 
+    // ─── Wirer Management ────────────────────────────────────────
+
+    /// @notice Authorize or revoke a wirer for `mapAssetToken` and `registerVault`.
+    /// @param account Address to toggle.
+    /// @param active Whether account may call wirer-guarded functions.
+    function setWirer(address account, bool active) external onlyOwner {
+        wirers[account] = active;
+        emit WirerSet(account, active);
+    }
+
     // ─── Vault Registration ──────────────────────────────────────
 
     /// @notice Register a basket vault so it may deposit capital and trade via this module.
     /// @param vault BasketVault address.
     /// @dev Reverts `VaultAlreadyRegistered` if already registered.
-    function registerVault(address vault) external onlyOwner {
+    function registerVault(address vault) external onlyOwnerOrWirer {
         if (_vaultStates[vault].registered) revert VaultAlreadyRegistered(vault);
 
         _vaultStates[vault] = VaultState({
@@ -154,7 +174,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @notice Map a logical asset id to the GMX index token address for that market.
     /// @param assetId Oracle / basket asset identifier.
     /// @param token GMX index token (ERC20) address.
-    function mapAssetToken(bytes32 assetId, address token) external onlyOwner {
+    function mapAssetToken(bytes32 assetId, address token) external onlyOwnerOrWirer {
         require(token != address(0), "Invalid token");
         assetTokens[assetId] = token;
         emit AssetTokenMapped(assetId, token);

@@ -18,7 +18,7 @@ import { type Address } from "viem";
 const quickLinks = [
   { href: "/admin/baskets", label: "Manage Baskets", icon: Layers, desc: "Create and configure baskets" },
   { href: "/admin/funding", label: "Funding", icon: Gauge, desc: "Manage funding owner and keeper controls" },
-  { href: "/admin/oracle", label: "Oracle Status", icon: Radio, desc: "Monitor oracle health" },
+  { href: "/admin/oracle", label: "Assets", icon: Radio, desc: "Oracle assets, prices, and sync" },
   { href: "/admin/pool", label: "Pool Health", icon: Activity, desc: "View pool utilization" },
   { href: "/docs", label: "Docs Wiki", icon: BookOpenText, desc: "Runbooks and integration reference" },
 ];

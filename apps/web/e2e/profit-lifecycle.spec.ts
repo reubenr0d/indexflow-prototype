@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import {
   E2E_ACCOUNT,
-  XAU_ASSET_ID,
+  BHP_ASSET_ID,
   connectWallet,
   getERC20Balance,
   getTransactionCount,
@@ -61,7 +61,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await waitForNextTransaction(E2E_ACCOUNT, txCount);
 
   await page.goto('/admin/oracle');
-  await page.getByTestId('oracle-asset-input').fill(XAU_ASSET_ID);
+  await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
   await page.getByTestId('oracle-price-input').fill('2000');
   txCount = await getTransactionCount(E2E_ACCOUNT);
   await page.getByTestId('oracle-submit-price').click();
@@ -102,7 +102,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('perp-allocate-submit').click();
   await waitForNextTransaction(E2E_ACCOUNT, txCount);
 
-  await page.getByTestId('open-position-filter').fill('XAU');
+  await page.getByTestId('open-position-filter').fill('BHP');
   await page.getByTestId('open-position-size').fill('2000');
   await page.getByTestId('open-position-collateral').fill('500');
   txCount = await getTransactionCount(E2E_ACCOUNT);
@@ -110,7 +110,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await waitForNextTransaction(E2E_ACCOUNT, txCount);
 
   await page.goto('/admin/oracle');
-  await page.getByTestId('oracle-asset-input').fill(XAU_ASSET_ID);
+  await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
   await page.getByTestId('oracle-price-input').fill('2200');
   txCount = await getTransactionCount(E2E_ACCOUNT);
   await page.getByTestId('oracle-submit-price').click();

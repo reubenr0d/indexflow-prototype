@@ -11,8 +11,25 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Added
+
+- [2026-04-10] `AssetWiring` coordinator contract (`src/perp/AssetWiring.sol`): permissionless `wireAsset(symbol, seedPrice8)` deploys a `MockIndexToken`, configures the oracle, seeds the GMX price feed, and maps the asset across `VaultAccounting`, `FundingRateManager`, and `PriceSync` in a single transaction.
+- [2026-04-10] `wirer` role on `OracleAdapter`, `VaultAccounting`, `FundingRateManager`, and `PriceSync`: `mapping(address => bool) wirers` with `setWirer(address, bool)` owner function and `onlyOwnerOrWirer` modifier on functions that `AssetWiring` and `BasketFactory` need to call.
+- [2026-04-10] `BasketFactory.createBasket` now auto-registers new baskets in `VaultAccounting` via `registerVault`, removing the need for a separate admin transaction.
+- [2026-04-10] `IPerp.registerVault` added to the perp interface so `BasketFactory` can call it through the interface.
+
 ### Changed
 
+- [2026-04-10] CI lint job now also installs web dependencies and runs ESLint (`npm run lint:web`) alongside `forge fmt --check`; pre-commit hook updated to run the same full-project checks instead of only linting staged files.
+- [2026-04-10] Admin "Register New Asset" card now calls `AssetWiring.wireAsset()` in a single transaction instead of the previous two-step `configureAsset` + `submitPrice` flow.
+- [2026-04-10] Deploy scripts (`DeployLocal.s.sol`, `DeploySepolia.s.sol`) refactored: deploy `AssetWiring`, set wirer/keeper roles, transfer GMX vault governance to `AssetWiring`, wire BHP via `wireAsset`, and output `assetWiring` address to deployment JSON.
+- [2026-04-10] `VaultAccounting.registerVault` and `mapAssetToken` now use `onlyOwnerOrWirer` instead of `onlyOwner`.
+- [2026-04-10] `OracleAdapter.configureAsset` now uses `onlyOwnerOrWirer` instead of `onlyOwner`.
+- [2026-04-10] `FundingRateManager.mapAssetToken` now uses `onlyOwnerOrWirer` instead of `onlyOwner`.
+- [2026-04-10] `PriceSync.addMapping` now uses `onlyOwnerOrWirer` instead of `onlyOwner`.
+- [2026-04-10] Web app: basket detail admin page UI/UX overhaul — add breadcrumb back-navigation and copy-on-click address; group content into titled sections (Overview, Reserves, Accounting, Composition, Operations, Position Management); replace plain-text reserve health with a styled status banner; make Operations section collapsible; add two-click confirmation on Close Position; create reusable `Select` UI component replacing raw `<select>` elements; fix fee collection not triggering post-tx data refresh; extract 7 inline sub-components into `components/baskets/admin/`.
+- [2026-04-10] Web app: admin sidebar and overview quick link rename **Oracle** → **Assets** (route remains `/admin/oracle`); page title and operator docs updated accordingly.
+- [2026-04-10] `DeployLocal.s.sol` / `DeploySepolia.s.sol`: BHP-only `CustomRelayer` deploy; initial BHP price from Yahoo via `vm.ffi` running `scripts/fetch-yf-asset-price.js`, which writes `cache/yf-seed-price.txt` for `vm.readFile` (avoids Forge mis-parsing decimal ASCII from FFI stdout). `foundry.toml`: `ffi = true`, `read` on `./cache`. Optional `SEED_PRICE_RAW` skips Yahoo. Add other assets via Admin → Assets or a custom deploy.
 - [2026-04-10] `OracleAdapter.configureAsset` now accepts a `string symbol` instead of `bytes32 assetId`; the asset id is computed as `keccak256(bytes(symbol))` internally and the symbol is stored in a new `assetSymbols` mapping. The `AssetConfigured` event now emits the symbol string. A `getAssetSymbol(bytes32)` view is also added.
 - [2026-04-10] Yahoo Finance price relayer (`scripts/update-yahoo-finance-prices.js`) is now fully on-chain driven: it enumerates active `CustomRelayer` assets and reads their symbols from the contract. No local config file (`yahoo-finance-feed-config.json`) is needed.
 - [2026-04-10] Web app asset labels are now fetched from on-chain `assetSymbols` mapping via `useReadContracts`, replacing the client-side `asset-registry.ts` localStorage approach.
@@ -28,6 +45,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-10] Admin "Register New Asset" now converts non-USD Yahoo Finance quotes to USD before seeding the on-chain price via `wireAsset`, fixing `DeviationTooLarge` reverts on the first relayer price update for assets quoted in foreign currencies (e.g. GBp for LSE stocks). The `/api/yahoo-finance/quote` route now returns a `priceUsd` field with server-side FX conversion.
 - [2026-04-10 16:30 UTC+07:00] Web app: contract revert errors now surface clean messages in toasts. Cross-contract custom errors (e.g. `VaultNotRegistered` from VaultAccounting when calling BasketVault) are decoded against a combined error ABI instead of falling through to a generic fallback. Wallet rejections silently dismiss the pending toast instead of showing an error.
 - [2026-04-10 14:34 UTC+07:00] CI E2E/local deploy env hardening: `.github/workflows/test.yml` now sets placeholder `ETHERSCAN_API_KEY` and `ARBISCAN_API_KEY` at workflow scope so `forge script ... --broadcast` for local Anvil deploys does not fail on missing explorer API key env vars when no verification is performed.
 - [2026-04-10 14:26 UTC+07:00] CI Foundry toolchain install stability: `.github/workflows/test.yml` now pins `foundry-rs/foundry-toolchain@v1` to `v1.3.1` across all jobs (build/test/coverage/lint/e2e) instead of floating `stable`, avoiding upstream `foundryup` attestation/hash mismatches that were failing E2E setup.

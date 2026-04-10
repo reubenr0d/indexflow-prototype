@@ -18,7 +18,7 @@ const adminNav = [
   { href: "/admin/baskets", label: "Baskets", icon: Layers },
   { href: "/admin/risk", label: "Risk Controls", icon: ShieldAlert },
   { href: "/admin/funding", label: "Funding", icon: Gauge },
-  { href: "/admin/oracle", label: "Oracle", icon: Radio },
+  { href: "/admin/oracle", label: "Assets", icon: Radio },
   { href: "/admin/pool", label: "Pool", icon: Activity },
   { href: "/docs", label: "Docs", icon: BookOpenText },
 ];

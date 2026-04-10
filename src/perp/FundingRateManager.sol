@@ -36,6 +36,8 @@ contract FundingRateManager is Ownable {
     mapping(bytes32 => FundingConfig) public fundingConfigs;
     /// @notice Maps logical asset id to GMX index token for imbalance reads.
     mapping(bytes32 => address) public assetTokens;
+    /// @notice Addresses authorized alongside owner on guarded admin functions (e.g. `mapAssetToken`).
+    mapping(address => bool) public wirers;
 
     /// @notice Default base factor when no per-asset config.
     uint256 public defaultBaseFundingRateFactor;
@@ -55,12 +57,19 @@ contract FundingRateManager is Ownable {
     event FundingIntervalUpdated(uint256 interval);
     /// @notice Emitted when `setKeeper` runs.
     event KeeperUpdated(address indexed keeper, bool active);
+    /// @notice Emitted when `setWirer` runs.
+    event WirerSet(address indexed account, bool active);
 
     /// @notice Caller is not keeper or owner.
     error Unauthorized();
 
     modifier onlyKeeper() {
         if (!keepers[msg.sender] && msg.sender != owner()) revert Unauthorized();
+        _;
+    }
+
+    modifier onlyOwnerOrWirer() {
+        require(msg.sender == owner() || wirers[msg.sender], "Not authorized");
         _;
     }
 
@@ -84,6 +93,14 @@ contract FundingRateManager is Ownable {
     function setKeeper(address keeper, bool active) external onlyOwner {
         keepers[keeper] = active;
         emit KeeperUpdated(keeper, active);
+    }
+
+    /// @notice Authorize or revoke a wirer for `mapAssetToken`.
+    /// @param account Address to toggle.
+    /// @param active Whether account may call wirer-guarded functions.
+    function setWirer(address account, bool active) external onlyOwner {
+        wirers[account] = active;
+        emit WirerSet(account, active);
     }
 
     /// @notice Update funding interval stored locally and used in `updateFundingRate`.
@@ -126,7 +143,7 @@ contract FundingRateManager is Ownable {
     /// @notice Bind asset id to GMX index token for imbalance sampling.
     /// @param assetId Logical id.
     /// @param token GMX index token address.
-    function mapAssetToken(bytes32 assetId, address token) external onlyOwner {
+    function mapAssetToken(bytes32 assetId, address token) external onlyOwnerOrWirer {
         require(token != address(0), "Invalid token");
         assetTokens[assetId] = token;
     }

@@ -15,6 +15,7 @@ type ContractAddresses = {
   priceSync: Address;
   usdc: Address;
   gmxVault: Address;
+  assetWiring: Address;
 };
 
 type DeploymentFile = {
@@ -27,6 +28,7 @@ type DeploymentFile = {
   priceSync?: string;
   usdc: string;
   gmxVault: string;
+  assetWiring?: string;
 };
 
 const ld = localDeployment as DeploymentFile;
@@ -43,6 +45,7 @@ const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
     priceSync: (ld.priceSync ?? "0x0000000000000000000000000000000000000000") as Address,
     usdc: ld.usdc as Address,
     gmxVault: ld.gmxVault as Address,
+    assetWiring: (ld.assetWiring ?? "0x0000000000000000000000000000000000000000") as Address,
   },
   sepolia: {
     basketFactory: sd.basketFactory as Address,
@@ -54,6 +57,7 @@ const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
     priceSync: (sd.priceSync ?? "0x0000000000000000000000000000000000000000") as Address,
     usdc: sd.usdc as Address,
     gmxVault: sd.gmxVault as Address,
+    assetWiring: (sd.assetWiring ?? "0x0000000000000000000000000000000000000000") as Address,
   },
 };
 
@@ -70,6 +74,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     priceSync: "0x0000000000000000000000000000000000000007" as Address,
     usdc: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" as Address,
     gmxVault: "0x0000000000000000000000000000000000000008" as Address,
+    assetWiring: "0x0000000000000000000000000000000000000000" as Address,
   },
   [arbitrumSepolia.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -81,6 +86,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     priceSync: "0x0000000000000000000000000000000000000007" as Address,
     usdc: "0x0000000000000000000000000000000000000008" as Address,
     gmxVault: "0x0000000000000000000000000000000000000009" as Address,
+    assetWiring: "0x0000000000000000000000000000000000000000" as Address,
   },
 };
 

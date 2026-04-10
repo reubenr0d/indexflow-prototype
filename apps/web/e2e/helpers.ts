@@ -3,8 +3,9 @@ import { expect, type Page } from '@playwright/test';
 export const E2E_ACCOUNT = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
 const RPC_URL = process.env.E2E_RPC_URL ?? 'http://127.0.0.1:8545';
 
-export const XAU_ASSET_ID =
-  '0x7c687a3207cd9c05b4b11d8dd7ac337919c2200102d72989a597ebc5afcf180b';
+/** `keccak256(bytes("BHP"))` — matches `DeployLocal` single CustomRelayer asset. */
+export const BHP_ASSET_ID =
+  '0x39ffcb70be22eb03bd43c55d57db0e1672ef8e9016fc0233569e1f8a8ff34db0';
 
 export async function installMetaMaskShim(page: Page) {
   await page.addInitScript(

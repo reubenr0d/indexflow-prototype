@@ -66,6 +66,8 @@ export interface YFQuote {
   symbol: string;
   name: string;
   price: number | null;
+  /** Local-currency price converted to USD (null when FX rate unavailable). */
+  priceUsd: number | null;
   currency: string;
   exchange: string;
   marketState: string;

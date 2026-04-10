@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Script.sol";
+import {YahooFinanceSeed} from "./YahooFinanceSeed.sol";
 import {IGMXVault} from "../src/perp/interfaces/IGMXVault.sol";
 import {VaultAccounting} from "../src/perp/VaultAccounting.sol";
 import {OracleAdapter} from "../src/perp/OracleAdapter.sol";
@@ -11,9 +12,9 @@ import {FundingRateManager} from "../src/perp/FundingRateManager.sol";
 import {PerpReader} from "../src/perp/PerpReader.sol";
 import {BasketFactory} from "../src/vault/BasketFactory.sol";
 import {PriceSync} from "../src/perp/PriceSync.sol";
+import {AssetWiring} from "../src/perp/AssetWiring.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
-import {MockChainlinkFeed} from "../src/mocks/MockChainlinkFeed.sol";
 
 interface ISimplePriceFeed {
     function setPrice(address token, uint256 price) external;
@@ -31,30 +32,23 @@ interface IVaultErrorController {
 }
 
 /// @notice Deploy full stack to local Anvil and write `apps/web/src/config/local-deployment.json`.
+/// @dev BHP is wired via `AssetWiring.wireAsset`; additional assets can be registered permissionlessly post-deploy.
+/// @dev Initial BHP seed price is fetched live via `scripts/fetch-yf-asset-price.js` (`vm.ffi`), or `SEED_PRICE_RAW` if set.
 contract DeployLocal is Script {
-    bytes32 constant XAU = keccak256("XAU");
-    bytes32 constant XAG = keccak256("XAG");
-    bytes32 constant BHP = keccak256("BHP");
-    bytes32 constant RIO = keccak256("RIO");
-    bytes32 constant VALE = keccak256("VALE");
-    bytes32 constant NEM = keccak256("NEM");
-    bytes32 constant FCX = keccak256("FCX");
-    bytes32 constant SCCO = keccak256("SCCO");
-
-    uint256 constant CHAINLINK_STALENESS = 3600;
-    uint256 constant RELAYER_STALENESS = 86_400;
-    uint256 constant RELAYER_DEVIATION_BPS = 2000;
-
-    uint256 constant XAU_PRICE_RAW = 200_000_000_000; // $2000 (8d)
-    uint256 constant XAG_PRICE_RAW = 2_500_000_000; // $25 (8d)
-    uint256 constant BHP_PRICE_RAW = 4_500_000_000; // $45 (8d)
-    uint256 constant RIO_PRICE_RAW = 6_300_000_000; // $63 (8d)
-    uint256 constant VALE_PRICE_RAW = 1_200_000_000; // $12 (8d)
-    uint256 constant NEM_PRICE_RAW = 4_800_000_000; // $48 (8d)
-    uint256 constant FCX_PRICE_RAW = 4_300_000_000; // $43 (8d)
-    uint256 constant SCCO_PRICE_RAW = 11_000_000_000; // $110 (8d)
-
     uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
+
+    struct Deployed {
+        address basketFactory;
+        address vaultAccounting;
+        address oracleAdapter;
+        address perpReader;
+        address pricingEngine;
+        address fundingRateManager;
+        address priceSync;
+        address usdc;
+        address gmxVault;
+        address assetWiring;
+    }
 
     function run() external {
         uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
@@ -64,140 +58,107 @@ contract DeployLocal is Script {
         address deployer = vm.addr(deployerPrivateKey);
         vm.startBroadcast(deployerPrivateKey);
 
-        MockUSDC usdc = new MockUSDC();
+        Deployed memory d;
+        d.usdc = address(new MockUSDC());
 
-        string[8] memory symbols = ["XAU", "XAG", "BHP", "RIO", "VALE", "NEM", "FCX", "SCCO"];
+        string memory symbol = "BHP";
+        uint256 seedRaw = YahooFinanceSeed.rawUsdPrice8(vm, symbol);
+        console2.log("BHP seed raw (8d USD, Yahoo or SEED_PRICE_RAW):", seedRaw);
 
-        bytes32[] memory assetIds = new bytes32[](8);
-        for (uint256 i = 0; i < symbols.length; i++) {
-            assetIds[i] = keccak256(bytes(symbols[i]));
-        }
+        address pfAddr = _deployGmx(d, deployer);
 
-        uint256[] memory rawPrices = new uint256[](8);
-        rawPrices[0] = XAU_PRICE_RAW;
-        rawPrices[1] = XAG_PRICE_RAW;
-        rawPrices[2] = BHP_PRICE_RAW;
-        rawPrices[3] = RIO_PRICE_RAW;
-        rawPrices[4] = VALE_PRICE_RAW;
-        rawPrices[5] = NEM_PRICE_RAW;
-        rawPrices[6] = FCX_PRICE_RAW;
-        rawPrices[7] = SCCO_PRICE_RAW;
+        _deployPerp(d, deployer, pfAddr);
 
-        address[] memory indexTokens = new address[](8);
-        indexTokens[0] = address(new MockIndexToken("Gold Token", "GOLD", 18));
-        indexTokens[1] = address(new MockIndexToken("Silver Token", "SILVER", 18));
-        indexTokens[2] = address(new MockIndexToken("BHP Token", "BHP", 18));
-        indexTokens[3] = address(new MockIndexToken("Rio Token", "RIO", 18));
-        indexTokens[4] = address(new MockIndexToken("Vale Token", "VALE", 18));
-        indexTokens[5] = address(new MockIndexToken("Newmont Token", "NEM", 18));
-        indexTokens[6] = address(new MockIndexToken("Freeport Token", "FCX", 18));
-        indexTokens[7] = address(new MockIndexToken("SCCO Token", "SCCO", 18));
+        _deployAssetWiring(d, deployer, pfAddr, symbol, seedRaw);
 
-        address pfAddr = deployCode("SimplePriceFeed.sol:SimplePriceFeed");
-        ISimplePriceFeed priceFeed = ISimplePriceFeed(pfAddr);
-        priceFeed.setPrice(address(usdc), 1e30);
-        for (uint256 i = 0; i < indexTokens.length; i++) {
-            priceFeed.setPrice(indexTokens[i], rawPrices[i] * 1e22);
-        }
+        _deployBasketFactory(d, deployer);
 
-        // Vault uses linked VaultMath; vm.getCode("Vault.sol:Vault") fails (wrong path + unlinked placeholders).
+        vm.stopBroadcast();
+
+        string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
+        vm.writeFile(outPath, _buildJson(d));
+        console2.log("Wrote", outPath);
+    }
+
+    function _deployGmx(Deployed memory d, address deployer) internal returns (address pfAddr) {
+        pfAddr = deployCode("SimplePriceFeed.sol:SimplePriceFeed");
+        ISimplePriceFeed(pfAddr).setPrice(d.usdc, 1e30);
+
         address vaultMath = deployCode("VaultMath.sol:VaultMath");
-        address vaultAddr = _deployVaultWithLinkedVaultMath(vaultMath);
-        IGMXVault gmxVault = IGMXVault(vaultAddr);
+        d.gmxVault = _deployVaultWithLinkedVaultMath(vaultMath);
+        IGMXVault gmxVault = IGMXVault(d.gmxVault);
 
-        address usdgAddr = deployCode("USDG.sol:USDG", abi.encode(vaultAddr));
-        address routerAddr = deployCode("Router.sol:Router", abi.encode(vaultAddr, usdgAddr, address(usdc)));
-        address vaultUtilsAddr = deployCode("VaultUtils.sol:VaultUtils", abi.encode(vaultAddr));
+        address usdgAddr = deployCode("USDG.sol:USDG", abi.encode(d.gmxVault));
+        address routerAddr = deployCode("Router.sol:Router", abi.encode(d.gmxVault, usdgAddr, d.usdc));
+        address vaultUtilsAddr = deployCode("VaultUtils.sol:VaultUtils", abi.encode(d.gmxVault));
 
         gmxVault.initialize(routerAddr, usdgAddr, pfAddr, 5e30, 600, 600);
         gmxVault.setVaultUtils(vaultUtilsAddr);
 
         address errCtrl = deployCode("VaultErrorController.sol:VaultErrorController");
         gmxVault.setErrorController(errCtrl);
-        _setVaultErrors(errCtrl, vaultAddr);
+        _setVaultErrors(errCtrl, d.gmxVault);
 
         gmxVault.setFees(0, 0, 0, 0, 0, 0, 5e30, 0, false);
+        gmxVault.setTokenConfig(d.usdc, 6, 10000, 0, 0, true, false);
 
-        gmxVault.setTokenConfig(address(usdc), 6, 10000, 0, 0, true, false);
-        for (uint256 i = 0; i < indexTokens.length; i++) {
-            gmxVault.setTokenConfig(indexTokens[i], 18, 10000, 0, 0, false, true);
-        }
+        MockUSDC(d.usdc).mint(deployer, 10_000_000e6);
+        MockUSDC(d.usdc).transfer(d.gmxVault, 1_000_000e6);
+        gmxVault.directPoolDeposit(d.usdc);
+        gmxVault.setBufferAmount(d.usdc, INITIAL_USDC_BUFFER);
+    }
 
-        usdc.mint(deployer, 10_000_000e6);
-        usdc.transfer(address(gmxVault), 1_000_000e6);
-        gmxVault.directPoolDeposit(address(usdc));
-        gmxVault.setBufferAmount(address(usdc), INITIAL_USDC_BUFFER);
+    function _deployPerp(Deployed memory d, address deployer, address pfAddr) internal {
+        OracleAdapter oa = new OracleAdapter(deployer);
+        d.oracleAdapter = address(oa);
+        oa.setKeeper(deployer, true);
 
-        MockChainlinkFeed xauFeed = new MockChainlinkFeed(8, "XAU / USD");
-        xauFeed.setLatestAnswer(int256(XAU_PRICE_RAW), block.timestamp);
+        VaultAccounting va = new VaultAccounting(d.usdc, d.gmxVault, d.oracleAdapter, deployer);
+        d.vaultAccounting = address(va);
 
-        OracleAdapter oracleAdapter = new OracleAdapter(deployer);
-        oracleAdapter.setKeeper(deployer, true);
+        d.pricingEngine = address(new PricingEngine(d.oracleAdapter, deployer));
 
-        oracleAdapter.configureAsset(
-            symbols[0], address(xauFeed), IOracleAdapter.FeedType.Chainlink, CHAINLINK_STALENESS, 5000, 8
+        FundingRateManager frm = new FundingRateManager(d.gmxVault, d.oracleAdapter, deployer);
+        d.fundingRateManager = address(frm);
+        frm.setKeeper(deployer, true);
+
+        d.perpReader = address(new PerpReader(d.gmxVault, d.oracleAdapter, d.vaultAccounting));
+
+        PriceSync ps = new PriceSync(d.oracleAdapter, pfAddr, deployer);
+        d.priceSync = address(ps);
+        ISimplePriceFeed(pfAddr).setKeeper(address(ps), true);
+    }
+
+    function _deployAssetWiring(
+        Deployed memory d,
+        address deployer,
+        address pfAddr,
+        string memory symbol,
+        uint256 seedRaw
+    ) internal {
+        AssetWiring aw = new AssetWiring(
+            d.oracleAdapter, d.vaultAccounting, d.fundingRateManager, d.priceSync, pfAddr, d.gmxVault, deployer
         );
+        d.assetWiring = address(aw);
 
-        bytes32[] memory customIds = new bytes32[](assetIds.length - 1);
-        uint256[] memory customPrices = new uint256[](assetIds.length - 1);
-        for (uint256 i = 1; i < assetIds.length; i++) {
-            oracleAdapter.configureAsset(
-                symbols[i],
-                address(0),
-                IOracleAdapter.FeedType.CustomRelayer,
-                RELAYER_STALENESS,
-                RELAYER_DEVIATION_BPS,
-                8
-            );
-            customIds[i - 1] = assetIds[i];
-            customPrices[i - 1] = rawPrices[i];
-        }
-        oracleAdapter.submitPrices(customIds, customPrices);
+        OracleAdapter(d.oracleAdapter).setWirer(d.assetWiring, true);
+        VaultAccounting(d.vaultAccounting).setWirer(d.assetWiring, true);
+        FundingRateManager(d.fundingRateManager).setWirer(d.assetWiring, true);
+        PriceSync(d.priceSync).setWirer(d.assetWiring, true);
 
-        VaultAccounting vaultAccounting =
-            new VaultAccounting(address(usdc), address(gmxVault), address(oracleAdapter), deployer);
-        for (uint256 i = 0; i < assetIds.length; i++) {
-            vaultAccounting.mapAssetToken(assetIds[i], indexTokens[i]);
-        }
+        OracleAdapter(d.oracleAdapter).setKeeper(d.assetWiring, true);
+        ISimplePriceFeed(pfAddr).setKeeper(d.assetWiring, true);
 
-        PricingEngine pricingEngine = new PricingEngine(address(oracleAdapter), deployer);
-        FundingRateManager fundingRateManager =
-            new FundingRateManager(address(gmxVault), address(oracleAdapter), deployer);
-        fundingRateManager.setKeeper(deployer, true);
-        for (uint256 i = 0; i < assetIds.length; i++) {
-            fundingRateManager.mapAssetToken(assetIds[i], indexTokens[i]);
-        }
+        IGMXVault(d.gmxVault).setGov(d.assetWiring);
 
-        PerpReader perpReader = new PerpReader(address(gmxVault), address(oracleAdapter), address(vaultAccounting));
+        aw.wireAsset(symbol, seedRaw);
+    }
 
-        PriceSync priceSync = new PriceSync(address(oracleAdapter), pfAddr, deployer);
-        priceFeed.setKeeper(address(priceSync), true);
-        for (uint256 i = 0; i < assetIds.length; i++) {
-            priceSync.addMapping(assetIds[i], indexTokens[i]);
-        }
-        priceSync.syncAll();
-
-        BasketFactory basketFactory = new BasketFactory(address(usdc), address(oracleAdapter), deployer);
-        basketFactory.setVaultAccounting(address(vaultAccounting));
-
-        vm.stopBroadcast();
-
-        string memory json = _buildJson(
-            address(basketFactory),
-            address(vaultAccounting),
-            address(oracleAdapter),
-            address(perpReader),
-            address(pricingEngine),
-            address(fundingRateManager),
-            address(priceSync),
-            address(usdc),
-            address(gmxVault)
-        );
-
-        string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
-        vm.writeFile(outPath, json);
-
-        console2.log("Wrote", outPath);
+    function _deployBasketFactory(Deployed memory d, address deployer) internal {
+        BasketFactory bf = new BasketFactory(d.usdc, d.oracleAdapter, deployer);
+        d.basketFactory = address(bf);
+        bf.setVaultAccounting(d.vaultAccounting);
+        VaultAccounting(d.vaultAccounting).setWirer(d.basketFactory, true);
     }
 
     /// @dev `vm.getCode` cannot load `Vault` while `VaultMath` is unlinked. Deploy the library, patch
@@ -227,48 +188,44 @@ contract DeployLocal is Script {
         return string(str);
     }
 
-    function _buildJson(
-        address basketFactory,
-        address vaultAccounting,
-        address oracleAdapter,
-        address perpReader,
-        address pricingEngine,
-        address fundingRateManager,
-        address priceSync,
-        address usdc,
-        address gmxVault
-    ) internal view returns (string memory) {
-        return string.concat(
+    function _buildJson(Deployed memory d) internal view returns (string memory) {
+        string memory p1 = string.concat(
             "{\n",
             '  "basketFactory": "',
-            vm.toString(basketFactory),
+            vm.toString(d.basketFactory),
             '",\n',
             '  "vaultAccounting": "',
-            vm.toString(vaultAccounting),
+            vm.toString(d.vaultAccounting),
             '",\n',
             '  "oracleAdapter": "',
-            vm.toString(oracleAdapter),
+            vm.toString(d.oracleAdapter),
             '",\n',
             '  "perpReader": "',
-            vm.toString(perpReader),
+            vm.toString(d.perpReader),
             '",\n',
             '  "pricingEngine": "',
-            vm.toString(pricingEngine),
-            '",\n',
+            vm.toString(d.pricingEngine),
+            '",\n'
+        );
+        string memory p2 = string.concat(
             '  "fundingRateManager": "',
-            vm.toString(fundingRateManager),
+            vm.toString(d.fundingRateManager),
             '",\n',
             '  "priceSync": "',
-            vm.toString(priceSync),
+            vm.toString(d.priceSync),
             '",\n',
             '  "usdc": "',
-            vm.toString(usdc),
+            vm.toString(d.usdc),
             '",\n',
             '  "gmxVault": "',
-            vm.toString(gmxVault),
+            vm.toString(d.gmxVault),
+            '",\n',
+            '  "assetWiring": "',
+            vm.toString(d.assetWiring),
             '"\n',
             "}\n"
         );
+        return string.concat(p1, p2);
     }
 
     function _setVaultErrors(address errCtrl, address vault) internal {

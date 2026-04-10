@@ -4,7 +4,7 @@ This page lists the currently supported oracle assets and where each asset's pri
 
 ## Oracle architecture (Sepolia)
 
-- `Chainlink` assets: `OracleAdapter.getPrice(assetId)` reads the Chainlink feed directly, and `PriceSync.syncAll()` writes that normalized value into GMX `SimplePriceFeed`.
+- `Chainlink` assets (when configured): `OracleAdapter.getPrice(assetId)` reads the Chainlink feed directly, and `PriceSync.syncAll()` writes that normalized value into GMX `SimplePriceFeed`.
 - `Yahoo Finance relayed` assets: `scripts/update-yahoo-finance-prices.js` enumerates active `CustomRelayer` assets on-chain (via `assetList`, `getAssetConfig`, `assetSymbols`), fetches Yahoo Finance quotes, converts non-USD currencies, and submits prices to `OracleAdapter.submitPrices` then calls `PriceSync.syncAll()`. No local config file is needed.
 
 ## On-chain symbol storage
@@ -23,20 +23,22 @@ Duplicate tickers across exchanges are disambiguated by Yahoo Finance's suffix c
 - This document covers **Ethereum Sepolia (`11155111`)** only.
 - Mainnet feed details are intentionally not included yet.
 
-## Supported assets and feed sources
+## Default greenfield deploy (`DeploySepolia`)
+
+`script/DeploySepolia.s.sol` seeds **one** oracle asset:
 
 | Asset | OracleAdapter feed type | Provider | Network | Notes |
 | --- | --- | --- | --- | --- |
-| `XAU` | `FeedType.Chainlink` | Chainlink | Sepolia | Feed: `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea` |
-| `XAG` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `BHP` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `RIO` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `VALE` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `NEM` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `FCX` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
-| `SCCO` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain |
+| `BHP` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain; mock BHP index token mapped in GMX stack |
 
-Additional assets from any Yahoo Finance-supported exchange (ASX, LSE, TSX, etc.) can be registered via the admin oracle UI. They are automatically picked up by the relayer.
+Initial `submitPrices` uses a **live Yahoo quote** at deploy time: `vm.ffi` runs `scripts/fetch-yf-asset-price.js`, which writes `cache/yf-seed-price.txt`; Solidity reads it via `vm.readFile` (avoids passing the decimal string through FFI stdout). Same for `DeployLocal` on Anvil. Set env **`SEED_PRICE_RAW`** (8-decimal USD raw integer) to skip the network call.
+
+## Adding more assets
+
+- **Custom relayer (Yahoo Finance):** register via **Admin → Assets** (or `configureAsset` + `mapAssetToken` / `PriceSync.addMapping` as appropriate). The relayer picks up every active `CustomRelayer` asset automatically.
+- **Chainlink example (XAU/USD on Sepolia):** if you add `XAU` with feed `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, `getPrice` reads the feed and `PriceSync.syncAll()` can push it into `SimplePriceFeed` like any other configured asset.
+
+Additional tickers from any Yahoo Finance-supported exchange (ASX, LSE, TSX, etc.) use the same relayer path once registered.
 
 ## Operator note
 

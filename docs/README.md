@@ -16,6 +16,7 @@ This index mirrors the in-app docs routes at `/docs` in the web app.
 - `/docs/deployments` — source: `docs/DEPLOYMENTS.md`
 - `/docs/e2e-testing` — source: `docs/E2E_TESTING.md`
 - `/docs/share-price-and-operations` — source: `docs/SHARE_PRICE_AND_OPERATIONS.md`
+- `/docs/utility-token-tokenomics` — source: `docs/UTILITY_TOKEN_TOKENOMICS.md`
 
 ## Legacy route aliases
 
@@ -45,6 +46,7 @@ These legacy in-app wiki routes are preserved for compatibility and redirect to 
 - [DEPLOYMENTS.md](./DEPLOYMENTS.md)
 - [E2E_TESTING.md](./E2E_TESTING.md)
 - [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md)
+- [UTILITY_TOKEN_TOKENOMICS.md](./UTILITY_TOKEN_TOKENOMICS.md)
 
 ## Sync expectation
 

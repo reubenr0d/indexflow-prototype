@@ -34,7 +34,7 @@ export const TOOLTIP_COPY = {
   reserveStatus: "Health indicator comparing idle liquidity against required reserve policy.",
 
   // Admin and operations headings
-  quickActions: "Shortcuts to high-impact admin workflows for basket, pool, oracle, and docs operations.",
+  quickActions: "Shortcuts to high-impact admin workflows for basket, pool, assets (oracle), and docs operations.",
   largestBaskets: "Top baskets ranked by TVL for a quick concentration snapshot.",
   holdings: "Wallet positions across basket share tokens and their current estimated values.",
   vaultHistory: "Recent onchain vault actions including deposits, redemptions, allocations, and position events.",

@@ -10,6 +10,7 @@ const contracts = [
   "OracleAdapter",
   "PricingEngine",
   "FundingRateManager",
+  "AssetWiring",
 ];
 
 const outDir = path.join(__dirname, "..", "out");

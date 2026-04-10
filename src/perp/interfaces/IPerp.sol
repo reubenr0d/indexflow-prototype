@@ -94,6 +94,10 @@ interface IPerp {
     /// @return realised Cumulative realised PnL on the vault state.
     function getVaultPnL(address vault) external view returns (int256 unrealised, int256 realised);
 
+    /// @notice Register a basket vault so it may deposit capital and trade.
+    /// @param vault BasketVault address.
+    function registerVault(address vault) external;
+
     /// @notice Whether `vault` is registered and allowed to operate.
     /// @param vault Address to query.
     /// @return True if registered flag is set.

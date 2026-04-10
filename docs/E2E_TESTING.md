@@ -6,7 +6,7 @@ This repo includes a browser E2E suite for the web app with real onchain writes 
 
 - Real UI interactions in Chromium via Playwright.
 - Real contract writes against local Anvil deployments.
-- Oracle price movement is the only synthetic market input (submitted onchain through admin/oracle flow).
+- Oracle price movement is the only synthetic market input (submitted onchain through the admin Assets page at `/admin/oracle`).
 - No frontend/API request stubs for basket/perp/pool transaction flows.
 
 ## Local Run
@@ -35,11 +35,13 @@ NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:c
 
 ## Coverage Target
 
+Playwright helpers assume the local deploy registers **`BHP`** as the sole oracle index asset (`BHP_ASSET_ID` in `apps/web/e2e/helpers.ts`).
+
 Current lifecycle coverage includes:
 
 - smoke/UI navigation,
 - admin basket create/manage,
-- admin oracle submit/sync,
+- admin assets (oracle) submit/sync,
 - user deposit,
 - perp allocate/open/close,
 - user redeem,

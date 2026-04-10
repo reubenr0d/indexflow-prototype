@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {BasketVault} from "./BasketVault.sol";
+import {IPerp} from "../perp/interfaces/IPerp.sol";
 
 /// @title BasketFactory
 /// @notice Deploys new BasketVault instances.
@@ -58,6 +59,7 @@ contract BasketFactory is Ownable {
 
         if (vaultAccounting != address(0)) {
             basket.setVaultAccounting(vaultAccounting);
+            IPerp(vaultAccounting).registerVault(address(basket));
         }
 
         basket.transferOwnership(msg.sender);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type AnchorHTMLAttributes } from "react";
+import { useEffect, useMemo, useState, type AnchorHTMLAttributes } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
-import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
-import { OracleAdapterABI } from "@/abi/contracts";
+import { useReadContract, useWaitForTransactionReceipt, useWriteContract, useConfig } from "wagmi";
+import { waitForTransactionReceipt } from "wagmi/actions";
+import { OracleAdapterABI, AssetWiringABI } from "@/abi/contracts";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
@@ -22,14 +23,14 @@ import {
 } from "@/hooks/useOracle";
 import { formatPrice, formatRelativeTime, formatAssetId } from "@/lib/format";
 import { REFETCH_INTERVAL } from "@/lib/constants";
-import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { useContractErrorToast, getContractErrorMessage } from "@/hooks/useContractErrorToast";
 import { showToast } from "@/components/ui/toast";
 import { motion } from "framer-motion";
 import { ExternalLink, Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { YahooFinanceSearch, type YFSearchSelection } from "@/components/yahoo-finance-search";
 import { fetchYahooFinanceQuote, type YFQuote } from "@/hooks/useYahooFinanceSearch";
-import { keccak256, stringToHex, zeroAddress } from "viem";
+import { keccak256, stringToHex } from "viem";
 
 function yahooFinanceQuoteUrl(symbol: string): string {
   return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}/`;
@@ -166,7 +167,7 @@ export default function AdminOraclePage() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-semibold tracking-tight text-app-text">
-            Oracle Status
+            Assets
           </h1>
           <p className="mt-1 text-sm text-app-muted">{count} assets configured</p>
         </div>
@@ -272,74 +273,15 @@ export default function AdminOraclePage() {
   );
 }
 
-const DEFAULT_STALENESS = 86400n;
-const DEFAULT_DEVIATION_BPS = 5000n;
-const DEFAULT_DECIMALS = 8;
-
 function RegisterAssetCard() {
   const { chainId } = useDeploymentTarget();
-  const { oracleAdapter } = getContracts(chainId);
+  const { assetWiring } = getContracts(chainId);
 
+  const config = useConfig();
   const [selected, setSelected] = useState<YFSearchSelection | null>(null);
   const [quote, setQuote] = useState<YFQuote | null>(null);
   const [isFetchingQuote, setIsFetchingQuote] = useState(false);
-  const pendingRef = useRef<{ symbol: string; price: number } | null>(null);
-
-  const {
-    writeContract: configureWrite,
-    data: configureHash,
-    isPending: isConfigurePending,
-    error: configureError,
-    isError: isConfigureError,
-  } = useWriteContract();
-  const configureReceipt = useWaitForTransactionReceipt({ hash: configureHash });
-
-  const {
-    writeContract: submitWrite,
-    data: submitHash,
-    isPending: isSubmitPending,
-    error: submitError,
-    isError: isSubmitError,
-  } = useWriteContract();
-  const submitReceipt = useWaitForTransactionReceipt({ hash: submitHash });
-
-  useEffect(() => {
-    if (configureReceipt.isSuccess && pendingRef.current) {
-      const { symbol, price } = pendingRef.current;
-      showToast("success", `Asset ${symbol} configured`);
-      const rawPrice = BigInt(Math.round(price * 1e8));
-      const assetId = keccak256(stringToHex(symbol));
-      submitWrite({
-        address: oracleAdapter,
-        abi: OracleAdapterABI,
-        functionName: "submitPrice",
-        args: [assetId, rawPrice],
-      });
-      pendingRef.current = null;
-      showToast("pending", "Seeding initial price...");
-    }
-  }, [configureReceipt.isSuccess, oracleAdapter, submitWrite]);
-
-  useEffect(() => {
-    if (submitReceipt.isSuccess) {
-      showToast("success", "Initial price submitted");
-    }
-  }, [submitReceipt.isSuccess]);
-
-  useContractErrorToast({
-    writeError: configureError,
-    writeIsError: isConfigureError,
-    receiptError: configureReceipt.error,
-    receiptIsError: configureReceipt.isError,
-    fallbackMessage: "Configure asset failed",
-  });
-  useContractErrorToast({
-    writeError: submitError,
-    writeIsError: isSubmitError,
-    receiptError: submitReceipt.error,
-    receiptIsError: submitReceipt.isError,
-    fallbackMessage: "Submit initial price failed",
-  });
+  const [isWiring, setIsWiring] = useState(false);
 
   const handleSelect = async (result: YFSearchSelection) => {
     setSelected(result);
@@ -349,18 +291,16 @@ function RegisterAssetCard() {
     setIsFetchingQuote(false);
   };
 
-  const isPending = isConfigurePending || isSubmitPending;
-
   return (
     <Card className="mb-6 p-6">
       <h2 className="mb-2 text-base font-semibold text-app-text">
         <InfoLabel
           label="Register New Asset"
-          tooltip="Search for any publicly-traded equity and register it as a custom relayer oracle asset."
+          tooltip="Search for any publicly-traded equity and register it as a tradeable oracle asset in a single transaction."
         />
       </h2>
       <p className="mb-4 text-sm text-app-muted">
-        Search any exchange (ASX, LSE, TSX, NYSE, etc.) and register the asset on-chain.
+        Search any exchange (ASX, LSE, TSX, NYSE, etc.) and wire the asset for trading on-chain.
       </p>
 
       <YahooFinanceSearch
@@ -388,7 +328,15 @@ function RegisterAssetCard() {
                 Price: <span className="font-semibold text-app-text">
                   {quote.price != null ? `${quote.price.toFixed(2)} ${quote.currency}` : "unavailable"}
                 </span>
+                {quote.currency !== "USD" && quote.priceUsd != null && (
+                  <span className="ml-2 text-app-muted">
+                    ({quote.priceUsd.toFixed(2)} USD)
+                  </span>
+                )}
               </p>
+              {quote.price != null && quote.currency !== "USD" && quote.priceUsd == null && (
+                <p className="text-xs text-app-warning">FX rate unavailable; cannot convert to USD for on-chain seed.</p>
+              )}
               <p>
                 Asset ID: <span className="font-mono text-xs">{keccak256(stringToHex(selected.symbol)).slice(0, 18)}...</span>
               </p>
@@ -405,21 +353,34 @@ function RegisterAssetCard() {
 
       <Button
         size="sm"
-        disabled={!selected || !quote?.price || isPending}
+        disabled={!selected || !quote?.priceUsd || isWiring}
         data-testid="register-asset-submit"
-        onClick={() => {
-          if (!selected || !quote?.price) return;
-          pendingRef.current = { symbol: selected.symbol, price: quote.price };
-          configureWrite({
-            address: oracleAdapter,
-            abi: OracleAdapterABI,
-            functionName: "configureAsset",
-            args: [selected.symbol, zeroAddress, 1, DEFAULT_STALENESS, DEFAULT_DEVIATION_BPS, DEFAULT_DECIMALS],
-          });
-          showToast("pending", `Registering ${selected.symbol}...`);
+        onClick={async () => {
+          if (!selected || !quote?.priceUsd) return;
+          const rawPrice8 = BigInt(Math.round(quote.priceUsd * 1e8));
+          setIsWiring(true);
+          showToast("pending", `Wiring ${selected.symbol}...`);
+          try {
+            const { writeContractAsync } = await import("wagmi/actions");
+            const hash = await writeContractAsync(config, {
+              address: assetWiring,
+              abi: AssetWiringABI,
+              functionName: "wireAsset",
+              args: [selected.symbol, rawPrice8],
+            });
+            await waitForTransactionReceipt(config, { hash });
+            showToast("success", "Asset wired and ready for trading");
+            setSelected(null);
+            setQuote(null);
+          } catch (e) {
+            const msg = getContractErrorMessage(e, "Wire asset failed");
+            if (msg) showToast("error", msg);
+          } finally {
+            setIsWiring(false);
+          }
         }}
       >
-        {isPending ? "Processing..." : "Register Asset"}
+        {isWiring ? "Wiring..." : "Register Asset"}
       </Button>
     </Card>
   );

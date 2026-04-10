@@ -4,6 +4,7 @@ out = "out"
 test = "test"
 script = "script"
 libs = ["lib", "node_modules"]
+ffi = true
 optimizer = true
 # Lower runs shrink deployed bytecode (Vault is near EIP-170); 200 was marginally over the limit with VaultMath linked.
 optimizer_runs = 1
@@ -15,6 +16,7 @@ auto_detect_solc = true
 fs_permissions = [
     { access = "read", path = "node_modules" },
     { access = "read", path = "./out" },
+    { access = "read", path = "./cache" },
     { access = "read-write", path = "./apps/web/src/config" },
 ]
 

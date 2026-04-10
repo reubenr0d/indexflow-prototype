@@ -64,11 +64,11 @@ Addresses:
 ## How to refresh
 
 - Local:
-  - `npm run deploy:local`
+  - `npm run deploy:local` (requires Node + network for live Yahoo `BHP` seed, or set `SEED_PRICE_RAW` to pin the initial oracle price)
   - Full local stack (fresh Anvil + contracts + subgraph + UI): `npm run local:up`
   - Teardown/reset volumes: `npm run local:down`
 - Sepolia:
-  - `npm run deploy:sepolia`
+  - `npm run deploy:sepolia` (same Yahoo seed behavior; optional `SEED_PRICE_RAW` override)
   - Optional verify pass:
     - `forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --private-key $PRIVATE_KEY --broadcast --resume --verify -vvv`
 

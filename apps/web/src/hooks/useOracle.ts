@@ -181,7 +181,7 @@ export function useSupportedOracleAssets() {
     () =>
       assetIds
         .filter((id, i) => Boolean(activeData?.[i]?.result))
-        .map((id, _filteredIdx) => {
+        .map((id) => {
           const originalIdx = assetIds.indexOf(id);
           const onChainSymbol = (onChainSymbolData?.[originalIdx]?.result as string | undefined) ?? "";
           const decoded = onChainSymbol || formatAssetId(id);

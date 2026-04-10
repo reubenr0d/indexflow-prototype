@@ -37,9 +37,14 @@ contract PriceSync is Ownable {
     mapping(bytes32 => uint256) internal _mappingIndex;
     mapping(bytes32 => bool) internal _mappingExists;
 
+    /// @notice Addresses authorized alongside owner on guarded admin functions (e.g. `addMapping`).
+    mapping(address => bool) public wirers;
+
     event Synced(bytes32 indexed assetId, address indexed token, uint256 price);
     event MappingAdded(bytes32 indexed assetId, address indexed token);
     event MappingRemoved(bytes32 indexed assetId);
+    /// @notice Emitted when `setWirer` runs.
+    event WirerSet(address indexed account, bool active);
 
     /// @notice `addMapping` when id already mapped.
     error MappingAlreadyExists(bytes32 assetId);
@@ -47,6 +52,11 @@ contract PriceSync is Ownable {
     error MappingNotFound(bytes32 assetId);
     /// @notice Constructor or admin setters received zero address.
     error ZeroAddress();
+
+    modifier onlyOwnerOrWirer() {
+        require(msg.sender == owner() || wirers[msg.sender], "Not authorized");
+        _;
+    }
 
     /// @param _oracleAdapter Oracle adapter.
     /// @param _simplePriceFeed GMX simple price feed.
@@ -62,7 +72,7 @@ contract PriceSync is Ownable {
     /// @notice Register an oracle asset id to a GMX token for syncing.
     /// @param assetId Adapter asset key.
     /// @param gmxToken GMX index/collateral token whose `setPrice` target applies.
-    function addMapping(bytes32 assetId, address gmxToken) external onlyOwner {
+    function addMapping(bytes32 assetId, address gmxToken) external onlyOwnerOrWirer {
         if (gmxToken == address(0)) revert ZeroAddress();
         if (_mappingExists[assetId]) revert MappingAlreadyExists(assetId);
 
@@ -140,6 +150,14 @@ contract PriceSync is Ownable {
     }
 
     // ─── Admin ───────────────────────────────────────────────────
+
+    /// @notice Authorize or revoke a wirer for `addMapping`.
+    /// @param account Address to toggle.
+    /// @param active Whether account may call wirer-guarded functions.
+    function setWirer(address account, bool active) external onlyOwner {
+        wirers[account] = active;
+        emit WirerSet(account, active);
+    }
 
     /// @notice Point sync source to a new adapter.
     /// @param _oracleAdapter New oracle adapter address.

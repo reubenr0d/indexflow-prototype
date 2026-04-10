@@ -2,31 +2,15 @@
 set -euo pipefail
 
 ROOT_DIR="$(git rev-parse --show-toplevel)"
-cd "$ROOT_DIR"
 
-SOL_FILES=()
-while IFS= read -r file; do
-  SOL_FILES+=("$file")
-done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.sol$' || true)
+echo "=== Pre-commit lint checks ==="
 
-if [ "${#SOL_FILES[@]}" -gt 0 ]; then
-  echo "Running forge fmt for staged Solidity files..."
-  PATH="/Users/reuben/.foundry/bin:$PATH" forge fmt --root "$ROOT_DIR" "${SOL_FILES[@]}"
-  echo "Re-staging Solidity files after formatting..."
-  git add "${SOL_FILES[@]}"
-fi
+# 1. Solidity formatting (same as CI: forge fmt --check)
+echo "Checking Solidity formatting..."
+PATH="/Users/reuben/.foundry/bin:$PATH" forge fmt --check --root "$ROOT_DIR"
 
-WEB_FILES=()
-while IFS= read -r file; do
-  WEB_FILES+=("$file")
-done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E '^apps/web/.*\.(js|jsx|ts|tsx)$' || true)
+# 2. Web ESLint (same as CI: npm run lint:web)
+echo "Running ESLint on web app..."
+npm --prefix "$ROOT_DIR" run lint:web
 
-if [ "${#WEB_FILES[@]}" -gt 0 ]; then
-  WEB_REL_FILES=()
-  for file in "${WEB_FILES[@]}"; do
-    WEB_REL_FILES+=("${file#apps/web/}")
-  done
-
-  echo "Running ESLint validation for staged web files..."
-  npm --prefix apps/web run lint -- "${WEB_REL_FILES[@]}"
-fi
+echo "=== All lint checks passed ==="

@@ -20,6 +20,8 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     mapping(bytes32 => PriceData) internal _prices;
     /// @notice Addresses allowed to call `submitPrice` / `submitPrices` (owner is always allowed).
     mapping(address => bool) public keepers;
+    /// @notice Addresses authorized alongside owner on guarded admin functions (e.g. `configureAsset`).
+    mapping(address => bool) public wirers;
     /// @notice Human-readable symbol for each asset id (set by `configureAsset`).
     mapping(bytes32 => string) public assetSymbols;
 
@@ -34,6 +36,8 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     event PriceUpdated(bytes32 indexed assetId, uint256 price, uint256 timestamp);
     /// @notice Emitted when `setKeeper` runs.
     event KeeperUpdated(address indexed keeper, bool active);
+    /// @notice Emitted when `setWirer` runs.
+    event WirerSet(address indexed account, bool active);
 
     /// @notice Custom relayer path had no stored price yet where required.
     error AssetNotFound(bytes32 assetId);
@@ -53,6 +57,11 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         _;
     }
 
+    modifier onlyOwnerOrWirer() {
+        require(msg.sender == owner() || wirers[msg.sender], "Not authorized");
+        _;
+    }
+
     /// @param _owner Ownable admin.
     constructor(address _owner) Ownable(_owner) {}
 
@@ -64,6 +73,14 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     function setKeeper(address keeper, bool active) external onlyOwner {
         keepers[keeper] = active;
         emit KeeperUpdated(keeper, active);
+    }
+
+    /// @notice Authorize or revoke a wirer for `configureAsset`.
+    /// @param account Address to toggle.
+    /// @param active Whether account may call wirer-guarded functions.
+    function setWirer(address account, bool active) external onlyOwner {
+        wirers[account] = active;
+        emit WirerSet(account, active);
     }
 
     /// @notice Configure or update an asset feed.
@@ -80,7 +97,7 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         uint256 stalenessThreshold,
         uint256 deviationBps,
         uint8 decimals_
-    ) external onlyOwner {
+    ) external onlyOwnerOrWirer {
         bytes32 assetId = keccak256(bytes(symbol));
         bool isNew = !_assetConfigs[assetId].active;
 
