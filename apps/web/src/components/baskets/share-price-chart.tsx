@@ -69,7 +69,7 @@ function CustomTooltip({
   );
 }
 
-export function SharePriceChart({ vault }: { vault: Address }) {
+export function SharePriceChart({ vault, compact }: { vault: Address; compact?: boolean }) {
   const { data, isLoading } = useSharePriceHistory(vault);
 
   const chartData = useMemo<ChartDataPoint[]>(() => {
@@ -99,6 +99,8 @@ export function SharePriceChart({ vault }: { vault: Address }) {
     return { change, pct, isPositive: change >= 0 };
   }, [chartData]);
 
+  const chartHeight = compact ? "h-48" : "h-48 lg:h-64";
+
   if (isLoading) {
     return (
       <Card className="p-5">
@@ -107,7 +109,7 @@ export function SharePriceChart({ vault }: { vault: Address }) {
           title={<InfoLabel label="Share Price History" tooltipKey="sharePriceHistory" />}
           meta="Loading price history..."
         />
-        <Skeleton className="h-48 w-full rounded-lg" />
+        <Skeleton className={`${chartHeight} w-full rounded-lg`} />
       </Card>
     );
   }
@@ -127,41 +129,42 @@ export function SharePriceChart({ vault }: { vault: Address }) {
     );
   }
 
+  const strokeColor = priceChange?.isPositive !== false ? "var(--success)" : "var(--danger)";
+
   return (
     <Card className="p-5">
-      <SectionHeader
-        icon={TrendingUp}
-        title={<InfoLabel label="Share Price History" tooltipKey="sharePriceHistory" />}
-        meta={
-          priceChange ? (
-            <span>
-              <span className={priceChange.isPositive ? "text-app-success" : "text-app-danger"}>
-                {priceChange.isPositive ? "+" : ""}
-                {priceChange.pct.toFixed(2)}%
-              </span>
-              {" "}over the displayed period ({data?.source === "rpc" ? "RPC" : "subgraph"})
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <TrendingUp className="h-4 w-4 text-app-muted" />
+          <span className="text-sm font-semibold text-app-text">
+            <InfoLabel label="Share Price" tooltipKey="sharePriceHistory" />
+          </span>
+          {chartData.length > 0 && (
+            <span className="font-mono text-lg font-bold text-app-text">
+              ${chartData[chartData.length - 1].price.toFixed(4)}
             </span>
-          ) : undefined
-        }
-      />
-      <div className="h-48 w-full">
+          )}
+        </div>
+        {priceChange && (
+          <span className="text-xs text-app-muted">
+            <span className={priceChange.isPositive ? "text-app-success" : "text-app-danger"}>
+              {priceChange.isPositive ? "+" : ""}
+              {priceChange.pct.toFixed(2)}%
+            </span>
+            {" "}({data?.source === "rpc" ? "RPC" : "subgraph"})
+          </span>
+        )}
+      </div>
+      <div className={`${chartHeight} w-full`}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
             <defs>
               <linearGradient id="sharePriceGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop
-                  offset="0%"
-                  stopColor={priceChange?.isPositive !== false ? "rgb(13,148,136)" : "rgb(239,68,68)"}
-                  stopOpacity={0.2}
-                />
-                <stop
-                  offset="95%"
-                  stopColor={priceChange?.isPositive !== false ? "rgb(13,148,136)" : "rgb(239,68,68)"}
-                  stopOpacity={0}
-                />
+                <stop offset="0%" stopColor={strokeColor} stopOpacity={0.18} />
+                <stop offset="95%" stopColor={strokeColor} stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-app-border, #e5e7eb)" opacity={0.4} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-app-border, #e5e7eb)" opacity={0.3} />
             <XAxis
               dataKey="label"
               tick={{ fontSize: 11, fill: "var(--color-app-muted, #9ca3af)" }}
@@ -174,14 +177,14 @@ export function SharePriceChart({ vault }: { vault: Address }) {
               tick={{ fontSize: 11, fill: "var(--color-app-muted, #9ca3af)" }}
               tickLine={false}
               axisLine={false}
-              tickFormatter={(v: number) => `$${v.toFixed(2)}`}
-              width={60}
+              tickFormatter={(v: number) => `$${v.toFixed(4)}`}
+              width={64}
             />
             <RechartsTooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
               dataKey="price"
-              stroke={priceChange?.isPositive !== false ? "rgb(13,148,136)" : "rgb(239,68,68)"}
+              stroke={strokeColor}
               strokeWidth={2}
               fill="url(#sharePriceGradient)"
               dot={false}

@@ -16,6 +16,7 @@ const eslintConfig = defineConfig([
     // Playwright output (local E2E runs; not present on fresh CI checkouts)
     "playwright-report/**",
     "test-results/**",
+    "coverage/**",
   ]),
 ]);
 

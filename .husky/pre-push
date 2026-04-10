@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -eu
+
+echo "husky pre-push: verifying lockfile integrity..."
+npm ci
+npm ci --prefix apps/web
+echo "husky pre-push: lockfiles OK"

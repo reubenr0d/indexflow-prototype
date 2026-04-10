@@ -47,9 +47,9 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 forge install
 npm install
 
-# Ensure git pre-commit hooks are installed (auto-runs via prepare on npm install).
-# The hook runs `forge fmt` on staged Solidity files and ESLint validation on staged web files (no auto-fix).
-npm run hooks:install
+# Git hooks (Husky) are configured automatically by `npm install` via the `prepare` script.
+# Pre-commit: forge fmt --check + ESLint (fast, reuses node_modules).
+# Pre-push:   npm ci (root + apps/web) to verify lockfile integrity before pushing.
 
 # Build
 forge build

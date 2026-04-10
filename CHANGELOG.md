@@ -13,6 +13,11 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-10] Web app: public basket detail page (`/baskets/[address]`) now shows per-asset oracle price charts, open positions table with PnL, compact composition + reserve health sidebar, and a horizontal metrics strip; deposit/redeem panel moves above content on mobile and sticks on desktop. Old composition card and advanced-metrics accordion are replaced by the shared components.
+- [2026-04-10] Web app: extract `useBasketDashboardData` hook consolidating ~120 lines of duplicated basket data-fetching shared between admin and public basket pages; move `MetricsStrip`, `AssetPricePanel`, `PositionsTable`, and `CompositionSidebar` from `admin/` to the shared `components/baskets/` namespace.
+- [2026-04-10] Git hooks: replace `.githooks` + `hooks:install` with **Husky** (`devDependency`); `prepare` runs `husky`. Pre-commit runs fast lint checks (`forge fmt --check`, `eslint src/`) reusing existing `node_modules`; pre-push verifies lockfile integrity via `npm ci` (root + `apps/web`) to match CI before pushing.
+- [2026-04-10] Web app: scope ESLint to `src/` only (`eslint src/` instead of bare `eslint`); add `coverage/**` to `globalIgnores` in `eslint.config.mjs`.
+- [2026-04-10] Web app: redesign admin basket detail page (`/admin/baskets/[address]`) into a professional trading dashboard with a compact metrics strip, per-asset oracle price charts with 24H/7D/30D windows, a standalone positions table with leverage and PnL % columns (stacked cards on mobile), a composition + reserve health sidebar, and collapsible trade/operations panels; layout is fully responsive for PWA use with trader-priority mobile ordering.
 - [2026-04-10] Web app: replace RainbowKit with Privy for authentication and wallet management; adds email OTP and Google login alongside external wallets (MetaMask, WalletConnect), with embedded wallet support for users without an existing wallet.
 - [2026-04-10] Web app: Anvil (localhost) testing now uses MetaMask as an external wallet through Privy with pre-funded Anvil accounts; chain configuration passes Anvil through Privy's `supportedChains` with a local RPC override.
 - [2026-04-10] Web app: admin panel auth guard uses Privy `authenticated` state instead of wagmi `isConnected`, allowing email/Google-authenticated users with embedded wallets to access the admin.
@@ -24,7 +29,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
-- [2026-04-10] Pre-commit hook (`forge fmt --check`) was silently skipped because `core.hooksPath` was not set; re-wired via `npm run hooks:install`.
+- [2026-04-10] `apps/web/package-lock.json` regenerated so `npm ci --prefix apps/web` matches `package.json` (fixes CI Lint install step when the lockfile was missing `react@18.3.1` and other resolved entries).
 
 ### Added
 
@@ -117,7 +122,7 @@ Legacy entries that predate this rule may remain without timestamps.
 - Docs: [docs/E2E_TESTING.md](docs/E2E_TESTING.md) runbook covering local and CI E2E setup/assumptions, plus README/docs index updates.
 - Integration coverage: new `test/GlobalLiquiditySharingIntegration.t.sol` suite for shared GMX liquidity across multiple vaults/baskets, including multi-vault happy-path assertions, an explicit equal-profit/equal-loss no-global-pool-drain check, constrained-liquidity stress (`Vault: poolAmount exceeded` on second close), and basket-level coupling under shared pool pressure.
 - Documentation: new [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) deployment registry with per-network status (local/Sepolia/Arbitrum), canonical contract addresses, Sepolia Etherscan links, sender context, and refresh/verification commands.
-- Repo tooling: native git pre-commit hook at `.githooks/pre-commit` now runs `forge fmt` for staged Solidity files and ESLint validation for staged `apps/web` JS/TS files before allowing commits (`npm run hooks:install` / `prepare` sets `core.hooksPath`).
+- Repo tooling: Husky-managed pre-commit hook (`.husky/pre-commit`) runs CI Lint parity checks (`npm ci` root + `apps/web`, `forge fmt --check`, `npm run lint:web`); `prepare` runs `husky` to set `core.hooksPath`.
 - Subgraph: `AssetTokenMapped` indexing support via a new immutable `AssetTokenMapUpdate` entity, plus manifest handler wiring for `VaultAccounting.AssetTokenMapped`.
 - Subgraph: `sync:networks` workflow/script to derive `apps/subgraph/networks.json` addresses from `apps/web/src/config/local-deployment.json` and `apps/web/src/config/sepolia-deployment.json`.
 - Web app prices drilldown route (`/prices/[assetId]`) with per-asset header status, historical `PriceUpdated` timeline, and price chart window controls (`24H`, `7D`, `30D`; default `7D`).
