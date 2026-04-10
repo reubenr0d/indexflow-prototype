@@ -35,14 +35,19 @@ interface ISimplePriceFeedView {
 /// @dev Reads addresses from a deployment config file.
 ///      - Default: apps/web/src/config/local-deployment.json
 ///      - Override: DEPLOYMENT_CONFIG=/abs/or/relative/path.json
-///      For XAU/XAG, optional env overrides are supported:
-///      - XAU_PRICE_RAW (8-decimal raw feed value)
+///      Optional env overrides are supported for custom assets:
 ///      - XAG_PRICE_RAW (8-decimal raw feed value)
+///      - BHP_PRICE_RAW, RIO_PRICE_RAW, VALE_PRICE_RAW, NEM_PRICE_RAW, FCX_PRICE_RAW, SCCO_PRICE_RAW
 ///      If unset, script re-submits each asset's current price (raw-denormalized) to refresh timestamp.
 contract SubmitAndSyncOraclePrices is Script {
     uint8 internal constant FEED_TYPE_CUSTOM_RELAYER = 1;
-    bytes32 internal constant XAU = keccak256("XAU");
     bytes32 internal constant XAG = keccak256("XAG");
+    bytes32 internal constant BHP = keccak256("BHP");
+    bytes32 internal constant RIO = keccak256("RIO");
+    bytes32 internal constant VALE = keccak256("VALE");
+    bytes32 internal constant NEM = keccak256("NEM");
+    bytes32 internal constant FCX = keccak256("FCX");
+    bytes32 internal constant SCCO = keccak256("SCCO");
 
     function run() external {
         uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
@@ -81,12 +86,7 @@ contract SubmitAndSyncOraclePrices is Script {
             (uint256 normalizedPrice, uint256 oldTs) = oracle.getPrice(assetId);
             uint256 rawPrice = _toRawPrice(normalizedPrice, cfg.decimals);
 
-            // Optional explicit price overrides for local XAU/XAG workflow.
-            if (assetId == XAU && vm.envExists("XAU_PRICE_RAW")) {
-                rawPrice = vm.envUint("XAU_PRICE_RAW");
-            } else if (assetId == XAG && vm.envExists("XAG_PRICE_RAW")) {
-                rawPrice = vm.envUint("XAG_PRICE_RAW");
-            }
+            rawPrice = _maybeOverrideRawPrice(assetId, rawPrice);
 
             candidateIds[customCount] = assetId;
             candidatePrices[customCount] = rawPrice;
@@ -145,5 +145,30 @@ contract SubmitAndSyncOraclePrices is Script {
             return vm.envString("DEPLOYMENT_CONFIG");
         }
         return string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
+    }
+
+    function _maybeOverrideRawPrice(bytes32 assetId, uint256 rawPrice) internal view returns (uint256) {
+        if (assetId == XAG && vm.envExists("XAG_PRICE_RAW")) {
+            return vm.envUint("XAG_PRICE_RAW");
+        }
+        if (assetId == BHP && vm.envExists("BHP_PRICE_RAW")) {
+            return vm.envUint("BHP_PRICE_RAW");
+        }
+        if (assetId == RIO && vm.envExists("RIO_PRICE_RAW")) {
+            return vm.envUint("RIO_PRICE_RAW");
+        }
+        if (assetId == VALE && vm.envExists("VALE_PRICE_RAW")) {
+            return vm.envUint("VALE_PRICE_RAW");
+        }
+        if (assetId == NEM && vm.envExists("NEM_PRICE_RAW")) {
+            return vm.envUint("NEM_PRICE_RAW");
+        }
+        if (assetId == FCX && vm.envExists("FCX_PRICE_RAW")) {
+            return vm.envUint("FCX_PRICE_RAW");
+        }
+        if (assetId == SCCO && vm.envExists("SCCO_PRICE_RAW")) {
+            return vm.envUint("SCCO_PRICE_RAW");
+        }
+        return rawPrice;
     }
 }

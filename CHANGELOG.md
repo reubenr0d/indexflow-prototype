@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]`.
+Within each category, add newest entries at the top.
+Legacy entries that predate this rule may remain without timestamps.
+
 ### Fixed
 
+- [2026-04-10 13:10 UTC+07:00] Web app deployment-target subgraph gating: `anvil` now uses subgraph reads whenever `NEXT_PUBLIC_SUBGRAPH_URL` is configured (same behavior as `sepolia`), while preserving RPC fallback when subgraph URL is unset/unavailable/returns unusable rows.
 - Web app local-network data source selection: basket/listing surfaces now gate subgraph usage by active deployment target (`isSubgraphEnabled`) instead of raw subgraph URL presence, so Anvil sessions reliably use RPC fallback and show locally created baskets.
 - Subgraph network targeting corrected from `arbitrum-sepolia` to `sepolia` for Ethereum Sepolia deployments: `apps/subgraph` sync/manifest/deploy flow now uses `NETWORK=sepolia`, docs/scripts were updated accordingly, and the legacy `apps/subgraph/indexflow-prototype` Studio manifest now also targets `sepolia` with the current `sepolia-deployment.json` BasketFactory address.
 - Web app lint reliability: ESLint now ignores generated `.vercel/**` build output, preventing non-source artifacts from causing lint failures during local/CI runs.
@@ -26,6 +31,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- [2026-04-10 13:10 UTC+07:00] Sepolia relayer updater path for non-Chainlink assets: `scripts/update-pyth-relayer-prices.js` fetches Hermes latest values for `XAG` and core mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`), converts `(price, expo)` to 8-decimal raw values, enforces feed freshness, submits `OracleAdapter.submitPrices`, then calls `PriceSync.syncAll`.
+- Oracle operator feed map file `scripts/pyth-feed-config.json` with pinned Pyth feed ids for `XAG` and the core six mining equities.
+- New npm tasks for Sepolia relayer operations: `update-pyth:sepolia` (broadcast) and `update-pyth:sepolia:dry` (validation-only).
+- `src/mocks/MockChainlinkFeed.sol` for local/testing Chainlink-style mutable feed data (`latestRoundData`) with configurable decimals/description.
+- Documentation: new [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) with a Sepolia-only oracle asset matrix mapping each supported symbol (`XAU`, `XAG`, `BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) to its configured source identifier (Chainlink feed address or Pyth feed ID), plus updater path notes.
+- Local compose orchestration via `docker-compose.local.yml` and root scripts (`local:up`, `local:down`, `local:logs`) to run Anvil, contract deploy, subgraph deploy, and web UI with compose-managed local subgraph env.
 - Web app deployment target state layer (`sepolia` / `anvil`) with persistent browser selection (`localStorage`) and wallet-chain-driven switching.
 - Web tests: new deployment helper coverage (`apps/web/src/lib/deployment.test.ts`) and deployment contract resolver coverage (`apps/web/src/config/contracts.test.ts`).
 - Web app E2E stack (Playwright + Chromium) under `apps/web/e2e` with deterministic CI wallet mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), smoke coverage, and a full user lifecycle gate from deposit to redeem-with-profit with admin basket/oracle/pool writes and onchain net-profit assertions.
@@ -70,11 +81,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Dead vendored GMX code: duplicate math libraries, unused OZ subtrees (ERC721, introspection, Strings, EnumerableMap/Set, vendored ERC20/Ownable), unused token implementations (WETH, Token), reference-only contracts (VaultPriceFeed, FastPriceFeed, FastPriceEvents), and ~20 unused interfaces for stripped modules (staking, AMM, governance, GLP, PositionRouter).
+- [2026-04-10 13:10 UTC+07:00] Dead vendored GMX code: duplicate math libraries, unused OZ subtrees (ERC721, introspection, Strings, EnumerableMap/Set, vendored ERC20/Ownable), unused token implementations (WETH, Token), reference-only contracts (VaultPriceFeed, FastPriceFeed, FastPriceEvents), and ~20 unused interfaces for stripped modules (staking, AMM, governance, GLP, PositionRouter).
 - Reader.sol functions for stripped features: `getTotalStaked`, `getStakingInfo`, `getVestingInfo`, `getPairInfo`.
 
 ### Changed
 
+- [2026-04-10 13:10 UTC+07:00] Oracle deployment profiles now use a mixed-source Sepolia/local model:
+  - `XAU` configured as `FeedType.Chainlink` (`0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea` on Sepolia, mock Chainlink feed locally).
+  - `XAG` plus mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) configured as `FeedType.CustomRelayer` with `stalenessThreshold=86400` and `deviationBps=2000`.
+  - New asset ids are wired through local/Sepolia deploy scripts for index token creation, GMX token config, `VaultAccounting.mapAssetToken`, `FundingRateManager.mapAssetToken`, and `PriceSync.addMapping`.
+- `SubmitAndSyncOraclePrices` manual override support now covers relayed `XAG` and mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) while leaving `XAU` on the Chainlink read path.
+- Oracle and operations docs now include the Sepolia mixed-source runbook and relayer updater command flow.
 - Web app runtime contract resolution now follows selected deployment target: `anvil` resolves from `apps/web/src/config/local-deployment.json`, `sepolia` resolves from `apps/web/src/config/sepolia-deployment.json`.
 - Web app wallet network guard now auto-switches MetaMask to the selected deployment chain (Anvil or Sepolia) instead of always forcing Sepolia.
 - Web app subgraph policy now disables subgraph reads when deployment target is `anvil`, using RPC-only paths/fallbacks where available.

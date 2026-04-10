@@ -18,7 +18,12 @@
     "sync:local": "forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast",
     "sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url sepolia --broadcast",
     "submit-sync:local": "forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url local --broadcast",
-    "submit-sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url sepolia --broadcast"
+    "submit-sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url sepolia --broadcast",
+    "update-pyth:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-pyth-relayer-prices.js",
+    "update-pyth:sepolia:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-pyth-relayer-prices.js",
+    "local:up": "docker compose -f docker-compose.local.yml up -d --build",
+    "local:down": "docker compose -f docker-compose.local.yml down -v",
+    "local:logs": "docker compose -f docker-compose.local.yml logs -f"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0"

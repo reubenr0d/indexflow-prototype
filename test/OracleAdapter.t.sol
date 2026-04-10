@@ -31,7 +31,6 @@ contract MockChainlinkFeed {
 contract OracleAdapterTest is Test {
     OracleAdapter public oracle;
     MockChainlinkFeed public goldFeed;
-    MockChainlinkFeed public silverFeed;
 
     bytes32 constant XAU = keccak256("XAU");
     bytes32 constant XAG = keccak256("XAG");
@@ -42,21 +41,19 @@ contract OracleAdapterTest is Test {
     function setUp() public {
         oracle = new OracleAdapter(address(this));
         goldFeed = new MockChainlinkFeed();
-        silverFeed = new MockChainlinkFeed();
 
         oracle.setKeeper(keeper, true);
 
         // Gold at $2000 (8 decimals)
         goldFeed.setPrice(200_000_000_000); // $2000 * 1e8
-        // Silver at $25 (8 decimals)
-        silverFeed.setPrice(2_500_000_000); // $25 * 1e8
 
-        // Configure Chainlink feeds
-        oracle.configureAsset(XAU, address(goldFeed), IOracleAdapter.FeedType.Chainlink, 300, 500, 8);
-        oracle.configureAsset(XAG, address(silverFeed), IOracleAdapter.FeedType.Chainlink, 300, 500, 8);
+        // Configure mixed feed profile
+        oracle.configureAsset(XAU, address(goldFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
+        oracle.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
+        oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
 
-        // Configure custom relayer feed
-        oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 300, 1000, 8);
+        vm.prank(keeper);
+        oracle.submitPrice(XAG, 2_500_000_000); // $25 * 1e8
     }
 
     function test_getPrice_chainlink() public view {
@@ -83,11 +80,11 @@ contract OracleAdapterTest is Test {
         vm.prank(keeper);
         oracle.submitPrice(BHP, 1_000_000_000); // $10
 
-        // 50% jump should revert (max deviation 1000 bps = 10%)
+        // 50% jump should revert (max deviation 2000 bps = 20%)
         // After fix: deviation is checked on normalized prices (both 1e30 precision)
         vm.expectRevert(
             abi.encodeWithSelector(
-                OracleAdapter.DeviationTooLarge.selector, BHP, 1_000_000_000 * 1e22, 1_500_000_000 * 1e22, 1000
+                OracleAdapter.DeviationTooLarge.selector, BHP, 1_000_000_000 * 1e22, 1_500_000_000 * 1e22, 2000
             )
         );
         vm.prank(keeper);
@@ -113,8 +110,31 @@ contract OracleAdapterTest is Test {
 
         assertFalse(oracle.isStale(BHP));
 
-        vm.warp(block.timestamp + 400);
+        vm.warp(block.timestamp + 86_401);
         assertTrue(oracle.isStale(BHP));
+    }
+
+    function test_isStale_boundary24h_custom() public {
+        assertFalse(oracle.isStale(XAG));
+        vm.warp(block.timestamp + 86_400);
+        assertFalse(oracle.isStale(XAG));
+        vm.warp(block.timestamp + 1);
+        assertTrue(oracle.isStale(XAG));
+    }
+
+    function test_getAssetConfig_mixedSources() public view {
+        IOracleAdapter.AssetConfig memory xauCfg = oracle.getAssetConfig(XAU);
+        assertEq(uint8(xauCfg.feedType), uint8(IOracleAdapter.FeedType.Chainlink));
+        assertEq(xauCfg.feedAddress, address(goldFeed));
+        assertEq(xauCfg.stalenessThreshold, 3600);
+        assertEq(xauCfg.decimals, 8);
+
+        IOracleAdapter.AssetConfig memory xagCfg = oracle.getAssetConfig(XAG);
+        assertEq(uint8(xagCfg.feedType), uint8(IOracleAdapter.FeedType.CustomRelayer));
+        assertEq(xagCfg.feedAddress, address(0));
+        assertEq(xagCfg.stalenessThreshold, 86_400);
+        assertEq(xagCfg.deviationBps, 2000);
+        assertEq(xagCfg.decimals, 8);
     }
 
     function test_isAssetActive() public view {

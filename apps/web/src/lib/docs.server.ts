@@ -39,6 +39,11 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     aliases: ["oracle-price-sync"],
   },
   {
+    fileName: "ORACLE_SUPPORTED_ASSETS.md",
+    slug: "oracle-supported-assets",
+    title: "Oracle Supported Assets",
+  },
+  {
     fileName: "GLOBAL_POOL_MANAGEMENT_FLOW.md",
     slug: "global-pool-management-flow",
     title: "Global Pool Management Flow",

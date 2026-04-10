@@ -13,6 +13,7 @@ import {BasketFactory} from "../src/vault/BasketFactory.sol";
 import {PriceSync} from "../src/perp/PriceSync.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
+import {MockChainlinkFeed} from "../src/mocks/MockChainlinkFeed.sol";
 
 interface ISimplePriceFeed {
     function setPrice(address token, uint256 price) external;
@@ -33,6 +34,26 @@ interface IVaultErrorController {
 contract DeployLocal is Script {
     bytes32 constant XAU = keccak256("XAU");
     bytes32 constant XAG = keccak256("XAG");
+    bytes32 constant BHP = keccak256("BHP");
+    bytes32 constant RIO = keccak256("RIO");
+    bytes32 constant VALE = keccak256("VALE");
+    bytes32 constant NEM = keccak256("NEM");
+    bytes32 constant FCX = keccak256("FCX");
+    bytes32 constant SCCO = keccak256("SCCO");
+
+    uint256 constant CHAINLINK_STALENESS = 3600;
+    uint256 constant RELAYER_STALENESS = 86_400;
+    uint256 constant RELAYER_DEVIATION_BPS = 2000;
+
+    uint256 constant XAU_PRICE_RAW = 200_000_000_000; // $2000 (8d)
+    uint256 constant XAG_PRICE_RAW = 2_500_000_000; // $25 (8d)
+    uint256 constant BHP_PRICE_RAW = 4_500_000_000; // $45 (8d)
+    uint256 constant RIO_PRICE_RAW = 6_300_000_000; // $63 (8d)
+    uint256 constant VALE_PRICE_RAW = 1_200_000_000; // $12 (8d)
+    uint256 constant NEM_PRICE_RAW = 4_800_000_000; // $48 (8d)
+    uint256 constant FCX_PRICE_RAW = 4_300_000_000; // $43 (8d)
+    uint256 constant SCCO_PRICE_RAW = 11_000_000_000; // $110 (8d)
+
     uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
 
     function run() external {
@@ -44,14 +65,43 @@ contract DeployLocal is Script {
         vm.startBroadcast(deployerPrivateKey);
 
         MockUSDC usdc = new MockUSDC();
-        MockIndexToken gold = new MockIndexToken("Gold Token", "GOLD", 18);
-        MockIndexToken silver = new MockIndexToken("Silver Token", "SILVER", 18);
+
+        bytes32[] memory assetIds = new bytes32[](8);
+        assetIds[0] = XAU;
+        assetIds[1] = XAG;
+        assetIds[2] = BHP;
+        assetIds[3] = RIO;
+        assetIds[4] = VALE;
+        assetIds[5] = NEM;
+        assetIds[6] = FCX;
+        assetIds[7] = SCCO;
+
+        uint256[] memory rawPrices = new uint256[](8);
+        rawPrices[0] = XAU_PRICE_RAW;
+        rawPrices[1] = XAG_PRICE_RAW;
+        rawPrices[2] = BHP_PRICE_RAW;
+        rawPrices[3] = RIO_PRICE_RAW;
+        rawPrices[4] = VALE_PRICE_RAW;
+        rawPrices[5] = NEM_PRICE_RAW;
+        rawPrices[6] = FCX_PRICE_RAW;
+        rawPrices[7] = SCCO_PRICE_RAW;
+
+        address[] memory indexTokens = new address[](8);
+        indexTokens[0] = address(new MockIndexToken("Gold Token", "GOLD", 18));
+        indexTokens[1] = address(new MockIndexToken("Silver Token", "SILVER", 18));
+        indexTokens[2] = address(new MockIndexToken("BHP Token", "BHP", 18));
+        indexTokens[3] = address(new MockIndexToken("Rio Token", "RIO", 18));
+        indexTokens[4] = address(new MockIndexToken("Vale Token", "VALE", 18));
+        indexTokens[5] = address(new MockIndexToken("Newmont Token", "NEM", 18));
+        indexTokens[6] = address(new MockIndexToken("Freeport Token", "FCX", 18));
+        indexTokens[7] = address(new MockIndexToken("SCCO Token", "SCCO", 18));
 
         address pfAddr = deployCode("SimplePriceFeed.sol:SimplePriceFeed");
         ISimplePriceFeed priceFeed = ISimplePriceFeed(pfAddr);
         priceFeed.setPrice(address(usdc), 1e30);
-        priceFeed.setPrice(address(gold), 2000e30);
-        priceFeed.setPrice(address(silver), 25e30);
+        for (uint256 i = 0; i < indexTokens.length; i++) {
+            priceFeed.setPrice(indexTokens[i], rawPrices[i] * 1e22);
+        }
 
         // Vault uses linked VaultMath; vm.getCode("Vault.sol:Vault") fails (wrong path + unlinked placeholders).
         address vaultMath = deployCode("VaultMath.sol:VaultMath");
@@ -72,40 +122,62 @@ contract DeployLocal is Script {
         gmxVault.setFees(0, 0, 0, 0, 0, 0, 5e30, 0, false);
 
         gmxVault.setTokenConfig(address(usdc), 6, 10000, 0, 0, true, false);
-        gmxVault.setTokenConfig(address(gold), 18, 10000, 0, 0, false, true);
-        gmxVault.setTokenConfig(address(silver), 18, 10000, 0, 0, false, true);
+        for (uint256 i = 0; i < indexTokens.length; i++) {
+            gmxVault.setTokenConfig(indexTokens[i], 18, 10000, 0, 0, false, true);
+        }
 
         usdc.mint(deployer, 10_000_000e6);
         usdc.transfer(address(gmxVault), 1_000_000e6);
         gmxVault.directPoolDeposit(address(usdc));
         gmxVault.setBufferAmount(address(usdc), INITIAL_USDC_BUFFER);
 
+        MockChainlinkFeed xauFeed = new MockChainlinkFeed(8, "XAU / USD");
+        xauFeed.setLatestAnswer(int256(XAU_PRICE_RAW), block.timestamp);
+
         OracleAdapter oracleAdapter = new OracleAdapter(deployer);
         oracleAdapter.setKeeper(deployer, true);
 
-        oracleAdapter.configureAsset(XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
-        oracleAdapter.configureAsset(XAG, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
-        oracleAdapter.submitPrice(XAU, 200_000_000_000);
-        oracleAdapter.submitPrice(XAG, 2_500_000_000);
+        oracleAdapter.configureAsset(
+            XAU, address(xauFeed), IOracleAdapter.FeedType.Chainlink, CHAINLINK_STALENESS, 5000, 8
+        );
+
+        bytes32[] memory customIds = new bytes32[](assetIds.length - 1);
+        uint256[] memory customPrices = new uint256[](assetIds.length - 1);
+        for (uint256 i = 1; i < assetIds.length; i++) {
+            oracleAdapter.configureAsset(
+                assetIds[i],
+                address(0),
+                IOracleAdapter.FeedType.CustomRelayer,
+                RELAYER_STALENESS,
+                RELAYER_DEVIATION_BPS,
+                8
+            );
+            customIds[i - 1] = assetIds[i];
+            customPrices[i - 1] = rawPrices[i];
+        }
+        oracleAdapter.submitPrices(customIds, customPrices);
 
         VaultAccounting vaultAccounting =
             new VaultAccounting(address(usdc), address(gmxVault), address(oracleAdapter), deployer);
-        vaultAccounting.mapAssetToken(XAU, address(gold));
-        vaultAccounting.mapAssetToken(XAG, address(silver));
+        for (uint256 i = 0; i < assetIds.length; i++) {
+            vaultAccounting.mapAssetToken(assetIds[i], indexTokens[i]);
+        }
 
         PricingEngine pricingEngine = new PricingEngine(address(oracleAdapter), deployer);
         FundingRateManager fundingRateManager =
             new FundingRateManager(address(gmxVault), address(oracleAdapter), deployer);
         fundingRateManager.setKeeper(deployer, true);
-        fundingRateManager.mapAssetToken(XAU, address(gold));
-        fundingRateManager.mapAssetToken(XAG, address(silver));
+        for (uint256 i = 0; i < assetIds.length; i++) {
+            fundingRateManager.mapAssetToken(assetIds[i], indexTokens[i]);
+        }
 
         PerpReader perpReader = new PerpReader(address(gmxVault), address(oracleAdapter), address(vaultAccounting));
 
         PriceSync priceSync = new PriceSync(address(oracleAdapter), pfAddr, deployer);
         priceFeed.setKeeper(address(priceSync), true);
-        priceSync.addMapping(XAU, address(gold));
-        priceSync.addMapping(XAG, address(silver));
+        for (uint256 i = 0; i < assetIds.length; i++) {
+            priceSync.addMapping(assetIds[i], indexTokens[i]);
+        }
         priceSync.syncAll();
 
         BasketFactory basketFactory = new BasketFactory(address(usdc), address(oracleAdapter), deployer);

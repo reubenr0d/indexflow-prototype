@@ -80,6 +80,34 @@ npm run deploy:local
 npm run deploy:sepolia
 ```
 
+## Local Compose Stack (Anvil + Contracts + Subgraph + UI)
+
+Use one compose entrypoint to launch a fresh local chain, deploy contracts, deploy the subgraph, and run the web UI:
+
+```bash
+# Start full stack
+npm run local:up
+
+# Stream logs
+npm run local:logs
+
+# Stop and remove volumes (fresh local reset)
+npm run local:down
+```
+
+If host port `3000` is occupied, remap UI:
+
+```bash
+UI_PORT=3001 npm run local:up
+```
+
+Default service endpoints:
+
+- Anvil RPC: `http://127.0.0.1:8545`
+- Graph query: `http://127.0.0.1:8000/subgraphs/name/indexflow-prototype`
+- Graph status: `http://127.0.0.1:8030/graphql`
+- Web UI: `http://127.0.0.1:${UI_PORT:-3000}`
+
 Web app runtime contract wiring:
 
 - Deployment target still persists in `localStorage`, but switching now follows the wallet chain selector in the connect button (single network dropdown in navbar).
@@ -105,9 +133,8 @@ NETWORK=sepolia npm --prefix apps/subgraph run build
 
 Runtime note:
 
-- The web app only uses subgraph reads when deployment target is `sepolia`.
-- When deployment target is `anvil`, subgraph queries are disabled and the app uses RPC-only data paths/fallbacks where available.
-- This target-gated behavior applies to home/dashboard/admin/baskets list surfaces, so local basket creation is visible immediately on Anvil without subgraph indexing.
+- The web app enables subgraph reads for both `sepolia` and `anvil` when `NEXT_PUBLIC_SUBGRAPH_URL` is configured.
+- When `NEXT_PUBLIC_SUBGRAPH_URL` is unset, unavailable, or subgraph rows are unusable, affected views fall back to RPC data paths.
 
 ## Operations
 
@@ -160,6 +187,30 @@ npm run sync:sepolia
 npm run submit-sync:sepolia
 ```
 
+**Sepolia mixed-source oracle profile**
+
+- `XAU` is configured as `FeedType.Chainlink` using Sepolia feed `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`.
+- `XAG` and mining equities (`BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`) are configured as `FeedType.CustomRelayer`.
+- Relayed assets use `stalenessThreshold=86400` and `deviationBps=2000`.
+
+**Sepolia Pyth relayer updater (XAG + mining equities)**
+
+`scripts/update-pyth-relayer-prices.js` pulls Hermes latest prices from feed ids in `scripts/pyth-feed-config.json`, converts `(price, expo)` to 8-decimal raw values, submits `submitPrices`, then calls `PriceSync.syncAll`.
+
+```bash
+# Dry-run (no tx broadcast)
+npm run update-pyth:sepolia:dry
+
+# Broadcast submitPrices + syncAll (requires PRIVATE_KEY)
+PRIVATE_KEY=0x... npm run update-pyth:sepolia
+```
+
+Updater safety checks:
+
+- Fails if any required feed is missing in Hermes response.
+- Fails if any feed `publish_time` is older than `MAX_AGE_SECONDS` (default `86400`).
+- Config/env overrides: `DEPLOYMENT_CONFIG`, `PYTH_FEED_CONFIG`, `HERMES_URL`, `RPC_URL`, `MAX_AGE_SECONDS`.
+
 ## Documentation
 
 - In-app wiki (web app):
@@ -171,6 +222,7 @@ npm run submit-sync:sepolia
     - `/docs/perp-risk-math`
     - `/docs/operator-interactions`
     - `/docs/price-feed-flow`
+    - `/docs/oracle-supported-assets`
     - `/docs/global-pool-management-flow`
     - `/docs/deployments`
     - `/docs/e2e-testing`
@@ -186,6 +238,7 @@ npm run submit-sync:sepolia
 - [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md) — Per-contract interaction matrix with inputs, checks, state deltas, and post-tx verification steps.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
+- [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source identifier (Chainlink feed or Pyth feed ID).
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.

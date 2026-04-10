@@ -5,10 +5,12 @@ import "forge-std/Test.sol";
 import "../src/perp/PricingEngine.sol";
 import "../src/perp/OracleAdapter.sol";
 import "../src/perp/interfaces/IOracleAdapter.sol";
+import "../src/mocks/MockChainlinkFeed.sol";
 
 contract PricingEngineTest is Test {
     PricingEngine public engine;
     OracleAdapter public oracle;
+    MockChainlinkFeed public xauFeed;
 
     bytes32 constant XAU = keccak256("XAU");
     bytes32 constant BHP = keccak256("BHP");
@@ -17,11 +19,13 @@ contract PricingEngineTest is Test {
 
     function setUp() public {
         oracle = new OracleAdapter(owner);
+        oracle.setKeeper(owner, true);
 
-        oracle.configureAsset(XAU, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
-        oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        xauFeed = new MockChainlinkFeed(8, "XAU / USD");
+        xauFeed.setLatestAnswer(200_000_000_000, block.timestamp); // $2000
 
-        oracle.submitPrice(XAU, 200_000_000_000); // $2000
+        oracle.configureAsset(XAU, address(xauFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
+        oracle.configureAsset(BHP, address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
         oracle.submitPrice(BHP, 4_500_000_000); // $45
 
         engine = new PricingEngine(address(oracle), owner);
@@ -90,7 +94,14 @@ contract PricingEngineTest is Test {
     }
 
     function test_staleOracle_reverts() public {
-        vm.warp(block.timestamp + 4000); // exceed 3600s staleness
+        vm.warp(block.timestamp + 86_401); // exceed custom-relayer staleness
+
+        vm.expectRevert(abi.encodeWithSelector(PricingEngine.StaleOraclePrice.selector, BHP));
+        engine.getExecutionPrice(BHP, 100_000e30, 10_000_000e30, true);
+    }
+
+    function test_staleChainlinkOracle_reverts() public {
+        vm.warp(block.timestamp + 4000); // exceed chainlink staleness
 
         vm.expectRevert(abi.encodeWithSelector(PricingEngine.StaleOraclePrice.selector, XAU));
         engine.getExecutionPrice(XAU, 100_000e30, 10_000_000e30, true);

@@ -11,6 +11,7 @@ This index mirrors the in-app docs routes at `/docs` in the web app.
 - `/docs/perp-risk-math` — source: `docs/PERP_RISK_MATH.md`
 - `/docs/operator-interactions` — source: `docs/OPERATOR_INTERACTIONS.md`
 - `/docs/price-feed-flow` — source: `docs/PRICE_FEED_FLOW.md`
+- `/docs/oracle-supported-assets` — source: `docs/ORACLE_SUPPORTED_ASSETS.md`
 - `/docs/global-pool-management-flow` — source: `docs/GLOBAL_POOL_MANAGEMENT_FLOW.md`
 - `/docs/deployments` — source: `docs/DEPLOYMENTS.md`
 - `/docs/e2e-testing` — source: `docs/E2E_TESTING.md`
@@ -39,6 +40,7 @@ These legacy in-app wiki routes are preserved for compatibility and redirect to 
 - [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)
 - [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md)
 - [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md)
+- [ORACLE_SUPPORTED_ASSETS.md](./ORACLE_SUPPORTED_ASSETS.md)
 - [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
 - [DEPLOYMENTS.md](./DEPLOYMENTS.md)
 - [E2E_TESTING.md](./E2E_TESTING.md)

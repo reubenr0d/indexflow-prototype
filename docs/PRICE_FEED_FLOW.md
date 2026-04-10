@@ -243,6 +243,39 @@ sequenceDiagram
 
 ---
 
+## Sepolia mixed-source runbook
+
+Current Sepolia profile:
+
+- `XAU`: `FeedType.Chainlink` (`0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, `decimals=8`).
+- `XAG`, `BHP`, `RIO`, `VALE`, `NEM`, `FCX`, `SCCO`: `FeedType.CustomRelayer`, `decimals=8`, `stalenessThreshold=86400`, `deviationBps=2000`.
+
+Relayer updater path:
+
+1. Read feed id mapping from `scripts/pyth-feed-config.json`.
+2. Pull Hermes latest parsed updates.
+3. Convert `(price, expo)` to adapter raw 8-decimal integers.
+4. Submit `OracleAdapter.submitPrices(bytes32[],uint256[])`.
+5. Call `PriceSync.syncAll()` to update GMX `SimplePriceFeed`.
+
+Reference commands:
+
+```bash
+# Dry-run (fetch + conversion + validation only)
+npm run update-pyth:sepolia:dry
+
+# Broadcast transactions
+PRIVATE_KEY=0x... npm run update-pyth:sepolia
+```
+
+Failure policy in updater:
+
+- Missing required feed in Hermes response: fail run.
+- Feed older than 24h (`MAX_AGE_SECONDS`, default `86400`): fail run.
+- `PRIVATE_KEY` missing while not in dry-run: fail run.
+
+---
+
 ## 8. Related: GMX funding parameters (not the price feed)
 
 Funding updates **do not** write `OracleAdapter` or `SimplePriceFeed`. Authorized keepers push global factors into the GMX vault.

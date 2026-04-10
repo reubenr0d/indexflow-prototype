@@ -111,6 +111,14 @@ forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices \
   --rpc-url local -vvv
 ```
 
+### Dry-run: Sepolia Pyth relayer updater (XAG + mining equities)
+
+```bash
+npm run update-pyth:sepolia:dry
+```
+
+This runs Hermes fetch, freshness checks, and raw-price conversion without broadcasting transactions.
+
 These simulate transactions and print traces without writing state.
 
 ### Execute for real
@@ -123,6 +131,8 @@ forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices \
 
 forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices \
   --rpc-url local --broadcast -vvv
+
+PRIVATE_KEY=0x... npm run update-pyth:sepolia
 ```
 
 ## 5) Practical operator checklist

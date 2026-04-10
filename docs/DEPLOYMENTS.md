@@ -2,7 +2,7 @@
 
 Canonical deployment references for each supported network.
 
-Last updated: 2026-04-09
+Last updated: 2026-04-10
 
 ## Network summary
 
@@ -19,8 +19,8 @@ Config file: `apps/web/src/config/local-deployment.json`
 
 Runtime note: the web app maps `anvil` to local deployment addresses, persists the selected target in browser `localStorage`, and keeps it aligned with the wallet chain selector in the connect button.
 
-Subgraph note: when target is `anvil`, subgraph queries are disabled and the app runs RPC-only data paths/fallbacks.
-This applies across the main basket discovery/overview surfaces (`/`, `/dashboard`, `/admin`, `/baskets`, `/admin/baskets`), so local creations are shown from RPC reads immediately on Anvil.
+Subgraph note: when `NEXT_PUBLIC_SUBGRAPH_URL` is configured, the app enables subgraph reads for both `anvil` and `sepolia`.
+If the subgraph URL is unset, unavailable, or returns unusable rows, the app falls back to RPC data paths.
 
 - `basketFactory`: `0xD5ac451B0c50B9476107823Af206eD814a2e2580`
 - `vaultAccounting`: `0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9`
@@ -65,6 +65,8 @@ Addresses:
 
 - Local:
   - `npm run deploy:local`
+  - Full local stack (fresh Anvil + contracts + subgraph + UI): `npm run local:up`
+  - Teardown/reset volumes: `npm run local:down`
 - Sepolia:
   - `npm run deploy:sepolia`
   - Optional verify pass:
