@@ -35,7 +35,7 @@ export async function autoApprovePrivyTransactions(page: Page) {
       for (const btn of btns) {
         if (btn.offsetParent === null) continue;
         const text = btn.textContent?.trim();
-        if (text === 'Approve' || text === 'Retry transaction') {
+        if (text === 'Approve' || text === 'Retry transaction' || text === 'All Done') {
           btn.click();
         }
       }
@@ -43,15 +43,39 @@ export async function autoApprovePrivyTransactions(page: Page) {
   });
 }
 
+const PRIVY_TEST_EMAIL = process.env.PRIVY_TEST_EMAIL ?? '';
+const PRIVY_TEST_OTP = process.env.PRIVY_TEST_OTP ?? '';
+
 /**
- * Ensure a wallet is connected. When Privy is configured the storageState
- * already has the session — just wait for the header indicator. Otherwise
- * click the legacy E2E Connect button.
+ * Ensure a wallet is connected. When Privy is configured, tries storageState
+ * first, then falls back to an interactive Privy login. Otherwise uses the
+ * legacy E2E Connect button.
  */
 export async function connectWallet(page: Page) {
   const privyWallet = page.locator('[data-testid="privy-connected-wallet"]');
-  if (await privyWallet.isVisible({ timeout: 3_000 }).catch(() => false)) {
-    return; // already authenticated via Privy storageState
+  if (await privyWallet.isVisible({ timeout: 5_000 }).catch(() => false)) {
+    return;
+  }
+
+  // Try Privy login if credentials are available
+  const loginBtn = page.getByRole('button', { name: 'Log in' });
+  if (PRIVY_TEST_EMAIL && PRIVY_TEST_OTP && await loginBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
+    await loginBtn.click();
+    const emailInput = page.locator('input[type="email"]').first();
+    await emailInput.waitFor({ state: 'visible', timeout: 15_000 });
+    await emailInput.fill(PRIVY_TEST_EMAIL);
+    await page.getByRole('button', { name: 'Submit', exact: true }).click();
+    await emailInput.waitFor({ state: 'hidden', timeout: 15_000 });
+    await page.waitForTimeout(2_000);
+    const otpInputs = page.locator('#privy-dialog input[type="text"]');
+    const count = await otpInputs.count();
+    if (count >= 6) {
+      for (let i = 0; i < PRIVY_TEST_OTP.length && i < count; i++) {
+        await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
+      }
+    }
+    await privyWallet.waitFor({ state: 'visible', timeout: 30_000 });
+    return;
   }
 
   // Legacy mock-connector path

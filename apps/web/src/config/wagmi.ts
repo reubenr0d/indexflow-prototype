@@ -9,45 +9,48 @@ const includeAnvil =
   (typeof window !== "undefined" &&
     ["localhost", "127.0.0.1"].includes(window.location.hostname));
 
-const localConfig = createConfig({
-  chains: [anvil, sepolia, arbitrumSepolia, arbitrum],
-  transports: {
-    [anvil.id]: http("http://127.0.0.1:8545"),
-    [sepolia.id]: http(),
-    [arbitrumSepolia.id]: http(),
-    [arbitrum.id]: http(),
-  },
-  multiInjectedProviderDiscovery: false,
-  ssr: true,
-});
-
-const remoteConfig = createConfig({
-  chains: [sepolia, arbitrumSepolia, arbitrum],
-  transports: {
-    [sepolia.id]: http(),
-    [arbitrumSepolia.id]: http(),
-    [arbitrum.id]: http(),
-  },
-  multiInjectedProviderDiscovery: false,
-  ssr: true,
-});
-
-export const defaultConfig = includeAnvil ? localConfig : remoteConfig;
-
-const e2eConfig = createWagmiConfig({
-  chains: [anvil],
-  connectors: [
-    mock({
-      accounts: ["0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"],
-      features: {
-        reconnect: true,
+function buildDefaultConfig() {
+  if (includeAnvil) {
+    return createConfig({
+      chains: [anvil, sepolia, arbitrumSepolia, arbitrum],
+      transports: {
+        [anvil.id]: http("http://127.0.0.1:8545"),
+        [sepolia.id]: http(),
+        [arbitrumSepolia.id]: http(),
+        [arbitrum.id]: http(),
       },
-    }),
-  ],
-  transports: {
-    [anvil.id]: http("http://127.0.0.1:8545"),
-  },
-  ssr: true,
-});
+      multiInjectedProviderDiscovery: false,
+      ssr: true,
+    });
+  }
+  return createConfig({
+    chains: [sepolia, arbitrumSepolia, arbitrum],
+    transports: {
+      [sepolia.id]: http(),
+      [arbitrumSepolia.id]: http(),
+      [arbitrum.id]: http(),
+    },
+    multiInjectedProviderDiscovery: false,
+    ssr: true,
+  });
+}
 
-export const config = isE2ETestMode ? e2eConfig : defaultConfig;
+export const defaultConfig = buildDefaultConfig();
+
+function buildE2EConfig() {
+  return createWagmiConfig({
+    chains: [anvil],
+    connectors: [
+      mock({
+        accounts: ["0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"],
+        features: { reconnect: true },
+      }),
+    ],
+    transports: {
+      [anvil.id]: http("http://127.0.0.1:8545"),
+    },
+    ssr: true,
+  });
+}
+
+export const config = isE2ETestMode ? buildE2EConfig() : defaultConfig;

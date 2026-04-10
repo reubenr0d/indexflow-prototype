@@ -38,6 +38,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
 
   // --- Create basket ---
   await page.goto('/admin/baskets');
+  await connectWallet(page);
   let txCount = await getTransactionCount(wallet);
   await page.getByTestId('admin-create-basket-toggle').click();
   await page.getByTestId('admin-create-basket-name').fill(basketName);
