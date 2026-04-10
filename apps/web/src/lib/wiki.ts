@@ -9,6 +9,7 @@ export const LEGACY_DOCS_SLUG_ALIASES: Record<string, string> = {
   "operator-interactions": "operator-interactions",
   "oracle-price-sync": "price-feed-flow",
   "pool-management": "global-pool-management-flow",
+  "pwa-notifications": "pwa-push-notifications",
   "contracts-reference": "readme",
   troubleshooting: "readme",
   "security-risk": "readme",

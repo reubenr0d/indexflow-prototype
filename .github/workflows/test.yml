@@ -199,6 +199,9 @@ jobs:
         env:
           NEXT_PUBLIC_E2E_TEST_MODE: "1"
           E2E_RPC_URL: "http://127.0.0.1:8545"
+          NEXT_PUBLIC_PRIVY_APP_ID: ${{ secrets.NEXT_PUBLIC_PRIVY_APP_ID }}
+          PRIVY_TEST_EMAIL: ${{ secrets.PRIVY_TEST_EMAIL }}
+          PRIVY_TEST_OTP: ${{ secrets.PRIVY_TEST_OTP }}
         run: npm run test:e2e:ci
 
       - name: Upload E2E artifacts
@@ -210,3 +213,22 @@ jobs:
             apps/web/playwright-report
             apps/web/test-results
             /tmp/anvil.log
+
+  push_worker:
+    name: Push Worker Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: apps/push-worker/package-lock.json
+
+      - name: Install push-worker dependencies
+        run: npm ci --prefix apps/push-worker
+
+      - name: Run push-worker tests
+        run: npm run --prefix apps/push-worker test

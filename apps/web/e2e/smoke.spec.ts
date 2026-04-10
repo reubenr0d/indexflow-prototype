@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { connectWallet } from './helpers';
+import { autoApprovePrivyTransactions, connectWallet } from './helpers';
 
 test('core ui smoke: landing, nav, theme, wallet connect', async ({ page }) => {
+  await autoApprovePrivyTransactions(page);
+
   await page.goto('/');
 
   await expect(page.getByText('Deposit into themed baskets backed by a shared trading engine')).toBeVisible();

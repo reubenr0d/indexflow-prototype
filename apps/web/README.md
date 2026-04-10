@@ -45,6 +45,16 @@ Read policy:
 - URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
 - Live-critical values (wallet balances and risk state) continue to read from RPC.
 
+## Push Notifications
+
+Set the push service URL to enable cloud-synced notification preferences and device subscriptions on `/settings`:
+
+```bash
+NEXT_PUBLIC_PUSH_SERVICE_URL=https://<your-cloud-run-service-url>
+```
+
+If unset or unavailable, the settings page falls back to wallet-scoped local storage.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

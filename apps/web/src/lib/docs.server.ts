@@ -56,6 +56,12 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     slug: "share-price-and-operations",
     title: "Share Price And Operations",
   },
+  {
+    fileName: "PWA_PUSH_NOTIFICATIONS.md",
+    slug: "pwa-push-notifications",
+    title: "PWA Push Notifications",
+    aliases: ["pwa-notifications"],
+  },
 ];
 
 const CONFIG_BY_SLUG = new Map(DOCS_FILE_CONFIG.map((entry) => [entry.slug, entry]));

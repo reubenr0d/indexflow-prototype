@@ -11,8 +11,14 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Fixed
+
+- [2026-04-10] Disable wagmi `multiInjectedProviderDiscovery` so Chrome no longer shows an "access to other apps and services" infobar on page load when wallet extensions (e.g. MetaMask) are installed; Privy manages wallet connections through its own modal.
+
 ### Changed
 
+- [2026-04-10 22:19 UTC+07:00] Web app PWA + settings rollout: added App Router manifest (`/manifest.webmanifest`), service-worker bootstrap (`public/sw.js` registration), new `/settings` route with install guidance and per-event push preferences, and header/account navigation entry for Settings. Preferences are API-first to a configurable push service (`NEXT_PUBLIC_PUSH_SERVICE_URL`) with wallet-scoped localStorage fallback when unavailable.
+- [2026-04-10] E2E tests now use Privy embedded wallets for transaction signing instead of wagmi mock connector: `globalSetup` logs in with a Privy test account (email + OTP), funds the embedded wallet via Anvil RPC, and transfers contract ownership so all UI-driven transactions are auto-signed without MetaMask or browser extensions. Falls back to the legacy mock connector when `NEXT_PUBLIC_PRIVY_APP_ID` is not set. CI passes Privy secrets from GitHub repository settings.
 - [2026-04-10 21:52 UTC+07:00] Codecov scope tightened to Solidity files only: added repository `.codecov.yml` project-path filter (`**/*.sol`) and set `codecov-action` `disable_search: true` in CI coverage upload/retry steps so only Foundry `lcov.info` is considered.
 - [2026-04-10 21:40 UTC+07:00] Test coverage expansion across all Solidity scopes: added new Foundry suites for `BasketFactory`, `FundingRateManager`, `PerpReader`, GMX admin/pricing and Router/SimplePriceFeed flows, plus deploy-script helper coverage (`DeployLocal` / `DeploySepolia` internals). CI coverage input remains unchanged (`forge coverage --ir-minimum --report lcov --report-file lcov.info`) with all Solidity files still included for Codecov.
 - [2026-04-10] Fresh Sepolia deployment with all contracts verified on Etherscan, including `AssetWiring` (previously missing from config); deployment starts at block 10630646.
@@ -39,6 +45,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-10 22:19 UTC+07:00] Serverless push backend scaffold under `apps/push-worker` (Cloud Run target): endpoints for subscribe/unsubscribe/preferences/test/dispatch/public-key/health, Firestore persistence for subscriptions + preference docs + dispatch cursors/logs, subgraph-first signal polling for investor/operator notifications, digest summary dispatch path, and VAPID Web Push send/prune handling.
+- [2026-04-10 22:19 UTC+07:00] Production deploy workflow `.github/workflows/deploy-production.yml`: main-branch automation for Cloud Run deployment (OIDC auth), Cloud Scheduler reconciliation (realtime + digest dispatch jobs), Vercel production deploy, and push-service smoke checks.
+- [2026-04-10 22:19 UTC+07:00] Docs/runbook and CI coverage for push/PWA: added `docs/PWA_PUSH_NOTIFICATIONS.md`, `/docs/pwa-push-notifications` route mapping (`pwa-notifications` alias), README + env docs updates, and a dedicated push-worker unit-test job in `.github/workflows/test.yml`.
 - [2026-04-10] Web app: `NEXT_PUBLIC_PRIVY_APP_ID` environment variable required for the Privy SDK; `NEXT_PUBLIC_WALLETCONNECT_ID` is no longer needed.
 - [2026-04-10] Web app: network selector dropdown in the header lets users switch between Anvil (Local) and Sepolia; anvil target automatically uses the local graph-node subgraph, sepolia uses the configured `NEXT_PUBLIC_SUBGRAPH_URL`.
 - [2026-04-10] CI: scheduled GitHub Actions workflow (`update-prices.yml`) fetches Yahoo Finance quotes every 15 minutes and syncs on-chain prices for all registered `CustomRelayer` assets; supports manual dispatch with per-network targeting and matrix-based multi-network parameterization. Runs as a dry-run validation check on pull requests (no on-chain transactions).

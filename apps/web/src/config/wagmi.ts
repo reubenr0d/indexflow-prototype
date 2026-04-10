@@ -13,6 +13,7 @@ export const defaultConfig = createConfig({
     [arbitrumSepolia.id]: http(),
     [arbitrum.id]: http(),
   },
+  multiInjectedProviderDiscovery: false,
   ssr: true,
 });
 

@@ -78,7 +78,24 @@ The Next.js web app requires the following environment variables (set in the she
 | --- | --- | --- |
 | `NEXT_PUBLIC_PRIVY_APP_ID` | Yes | Privy app ID from [dashboard.privy.io](https://dashboard.privy.io) |
 | `NEXT_PUBLIC_SUBGRAPH_URL` | No | Subgraph endpoint (auto-set by `local:dev`) |
+| `NEXT_PUBLIC_PUSH_SERVICE_URL` | No | Cloud Run push-worker base URL used by `/settings` for preferences/subscription APIs |
 | `NEXT_PUBLIC_E2E_TEST_MODE` | No | Set to `1` for deterministic E2E mock wallet |
+
+### Push Worker Environment (`apps/push-worker`)
+
+The push worker service (Cloud Run) requires:
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `VAPID_PUBLIC_KEY` | Yes | Web Push VAPID public key (base64url) |
+| `VAPID_PRIVATE_KEY` | Yes | Web Push VAPID private key (base64url) |
+| `VAPID_CONTACT_EMAIL` | Yes | Contact identity passed to push services (for example `mailto:ops@indexflow.app`) |
+| `SUBGRAPH_URL` | Yes | Subgraph endpoint for dispatch signal scans |
+| `DISPATCH_AUTH_TOKEN` | Yes | Bearer token required by `POST /v1/push/dispatch` |
+| `OPEN_INTEREST_NEAR_CAP_BPS` | No | Threshold for open-interest alerting (default `9000`) |
+| `ORACLE_STALE_THRESHOLD_SECONDS` | No | Oracle staleness threshold in seconds (default `2700`) |
+| `LARGE_PNL_THRESHOLD_USD` | No | Realized PnL threshold for large-PnL alerts (default `5000`) |
+| `RESERVE_BREACH_COOLDOWN_MS` | No | Cooldown window for reserve-breach repeat alerts (default `1800000`) |
 
 ## Deployment
 
@@ -159,6 +176,8 @@ npm run local:down
 - `apps/web/src/config/sepolia-deployment.json` is used when target is `sepolia`.
 - `apps/web/src/config/local-deployment.json` is used when target is `anvil`.
 - Authentication uses **Privy** (email, Google, or external wallets like MetaMask). Set `NEXT_PUBLIC_PRIVY_APP_ID` from [dashboard.privy.io](https://dashboard.privy.io).
+- The app is installable as a PWA (`/manifest.webmanifest`, `public/sw.js`). Notification preferences are managed in **Settings** (`/settings`).
+- iOS install note: use **Safari → Share → Add to Home Screen**. iOS Web Push requires Home Screen install.
 - For local Anvil testing, connect MetaMask through Privy with the pre-funded Anvil account (`0xf39Fd6...`).
 - In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), deployment target is locked to `anvil` and the deterministic mock wallet connector remains enabled for CI-stable signing.
 - When a wallet is connected on the wrong network, the app auto-requests a switch to the selected deployment chain.
@@ -293,6 +312,7 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
     - `/docs/deployments`
     - `/docs/e2e-testing`
     - `/docs/share-price-and-operations`
+    - `/docs/pwa-push-notifications`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
 - Operator monitoring surfaces (web app):
 - `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink` or `Custom Oracle`).
@@ -307,6 +327,7 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
 - [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source (Chainlink feed or Yahoo Finance relayer).
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
+- [docs/PWA_PUSH_NOTIFICATIONS.md](docs/PWA_PUSH_NOTIFICATIONS.md) — PWA install behavior, push worker architecture, notification categories, and staging verification runbook.
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.
 - Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
 

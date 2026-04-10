@@ -1,0 +1,178 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  deploy-push-worker:
+    name: Deploy Push Worker (Cloud Run)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      service_url: ${{ steps.describe.outputs.service_url }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: apps/push-worker/package-lock.json
+
+      - name: Install push-worker dependencies
+        run: npm ci --prefix apps/push-worker
+
+      - name: Run push-worker tests
+        run: npm run --prefix apps/push-worker test
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy Cloud Run service
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
+          PUSH_WORKER_SERVICE: ${{ secrets.PUSH_WORKER_SERVICE }}
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          VAPID_CONTACT_EMAIL: ${{ secrets.VAPID_CONTACT_EMAIL }}
+          SUBGRAPH_URL: ${{ secrets.SUBGRAPH_URL }}
+          DISPATCH_AUTH_TOKEN: ${{ secrets.DISPATCH_AUTH_TOKEN }}
+          OPEN_INTEREST_NEAR_CAP_BPS: ${{ secrets.OPEN_INTEREST_NEAR_CAP_BPS }}
+          ORACLE_STALE_THRESHOLD_SECONDS: ${{ secrets.ORACLE_STALE_THRESHOLD_SECONDS }}
+          LARGE_PNL_THRESHOLD_USD: ${{ secrets.LARGE_PNL_THRESHOLD_USD }}
+          RESERVE_BREACH_COOLDOWN_MS: ${{ secrets.RESERVE_BREACH_COOLDOWN_MS }}
+        run: |
+          gcloud run deploy "$PUSH_WORKER_SERVICE" \
+            --project "$GCP_PROJECT_ID" \
+            --region "$GCP_REGION" \
+            --source apps/push-worker \
+            --allow-unauthenticated \
+            --set-env-vars "VAPID_PUBLIC_KEY=$VAPID_PUBLIC_KEY,VAPID_PRIVATE_KEY=$VAPID_PRIVATE_KEY,VAPID_CONTACT_EMAIL=$VAPID_CONTACT_EMAIL,SUBGRAPH_URL=$SUBGRAPH_URL,DISPATCH_AUTH_TOKEN=$DISPATCH_AUTH_TOKEN,OPEN_INTEREST_NEAR_CAP_BPS=$OPEN_INTEREST_NEAR_CAP_BPS,ORACLE_STALE_THRESHOLD_SECONDS=$ORACLE_STALE_THRESHOLD_SECONDS,LARGE_PNL_THRESHOLD_USD=$LARGE_PNL_THRESHOLD_USD,RESERVE_BREACH_COOLDOWN_MS=$RESERVE_BREACH_COOLDOWN_MS" \
+            --quiet
+
+      - id: describe
+        name: Read Cloud Run URL
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
+          PUSH_WORKER_SERVICE: ${{ secrets.PUSH_WORKER_SERVICE }}
+        run: |
+          SERVICE_URL=$(gcloud run services describe "$PUSH_WORKER_SERVICE" \
+            --project "$GCP_PROJECT_ID" \
+            --region "$GCP_REGION" \
+            --format='value(status.url)')
+          echo "service_url=$SERVICE_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure Cloud Scheduler jobs
+        env:
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
+          SCHEDULER_LOCATION: ${{ secrets.GCP_SCHEDULER_LOCATION }}
+          DISPATCH_AUTH_TOKEN: ${{ secrets.DISPATCH_AUTH_TOKEN }}
+          REALTIME_JOB_NAME: ${{ secrets.PUSH_REALTIME_JOB_NAME }}
+          DIGEST_JOB_NAME: ${{ secrets.PUSH_DIGEST_JOB_NAME }}
+          REALTIME_CRON: ${{ secrets.PUSH_REALTIME_CRON }}
+          DIGEST_CRON: ${{ secrets.PUSH_DIGEST_CRON }}
+          SERVICE_URL: ${{ steps.describe.outputs.service_url }}
+        run: |
+          set -euo pipefail
+          SCHEDULER_LOCATION="${SCHEDULER_LOCATION:-$GCP_REGION}"
+
+          ensure_job() {
+            local JOB_NAME="$1"
+            local SCHEDULE="$2"
+            local MODE="$3"
+            local URL="${SERVICE_URL}/v1/push/dispatch?mode=${MODE}"
+            local HEADERS="Authorization=Bearer ${DISPATCH_AUTH_TOKEN},Content-Type=application/json"
+
+            if gcloud scheduler jobs describe "$JOB_NAME" --location "$SCHEDULER_LOCATION" --project "$GCP_PROJECT_ID" >/dev/null 2>&1; then
+              gcloud scheduler jobs update http "$JOB_NAME" \
+                --location "$SCHEDULER_LOCATION" \
+                --project "$GCP_PROJECT_ID" \
+                --schedule "$SCHEDULE" \
+                --uri "$URL" \
+                --http-method POST \
+                --headers "$HEADERS" \
+                --message-body '{}' \
+                --quiet
+            else
+              gcloud scheduler jobs create http "$JOB_NAME" \
+                --location "$SCHEDULER_LOCATION" \
+                --project "$GCP_PROJECT_ID" \
+                --schedule "$SCHEDULE" \
+                --uri "$URL" \
+                --http-method POST \
+                --headers "$HEADERS" \
+                --message-body '{}' \
+                --quiet
+            fi
+          }
+
+          ensure_job "$REALTIME_JOB_NAME" "${REALTIME_CRON:-*/5 * * * *}" "realtime"
+          ensure_job "$DIGEST_JOB_NAME" "${DIGEST_CRON:-0 */6 * * *}" "digest"
+
+  deploy-web:
+    name: Deploy Web (Vercel)
+    runs-on: ubuntu-latest
+    needs: deploy-push-worker
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Pull Vercel project settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          cd apps/web
+          npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+
+      - name: Deploy to Vercel production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          cd apps/web
+          npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+
+      - name: Smoke check push worker
+        env:
+          SERVICE_URL: ${{ needs.deploy-push-worker.outputs.service_url }}
+        run: |
+          curl -fsS "$SERVICE_URL/healthz"
+          curl -fsS "$SERVICE_URL/v1/push/public-key"
+
+      - name: Optional push test (fixture wallet)
+        if: ${{ secrets.PUSH_SMOKE_WALLET != '' }}
+        env:
+          SERVICE_URL: ${{ needs.deploy-push-worker.outputs.service_url }}
+          PUSH_SMOKE_WALLET: ${{ secrets.PUSH_SMOKE_WALLET }}
+        run: |
+          curl -fsS -X POST "$SERVICE_URL/v1/push/test" \
+            -H 'content-type: application/json' \
+            --data "{\"wallet\":\"$PUSH_SMOKE_WALLET\"}"

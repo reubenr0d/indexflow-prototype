@@ -9,6 +9,7 @@
     "test:v": "forge test -vvv",
     "test:e2e": "npm --prefix apps/web run test:e2e",
     "test:e2e:ci": "npm --prefix apps/web run test:e2e:ci",
+    "test:push-worker": "npm --prefix apps/push-worker run test",
     "lint:web": "npm --prefix apps/web run lint",
     "prepare": "husky",
     "anvil": "anvil",

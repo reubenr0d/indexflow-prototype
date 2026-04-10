@@ -126,10 +126,9 @@ function FallbackWeb3ProviderInner({ children }: { children: React.ReactNode }) 
 }
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
-  const usePrivy = !isE2ETestMode && hasPrivyAppId;
   return (
     <DeploymentProvider>
-      {usePrivy ? (
+      {hasPrivyAppId ? (
         <PrivyWeb3ProviderInner>{children}</PrivyWeb3ProviderInner>
       ) : (
         <FallbackWeb3ProviderInner>{children}</FallbackWeb3ProviderInner>

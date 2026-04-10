@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Web3Provider } from "@/providers/Web3Provider";
 import { Header } from "@/components/layout/header";
+import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
 import { ToastContainer } from "@/components/ui/toast";
 import "./globals.css";
 
@@ -21,6 +22,16 @@ export const metadata: Metadata = {
   title: "IndexFlow | Oracle-priced basket vaults",
   description:
     "Deposit USDC into weighted baskets priced by oracles, backed by a shared GMX-style perpetual pool. For operators and liquidity providers.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "IndexFlow",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f172a",
 };
 
 export default function RootLayout({
@@ -31,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} h-full antialiased`}>
       <body className="min-h-full bg-app-bg text-app-text">
+        <PwaBootstrap />
         <Web3Provider>
           <Header />
           <ToastContainer />

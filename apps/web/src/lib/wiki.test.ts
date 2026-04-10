@@ -5,7 +5,7 @@ import { LEGACY_DOCS_SLUGS } from "@/lib/wiki";
 describe("docs registry", () => {
   it("exposes all markdown docs from docs/", async () => {
     const docs = await getDocsManifest();
-    expect(docs).toHaveLength(11);
+    expect(docs).toHaveLength(12);
 
     const files = docs.map((doc) => doc.fileName).sort();
     expect(files).toEqual([
@@ -18,6 +18,7 @@ describe("docs registry", () => {
       "ORACLE_SUPPORTED_ASSETS.md",
       "PERP_RISK_MATH.md",
       "PRICE_FEED_FLOW.md",
+      "PWA_PUSH_NOTIFICATIONS.md",
       "README.md",
       "SHARE_PRICE_AND_OPERATIONS.md",
     ]);

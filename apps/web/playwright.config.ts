@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
+import path from 'node:path';
 
 const isCI = !!process.env.CI;
+const hasPrivy = Boolean(process.env.NEXT_PUBLIC_PRIVY_APP_ID);
+const storageStatePath = path.join(__dirname, 'e2e', '.auth', 'privy-state.json');
 
 export default defineConfig({
   testDir: './e2e',
@@ -24,20 +27,38 @@ export default defineConfig({
     video: 'retain-on-failure',
     headless: true,
   },
-  projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-  ],
+  projects: hasPrivy
+    ? [
+        {
+          name: 'setup',
+          testMatch: /auth\.setup\.ts/,
+        },
+        {
+          name: 'chromium',
+          use: {
+            ...devices['Desktop Chrome'],
+            storageState: storageStatePath,
+          },
+          dependencies: ['setup'],
+        },
+      ]
+    : [
+        {
+          name: 'chromium',
+          use: { ...devices['Desktop Chrome'] },
+        },
+      ],
   webServer: {
     command: 'npm run dev -- --hostname 127.0.0.1 --port 3000',
     port: 3000,
     cwd: __dirname,
-    reuseExistingServer: false,
+    reuseExistingServer: true,
     timeout: 120_000,
     env: {
       NEXT_PUBLIC_E2E_TEST_MODE: '1',
+      ...(process.env.NEXT_PUBLIC_PRIVY_APP_ID
+        ? { NEXT_PUBLIC_PRIVY_APP_ID: process.env.NEXT_PUBLIC_PRIVY_APP_ID }
+        : {}),
     },
   },
   outputDir: 'test-results/artifacts',

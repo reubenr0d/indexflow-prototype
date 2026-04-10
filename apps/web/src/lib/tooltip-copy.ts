@@ -106,6 +106,12 @@ export const TOOLTIP_COPY = {
   txPending: "The current transaction is waiting to be confirmed by the network.",
   txConfirmed: "The current transaction confirmed successfully.",
   txFailed: "The current transaction failed and can be retried after checking the error.",
+
+  // Push notification settings
+  pushMasterToggle: "Master switch for all real-time push notification categories.",
+  pushDigestToggle: "Controls whether periodic digest notifications are sent.",
+  pushInvestorAlerts: "Wallet-holder alerts for investor-facing vault events.",
+  pushOperatorAlerts: "Operational alerts for risk controls and keeper-sensitive conditions.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;

@@ -1,11 +1,68 @@
 import { expect, type Page } from '@playwright/test';
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
 
+/** Anvil deployer — used as the `from` address for backend RPC helper calls. */
 export const E2E_ACCOUNT = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
 const RPC_URL = process.env.E2E_RPC_URL ?? 'http://127.0.0.1:8545';
 
 /** `keccak256(bytes("BHP"))` — matches `DeployLocal` single CustomRelayer asset. */
 export const BHP_ASSET_ID =
   '0x39ffcb70be22eb03bd43c55d57db0e1672ef8e9016fc0233569e1f8a8ff34db0';
+
+const WALLET_FILE = path.join(__dirname, '.auth', 'wallet-address.json');
+
+/**
+ * Returns the Privy embedded-wallet address written by global-setup,
+ * or falls back to the Anvil deployer when running without Privy.
+ */
+export function getE2EWalletAddress(): string {
+  if (existsSync(WALLET_FILE)) {
+    const data = JSON.parse(readFileSync(WALLET_FILE, 'utf8')) as { address: string };
+    if (data.address) return data.address;
+  }
+  return E2E_ACCOUNT;
+}
+
+/**
+ * Inject a script that auto-clicks the Privy "Approve" transaction dialog.
+ * Must be called BEFORE the first page.goto().
+ */
+export async function autoApprovePrivyTransactions(page: Page) {
+  await page.addInitScript(() => {
+    setInterval(() => {
+      const btns = document.querySelectorAll<HTMLButtonElement>('button');
+      for (const btn of btns) {
+        const text = btn.textContent?.trim();
+        if (text === 'Approve' && btn.offsetParent !== null) {
+          btn.click();
+        }
+      }
+    }, 300);
+  });
+}
+
+/**
+ * Ensure a wallet is connected. When Privy is configured the storageState
+ * already has the session — just wait for the header indicator. Otherwise
+ * click the legacy E2E Connect button.
+ */
+export async function connectWallet(page: Page) {
+  const privyWallet = page.locator('[data-testid="privy-connected-wallet"]');
+  if (await privyWallet.isVisible({ timeout: 3_000 }).catch(() => false)) {
+    return; // already authenticated via Privy storageState
+  }
+
+  // Legacy mock-connector path
+  const desktopButton = page.getByTestId('e2e-connect-wallet');
+  if (await desktopButton.isVisible()) {
+    await desktopButton.click();
+  }
+  const mobileButton = page.getByTestId('e2e-connect-wallet-mobile');
+  if (await mobileButton.isVisible()) {
+    await mobileButton.click();
+  }
+}
 
 export async function installMetaMaskShim(page: Page) {
   await page.addInitScript(
@@ -89,17 +146,6 @@ export async function installMetaMaskShim(page: Page) {
     },
     { account: E2E_ACCOUNT, rpcUrl: RPC_URL }
   );
-}
-
-export async function connectWallet(page: Page) {
-  const desktopButton = page.getByTestId('e2e-connect-wallet');
-  if (await desktopButton.isVisible()) {
-    await desktopButton.click();
-  }
-  const mobileButton = page.getByTestId('e2e-connect-wallet-mobile');
-  if (await mobileButton.isVisible()) {
-    await mobileButton.click();
-  }
 }
 
 export async function waitForSuccessToast(page: Page, message: string) {

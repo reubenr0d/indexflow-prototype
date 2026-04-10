@@ -20,7 +20,7 @@ import { showToast } from "@/components/ui/toast";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
-import { Sun, Moon, Menu, X, LogOut } from "lucide-react";
+import { Sun, Moon, Menu, X, LogOut, Settings } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NetworkSelector } from "@/components/layout/network-selector";
 
@@ -29,6 +29,7 @@ const navItems = [
   { href: "/baskets", label: "Baskets" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/prices", label: "Prices" },
+  { href: "/settings", label: "Settings" },
   { href: "/docs", label: "Docs" },
   { href: "/admin", label: "Admin" },
 ];
@@ -75,6 +76,8 @@ function PrivyConnectButton() {
       <button
         type="button"
         onClick={() => setShowMenu((v) => !v)}
+        data-testid="privy-connected-wallet"
+        data-address={address ?? ""}
         className="flex h-9 items-center gap-2 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover"
       >
         <span className="h-2 w-2 rounded-full bg-emerald-400" />
@@ -94,6 +97,14 @@ function PrivyConnectButton() {
                 {user.email.address}
               </div>
             )}
+            <Link
+              href="/settings"
+              onClick={() => setShowMenu(false)}
+              className="flex w-full items-center gap-2 border-b border-app-border px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
+            >
+              <Settings className="h-3.5 w-3.5" />
+              Settings
+            </Link>
             <button
               type="button"
               onClick={() => {
@@ -243,7 +254,7 @@ export function Header() {
                 {isPending ? "Minting..." : "Mint 10k USDC"}
               </button>
             )}
-            {isE2ETestMode && !address && (
+            {isE2ETestMode && !isPrivyConfigured && !address && (
               <button
                 type="button"
                 onClick={handleE2EConnect}
@@ -299,7 +310,7 @@ export function Header() {
                   {isPending ? "Minting..." : "Mint 10k USDC"}
                 </button>
               )}
-              {isE2ETestMode && !address && (
+              {isE2ETestMode && !isPrivyConfigured && !address && (
                 <button
                   type="button"
                   onClick={handleE2EConnect}
