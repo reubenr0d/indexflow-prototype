@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { usePrivy } from "@privy-io/react-auth";
 import {
   useAccount,
   useChainId,
@@ -13,13 +13,14 @@ import {
 } from "wagmi";
 import { anvil } from "viem/chains";
 import { getContracts } from "@/config/contracts";
+import { isPrivyConfigured } from "@/config/privy";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { ERC20ABI } from "@/abi/erc20";
 import { showToast } from "@/components/ui/toast";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
-import { Sun, Moon, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X, LogOut } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NetworkSelector } from "@/components/layout/network-selector";
 
@@ -35,6 +36,85 @@ const navItems = [
 function isNavActive(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard";
   return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function truncateAddress(address: string) {
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+
+function PrivyConnectButton() {
+  const { ready, authenticated, login, logout, user } = usePrivy();
+  const { address } = useAccount();
+  const [showMenu, setShowMenu] = useState(false);
+
+  if (!ready) {
+    return (
+      <div className="h-9 w-24 animate-pulse rounded-md border border-app-border bg-app-surface" />
+    );
+  }
+
+  if (!authenticated) {
+    return (
+      <button
+        type="button"
+        onClick={login}
+        className="h-9 rounded-md bg-app-accent px-4 text-sm font-medium text-white transition-colors hover:bg-app-accent/90"
+      >
+        Log in
+      </button>
+    );
+  }
+
+  const displayLabel =
+    address
+      ? truncateAddress(address)
+      : user?.email?.address ?? user?.google?.email ?? "Connected";
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setShowMenu((v) => !v)}
+        className="flex h-9 items-center gap-2 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover"
+      >
+        <span className="h-2 w-2 rounded-full bg-emerald-400" />
+        {displayLabel}
+      </button>
+      {showMenu && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setShowMenu(false)} />
+          <div className="absolute right-0 top-full z-50 mt-1 min-w-[10rem] overflow-hidden rounded-lg border border-app-border bg-app-surface shadow-lg">
+            {address && (
+              <div className="border-b border-app-border px-3 py-2 text-xs text-app-muted">
+                {truncateAddress(address)}
+              </div>
+            )}
+            {user?.email?.address && (
+              <div className="border-b border-app-border px-3 py-2 text-xs text-app-muted">
+                {user.email.address}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                setShowMenu(false);
+                logout();
+              }}
+              className="flex w-full items-center gap-2 px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              Log out
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+function ConnectWalletButton() {
+  if (!isPrivyConfigured) return null;
+  return <PrivyConnectButton />;
 }
 
 export function Header() {
@@ -185,8 +265,8 @@ export function Header() {
             >
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
-            <div className="hidden sm:block [&_button]:!rounded-md [&_button]:!font-medium">
-              <ConnectButton showBalance={false} chainStatus="none" accountStatus="address" />
+            <div className="hidden sm:block">
+              <ConnectWalletButton />
             </div>
             <button
               type="button"
@@ -260,7 +340,7 @@ export function Header() {
                 <NetworkSelector />
               </div>
               <div className="pt-2 sm:hidden">
-                <ConnectButton showBalance={false} chainStatus="none" accountStatus="address" />
+                <ConnectWalletButton />
               </div>
             </nav>
           </motion.div>

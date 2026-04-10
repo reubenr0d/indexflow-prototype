@@ -2,34 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
-import { WagmiProvider, useAccount, useChainId, useSwitchChain } from "wagmi";
+import { PrivyProvider } from "@privy-io/react-auth";
+import { WagmiProvider } from "@privy-io/wagmi";
+import { WagmiProvider as WagmiProviderNative } from "wagmi";
+import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { connect as connectAction } from "wagmi/actions";
 import { showToast } from "@/components/ui/toast";
 import { deploymentLabel, deploymentTargetForChainId } from "@/lib/deployment";
-import { config } from "@/config/wagmi";
+import { config, defaultConfig } from "@/config/wagmi";
+import { privyAppId, privyConfig } from "@/config/privy";
 import { DeploymentProvider, useDeploymentTarget } from "@/providers/DeploymentProvider";
-import "@rainbow-me/rainbowkit/styles.css";
 
 const queryClient = new QueryClient();
 const MM_SWITCH_COOLDOWN_MS = 30_000;
 const MM_SWITCH_COOLDOWN_KEY = "indexflow:mm-switch-deployment-cooldown-until";
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
-
-const rkTheme = {
-  lightMode: lightTheme({
-    accentColor: "#0d9488",
-    accentColorForeground: "#ffffff",
-    borderRadius: "medium",
-    fontStack: "system",
-  }),
-  darkMode: darkTheme({
-    accentColor: "#2dd4bf",
-    accentColorForeground: "#04120f",
-    borderRadius: "medium",
-    fontStack: "system",
-  }),
-};
+const hasPrivyAppId = privyAppId.length > 0;
 
 function getCooldownUntil(): number {
   if (typeof window === "undefined") return 0;
@@ -43,7 +31,7 @@ function setCooldownUntil(until: number) {
   window.sessionStorage.setItem(MM_SWITCH_COOLDOWN_KEY, String(until));
 }
 
-function AutoSwitchMetaMaskToDeploymentChain() {
+function AutoSwitchWalletToDeploymentChain() {
   const { isConnected, connector, address } = useAccount();
   const walletChainId = useChainId();
   const { chainId: targetChainId, target, setTarget } = useDeploymentTarget();
@@ -53,7 +41,7 @@ function AutoSwitchMetaMaskToDeploymentChain() {
   useEffect(() => {
     if (isE2ETestMode) return;
     if (!isConnected) return;
-    if (connector?.id !== "metaMask") return;
+
     const mappedTarget = deploymentTargetForChainId(walletChainId);
     if (mappedTarget && mappedTarget !== target) {
       setTarget(mappedTarget);
@@ -80,7 +68,7 @@ function AutoSwitchMetaMaskToDeploymentChain() {
       .catch(() => {
         showToast(
           "error",
-          `Wrong MetaMask network. Please switch to ${deploymentLabel(target)} to continue.`
+          `Wrong network. Please switch to ${deploymentLabel(target)} to continue.`
         );
       })
       .finally(() => {
@@ -113,24 +101,39 @@ function AutoConnectE2EWallet() {
   return null;
 }
 
-function Web3ProviderInner({ children }: { children: React.ReactNode }) {
+function PrivyWeb3ProviderInner({ children }: { children: React.ReactNode }) {
   return (
-    <WagmiProvider config={config}>
+    <PrivyProvider appId={privyAppId} config={privyConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={rkTheme} modalSize="compact">
-          <AutoConnectE2EWallet />
-          <AutoSwitchMetaMaskToDeploymentChain />
+        <WagmiProvider config={defaultConfig}>
+          <AutoSwitchWalletToDeploymentChain />
           {children}
-        </RainbowKitProvider>
+        </WagmiProvider>
       </QueryClientProvider>
-    </WagmiProvider>
+    </PrivyProvider>
+  );
+}
+
+function FallbackWeb3ProviderInner({ children }: { children: React.ReactNode }) {
+  return (
+    <WagmiProviderNative config={config}>
+      <QueryClientProvider client={queryClient}>
+        {isE2ETestMode && <AutoConnectE2EWallet />}
+        {children}
+      </QueryClientProvider>
+    </WagmiProviderNative>
   );
 }
 
 export function Web3Provider({ children }: { children: React.ReactNode }) {
+  const usePrivy = !isE2ETestMode && hasPrivyAppId;
   return (
     <DeploymentProvider>
-      <Web3ProviderInner>{children}</Web3ProviderInner>
+      {usePrivy ? (
+        <PrivyWeb3ProviderInner>{children}</PrivyWeb3ProviderInner>
+      ) : (
+        <FallbackWeb3ProviderInner>{children}</FallbackWeb3ProviderInner>
+      )}
     </DeploymentProvider>
   );
 }

@@ -12,9 +12,10 @@
     "test:e2e:ci": "playwright test --project=chromium"
   },
   "dependencies": {
-    "@rainbow-me/rainbowkit": "^2.2.10",
+    "@privy-io/chains": "^0.1.4",
+    "@privy-io/react-auth": "^3.21.0",
+    "@privy-io/wagmi": "^4.0.4",
     "@tanstack/react-query": "^5.96.2",
-    "@walletconnect/ethereum-provider": "^2.23.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
@@ -32,7 +33,7 @@
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
     "tailwind-merge": "^3.5.0",
-    "viem": "^2.47.10",
+    "viem": "^2.47.4",
     "wagmi": "^2.17.0",
     "yahoo-finance2": "^3.14.0"
   },

@@ -13,6 +13,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-10] Web app: replace RainbowKit with Privy for authentication and wallet management; adds email OTP and Google login alongside external wallets (MetaMask, WalletConnect), with embedded wallet support for users without an existing wallet.
+- [2026-04-10] Web app: Anvil (localhost) testing now uses MetaMask as an external wallet through Privy with pre-funded Anvil accounts; chain configuration passes Anvil through Privy's `supportedChains` with a local RPC override.
+- [2026-04-10] Web app: admin panel auth guard uses Privy `authenticated` state instead of wagmi `isConnected`, allowing email/Google-authenticated users with embedded wallets to access the admin.
 - [2026-04-10] Pre-commit hook no longer requires a local Foundry install; Solidity formatting check is skipped with a notice when `forge` is not available (CI still enforces it).
 - [2026-04-10] Web app: network selector only shows networks with real deployment configs (placeholder addresses are filtered out) and shows a per-network SG badge when a subgraph is configured; RainbowKit's built-in chain selector is hidden in favour of the single selector.
 - [2026-04-10] CI: upgrade `actions/checkout` v4 → v5, `actions/setup-node` v4 → v5, and `actions/upload-artifact` v4 → v5 across all workflows (`test.yml`, `update-prices.yml`) to use Node.js 24 runtime and avoid the June 2026 deprecation of Node.js 20 actions.
@@ -21,11 +24,11 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
-- [2026-04-10] Web ESLint ignores `playwright-report/` and `test-results/` so `npm run lint:web` matches CI after local Playwright runs (generated assets are no longer linted).
 - [2026-04-10] Pre-commit hook (`forge fmt --check`) was silently skipped because `core.hooksPath` was not set; re-wired via `npm run hooks:install`.
 
 ### Added
 
+- [2026-04-10] Web app: `NEXT_PUBLIC_PRIVY_APP_ID` environment variable required for the Privy SDK; `NEXT_PUBLIC_WALLETCONNECT_ID` is no longer needed.
 - [2026-04-10] Web app: network selector dropdown in the header lets users switch between Anvil (Local) and Sepolia; anvil target automatically uses the local graph-node subgraph, sepolia uses the configured `NEXT_PUBLIC_SUBGRAPH_URL`.
 - [2026-04-10] CI: scheduled GitHub Actions workflow (`update-prices.yml`) fetches Yahoo Finance quotes every 15 minutes and syncs on-chain prices for all registered `CustomRelayer` assets; supports manual dispatch with per-network targeting and matrix-based multi-network parameterization. Runs as a dry-run validation check on pull requests (no on-chain transactions).
 - [2026-04-10] `redeploy:local` npm script: single host-side command that deploys contracts to Docker Anvil, syncs subgraph networks, builds and deploys the subgraph to the local graph-node — UI picks up new addresses via Next.js HMR.

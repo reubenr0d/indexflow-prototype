@@ -70,6 +70,16 @@ ETHERSCAN_API_KEY=
 ARBISCAN_API_KEY=
 ```
 
+### Web App Environment
+
+The Next.js web app requires the following environment variables (set in the shell or a local `.env` file inside `apps/web/`):
+
+| Variable | Required | Description |
+| --- | --- | --- |
+| `NEXT_PUBLIC_PRIVY_APP_ID` | Yes | Privy app ID from [dashboard.privy.io](https://dashboard.privy.io) |
+| `NEXT_PUBLIC_SUBGRAPH_URL` | No | Subgraph endpoint (auto-set by `local:dev`) |
+| `NEXT_PUBLIC_E2E_TEST_MODE` | No | Set to `1` for deterministic E2E mock wallet |
+
 ## Deployment
 
 Deploy scripts pull a live **Yahoo Finance** quote for `BHP` (8-decimal USD raw) via Node (`scripts/fetch-yf-asset-price.js` and Foundry `ffi`). The script writes `cache/yf-seed-price.txt` (gitignored); Solidity reads it with `vm.readFile` so the seed is not passed through `ffi` stdout (which can mis-decode decimal ASCII). **Node** must be on `PATH`, and the machine needs **outbound network** access unless you pin a seed.
@@ -104,7 +114,7 @@ npm run local:up
 npm run local:dev
 ```
 
-Open `http://localhost:3000`, switch the wallet / deployment target to **Anvil**.
+Open `http://localhost:3000`, log in via Privy (or connect MetaMask), and switch the deployment target to **Anvil**.
 
 ### Redeploying after code changes
 
@@ -145,11 +155,13 @@ npm run local:down
 
 ### Web app runtime contract wiring
 
-- Deployment target persists in `localStorage` and follows the wallet chain selector.
+- Deployment target persists in `localStorage` and follows the network selector.
 - `apps/web/src/config/sepolia-deployment.json` is used when target is `sepolia`.
 - `apps/web/src/config/local-deployment.json` is used when target is `anvil`.
+- Authentication uses **Privy** (email, Google, or external wallets like MetaMask). Set `NEXT_PUBLIC_PRIVY_APP_ID` from [dashboard.privy.io](https://dashboard.privy.io).
+- For local Anvil testing, connect MetaMask through Privy with the pre-funded Anvil account (`0xf39Fd6...`).
 - In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), deployment target is locked to `anvil` and the deterministic mock wallet connector remains enabled for CI-stable signing.
-- When MetaMask is connected on the wrong network, the app auto-requests a switch to the selected deployment chain.
+- When a wallet is connected on the wrong network, the app auto-requests a switch to the selected deployment chain.
 
 ## Subgraph Ops
 

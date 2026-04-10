@@ -361,8 +361,8 @@ function RegisterAssetCard() {
           setIsWiring(true);
           showToast("pending", `Wiring ${selected.symbol}...`);
           try {
-            const { writeContractAsync } = await import("wagmi/actions");
-            const hash = await writeContractAsync(config, {
+            const { writeContract } = await import("wagmi/actions");
+            const hash = await writeContract(config, {
               address: assetWiring,
               abi: AssetWiringABI,
               functionName: "wireAsset",
