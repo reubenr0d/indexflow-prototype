@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
+import { SharePriceChart } from "@/components/baskets/share-price-chart";
 import { PerpCompositionRow } from "@/components/baskets/perp-composition-row";
 import {
   ActivityBadge,
@@ -20,7 +21,7 @@ import {
   getBasketActivityMeta,
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
-import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
+import { useBasketInfo, useVaultPnL, useVaultState } from "@/hooks/usePerpReader";
 import {
   useBasketFees,
   useMinReserveBps,
@@ -83,6 +84,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const { data: info, isLoading } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
+  const { data: vaultPnL } = useVaultPnL(vault);
   const { depositFee, redeemFee } = useBasketFees(vault);
   const { data: minReserveBps } = useMinReserveBps(vault);
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
@@ -182,6 +184,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const requiredReserve = (requiredReserveUsdc as bigint | undefined) ?? 0n;
   const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
   const reserveHealthy = idleUsdc >= requiredReserve;
+
+  const pnlResult = vaultPnL as [bigint, bigint] | undefined;
+  const unrealisedPnL = pnlResult?.[0] ?? 0n;
+  const realisedPnL = pnlResult?.[1] ?? 0n;
+  const netPnL = unrealisedPnL + realisedPnL;
+  const hasPnLData = pnlResult !== undefined;
 
   const positionTrackingKeys = useMemo(
     () =>
@@ -395,8 +403,32 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                   subValue={latestActivityMeta ? latestActivityMeta.title : "No indexed activity"}
                 />
               </div>
+              {hasPnLData && (
+                <div className="grid gap-3 border-t border-app-border bg-app-bg-subtle/60 p-4 sm:grid-cols-3">
+                  <MetricTile
+                    icon={TrendingUp}
+                    label={<InfoLabel label="Unrealised P&L" tooltipKey="unrealisedPnl" />}
+                    value={formatSignedUsd1e30(unrealisedPnL)}
+                    subValue="Mark-to-market on open positions"
+                  />
+                  <MetricTile
+                    icon={Activity}
+                    label={<InfoLabel label="Realised P&L" tooltipKey="realisedPnl" />}
+                    value={formatSignedUsd1e30(realisedPnL)}
+                    subValue="Locked in from closed positions"
+                  />
+                  <MetricTile
+                    icon={Gauge}
+                    label={<InfoLabel label="Net P&L" tooltipKey="netPnl" />}
+                    value={formatSignedUsd1e30(netPnL)}
+                    subValue="Total perp profit / loss"
+                  />
+                </div>
+              )}
             </Card>
           </motion.div>
+
+          <SharePriceChart vault={vault} />
 
           <Card className="p-5">
             <SectionHeader

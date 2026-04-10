@@ -8,6 +8,7 @@ import { TrendPill } from "@/components/ui/trend-pill";
 import { formatBps, formatUSDC } from "@/lib/format";
 import { type Address } from "viem";
 import { BasketIcon } from "./basket-icons";
+import { useBasketTrendSnapshots } from "@/hooks/subgraph/useSubgraphQueries";
 
 interface BasketCardProps {
   vault: Address;
@@ -35,10 +36,14 @@ export function BasketCard({
   assetCount,
   perpBlendBps,
   depositFee,
-  trend24h,
-  trend7d,
+  trend24h: trend24hProp,
+  trend7d: trend7dProp,
   index = 0,
 }: BasketCardProps) {
+  const { data: trendData } = useBasketTrendSnapshots(vault);
+  const trend24h = trend24hProp ?? trendData?.day?.delta?.sharePrice ?? null;
+  const trend7d = trend7dProp ?? trendData?.week?.delta?.sharePrice ?? null;
+
   const tvl = usdcBalance + perpAllocated;
   const perpShare = tvl > 0n ? `${Number((perpAllocated * 100n) / tvl)}% in perp` : "No perp allocation";
   const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {

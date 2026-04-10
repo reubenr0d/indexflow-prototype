@@ -8,6 +8,7 @@ import { StatCard } from "@/components/ui/stat-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { PerpCompositionRow } from "@/components/baskets/perp-composition-row";
+import { SharePriceChart } from "@/components/baskets/share-price-chart";
 import { SetAssetsCard } from "@/components/baskets/admin/set-assets-card";
 import { PerpAllocationCard } from "@/components/baskets/admin/perp-allocation-card";
 import { MaxPerpAllocationCard } from "@/components/baskets/admin/max-perp-allocation-card";
@@ -15,7 +16,7 @@ import { FeeCollectionCard } from "@/components/baskets/admin/fee-collection-car
 import { ReservePolicyCard } from "@/components/baskets/admin/reserve-policy-card";
 import { ReserveTopUpCard } from "@/components/baskets/admin/reserve-topup-card";
 import { BasketPositionManagerCard } from "@/components/baskets/admin/position-manager-card";
-import { useBasketInfo, useVaultState } from "@/hooks/usePerpReader";
+import { useBasketInfo, useVaultPnL, useVaultState } from "@/hooks/usePerpReader";
 import { useBasketDetailQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import {
   useBasketFees,
@@ -69,6 +70,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
 
   const { data: info } = useBasketInfo(vault);
   const { data: vaultState } = useVaultState(vault);
+  const { data: vaultPnL } = useVaultPnL(vault);
   const { depositFee, redeemFee } = useBasketFees(vault);
   const { data: minReserveBps } = useMinReserveBps(vault);
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
@@ -102,11 +104,21 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     registered: boolean;
   } | undefined;
 
+  const pnlResult = vaultPnL as [bigint, bigint] | undefined;
+  const unrealisedPnL = pnlResult?.[0] ?? 0n;
+  const realisedPnL = pnlResult?.[1] ?? 0n;
+  const netPnL = unrealisedPnL + realisedPnL;
+
   const tvl = (basketInfo?.usdcBalance ?? 0n) + (basketInfo?.perpAllocated ?? 0n);
   const idleUsdc = (basketInfo?.usdcBalance ?? 0n) - ((collectedFees as bigint | undefined) ?? 0n);
   const requiredReserve = (requiredReserveUsdc as bigint | undefined) ?? 0n;
   const availableForPerp = (availableForPerpUsdc as bigint | undefined) ?? 0n;
   const reserveHealthy = idleUsdc >= requiredReserve;
+
+  const capitalUtilPct = tvl > 0n ? Number(((basketInfo?.perpAllocated ?? 0n) * 10000n) / tvl) / 100 : 0;
+  const leverageRatio = state?.depositedCapital && state.depositedCapital > 0n
+    ? Number(state.openInterest * 100n / state.depositedCapital) / 100
+    : 0;
 
   const basketDetail = useBasketDetailQuery(vault, 1, 0);
   const subgraphConfiguredAssetIds = (basketDetail.data?.basket?.assets ?? [])
@@ -320,14 +332,27 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
       {/* Accounting (conditional) */}
       {state?.registered && (
         <Section title="Accounting">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <StatCard label="Deposited Capital" value={formatUSDC(state.depositedCapital)} tooltipKey="depositedCapital" />
-            <StatCard label="Realised PnL" value={formatSignedUsd1e30(state.realisedPnL)} tooltipKey="realisedPnl" />
             <StatCard label="Open Interest" value={formatUsd1e30(state.openInterest)} tooltipKey="openInterest" />
             <StatCard label="Positions" value={String(state.positionCount)} tooltipKey="positions" />
           </div>
+          <div className="mt-4 grid gap-4 sm:grid-cols-3">
+            <StatCard label="Unrealised P&L" value={formatSignedUsd1e30(unrealisedPnL)} tooltipKey="unrealisedPnl" subValue="Mark-to-market on open positions" />
+            <StatCard label="Realised P&L" value={formatSignedUsd1e30(realisedPnL)} tooltipKey="realisedPnl" subValue="Locked in from closed positions" />
+            <StatCard label="Net P&L" value={formatSignedUsd1e30(netPnL)} tooltipKey="netPnl" subValue="Total perp profit / loss" />
+          </div>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <StatCard label="Capital Utilization" value={`${capitalUtilPct.toFixed(2)}%`} tooltipKey="capitalUtilization" subValue="Perp allocated as share of TVL" />
+            <StatCard label="Leverage Ratio" value={`${leverageRatio.toFixed(2)}x`} tooltipKey="leverageRatio" subValue="Open interest / deposited capital" />
+          </div>
         </Section>
       )}
+
+      {/* Share Price History */}
+      <Section title="Performance">
+        <SharePriceChart vault={vault} />
+      </Section>
 
       {/* Composition */}
       <Section title="Composition">

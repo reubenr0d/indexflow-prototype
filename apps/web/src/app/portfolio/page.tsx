@@ -1,22 +1,67 @@
 "use client";
 
+import { useMemo } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { InfoLabel } from "@/components/ui/info-tooltip";
-import { useAccount, useReadContracts } from "wagmi";
+import { useAccount, usePublicClient, useReadContracts } from "wagmi";
+import { useQuery } from "@tanstack/react-query";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useUserPortfolioQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import { BasketShareTokenABI } from "@/abi/contracts";
-import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
+import { formatUSDC, formatShares, formatCompact, formatBps, formatSignedUsd1e30 } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Wallet, ArrowUpRight } from "lucide-react";
-import { type Address } from "viem";
+import { Wallet, ArrowUpRight, TrendingUp, TrendingDown } from "lucide-react";
+import { type Address, parseAbiItem } from "viem";
+
+function useUserCostBasisFallback(vaults: Address[], userAddress: Address | undefined, enabled: boolean) {
+  const { chainId } = useDeploymentTarget();
+  const publicClient = usePublicClient({ chainId });
+
+  return useQuery({
+    queryKey: ["user-cost-basis-rpc", chainId, userAddress, vaults.join(",")],
+    enabled: enabled && !!publicClient && !!userAddress && vaults.length > 0,
+    queryFn: async (): Promise<Map<Address, bigint>> => {
+      if (!publicClient || !userAddress) return new Map();
+
+      const results = await Promise.all(
+        vaults.map(async (vault) => {
+          const [deposits, redeems] = await Promise.all([
+            publicClient.getLogs({
+              address: vault,
+              event: parseAbiItem("event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted)"),
+              args: { user: userAddress },
+              fromBlock: 0n,
+              toBlock: "latest",
+            }),
+            publicClient.getLogs({
+              address: vault,
+              event: parseAbiItem("event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned)"),
+              args: { user: userAddress },
+              fromBlock: 0n,
+              toBlock: "latest",
+            }),
+          ]);
+
+          const totalDeposited = deposits.reduce((sum, l) => sum + (l.args.usdcAmount ?? 0n), 0n);
+          const totalRedeemed = redeems.reduce((sum, l) => sum + (l.args.usdcReturned ?? 0n), 0n);
+          return [vault, totalDeposited - totalRedeemed] as const;
+        })
+      );
+
+      return new Map(results);
+    },
+    staleTime: 30_000,
+    retry: 1,
+  });
+}
 
 export default function PortfolioPage() {
   const { address, isConnected } = useAccount();
@@ -86,6 +131,29 @@ export default function PortfolioPage() {
     ])
   );
 
+  const holdingVaults = useMemo(() => holdings.map((h) => h.vault as Address), [holdings]);
+  const shouldUseCostBasisFallback =
+    !subgraph.isLoading && (subgraph.isError || !subgraphData || (subgraphData.holdings ?? []).length === 0);
+  const costBasisFallback = useUserCostBasisFallback(holdingVaults, address, shouldUseCostBasisFallback);
+
+  const costBasisByVault = useMemo(() => {
+    if (hasSubgraphData && subgraphData?.holdings) {
+      const m = new Map<string, bigint>();
+      for (const h of subgraphData.holdings) {
+        m.set(h.vault, h.netDepositedUsdc - h.netRedeemedUsdc);
+      }
+      return m;
+    }
+    return costBasisFallback.data ?? new Map<string, bigint>();
+  }, [costBasisFallback.data, hasSubgraphData, subgraphData]);
+
+  const totalCostBasis = useMemo(
+    () => holdings.reduce((sum, h) => sum + (costBasisByVault.get(h.vault) ?? 0n), 0n),
+    [costBasisByVault, holdings]
+  );
+  const totalPnL = totalValue - totalCostBasis;
+  const totalRoiPct = totalCostBasis > 0n ? Number((totalPnL * 10000n) / totalCostBasis) / 100 : 0;
+
   if (!isConnected) {
     return (
       <PageWrapper>
@@ -116,6 +184,15 @@ export default function PortfolioPage() {
             formatCompact(Number(totalValue / USDC_PRECISION))
           )}
         </div>
+        {!isLoading && totalCostBasis > 0n && (
+          <div className="mt-3 flex items-center justify-center gap-4 text-sm">
+            <span className="text-app-muted">Cost basis {formatUSDC(totalCostBasis)}</span>
+            <span className={totalPnL >= 0n ? "text-app-success" : "text-app-danger"}>
+              {totalPnL >= 0n ? <TrendingUp className="mr-1 inline h-3.5 w-3.5" /> : <TrendingDown className="mr-1 inline h-3.5 w-3.5" />}
+              {totalPnL >= 0n ? "+" : "-"}{formatUSDC(totalPnL >= 0n ? totalPnL : -totalPnL)} ({totalRoiPct >= 0 ? "+" : ""}{totalRoiPct.toFixed(2)}%)
+            </span>
+          </div>
+        )}
       </motion.div>
 
       <h2 className="mb-4 text-lg font-semibold text-app-text">
@@ -135,8 +212,7 @@ export default function PortfolioPage() {
         </div>
       ) : holdings.length > 0 ? (
         <div className="space-y-3">
-          {holdings.map((h, i) => (
-            (() => {
+          {holdings.map((h, i) => {
               const info = infoByVault.get(h.vault as Address);
               const perpBlendBps = computeBlendedComposition(
                 info?.usdcBalance ?? 0n,
@@ -144,6 +220,9 @@ export default function PortfolioPage() {
                 openInterestByVault.get(h.vault as Address) ?? 0n,
                 []
               ).perpBlendBps;
+              const holdingCostBasis = costBasisByVault.get(h.vault) ?? 0n;
+              const holdingPnL = h.value - holdingCostBasis;
+              const holdingRoiPct = holdingCostBasis > 0n ? Number((holdingPnL * 10000n) / holdingCostBasis) / 100 : 0;
               return (
             <motion.div
               key={h.vault}
@@ -160,13 +239,23 @@ export default function PortfolioPage() {
                     <p className="mt-0.5 text-sm text-app-muted">
                       {formatShares(h.balance)} shares
                     </p>
+                    {holdingCostBasis > 0n && (
+                      <p className="mt-0.5 text-xs text-app-muted">
+                        Cost basis {formatUSDC(holdingCostBasis)}
+                      </p>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <p className="font-semibold text-app-text">
                         {formatUSDC(h.value)}
                       </p>
-                      <p className="text-sm text-app-muted">
+                      {holdingCostBasis > 0n && (
+                        <p className={`text-sm font-medium ${holdingPnL >= 0n ? "text-app-success" : "text-app-danger"}`}>
+                          {holdingPnL >= 0n ? "+" : "-"}{formatUSDC(holdingPnL >= 0n ? holdingPnL : -holdingPnL)} ({holdingRoiPct >= 0 ? "+" : ""}{holdingRoiPct.toFixed(2)}%)
+                        </p>
+                      )}
+                      <p className="text-xs text-app-muted">
                         {formatUSDC(h.sharePrice)} / share
                       </p>
                       <p className="text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
@@ -177,8 +266,7 @@ export default function PortfolioPage() {
               </Link>
             </motion.div>
               );
-            })()
-          ))}
+          })}
         </div>
       ) : (
         <div className="py-20 text-center">

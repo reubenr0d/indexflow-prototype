@@ -85,6 +85,9 @@ sequenceDiagram
 
 ## UI visibility
 
+- `/baskets/[address]` shows **unrealised, realised, and net P&L** tiles (pure RPC via `PerpReader.getVaultPnL`) and a **share price history chart** (subgraph snapshots with RPC multi-block fallback).
 - `/baskets/[address]` includes a **Vault History** timeline (deposits, redeems, allocations, position activity, and related tx links).
 - On `/baskets/[address]`, the deposit/redeem panel keeps a stable quote area to reduce layout shift; switching tabs clears the typed amount.
 - The deposit/redeem card uses icon tabs for Deposit/Redeem mode switching and keeps inline transaction feedback for approval and submission flow.
+- `/baskets` list cards show **24h / 7d share price trend pills** with live data from subgraph or RPC fallback.
+- `/portfolio` displays per-basket and aggregate **cost basis** (net deposited minus redeemed), **P&L**, and **ROI %** — sourced from subgraph history with an RPC log-scanning fallback.

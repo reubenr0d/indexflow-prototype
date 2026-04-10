@@ -149,6 +149,22 @@ export const GET_BASKET_TREND_SNAPSHOTS = gql`
   }
 `;
 
+export const GET_SHARE_PRICE_HISTORY = gql`
+  query GetSharePriceHistory($id: ID!, $first: Int!) {
+    basketSnapshots(
+      where: { basket_: { id: $id }, period: "1d" }
+      first: $first
+      orderBy: bucketStart
+      orderDirection: asc
+    ) {
+      bucketStart
+      updatedAt
+      sharePrice
+      tvlBookUsdc
+    }
+  }
+`;
+
 export const GET_BASKET_ACTIVITIES = gql`
   query GetBasketActivities($id: String!, $first: Int!, $skip: Int!) {
     basketActivities(

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,11 +17,15 @@ import {
   useOpenPosition,
   usePositionTracking,
 } from "@/hooks/useVaultAccounting";
-import { formatUSDC, formatPrice, parseUSDCInput } from "@/lib/format";
-import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
+import { formatUSDC, formatPrice, formatAssetId, formatSignedUsd1e30, parseUSDCInput } from "@/lib/format";
+import { PRICE_PRECISION, USDC_PRECISION, REFETCH_INTERVAL } from "@/lib/constants";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
-import { type Address, type Hex } from "viem";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
+import { getContracts } from "@/config/contracts";
+import { OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
+import { useReadContracts } from "wagmi";
+import { type Address, type Hex, encodePacked, keccak256 } from "viem";
 
 function usdcToInputValue(amount: bigint): string {
   const whole = amount / 1_000_000n;
@@ -157,6 +161,94 @@ export function BasketPositionManagerCard({ vault }: { vault: Address }) {
 
   const closeSizeMax = closePos?.exists ? closePos.size : 0n;
   const closeCollateralMax = closePos?.exists ? closePos.collateralUsdc : 0n;
+
+  const { chainId } = useDeploymentTarget();
+  const { oracleAdapter, vaultAccounting } = getContracts(chainId);
+
+  const allAssets = supportedAssets ?? [];
+  const posKeys = useMemo(
+    () =>
+      allAssets.flatMap((asset) => [
+        { assetId: asset.idHex as `0x${string}`, isLong: true, key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, asset.idHex as `0x${string}`, true])) },
+        { assetId: asset.idHex as `0x${string}`, isLong: false, key: keccak256(encodePacked(["address", "bytes32", "bool"], [vault, asset.idHex as `0x${string}`, false])) },
+      ]),
+    [allAssets, vault]
+  );
+
+  const { data: allTrackingRows } = useReadContracts({
+    contracts: posKeys.map((entry) => ({
+      address: vaultAccounting,
+      abi: VaultAccountingABI,
+      functionName: "getPositionTracking" as const,
+      args: [entry.key] as const,
+    })),
+    query: { enabled: posKeys.length > 0, refetchInterval: REFETCH_INTERVAL },
+  });
+
+  const openPositions = useMemo(() => {
+    const positions: Array<{
+      assetId: `0x${string}`;
+      isLong: boolean;
+      size: bigint;
+      collateral: bigint;
+      collateralUsdc: bigint;
+      averagePrice: bigint;
+      label: string;
+    }> = [];
+
+    posKeys.forEach((entry, i) => {
+      const raw = allTrackingRows?.[i]?.result;
+      if (!raw) return;
+      const tracking = raw as
+        | { size?: bigint; collateral?: bigint; collateralUsdc?: bigint; averagePrice?: bigint; exists?: boolean }
+        | [Address, `0x${string}`, boolean, bigint, bigint, bigint, bigint, bigint, boolean];
+      const exists = Array.isArray(tracking) ? Boolean(tracking[8]) : Boolean(tracking.exists);
+      if (!exists) return;
+      const size = Array.isArray(tracking) ? tracking[3] : (tracking.size ?? 0n);
+      const collateral = Array.isArray(tracking) ? tracking[4] : (tracking.collateral ?? 0n);
+      const collateralUsdc = Array.isArray(tracking) ? tracking[5] : (tracking.collateralUsdc ?? 0n);
+      const averagePrice = Array.isArray(tracking) ? tracking[6] : (tracking.averagePrice ?? 0n);
+      if (size === 0n) return;
+      const meta = allAssets.find((a) => (a.idHex as string).toLowerCase() === entry.assetId.toLowerCase());
+      positions.push({
+        assetId: entry.assetId,
+        isLong: entry.isLong,
+        size,
+        collateral,
+        collateralUsdc,
+        averagePrice,
+        label: meta?.label ?? formatAssetId(entry.assetId),
+      });
+    });
+
+    return positions;
+  }, [allAssets, allTrackingRows, posKeys]);
+
+  const { data: positionPriceRows } = useReadContracts({
+    contracts: openPositions.map((pos) => ({
+      address: oracleAdapter,
+      abi: OracleAdapterABI,
+      functionName: "getPrice" as const,
+      args: [pos.assetId] as const,
+    })),
+    query: { enabled: openPositions.length > 0, refetchInterval: REFETCH_INTERVAL },
+  });
+
+  const positionsWithPnL = useMemo(() => {
+    return openPositions.map((pos, i) => {
+      const priceRow = positionPriceRows?.[i]?.result as [bigint, bigint] | undefined;
+      const currentPrice = priceRow?.[0] ?? 0n;
+      let unrealisedPnL = 0n;
+      if (currentPrice > 0n && pos.averagePrice > 0n) {
+        if (pos.isLong) {
+          unrealisedPnL = ((currentPrice - pos.averagePrice) * pos.size) / pos.averagePrice;
+        } else {
+          unrealisedPnL = ((pos.averagePrice - currentPrice) * pos.size) / pos.averagePrice;
+        }
+      }
+      return { ...pos, currentPrice, unrealisedPnL };
+    });
+  }, [openPositions, positionPriceRows]);
 
   const handleCloseClick = () => {
     if (!confirmClose) {
@@ -324,6 +416,48 @@ export function BasketPositionManagerCard({ vault }: { vault: Address }) {
           </div>
         </div>
       </div>
+
+      {positionsWithPnL.length > 0 && (
+        <div className="mt-6">
+          <p className="mb-3 text-sm font-semibold text-app-text">
+            <InfoLabel label="Open Positions P&L" tooltipKey="unrealisedPnl" />
+          </p>
+          <div className="overflow-x-auto rounded-lg border border-app-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-app-border bg-app-bg-subtle/60 text-left text-xs font-semibold uppercase tracking-wider text-app-muted">
+                  <th className="px-4 py-3">Asset</th>
+                  <th className="px-4 py-3">Side</th>
+                  <th className="px-4 py-3 text-right">Size</th>
+                  <th className="px-4 py-3 text-right">Collateral</th>
+                  <th className="px-4 py-3 text-right">Entry Price</th>
+                  <th className="px-4 py-3 text-right">Current Price</th>
+                  <th className="px-4 py-3 text-right">Unrealised P&L</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-app-border">
+                {positionsWithPnL.map((pos, i) => (
+                  <tr key={`${pos.assetId}-${pos.isLong ? "long" : "short"}`} className="hover:bg-app-surface-hover">
+                    <td className="px-4 py-3 font-medium text-app-text">{pos.label}</td>
+                    <td className="px-4 py-3">
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${pos.isLong ? "bg-app-success/10 text-app-success" : "bg-app-danger/10 text-app-danger"}`}>
+                        {pos.isLong ? "Long" : "Short"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono text-app-text">{formatPrice(pos.size)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-app-text">{formatUSDC(pos.collateralUsdc)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-app-text">{formatPrice(pos.averagePrice)}</td>
+                    <td className="px-4 py-3 text-right font-mono text-app-text">{pos.currentPrice > 0n ? formatPrice(pos.currentPrice) : "--"}</td>
+                    <td className={`px-4 py-3 text-right font-mono font-semibold ${pos.unrealisedPnL > 0n ? "text-app-success" : pos.unrealisedPnL < 0n ? "text-app-danger" : "text-app-text"}`}>
+                      {formatSignedUsd1e30(pos.unrealisedPnL)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </Card>
   );
 }

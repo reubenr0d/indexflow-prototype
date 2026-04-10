@@ -13,6 +13,12 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-10] Web app: basket detail pages (investor and admin) now display unrealised, realised, and net P&L tiles via `PerpReader.getVaultPnL` (pure RPC, no subgraph dependency).
+- [2026-04-10] Web app: basket list `TrendPill` components now show live 24h / 7d share price deltas from `useBasketTrendSnapshots` (subgraph primary, RPC multi-block fallback).
+- [2026-04-10] Web app: portfolio page shows per-basket and aggregate cost basis, P&L, and ROI derived from deposit/redeem history (subgraph primary, `Deposited`/`Redeemed` log scan fallback).
+- [2026-04-10] Web app: admin basket detail gains capital utilization % and leverage ratio stat cards in the Accounting section.
+- [2026-04-10] Web app: position manager card shows an Open Positions P&L table with per-position unrealised P&L computed from oracle prices and entry prices.
+- [2026-04-10] Web app: share price history area chart on both investor and admin basket detail pages (subgraph `BasketSnapshot` primary, RPC multi-block `getSharePrice` sampling fallback).
 - [2026-04-10] `AssetWiring` coordinator contract (`src/perp/AssetWiring.sol`): permissionless `wireAsset(symbol, seedPrice8)` deploys a `MockIndexToken`, configures the oracle, seeds the GMX price feed, and maps the asset across `VaultAccounting`, `FundingRateManager`, and `PriceSync` in a single transaction.
 - [2026-04-10] `wirer` role on `OracleAdapter`, `VaultAccounting`, `FundingRateManager`, and `PriceSync`: `mapping(address => bool) wirers` with `setWirer(address, bool)` owner function and `onlyOwnerOrWirer` modifier on functions that `AssetWiring` and `BasketFactory` need to call.
 - [2026-04-10] `BasketFactory.createBasket` now auto-registers new baskets in `VaultAccounting` via `registerVault`, removing the need for a separate admin transaction.
