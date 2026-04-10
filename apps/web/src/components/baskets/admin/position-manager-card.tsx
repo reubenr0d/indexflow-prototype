@@ -165,7 +165,7 @@ export function BasketPositionManagerCard({ vault }: { vault: Address }) {
   const { chainId } = useDeploymentTarget();
   const { oracleAdapter, vaultAccounting } = getContracts(chainId);
 
-  const allAssets = supportedAssets ?? [];
+  const allAssets = useMemo(() => supportedAssets ?? [], [supportedAssets]);
   const posKeys = useMemo(
     () =>
       allAssets.flatMap((asset) => [
@@ -436,7 +436,7 @@ export function BasketPositionManagerCard({ vault }: { vault: Address }) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-app-border">
-                {positionsWithPnL.map((pos, i) => (
+                {positionsWithPnL.map((pos) => (
                   <tr key={`${pos.assetId}-${pos.isLong ? "long" : "short"}`} className="hover:bg-app-surface-hover">
                     <td className="px-4 py-3 font-medium text-app-text">{pos.label}</td>
                     <td className="px-4 py-3">

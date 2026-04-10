@@ -21,6 +21,7 @@ import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { NetworkSelector } from "@/components/layout/network-selector";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard" },
@@ -173,6 +174,9 @@ export function Header() {
                 {isConnectPending ? "Connecting..." : "E2E Connect"}
               </button>
             )}
+            <div className="hidden sm:block">
+              <NetworkSelector />
+            </div>
             <button
               type="button"
               onClick={toggle}
@@ -182,7 +186,7 @@ export function Header() {
               {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </button>
             <div className="hidden sm:block [&_button]:!rounded-md [&_button]:!font-medium">
-              <ConnectButton showBalance={false} chainStatus="icon" accountStatus="address" />
+              <ConnectButton showBalance={false} chainStatus="none" accountStatus="address" />
             </div>
             <button
               type="button"
@@ -253,7 +257,10 @@ export function Header() {
                 );
               })}
               <div className="pt-2 sm:hidden">
-                <ConnectButton showBalance={false} chainStatus="icon" accountStatus="address" />
+                <NetworkSelector />
+              </div>
+              <div className="pt-2 sm:hidden">
+                <ConnectButton showBalance={false} chainStatus="none" accountStatus="address" />
               </div>
             </nav>
           </motion.div>

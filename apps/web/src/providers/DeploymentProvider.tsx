@@ -5,7 +5,7 @@ import {
   chainIdForDeploymentTarget,
   DEFAULT_DEPLOYMENT_TARGET,
   DEPLOYMENT_TARGET_STORAGE_KEY,
-  isSubgraphEnabledForTarget,
+  getSubgraphUrlForTarget,
   parseDeploymentTarget,
   type DeploymentTarget,
 } from "@/lib/deployment";
@@ -15,12 +15,12 @@ type DeploymentContextValue = {
   setTarget: (target: DeploymentTarget) => void;
   chainId: number;
   isSubgraphEnabled: boolean;
+  subgraphUrl: string | null;
   canSwitchTarget: boolean;
 };
 
 const DeploymentContext = createContext<DeploymentContextValue | null>(null);
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
-const subgraphUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 
 function readInitialTarget(): DeploymentTarget {
   if (typeof window === "undefined") {
@@ -46,11 +46,13 @@ export function DeploymentProvider({ children }: { children: React.ReactNode }) 
 
   const value = useMemo<DeploymentContextValue>(() => {
     const effectiveTarget = isE2ETestMode ? "anvil" : target;
+    const url = getSubgraphUrlForTarget(effectiveTarget);
     return {
       target: effectiveTarget,
       setTarget,
       chainId: chainIdForDeploymentTarget(effectiveTarget),
-      isSubgraphEnabled: isSubgraphEnabledForTarget(effectiveTarget, subgraphUrl),
+      isSubgraphEnabled: url !== null,
+      subgraphUrl: url,
       canSwitchTarget: !isE2ETestMode,
     };
   }, [setTarget, target]);

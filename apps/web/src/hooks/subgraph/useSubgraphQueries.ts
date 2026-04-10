@@ -31,10 +31,10 @@ const ERC20_BALANCE_OF_ABI = [
 ] as const;
 
 function useAvailableSubgraph() {
-  const { isSubgraphEnabled } = useDeploymentTarget();
+  const { isSubgraphEnabled, subgraphUrl } = useDeploymentTarget();
   const client = useMemo(
-    () => (isSubgraphEnabled ? getSubgraphClient() : null),
-    [isSubgraphEnabled]
+    () => (isSubgraphEnabled ? getSubgraphClient(subgraphUrl) : null),
+    [isSubgraphEnabled, subgraphUrl]
   );
   return { client, isAvailable: isSubgraphEnabled && Boolean(client) };
 }
@@ -503,10 +503,10 @@ const TREND_PERIODS: Record<BasketSnapshotPeriod, bigint> = {
 };
 
 export function useBasketTrendSnapshots(vault: Address | undefined) {
-  const { chainId, isSubgraphEnabled } = useDeploymentTarget();
+  const { chainId, isSubgraphEnabled, subgraphUrl } = useDeploymentTarget();
   const client = useMemo(
-    () => (isSubgraphEnabled ? getSubgraphClient() : null),
-    [isSubgraphEnabled]
+    () => (isSubgraphEnabled ? getSubgraphClient(subgraphUrl) : null),
+    [isSubgraphEnabled, subgraphUrl]
   );
   const publicClient = usePublicClient({ chainId });
   const isAvailable = Boolean(vault);
@@ -959,10 +959,10 @@ export type SharePriceHistoryResult = {
 const HISTORY_SAMPLE_COUNT = 20;
 
 export function useSharePriceHistory(vault: Address | undefined) {
-  const { chainId, isSubgraphEnabled } = useDeploymentTarget();
+  const { chainId, isSubgraphEnabled, subgraphUrl } = useDeploymentTarget();
   const client = useMemo(
-    () => (isSubgraphEnabled ? getSubgraphClient() : null),
-    [isSubgraphEnabled]
+    () => (isSubgraphEnabled ? getSubgraphClient(subgraphUrl) : null),
+    [isSubgraphEnabled, subgraphUrl]
   );
   const publicClient = usePublicClient({ chainId });
 

@@ -3,6 +3,7 @@ name: Update Prices
 on:
   schedule:
     - cron: "*/15 * * * *"
+  pull_request:
   workflow_dispatch:
     inputs:
       network:
@@ -23,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'schedule'
+      || github.event_name == 'pull_request'
       || github.event.inputs.network == 'all'
       || github.event.inputs.network == matrix.network
     strategy:
@@ -34,7 +36,7 @@ jobs:
             rpc_url_secret: SEPOLIA_RPC_URL
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: recursive
 
@@ -44,9 +46,9 @@ jobs:
           version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
           cache: "npm"
 
       - name: Install npm dependencies
@@ -56,5 +58,6 @@ jobs:
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
-          PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+          PRIVATE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.KEEPER_PRIVATE_KEY }}
+          DRY_RUN: ${{ github.event_name == 'pull_request' && '1' || '' }}
         run: node scripts/update-yahoo-finance-prices.js

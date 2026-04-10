@@ -11,11 +11,25 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Changed
+
+- [2026-04-10] Pre-commit hook no longer requires a local Foundry install; Solidity formatting check is skipped with a notice when `forge` is not available (CI still enforces it).
+- [2026-04-10] Web app: network selector only shows networks with real deployment configs (placeholder addresses are filtered out) and shows a per-network SG badge when a subgraph is configured; RainbowKit's built-in chain selector is hidden in favour of the single selector.
+- [2026-04-10] CI: upgrade `actions/checkout` v4 → v5, `actions/setup-node` v4 → v5, and `actions/upload-artifact` v4 → v5 across all workflows (`test.yml`, `update-prices.yml`) to use Node.js 24 runtime and avoid the June 2026 deprecation of Node.js 20 actions.
+- [2026-04-10] CI: bump runner `node-version` from 20 to 22 (current LTS).
+- [2026-04-10] Pre-commit hook: discover Foundry via `$HOME/.foundry/bin` and `$HOME/.cargo/bin` dynamically instead of hardcoding an absolute user path; fail with a clear error when `forge` is missing.
+
+### Fixed
+
+- [2026-04-10] Web ESLint ignores `playwright-report/` and `test-results/` so `npm run lint:web` matches CI after local Playwright runs (generated assets are no longer linted).
+- [2026-04-10] Pre-commit hook (`forge fmt --check`) was silently skipped because `core.hooksPath` was not set; re-wired via `npm run hooks:install`.
+
 ### Added
 
-- [2026-04-10] CI: scheduled GitHub Actions workflow (`update-prices.yml`) fetches Yahoo Finance quotes every 15 minutes and syncs on-chain prices for all registered `CustomRelayer` assets; supports manual dispatch with per-network targeting and matrix-based multi-network parameterization.
+- [2026-04-10] Web app: network selector dropdown in the header lets users switch between Anvil (Local) and Sepolia; anvil target automatically uses the local graph-node subgraph, sepolia uses the configured `NEXT_PUBLIC_SUBGRAPH_URL`.
+- [2026-04-10] CI: scheduled GitHub Actions workflow (`update-prices.yml`) fetches Yahoo Finance quotes every 15 minutes and syncs on-chain prices for all registered `CustomRelayer` assets; supports manual dispatch with per-network targeting and matrix-based multi-network parameterization. Runs as a dry-run validation check on pull requests (no on-chain transactions).
 - [2026-04-10] `redeploy:local` npm script: single host-side command that deploys contracts to Docker Anvil, syncs subgraph networks, builds and deploys the subgraph to the local graph-node — UI picks up new addresses via Next.js HMR.
-- [2026-04-10] `local:dev` npm script: starts the Next.js dev server on host with `NEXT_PUBLIC_SUBGRAPH_URL` pointed at the local graph-node.
+- [2026-04-10] `local:dev` npm script: starts the Next.js dev server on host.
 - [2026-04-10] Web app: basket detail pages (investor and admin) now display unrealised, realised, and net P&L tiles via `PerpReader.getVaultPnL` (pure RPC, no subgraph dependency).
 - [2026-04-10] Web app: basket list `TrendPill` components now show live 24h / 7d share price deltas from `useBasketTrendSnapshots` (subgraph primary, RPC multi-block fallback).
 - [2026-04-10] Web app: portfolio page shows per-basket and aggregate cost basis, P&L, and ROI derived from deposit/redeem history (subgraph primary, `Deposited`/`Redeemed` log scan fallback).

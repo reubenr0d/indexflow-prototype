@@ -3,13 +3,19 @@ set -euo pipefail
 
 ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+for p in "$HOME/.foundry/bin" "$HOME/.cargo/bin"; do
+  [[ -d "$p" ]] && export PATH="$p:$PATH"
+done
+
 echo "=== Pre-commit lint checks ==="
 
-# 1. Solidity formatting (same as CI: forge fmt --check)
-echo "Checking Solidity formatting..."
-PATH="/Users/reuben/.foundry/bin:$PATH" forge fmt --check --root "$ROOT_DIR"
+if command -v forge &>/dev/null; then
+  echo "Checking Solidity formatting..."
+  forge fmt --check --root "$ROOT_DIR"
+else
+  echo "Skipping Solidity formatting (forge not found; CI will catch it)"
+fi
 
-# 2. Web ESLint (same as CI: npm run lint:web)
 echo "Running ESLint on web app..."
 npm --prefix "$ROOT_DIR" run lint:web
 

@@ -51,11 +51,11 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   }
 
   await page.goto(`/admin/baskets/${basketAddress}`);
-  const firstAssetOption = page.locator('datalist[id="set-assets-0"] option').first();
-  await expect(firstAssetOption).toHaveCount(1, { timeout: 30_000 });
-  const assetLabel = await firstAssetOption.getAttribute('value');
-  if (!assetLabel) throw new Error('No supported asset options loaded for Set Assets');
-  await page.getByTestId('set-assets-input-0').fill(assetLabel);
+  const setAssetsInput = page.getByTestId('set-assets-input-0');
+  await setAssetsInput.click();
+  const registeredOption = page.locator('button:has(span:text("On-chain"))').first();
+  await expect(registeredOption).toBeVisible({ timeout: 30_000 });
+  await registeredOption.click();
   txCount = await getTransactionCount(E2E_ACCOUNT);
   await page.getByTestId('set-assets-submit').click();
   await waitForNextTransaction(E2E_ACCOUNT, txCount);
@@ -124,8 +124,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('close-position-collateral').fill('0');
   txCount = await getTransactionCount(E2E_ACCOUNT);
   await page.getByTestId('close-position-submit').click();
+  await expect(page.getByTestId('close-position-submit')).toContainText('Confirm');
+  await page.getByTestId('close-position-submit').click();
   await waitForNextTransaction(E2E_ACCOUNT, txCount);
-  await expect(page.getByText('Realised PnL')).toBeVisible();
+  await expect(page.getByText('Realised P&L')).toBeVisible();
 
   await page.getByTestId('perp-allocation-amount').fill('1200');
   txCount = await getTransactionCount(E2E_ACCOUNT);

@@ -7,10 +7,10 @@ export function getSubgraphUrl(): string | null {
   return trimmed.length > 0 ? trimmed : null;
 }
 
-export function getSubgraphClient(): GraphQLClient | null {
-  const url = getSubgraphUrl();
-  if (!url) return null;
-  return new GraphQLClient(url, {
+export function getSubgraphClient(url?: string | null): GraphQLClient | null {
+  const resolved = url ?? getSubgraphUrl();
+  if (!resolved) return null;
+  return new GraphQLClient(resolved, {
     fetch,
   });
 }

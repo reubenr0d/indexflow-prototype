@@ -26,7 +26,7 @@
     "local:up": "docker compose -f docker-compose.local.yml up -d && sh scripts/local/redeploy.sh",
     "local:down": "docker compose -f docker-compose.local.yml down -v",
     "local:logs": "docker compose -f docker-compose.local.yml logs -f",
-    "local:dev": "NEXT_PUBLIC_SUBGRAPH_URL=http://localhost:8000/subgraphs/name/indexflow-prototype npm --prefix apps/web run dev",
+    "local:dev": "npm --prefix apps/web run dev",
     "redeploy:local": "sh scripts/local/redeploy.sh"
   },
   "dependencies": {

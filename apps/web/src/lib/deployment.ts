@@ -30,10 +30,15 @@ export function deploymentLabel(target: DeploymentTarget): string {
   return target === "anvil" ? "Anvil (Local)" : "Sepolia";
 }
 
-export function isSubgraphEnabledForTarget(
-  _target: DeploymentTarget,
-  subgraphUrl: string | null | undefined
-): boolean {
-  const trimmed = subgraphUrl?.trim() ?? "";
-  return trimmed.length > 0;
+const LOCAL_SUBGRAPH_URL = "http://localhost:8000/subgraphs/name/indexflow-prototype";
+
+/**
+ * Returns the subgraph URL for a given target.
+ * - anvil: always uses the local graph-node URL.
+ * - sepolia / other: uses NEXT_PUBLIC_SUBGRAPH_URL from env.
+ */
+export function getSubgraphUrlForTarget(target: DeploymentTarget): string | null {
+  if (target === "anvil") return LOCAL_SUBGRAPH_URL;
+  const envUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL?.trim() ?? "";
+  return envUrl.length > 0 ? envUrl : null;
 }

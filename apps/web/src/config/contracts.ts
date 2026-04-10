@@ -97,3 +97,14 @@ export function getContractsForDeploymentTarget(target: DeploymentTarget): Contr
 export function getContracts(chainId: number): ContractAddresses {
   return CONTRACT_ADDRESSES[chainId] ?? CONTRACT_ADDRESSES[sepolia.id];
 }
+
+const PLACEHOLDER_RE = /^0x0{38,}[0-9a-f]{0,2}$/i;
+
+export function isDeploymentConfigured(target: DeploymentTarget): boolean {
+  const addrs = BY_DEPLOYMENT_TARGET[target];
+  if (!addrs) return false;
+  return !PLACEHOLDER_RE.test(addrs.basketFactory);
+}
+
+export const CONFIGURED_DEPLOYMENT_TARGETS: DeploymentTarget[] =
+  (Object.keys(BY_DEPLOYMENT_TARGET) as DeploymentTarget[]).filter(isDeploymentConfigured);

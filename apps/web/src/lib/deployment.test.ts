@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_DEPLOYMENT_TARGET,
   chainIdForDeploymentTarget,
-  isSubgraphEnabledForTarget,
+  getSubgraphUrlForTarget,
   parseDeploymentTarget,
 } from "./deployment";
 
@@ -22,9 +22,22 @@ describe("deployment target helpers", () => {
     expect(chainIdForDeploymentTarget("anvil")).toBe(31337);
   });
 
-  it("disables subgraph for anvil", () => {
-    expect(isSubgraphEnabledForTarget("anvil", "https://example.com/subgraph")).toBe(false);
-    expect(isSubgraphEnabledForTarget("sepolia", "https://example.com/subgraph")).toBe(true);
-    expect(isSubgraphEnabledForTarget("sepolia", "   ")).toBe(false);
+  it("returns local subgraph URL for anvil", () => {
+    const url = getSubgraphUrlForTarget("anvil");
+    expect(url).toBe("http://localhost:8000/subgraphs/name/indexflow-prototype");
+  });
+
+  it("returns env subgraph URL for sepolia when set", () => {
+    const originalEnv = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "https://example.com/subgraph";
+    expect(getSubgraphUrlForTarget("sepolia")).toBe("https://example.com/subgraph");
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalEnv;
+  });
+
+  it("returns null for sepolia when env is empty", () => {
+    const originalEnv = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "   ";
+    expect(getSubgraphUrlForTarget("sepolia")).toBeNull();
+    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalEnv;
   });
 });

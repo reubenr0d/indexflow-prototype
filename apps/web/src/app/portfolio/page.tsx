@@ -12,7 +12,7 @@ import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useUserPortfolioQuery } from "@/hooks/subgraph/useSubgraphQueries";
 import { BasketShareTokenABI } from "@/abi/contracts";
-import { formatUSDC, formatShares, formatCompact, formatBps, formatSignedUsd1e30 } from "@/lib/format";
+import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
