@@ -62,12 +62,13 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
 
   // --- Set assets ---
   await page.goto(`/admin/baskets/${basketAddress}`);
-  // The "Set Assets" panel lives inside the collapsible "Operations" section
+  // Expand the collapsible "Operations" section to access the Set Assets card
   const operationsBtn = page.getByRole('button', { name: 'Operations' });
-  if (await operationsBtn.isVisible()) {
-    await operationsBtn.click();
-  }
+  await operationsBtn.scrollIntoViewIfNeeded();
+  await operationsBtn.click();
+  await page.waitForTimeout(1_000);
   const setAssetsInput = page.getByTestId('set-assets-input-0');
+  await setAssetsInput.waitFor({ state: 'visible', timeout: 15_000 });
   await setAssetsInput.click();
   const registeredOption = page.locator('button:has(span:text("On-chain"))').first();
   await expect(registeredOption).toBeVisible({ timeout: 30_000 });
@@ -76,10 +77,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('set-assets-submit').click();
   await waitForNextTransaction(wallet, txCount);
 
-  // --- Oracle price ---
+  // --- Oracle price (use value near the seed price to stay within deviation limits) ---
   await page.goto('/admin/oracle');
   await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
-  await page.getByTestId('oracle-price-input').fill('2000');
+  await page.getByTestId('oracle-price-input').fill('80');
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('oracle-submit-price').click();
   await waitForNextTransaction(wallet, txCount);
@@ -128,10 +129,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('open-position-submit').click();
   await waitForNextTransaction(wallet, txCount);
 
-  // --- Price increase ---
+  // --- Price increase (10% gain) ---
   await page.goto('/admin/oracle');
   await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
-  await page.getByTestId('oracle-price-input').fill('2200');
+  await page.getByTestId('oracle-price-input').fill('88');
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('oracle-submit-price').click();
   await waitForNextTransaction(wallet, txCount);

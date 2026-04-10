@@ -1,8 +1,18 @@
 # Deployment Registry
 
-Canonical deployment references for each supported network.
+Canonical deployment references for Sepolia contracts, subgraph indexing, and push-notification infrastructure.
 
 Last updated: 2026-04-10
+
+## Deployment surfaces (production)
+
+| Surface | Runtime | Purpose | Canonical source |
+| --- | --- | --- | --- |
+| Contracts | Ethereum Sepolia (`11155111`) | Onchain basket/perp protocol state and transactions | `apps/web/src/config/sepolia-deployment.json` |
+| Subgraph | The Graph Studio (Sepolia-indexed) | Indexed read model for web and push-trigger scans | `NEXT_PUBLIC_SUBGRAPH_URL` (web) and `SUBGRAPH_URL` (push worker) |
+| Push worker | Google Cloud Run + Cloud Scheduler + Firestore | Web Push subscription, preferences, dispatch, and digest delivery | `.github/workflows/deploy-production.yml` + GCP secrets |
+
+Google Cloud resources in this repo are used only for serverless push notifications. They are not used for contract deployment, execution, or oracle keeper writes.
 
 ## Network summary
 
@@ -12,6 +22,12 @@ Last updated: 2026-04-10
 | Ethereum Sepolia | `11155111` | Deployed + verified | `apps/web/src/config/sepolia-deployment.json` |
 | Arbitrum One | `42161` | Not deployed in this repo snapshot | N/A |
 | Arbitrum Sepolia | `421614` | Not deployed in this repo snapshot | N/A |
+
+## Sepolia contracts (primary chain deployment)
+
+Config file: `apps/web/src/config/sepolia-deployment.json`
+
+Purpose: canonical contract addresses used by the production web app for Sepolia interactions.
 
 ## Local (Anvil)
 
@@ -32,9 +48,7 @@ If the subgraph URL is unset, unavailable, or returns unusable rows, the app fal
 - `usdc`: `0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc`
 - `gmxVault`: `0x04C89607413713Ec9775E14b954286519d836FEf`
 
-## Ethereum Sepolia
-
-Config file: `apps/web/src/config/sepolia-deployment.json`
+## Ethereum Sepolia address registry
 
 - Deployment sender (latest successful run): `0x36716c8c5D1AE680C78bD0eCC230896556399713`
 - Broadcast status: `ONCHAIN EXECUTION COMPLETE & SUCCESSFUL`
@@ -64,6 +78,51 @@ Addresses:
 - `assetWiring`: `0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C`  
   https://sepolia.etherscan.io/address/0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C
 
+## Subgraph deployment (Sepolia indexed)
+
+Runtime: The Graph Studio
+
+Purpose: indexed query layer used by:
+
+- web app read paths (`NEXT_PUBLIC_SUBGRAPH_URL`)
+- push-worker trigger scans (`SUBGRAPH_URL`)
+
+Canonical workflow:
+
+```bash
+# authenticate once
+npx graph auth <DEPLOY_KEY>
+
+# deploy sepolia-indexed subgraph
+NETWORK=sepolia SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
+```
+
+After deploy:
+
+- set web app `NEXT_PUBLIC_SUBGRAPH_URL` to the Studio query URL (Vercel + local env as needed)
+- set push worker `SUBGRAPH_URL` to the same or equivalent production query URL
+
+## Google Cloud deployment (push notifications only)
+
+Runtime components:
+
+- Cloud Run service (`apps/push-worker`)
+- Cloud Scheduler jobs (`realtime` and `digest` dispatch)
+- Firestore collections (`subscriptions`, `preferences`, `dispatch_state`, `dispatch_log`)
+
+Purpose boundary:
+
+- Accept push subscriptions and preference updates
+- Evaluate trigger/digest jobs and send Web Push via VAPID
+- Persist push-only state (preference + dedupe/cursor logs)
+- No contract deployment/verification responsibilities
+- No replacement of onchain execution or deploy scripts
+
+CI deployment path:
+
+- `.github/workflows/deploy-production.yml` deploys Cloud Run from `main`
+- same workflow reconciles Scheduler jobs and runs push health smoke checks
+
 ## How to refresh
 
 - Local (Docker Compose workflow):
@@ -81,3 +140,5 @@ Then update this file from:
 
 - `apps/web/src/config/local-deployment.json`
 - `apps/web/src/config/sepolia-deployment.json`
+- active Subgraph Studio query URL (for current production slug/version)
+- Cloud Run service URL and Scheduler job names (if changed)

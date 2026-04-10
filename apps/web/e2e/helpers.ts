@@ -25,20 +25,21 @@ export function getE2EWalletAddress(): string {
 }
 
 /**
- * Inject a script that auto-clicks the Privy "Approve" transaction dialog.
- * Must be called BEFORE the first page.goto().
+ * Inject a script that auto-clicks the Privy "Approve" and "Retry transaction"
+ * dialogs. Must be called BEFORE the first page.goto().
  */
 export async function autoApprovePrivyTransactions(page: Page) {
   await page.addInitScript(() => {
     setInterval(() => {
       const btns = document.querySelectorAll<HTMLButtonElement>('button');
       for (const btn of btns) {
+        if (btn.offsetParent === null) continue;
         const text = btn.textContent?.trim();
-        if (text === 'Approve' && btn.offsetParent !== null) {
+        if (text === 'Approve' || text === 'Retry transaction') {
           btn.click();
         }
       }
-    }, 300);
+    }, 500);
   });
 }
 

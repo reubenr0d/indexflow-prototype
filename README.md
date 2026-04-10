@@ -325,7 +325,7 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
 - [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source (Chainlink feed or Yahoo Finance relayer).
-- [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Per-network deployment registry (local + Sepolia), contract addresses, explorer links, and refresh workflow.
+- [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Deployment registry for Sepolia contracts, Subgraph indexing, and Google Cloud push-worker infrastructure (push notifications only).
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/PWA_PUSH_NOTIFICATIONS.md](docs/PWA_PUSH_NOTIFICATIONS.md) — PWA install behavior, push worker architecture, notification categories, and staging verification runbook.
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.

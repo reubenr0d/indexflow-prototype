@@ -13,10 +13,11 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
-- [2026-04-10] Disable wagmi `multiInjectedProviderDiscovery` so Chrome no longer shows an "access to other apps and services" infobar on page load when wallet extensions (e.g. MetaMask) are installed; Privy manages wallet connections through its own modal.
+- [2026-04-10] Exclude Anvil chain (localhost:8545) from wagmi and Privy configs on non-local deployments so Chrome's Local Network Access prompt ("access to other apps and services") no longer appears on production/preview sites; Anvil is still available on localhost and in E2E mode.
 
 ### Changed
 
+- [2026-04-10 23:20 UTC+07:00] Deployment documentation expanded in `docs/DEPLOYMENTS.md` to explicitly separate production surfaces: Sepolia contract registry, Sepolia-indexed subgraph deployment/runtime wiring, and Google Cloud Run/Scheduler/Firestore usage scoped to push notifications only (no contract execution role). README deployment-doc summary updated to match.
 - [2026-04-10 22:19 UTC+07:00] Web app PWA + settings rollout: added App Router manifest (`/manifest.webmanifest`), service-worker bootstrap (`public/sw.js` registration), new `/settings` route with install guidance and per-event push preferences, and header/account navigation entry for Settings. Preferences are API-first to a configurable push service (`NEXT_PUBLIC_PUSH_SERVICE_URL`) with wallet-scoped localStorage fallback when unavailable.
 - [2026-04-10] E2E tests now use Privy embedded wallets for transaction signing instead of wagmi mock connector: `globalSetup` logs in with a Privy test account (email + OTP), funds the embedded wallet via Anvil RPC, and transfers contract ownership so all UI-driven transactions are auto-signed without MetaMask or browser extensions. Falls back to the legacy mock connector when `NEXT_PUBLIC_PRIVY_APP_ID` is not set. CI passes Privy secrets from GitHub repository settings.
 - [2026-04-10 21:52 UTC+07:00] Codecov scope tightened to Solidity files only: added repository `.codecov.yml` project-path filter (`**/*.sol`) and set `codecov-action` `disable_search: true` in CI coverage upload/retry steps so only Foundry `lcov.info` is considered.

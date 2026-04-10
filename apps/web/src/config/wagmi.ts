@@ -4,8 +4,12 @@ import { createConfig as createWagmiConfig, http, mock } from "wagmi";
 import { anvil } from "viem/chains";
 
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
+const includeAnvil =
+  isE2ETestMode ||
+  (typeof window !== "undefined" &&
+    ["localhost", "127.0.0.1"].includes(window.location.hostname));
 
-export const defaultConfig = createConfig({
+const localConfig = createConfig({
   chains: [anvil, sepolia, arbitrumSepolia, arbitrum],
   transports: {
     [anvil.id]: http("http://127.0.0.1:8545"),
@@ -16,6 +20,19 @@ export const defaultConfig = createConfig({
   multiInjectedProviderDiscovery: false,
   ssr: true,
 });
+
+const remoteConfig = createConfig({
+  chains: [sepolia, arbitrumSepolia, arbitrum],
+  transports: {
+    [sepolia.id]: http(),
+    [arbitrumSepolia.id]: http(),
+    [arbitrum.id]: http(),
+  },
+  multiInjectedProviderDiscovery: false,
+  ssr: true,
+});
+
+export const defaultConfig = includeAnvil ? localConfig : remoteConfig;
 
 const e2eConfig = createWagmiConfig({
   chains: [anvil],
