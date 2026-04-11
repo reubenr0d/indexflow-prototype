@@ -27,7 +27,12 @@
     "local:down": "docker compose -f docker-compose.local.yml down -v",
     "local:logs": "docker compose -f docker-compose.local.yml logs -f",
     "local:dev": "npm --prefix apps/web run dev",
-    "redeploy:local": "sh scripts/local/redeploy.sh"
+    "redeploy:local": "sh scripts/local/redeploy.sh",
+    "agent": "node scripts/vault-agent.mjs",
+    "agent:dry": "AGENT_DRY_RUN=1 node scripts/vault-agent.mjs",
+    "agent:run": "node scripts/agent-runner.mjs",
+    "mcp:vault-manager": "node apps/vault-manager-mcp/index.js",
+    "mcp:yfinance": "node apps/yfinance-mcp/index.js"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0",

@@ -11,6 +11,36 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Added
+
+- [2026-04-11] Agent memory system: each agent gets persistent state (`agents/memory/<name>/state.json`) and an append-only run log (`run-log.jsonl`). The runner loads recent history into the system prompt so agents have context across cron runs. Memory is committed to the repo; CI auto-commits changes after each run.
+- [2026-04-11] Auto vault lifecycle: agents auto-deploy their own vault on first run via `create_vault`. The runner captures the vault address from `get_all_vaults` and saves it to state. If the agent `.md` file changes (SHA-256 hash mismatch), a new vault is deployed automatically.
+- [2026-04-11] Vault scoping: each vault-manager agent manages exactly one vault. Frontmatter fields `vaultName`, `depositFeeBps`, and `redeemFeeBps` configure the auto-deployed vault. The runner injects vault address and run history into the system prompt.
+- [2026-04-11] Yahoo Finance MCP server (`apps/yfinance-mcp/`): standalone MCP server for stock/ETF/index search and live quote lookups via Yahoo Finance, with automatic FX conversion to USD. Any agent can use it by adding `yfinance-mcp` to its `mcpServers` list.
+- [2026-04-11] Multi-agent framework: agents are defined as markdown files (`agents/<name>.md`) with YAML frontmatter for config and markdown body as the system prompt. A generic runner (`scripts/agent-runner.mjs`) parses agent definitions, spawns MCP servers from a shared registry (`agents/mcp-servers.json`), and runs the LLM agent loop. No JavaScript knowledge needed to create new agents.
+- [2026-04-11] `agent:run` npm script for running any agent by name (`npm run agent:run -- <name>`).
+- [2026-04-11] GitHub Actions `vault-agent.yml` now accepts an `agent_name` dispatch input to run any agent from the `agents/` directory.
+- [2026-04-11] Unified agent documentation (`docs/AGENTS_FRAMEWORK.md`): agent definitions, MCP tool reference, vault lifecycle, memory, workflows, risk guardrails, and architecture in a single doc.
+- [2026-04-11] Vault Manager MCP server (`apps/vault-manager-mcp/`): on-chain vault reads (state, PnL, oracle assets, positions) and write tools (wire asset, create vault, set assets, allocate/withdraw perp, open/close positions) over stdio using `@modelcontextprotocol/sdk`.
+- [2026-04-11] Sample vault management agent (`agents/sample-vault-manager.md`): example agent definition that reviews vault states and market conditions and executes management actions. Use as a template for custom agents. `scripts/vault-agent.mjs` is a backward-compatible wrapper.
+- [2026-04-11] GitHub Actions cron workflow (`.github/workflows/vault-agent.yml`): runs the vault agent every 6 hours on Sepolia with manual dispatch and dry-run toggle.
+
+- [2026-04-11] Npm scripts `agent`, `agent:dry`, and `mcp:vault-manager` for running the vault agent and MCP server.
+
+### Changed
+
+- [2026-04-11] Agent renamed from `vault-manager` to `sample-vault-manager` to serve as an example template. Rewritten for single-vault scoping with `vaultName`, `depositFeeBps`, `redeemFeeBps` frontmatter fields.
+- [2026-04-11] `scripts/agent-runner.mjs` extended with memory loading/saving, SHA-256 file hash change detection, vault context injection into system prompt, vault address capture from `create_vault`/`get_all_vaults`, and run-log persistence.
+- [2026-04-11] GitHub Actions `vault-agent.yml` now auto-commits agent memory (`agents/memory/`) to the repo after each run instead of using ephemeral cache. Added `contents: write` permission and `vault-agent[bot]` committer identity.
+- [2026-04-11] Yahoo Finance tools (`yfinance_search`, `yfinance_quote`) extracted from `vault-manager-mcp` into a standalone `yfinance-mcp` server (`apps/yfinance-mcp/`). `update_oracle_prices` removed from vault-manager-mcp — oracle price updates are handled by a separate keeper, not the position management agent.
+- [2026-04-11] Agent system refactored from single hardcoded script to markdown-based multi-agent framework: `scripts/vault-agent.mjs` (329 lines) split into generic runner (`scripts/agent-runner.mjs`), agent definition (`agents/sample-vault-manager.md`), and MCP server registry (`agents/mcp-servers.json`). Existing `npm run agent` / `agent:dry` commands unchanged.
+- [2026-04-11] MCP server tool descriptions rewritten with return shapes, cross-tool disambiguation ("call X first", "use Y after"), and parameter examples for non-obvious types (bytes32, raw USDC, GMX 1e30 scale).
+- [2026-04-11] MCP server error responses now return structured JSON with `error_code`, `message`, and `recovery_hint` (suggested next tool or fix) instead of bare error strings.
+- [2026-04-11] MCP server read tools now include human-readable companion fields (`_usdc`, `_usd`, `_pct`) alongside raw on-chain values; write tools return parsed receipts (`transactionHash`, `status`, `blockNumber`) and `next_steps` with suggested follow-up tools.
+- [2026-04-11] MCP server: new `get_all_vault_states` batch tool returns a full state summary (NAV, PnL, reserves, positions) for every vault in a single call, reducing agent turns from N+1 to 1.
+- [2026-04-11] Vault agent (`scripts/vault-agent.mjs`): LLM API calls now retry with exponential backoff (3 attempts, 2s/4s/8s) on 429 and 5xx errors; tool responses are truncated to a configurable token budget (`AGENT_MAX_TOOL_RESPONSE`, default 6000 chars) before being sent to the LLM; a structured JSON run summary is emitted at exit for CI parsing.
+- [2026-04-11] Merged `docs/SKILL_VAULT_MANAGER.md` into `docs/AGENTS_FRAMEWORK.md` — single unified doc for agent framework, MCP tool reference, workflows, and risk guardrails.
+
 ### Fixed
 
 - [2026-04-10] Exclude Anvil chain (localhost:8545) from wagmi and Privy configs on non-local deployments so Chrome's Local Network Access prompt ("access to other apps and services") no longer appears on production/preview sites; Anvil is still available on localhost and in E2E mode.

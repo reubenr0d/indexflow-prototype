@@ -26,6 +26,11 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     headless: true,
+    launchOptions: {
+      args: [
+        '--disable-features=ThirdPartyCookiePhaseout,TrackingProtection3pcd',
+      ],
+    },
   },
   projects: hasPrivy
     ? [

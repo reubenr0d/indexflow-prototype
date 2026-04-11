@@ -1,0 +1,89 @@
+name: Vault Agent
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      agent_name:
+        description: "Agent to run (matches agents/<name>.md)"
+        required: false
+        default: "sample-vault-manager"
+        type: string
+      dry_run:
+        description: "Run in dry-run mode (observe only, no writes)"
+        required: false
+        default: "false"
+        type: boolean
+      network:
+        description: "Target network"
+        required: false
+        default: "sepolia"
+        type: choice
+        options:
+          - sepolia
+
+env:
+  FOUNDRY_VERSION: v1.3.1
+
+permissions:
+  contents: write
+
+jobs:
+  vault-agent:
+    name: Agent "${{ inputs.agent_name || 'sample-vault-manager' }}" (${{ matrix.network }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - network: sepolia
+            deployment_config: apps/web/src/config/sepolia-deployment.json
+            rpc_url_secret: SEPOLIA_RPC_URL
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install root npm dependencies
+        run: npm ci
+
+      - name: Install MCP server dependencies
+        run: |
+          npm --prefix apps/vault-manager-mcp ci
+          npm --prefix apps/yfinance-mcp ci
+
+      - name: Run Agent
+        env:
+          DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
+          RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
+          AGENT_MAX_TURNS: "20"
+        run: node scripts/agent-runner.mjs ${{ inputs.agent_name || 'sample-vault-manager' }}
+
+      - name: Commit agent memory
+        if: always()
+        run: |
+          git config user.name "vault-agent[bot]"
+          git config user.email "vault-agent[bot]@users.noreply.github.com"
+          git add agents/memory/
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(agent): update ${{ inputs.agent_name || 'sample-vault-manager' }} memory (${{ matrix.network }})"
+          git pull --rebase
+          git push

@@ -1,0 +1,16 @@
+{
+  "name": "yfinance-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Yahoo Finance search and quote lookups",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "yahoo-finance2": "^3.14.0",
+    "zod": "^3.23.0"
+  }
+}

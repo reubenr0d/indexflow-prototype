@@ -6,10 +6,12 @@ import {
   BHP_ASSET_ID,
   autoApprovePrivyTransactions,
   connectWallet,
+  dismissPrivyDialogs,
   getE2EWalletAddress,
   getERC20Balance,
   getTransactionCount,
   mintMockUsdc,
+  navTo,
   parseBasketAddressFromHref,
   waitForERC20Balance,
   waitForNextTransaction,
@@ -20,14 +22,17 @@ const deployment = JSON.parse(
 ) as { usdc: string };
 
 test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admin flows', async ({ page }) => {
-  test.setTimeout(420_000);
+  test.setTimeout(600_000);
   const basketName = `E2E Profit ${Date.now()}`;
 
-  // The wallet used for UI tx — Privy embedded wallet if configured, else Anvil deployer.
   const wallet = getE2EWalletAddress();
 
-  // Auto-click Privy "Approve" dialog on every transaction (must be before first goto)
   await autoApprovePrivyTransactions(page);
+
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') console.log(`[page error] ${msg.text()}`);
+  });
+  page.on('pageerror', (err) => console.log(`[page crash] ${err.message}`));
 
   await page.goto('/');
   await connectWallet(page);
@@ -37,8 +42,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   const initialBalance = await getERC20Balance(deployment.usdc, wallet);
 
   // --- Create basket ---
-  await page.goto('/admin/baskets');
-  await connectWallet(page);
+  await navTo(page, '/admin/baskets');
   let txCount = await getTransactionCount(wallet);
   await page.getByTestId('admin-create-basket-toggle').click();
   await page.getByTestId('admin-create-basket-name').fill(basketName);
@@ -46,28 +50,26 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('admin-create-basket-redeem-fee').fill('0');
   await page.getByTestId('admin-create-basket-submit').click();
   await waitForNextTransaction(wallet, txCount);
-  await page.goto('/admin/baskets');
+  await dismissPrivyDialogs(page);
+  await navTo(page, '/admin/baskets');
 
   const createdLink = page.locator('a[href^="/admin/baskets/0x"]').first();
   await expect(createdLink).toBeVisible({ timeout: 30_000 });
   const basketAddress = parseBasketAddressFromHref(await createdLink.getAttribute('href'));
 
   // --- Register for risk ---
-  await page.goto('/admin/risk');
+  await navTo(page, '/admin/risk');
   const registerButton = page.getByTestId(`risk-register-${basketAddress.toLowerCase()}`);
   if (await registerButton.isVisible()) {
     txCount = await getTransactionCount(wallet);
     await registerButton.click();
     await waitForNextTransaction(wallet, txCount);
+    await dismissPrivyDialogs(page);
   }
 
   // --- Set assets ---
-  await page.goto(`/admin/baskets/${basketAddress}`);
-  // Expand the collapsible "Operations" section to access the Set Assets card
-  const operationsBtn = page.getByRole('button', { name: 'Operations' });
-  await operationsBtn.scrollIntoViewIfNeeded();
-  await operationsBtn.click();
-  await page.waitForTimeout(1_000);
+  await navTo(page, '/admin/basket-detail', basketAddress);
+  await expandOperations(page);
   const setAssetsInput = page.getByTestId('set-assets-input-0');
   await setAssetsInput.waitFor({ state: 'visible', timeout: 15_000 });
   await setAssetsInput.click();
@@ -77,9 +79,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('set-assets-submit').click();
   await waitForNextTransaction(wallet, txCount);
+  await dismissPrivyDialogs(page);
 
-  // --- Oracle price (use value near the seed price to stay within deviation limits) ---
-  await page.goto('/admin/oracle');
+  // --- Oracle price ---
+  await navTo(page, '/admin/oracle');
   await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
   await page.getByTestId('oracle-price-input').fill('80');
   txCount = await getTransactionCount(wallet);
@@ -88,9 +91,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('oracle-sync-all').click();
   await waitForNextTransaction(wallet, txCount);
+  await dismissPrivyDialogs(page);
 
   // --- Deposit ---
-  await page.goto(`/baskets/${basketAddress}`);
+  await navTo(page, '/basket-detail', basketAddress);
   await page.getByTestId('deposit-redeem-amount').fill('2000');
   const balanceBeforeDeposit = await getERC20Balance(deployment.usdc, wallet);
   await page.getByTestId('deposit-redeem-submit').click();
@@ -104,7 +108,6 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
     );
     deposited = true;
   } catch {
-    // First click may only approve USDC; click again to execute deposit.
     await page.getByTestId('deposit-redeem-submit').click();
     await waitForERC20Balance(
       deployment.usdc,
@@ -115,9 +118,12 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
     deposited = true;
   }
   expect(deposited).toBeTruthy();
+  await dismissPrivyDialogs(page);
 
   // --- Perp allocation & position ---
-  await page.goto(`/admin/baskets/${basketAddress}`);
+  await navTo(page, '/admin/basket-detail', basketAddress);
+  await expandOperations(page);
+  await page.getByTestId('perp-allocation-amount').waitFor({ state: 'visible', timeout: 15_000 });
   await page.getByTestId('perp-allocation-amount').fill('1000');
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('perp-allocate-submit').click();
@@ -129,9 +135,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('open-position-submit').click();
   await waitForNextTransaction(wallet, txCount);
+  await dismissPrivyDialogs(page);
 
   // --- Price increase (10% gain) ---
-  await page.goto('/admin/oracle');
+  await navTo(page, '/admin/oracle');
   await page.getByTestId('oracle-asset-input').fill(BHP_ASSET_ID);
   await page.getByTestId('oracle-price-input').fill('88');
   txCount = await getTransactionCount(wallet);
@@ -140,9 +147,11 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('oracle-sync-all').click();
   await waitForNextTransaction(wallet, txCount);
+  await dismissPrivyDialogs(page);
 
   // --- Close position ---
-  await page.goto(`/admin/baskets/${basketAddress}`);
+  await navTo(page, '/admin/basket-detail', basketAddress);
+  await page.getByTestId('close-position-size').waitFor({ state: 'visible', timeout: 15_000 });
   await page.getByTestId('close-position-size').fill('2000');
   await page.getByTestId('close-position-collateral').fill('0');
   txCount = await getTransactionCount(wallet);
@@ -153,13 +162,16 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await expect(page.getByText('Realised P&L')).toBeVisible();
 
   // --- Withdraw perp allocation ---
+  await expandOperations(page);
+  await page.getByTestId('perp-allocation-amount').waitFor({ state: 'visible', timeout: 15_000 });
   await page.getByTestId('perp-allocation-amount').fill('1200');
   txCount = await getTransactionCount(wallet);
   await page.getByTestId('perp-withdraw-submit').click();
   await waitForNextTransaction(wallet, txCount);
+  await dismissPrivyDialogs(page);
 
   // --- Redeem ---
-  await page.goto(`/baskets/${basketAddress}`);
+  await navTo(page, '/basket-detail', basketAddress);
   await page.getByRole('tab', { name: 'Redeem' }).click();
   await page.getByText(/^Max:/).first().click();
   const balanceBeforeRedeem = await getERC20Balance(deployment.usdc, wallet);
@@ -175,7 +187,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   expect(finalBalance).toBeGreaterThan(initialBalance);
 
   // --- Pool operations ---
-  await page.goto('/admin/pool');
+  await navTo(page, '/admin/pool');
   const poolBufferInput = page.getByTestId('pool-buffer-input-usdc');
   await poolBufferInput.fill('150000');
   txCount = await getTransactionCount(wallet);
@@ -188,3 +200,10 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('pool-deposit-submit-usdc').click();
   await waitForNextTransaction(wallet, txCount);
 });
+
+async function expandOperations(page: import('@playwright/test').Page) {
+  const opsBtn = page.getByRole('button', { name: 'Operations' });
+  await opsBtn.scrollIntoViewIfNeeded();
+  await opsBtn.click();
+  await page.waitForTimeout(1_000);
+}

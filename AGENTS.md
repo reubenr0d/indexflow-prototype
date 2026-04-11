@@ -63,3 +63,31 @@ For bare-metal Anvil without Docker (no subgraph), use `npm run deploy:local` in
 ## Scope-Specific Rule (Web App)
 
 For work in `apps/web`, also follow [`apps/web/AGENTS.md`](/Users/reuben/Desktop/minestarters/code/snx-prototype/apps/web/AGENTS.md) (Next.js docs/version caveat).
+
+## Deployment Safety Rules (All Agents)
+
+Deployment operations must be conservative by default.
+
+- Do not modify, delete, scale, or reconfigure any existing cloud deployment unless the user explicitly requests that exact change in the current session.
+- When asked to deploy new infrastructure, create new services/jobs with explicit names and treat all pre-existing resources as protected.
+- Never run destructive deployment commands (`delete`, forced replacement, broad wildcard cleanup) without explicit user approval in the same session.
+- For CI/CD updates, limit changes to the specific workflow/service requested; do not widen blast radius to unrelated environments or projects.
+
+## Agent Deployment Memory (Required)
+
+Maintain a local deployment memory ledger at:
+
+- `AGENT_DEPLOYMENT_MEMORY.md`
+
+Rules:
+
+- Before any deployment action, read this file and use it as the allowlist for resources the agent may touch.
+- If a resource is not listed as allowed, treat it as protected and do not change it unless the user explicitly approves.
+- When the agent creates a new service/job, append an entry with:
+  - provider/project
+  - service/job/resource name
+  - environment (`local`, `staging`, `production`)
+  - owner (`agent` or `user`)
+  - allowed actions (`read`, `deploy`, `update-config`, etc.)
+  - created date and short purpose
+- If ownership is ambiguous, default to `user` and `read` only.

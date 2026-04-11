@@ -296,6 +296,27 @@ Config/env overrides: `DEPLOYMENT_CONFIG`, `RPC_URL`.
 
 The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that lets operators discover any publicly-traded equity and register it on-chain as a `CustomRelayer` asset with an initial price seed. Registered assets automatically appear in basket asset pickers.
 
+**Multi-Agent Framework**
+
+Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent.
+
+```bash
+# Install MCP server deps (one-time)
+npm --prefix apps/vault-manager-mcp install
+
+# Run the sample agent by name
+LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+
+# Dry-run mode
+AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+
+# Backward-compatible shortcuts for sample-vault-manager
+LLM_API_KEY=sk-... npm run agent:dry
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
+```
+
+A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents on Sepolia with manual dispatch and an `agent_name` parameter. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
+
 ## Documentation
 
 - In-app wiki (web app):

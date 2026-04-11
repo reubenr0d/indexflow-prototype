@@ -1,0 +1,16 @@
+{
+  "vault-manager-mcp": {
+    "command": "node",
+    "args": ["apps/vault-manager-mcp/index.js"],
+    "envPassthrough": [
+      "DEPLOYMENT_CONFIG",
+      "RPC_URL",
+      "PRIVATE_KEY"
+    ]
+  },
+  "yfinance-mcp": {
+    "command": "node",
+    "args": ["apps/yfinance-mcp/index.js"],
+    "envPassthrough": []
+  }
+}

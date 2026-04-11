@@ -47,38 +47,123 @@ const PRIVY_TEST_EMAIL = process.env.PRIVY_TEST_EMAIL ?? '';
 const PRIVY_TEST_OTP = process.env.PRIVY_TEST_OTP ?? '';
 
 /**
- * Ensure a wallet is connected. When Privy is configured, tries storageState
- * first, then falls back to an interactive Privy login. Otherwise uses the
- * legacy E2E Connect button.
+ * Ensure a wallet is connected. When Privy is configured, waits for the SDK to
+ * initialize, then either confirms the session was restored or performs a fresh
+ * login. Falls back to the legacy E2E Connect button when Privy is not configured.
  */
+/**
+ * Dismiss any visible Privy transaction dialogs and wait for them to close
+ * before a page navigation. Call BEFORE page.goto() after a transaction.
+ */
+export async function dismissPrivyDialogs(page: Page) {
+  // autoApprovePrivyTransactions handles clicking; just wait for the dialog to close
+  const allDoneBtn = page.getByRole('button', { name: 'All Done' });
+  await allDoneBtn.waitFor({ state: 'hidden', timeout: 8_000 }).catch(() => {});
+  await page.waitForTimeout(500);
+}
+
+/**
+ * Ensure the Privy SDK is initialised after a full-page navigation.
+ * If the session doesn't restore, nukes all Privy state, logs in on '/'
+ * (which has no PrivyAdminGate), then navigates back to the target URL.
+ */
+export async function ensureWalletAfterNav(page: Page) {
+  const wallet = page.locator('[data-testid="privy-connected-wallet"]');
+  const loginBtn = page.getByRole('button', { name: 'Log in' });
+
+  try {
+    await Promise.race([
+      wallet.waitFor({ state: 'visible', timeout: 12_000 }),
+      loginBtn.waitFor({ state: 'visible', timeout: 12_000 }),
+    ]);
+  } catch {
+    // SDK stuck in ready=false
+  }
+
+  if (await wallet.isVisible().catch(() => false)) return;
+
+  if (await loginBtn.isVisible().catch(() => false)) {
+    await doPrivyLogin(page);
+    return;
+  }
+
+  // SDK is stuck (ready=false): nuke state and recover via '/' (no admin gate)
+  const targetUrl = page.url();
+
+  await page.context().clearCookies();
+  await page.evaluate(() => {
+    Object.keys(localStorage)
+      .filter((k) => k.startsWith('privy') || k.includes('privy'))
+      .forEach((k) => localStorage.removeItem(k));
+    sessionStorage.clear();
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  try {
+    await loginBtn.waitFor({ state: 'visible', timeout: 15_000 });
+  } catch {
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await loginBtn.waitFor({ state: 'visible', timeout: 15_000 });
+  }
+
+  await doPrivyLogin(page);
+
+  // Return to the original admin page with a fresh session
+  const targetPath = new URL(targetUrl).pathname;
+  await page.goto(targetPath, { waitUntil: 'domcontentloaded' });
+  await wallet.waitFor({ state: 'visible', timeout: 15_000 });
+}
+
+async function doPrivyLogin(page: Page) {
+  const loginBtn = page.getByRole('button', { name: 'Log in' });
+  await loginBtn.click();
+  const emailInput = page.locator('input[type="email"]').first();
+  await emailInput.waitFor({ state: 'visible', timeout: 15_000 });
+  await emailInput.fill(PRIVY_TEST_EMAIL);
+  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await emailInput.waitFor({ state: 'hidden', timeout: 15_000 });
+  await page.waitForTimeout(2_000);
+  const otpInputs = page.locator('#privy-dialog input[type="text"]');
+  const count = await otpInputs.count();
+  if (count >= 6) {
+    for (let i = 0; i < PRIVY_TEST_OTP.length && i < count; i++) {
+      await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
+    }
+  }
+  const wallet = page.locator('[data-testid="privy-connected-wallet"]');
+  await wallet.waitFor({ state: 'visible', timeout: 30_000 });
+}
+
 export async function connectWallet(page: Page) {
   const privyWallet = page.locator('[data-testid="privy-connected-wallet"]');
-  if (await privyWallet.isVisible({ timeout: 5_000 }).catch(() => false)) {
+
+  if (await privyWallet.isVisible({ timeout: 8_000 }).catch(() => false)) {
     return;
   }
 
-  // Try Privy login if credentials are available
-  const loginBtn = page.getByRole('button', { name: 'Log in' });
-  if (PRIVY_TEST_EMAIL && PRIVY_TEST_OTP && await loginBtn.isVisible({ timeout: 2_000 }).catch(() => false)) {
-    await loginBtn.click();
-    const emailInput = page.locator('input[type="email"]').first();
-    await emailInput.waitFor({ state: 'visible', timeout: 15_000 });
-    await emailInput.fill(PRIVY_TEST_EMAIL);
-    await page.getByRole('button', { name: 'Submit', exact: true }).click();
-    await emailInput.waitFor({ state: 'hidden', timeout: 15_000 });
-    await page.waitForTimeout(2_000);
-    const otpInputs = page.locator('#privy-dialog input[type="text"]');
-    const count = await otpInputs.count();
-    if (count >= 6) {
-      for (let i = 0; i < PRIVY_TEST_OTP.length && i < count; i++) {
-        await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
+  if (PRIVY_TEST_EMAIL && PRIVY_TEST_OTP) {
+    const loginBtn = page.getByRole('button', { name: 'Log in' });
+    if (await loginBtn.isVisible({ timeout: 5_000 }).catch(() => false)) {
+      await loginBtn.click();
+      const emailInput = page.locator('input[type="email"]').first();
+      await emailInput.waitFor({ state: 'visible', timeout: 15_000 });
+      await emailInput.fill(PRIVY_TEST_EMAIL);
+      await page.getByRole('button', { name: 'Submit', exact: true }).click();
+      await emailInput.waitFor({ state: 'hidden', timeout: 15_000 });
+      await page.waitForTimeout(2_000);
+      const otpInputs = page.locator('#privy-dialog input[type="text"]');
+      const count = await otpInputs.count();
+      if (count >= 6) {
+        for (let i = 0; i < PRIVY_TEST_OTP.length && i < count; i++) {
+          await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
+        }
       }
+      await privyWallet.waitFor({ state: 'visible', timeout: 30_000 });
+      return;
     }
-    await privyWallet.waitFor({ state: 'visible', timeout: 30_000 });
-    return;
   }
 
-  // Legacy mock-connector path
   const desktopButton = page.getByTestId('e2e-connect-wallet');
   if (await desktopButton.isVisible()) {
     await desktopButton.click();
@@ -256,4 +341,112 @@ export function parseBasketAddressFromHref(href: string | null) {
   const address = href.split('/').pop();
   if (!address || !address.startsWith('0x')) throw new Error(`Unexpected basket href: ${href}`);
   return address;
+}
+
+/**
+ * Click a basket link and wait for navigation. Retries if the first click
+ * doesn't trigger navigation (can happen during Next.js compilation or
+ * when the click lands on an interactive child element).
+ */
+async function clickBasketLink(page: Page, href: string, maxAttempts = 3) {
+  const link = page.locator(`a[href="${href}"]`).first();
+  await link.waitFor({ state: 'visible', timeout: 15_000 });
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    // Click near top-left to avoid "Show info" buttons inside the link
+    await link.click({ position: { x: 20, y: 8 }, timeout: 5_000 }).catch(() => {});
+    try {
+      await waitForPath(page, href, 5_000);
+      return;
+    } catch {
+      if (attempt === maxAttempts) {
+        throw new Error(`Failed to navigate to ${href} after ${maxAttempts} attempts`);
+      }
+      await page.waitForTimeout(1_000);
+    }
+  }
+}
+
+/**
+ * Wait for the current pathname to match (polling, works with pushState).
+ */
+async function waitForPath(page: Page, expected: string, timeout = 20_000) {
+  await page.waitForFunction(
+    (p) => {
+      const path = window.location.pathname;
+      return path === p || path === p + '/';
+    },
+    expected,
+    { timeout },
+  );
+}
+
+/**
+ * Navigate using Next.js client-side routing (Link click) instead of
+ * page.goto(), which causes a full page reload and breaks the Privy SDK.
+ */
+export async function navTo(page: Page, target: string, basketAddress?: string) {
+  async function currentPath() {
+    return new URL(page.url()).pathname;
+  }
+
+  async function ensureAdmin() {
+    if (!(await currentPath()).startsWith('/admin')) {
+      const adminLink = page.locator('header nav a[href="/admin"]').first();
+      await adminLink.evaluate((el) => (el as HTMLElement).click());
+      await waitForPath(page, '/admin');
+      await page.waitForTimeout(1_000);
+    }
+  }
+
+  async function clickSidebar(href: string) {
+    const link = page.locator(`aside a[href="${href}"]`).first();
+    await link.waitFor({ state: 'visible', timeout: 15_000 });
+    await link.evaluate((el) => (el as HTMLElement).click());
+    await waitForPath(page, href);
+  }
+
+  switch (target) {
+    case '/admin/baskets': {
+      await ensureAdmin();
+      await clickSidebar('/admin/baskets');
+      break;
+    }
+    case '/admin/risk': {
+      await ensureAdmin();
+      await clickSidebar('/admin/risk');
+      break;
+    }
+    case '/admin/oracle': {
+      await ensureAdmin();
+      await clickSidebar('/admin/oracle');
+      break;
+    }
+    case '/admin/pool': {
+      await ensureAdmin();
+      await clickSidebar('/admin/pool');
+      break;
+    }
+    case '/admin/basket-detail': {
+      if (!basketAddress) throw new Error('basketAddress required');
+      await ensureAdmin();
+      if ((await currentPath()) !== '/admin/baskets') {
+        await clickSidebar('/admin/baskets');
+      }
+      await clickBasketLink(page, `/admin/baskets/${basketAddress}`);
+      break;
+    }
+    case '/basket-detail': {
+      if (!basketAddress) throw new Error('basketAddress required');
+      const basketsNavLink = page.locator('header nav a[href="/baskets"]').first();
+      await basketsNavLink.evaluate((el) => (el as HTMLElement).click());
+      await waitForPath(page, '/baskets');
+      await clickBasketLink(page, `/baskets/${basketAddress}`);
+      break;
+    }
+    default:
+      throw new Error(`Unknown navigation target: ${target}`);
+  }
+
+  await page.waitForTimeout(500);
 }
