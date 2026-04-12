@@ -13,6 +13,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-12] Agent skills convention: reusable skill files (`agents/skills/`) separate generalised tool/API references from agent-specific strategy. New `skills` frontmatter field loads skill files into the system prompt at runtime. Includes `vault-manager` and `yfinance` skills extracted from the sample agent.
 - [2026-04-11] Agent memory system: each agent gets persistent state (`agents/memory/<name>/state.json`) and an append-only run log (`run-log.jsonl`). The runner loads recent history into the system prompt so agents have context across cron runs. Memory is committed to the repo; CI auto-commits changes after each run.
 - [2026-04-11] Auto vault lifecycle: agents auto-deploy their own vault on first run via `create_vault`. The runner captures the vault address from `get_all_vaults` and saves it to state. If the agent `.md` file changes (SHA-256 hash mismatch), a new vault is deployed automatically.
 - [2026-04-11] Vault scoping: each vault-manager agent manages exactly one vault. Frontmatter fields `vaultName`, `depositFeeBps`, and `redeemFeeBps` configure the auto-deployed vault. The runner injects vault address and run history into the system prompt.

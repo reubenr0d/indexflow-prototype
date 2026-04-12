@@ -219,11 +219,22 @@ function loadAgentConfig(agentName) {
 
   const writeTools = new Set(frontmatter.writeTools || []);
 
+  const skillNames = frontmatter.skills || [];
+  const skills = skillNames.map((name) => {
+    const skillPath = resolve(PROJECT_ROOT, "agents", "skills", `${name}.md`);
+    try {
+      return readFileSync(skillPath, "utf8").trim();
+    } catch {
+      throw new Error(`Skill file not found: agents/skills/${name}.md`);
+    }
+  });
+
   return {
     name: frontmatter.name || agentName,
     description: frontmatter.description || "",
     mcpServers,
     writeTools,
+    skills,
     systemPrompt,
     userPrompt,
     maxTurns: frontmatter.maxTurns || 20,
@@ -360,6 +371,12 @@ function truncateForLLM(content) {
 
 function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
   let prompt = config.systemPrompt;
+
+  // Skills (generalised tool/API references)
+  if (config.skills.length > 0) {
+    prompt += "\n\n---\n";
+    prompt += config.skills.join("\n\n---\n\n");
+  }
 
   // Vault context
   prompt += "\n\n## Your Vault\n";

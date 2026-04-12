@@ -27,10 +27,10 @@ On first run, the agent automatically deploys its own vault. Subsequent runs man
 ## Creating a New Agent
 
 1. Create a markdown file at `agents/<name>.md`
-2. Add YAML frontmatter with config (MCP servers, vault name, fees, write tools)
-3. Write the system prompt as the markdown body
+2. Add YAML frontmatter with config (skills, MCP servers, vault name, fees, write tools)
+3. Write the system prompt as the markdown body (identity, strategy, rules)
 4. Add a `## User Prompt` section at the end with the initial task
-5. Run it -- the runner handles vault deployment and memory automatically
+5. Run it -- the runner handles skill injection, vault deployment, and memory automatically
 
 ### Agent File Format
 
@@ -38,6 +38,9 @@ On first run, the agent automatically deploys its own vault. Subsequent runs man
 ---
 name: gold-trader
 description: Trades gold and mining stocks
+skills:
+  - vault-manager
+  - yfinance
 mcpServers:
   - vault-manager-mcp
   - yfinance-mcp
@@ -79,6 +82,7 @@ your vault positions based on market conditions.
 |---|---|---|---|
 | `name` | no | filename | Agent identifier |
 | `description` | no | -- | Short description for logs |
+| `skills` | no | `[]` | List of skill names from `agents/skills/` (loaded as tool/API reference) |
 | `mcpServers` | yes | -- | List of MCP server names from `agents/mcp-servers.json` |
 | `writeTools` | no | `[]` | Tools blocked in dry-run mode |
 | `vaultName` | no | agent name | Name for the auto-deployed vault |
@@ -89,14 +93,67 @@ your vault positions based on market conditions.
 
 ### Prompt Structure
 
-The markdown body (everything after the frontmatter `---`) is the **system prompt**. It tells the LLM who it is, what rules to follow, and how to use the available tools.
+The markdown body (everything after the frontmatter `---`) is the **system prompt** — the agent's "soul." It defines identity, strategy, and rules. Keep it focused on *what the agent cares about*, not tool API details.
 
-The `## User Prompt` heading splits the body. Everything below it becomes the **initial user message** that kicks off the agent loop. If omitted, a generic "execute your assigned task" message is used.
+The `## User Prompt` heading splits the body. Everything below it becomes the **initial user message** (the "heartbeat") that kicks off the agent loop. If omitted, a generic "execute your assigned task" message is used.
 
-The runner automatically injects additional sections into the system prompt at runtime:
-- **Your Vault**: the vault address (or instructions to deploy one)
-- **Recent Run History**: summaries of the last 5 runs
-- **Dry Run Mode**: whether write tools are active
+The runner assembles the final system prompt at runtime in this order:
+1. **Agent body** (soul — identity, strategy, rules)
+2. **Skill files** (generalised tool/API references from `agents/skills/`)
+3. **Your Vault**: the vault address (or instructions to deploy one)
+4. **Recent Run History**: summaries of the last 5 runs
+5. **Dry Run Mode**: whether write tools are active
+
+---
+
+## Skills
+
+Skills are reusable tool/API reference files that live in `agents/skills/`. They follow the convention from [Proof of Lobster](https://github.com/Theseuschain/proof-of-lobster/tree/master/agent): a skill describes *what tools are available and how to use them* (endpoints, parameters, units, workflows) without dictating strategy. Strategy-specific instructions (which assets to trade, risk thresholds, allocation limits) belong in the agent body.
+
+### Convention
+
+| Layer | File | Contains | Example |
+|-------|------|----------|---------|
+| Soul | `agents/<name>.md` body | Identity, strategy, rules, thresholds | "Max 50% to perp, close losers at 15%" |
+| Skill | `agents/skills/<skill>.md` | Tool reference, units, generalised workflows | "open_position takes vault, assetId, isLong, size, collateral" |
+| Heartbeat | `## User Prompt` section | The task for this run | "Check vault, research markets, manage positions" |
+
+### Creating a Skill
+
+Create a markdown file at `agents/skills/<name>.md`. The file is plain markdown (no frontmatter). Structure it as a tool/API reference:
+
+```markdown
+# My Skill Name
+
+Your capabilities for doing X.
+
+## Tools
+(tool names, descriptions, key params)
+
+## Units / Conventions
+(data formats, scaling, companion fields)
+
+## Workflows
+(generalised step-by-step flows)
+
+## Response Format
+(success/error patterns)
+```
+
+### Available Skills
+
+| Skill | File | Description |
+|-------|------|-------------|
+| `vault-manager` | `agents/skills/vault-manager.md` | On-chain vault reads/writes, units, position workflows |
+| `yfinance` | `agents/skills/yfinance.md` | Yahoo Finance search and quote lookups |
+
+Reference skills in agent frontmatter:
+
+```yaml
+skills:
+  - vault-manager
+  - yfinance
+```
 
 ---
 
@@ -315,7 +372,10 @@ Optional: `LLM_BASE_URL`, `LLM_MODEL`
 
 ```
 agents/
-  sample-vault-manager.md # Example agent definition (prompt + config)
+  sample-vault-manager.md # Agent definition (soul + heartbeat)
+  skills/                 # Reusable skill files (tool/API references)
+    vault-manager.md      # Vault MCP tool reference, units, workflows
+    yfinance.md           # Yahoo Finance search + quote reference
   mcp-servers.json        # MCP server registry (spawn commands)
   memory/                 # Per-agent persistent memory (committed to repo)
     sample-vault-manager/
@@ -323,7 +383,7 @@ agents/
       run-log.jsonl
 
 scripts/
-  agent-runner.mjs        # Generic runner (parses .md, memory, vault lifecycle, LLM loop)
+  agent-runner.mjs        # Generic runner (parses .md, loads skills, memory, vault lifecycle, LLM loop)
   vault-agent.mjs         # Backward-compatible wrapper for sample-vault-manager
 
 apps/
