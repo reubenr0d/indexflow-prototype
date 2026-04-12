@@ -13,6 +13,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-12] [`.env.example`](.env.example) expanded to cover Foundry RPC/verification, deploy `SEED_PRICE_RAW`, agent runner, vault MCP, price updater, subgraph `NETWORK`, push-worker, and CI secret pointers; added [`apps/web/.env.example`](apps/web/.env.example) for Next.js and Playwright. Gitignore now includes root `.env.local` and `apps/web/.env.local`.
 - [2026-04-12] Agent skills convention: reusable skill files (`agents/skills/`) separate generalised tool/API references from agent-specific strategy. New `skills` frontmatter field loads skill files into the system prompt at runtime. Includes `vault-manager` and `yfinance` skills extracted from the sample agent.
 - [2026-04-11] Agent memory system: each agent gets persistent state (`agents/memory/<name>/state.json`) and an append-only run log (`run-log.jsonl`). The runner loads recent history into the system prompt so agents have context across cron runs. Memory is committed to the repo; CI auto-commits changes after each run.
 - [2026-04-11] Auto vault lifecycle: agents auto-deploy their own vault on first run via `create_vault`. The runner captures the vault address from `get_all_vaults` and saves it to state. If the agent `.md` file changes (SHA-256 hash mismatch), a new vault is deployed automatically.
@@ -30,6 +31,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-12 12:20 UTC+07:00] Agent runner write-safety gate: new `AGENT_CONFIRM_WRITES=1` mode intercepts assistant write-tool batches and requires operator approval (`approve` / `reject`) or free-text refinement feedback in an interactive terminal loop before executing on-chain writes. In non-interactive environments (e.g. CI), confirmation is explicitly bypassed and writes proceed. Run summaries now include confirmation batch decisions.
 - [2026-04-11] Agent renamed from `vault-manager` to `sample-vault-manager` to serve as an example template. Rewritten for single-vault scoping with `vaultName`, `depositFeeBps`, `redeemFeeBps` frontmatter fields.
 - [2026-04-11] `scripts/agent-runner.mjs` extended with memory loading/saving, SHA-256 file hash change detection, vault context injection into system prompt, vault address capture from `create_vault`/`get_all_vaults`, and run-log persistence.
 - [2026-04-11] GitHub Actions `vault-agent.yml` now auto-commits agent memory (`agents/memory/`) to the repo after each run instead of using ephemeral cache. Added `contents: write` permission and `vault-agent[bot]` committer identity.

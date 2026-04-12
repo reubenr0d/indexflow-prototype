@@ -15,6 +15,9 @@ LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
 # Dry-run mode (observe only, no on-chain writes)
 AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
 
+# Interactive write confirmation mode (local operator approval)
+AGENT_CONFIRM_WRITES=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+
 # Backward-compatible shortcuts for the sample agent
 LLM_API_KEY=sk-... npm run agent:dry
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
@@ -333,9 +336,23 @@ The workflow at `.github/workflows/vault-agent.yml` supports manual dispatch wit
 
 The cron schedule runs `sample-vault-manager` every 6 hours by default. After each run, the workflow commits any memory changes (`agents/memory/`) back to the repo automatically.
 
+### Write Confirmation Mode
+
+Set `AGENT_CONFIRM_WRITES=1` to require approval whenever an assistant turn proposes one or more write tools.
+
+- The runner pauses and shows the proposed write batch.
+- Commands:
+  - `approve`: execute the full batch in order (including any read calls in that same batch)
+  - `reject`: skip the write batch and ask the model to propose an alternative
+  - any other text: treated as operator feedback; the model revises its proposed calls, and the approval loop repeats
+- If no interactive TTY is available (for example CI), confirmation is bypassed and writes proceed with an explicit log message.
+- `AGENT_DRY_RUN=1` still takes precedence and skips write execution entirely.
+
 ---
 
 ## Environment Variables
+
+Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (gitignored). The agent runner loads those files on startup if present; values already set in the environment are not overwritten. Full list: [`.env.example`](../.env.example) (root — agents, Foundry, scripts) and [`apps/web/.env.example`](../apps/web/.env.example) (Next.js / Playwright).
 
 ### Agent Runner
 
@@ -346,6 +363,7 @@ The cron schedule runs `sample-vault-manager` every 6 hours by default. After ea
 | `LLM_MODEL` | `gpt-4o` | Model name |
 | `AGENT_MAX_TURNS` | from agent config | Override max turns |
 | `AGENT_DRY_RUN` | -- | `1` to skip write tools |
+| `AGENT_CONFIRM_WRITES` | -- | `1` to require operator confirmation for write batches (TTY only; bypasses in non-interactive runs) |
 | `AGENT_MAX_TOOL_RESPONSE` | `6000` | Max chars per tool response sent to LLM |
 
 ### Vault Manager MCP Server

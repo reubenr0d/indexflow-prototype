@@ -60,7 +60,12 @@ forge test -vv
 
 ## Configuration
 
-Copy `.env.example` to `.env` and set:
+Environment templates (all variables documented with comments):
+
+- **Repo root:** copy [`.env.example`](.env.example) to `.env` for Foundry RPC URLs, explorer keys, deploy overrides, agents, and scripts that read the root `.env` / `.env.local`.
+- **Web app:** copy [`apps/web/.env.example`](apps/web/.env.example) to `apps/web/.env.local` for `NEXT_PUBLIC_*` and Playwright/E2E vars.
+
+Minimal root `.env` for Forge scripts:
 
 ```
 SEPOLIA_RPC_URL=
@@ -72,7 +77,7 @@ ARBISCAN_API_KEY=
 
 ### Web App Environment
 
-The Next.js web app requires the following environment variables (set in the shell or a local `.env` file inside `apps/web/`):
+The Next.js web app reads `apps/web/.env.local` (or shell). Required and optional variables:
 
 | Variable | Required | Description |
 | --- | --- | --- |
@@ -96,6 +101,7 @@ The push worker service (Cloud Run) requires:
 | `ORACLE_STALE_THRESHOLD_SECONDS` | No | Oracle staleness threshold in seconds (default `2700`) |
 | `LARGE_PNL_THRESHOLD_USD` | No | Realized PnL threshold for large-PnL alerts (default `5000`) |
 | `RESERVE_BREACH_COOLDOWN_MS` | No | Cooldown window for reserve-breach repeat alerts (default `1800000`) |
+| `PORT` | No | HTTP listen port (default `8080`) |
 
 ## Deployment
 
@@ -304,11 +310,16 @@ Agents are defined as markdown files in `agents/` -- each file is a system promp
 # Install MCP server deps (one-time)
 npm --prefix apps/vault-manager-mcp install
 
+# Uses repo-root .env / .env.local if present (see Configuration above)
+
 # Run the sample agent by name
 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
 
 # Dry-run mode
 AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+
+# Interactive write approval mode (asks before on-chain writes)
+AGENT_CONFIRM_WRITES=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
 
 # Backward-compatible shortcuts for sample-vault-manager
 LLM_API_KEY=sk-... npm run agent:dry

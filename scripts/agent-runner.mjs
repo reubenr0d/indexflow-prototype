@@ -24,13 +24,18 @@
  *   LLM_MODEL                - Model name (defaults to gpt-4o)
  *   AGENT_MAX_TURNS           - Override max turns from agent config
  *   AGENT_DRY_RUN             - Set to "1" to skip write tool calls
+ *   AGENT_CONFIRM_WRITES      - Set to "1" to require operator approval before write batches
  *   AGENT_MAX_TOOL_RESPONSE   - Max chars from tool response sent to LLM (default 6000)
+ *
+ * Local env files: if present, `.env` and `.env.local` at the repo root are loaded
+ * before reading configuration (existing shell env wins).
  */
 
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { createHash } from "node:crypto";
 import { resolve, dirname } from "node:path";
+import { createInterface } from "node:readline/promises";
 import {
   readFileSync,
   writeFileSync,
@@ -39,9 +44,37 @@ import {
   existsSync,
 } from "node:fs";
 import { fileURLToPath } from "node:url";
+import {
+  classifyToolCalls,
+  shouldBypassWriteConfirmation,
+  isInteractiveTty,
+} from "./agent-runner-confirmation.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, "..");
+
+function loadRootEnv(root) {
+  for (const name of [".env", ".env.local"]) {
+    const envPath = resolve(root, name);
+    if (!existsSync(envPath)) continue;
+    const lines = readFileSync(envPath, "utf8").split("\n");
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) continue;
+      const eqIdx = trimmed.indexOf("=");
+      if (eqIdx < 1) continue;
+      const key = trimmed.slice(0, eqIdx).trim();
+      const val = trimmed
+        .slice(eqIdx + 1)
+        .trim()
+        .replace(/^["']|["']$/g, "");
+      if (!process.env[key]) process.env[key] = val;
+    }
+  }
+}
+
+loadRootEnv(PROJECT_ROOT);
+
 const MEMORY_DIR = resolve(PROJECT_ROOT, "agents", "memory");
 
 // ---------------------------------------------------------------------------
@@ -256,6 +289,9 @@ const LLM_MODEL = process.env.LLM_MODEL || "gpt-4o";
 const DRY_RUN = ["1", "true", "yes"].includes(
   (process.env.AGENT_DRY_RUN || "").toLowerCase()
 );
+const CONFIRM_WRITES = ["1", "true", "yes"].includes(
+  (process.env.AGENT_CONFIRM_WRITES || "").toLowerCase()
+);
 const MAX_TOOL_RESPONSE = parseInt(
   process.env.AGENT_MAX_TOOL_RESPONSE || "6000",
   10
@@ -440,6 +476,117 @@ function extractNewestVaultAddress(content, vaultName) {
   return null;
 }
 
+function renderToolCallLine(call) {
+  return `- ${call.toolName}(${JSON.stringify(call.args)})`;
+}
+
+async function confirmWriteBatchInteractively({
+  initialChoice,
+  initialClassified,
+  turn,
+  messages,
+  openaiTools,
+  temperature,
+  writeTools,
+}) {
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  let currentChoice = initialChoice;
+  let currentClassified = initialClassified;
+  let refinementRounds = 0;
+
+  try {
+    while (true) {
+      if (!currentClassified.hasWriteCalls) {
+        return {
+          status: "revised_no_writes",
+          choice: currentChoice,
+          classified: currentClassified,
+          refinementRounds,
+        };
+      }
+
+      console.log("\n=== Write Confirmation Required ===");
+      console.log(
+        `Turn ${turn}: proposed ${currentClassified.writeCalls.length} write call(s):`
+      );
+      for (const writeCall of currentClassified.writeCalls) {
+        console.log(`  ${renderToolCallLine(writeCall)}`);
+      }
+      if (currentClassified.readCalls.length > 0) {
+        console.log("  (This batch also includes read tool calls.)");
+      }
+
+      const rawInput = await rl.question(
+        "Type 'approve' to execute, 'reject' to skip writes, or provide feedback for revision: "
+      );
+      const input = rawInput.trim();
+      const command = input.toLowerCase();
+
+      if (command === "approve") {
+        return {
+          status: "approved",
+          choice: currentChoice,
+          classified: currentClassified,
+          refinementRounds,
+        };
+      }
+
+      if (command === "reject") {
+        return {
+          status: "rejected",
+          choice: currentChoice,
+          classified: currentClassified,
+          refinementRounds,
+        };
+      }
+
+      refinementRounds += 1;
+      const feedback =
+        input ||
+        "Revise this write batch with safer and better-justified actions.";
+      const proposedCalls = currentClassified.calls
+        .map((call) => renderToolCallLine(call))
+        .join("\n");
+
+      messages.push({
+        role: "user",
+        content:
+          "Operator feedback on your proposed tool-call batch:\n" +
+          `${feedback}\n\n` +
+          "Your last proposed calls were:\n" +
+          `${proposedCalls}\n\n` +
+          "Revise your plan. If writes are still needed, emit revised tool calls.",
+      });
+
+      const revisedResponse = await chatCompletion(
+        messages,
+        openaiTools,
+        temperature
+      );
+      currentChoice = revisedResponse.choices[0];
+
+      if (
+        currentChoice.finish_reason === "stop" ||
+        !currentChoice.message.tool_calls?.length
+      ) {
+        return {
+          status: "revised_no_tools",
+          choice: currentChoice,
+          classified: null,
+          refinementRounds,
+        };
+      }
+
+      currentClassified = classifyToolCalls(
+        currentChoice.message.tool_calls,
+        writeTools
+      );
+    }
+  } finally {
+    rl.close();
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -483,9 +630,11 @@ export async function runAgent(agentName) {
     agent: config.name,
     model: LLM_MODEL,
     dryRun: DRY_RUN,
+    confirmWrites: CONFIRM_WRITES,
     turns: 0,
     toolCalls: [],
     writeActions: [],
+    confirmationBatches: [],
     errors: [],
     startedAt: new Date().toISOString(),
     finishedAt: null,
@@ -496,6 +645,7 @@ export async function runAgent(agentName) {
   console.log(`Model: ${LLM_MODEL}`);
   console.log(`Max turns: ${maxTurns}`);
   console.log(`Dry run: ${DRY_RUN}`);
+  console.log(`Confirm writes: ${CONFIRM_WRITES}`);
   console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
   console.log(
     `MCP servers: ${config.mcpServers.map((s) => s.name).join(", ") || "(none)"}`
@@ -547,6 +697,94 @@ export async function runAgent(agentName) {
       { role: "user", content: config.userPrompt },
     ];
 
+    async function executeToolCall(call) {
+      const { toolCall, toolName, originalName, args, isWrite } = call;
+      console.log(`  Tool: ${toolName}(${JSON.stringify(args)})`);
+      runSummary.toolCalls.push(toolName);
+
+      const entry = toolMap.get(toolName);
+      if (!entry) {
+        const errMsg = `Unknown tool: ${toolName}`;
+        console.error(`  ${errMsg}`);
+        runSummary.errors.push({ tool: toolName, error: errMsg });
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: errMsg,
+        });
+        return;
+      }
+
+      if (DRY_RUN && isWrite) {
+        const skipMsg = `[DRY RUN] Skipped write tool: ${toolName}`;
+        console.log(`  ${skipMsg}`);
+        runSummary.writeActions.push({
+          tool: toolName,
+          args,
+          skipped: true,
+        });
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: skipMsg,
+        });
+        return;
+      }
+
+      try {
+        const result = await entry.client.callTool({
+          name: originalName,
+          arguments: args,
+        });
+        const content = result.content
+          .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+          .join("\n");
+
+        const preview =
+          content.slice(0, 200) + (content.length > 200 ? "..." : "");
+        console.log(`  Result: ${preview}`);
+
+        if (isWrite) {
+          runSummary.writeActions.push({
+            tool: toolName,
+            args,
+            skipped: false,
+          });
+        }
+
+        // --- Vault address capture ---
+        if (originalName === "create_vault") {
+          didCreateVault = true;
+        }
+        if (
+          originalName === "get_all_vaults" &&
+          didCreateVault &&
+          !capturedVaultAddress
+        ) {
+          const addr = extractNewestVaultAddress(content, config.vaultName);
+          if (addr) {
+            capturedVaultAddress = addr;
+            console.log(`  >> Captured new vault address: ${addr}`);
+          }
+        }
+
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: truncateForLLM(content),
+        });
+      } catch (err) {
+        const errMsg = `Tool error: ${err.message}`;
+        console.error(`  ${errMsg}`);
+        runSummary.errors.push({ tool: toolName, error: err.message });
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: errMsg,
+        });
+      }
+    }
+
     for (let turn = 0; turn < maxTurns; turn++) {
       runSummary.turns = turn + 1;
       console.log(`--- Turn ${turn + 1}/${maxTurns} ---`);
@@ -556,7 +794,78 @@ export async function runAgent(agentName) {
         openaiTools,
         config.temperature
       );
-      const choice = response.choices[0];
+      let choice = response.choices[0];
+      let classified = classifyToolCalls(
+        choice.message.tool_calls || [],
+        config.writeTools
+      );
+
+      if (CONFIRM_WRITES && !DRY_RUN && classified.hasWriteCalls) {
+        const bypassConfirmation = shouldBypassWriteConfirmation({
+          confirmWritesEnabled: CONFIRM_WRITES,
+          dryRun: DRY_RUN,
+          hasWriteCalls: classified.hasWriteCalls,
+          interactiveTty: isInteractiveTty(),
+        });
+
+        if (bypassConfirmation) {
+          console.log(
+            "  [CONFIRM WRITES] Non-interactive terminal detected; bypassing confirmation and executing write batch."
+          );
+          runSummary.confirmationBatches.push({
+            turn: turn + 1,
+            status: "bypassed-non-interactive",
+            interactive: false,
+            refinementRounds: 0,
+            proposedWriteTools: classified.writeCalls.map((c) => c.toolName),
+          });
+        } else {
+          const confirmation = await confirmWriteBatchInteractively({
+            initialChoice: choice,
+            initialClassified: classified,
+            turn: turn + 1,
+          messages,
+          openaiTools,
+          temperature: config.temperature,
+          writeTools: config.writeTools,
+        });
+
+          runSummary.confirmationBatches.push({
+            turn: turn + 1,
+            status: confirmation.status,
+            interactive: true,
+            refinementRounds: confirmation.refinementRounds,
+            proposedWriteTools:
+              confirmation.classified?.writeCalls?.map((c) => c.toolName) || [],
+          });
+
+          if (confirmation.status === "rejected") {
+            messages.push({
+              role: "user",
+              content:
+                "Operator rejected your proposed blockchain write batch. " +
+                "Continue with analysis and propose an alternative without executing that write batch.",
+            });
+            console.log("  [CONFIRM WRITES] Write batch rejected by operator.");
+            continue;
+          }
+
+          choice = confirmation.choice;
+          if (
+            choice.finish_reason === "stop" ||
+            !choice.message.tool_calls?.length
+          ) {
+            if (choice.message.content) {
+              agentSummaryText = choice.message.content;
+              console.log("\n=== Agent Summary ===");
+              console.log(choice.message.content);
+            }
+            break;
+          }
+
+          classified = classifyToolCalls(choice.message.tool_calls, config.writeTools);
+        }
+      }
 
       if (
         choice.finish_reason === "stop" ||
@@ -571,102 +880,8 @@ export async function runAgent(agentName) {
       }
 
       messages.push(choice.message);
-
-      for (const toolCall of choice.message.tool_calls) {
-        const toolName = toolCall.function.name;
-        let args;
-        try {
-          args = JSON.parse(toolCall.function.arguments);
-        } catch {
-          args = {};
-        }
-
-        console.log(`  Tool: ${toolName}(${JSON.stringify(args)})`);
-        runSummary.toolCalls.push(toolName);
-
-        const originalName = toolName.includes("/")
-          ? toolName.split("/").slice(1).join("/")
-          : toolName;
-        const entry = toolMap.get(toolName);
-        if (!entry) {
-          const errMsg = `Unknown tool: ${toolName}`;
-          console.error(`  ${errMsg}`);
-          runSummary.errors.push({ tool: toolName, error: errMsg });
-          messages.push({
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: errMsg,
-          });
-          continue;
-        }
-
-        if (DRY_RUN && config.writeTools.has(originalName)) {
-          const skipMsg = `[DRY RUN] Skipped write tool: ${toolName}`;
-          console.log(`  ${skipMsg}`);
-          runSummary.writeActions.push({
-            tool: toolName,
-            args,
-            skipped: true,
-          });
-          messages.push({
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: skipMsg,
-          });
-          continue;
-        }
-
-        try {
-          const result = await entry.client.callTool({
-            name: originalName,
-            arguments: args,
-          });
-          const content = result.content
-            .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
-            .join("\n");
-
-          const preview =
-            content.slice(0, 200) + (content.length > 200 ? "..." : "");
-          console.log(`  Result: ${preview}`);
-
-          if (config.writeTools.has(originalName)) {
-            runSummary.writeActions.push({
-              tool: toolName,
-              args,
-              skipped: false,
-            });
-          }
-
-          // --- Vault address capture ---
-          if (originalName === "create_vault") {
-            didCreateVault = true;
-          }
-          if (originalName === "get_all_vaults" && didCreateVault && !capturedVaultAddress) {
-            const addr = extractNewestVaultAddress(
-              content,
-              config.vaultName
-            );
-            if (addr) {
-              capturedVaultAddress = addr;
-              console.log(`  >> Captured new vault address: ${addr}`);
-            }
-          }
-
-          messages.push({
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: truncateForLLM(content),
-          });
-        } catch (err) {
-          const errMsg = `Tool error: ${err.message}`;
-          console.error(`  ${errMsg}`);
-          runSummary.errors.push({ tool: toolName, error: err.message });
-          messages.push({
-            role: "tool",
-            tool_call_id: toolCall.id,
-            content: errMsg,
-          });
-        }
+      for (const call of classified.calls) {
+        await executeToolCall(call);
       }
     }
 
@@ -705,6 +920,7 @@ export async function runAgent(agentName) {
       turns: runSummary.turns,
       toolCalls: runSummary.toolCalls,
       writeActions: runSummary.writeActions,
+      confirmationBatches: runSummary.confirmationBatches,
       errors: runSummary.errors,
       summary: summarySnippet,
     });
@@ -728,6 +944,7 @@ export async function runAgent(agentName) {
       turns: runSummary.turns,
       toolCalls: runSummary.toolCalls,
       writeActions: runSummary.writeActions,
+      confirmationBatches: runSummary.confirmationBatches,
       errors: runSummary.errors,
       summary: "FAILED: " + (err.message || String(err)),
     });
