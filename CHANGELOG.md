@@ -13,6 +13,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-12 15:16 UTC+07:00] Added standalone peer-review spec [`docs/SYNTHETIC_EPOCH_SECURITY_REVIEW.md`](docs/SYNTHETIC_EPOCH_SECURITY_REVIEW.md) covering synthetic epoch settlement decisions, protocol flow, anti-cherry-pick controls, threat model, audit invariants, operational runbook, and Mermaid security/flow diagrams.
 - [2026-04-12] [`.env.example`](.env.example) expanded to cover Foundry RPC/verification, deploy `SEED_PRICE_RAW`, agent runner, vault MCP, price updater, subgraph `NETWORK`, push-worker, and CI secret pointers; added [`apps/web/.env.example`](apps/web/.env.example) for Next.js and Playwright. Gitignore now includes root `.env.local` and `apps/web/.env.local`.
 - [2026-04-12] Agent skills convention: reusable skill files (`agents/skills/`) separate generalised tool/API references from agent-specific strategy. New `skills` frontmatter field loads skill files into the system prompt at runtime. Includes `vault-manager` and `yfinance` skills extracted from the sample agent.
 - [2026-04-11] Agent memory system: each agent gets persistent state (`agents/memory/<name>/state.json`) and an append-only run log (`run-log.jsonl`). The runner loads recent history into the system prompt so agents have context across cron runs. Memory is committed to the repo; CI auto-commits changes after each run.
