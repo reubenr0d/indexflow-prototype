@@ -105,7 +105,7 @@ The push worker service (Cloud Run) requires:
 
 ## Deployment
 
-Deploy scripts pull a live **Yahoo Finance** quote for `BHP` (8-decimal USD raw) via Node (`scripts/fetch-yf-asset-price.js` and Foundry `ffi`). The script writes `cache/yf-seed-price.txt` (gitignored); Solidity reads it with `vm.readFile` so the seed is not passed through `ffi` stdout (which can mis-decode decimal ASCII). **Node** must be on `PATH`, and the machine needs **outbound network** access unless you pin a seed.
+Deploy scripts pull a live **Yahoo Finance** quote for `BHP.AX` (8-decimal USD raw) via Node (`scripts/fetch-yf-asset-price.js` and Foundry `ffi`). The script writes `cache/yf-seed-price.txt` (gitignored); Solidity reads it with `vm.readFile` so the seed is not passed through `ffi` stdout (which can mis-decode decimal ASCII). **Node** must be on `PATH`, and the machine needs **outbound network** access unless you pin a seed.
 
 - **Offline / no Yahoo:** set `SEED_PRICE_RAW` to the 8-decimal raw integer (e.g. `4500000000` for \$45.00) so deploy skips FFI.
 
@@ -192,6 +192,8 @@ npm run local:down
 
 `apps/subgraph` syncs network addresses from web deployment outputs before manifest generation.
 
+Mappings that reuse shared basket refresh/snapshot helpers (`BasketFactory`, `VaultAccounting`, and `BasketVaultTemplate`) must declare the helper ABIs: `BasketVault`, `BasketShareToken`, `ERC20`, and `VaultAccounting`.
+
 ```bash
 # optional manual sync
 npm --prefix apps/subgraph run sync:networks
@@ -274,7 +276,7 @@ npm run submit-sync:sepolia
 
 **Default oracle profile (greenfield `DeployLocal` / `DeploySepolia`)**
 
-- Only **`BHP`** is registered, as `FeedType.CustomRelayer` (`stalenessThreshold=86400`, `deviationBps=2000`), for the Yahoo Finance relayer path.
+- Only **`BHP.AX`** is registered, as `FeedType.CustomRelayer` (`stalenessThreshold=86400`, `deviationBps=2000`), for the Yahoo Finance relayer path.
 - Add more symbols (including `FeedType.Chainlink` feeds such as Sepolia XAU/USD at `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`) via **Admin → Assets** or a customized deploy script.
 
 **Yahoo Finance price relayer (config-free, on-chain driven)**
@@ -300,7 +302,7 @@ Config/env overrides: `DEPLOYMENT_CONFIG`, `RPC_URL`.
 
 **Registering new assets via admin UI**
 
-The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that lets operators discover any publicly-traded equity and register it on-chain as a `CustomRelayer` asset with an initial price seed. Registered assets automatically appear in basket asset pickers.
+The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that lets operators discover any publicly-traded equity and register it on-chain as a `CustomRelayer` asset with an initial price seed. Ambiguous unsuffixed equities (for example `BHP`) are rejected and must be registered with an explicit exchange suffix (for example `BHP.AX`). Unique unsuffixed equities (for example `AAPL`) and non-equity symbols remain valid. Registered assets automatically appear in basket asset pickers.
 
 **Multi-Agent Framework**
 
@@ -328,6 +330,10 @@ LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
 
 A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents on Sepolia with manual dispatch and an `agent_name` parameter. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
 
+Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl` (for example `run-log.sepolia.jsonl`, `run-log.local.jsonl`). Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
+
+Agent memory is deployment-aware: the runner fingerprints the active deployment context (network key + `DEPLOYMENT_CONFIG` content + `RPC_URL`). When that fingerprint changes (for example after redeploying contracts), it automatically invalidates stale memory for that network by rotating `state.json` and `run-log.<network>.jsonl` into `agents/memory/<agent>/archive/`, then starts from a fresh vault context.
+
 ## Documentation
 
 - In-app wiki (web app):
@@ -345,6 +351,7 @@ A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents on Sepol
     - `/docs/e2e-testing`
     - `/docs/share-price-and-operations`
     - `/docs/pwa-push-notifications`
+    - `/docs/regulatory-roadmap-draft`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
 - Operator monitoring surfaces (web app):
 - `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink` or `Custom Oracle`).
@@ -360,6 +367,7 @@ A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents on Sepol
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Deployment registry for Sepolia contracts, Subgraph indexing, and Google Cloud push-worker infrastructure (push notifications only).
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/PWA_PUSH_NOTIFICATIONS.md](docs/PWA_PUSH_NOTIFICATIONS.md) — PWA install behavior, push worker architecture, notification categories, and staging verification runbook.
+- [docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md) — Draft brainstorming memo for EU-first launch structuring, likely regulatory perimeter, phased workstreams, and launch-limiting assumptions.
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.
 - Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
 

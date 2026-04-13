@@ -27,6 +27,8 @@ dataSources:
           file: ./abis/BasketShareToken.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: VaultAccounting
+          file: ./abis/VaultAccounting.json
       eventHandlers:
         - event: BasketCreated(indexed address,indexed address,address,string)
           handler: handleBasketCreated
@@ -51,6 +53,12 @@ dataSources:
       abis:
         - name: VaultAccounting
           file: ./abis/VaultAccounting.json
+        - name: BasketVault
+          file: ./abis/BasketVault.json
+        - name: BasketShareToken
+          file: ./abis/BasketShareToken.json
+        - name: ERC20
+          file: ./abis/ERC20.json
       eventHandlers:
         - event: VaultRegistered(indexed address)
           handler: handleVaultRegistered
@@ -124,6 +132,8 @@ templates:
           file: ./abis/BasketShareToken.json
         - name: ERC20
           file: ./abis/ERC20.json
+        - name: VaultAccounting
+          file: ./abis/VaultAccounting.json
       eventHandlers:
         - event: Deposited(indexed address,uint256,uint256)
           handler: handleDeposited

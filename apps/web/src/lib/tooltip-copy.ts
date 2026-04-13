@@ -85,7 +85,8 @@ export const TOOLTIP_COPY = {
   maxPositionSize:
     "Upper bound on any individual position size for a vault, shown in USD notional (full-dollar display from 1e30 precision).",
   createNewBasket: "Create a new basket vault with configured name and entry/exit fees.",
-  setAssets: "Define which supported oracle assets this basket can trade.",
+  setAssets:
+    "Define which supported oracle assets this basket can trade. For ambiguous equity tickers, use exchange-suffixed symbols (for example: BHP.AX).",
   perpAllocation: "Move capital between idle vault liquidity and the perp sleeve.",
   maxPerpAllocation: "Cap the maximum capital that can be allocated to perps for this basket.",
   collectFees: "Transfer accumulated basket fees to a designated recipient address.",

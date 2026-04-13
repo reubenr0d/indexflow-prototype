@@ -37,13 +37,13 @@ interface ISimplePriceFeedView {
 ///      - Override: DEPLOYMENT_CONFIG=/abs/or/relative/path.json
 ///      Optional env overrides are supported for custom assets:
 ///      - XAG_PRICE_RAW (8-decimal raw feed value)
-///      - BHP_PRICE_RAW, RIO_PRICE_RAW, VALE_PRICE_RAW, NEM_PRICE_RAW, FCX_PRICE_RAW, SCCO_PRICE_RAW
+///      - BHP_AX_PRICE_RAW, RIO_AX_PRICE_RAW, VALE_PRICE_RAW, NEM_PRICE_RAW, FCX_PRICE_RAW, SCCO_PRICE_RAW
 ///      If unset, script re-submits each asset's current price (raw-denormalized) to refresh timestamp.
 contract SubmitAndSyncOraclePrices is Script {
     uint8 internal constant FEED_TYPE_CUSTOM_RELAYER = 1;
     bytes32 internal constant XAG = keccak256("XAG");
-    bytes32 internal constant BHP = keccak256("BHP");
-    bytes32 internal constant RIO = keccak256("RIO");
+    bytes32 internal constant BHP_AX = keccak256("BHP.AX");
+    bytes32 internal constant RIO_AX = keccak256("RIO.AX");
     bytes32 internal constant VALE = keccak256("VALE");
     bytes32 internal constant NEM = keccak256("NEM");
     bytes32 internal constant FCX = keccak256("FCX");
@@ -151,11 +151,11 @@ contract SubmitAndSyncOraclePrices is Script {
         if (assetId == XAG && vm.envExists("XAG_PRICE_RAW")) {
             return vm.envUint("XAG_PRICE_RAW");
         }
-        if (assetId == BHP && vm.envExists("BHP_PRICE_RAW")) {
-            return vm.envUint("BHP_PRICE_RAW");
+        if (assetId == BHP_AX && vm.envExists("BHP_AX_PRICE_RAW")) {
+            return vm.envUint("BHP_AX_PRICE_RAW");
         }
-        if (assetId == RIO && vm.envExists("RIO_PRICE_RAW")) {
-            return vm.envUint("RIO_PRICE_RAW");
+        if (assetId == RIO_AX && vm.envExists("RIO_AX_PRICE_RAW")) {
+            return vm.envUint("RIO_AX_PRICE_RAW");
         }
         if (assetId == VALE && vm.envExists("VALE_PRICE_RAW")) {
             return vm.envUint("VALE_PRICE_RAW");

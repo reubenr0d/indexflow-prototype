@@ -247,7 +247,7 @@ sequenceDiagram
 
 Greenfield `DeploySepolia` profile:
 
-- `BHP` only: `FeedType.CustomRelayer`, `decimals=8`, `stalenessThreshold=86400`, `deviationBps=2000`.
+- `BHP.AX` only: `FeedType.CustomRelayer`, `decimals=8`, `stalenessThreshold=86400`, `deviationBps=2000`.
 
 Operators can add further assets (e.g. `XAU` with Sepolia Chainlink `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, or more Yahoo Finance relayed tickers) via **Admin → Assets** or scripted `configureAsset`; see [docs/ORACLE_SUPPORTED_ASSETS.md](ORACLE_SUPPORTED_ASSETS.md).
 
@@ -272,6 +272,7 @@ PRIVATE_KEY=0x... npm run update-prices:sepolia
 Failure policy in updater:
 
 - Assets with empty `assetSymbols` on-chain are skipped with a warning.
+- Ambiguous unsuffixed equities should be re-wired with explicit exchange suffixes (for example `BHP.AX`) before automation.
 - `PRIVATE_KEY` missing while not in dry-run: fail run.
 
 ---

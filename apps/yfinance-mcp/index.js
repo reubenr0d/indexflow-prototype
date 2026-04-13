@@ -3,6 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { classifySymbolWithSearch } from "../shared/yahoo-symbol-policy.mjs";
 
 // ---------------------------------------------------------------------------
 // Yahoo Finance client (lazy-loaded)
@@ -26,6 +27,23 @@ async function getUsdRate(currency) {
   const rate = q.regularMarketPrice;
   if (!rate || rate <= 0) throw new Error(`Could not fetch FX rate for ${pair}`);
   return rate;
+}
+
+async function getSearchRows(symbol) {
+  const client = await yf();
+  try {
+    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 });
+    return (raw.quotes ?? [])
+      .filter((quote) => "symbol" in quote)
+      .map((quote) => ({
+        symbol: quote.symbol,
+        quoteType: quote.quoteType ?? "",
+        exchange: quote.exchDisp ?? quote.exchange ?? "",
+        name: quote.longname ?? quote.shortname ?? "",
+      }));
+  } catch {
+    return [];
+  }
 }
 
 function toolError(code, message, recoveryHint) {
@@ -87,7 +105,7 @@ server.registerTool(
     title: "Yahoo Finance Quote",
     description:
       "Get current price quotes for one or more Yahoo Finance symbols. " +
-      "Returns [{symbol, name, price, priceUsd, currency, exchange, marketState, dayChange, dayChangePct, volume, marketCap}]. " +
+      "Returns [{symbol, name, price, priceUsd, currency, exchange, marketState, dayChange, dayChangePct, volume, marketCap, requestedSymbol, resolvedSymbol, isAmbiguous, candidates}]. " +
       "Automatically converts non-USD prices via FX rates. " +
       "Works for any stock, ETF, index, commodity, or forex pair on Yahoo Finance.",
     inputSchema: {
@@ -99,6 +117,8 @@ server.registerTool(
       const client = await yf();
       const quotes = await Promise.all(
         symbols.map(async (symbol) => {
+          const searchRows = await getSearchRows(symbol);
+          const classification = classifySymbolWithSearch(symbol, searchRows);
           try {
             const q = await client.quote(symbol);
             const price = q.regularMarketPrice ?? null;
@@ -109,6 +129,8 @@ server.registerTool(
               priceUsd = +(price * fxRate).toFixed(4);
             }
             return {
+              requestedSymbol: symbol,
+              resolvedSymbol: q.symbol ?? null,
               symbol: q.symbol,
               name: q.longName ?? q.shortName ?? "",
               price,
@@ -120,16 +142,25 @@ server.registerTool(
               dayChangePct: q.regularMarketChangePercent ?? null,
               volume: q.regularMarketVolume ?? null,
               marketCap: q.marketCap ?? null,
+              isAmbiguous: classification.isAmbiguous,
+              candidates: classification.candidates,
             };
           } catch {
-            return { symbol, error: "Quote failed — check symbol format" };
+            return {
+              requestedSymbol: symbol,
+              resolvedSymbol: null,
+              symbol,
+              error: "Quote failed — check symbol format",
+              isAmbiguous: classification.isAmbiguous,
+              candidates: classification.candidates,
+            };
           }
         }),
       );
       return { content: [{ type: "text", text: JSON.stringify(quotes, null, 2) }] };
     } catch (err) {
       return toolError("YAHOO_QUOTE_FAILED", err.message,
-        "Verify symbol format (e.g. 'BHP.AX' not 'BHP'). Yahoo Finance may be temporarily unavailable.");
+        "Verify symbol format; for ambiguous equities use exchange suffixes (e.g. 'BHP.AX'). Yahoo Finance may be temporarily unavailable.");
     }
   },
 );

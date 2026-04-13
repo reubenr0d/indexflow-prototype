@@ -1,29 +1,29 @@
 {
   "anvil": {
     "basketFactory": {
-      "address": "0xf5059a5D33d5853360D16C683c16e67980206f36",
+      "address": "0x7E6C94173C264aaE66Bf36ce047b0Aef585C2181",
       "startBlock": 0
     },
     "vaultAccounting": {
-      "address": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+      "address": "0x42E5a852Aa5cd4284227796Bc5d2461189A65b8a",
       "startBlock": 0
     },
     "oracleAdapter": {
-      "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+      "address": "0xeA503D963ecFF34BfFd3C3E8a2Ee3C25839deA7B",
       "startBlock": 0
     }
   },
   "sepolia": {
     "basketFactory": {
-      "address": "0x109e0A03011d7c4c54a7073a828a07FfF2868304",
+      "address": "0x914f089F2D216343E625dDF3bD69E0662Bd9BfA2",
       "startBlock": 10630646
     },
     "vaultAccounting": {
-      "address": "0x8C6B61ADfe35B1B0609D905650420F3A00f813Aa",
+      "address": "0xfd9cd5D80f867A6cCC0356F82Dc6b84231889a45",
       "startBlock": 10630646
     },
     "oracleAdapter": {
-      "address": "0xBeB2E04850d1E306eb52EfC69d9B6f1550F10195",
+      "address": "0x511FD51308f013eBB33c8264E8cc038e6Db9a24D",
       "startBlock": 10630646
     }
   }

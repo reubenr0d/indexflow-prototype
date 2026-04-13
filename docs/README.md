@@ -18,6 +18,7 @@ This index mirrors the in-app docs routes at `/docs` in the web app.
 - `/docs/share-price-and-operations` — source: `docs/SHARE_PRICE_AND_OPERATIONS.md`
 - `/docs/pwa-push-notifications` — source: `docs/PWA_PUSH_NOTIFICATIONS.md`
 - `/docs/utility-token-tokenomics` — source: `docs/UTILITY_TOKEN_TOKENOMICS.md`
+- `/docs/regulatory-roadmap-draft` — source: `docs/REGULATORY_ROADMAP_DRAFT.md`
 - `/docs/agents-framework` — source: `docs/AGENTS_FRAMEWORK.md`
 
 ## Legacy route aliases
@@ -51,6 +52,7 @@ These legacy in-app wiki routes are preserved for compatibility and redirect to 
 - [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md)
 - [PWA_PUSH_NOTIFICATIONS.md](./PWA_PUSH_NOTIFICATIONS.md)
 - [UTILITY_TOKEN_TOKENOMICS.md](./UTILITY_TOKEN_TOKENOMICS.md)
+- [REGULATORY_ROADMAP_DRAFT.md](./REGULATORY_ROADMAP_DRAFT.md)
 - [AGENTS_FRAMEWORK.md](./AGENTS_FRAMEWORK.md) — multi-agent framework: agent definitions, MCP tool reference, vault lifecycle, and memory
 
 ## Sync expectation

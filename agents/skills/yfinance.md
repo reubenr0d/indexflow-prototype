@@ -19,7 +19,7 @@ Get live price quotes with USD conversion, day change, and volume.
 
 - `symbols`: Array of ticker strings (e.g. `["AAPL", "BHP.AX", "GC=F"]`)
 
-Returns per-symbol: current price, currency, USD-converted price, day change (absolute and percent), volume, market cap, and 52-week range.
+Returns per-symbol: current price, currency, USD-converted price, day change (absolute and percent), volume, market cap, plus symbol-resolution fields (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates`).
 
 ## Example Calls
 
@@ -38,6 +38,7 @@ yfinance_quote({ symbols: ["GC=F"] })
 ## Tips
 
 - Symbols follow Yahoo Finance conventions: `.AX` for ASX, `.L` for London, `=F` for futures.
+- For equities, prefer exchange-suffixed symbols when available; ambiguous unsuffixed symbols are write-unsafe.
 - Quotes include a `regularMarketPrice` in the native currency and a USD-converted price.
 - Use search first when you don't know the exact ticker symbol.
 - Day change fields tell you intraday momentum; 52-week range gives broader context.

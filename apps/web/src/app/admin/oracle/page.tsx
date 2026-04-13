@@ -293,6 +293,11 @@ function RegisterAssetCard() {
     setIsFetchingQuote(false);
   };
 
+  const isSymbolAmbiguous = Boolean(quote?.isAmbiguous);
+  const ambiguityText = quote?.candidates?.length
+    ? `Ambiguous ticker. Use an explicit exchange suffix: ${quote.candidates.join(", ")}`
+    : "Ambiguous ticker. Use an explicit exchange suffix (for example: BHP.AX).";
+
   return (
     <Card className="mb-6 p-6">
       <h2 className="mb-2 text-base font-semibold text-app-text">
@@ -326,6 +331,9 @@ function RegisterAssetCard() {
             <p className="text-sm text-app-muted">Fetching quote...</p>
           ) : quote ? (
             <div className="space-y-1 text-sm text-app-muted">
+              {isSymbolAmbiguous && (
+                <p className="text-xs text-app-danger">{ambiguityText}</p>
+              )}
               <p>
                 Price: <span className="font-semibold text-app-text">
                   {quote.price != null ? `${quote.price.toFixed(2)} ${quote.currency}` : "unavailable"}
@@ -343,6 +351,9 @@ function RegisterAssetCard() {
                 Asset ID: <span className="font-mono text-xs">{keccak256(stringToHex(selected.symbol)).slice(0, 18)}...</span>
               </p>
               <p>Market state: {quote.marketState}</p>
+              {quote.resolvedSymbol && quote.resolvedSymbol !== selected.symbol && (
+                <p className="text-xs text-app-warning">Resolved Yahoo symbol: {quote.resolvedSymbol}</p>
+              )}
             </div>
           ) : (
             <p className="text-sm text-app-danger">Could not fetch quote.</p>
@@ -355,10 +366,14 @@ function RegisterAssetCard() {
 
       <Button
         size="sm"
-        disabled={!selected || !quote?.priceUsd || isWiring}
+        disabled={!selected || !quote?.priceUsd || isWiring || isSymbolAmbiguous}
         data-testid="register-asset-submit"
         onClick={async () => {
           if (!selected || !quote?.priceUsd) return;
+          if (quote.isAmbiguous) {
+            showToast("error", ambiguityText);
+            return;
+          }
           const rawPrice8 = BigInt(Math.round(quote.priceUsd * 1e8));
           setIsWiring(true);
           showToast("pending", `Wiring ${selected.symbol}...`);

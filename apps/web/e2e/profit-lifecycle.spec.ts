@@ -129,7 +129,7 @@ test('user lifecycle: deposit -> profitable perp -> redeem net profit, with admi
   await page.getByTestId('perp-allocate-submit').click();
   await waitForNextTransaction(wallet, txCount);
 
-  await page.getByTestId('open-position-filter').fill('BHP');
+  await page.getByTestId('open-position-filter').fill('BHP.AX');
   await page.getByTestId('open-position-size').fill('2000');
   await page.getByTestId('open-position-collateral').fill('500');
   txCount = await getTransactionCount(wallet);

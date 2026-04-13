@@ -9,7 +9,7 @@
  *
  * Features:
  *   - Multi-MCP-server support (tool collision detection)
- *   - Persistent memory per agent (state.json + run-log.jsonl)
+ *   - Persistent memory per agent (state.json + run-log.<network>.jsonl)
  *   - Auto vault deployment on first run or agent file change
  *   - Vault address capture from create_vault / get_all_vaults results
  *   - LLM retry with exponential backoff
@@ -26,6 +26,7 @@
  *   AGENT_DRY_RUN             - Set to "1" to skip write tool calls
  *   AGENT_CONFIRM_WRITES      - Set to "1" to require operator approval before write batches
  *   AGENT_MAX_TOOL_RESPONSE   - Max chars from tool response sent to LLM (default 6000)
+ *   AGENT_NETWORK             - Optional network key for run log files
  *
  * Local env files: if present, `.env` and `.env.local` at the repo root are loaded
  * before reading configuration (existing shell env wins).
@@ -34,7 +35,7 @@
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import { createHash } from "node:crypto";
-import { resolve, dirname } from "node:path";
+import { resolve, dirname, basename } from "node:path";
 import { createInterface } from "node:readline/promises";
 import {
   readFileSync,
@@ -42,6 +43,7 @@ import {
   appendFileSync,
   mkdirSync,
   existsSync,
+  renameSync,
 } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
@@ -170,6 +172,107 @@ function agentMemoryDir(agentName) {
   return resolve(MEMORY_DIR, agentName);
 }
 
+function sanitizeNetworkKey(value) {
+  const cleaned = String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+  return cleaned || "default";
+}
+
+function inferNetworkKeyFromDeploymentConfig() {
+  const deploymentConfig = process.env.DEPLOYMENT_CONFIG;
+  if (!deploymentConfig) return null;
+  const file = basename(deploymentConfig);
+  return sanitizeNetworkKey(
+    file
+      .replace(/-deployment\.json$/i, "")
+      .replace(/\.deployment\.json$/i, "")
+      .replace(/\.json$/i, "")
+  );
+}
+
+function resolveRunNetworkKey() {
+  if (process.env.AGENT_NETWORK) {
+    return sanitizeNetworkKey(process.env.AGENT_NETWORK);
+  }
+  return inferNetworkKeyFromDeploymentConfig() || "default";
+}
+
+function runLogPath(agentName, networkKey) {
+  return resolve(agentMemoryDir(agentName), `run-log.${networkKey}.jsonl`);
+}
+
+function resolveDeploymentConfigPath() {
+  if (!process.env.DEPLOYMENT_CONFIG) return null;
+  return resolve(PROJECT_ROOT, process.env.DEPLOYMENT_CONFIG);
+}
+
+function buildDeploymentFingerprint(runNetwork) {
+  const deploymentConfigPath = resolveDeploymentConfigPath();
+  const deploymentConfigExists = Boolean(
+    deploymentConfigPath && existsSync(deploymentConfigPath)
+  );
+  const deploymentConfigContent = deploymentConfigExists
+    ? readFileSync(deploymentConfigPath, "utf8")
+    : "";
+  const payload = JSON.stringify({
+    runNetwork,
+    rpcUrl: process.env.RPC_URL || "",
+    deploymentConfigPath: deploymentConfigPath || "",
+    deploymentConfigExists,
+    deploymentConfigContent,
+  });
+  return {
+    fingerprint: hashContent(payload),
+    deploymentConfigPath,
+  };
+}
+
+function shortHash(hash) {
+  if (!hash) return "none";
+  const normalized = String(hash);
+  const hex = normalized.startsWith("sha256:")
+    ? normalized.slice("sha256:".length)
+    : normalized;
+  return hex.slice(0, 10);
+}
+
+function shouldInvalidateDeploymentMemory(state, nextDeploymentFingerprint) {
+  if (!state) return false;
+  if (!state.deploymentFingerprint) return true;
+  return state.deploymentFingerprint !== nextDeploymentFingerprint;
+}
+
+function rotateFileToArchive(filePath, reasonTag) {
+  if (!existsSync(filePath)) return null;
+  const archiveDir = resolve(dirname(filePath), "archive");
+  mkdirSync(archiveDir, { recursive: true });
+  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const archivedPath = resolve(
+    archiveDir,
+    `${basename(filePath)}.${stamp}.${reasonTag}`
+  );
+  renameSync(filePath, archivedPath);
+  return archivedPath;
+}
+
+function rotateAgentMemoryForDeploymentChange(
+  agentName,
+  networkKey,
+  previousFingerprint,
+  nextFingerprint
+) {
+  const reasonTag = `deployment-${shortHash(previousFingerprint)}-to-${shortHash(nextFingerprint)}`;
+  const stateFilePath = resolve(agentMemoryDir(agentName), "state.json");
+  const networkRunLogPath = runLogPath(agentName, networkKey);
+  return {
+    stateArchivePath: rotateFileToArchive(stateFilePath, reasonTag),
+    runLogArchivePath: rotateFileToArchive(networkRunLogPath, reasonTag),
+  };
+}
+
 function readState(agentName) {
   const p = resolve(agentMemoryDir(agentName), "state.json");
   if (!existsSync(p)) return null;
@@ -186,8 +289,8 @@ function writeState(agentName, state) {
   writeFileSync(resolve(dir, "state.json"), JSON.stringify(state, null, 2) + "\n");
 }
 
-function readRecentRunLog(agentName, count = 5) {
-  const p = resolve(agentMemoryDir(agentName), "run-log.jsonl");
+function readRecentRunLog(agentName, networkKey, count = 5) {
+  const p = runLogPath(agentName, networkKey);
   if (!existsSync(p)) return [];
   try {
     const lines = readFileSync(p, "utf8")
@@ -208,13 +311,10 @@ function readRecentRunLog(agentName, count = 5) {
   }
 }
 
-function appendRunLog(agentName, entry) {
+function appendRunLog(agentName, networkKey, entry) {
   const dir = agentMemoryDir(agentName);
   mkdirSync(dir, { recursive: true });
-  appendFileSync(
-    resolve(dir, "run-log.jsonl"),
-    JSON.stringify(entry) + "\n"
-  );
+  appendFileSync(runLogPath(agentName, networkKey), JSON.stringify(entry) + "\n");
 }
 
 function hashContent(content) {
@@ -598,14 +698,39 @@ export async function runAgent(agentName) {
   }
 
   const config = loadAgentConfig(agentName);
+  const runNetwork = resolveRunNetworkKey();
+  const runLogFile = `run-log.${runNetwork}.jsonl`;
+  const deploymentContext = buildDeploymentFingerprint(runNetwork);
   const maxTurns = parseInt(
     process.env.AGENT_MAX_TURNS || String(config.maxTurns),
     10
   );
 
   // --- Memory: load state and determine vault lifecycle ---
-  const state = readState(agentName);
-  const recentRuns = readRecentRunLog(agentName, 5);
+  let state = readState(agentName);
+  let recentRuns = readRecentRunLog(agentName, runNetwork, 5);
+  if (shouldInvalidateDeploymentMemory(state, deploymentContext.fingerprint)) {
+    const rotation = rotateAgentMemoryForDeploymentChange(
+      agentName,
+      runNetwork,
+      state?.deploymentFingerprint || null,
+      deploymentContext.fingerprint
+    );
+    const previousFingerprintLabel = state?.deploymentFingerprint
+      ? shortHash(state.deploymentFingerprint)
+      : "legacy";
+    console.log(
+      `Memory: deployment context changed (${previousFingerprintLabel} -> ${shortHash(deploymentContext.fingerprint)}) — invalidating state and ${runLogFile}.`
+    );
+    if (rotation.stateArchivePath) {
+      console.log(`Memory: archived state -> ${rotation.stateArchivePath}`);
+    }
+    if (rotation.runLogArchivePath) {
+      console.log(`Memory: archived run log -> ${rotation.runLogArchivePath}`);
+    }
+    state = null;
+    recentRuns = [];
+  }
   const needsNewVault =
     !state || !state.vaultAddress || state.agentFileHash !== config.fileHash;
 
@@ -623,7 +748,9 @@ export async function runAgent(agentName) {
     console.log(`Memory: vault ${state.vaultAddress} (${state.vaultName})`);
   }
   if (recentRuns.length > 0) {
-    console.log(`Memory: ${recentRuns.length} recent run(s) loaded.`);
+    console.log(
+      `Memory: ${recentRuns.length} recent run(s) loaded from ${runLogFile}.`
+    );
   }
 
   const runSummary = {
@@ -631,6 +758,7 @@ export async function runAgent(agentName) {
     model: LLM_MODEL,
     dryRun: DRY_RUN,
     confirmWrites: CONFIRM_WRITES,
+    network: runNetwork,
     turns: 0,
     toolCalls: [],
     writeActions: [],
@@ -646,6 +774,8 @@ export async function runAgent(agentName) {
   console.log(`Max turns: ${maxTurns}`);
   console.log(`Dry run: ${DRY_RUN}`);
   console.log(`Confirm writes: ${CONFIRM_WRITES}`);
+  console.log(`Run network: ${runNetwork}`);
+  console.log(`Run log file: ${runLogFile}`);
   console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
   console.log(
     `MCP servers: ${config.mcpServers.map((s) => s.name).join(", ") || "(none)"}`
@@ -893,6 +1023,8 @@ export async function runAgent(agentName) {
         vaultAddress: capturedVaultAddress,
         vaultName: config.vaultName || config.name,
         agentFileHash: config.fileHash,
+        deploymentFingerprint: deploymentContext.fingerprint,
+        deploymentConfigPath: deploymentContext.deploymentConfigPath,
         deployedAt:
           didCreateVault && capturedVaultAddress !== state?.vaultAddress
             ? runSummary.startedAt
@@ -905,6 +1037,8 @@ export async function runAgent(agentName) {
       const updatedState = {
         ...state,
         agentFileHash: config.fileHash,
+        deploymentFingerprint: deploymentContext.fingerprint,
+        deploymentConfigPath: deploymentContext.deploymentConfigPath,
         lastRunAt: runSummary.finishedAt,
       };
       writeState(agentName, updatedState);
@@ -913,18 +1047,23 @@ export async function runAgent(agentName) {
     const summarySnippet = agentSummaryText
       ? agentSummaryText.slice(0, 500)
       : "";
-    appendRunLog(agentName, {
-      timestamp: runSummary.finishedAt,
-      agent: config.name,
-      vault: capturedVaultAddress || null,
-      turns: runSummary.turns,
-      toolCalls: runSummary.toolCalls,
-      writeActions: runSummary.writeActions,
-      confirmationBatches: runSummary.confirmationBatches,
-      errors: runSummary.errors,
-      summary: summarySnippet,
-    });
-    console.log("Memory: run log appended.");
+    if (DRY_RUN) {
+      console.log("Memory: dry run active — run log not updated.");
+    } else {
+      appendRunLog(agentName, runNetwork, {
+        timestamp: runSummary.finishedAt,
+        agent: config.name,
+        network: runNetwork,
+        vault: capturedVaultAddress || null,
+        turns: runSummary.turns,
+        toolCalls: runSummary.toolCalls,
+        writeActions: runSummary.writeActions,
+        confirmationBatches: runSummary.confirmationBatches,
+        errors: runSummary.errors,
+        summary: summarySnippet,
+      });
+      console.log("Memory: run log appended.");
+    }
 
     console.log("\n=== Run Summary (JSON) ===");
     console.log(JSON.stringify(runSummary, null, 2));
@@ -936,18 +1075,23 @@ export async function runAgent(agentName) {
     });
     console.error("Agent failed:", err.message || err);
 
-    // Still persist run log on failure
-    appendRunLog(agentName, {
-      timestamp: runSummary.finishedAt,
-      agent: config.name,
-      vault: capturedVaultAddress || null,
-      turns: runSummary.turns,
-      toolCalls: runSummary.toolCalls,
-      writeActions: runSummary.writeActions,
-      confirmationBatches: runSummary.confirmationBatches,
-      errors: runSummary.errors,
-      summary: "FAILED: " + (err.message || String(err)),
-    });
+    // Persist failure log unless this is a dry run.
+    if (!DRY_RUN) {
+      appendRunLog(agentName, runNetwork, {
+        timestamp: runSummary.finishedAt,
+        agent: config.name,
+        network: runNetwork,
+        vault: capturedVaultAddress || null,
+        turns: runSummary.turns,
+        toolCalls: runSummary.toolCalls,
+        writeActions: runSummary.writeActions,
+        confirmationBatches: runSummary.confirmationBatches,
+        errors: runSummary.errors,
+        summary: "FAILED: " + (err.message || String(err)),
+      });
+    } else {
+      console.log("Memory: dry run active — failure not written to run log.");
+    }
 
     console.log("\n=== Run Summary (JSON) ===");
     console.log(JSON.stringify(runSummary, null, 2));
@@ -965,7 +1109,20 @@ export async function runAgent(agentName) {
 // CLI entry point
 // ---------------------------------------------------------------------------
 
-const agentName = process.argv[2];
-if (agentName) {
-  runAgent(agentName).catch(() => process.exit(1));
+const isDirectCliEntry =
+  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isDirectCliEntry) {
+  const agentName = process.argv[2];
+  if (agentName) {
+    runAgent(agentName).catch(() => process.exit(1));
+  }
 }
+
+export const __agentRunnerInternals = {
+  sanitizeNetworkKey,
+  buildDeploymentFingerprint,
+  shortHash,
+  shouldInvalidateDeploymentMemory,
+  rotateFileToArchive,
+  rotateAgentMemoryForDeploymentChange,
+};

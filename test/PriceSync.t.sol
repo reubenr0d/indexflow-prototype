@@ -77,9 +77,9 @@ contract PriceSyncTest is Test {
     }
 
     function test_addMapping() public {
-        bytes32 newId = keccak256("BHP");
+        bytes32 newId = keccak256("BHP.AX");
         address newToken = address(0xAA03);
-        oracle.configureAsset("BHP", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
+        oracle.configureAsset("BHP.AX", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 5000, 8);
         oracle.submitPrice(newId, 5_000_000_000); // $50
 
         priceSync.addMapping(newId, newToken);

@@ -7,7 +7,7 @@
  * the price on stdout: some Forge versions treat `ffi` stdout in ways that corrupt
  * pure decimal ASCII (e.g. digit pairs decoded as bytes).
  *
- * Usage: node scripts/fetch-yf-asset-price.js BHP
+ * Usage: node scripts/fetch-yf-asset-price.js BHP.AX
  */
 
 const fs = require("fs");

@@ -13,7 +13,7 @@ contract PricingEngineTest is Test {
     MockChainlinkFeed public xauFeed;
 
     bytes32 constant XAU = keccak256("XAU");
-    bytes32 constant BHP = keccak256("BHP");
+    bytes32 constant BHP = keccak256("BHP.AX");
 
     address owner = address(this);
 
@@ -25,7 +25,7 @@ contract PricingEngineTest is Test {
         xauFeed.setLatestAnswer(200_000_000_000, block.timestamp); // $2000
 
         oracle.configureAsset("XAU", address(xauFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
-        oracle.configureAsset("BHP", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
+        oracle.configureAsset("BHP.AX", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
         oracle.submitPrice(BHP, 4_500_000_000); // $45
 
         engine = new PricingEngine(address(oracle), owner);

@@ -16,7 +16,7 @@ This page lists the currently supported oracle assets and where each asset's pri
 - The web app reads `assetSymbols(id)` to display labels.
 - No local config or localStorage mapping is required.
 
-Duplicate tickers across exchanges are disambiguated by Yahoo Finance's suffix convention (e.g. `BHP` for US/ADR, `BHP.AX` for ASX, `BHP.L` for LSE), each producing a distinct `keccak256` hash.
+Duplicate tickers across exchanges are disambiguated by Yahoo Finance's suffix convention (e.g. `BHP.AX` for ASX, `BHP.L` for LSE). Ambiguous unsuffixed equities are rejected on write paths.
 
 ## Network coverage
 
@@ -29,13 +29,14 @@ Duplicate tickers across exchanges are disambiguated by Yahoo Finance's suffix c
 
 | Asset | OracleAdapter feed type | Provider | Network | Notes |
 | --- | --- | --- | --- | --- |
-| `BHP` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain; mock BHP index token mapped in GMX stack |
+| `BHP.AX` | `FeedType.CustomRelayer` | Yahoo Finance | Sepolia | Symbol stored on-chain; mock BHP.AX index token mapped in GMX stack |
 
 Initial `submitPrices` uses a **live Yahoo quote** at deploy time: `vm.ffi` runs `scripts/fetch-yf-asset-price.js`, which writes `cache/yf-seed-price.txt`; Solidity reads it via `vm.readFile` (avoids passing the decimal string through FFI stdout). Same for `DeployLocal` on Anvil. Set env **`SEED_PRICE_RAW`** (8-decimal USD raw integer) to skip the network call.
 
 ## Adding more assets
 
 - **Custom relayer (Yahoo Finance):** register via **Admin → Assets** (or `configureAsset` + `mapAssetToken` / `PriceSync.addMapping` as appropriate). The relayer picks up every active `CustomRelayer` asset automatically.
+- **Symbol policy:** for equities, use exchange-suffixed symbols when multiple listings exist (`BHP.AX`, `BHP.L`, etc.). Ambiguous unsuffixed equities are rejected on write flows, while unique unsuffixed equities (for example `AAPL`) remain allowed.
 - **Chainlink example (XAU/USD on Sepolia):** if you add `XAU` with feed `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, `getPrice` reads the feed and `PriceSync.syncAll()` can push it into `SimplePriceFeed` like any other configured asset.
 
 Additional tickers from any Yahoo Finance-supported exchange (ASX, LSE, TSX, etc.) use the same relayer path once registered.

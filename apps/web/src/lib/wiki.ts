@@ -1,5 +1,6 @@
 // Docs compatibility map for legacy in-app wiki routes.
-// Canonical docs content now renders directly from repository markdown in `docs/*.md`.
+// Canonical docs content now renders directly from repository markdown in `docs/*.md`,
+// including operator guidance for exchange-suffixed Yahoo equity symbols.
 
 export const LEGACY_DOCS_SLUG_ALIASES: Record<string, string> = {
   overview: "readme",

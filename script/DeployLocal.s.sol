@@ -32,8 +32,8 @@ interface IVaultErrorController {
 }
 
 /// @notice Deploy full stack to local Anvil and write `apps/web/src/config/local-deployment.json`.
-/// @dev BHP is wired via `AssetWiring.wireAsset`; additional assets can be registered permissionlessly post-deploy.
-/// @dev Initial BHP seed price is fetched live via `scripts/fetch-yf-asset-price.js` (`vm.ffi`), or `SEED_PRICE_RAW` if set.
+/// @dev BHP.AX is wired via `AssetWiring.wireAsset`; additional assets can be registered permissionlessly post-deploy.
+/// @dev Initial BHP.AX seed price is fetched live via `scripts/fetch-yf-asset-price.js` (`vm.ffi`), or `SEED_PRICE_RAW` if set.
 contract DeployLocal is Script {
     uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
 
@@ -61,9 +61,9 @@ contract DeployLocal is Script {
         Deployed memory d;
         d.usdc = address(new MockUSDC());
 
-        string memory symbol = "BHP";
+        string memory symbol = "BHP.AX";
         uint256 seedRaw = YahooFinanceSeed.rawUsdPrice8(vm, symbol);
-        console2.log("BHP seed raw (8d USD, Yahoo or SEED_PRICE_RAW):", seedRaw);
+        console2.log("BHP.AX seed raw (8d USD, Yahoo or SEED_PRICE_RAW):", seedRaw);
 
         address pfAddr = _deployGmx(d, deployer);
 

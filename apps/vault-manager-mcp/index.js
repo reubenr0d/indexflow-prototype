@@ -6,6 +6,7 @@ import { z } from "zod";
 import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
+import { classifySymbolWithSearch, symbolPolicyMessage } from "../shared/yahoo-symbol-policy.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -35,13 +36,22 @@ function deployment() {
 // Unit formatting helpers
 // ---------------------------------------------------------------------------
 
+function parseCastBigInt(raw) {
+  const value = String(raw ?? "").trim();
+  const stripped = value.replace(/\s*\[[^\]]+\]\s*$/, "").trim();
+  if (!stripped) throw new Error(`Cannot parse empty numeric value from cast output: "${value}"`);
+  if (/^-?\d+$/.test(stripped)) return BigInt(stripped);
+  if (/^-?0x[0-9a-fA-F]+$/.test(stripped)) return BigInt(stripped);
+  throw new Error(`Cannot parse integer from cast output: "${value}"`);
+}
+
 function formatUsdc(raw) {
-  const n = Number(BigInt(raw)) / 1e6;
+  const n = Number(parseCastBigInt(raw)) / 1e6;
   return n.toFixed(2);
 }
 
 function formatSharePrice(raw) {
-  const n = Number(BigInt(raw)) / 1e30;
+  const n = Number(parseCastBigInt(raw)) / 1e30;
   return n.toFixed(6);
 }
 
@@ -51,7 +61,7 @@ function formatBps(raw) {
 }
 
 function formatOraclePrice8(raw) {
-  const n = Number(BigInt(raw)) / 1e8;
+  const n = Number(parseCastBigInt(raw)) / 1e8;
   return n.toFixed(4);
 }
 
@@ -61,6 +71,45 @@ function parseIntSafe(hex) {
 
 function stripQuotes(s) {
   return s.replace(/^"|"$/g, "");
+}
+
+let _yf = null;
+async function yf() {
+  if (!_yf) {
+    const mod = await import("yahoo-finance2");
+    const YahooFinance = mod.default;
+    _yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
+  }
+  return _yf;
+}
+
+async function getSearchRows(symbol) {
+  const client = await yf();
+  try {
+    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 });
+    return (raw.quotes ?? [])
+      .filter((quote) => "symbol" in quote)
+      .map((quote) => ({
+        symbol: quote.symbol,
+        quoteType: quote.quoteType ?? "",
+        exchange: quote.exchDisp ?? quote.exchange ?? "",
+        name: quote.longname ?? quote.shortname ?? "",
+      }));
+  } catch {
+    return [];
+  }
+}
+
+async function validateWriteSymbolPolicy(symbol) {
+  const rows = await getSearchRows(symbol);
+  const classification = classifySymbolWithSearch(symbol, rows);
+  if (!classification.allowed) {
+    const err = new Error(symbolPolicyMessage(classification));
+    err.code = "INVALID_SYMBOL_POLICY";
+    err.classification = classification;
+    throw err;
+  }
+  return classification;
 }
 
 // ---------------------------------------------------------------------------
@@ -422,6 +471,7 @@ server.registerTool(
     description:
       "Wire a new tradeable asset on-chain in a single transaction via AssetWiring. " +
       "Deploys a MockIndexToken, configures the OracleAdapter, seeds the GMX price feed, and maps the asset across VaultAccounting/FundingRateManager/PriceSync. " +
+      "Ambiguous unsuffixed equities are rejected — use exchange-suffixed Yahoo symbols (e.g. BHP.AX). " +
       "Always call yfinance_quote first to get the current USD price for seedPriceUsd. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
@@ -431,14 +481,33 @@ server.registerTool(
   },
   async ({ symbol, seedPriceUsd }) => {
     try {
+      await validateWriteSymbolPolicy(symbol);
       const d = deployment();
       const seedPriceRaw8 = BigInt(Math.round(seedPriceUsd * 1e8)).toString();
       const rawReceipt = castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8]);
       return writeResult(rawReceipt, [
         { tool: "get_oracle_assets", reason: "Verify the new asset appears and is active" },
         { tool: "set_vault_assets", reason: "Add the new asset to a vault's tracked assets" },
+        { tool: "yfinance_search", reason: "Use exact exchange-suffixed symbols when a base ticker is ambiguous" },
       ]);
     } catch (err) {
+      if (err.code === "INVALID_SYMBOL_POLICY") {
+        const c = err.classification ?? {};
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              success: false,
+              error_code: "INVALID_SYMBOL_POLICY",
+              message: err.message,
+              requestedSymbol: c.requestedSymbol ?? symbol,
+              candidates: c.candidates ?? [],
+              recovery_hint: "Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).",
+            }, null, 2),
+          }],
+          isError: true,
+        };
+      }
       return writeError(err);
     }
   },

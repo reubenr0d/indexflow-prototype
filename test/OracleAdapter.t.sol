@@ -34,7 +34,7 @@ contract OracleAdapterTest is Test {
 
     bytes32 constant XAU = keccak256("XAU");
     bytes32 constant XAG = keccak256("XAG");
-    bytes32 constant BHP = keccak256("BHP");
+    bytes32 constant BHP = keccak256("BHP.AX");
 
     address keeper = address(0xBEEF);
 
@@ -50,7 +50,7 @@ contract OracleAdapterTest is Test {
         // Configure mixed feed profile
         oracle.configureAsset("XAU", address(goldFeed), IOracleAdapter.FeedType.Chainlink, 3600, 5000, 8);
         oracle.configureAsset("XAG", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
-        oracle.configureAsset("BHP", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
+        oracle.configureAsset("BHP.AX", address(0), IOracleAdapter.FeedType.CustomRelayer, 86_400, 2000, 8);
 
         vm.prank(keeper);
         oracle.submitPrice(XAG, 2_500_000_000); // $25 * 1e8

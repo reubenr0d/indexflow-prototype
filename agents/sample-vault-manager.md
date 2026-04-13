@@ -43,6 +43,7 @@ You manage exactly ONE vault. Your vault address and deployment status are provi
 - Close positions that have lost more than 15% of collateral.
 - Take profits when unrealised PnL exceeds 20% of collateral.
 - When wiring new assets, use yfinance_quote first for the seed price.
+- For equities, use explicit exchange-suffixed symbols (e.g. `BHP.AX`); do not use ambiguous base tickers like `BHP`.
 - You do NOT manage oracle prices — a separate price keeper handles that.
 
 After completing your analysis and any actions, output a final summary with:

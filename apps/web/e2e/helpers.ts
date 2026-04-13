@@ -6,9 +6,9 @@ import path from 'node:path';
 export const E2E_ACCOUNT = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
 const RPC_URL = process.env.E2E_RPC_URL ?? 'http://127.0.0.1:8545';
 
-/** `keccak256(bytes("BHP"))` — matches `DeployLocal` single CustomRelayer asset. */
+/** `keccak256(bytes("BHP.AX"))` — matches `DeployLocal` single CustomRelayer asset. */
 export const BHP_ASSET_ID =
-  '0x39ffcb70be22eb03bd43c55d57db0e1672ef8e9016fc0233569e1f8a8ff34db0';
+  '0xa6a463452d580deb8ec322d23a82cfeb4552da030bd3d4db8db762f3ded88a8f';
 
 const WALLET_FILE = path.join(__dirname, '.auth', 'wallet-address.json');
 

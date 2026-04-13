@@ -176,25 +176,33 @@ Each agent has persistent memory stored at `agents/memory/<agent-name>/`:
 
 ```
 agents/memory/sample-vault-manager/
-  state.json        # Current state (vault address, file hash, timestamps)
-  run-log.jsonl     # Append-only history (one JSON line per run)
+  state.json        # Current state (vault address, file hash, deployment fingerprint, timestamps)
+  run-log.sepolia.jsonl  # Append-only history per network (one JSON line per run)
+  run-log.local.jsonl    # Separate context stream for local runs
+  archive/          # Auto-rotated stale state/log files from deployment changes
 ```
 
-**state.json** tracks the vault address, file hash for change detection, and timestamps:
+**state.json** tracks the vault address, file hash for change detection, deployment fingerprint metadata, and timestamps:
 ```json
 {
   "vaultAddress": "0xabc...",
   "vaultName": "Mining Basket",
   "agentFileHash": "sha256:abc123...",
+  "deploymentFingerprint": "sha256:def456...",
+  "deploymentConfigPath": "/abs/path/to/sepolia-deployment.json",
   "deployedAt": "2026-04-11T10:00:00Z",
   "lastRunAt": "2026-04-11T16:00:00Z"
 }
 ```
 
-**run-log.jsonl** is appended after every run (including failures) with tool calls, actions, and the agent's summary:
+**run-log.<network>.jsonl** is appended after live runs (including failures) with tool calls, actions, and the agent's summary. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs:
 ```json
-{"timestamp":"...","agent":"sample-vault-manager","vault":"0x...","turns":5,"toolCalls":[...],"writeActions":[...],"errors":[],"summary":"..."}
+{"timestamp":"...","agent":"sample-vault-manager","network":"sepolia","vault":"0x...","turns":5,"toolCalls":[...],"writeActions":[...],"errors":[],"summary":"..."}
 ```
+
+The runner resolves `<network>` from `AGENT_NETWORK` when set, otherwise it infers it from `DEPLOYMENT_CONFIG` (for example `sepolia-deployment.json` -> `sepolia`).
+
+On startup, the runner computes a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`. If the fingerprint changed since the last saved state (or legacy state has no fingerprint), it invalidates stale context by rotating `state.json` and only the active network log (`run-log.<network>.jsonl`) into `agents/memory/<agent>/archive/`, then treats the run as fresh vault lifecycle.
 
 Memory is committed to the repo. In CI, the workflow auto-commits memory changes after each run, making agent state durable, inspectable, and version-controlled.
 
@@ -243,7 +251,7 @@ To add a new MCP server: add the server code under `apps/`, then add an entry to
 | Tool | Purpose | Key params |
 |---|---|---|
 | `yfinance_search` | Find stocks, ETFs, indices by name/ticker | `query`, `limit` |
-| `yfinance_quote` | Get live prices with USD conversion, day change, volume | `symbols[]` |
+| `yfinance_quote` | Get live prices with USD conversion, day change, volume, and symbol-resolution metadata (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates[]`) | `symbols[]` |
 
 ### On-Chain Reads (vault-manager-mcp)
 
@@ -262,7 +270,7 @@ All return `{success, transactionHash, next_steps}` with structured error recove
 
 | Tool | Purpose | Key params |
 |---|---|---|
-| `wire_asset` | Register new tradeable asset | `symbol`, `seedPriceUsd` |
+| `wire_asset` | Register new tradeable asset (rejects ambiguous unsuffixed equities like `BHP`) | `symbol`, `seedPriceUsd` |
 | `create_vault` | Deploy new basket vault | `name`, `depositFeeBps`, `redeemFeeBps` |
 | `set_vault_assets` | Set vault's tracked assets | `vault`, `assetIds[]` |
 | `allocate_to_perp` | Move USDC to perp module | `vault`, `amount` (raw USDC) |
@@ -290,6 +298,8 @@ Tool responses include `_usdc`, `_usd`, and `_pct` companion fields with human-r
 - [ ] `yfinance_search({ query: "Rio Tinto" })` -- find ticker
 - [ ] `yfinance_quote({ symbols: ["RIO.AX"] })` -- get current USD price
 - [ ] `wire_asset({ symbol: "RIO.AX", seedPriceUsd: 95.50 })` -- register on-chain
+- [ ] If `yfinance_quote` returns `isAmbiguous=true`, retry with an exchange-suffixed symbol before wiring
+- [ ] Unique unsuffixed equities (e.g. `AAPL`) and non-equity symbols (e.g. `GC=F`) are still valid
 - [ ] `get_oracle_assets()` -- verify it appears with `active: true`
 - [ ] `set_vault_assets({ vault: "<your vault>", assetIds: [...existing, ...new] })` -- add to your vault
 
@@ -365,6 +375,7 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 | `AGENT_DRY_RUN` | -- | `1` to skip write tools |
 | `AGENT_CONFIRM_WRITES` | -- | `1` to require operator confirmation for write batches (TTY only; bypasses in non-interactive runs) |
 | `AGENT_MAX_TOOL_RESPONSE` | `6000` | Max chars per tool response sent to LLM |
+| `AGENT_NETWORK` | inferred | Optional run-log namespace override; controls which `run-log.<network>.jsonl` file is read/written |
 
 ### Vault Manager MCP Server
 
@@ -398,7 +409,7 @@ agents/
   memory/                 # Per-agent persistent memory (committed to repo)
     sample-vault-manager/
       state.json
-      run-log.jsonl
+      run-log.sepolia.jsonl
 
 scripts/
   agent-runner.mjs        # Generic runner (parses .md, loads skills, memory, vault lifecycle, LLM loop)

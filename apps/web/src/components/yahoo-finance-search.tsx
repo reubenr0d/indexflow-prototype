@@ -31,7 +31,7 @@ export function YahooFinanceSearch({
   registeredAssets,
   onSelectRegistered,
   excludeIds,
-  placeholder = "Search stocks (e.g. BHP, Rio Tinto, Glencore...)",
+  placeholder = "Search stocks (e.g. BHP.AX, Rio Tinto, Glencore...)",
   value: controlledValue,
   className,
   ...rest

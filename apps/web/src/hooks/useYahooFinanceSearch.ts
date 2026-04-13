@@ -63,6 +63,8 @@ export function useYahooFinanceSearch(query: string, debounceMs = 300) {
 }
 
 export interface YFQuote {
+  requestedSymbol: string;
+  resolvedSymbol: string | null;
   symbol: string;
   name: string;
   price: number | null;
@@ -71,6 +73,8 @@ export interface YFQuote {
   currency: string;
   exchange: string;
   marketState: string;
+  isAmbiguous: boolean;
+  candidates: string[];
 }
 
 export async function fetchYahooFinanceQuote(symbol: string): Promise<YFQuote | null> {

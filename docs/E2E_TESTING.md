@@ -107,7 +107,7 @@ When `NEXT_PUBLIC_E2E_TEST_MODE=1`, `getSubgraphUrlForTarget()` always returns `
 
 ## Coverage Target
 
-Playwright helpers assume the local deploy registers **`BHP`** as the sole oracle index asset (`BHP_ASSET_ID` in `apps/web/e2e/helpers.ts`).
+Playwright helpers assume the local deploy registers **`BHP.AX`** as the sole oracle index asset (`BHP_ASSET_ID` in `apps/web/e2e/helpers.ts`).
 
 Current lifecycle coverage includes:
 

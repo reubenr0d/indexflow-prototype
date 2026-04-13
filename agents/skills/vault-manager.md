@@ -39,6 +39,7 @@ All write tools return `{success, transactionHash, next_steps}` with structured 
 | Asset ID | `keccak256("BHP.AX")` | `cast keccak "BHP.AX"` to compute |
 
 Tool responses include `_usdc`, `_usd`, and `_pct` companion fields with human-readable conversions.
+For equities, prefer exchange-suffixed Yahoo symbols (`BHP.AX`, `RIO.AX`, `BHP.L`) to avoid cross-exchange ambiguity.
 
 ## Workflows
 
