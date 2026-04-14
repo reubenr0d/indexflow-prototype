@@ -2,16 +2,11 @@
 
 This index mirrors the in-app docs routes at `/docs` in the web app.
 
-## Repo-only technical papers
-
-These markdown files live in `docs/` but are intentionally **not** mapped to in-app `/docs` routes:
-
-- [INDEXFLOW_TECHNICAL_WHITEPAPER.md](./INDEXFLOW_TECHNICAL_WHITEPAPER.md) — canonical engineering whitepaper for the current repo snapshot, with code references, interface pack, mermaid diagrams, and roadmap labels.
-
 ## In-app docs map (canonical routes)
 
 - `/docs` — searchable index built from repository markdown under `docs/*.md`.
 - `/docs/readme` — source: `docs/README.md`
+- `/docs/technical-architecture-roadmap` — source: `docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md`
 - `/docs/investor-flow` — source: `docs/INVESTOR_FLOW.md`
 - `/docs/asset-manager-flow` — source: `docs/ASSET_MANAGER_FLOW.md`
 - `/docs/perp-risk-math` — source: `docs/PERP_RISK_MATH.md`
@@ -46,7 +41,7 @@ These legacy in-app wiki routes are preserved for compatibility and redirect to 
 ## Canonical markdown sources
 
 - [README.md](./README.md)
-- [INDEXFLOW_TECHNICAL_WHITEPAPER.md](./INDEXFLOW_TECHNICAL_WHITEPAPER.md) — repo-only technical whitepaper, not an in-app `/docs` route
+- [TECHNICAL_ARCHITECTURE_AND_ROADMAP.md](./TECHNICAL_ARCHITECTURE_AND_ROADMAP.md) — Technical Architecture & Roadmap
 - [INVESTOR_FLOW.md](./INVESTOR_FLOW.md)
 - [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md)
 - [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)

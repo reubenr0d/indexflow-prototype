@@ -19,6 +19,11 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     title: "Documentation Index",
     aliases: ["overview", "contracts-reference", "troubleshooting", "security-risk"],
   },
+  {
+    fileName: "TECHNICAL_ARCHITECTURE_AND_ROADMAP.md",
+    slug: "technical-architecture-roadmap",
+    title: "Technical Architecture & Roadmap",
+  },
   { fileName: "INVESTOR_FLOW.md", slug: "investor-flow", title: "Investor Flow", aliases: ["investor"] },
   {
     fileName: "ASSET_MANAGER_FLOW.md",

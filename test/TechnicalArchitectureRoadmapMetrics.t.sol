@@ -8,9 +8,10 @@ import {IPerp} from "../src/perp/interfaces/IPerp.sol";
 import {IntegrationTest} from "./Integration.t.sol";
 import {GlobalLiquiditySharingIntegrationTest} from "./GlobalLiquiditySharingIntegration.t.sol";
 
-contract WhitepaperMetricsBasketTest is IntegrationTest {
+contract TechnicalArchitectureRoadmapMetricsBasketTest is IntegrationTest {
     function test_metrics_reserveDepth_redemptionHeadroom_and_topUpEffect() public {
-        BasketVault basket = new BasketVault("Whitepaper Gold Basket", address(usdc), address(oracleAdapter), deployer);
+        BasketVault basket =
+            new BasketVault("Architecture Gold Basket", address(usdc), address(oracleAdapter), deployer);
 
         bytes32[] memory assetIds = new bytes32[](1);
         assetIds[0] = GOLD_ID;
@@ -147,7 +148,7 @@ contract WhitepaperMetricsBasketTest is IntegrationTest {
     }
 }
 
-contract WhitepaperMetricsSharedPoolTest is GlobalLiquiditySharingIntegrationTest {
+contract TechnicalArchitectureRoadmapMetricsSharedPoolTest is GlobalLiquiditySharingIntegrationTest {
     function test_metrics_shared_pool_stress_waterfall() public {
         _deployStack(150_000e6);
 

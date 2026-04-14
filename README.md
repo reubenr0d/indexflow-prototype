@@ -340,6 +340,7 @@ Agent memory is deployment-aware: the runner fingerprints the active deployment 
   - `/docs` — searchable index sourced directly from repository markdown under `docs/*.md`.
   - Canonical routes:
     - `/docs/readme`
+    - `/docs/technical-architecture-roadmap`
     - `/docs/investor-flow`
     - `/docs/asset-manager-flow`
     - `/docs/perp-risk-math`
@@ -353,13 +354,11 @@ Agent memory is deployment-aware: the runner fingerprints the active deployment 
     - `/docs/pwa-push-notifications`
     - `/docs/regulatory-roadmap-draft`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
-- Repo-only technical papers:
-  - [docs/INDEXFLOW_TECHNICAL_WHITEPAPER.md](docs/INDEXFLOW_TECHNICAL_WHITEPAPER.md) — Engineering-grade protocol whitepaper covering live contract design, module boundaries, code references, testing surfaces, roadmap labels, and a dated competitor/tokenomics appendix. This document is intentionally **not** wired to a `/docs` route in the web app.
 - Operator monitoring surfaces (web app):
   - `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink` or `Custom Oracle`).
   - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
 - [MODIFICATIONS.md](MODIFICATIONS.md) — Detailed changes vs upstream GMX.
-- [docs/INDEXFLOW_TECHNICAL_WHITEPAPER.md](docs/INDEXFLOW_TECHNICAL_WHITEPAPER.md) — Canonical repo-facing technical whitepaper for IndexFlow’s basket-vault, shared-perp, oracle, monitoring, governance, and tokenomics design.
+- [docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md](docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md) — Canonical IndexFlow technical architecture and roadmap document for basket-vault, shared-perp, oracle, monitoring, governance, and tokenomics design.
 - [docs/INVESTOR_FLOW.md](docs/INVESTOR_FLOW.md) — Basket share holder journey, mint/redeem vs NAV, perp allocation, and what investors do not control.
 - [docs/ASSET_MANAGER_FLOW.md](docs/ASSET_MANAGER_FLOW.md) — Basket/perp manager flow: setup, capital allocation, positions, risk controls, and implementation caveats.
 - [docs/PERP_RISK_MATH.md](docs/PERP_RISK_MATH.md) — Leverage formulas, unit conventions, and liquidation caveats for operator sizing decisions.

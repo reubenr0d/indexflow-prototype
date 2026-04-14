@@ -1,16 +1,16 @@
-# IndexFlow Technical Whitepaper
+# IndexFlow Technical Architecture & Roadmap
 
 Status: technical repository draft  
 Date: 2026-04-14  
 Scope: current repository implementation plus explicitly labeled roadmap items
 
-This document is the canonical engineering whitepaper for the current `snx-prototype` repository snapshot. When repository markdown, slide language, and deployed code diverge, this document treats code as the source of truth for implemented behavior and labels everything else as draft or recommendation.
+This document is the canonical technical architecture and roadmap for the current `snx-prototype` repository snapshot. When repository markdown, slide language, and deployed code diverge, this document treats code as the source of truth for implemented behavior and labels everything else as draft or recommendation.
 
 Status labels used throughout:
 
 - `Implemented today` means the behavior exists in this repository’s current contracts, scripts, tests, or read models.
 - `Documented in repo drafts` means the behavior appears in repository markdown or planning docs but is not implemented on-chain.
-- `Recommended future design` means a design recommendation made in this paper to reconcile the current repo with the target IndexFlow architecture.
+- `Recommended future design` means a design recommendation made in this document to reconcile the current repo with the target IndexFlow architecture.
 
 ## Abstract
 
@@ -18,7 +18,7 @@ IndexFlow is a structured-exposure protocol built around basket vaults that acce
 
 In the current repo, `BasketVault` holds user funds, prices shares from idle USDC plus perp allocation plus attributed PnL, and gates redemptions by immediate idle liquidity. `VaultAccounting` sits between baskets and the shared GMX vault, tracks per-basket capital buckets and realized/unrealized PnL, and opens positions in a shared counterparty pool. `OracleAdapter`, `PricingEngine`, `FundingRateManager`, `PriceSync`, `PerpReader`, and `AssetWiring` provide the oracle, pricing, funding, monitoring, and deployment surfaces around that core. Code refs: `src/vault/BasketVault.sol` `L12-L313`; `src/perp/VaultAccounting.sol` `L12-L513`; `src/perp/OracleAdapter.sol` `L7-L286`; `src/perp/PricingEngine.sol` `L7-L150`; `src/perp/FundingRateManager.sol` `L8-L241`; `src/perp/PriceSync.sol` `L7-L183`; `src/perp/PerpReader.sol` `L11-L262`; `src/perp/AssetWiring.sol` `L19-L86`.
 
-This paper formalizes the current implementation, identifies the exact places where repo code stops and roadmap language begins, and proposes a coherent next-step architecture for governance, tokenomics, backstops, and multi-chain expansion.
+This document formalizes the current implementation, identifies the exact places where repo code stops and roadmap language begins, and proposes a coherent next-step architecture for governance, tokenomics, backstops, and multi-chain expansion.
 
 ## Introduction and protocol thesis
 
@@ -30,7 +30,7 @@ The current repository already encodes three defining protocol choices:
 2. Basket NAV is not just idle cash. It includes idle USDC, capital allocated to the perp module, realized PnL, and unrealized PnL when `VaultAccounting` is wired. Code refs: `src/vault/BasketVault.sol` `_totalVaultValue()` `L294-L296`; `_pricingNav()` `L299-L305`.
 3. Redemption liquidity is not equal to NAV. `redeem()` prices against `_pricingNav()` but hard-reverts if the vault does not hold enough idle USDC after reserved fees. Code refs: `src/vault/BasketVault.sol` `BasketVault.redeem()` `L172-L191`.
 
-That third choice is the central design truth the whitepaper should preserve. In IndexFlow, total value and redeemable liquidity are different state variables. This is not a documentation caveat. It is the main solvency and UX constraint around which the protocol must be designed.
+That third choice is the central design truth this document should preserve. In IndexFlow, total value and redeemable liquidity are different state variables. This is not a documentation caveat. It is the main solvency and UX constraint around which the protocol must be designed.
 
 The repo’s supporting docs already explain this operating model from both investor and operator perspectives. Code-adjacent doc refs: `docs/SHARE_PRICE_AND_OPERATIONS.md`; `docs/ASSET_MANAGER_FLOW.md`; `docs/INVESTOR_FLOW.md`; `docs/GLOBAL_POOL_MANAGEMENT_FLOW.md`.
 
@@ -154,7 +154,7 @@ Current repo behavior is simpler and stricter: redemption is synchronous and bou
 
 On-chain basket composition is presently a list of active asset ids, not a weighted index. `BasketVault` stores `AssetAllocation[]` with only `bytes32 assetId`, validates each asset against the oracle, and exposes `getAssetCount()` / `getAssetAt()`. There is no stored weight vector, rebalance schedule, or basket-level target-allocation math in the contract. Code refs: `src/vault/BasketVault.sol` `AssetAllocation` `L23-L26`; `setAssets()` `L88-L98`; `getAssetCount()` `L275-L279`; `getAssetAt()` `L283-L287`.
 
-This is enough for asset admission and basket identification, but not enough for a formal “index methodology” section. The whitepaper should therefore describe the current repo as supporting basket asset sets with manager-directed perp exposure, not yet fully weighted on-chain indices.
+This is enough for asset admission and basket identification, but not enough for a formal “index methodology” section. This document should therefore describe the current repo as supporting basket asset sets with manager-directed perp exposure, not yet fully weighted on-chain indices.
 
 ### Sequence: deposit flow
 
@@ -330,7 +330,7 @@ impactBps = min(sizeDelta * impactFactorBps / availableLiquidity, maxImpactBps)
 
 It reverts on stale oracle data and supports per-asset impact curves with defaults. Code refs: `src/perp/PricingEngine.sol` `configureAssetImpact()` `L65-L72`; `setDefaultImpact()` `L77-L82`; `getExecutionPrice()` `L92-L109`; `_calculateImpact()` `L135-L150`.
 
-The important limitation is that `PricingEngine` is currently a quote engine, not the canonical execution engine. `VaultAccounting.openPosition()` and `closePosition()` call directly into GMX and do not consult `PricingEngine`. The whitepaper should therefore present deterministic slippage as an implemented quoting primitive and a recommended future execution primitive, not as something already enforced at trade settlement.
+The important limitation is that `PricingEngine` is currently a quote engine, not the canonical execution engine. `VaultAccounting.openPosition()` and `closePosition()` call directly into GMX and do not consult `PricingEngine`. This document should therefore present deterministic slippage as an implemented quoting primitive and a recommended future execution primitive, not as something already enforced at trade settlement.
 
 ### Funding
 
@@ -378,7 +378,7 @@ The current practical waterfall is:
 3. if GMX pool liquidity is insufficient, the close can revert with `Vault: poolAmount exceeded`;
 4. there is no first-party insurance or backstop module after that point.
 
-This behavior is not hypothetical. It is demonstrated in the shared-pool stress suite and in the dedicated metrics harness. Test refs: `test/GlobalLiquiditySharingIntegration.t.sol` `L174-L199`; `test/WhitepaperMetrics.t.sol` `L148-L193`.
+This behavior is not hypothetical. It is demonstrated in the shared-pool stress suite and in the dedicated metrics harness. Test refs: `test/GlobalLiquiditySharingIntegration.t.sol` `L174-L199`; `test/TechnicalArchitectureRoadmapMetrics.t.sol` `L148-L193`.
 
 ### Sequence: liquidation and backstop flow
 
@@ -435,7 +435,7 @@ The new metrics harness makes the effect explicit. In a deterministic local scen
 | Reserve ratio | 50.00% | 60.00% |
 | Immediately redeemable share fraction | 50.00% | 60.00% |
 
-After the top-up, a previously failing redemption becomes executable. Test refs: `test/WhitepaperMetrics.t.sol` `WhitepaperMetricsBasketTest.test_metrics_reserveDepth_redemptionHeadroom_and_topUpEffect()` `L12-L95`.
+After the top-up, a previously failing redemption becomes executable. Test refs: `test/TechnicalArchitectureRoadmapMetrics.t.sol` `TechnicalArchitectureRoadmapMetricsBasketTest.test_metrics_reserveDepth_redemptionHeadroom_and_topUpEffect()` `L12-L95`.
 
 ### Shared-pool top-ups
 
@@ -462,7 +462,7 @@ sequenceDiagram
 
 `Recommended future design`
 
-The whitepaper should formally distinguish:
+This document should formally distinguish:
 
 - basket reserve top-ups, which improve redemption depth and accrue to current share holders;
 - shared-pool top-ups, which improve trading capacity and liquidation resilience across all connected baskets.
@@ -496,7 +496,7 @@ IndexFlow needs a two-speed governance design:
 1. slow governance for token-defined control points such as asset admission, manager admission, chain expansion, and treasury policy;
 2. fast risk governance for pauses, oracle disables, cap changes, and emergency routing.
 
-The closest official design references are Drift’s risk and safety surfaces, Jupiter’s explicit custody and multisig ceremony language, and dYdX’s staking-plus-governance chain model.[^drifttoken][^dydxutility][^dydxmica]
+The closest official design references are Drift’s risk and safety surfaces, Jupiter’s explicit custody and multisig ceremony language, and dYdX’s staking-plus-governance chain model.[^drifttoken][^dydxutility][^dydxrewards]
 
 Concrete recommendations:
 
@@ -960,9 +960,9 @@ ABI source ref: `apps/web/src/abi/contracts.ts`.
 
 ### Existing baseline
 
-Before this whitepaper pass, the repository already had a full Foundry baseline of `133/133` passing tests, as observed during planning.
+Before this technical-architecture and roadmap pass, the repository already had a full Foundry baseline of `133/133` passing tests, as observed during planning.
 
-After adding the deterministic whitepaper metrics harness in this pass, the full repo suite now passes `162/162` tests on `2026-04-14` using:
+After adding the deterministic technical architecture metrics harness in this pass, the full repo suite now passes `162/162` tests on `2026-04-14` using:
 
 ```bash
 PATH="/Users/reuben/.foundry/bin:$PATH" forge test --root /Users/reuben/Desktop/minestarters/code/snx-prototype
@@ -981,7 +981,7 @@ Test refs: `test/Integration.t.sol` `test_basketE2E_fullRoundTrip()` `L831-L902`
 
 ### Added deterministic metrics harness
 
-This whitepaper pass adds `test/WhitepaperMetrics.t.sol` to produce reproducible, whitepaper-grade metrics over reserve depth, shared-pool utilization, and shared-pool stress behavior. Test ref: `test/WhitepaperMetrics.t.sol` `L11-L193`.
+This technical-architecture and roadmap pass adds `test/TechnicalArchitectureRoadmapMetrics.t.sol` to produce reproducible, architecture-grade metrics over reserve depth, shared-pool utilization, and shared-pool stress behavior. Test ref: `test/TechnicalArchitectureRoadmapMetrics.t.sol` `L11-L193`.
 
 Observed outputs from the targeted run:
 
@@ -1028,7 +1028,7 @@ The repo should add:
 | Jupiter Perps | Jupiter developer docs on the pool account[^jupiterpool] | Investors and integrators expect explicit AUM, cap, and weight-buffer accounting |
 | Gains Network | Gains gToken vault docs and staker docs[^gainsvault][^gainsstaker][^gainsfaq] | LP-as-counterparty vaults need explicit exchange-rate math, withdrawal friction, and solvency-restoration logic |
 | Drift | Drift insurance fund, safety module, and token docs[^driftif][^driftifstaking][^driftdsm][^drifttoken] | Stake-to-insure modules need explicit bankruptcy risk, cooldowns, and fee-linked incentives |
-| dYdX Chain | dYdX Foundation utility and rewards posts[^dydxutility][^dydxrewards][^dydxmica] | Fee-linked staking and governance are stronger than abstract governance-only utility |
+| dYdX Chain | dYdX Foundation utility and rewards posts[^dydxutility][^dydxrewards] | Fee-linked staking and governance are stronger than abstract governance-only utility |
 | Hyperliquid | Hyperliquid oracle, liquidations, protocol-vault, and staking docs[^hyperoracle][^hyperliquidations][^hypervaults][^hyperstake] | Sophisticated perps integrators expect explicit liquidation mechanics, protocol backstop descriptions, and staking lockup rules |
 | Sommelier | Sommelier cellar docs[^sommelier] | Vault docs should openly document ERC-4626 deviations, share locks, and `totalAssets` caveats |
 | Synthetix V3 | Synthetix V3 docs[^synthetixv3] | Shared collateral allocated across markets is a proven design reference for pooled risk budgets |
@@ -1075,9 +1075,9 @@ Interpretation for IndexFlow:
 4. `PerpReader.getTotalVaultValue()` uses raw USDC balance and does not subtract `collectedFees`, while `BasketVault._pricingNav()` excludes fees. This is a read-model mismatch. Code refs: `src/perp/PerpReader.sol` `L162-L171`; `src/vault/BasketVault.sol` `L309-L313`.
 5. `PerpReader.getBasketInfo()` sets both `basketPrice` and `sharePrice` to `bv.getSharePrice()`. If the product wants a distinct basket-level index price, that field is not implemented today. Code refs: `src/perp/PerpReader.sol` `L103-L117`.
 6. `AssetWiring.wireAsset()` is permissionless and deploys `MockIndexToken`, which is appropriate for local/testnet bootstrap but not a production admission-control model. Code refs: `src/perp/AssetWiring.sol` `L19-L77`.
-7. There is no first-party token, insurance fund, redemption reserve, timelock, security council, or proxy upgradeability in repo code today. Any whitepaper language implying these are live would be inaccurate.
+7. There is no first-party token, insurance fund, redemption reserve, timelock, security council, or proxy upgradeability in repo code today. Any outdated document naming implying these are live would be inaccurate.
 8. `FundingRateManager` exists, but basket execution does not route through a closed-loop funding policy system. It remains an owner/keeper surface. Code refs: `src/perp/FundingRateManager.sol` `L157-L167`.
-9. Shared-pool stress currently ends in a hard revert, not an explicit protocol-managed backstop. Test refs: `test/GlobalLiquiditySharingIntegration.t.sol` `L174-L199`; `test/WhitepaperMetrics.t.sol` `L148-L193`.
+9. Shared-pool stress currently ends in a hard revert, not an explicit protocol-managed backstop. Test refs: `test/GlobalLiquiditySharingIntegration.t.sol` `L174-L199`; `test/TechnicalArchitectureRoadmapMetrics.t.sol` `L148-L193`.
 10. `VaultAccounting.openPosition()` increments `positionCount` even when adding to an already-open key, which may overcount unique legs under repeated increases. Code ref: `src/perp/VaultAccounting.sol` `L294-L329`.
 11. The `IPerp` comment says `getVaultPnL()` unrealized output excludes funding accrual, but `VaultAccounting.getVaultPnL()` subtracts a funding-fee estimate from unrealized PnL. Interface comments should be reconciled with implementation. Code refs: `src/perp/interfaces/IPerp.sol` `L83-L88`; `src/perp/VaultAccounting.sol` `L406-L433`.
 12. Repo docs contain no canonical local source for private-round terms. The requested `$1M` at `$10M` FDV assumption therefore needs reconciliation against any external deck or fundraising material before publication.
@@ -1104,7 +1104,6 @@ Interpretation for IndexFlow:
 [^driftdsm]: Drift Docs, "Drift Safety Module", https://docs.drift.trade/drift-safety-module
 [^dydxutility]: dYdX Foundation, "DYDX Token Utility Explained", https://www.dydx.foundation/blog/dydx-token-utility-explaned
 [^dydxrewards]: dYdX Foundation, "Understanding Rewards and Fees on the dYdX Chain", https://www.dydx.foundation/blog/understanding-rewards-and-fees-on-the-dydx-chain
-[^dydxmica]: dYdX Foundation, "Navigating MiCA: What the DYDX Token Means in a Regulated World", https://www.dydx.foundation/blog/dydx-mica-whitepaper
 [^synthetixv3]: Synthetix Docs, "Synthetix V3", https://docs.synthetix.io/synthetix-v3
 [^tokenomicsdraft]: Repository draft, `docs/UTILITY_TOKEN_TOKENOMICS.md`
 [^coingecko]: CoinGecko API snapshot taken on 2026-04-14 via `simple/price` endpoint for `gmx,gains-network,drift-protocol,hyperliquid,jupiter-exchange-solana,sommelier,havven,dydx-chain`.
