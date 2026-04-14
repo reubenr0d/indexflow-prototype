@@ -29,11 +29,7 @@ export function useBasketDashboardData(vault: Address) {
   const { data: requiredReserveUsdc } = useRequiredReserveUsdc(vault);
   const { data: availableForPerpUsdc } = useAvailableForPerpUsdc(vault);
   const { data: collectedFees } = useCollectedFees(vault);
-  const {
-    data: onchainBasketAssets,
-    isLoading: isOnchainAssetsLoading,
-    isFetching: isOnchainAssetsFetching,
-  } = useBasketAssets(vault);
+  const { data: onchainBasketAssets } = useBasketAssets(vault);
   const { data: assetMeta } = useOracleAssetMetaMap();
   const { chainId } = useDeploymentTarget();
   const { usdc, vaultAccounting } = getContracts(chainId);

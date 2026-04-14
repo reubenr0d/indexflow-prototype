@@ -2,6 +2,12 @@
 
 This index mirrors the in-app docs routes at `/docs` in the web app.
 
+## Repo-only technical papers
+
+These markdown files live in `docs/` but are intentionally **not** mapped to in-app `/docs` routes:
+
+- [INDEXFLOW_TECHNICAL_WHITEPAPER.md](./INDEXFLOW_TECHNICAL_WHITEPAPER.md) — canonical engineering whitepaper for the current repo snapshot, with code references, interface pack, mermaid diagrams, and roadmap labels.
+
 ## In-app docs map (canonical routes)
 
 - `/docs` — searchable index built from repository markdown under `docs/*.md`.
@@ -40,6 +46,7 @@ These legacy in-app wiki routes are preserved for compatibility and redirect to 
 ## Canonical markdown sources
 
 - [README.md](./README.md)
+- [INDEXFLOW_TECHNICAL_WHITEPAPER.md](./INDEXFLOW_TECHNICAL_WHITEPAPER.md) — repo-only technical whitepaper, not an in-app `/docs` route
 - [INVESTOR_FLOW.md](./INVESTOR_FLOW.md)
 - [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md)
 - [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)

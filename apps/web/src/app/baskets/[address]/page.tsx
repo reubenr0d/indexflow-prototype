@@ -33,7 +33,6 @@ import {
   formatBps,
   formatAddress,
   formatPrice,
-  formatRelativeTime,
   formatSignedUsd1e30,
   formatUsd1e30,
   formatAssetId,
@@ -65,12 +64,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     tvl,
     idleUsdc,
     requiredReserve,
-    availableForPerp,
     reserveHealthy,
     collectedFeesUsdc,
     depositFee,
     redeemFee,
-    minReserveBps,
     unrealisedPnL,
     realisedPnL,
     netPnL,
@@ -80,7 +77,6 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     blended,
     showAllocatedComposition,
     assetMeta,
-    chainId,
   } = useBasketDashboardData(vault);
 
   const [historySkip, setHistorySkip] = useState(0);

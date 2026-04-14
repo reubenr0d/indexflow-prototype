@@ -45,7 +45,6 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     redeemFee,
     minReserveBps,
     unrealisedPnL,
-    realisedPnL,
     netPnL,
     capitalUtilPct,
     leverageRatio,
