@@ -320,8 +320,11 @@ LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
 # Dry-run mode
 AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
 
-# Interactive write approval mode (asks before on-chain writes)
-AGENT_CONFIRM_WRITES=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+# Write confirmations are ON by default (interactive TTY prompts before on-chain writes)
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+
+# Non-interactive auto-execute override (off by default)
+AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
 
 # Backward-compatible shortcuts for sample-vault-manager
 LLM_API_KEY=sk-... npm run agent:dry

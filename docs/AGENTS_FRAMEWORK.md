@@ -15,8 +15,11 @@ LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
 # Dry-run mode (observe only, no on-chain writes)
 AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
 
-# Interactive write confirmation mode (local operator approval)
-AGENT_CONFIRM_WRITES=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+# Write confirmation is enabled by default (interactive TTY prompts)
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+
+# Non-interactive auto-execute override (disabled by default)
+AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
 
 # Backward-compatible shortcuts for the sample agent
 LLM_API_KEY=sk-... npm run agent:dry
@@ -348,14 +351,16 @@ The cron schedule runs `sample-vault-manager` every 6 hours by default. After ea
 
 ### Write Confirmation Mode
 
-Set `AGENT_CONFIRM_WRITES=1` to require approval whenever an assistant turn proposes one or more write tools.
+Write confirmation is enabled by default. Whenever an assistant turn proposes one or more write tools, the runner requires approval in interactive terminals.
 
 - The runner pauses and shows the proposed write batch.
 - Commands:
   - `approve`: execute the full batch in order (including any read calls in that same batch)
   - `reject`: skip the write batch and ask the model to propose an alternative
   - any other text: treated as operator feedback; the model revises its proposed calls, and the approval loop repeats
-- If no interactive TTY is available (for example CI), confirmation is bypassed and writes proceed with an explicit log message.
+- If no interactive TTY is available (for example CI), write calls are skipped by default and read calls still run.
+- Set `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` to explicitly allow non-interactive write execution without prompts.
+- Set `AGENT_CONFIRM_WRITES=0` to disable confirmation logic entirely.
 - `AGENT_DRY_RUN=1` still takes precedence and skips write execution entirely.
 
 ---
@@ -373,7 +378,8 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 | `LLM_MODEL` | `gpt-4o` | Model name |
 | `AGENT_MAX_TURNS` | from agent config | Override max turns |
 | `AGENT_DRY_RUN` | -- | `1` to skip write tools |
-| `AGENT_CONFIRM_WRITES` | -- | `1` to require operator confirmation for write batches (TTY only; bypasses in non-interactive runs) |
+| `AGENT_CONFIRM_WRITES` | `1` | Write confirmation gate; set `0` to disable confirmation logic |
+| `AGENT_NON_INTERACTIVE_WRITE_EXECUTE` | -- | `1` to auto-execute writes in non-interactive runs when confirmation is enabled |
 | `AGENT_MAX_TOOL_RESPONSE` | `6000` | Max chars per tool response sent to LLM |
 | `AGENT_NETWORK` | inferred | Optional run-log namespace override; controls which `run-log.<network>.jsonl` file is read/written |
 

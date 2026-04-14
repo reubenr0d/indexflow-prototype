@@ -24,7 +24,8 @@
  *   LLM_MODEL                - Model name (defaults to gpt-4o)
  *   AGENT_MAX_TURNS           - Override max turns from agent config
  *   AGENT_DRY_RUN             - Set to "1" to skip write tool calls
- *   AGENT_CONFIRM_WRITES      - Set to "1" to require operator approval before write batches
+ *   AGENT_CONFIRM_WRITES      - Defaults to enabled; set to "0" to disable write confirmations
+ *   AGENT_NON_INTERACTIVE_WRITE_EXECUTE - Set to "1" to auto-execute writes in non-interactive sessions
  *   AGENT_MAX_TOOL_RESPONSE   - Max chars from tool response sent to LLM (default 6000)
  *   AGENT_NETWORK             - Optional network key for run log files
  *
@@ -49,6 +50,7 @@ import { fileURLToPath } from "node:url";
 import {
   classifyToolCalls,
   shouldBypassWriteConfirmation,
+  shouldSkipWritesForNonInteractiveSession,
   isInteractiveTty,
 } from "./agent-runner-confirmation.mjs";
 
@@ -389,8 +391,11 @@ const LLM_MODEL = process.env.LLM_MODEL || "gpt-4o";
 const DRY_RUN = ["1", "true", "yes"].includes(
   (process.env.AGENT_DRY_RUN || "").toLowerCase()
 );
-const CONFIRM_WRITES = ["1", "true", "yes"].includes(
-  (process.env.AGENT_CONFIRM_WRITES || "").toLowerCase()
+const CONFIRM_WRITES = !["0", "false", "no"].includes(
+  (process.env.AGENT_CONFIRM_WRITES || "").toLowerCase().trim()
+);
+const NON_INTERACTIVE_WRITE_EXECUTE = ["1", "true", "yes"].includes(
+  (process.env.AGENT_NON_INTERACTIVE_WRITE_EXECUTE || "").toLowerCase().trim()
 );
 const MAX_TOOL_RESPONSE = parseInt(
   process.env.AGENT_MAX_TOOL_RESPONSE || "6000",
@@ -774,6 +779,9 @@ export async function runAgent(agentName) {
   console.log(`Max turns: ${maxTurns}`);
   console.log(`Dry run: ${DRY_RUN}`);
   console.log(`Confirm writes: ${CONFIRM_WRITES}`);
+  console.log(
+    `Non-interactive write execute override: ${NON_INTERACTIVE_WRITE_EXECUTE}`
+  );
   console.log(`Run network: ${runNetwork}`);
   console.log(`Run log file: ${runLogFile}`);
   console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
@@ -827,7 +835,7 @@ export async function runAgent(agentName) {
       { role: "user", content: config.userPrompt },
     ];
 
-    async function executeToolCall(call) {
+    async function executeToolCall(call, { forceSkipWrites = false } = {}) {
       const { toolCall, toolName, originalName, args, isWrite } = call;
       console.log(`  Tool: ${toolName}(${JSON.stringify(args)})`);
       runSummary.toolCalls.push(toolName);
@@ -845,8 +853,10 @@ export async function runAgent(agentName) {
         return;
       }
 
-      if (DRY_RUN && isWrite) {
-        const skipMsg = `[DRY RUN] Skipped write tool: ${toolName}`;
+      if ((DRY_RUN || forceSkipWrites) && isWrite) {
+        const skipMsg = DRY_RUN
+          ? `[DRY RUN] Skipped write tool: ${toolName}`
+          : `[CONFIRM WRITES] Non-interactive session without AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1; skipped write tool: ${toolName}`;
         console.log(`  ${skipMsg}`);
         runSummary.writeActions.push({
           tool: toolName,
@@ -929,36 +939,58 @@ export async function runAgent(agentName) {
         choice.message.tool_calls || [],
         config.writeTools
       );
+      let skipWritesThisBatch = false;
 
       if (CONFIRM_WRITES && !DRY_RUN && classified.hasWriteCalls) {
+        const interactiveTty = isInteractiveTty();
         const bypassConfirmation = shouldBypassWriteConfirmation({
           confirmWritesEnabled: CONFIRM_WRITES,
           dryRun: DRY_RUN,
           hasWriteCalls: classified.hasWriteCalls,
-          interactiveTty: isInteractiveTty(),
+          interactiveTty,
+          nonInteractiveWriteExecute: NON_INTERACTIVE_WRITE_EXECUTE,
+        });
+        const skipNonInteractiveWrites = shouldSkipWritesForNonInteractiveSession({
+          confirmWritesEnabled: CONFIRM_WRITES,
+          dryRun: DRY_RUN,
+          hasWriteCalls: classified.hasWriteCalls,
+          interactiveTty,
+          nonInteractiveWriteExecute: NON_INTERACTIVE_WRITE_EXECUTE,
         });
 
         if (bypassConfirmation) {
           console.log(
-            "  [CONFIRM WRITES] Non-interactive terminal detected; bypassing confirmation and executing write batch."
+            "  [CONFIRM WRITES] Non-interactive terminal detected with AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1; bypassing confirmation and executing write batch."
           );
           runSummary.confirmationBatches.push({
             turn: turn + 1,
-            status: "bypassed-non-interactive",
+            status: "bypassed-non-interactive-execute",
             interactive: false,
             refinementRounds: 0,
             proposedWriteTools: classified.writeCalls.map((c) => c.toolName),
           });
+        } else if (skipNonInteractiveWrites) {
+          console.log(
+            "  [CONFIRM WRITES] Non-interactive terminal detected; AGENT_NON_INTERACTIVE_WRITE_EXECUTE is disabled, so write calls will be skipped."
+          );
+          runSummary.confirmationBatches.push({
+            turn: turn + 1,
+            status: "bypassed-non-interactive-skip-writes",
+            interactive: false,
+            refinementRounds: 0,
+            proposedWriteTools: classified.writeCalls.map((c) => c.toolName),
+          });
+          skipWritesThisBatch = true;
         } else {
           const confirmation = await confirmWriteBatchInteractively({
             initialChoice: choice,
             initialClassified: classified,
             turn: turn + 1,
-          messages,
-          openaiTools,
-          temperature: config.temperature,
-          writeTools: config.writeTools,
-        });
+            messages,
+            openaiTools,
+            temperature: config.temperature,
+            writeTools: config.writeTools,
+          });
 
           runSummary.confirmationBatches.push({
             turn: turn + 1,
@@ -1011,7 +1043,7 @@ export async function runAgent(agentName) {
 
       messages.push(choice.message);
       for (const call of classified.calls) {
-        await executeToolCall(call);
+        await executeToolCall(call, { forceSkipWrites: skipWritesThisBatch });
       }
     }
 

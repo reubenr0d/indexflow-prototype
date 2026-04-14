@@ -36,11 +36,29 @@ export function shouldBypassWriteConfirmation({
   dryRun,
   hasWriteCalls,
   interactiveTty,
+  nonInteractiveWriteExecute,
 }) {
   return (
     confirmWritesEnabled &&
     !dryRun &&
     hasWriteCalls &&
-    !interactiveTty
+    !interactiveTty &&
+    nonInteractiveWriteExecute
+  );
+}
+
+export function shouldSkipWritesForNonInteractiveSession({
+  confirmWritesEnabled,
+  dryRun,
+  hasWriteCalls,
+  interactiveTty,
+  nonInteractiveWriteExecute,
+}) {
+  return (
+    confirmWritesEnabled &&
+    !dryRun &&
+    hasWriteCalls &&
+    !interactiveTty &&
+    !nonInteractiveWriteExecute
   );
 }
