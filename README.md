@@ -307,6 +307,7 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
 **Multi-Agent Framework**
 
 Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent.
+For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryDirection`, `maxNewPositionsPerRun`).
 
 ```bash
 # Install MCP server deps (one-time)

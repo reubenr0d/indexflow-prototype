@@ -164,6 +164,34 @@ function parseReceipt(rawJson) {
   }
 }
 
+const BASKET_CREATED_TOPIC =
+  "0xdd8d0dea78c92dc9118b2f6db8e1467c0b543dc8fdc4251fdce2ba2352b44d16";
+
+function topicToAddress(topic) {
+  if (typeof topic !== "string" || !topic.startsWith("0x") || topic.length !== 66) return null;
+  return `0x${topic.slice(-40)}`;
+}
+
+function extractVaultAddressFromCreateVaultReceipt(rawJson) {
+  try {
+    const receipt = JSON.parse(rawJson);
+    const logs = Array.isArray(receipt?.logs) ? receipt.logs : [];
+    for (const log of logs) {
+      const topics = Array.isArray(log?.topics) ? log.topics : [];
+      if (
+        topics.length >= 3 &&
+        String(topics[0]).toLowerCase() === BASKET_CREATED_TOPIC &&
+        typeof topics[2] === "string"
+      ) {
+        return topicToAddress(topics[2]);
+      }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 function writeResult(rawReceipt, nextSteps) {
   const tx = parseReceipt(rawReceipt);
   const result = { success: tx.status === "success", ...tx };
@@ -520,8 +548,8 @@ server.registerTool(
     description:
       "Deploy a new basket vault via BasketFactory.createBasket. The vault is auto-registered with VaultAccounting. " +
       "Fees are in basis points: 100 bps = 1%, max 500 bps = 5%. " +
-      "Returns {success, transactionHash, next_steps}. " +
-      "After creation, call get_all_vaults to find the new address, then set_vault_assets to configure tracked assets.",
+      "Returns {success, transactionHash, vaultAddress, next_steps}. " +
+      "After creation, use the returned vaultAddress with set_vault_assets to configure tracked assets.",
     inputSchema: {
       name: z.string().describe("Vault display name (e.g. 'Mining Basket')"),
       depositFeeBps: z.number().int().min(0).max(500).describe("Deposit fee in bps (e.g. 50 = 0.5%)"),
@@ -532,10 +560,21 @@ server.registerTool(
     try {
       const d = deployment();
       const rawReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
-      return writeResult(rawReceipt, [
-        { tool: "get_all_vaults", reason: "Find the new vault's address" },
-        { tool: "set_vault_assets", reason: "Configure which assets the vault tracks" },
-      ]);
+      const tx = parseReceipt(rawReceipt);
+      const vaultAddress = extractVaultAddressFromCreateVaultReceipt(rawReceipt);
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            success: tx.status === "success",
+            ...tx,
+            vaultAddress,
+            next_steps: [
+              { tool: "set_vault_assets", reason: "Configure which assets the vault tracks", params_hint: { vault: vaultAddress } },
+            ],
+          }, null, 2),
+        }],
+      };
     } catch (err) {
       return writeError(err);
     }

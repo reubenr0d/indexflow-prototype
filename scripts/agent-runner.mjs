@@ -11,7 +11,7 @@
  *   - Multi-MCP-server support (tool collision detection)
  *   - Persistent memory per agent (state.json + run-log.<network>.jsonl)
  *   - Auto vault deployment on first run or agent file change
- *   - Vault address capture from create_vault / get_all_vaults results
+ *   - Vault address capture from create_vault result (with get_all_vaults fallback)
  *   - LLM retry with exponential backoff
  *   - Dry-run mode, token budget truncation, structured CI output
  *
@@ -164,6 +164,87 @@ function parseYamlValue(val) {
   if (/^-?\d+$/.test(val)) return parseInt(val, 10);
   if (/^-?\d+\.\d+$/.test(val)) return parseFloat(val);
   return val.replace(/^["']|["']$/g, "");
+}
+
+function parseBigIntish(value) {
+  if (typeof value === "bigint") return value;
+  if (typeof value === "number") return BigInt(Math.trunc(value));
+  if (typeof value !== "string") return null;
+  const cleaned = value.replace(/\s*\[[^\]]+\]\s*$/, "").trim();
+  if (!cleaned) return null;
+  if (/^-?\d+$/.test(cleaned)) return BigInt(cleaned);
+  if (/^-?0x[0-9a-fA-F]+$/.test(cleaned)) return BigInt(cleaned);
+  return null;
+}
+
+function parseJsonText(text) {
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+function parseAgentPolicy(frontmatter) {
+  const hasPolicyFields =
+    frontmatter.autoAllocateTargetBps !== undefined ||
+    frontmatter.entryMode !== undefined ||
+    frontmatter.entryMomentumPctMin !== undefined ||
+    frontmatter.entryVolumeMin !== undefined ||
+    frontmatter.entryDirection !== undefined ||
+    frontmatter.maxNewPositionsPerRun !== undefined ||
+    frontmatter.positionSizingMode !== undefined;
+
+  if (!hasPolicyFields) {
+    return {
+      enabled: false,
+      autoAllocateTargetBps: 0,
+      entryMode: "none",
+      entryMomentumPctMin: 0,
+      entryVolumeMin: 0,
+      entryDirection: "long_only",
+      maxNewPositionsPerRun: 0,
+      positionSizingMode: "model_decides",
+    };
+  }
+
+  const autoAllocateTargetBps = Number(frontmatter.autoAllocateTargetBps ?? 0);
+  const entryMode = String(frontmatter.entryMode ?? "none");
+  const entryMomentumPctMin = Number(frontmatter.entryMomentumPctMin ?? 0);
+  const entryVolumeMin = Number(frontmatter.entryVolumeMin ?? 0);
+  const entryDirection = String(frontmatter.entryDirection ?? "long_only");
+  const maxNewPositionsPerRun = Number(frontmatter.maxNewPositionsPerRun ?? 0);
+  const positionSizingMode = String(frontmatter.positionSizingMode ?? "model_decides");
+
+  if (!Number.isFinite(autoAllocateTargetBps) || autoAllocateTargetBps < 0 || autoAllocateTargetBps > 10_000) {
+    throw new Error("Invalid autoAllocateTargetBps; expected 0..10000");
+  }
+  if (!["none", "momentum_volume"].includes(entryMode)) {
+    throw new Error("Invalid entryMode; expected 'none' or 'momentum_volume'");
+  }
+  if (!Number.isFinite(entryMomentumPctMin) || entryMomentumPctMin < 0) {
+    throw new Error("Invalid entryMomentumPctMin; expected >= 0");
+  }
+  if (!Number.isFinite(entryVolumeMin) || entryVolumeMin < 0) {
+    throw new Error("Invalid entryVolumeMin; expected >= 0");
+  }
+  if (!["long_only"].includes(entryDirection)) {
+    throw new Error("Invalid entryDirection; currently only 'long_only' is supported");
+  }
+  if (!Number.isFinite(maxNewPositionsPerRun) || maxNewPositionsPerRun < 0) {
+    throw new Error("Invalid maxNewPositionsPerRun; expected >= 0");
+  }
+
+  return {
+    enabled: true,
+    autoAllocateTargetBps,
+    entryMode,
+    entryMomentumPctMin,
+    entryVolumeMin,
+    entryDirection,
+    maxNewPositionsPerRun,
+    positionSizingMode,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -369,6 +450,7 @@ function loadAgentConfig(agentName) {
     description: frontmatter.description || "",
     mcpServers,
     writeTools,
+    policy: parseAgentPolicy(frontmatter),
     skills,
     systemPrompt,
     userPrompt,
@@ -506,6 +588,107 @@ function truncateForLLM(content) {
   );
 }
 
+function computeAutoAllocationAmount(vaultState, autoAllocateTargetBps) {
+  if (!vaultState || autoAllocateTargetBps <= 0) return 0n;
+  const availableRaw = parseBigIntish(vaultState.availableForPerp) ?? 0n;
+  if (availableRaw <= 0n) return 0n;
+  return (availableRaw * BigInt(autoAllocateTargetBps)) / 10_000n;
+}
+
+function getEligibleMomentumVolumeAssets({ policy, vaultState, oracleAssets, quotes }) {
+  if (
+    !policy?.enabled ||
+    policy.entryMode !== "momentum_volume" ||
+    !vaultState ||
+    !Array.isArray(vaultState.assets) ||
+    !Array.isArray(oracleAssets?.assets) ||
+    !Array.isArray(quotes)
+  ) {
+    return [];
+  }
+
+  const trackedAssetIds = new Set(vaultState.assets.map((a) => String(a).toLowerCase()));
+  const oracleBySymbol = new Map();
+  for (const asset of oracleAssets.assets) {
+    const symbol = String(asset.symbol || "").toUpperCase();
+    if (!symbol) continue;
+    if (!trackedAssetIds.has(String(asset.assetId || "").toLowerCase())) continue;
+    oracleBySymbol.set(symbol, asset);
+  }
+
+  const eligible = [];
+  for (const q of quotes) {
+    if (!q || q.error) continue;
+    const volume = Number(q.volume ?? 0);
+    const dayChangePct = Number(q.dayChangePct ?? 0);
+    if (!Number.isFinite(volume) || !Number.isFinite(dayChangePct)) continue;
+    if (volume < policy.entryVolumeMin) continue;
+    if (dayChangePct < policy.entryMomentumPctMin) continue;
+
+    const symbolsToTry = [
+      String(q.resolvedSymbol || "").toUpperCase(),
+      String(q.symbol || "").toUpperCase(),
+      String(q.requestedSymbol || "").toUpperCase(),
+    ].filter(Boolean);
+    const oracleAsset = symbolsToTry.map((s) => oracleBySymbol.get(s)).find(Boolean);
+    if (!oracleAsset) continue;
+
+    eligible.push({
+      assetId: oracleAsset.assetId,
+      symbol: oracleAsset.symbol,
+      dayChangePct,
+      volume,
+      quoteSymbol: q.symbol || q.requestedSymbol || oracleAsset.symbol,
+    });
+  }
+
+  const seen = new Set();
+  return eligible.filter((item) => {
+    const key = String(item.assetId).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function validatePolicyWriteBatch({
+  classified,
+  policy,
+  opensExecutedSoFar,
+  eligibleAssets,
+}) {
+  if (!policy?.enabled || !classified?.hasWriteCalls) return null;
+
+  const openCalls = classified.writeCalls.filter((c) => c.originalName === "open_position");
+  if (openCalls.length === 0) return null;
+
+  if (policy.entryDirection === "long_only") {
+    for (const call of openCalls) {
+      if (call.args?.isLong !== true) {
+        return "Policy violation: only long positions are allowed. Revise open_position calls with isLong=true.";
+      }
+    }
+  }
+
+  const maxOpens = Math.max(0, Number(policy.maxNewPositionsPerRun || 0));
+  if (opensExecutedSoFar + openCalls.length > maxOpens) {
+    return `Policy violation: proposed open_position calls exceed maxNewPositionsPerRun=${maxOpens}.`;
+  }
+
+  const eligibleIds = new Set((eligibleAssets || []).map((a) => String(a.assetId).toLowerCase()));
+  if (eligibleIds.size === 0 && openCalls.length > 0) {
+    return "Policy violation: no assets currently meet momentum+volume criteria, so do not open new positions.";
+  }
+  for (const call of openCalls) {
+    const assetId = String(call.args?.assetId || "").toLowerCase();
+    if (!eligibleIds.has(assetId)) {
+      return "Policy violation: open_position assetId is not in the current eligible set from momentum+volume filtering.";
+    }
+  }
+
+  return null;
+}
+
 // ---------------------------------------------------------------------------
 // Build system prompt with vault context, memory, and dry-run notice
 // ---------------------------------------------------------------------------
@@ -526,7 +709,7 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
     prompt +=
       `You do not have a vault yet. Your first action must be to create one:\n` +
       `- Call create_vault with name="${name}", depositFeeBps=${config.depositFeeBps}, redeemFeeBps=${config.redeemFeeBps}\n` +
-      `- Then call get_all_vaults to find the new vault address\n` +
+      `- Use the returned vaultAddress from create_vault\n` +
       `- Then proceed with your normal workflow using that vault address.`;
   } else if (state?.vaultAddress) {
     prompt +=
@@ -558,12 +741,32 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
     : "\n\n## Dry Run Mode\nLive mode: you may execute write operations.";
   prompt += dryRunNotice;
 
+  if (config.policy?.enabled) {
+    prompt += "\n\n## Enforced Policy";
+    prompt += `\n- Auto allocation target from available idle USDC: ${config.policy.autoAllocateTargetBps} bps`;
+    prompt += `\n- Entry mode: ${config.policy.entryMode}`;
+    prompt += `\n- Entry trigger: dayChangePct >= ${config.policy.entryMomentumPctMin} and volume >= ${config.policy.entryVolumeMin}`;
+    prompt += `\n- Direction: ${config.policy.entryDirection}`;
+    prompt += `\n- Max new positions per run: ${config.policy.maxNewPositionsPerRun}`;
+    prompt += `\n- Position sizing: ${config.policy.positionSizingMode}`;
+  }
+
   return prompt;
 }
 
 // ---------------------------------------------------------------------------
-// Extract vault address from get_all_vaults response
+// Extract vault address from tool responses
 // ---------------------------------------------------------------------------
+
+function extractVaultAddressFromCreateVaultResponse(content) {
+  try {
+    const data = JSON.parse(content);
+    if (data && typeof data.vaultAddress === "string" && data.vaultAddress.startsWith("0x")) {
+      return data.vaultAddress;
+    }
+  } catch {}
+  return null;
+}
 
 function extractNewestVaultAddress(content, vaultName) {
   try {
@@ -583,6 +786,12 @@ function extractNewestVaultAddress(content, vaultName) {
 
 function renderToolCallLine(call) {
   return `- ${call.toolName}(${JSON.stringify(call.args)})`;
+}
+
+function parseWriteConfirmationCommand(rawInput) {
+  const input = String(rawInput ?? "").trim();
+  if (!input) return { input: "", command: "approve" };
+  return { input, command: input.toLowerCase() };
 }
 
 async function confirmWriteBatchInteractively({
@@ -622,10 +831,9 @@ async function confirmWriteBatchInteractively({
       }
 
       const rawInput = await rl.question(
-        "Type 'approve' to execute, 'reject' to skip writes, or provide feedback for revision: "
+        "Press Enter to approve, type 'reject' to skip writes, or provide feedback for revision: "
       );
-      const input = rawInput.trim();
-      const command = input.toLowerCase();
+      const { input, command } = parseWriteConfirmationCommand(rawInput);
 
       if (command === "approve") {
         return {
@@ -769,6 +977,24 @@ export async function runAgent(agentName) {
     writeActions: [],
     confirmationBatches: [],
     errors: [],
+    policyDiagnostics: {
+      enabled: config.policy?.enabled || false,
+      autoAllocateTargetBps: config.policy?.autoAllocateTargetBps || 0,
+      entryMode: config.policy?.entryMode || "none",
+      entryMomentumPctMin: config.policy?.entryMomentumPctMin || 0,
+      entryVolumeMin: config.policy?.entryVolumeMin || 0,
+      entryDirection: config.policy?.entryDirection || "long_only",
+      maxNewPositionsPerRun: config.policy?.maxNewPositionsPerRun || 0,
+      positionSizingMode: config.policy?.positionSizingMode || "model_decides",
+      eligibleAssetCount: 0,
+      eligibleAssetIds: [],
+      eligibleSymbols: [],
+      allocationRequiredRaw: "0",
+      allocationTriggered: false,
+      allocationWritesExecuted: 0,
+      entryTriggered: false,
+      opensExecuted: 0,
+    },
     startedAt: new Date().toISOString(),
     finishedAt: null,
   };
@@ -794,6 +1020,14 @@ export async function runAgent(agentName) {
   let capturedVaultAddress = state?.vaultAddress || null;
   let agentSummaryText = null;
   let didCreateVault = false;
+  const policyRuntime = {
+    latestVaultState: null,
+    latestOracleAssets: null,
+    latestQuotes: null,
+    opensExecuted: 0,
+    allocationWritesExecuted: 0,
+    enforcementRounds: 0,
+  };
 
   try {
     for (const serverDef of config.mcpServers) {
@@ -839,6 +1073,18 @@ export async function runAgent(agentName) {
       const { toolCall, toolName, originalName, args, isWrite } = call;
       console.log(`  Tool: ${toolName}(${JSON.stringify(args)})`);
       runSummary.toolCalls.push(toolName);
+
+      if (originalName === "get_all_vaults" && capturedVaultAddress) {
+        const skipMsg =
+          `[POLICY] Skipped get_all_vaults because this agent already has its vault in memory: ${capturedVaultAddress}`;
+        console.log(`  ${skipMsg}`);
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: skipMsg,
+        });
+        return;
+      }
 
       const entry = toolMap.get(toolName);
       if (!entry) {
@@ -892,9 +1138,31 @@ export async function runAgent(agentName) {
           });
         }
 
+        const parsed = parseJsonText(content);
+        if (originalName === "get_vault_state" && parsed && typeof parsed === "object") {
+          policyRuntime.latestVaultState = parsed;
+        }
+        if (originalName === "get_oracle_assets" && parsed && typeof parsed === "object") {
+          policyRuntime.latestOracleAssets = parsed;
+        }
+        if (originalName === "yfinance_quote" && Array.isArray(parsed)) {
+          policyRuntime.latestQuotes = parsed;
+        }
+        if (originalName === "allocate_to_perp" && parsed?.success === true) {
+          policyRuntime.allocationWritesExecuted += 1;
+        }
+        if (originalName === "open_position" && parsed?.success === true) {
+          policyRuntime.opensExecuted += 1;
+        }
+
         // --- Vault address capture ---
         if (originalName === "create_vault") {
           didCreateVault = true;
+          const addrFromCreate = extractVaultAddressFromCreateVaultResponse(content);
+          if (addrFromCreate) {
+            capturedVaultAddress = addrFromCreate;
+            console.log(`  >> Captured new vault address from create_vault: ${addrFromCreate}`);
+          }
         }
         if (
           originalName === "get_all_vaults" &&
@@ -940,6 +1208,48 @@ export async function runAgent(agentName) {
         config.writeTools
       );
       let skipWritesThisBatch = false;
+      const policyEnabled = config.policy?.enabled;
+      const eligibleAssets = getEligibleMomentumVolumeAssets({
+        policy: config.policy,
+        vaultState: policyRuntime.latestVaultState,
+        oracleAssets: policyRuntime.latestOracleAssets,
+        quotes: policyRuntime.latestQuotes,
+      });
+      const allocationAmountRaw = computeAutoAllocationAmount(
+        policyRuntime.latestVaultState,
+        config.policy?.autoAllocateTargetBps || 0
+      );
+      runSummary.policyDiagnostics.eligibleAssetCount = eligibleAssets.length;
+      runSummary.policyDiagnostics.eligibleAssetIds = eligibleAssets.map((a) => a.assetId);
+      runSummary.policyDiagnostics.eligibleSymbols = eligibleAssets.map((a) => a.symbol);
+      runSummary.policyDiagnostics.allocationRequiredRaw = allocationAmountRaw.toString();
+      runSummary.policyDiagnostics.allocationWritesExecuted = policyRuntime.allocationWritesExecuted;
+      runSummary.policyDiagnostics.opensExecuted = policyRuntime.opensExecuted;
+      runSummary.policyDiagnostics.allocationTriggered =
+        policyRuntime.allocationWritesExecuted > 0 || allocationAmountRaw > 0n;
+      runSummary.policyDiagnostics.entryTriggered =
+        policyRuntime.opensExecuted > 0 || eligibleAssets.length > 0;
+
+      if (policyEnabled && classified.hasWriteCalls) {
+        const violation = validatePolicyWriteBatch({
+          classified,
+          policy: config.policy,
+          opensExecutedSoFar: policyRuntime.opensExecuted,
+          eligibleAssets,
+        });
+        if (violation) {
+          policyRuntime.enforcementRounds += 1;
+          messages.push(choice.message);
+          messages.push({
+            role: "user",
+            content:
+              `${violation}\n` +
+              "Revise your tool calls to satisfy policy constraints. Keep gas usage pragmatic by avoiding unnecessary writes.",
+          });
+          console.log(`  [POLICY] ${violation}`);
+          continue;
+        }
+      }
 
       if (CONFIRM_WRITES && !DRY_RUN && classified.hasWriteCalls) {
         const interactiveTty = isInteractiveTty();
@@ -1017,6 +1327,16 @@ export async function runAgent(agentName) {
             choice.finish_reason === "stop" ||
             !choice.message.tool_calls?.length
           ) {
+            if (needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
+              policyRuntime.enforcementRounds += 1;
+              messages.push({
+                role: "user",
+                content:
+                  "You still do not have a vault address in memory. Call create_vault now and continue with that vault only. Do not call get_all_vaults unless create_vault fails to return vaultAddress.",
+              });
+              console.log("  [POLICY] Vault is missing; forcing create_vault before final summary.");
+              continue;
+            }
             if (choice.message.content) {
               agentSummaryText = choice.message.content;
               console.log("\n=== Agent Summary ===");
@@ -1033,6 +1353,60 @@ export async function runAgent(agentName) {
         choice.finish_reason === "stop" ||
         !choice.message.tool_calls?.length
       ) {
+        if (needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
+          policyRuntime.enforcementRounds += 1;
+          messages.push(choice.message);
+          messages.push({
+            role: "user",
+            content:
+              "You still do not have a vault address in memory. Call create_vault now and continue with that vault only. Do not call get_all_vaults unless create_vault fails to return vaultAddress.",
+          });
+          console.log("  [POLICY] Vault is missing; forcing create_vault before final summary.");
+          continue;
+        }
+        if (policyEnabled && policyRuntime.enforcementRounds < 8) {
+          const activeVault = capturedVaultAddress || state?.vaultAddress || null;
+          const needsAllocation =
+            activeVault &&
+            allocationAmountRaw > 0n &&
+            policyRuntime.allocationWritesExecuted === 0;
+          const needsEntry =
+            activeVault &&
+            eligibleAssets.length > 0 &&
+            policyRuntime.opensExecuted === 0;
+
+          if (needsAllocation || needsEntry) {
+            const policyDirectives = [];
+            if (needsAllocation) {
+              policyDirectives.push(
+                `1) Call allocate_to_perp with { vault: "${activeVault}", amount: "${allocationAmountRaw.toString()}" }.`
+              );
+            }
+            if (needsEntry) {
+              const maxOpens = Math.max(0, Number(config.policy.maxNewPositionsPerRun || 0));
+              const eligibleList = eligibleAssets
+                .slice(0, maxOpens || eligibleAssets.length)
+                .map((a) => `${a.symbol} (${a.assetId})`)
+                .join(", ");
+              policyDirectives.push(
+                `2) Open long-only positions on eligible assets (${eligibleList}). Use at most ${maxOpens} new positions this run and choose sizing/collateral pragmatically.`
+              );
+            }
+
+            policyRuntime.enforcementRounds += 1;
+            messages.push(choice.message);
+            messages.push({
+              role: "user",
+              content:
+                "Policy enforcement before final summary:\n" +
+                policyDirectives.join("\n") +
+                "\nAfter executing required writes, re-read vault state and then summarize.",
+            });
+            console.log("  [POLICY] Enforcing allocation/entry requirements before final summary.");
+            continue;
+          }
+        }
+
         if (choice.message.content) {
           agentSummaryText = choice.message.content;
           console.log("\n=== Agent Summary ===");
@@ -1157,4 +1531,9 @@ export const __agentRunnerInternals = {
   shouldInvalidateDeploymentMemory,
   rotateFileToArchive,
   rotateAgentMemoryForDeploymentChange,
+  parseAgentPolicy,
+  computeAutoAllocationAmount,
+  getEligibleMomentumVolumeAssets,
+  validatePolicyWriteBatch,
+  parseWriteConfirmationCommand,
 };

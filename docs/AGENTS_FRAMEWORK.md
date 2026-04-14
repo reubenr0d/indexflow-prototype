@@ -63,6 +63,13 @@ depositFeeBps: 50
 redeemFeeBps: 50
 maxTurns: 15
 temperature: 0.3
+autoAllocateTargetBps: 3000
+entryMode: momentum_volume
+entryMomentumPctMin: 2.0
+entryVolumeMin: 500000
+entryDirection: long_only
+maxNewPositionsPerRun: 5
+positionSizingMode: model_decides
 ---
 
 You are a gold and mining stock trading agent.
@@ -96,6 +103,13 @@ your vault positions based on market conditions.
 | `redeemFeeBps` | no | `50` | Vault redeem fee in basis points |
 | `maxTurns` | no | `20` | Max agent loop iterations |
 | `temperature` | no | `0.2` | LLM temperature |
+| `autoAllocateTargetBps` | no | `0` | Auto-allocate this share (bps) of `availableForPerp` before summary |
+| `entryMode` | no | `none` | Entry policy mode (`none` or `momentum_volume`) |
+| `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating |
+| `entryVolumeMin` | no | `0` | Minimum Yahoo quote volume threshold for entry gating |
+| `entryDirection` | no | `long_only` | Allowed entry direction (currently `long_only`) |
+| `maxNewPositionsPerRun` | no | `0` | Hard cap on new `open_position` writes per run |
+| `positionSizingMode` | no | `model_decides` | Position sizing policy (`model_decides`) |
 
 ### Prompt Structure
 
@@ -167,7 +181,7 @@ skills:
 
 Each agent manages exactly one vault. The runner handles deployment automatically:
 
-- **First run**: no memory exists, the runner instructs the agent to create a vault via `create_vault`, then captures the new address from the `get_all_vaults` response.
+- **First run**: no memory exists, the runner instructs the agent to create a vault via `create_vault`, then captures the new address from the `create_vault` `vaultAddress` response (with `get_all_vaults` fallback only if needed).
 - **Subsequent runs**: the runner loads the vault address from memory and injects it into the system prompt.
 - **Agent file changes**: the runner computes a SHA-256 hash of the `.md` file. If the hash changes (new strategy, updated config, etc.), it triggers a new vault deployment. The old vault remains on-chain but is no longer managed.
 
@@ -274,7 +288,7 @@ All return `{success, transactionHash, next_steps}` with structured error recove
 | Tool | Purpose | Key params |
 |---|---|---|
 | `wire_asset` | Register new tradeable asset (rejects ambiguous unsuffixed equities like `BHP`) | `symbol`, `seedPriceUsd` |
-| `create_vault` | Deploy new basket vault | `name`, `depositFeeBps`, `redeemFeeBps` |
+| `create_vault` | Deploy new basket vault (returns `vaultAddress`) | `name`, `depositFeeBps`, `redeemFeeBps` |
 | `set_vault_assets` | Set vault's tracked assets | `vault`, `assetIds[]` |
 | `allocate_to_perp` | Move USDC to perp module | `vault`, `amount` (raw USDC) |
 | `withdraw_from_perp` | Pull USDC back to vault | `vault`, `amount` (raw USDC) |
@@ -355,7 +369,7 @@ Write confirmation is enabled by default. Whenever an assistant turn proposes on
 
 - The runner pauses and shows the proposed write batch.
 - Commands:
-  - `approve`: execute the full batch in order (including any read calls in that same batch)
+  - `approve` (or press `Enter`): execute the full batch in order (including any read calls in that same batch)
   - `reject`: skip the write batch and ask the model to propose an alternative
   - any other text: treated as operator feedback; the model revises its proposed calls, and the approval loop repeats
 - If no interactive TTY is available (for example CI), write calls are skipped by default and read calls still run.
