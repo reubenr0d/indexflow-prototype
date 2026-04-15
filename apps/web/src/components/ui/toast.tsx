@@ -57,7 +57,7 @@ export function ToastContainer() {
   const dismiss = (id: string) => setToasts((prev) => prev.filter((t) => t.id !== id));
 
   return (
-    <div className="fixed right-4 top-16 z-50 flex flex-col gap-2">
+    <div className="fixed right-4 top-16 z-50 flex flex-col gap-2" role="status" aria-live="polite">
       <AnimatePresence>
         {toasts.map((t) => (
           <motion.div

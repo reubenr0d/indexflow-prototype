@@ -3,9 +3,17 @@
 import { use, useState } from "react";
 import Link from "next/link";
 import { PageWrapper } from "@/components/layout/page-wrapper";
-import { SharePriceChart } from "@/components/baskets/share-price-chart";
+import dynamic from "next/dynamic";
 import { MetricsStrip } from "@/components/baskets/metrics-strip";
-import { AssetPricePanel } from "@/components/baskets/asset-price-panel";
+
+const SharePriceChart = dynamic(
+  () => import("@/components/baskets/share-price-chart").then((m) => m.SharePriceChart),
+  { ssr: false },
+);
+const AssetPricePanel = dynamic(
+  () => import("@/components/baskets/asset-price-panel").then((m) => m.AssetPricePanel),
+  { ssr: false },
+);
 import { PositionsTable } from "@/components/baskets/positions-table";
 import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
 import { SetAssetsCard } from "@/components/baskets/admin/set-assets-card";

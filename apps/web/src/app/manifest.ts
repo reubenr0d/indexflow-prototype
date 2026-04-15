@@ -24,11 +24,6 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "any",
         purpose: "maskable",
       },
-      {
-        src: "/favicon.ico",
-        type: "image/x-icon",
-        sizes: "any",
-      },
     ],
   };
 }

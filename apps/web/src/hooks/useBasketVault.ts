@@ -1,6 +1,6 @@
 "use client";
 
-import { useReadContract, useReadContracts, useWaitForTransactionReceipt } from "wagmi";
+import { useReadContract, useReadContracts, useSimulateContract, useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { BasketVaultABI } from "@/abi/BasketVault";
 import { ERC20ABI } from "@/abi/erc20";
@@ -57,6 +57,28 @@ export function useBasketFees(vault: Address) {
     functionName: "redeemFeeBps",
   });
   return { depositFee: deposit.data, redeemFee: redeem.data };
+}
+
+export function useSimulateDeposit(vault: Address, amount: bigint, account: Address | undefined) {
+  return useSimulateContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "deposit",
+    args: [amount],
+    account,
+    query: { enabled: !!account && amount > 0n },
+  });
+}
+
+export function useSimulateRedeem(vault: Address, shares: bigint, account: Address | undefined) {
+  return useSimulateContract({
+    address: vault,
+    abi: BasketVaultABI,
+    functionName: "redeem",
+    args: [shares],
+    account,
+    query: { enabled: !!account && shares > 0n },
+  });
 }
 
 export function useDeposit() {

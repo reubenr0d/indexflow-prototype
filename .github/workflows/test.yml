@@ -123,6 +123,26 @@ jobs:
           fail_ci_if_error: false
           use_oidc: true
 
+  web_unit:
+    name: Web Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Run web Vitest suite
+        run: npm --prefix apps/web run test
+
   lint:
     name: Lint
     runs-on: ubuntu-latest

@@ -258,8 +258,8 @@ export default function PrimerSharedLiquidity() {
                 transition={{ delay: i * 0.12, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               >
                 <rect x="40" y={b.y} width="160" height="3" rx="1.5" fill="url(#basket-top-grad)" />
-                <rect
-                  x="40" y={b.y + 3} width="160" height="57" rx="0 0 10 10"
+                <path
+                  d={`M40 ${b.y + 3} h160 v47 a10,10 0 0 1 -10,10 h-140 a10,10 0 0 1 -10,-10 v-47 Z`}
                   fill="var(--surface)"
                   stroke="var(--accent)"
                   strokeWidth="1.5"

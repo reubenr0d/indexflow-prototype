@@ -6,9 +6,17 @@ import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
-import { SharePriceChart } from "@/components/baskets/share-price-chart";
+import dynamic from "next/dynamic";
 import { MetricsStrip } from "@/components/baskets/metrics-strip";
-import { AssetPricePanel } from "@/components/baskets/asset-price-panel";
+
+const SharePriceChart = dynamic(
+  () => import("@/components/baskets/share-price-chart").then((m) => m.SharePriceChart),
+  { ssr: false },
+);
+const AssetPricePanel = dynamic(
+  () => import("@/components/baskets/asset-price-panel").then((m) => m.AssetPricePanel),
+  { ssr: false },
+);
 import { PositionsTable } from "@/components/baskets/positions-table";
 import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
 import {
@@ -21,6 +29,7 @@ import {
   getBasketActivityMeta,
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
+import { BasketTour } from "@/components/onboarding/basket-tour";
 import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
   type BasketActivityRow,
@@ -167,6 +176,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   return (
     <PageWrapper className="py-6 sm:py-8">
+      <BasketTour />
       {/* ── Hero card (compact) ── */}
       <Card className="mb-6 overflow-hidden border border-app-border shadow-[var(--shadow)]">
         <div className="relative overflow-hidden">
@@ -207,14 +217,16 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
       </Card>
 
       {/* ── Metrics strip ── */}
-      <MetricsStrip metrics={metricsData} className="mb-6" />
+      <div data-tour="metrics">
+        <MetricsStrip metrics={metricsData} className="mb-6" />
+      </div>
 
       {/* ── Main layout: flex column on mobile, 3-col grid on desktop ── */}
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3 lg:gap-8">
 
         {/* ── Sidebar: Deposit/Redeem + Composition ── */}
         <div className="order-1 lg:order-none lg:col-span-1 lg:row-span-4">
-          <div className="lg:sticky lg:top-20 lg:space-y-6">
+          <div className="lg:sticky lg:top-20 lg:space-y-6" data-tour="deposit-panel">
             <DepositRedeemPanel
               vault={vault}
               sharePrice={basketInfo?.sharePrice ?? 0n}
@@ -237,12 +249,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
         </div>
 
         {/* ── Share price chart ── */}
-        <div className="order-2 lg:order-none lg:col-span-2">
+        <div className="order-2 lg:order-none lg:col-span-2" data-tour="share-chart">
           <SharePriceChart vault={vault} />
         </div>
 
         {/* ── Positions table ── */}
-        <div className="order-3 lg:order-none lg:col-span-2">
+        <div className="order-3 lg:order-none lg:col-span-2" data-tour="positions">
           <PositionsTable vault={vault} />
         </div>
 

@@ -43,7 +43,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@openzeppelin/contracts": "^5.2.0",
-    "yahoo-finance2": "^3.14.0",
     "zod": "^4.3.6"
   }
 }

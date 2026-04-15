@@ -47,9 +47,8 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 forge install
 npm install
 
-# Git hooks (Husky) are configured automatically by `npm install` via the `prepare` script.
-# Pre-commit: forge fmt --check + ESLint (fast, reuses node_modules).
-# Pre-push:   npm ci (root + apps/web) to verify lockfile integrity before pushing.
+# Formatting and lint checks run in CI (no local git hooks).
+# See .github/workflows/test.yml for the full CI pipeline.
 
 # Build
 forge build

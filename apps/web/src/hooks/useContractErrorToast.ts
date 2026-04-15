@@ -124,7 +124,7 @@ export function useContractErrorToast({
       return;
     }
     showToast("error", msg);
-  }, [writeError, writeIsError, receiptError, receiptIsError, fallbackMessage]);
+  }, [writeError, writeIsError, fallbackMessage]);
 
   useEffect(() => {
     if (!receiptIsError) {

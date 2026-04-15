@@ -1,4 +1,6 @@
-const CACHE_VERSION = "indexflow-shell-v1";
+// __SW_BUILD_STAMP__ is replaced at build time by scripts/stamp-sw-version.mjs.
+// Changing CACHE_VERSION causes the activate handler to purge stale caches.
+const CACHE_VERSION = "indexflow-shell-__SW_BUILD_STAMP__";
 const SHELL_ASSETS = ["/", "/dashboard", "/baskets", "/portfolio", "/settings"];
 
 self.addEventListener("install", (event) => {
@@ -29,17 +31,24 @@ self.addEventListener("fetch", (event) => {
 
   if (url.pathname.startsWith("/_next/") || url.pathname.startsWith("/api/")) return;
 
+  // Stale-while-revalidate: serve cached response immediately for fast paint,
+  // then update the cache in the background so the next load is fresh.
   event.respondWith(
     caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
+      const networkFetch = fetch(request)
         .then((response) => {
-          if (!response || response.status !== 200) return response;
-          const copy = response.clone();
-          caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy)).catch(() => undefined);
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches
+              .open(CACHE_VERSION)
+              .then((cache) => cache.put(request, copy))
+              .catch(() => undefined);
+          }
           return response;
         })
         .catch(() => caches.match("/"));
+
+      return cached || networkFetch;
     })
   );
 });

@@ -6,6 +6,8 @@ import {
   useApproveUSDC,
   useDeposit,
   useRedeem,
+  useSimulateDeposit,
+  useSimulateRedeem,
   useUSDCAllowance,
   useUSDCBalance,
 } from "@/hooks/useBasketVault";
@@ -84,6 +86,19 @@ export function DepositRedeemPanel({
   } = useRedeem();
 
   const parsedAmount = amount ? parseUSDCInput(amount) : 0n;
+
+  const { error: simDepositError } = useSimulateDeposit(
+    vault,
+    mode === "deposit" ? parsedAmount : 0n,
+    mode === "deposit" ? address : undefined
+  );
+  const { error: simRedeemError } = useSimulateRedeem(
+    vault,
+    mode === "redeem" ? parsedAmount : 0n,
+    mode === "redeem" ? address : undefined
+  );
+  const simulationError = mode === "deposit" ? simDepositError : simRedeemError;
+
   const needsApproval =
     mode === "deposit" &&
     parsedAmount > 0n &&
@@ -198,7 +213,7 @@ export function DepositRedeemPanel({
 
       <div className="mb-4">
         <div className="mb-2 flex items-center justify-between">
-          <label className="text-sm font-medium text-app-muted">
+          <label htmlFor="deposit-redeem-amount" className="text-sm font-medium text-app-muted">
             {mode === "deposit" ? "USDC amount" : "Shares"}
           </label>
           {balance !== undefined && (
@@ -218,6 +233,7 @@ export function DepositRedeemPanel({
           )}
         </div>
         <Input
+          id="deposit-redeem-amount"
           type="number"
           placeholder="0.00"
           value={amount}
@@ -254,6 +270,12 @@ export function DepositRedeemPanel({
             : "Redeem quotes estimate the cash you will receive after fee impact."}
         </p>
       </div>
+
+      {simulationError && parsedAmount > 0n && !needsApproval && (
+        <p className="mb-3 rounded-md border border-app-danger/30 bg-app-danger/5 px-3 py-2 text-xs text-app-danger">
+          This transaction is likely to fail. Check your balance and try a smaller amount.
+        </p>
+      )}
 
       {!address ? (
         <Button variant="secondary" size="lg" className="w-full" disabled>

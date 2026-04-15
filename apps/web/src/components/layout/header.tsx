@@ -21,7 +21,6 @@ import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X, LogOut, Settings, PieChart, Coins, Loader2 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
 import { NetworkSelector } from "@/components/layout/network-selector";
 
 const navItems = [
@@ -352,80 +351,76 @@ export function Header() {
         </div>
       </header>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-x-0 top-14 z-30 overflow-hidden border-b border-app-border bg-app-surface md:hidden"
-          >
-            <nav className="space-y-0.5 p-3">
-              {isTestnet && !onHome && (
-                <button
-                  type="button"
-                  onClick={handleMint}
-                  disabled={!canMint}
-                  data-testid="mint-10k-usdc-mobile"
-                  className="mb-2 flex w-full items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-sm font-medium text-emerald-600 disabled:pointer-events-none disabled:opacity-45 dark:text-emerald-400"
-                >
-                  {isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Coins className="h-4 w-4" />
-                  )}
-                  {isPending ? "Minting..." : "Mint 10,000 USDC"}
-                </button>
-              )}
-              {isE2ETestMode && !isPrivyConfigured && !address && (
-                <button
-                  type="button"
-                  onClick={handleE2EConnect}
-                  disabled={isConnectPending}
-                  data-testid="e2e-connect-wallet-mobile"
-                  className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
-                >
-                  {isConnectPending ? "Connecting..." : "E2E Connect"}
-                </button>
-              )}
-              {[...navItems, ...mobileOnlyItems].map((item) => {
-                const active = isNavActive(pathname, item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={cn(
-                      "block rounded-md px-3 py-2.5 text-sm font-medium",
-                      active ? "bg-app-bg-subtle text-app-text" : "text-app-muted"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-              <div className="pt-2 sm:hidden">
-                <NetworkSelector />
-              </div>
-              <button
-                type="button"
-                onClick={toggle}
-                className="flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-app-muted transition-colors hover:bg-app-surface-hover hover:text-app-text"
-              >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4" />
-                ) : (
-                  <Moon className="h-4 w-4" />
-                )}
-                {theme === "dark" ? "Light mode" : "Dark mode"}
-              </button>
-              <div className="pt-2 sm:hidden">
-                <ConnectWalletButton theme={theme} toggle={toggle} />
-              </div>
-            </nav>
-          </motion.div>
+      <div
+        className={cn(
+          "fixed inset-x-0 top-14 z-30 overflow-hidden border-b border-app-border bg-app-surface transition-[max-height,opacity] duration-200 ease-in-out md:hidden",
+          mobileOpen ? "max-h-[80vh] opacity-100" : "pointer-events-none max-h-0 opacity-0 border-transparent"
         )}
-      </AnimatePresence>
+      >
+        <nav className="space-y-0.5 p-3">
+          {isTestnet && !onHome && (
+            <button
+              type="button"
+              onClick={handleMint}
+              disabled={!canMint}
+              data-testid="mint-10k-usdc-mobile"
+              className="mb-2 flex w-full items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-sm font-medium text-emerald-600 disabled:pointer-events-none disabled:opacity-45 dark:text-emerald-400"
+            >
+              {isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Coins className="h-4 w-4" />
+              )}
+              {isPending ? "Minting..." : "Mint 10,000 USDC"}
+            </button>
+          )}
+          {isE2ETestMode && !isPrivyConfigured && !address && (
+            <button
+              type="button"
+              onClick={handleE2EConnect}
+              disabled={isConnectPending}
+              data-testid="e2e-connect-wallet-mobile"
+              className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
+            >
+              {isConnectPending ? "Connecting..." : "E2E Connect"}
+            </button>
+          )}
+          {[...navItems, ...mobileOnlyItems].map((item) => {
+            const active = isNavActive(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className={cn(
+                  "block rounded-md px-3 py-2.5 text-sm font-medium",
+                  active ? "bg-app-bg-subtle text-app-text" : "text-app-muted"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <div className="pt-2 sm:hidden">
+            <NetworkSelector />
+          </div>
+          <button
+            type="button"
+            onClick={toggle}
+            className="flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-app-muted transition-colors hover:bg-app-surface-hover hover:text-app-text"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+            {theme === "dark" ? "Light mode" : "Dark mode"}
+          </button>
+          <div className="pt-2 sm:hidden">
+            <ConnectWalletButton theme={theme} toggle={toggle} />
+          </div>
+        </nav>
+      </div>
     </>
   );
 }

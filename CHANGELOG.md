@@ -13,6 +13,32 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-15] Security headers: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy via `next.config.ts` `headers()`.
+- [2026-04-15] Transaction simulation: `useSimulateDeposit` and `useSimulateRedeem` hooks pre-validate deposits and redemptions before submission; inline warning shown when simulation fails.
+- [2026-04-15] Branded error page (`error.tsx`) with retry action and not-found page (`not-found.tsx`) with navigation links.
+- [2026-04-15] Legal pages: `/terms` (Terms of Use) and `/privacy` (Privacy Policy) with standard DeFi disclaimer language, linked from footer.
+- [2026-04-15] Open Graph and Twitter Card metadata (`metadataBase`, `openGraph`, `twitter`) on root layout; dynamic OG image via `opengraph-image.tsx` (edge runtime).
+- [2026-04-15] SEO: `sitemap.ts` covering static routes and all docs pages; `robots.ts` disallowing `/admin` and `/api/`.
+- [2026-04-15] Radix Dialog primitive (`@radix-ui/react-dialog`) as reusable `Dialog` component with overlay, content, header, footer, title, and description sub-components.
+- [2026-04-15] Shared `useAutoSwitchChain` hook extracted from Privy provider; now also runs on the Wagmi-only fallback provider so non-Privy users get automatic network switching.
+- [2026-04-15] Tooltip-based onboarding tour system (`TourProvider`, `TourTooltip`, `BasketTour`) with 4-step guided walkthrough on the basket detail page (metrics, deposit/redeem, share chart, positions). Dismisses permanently via localStorage; can be reset programmatically.
+- [2026-04-15] Web Vitest unit tests added to CI pipeline (`web_unit` job in `test.yml`).
+
+### Fixed
+
+- [2026-04-15] Toast container now announces to screen readers via `role="status"` and `aria-live="polite"`.
+- [2026-04-15] Deposit/redeem panel label now properly associated with input via `htmlFor`/`id` pairing.
+- [2026-04-15] Removed stale `/favicon.ico` reference from `manifest.ts` (only `icon.svg` exists; Next.js serves it automatically).
+- [2026-04-15] README setup section updated to reflect CI-only checks (removed stale Husky git hooks reference).
+- [2026-04-15 UTC+07:00] Remove RPC `getLogs(fromBlock: 0)` fallback from `useOraclePriceHistory`; subgraph is now the sole price history source, eliminating expensive full-chain log scans that degraded dev performance over time.
+- [2026-04-15 UTC+07:00] Fix `useContractErrorToast` write-error effect re-running on unrelated receipt state changes by removing unused dependencies from the effect array.
+- [2026-04-15 UTC+07:00] Service worker no longer serves stale cached HTML indefinitely; fetch handler switched from cache-first to stale-while-revalidate so returning users get fresh content on the next navigation after a deploy. Cache version is now stamped with the git commit hash at build time so each deployment fully prunes the previous cache. Service worker registration is disabled in development mode (and any existing registration is unregistered) to eliminate the need to clear browser cache after dev server restarts.
+
+### Added
+
+- [2026-04-15 UTC+07:00] Add `@sentry/nextjs` for error tracking and observability — server-side (`instrumentation.ts` with `onRequestError`), client-side (`instrumentation-client.ts` with Session Replay), and `global-error.tsx` error boundary; source maps uploaded in CI via `withSentryConfig`; Sentry tunnel route to bypass ad-blockers. DSN configured via `NEXT_PUBLIC_SENTRY_DSN`.
+- [2026-04-15 UTC+07:00] Add `@vercel/analytics` and `@vercel/speed-insights` for traffic and performance monitoring (zero-config on Vercel).
+- [2026-04-15 UTC+07:00] Add `@next/bundle-analyzer` and SSR ticker data fetcher (`ticker.server.ts`) for server-side price loading on the landing page.
 - [2026-04-15 UTC+07:00] Docs: contract call card component (`ContractCallCard`) for rendering contract interaction references as styled UI cards in markdown docs; triggered by `contract-call` fenced code blocks with YAML-like syntax for function, caller, inputs, effects, and revert conditions.
 - [2026-04-15 UTC+07:00] Docs: comprehensive contract interaction entries in `OPERATOR_INTERACTIONS.md` covering all operator-callable functions across BasketVault, VaultAccounting, OracleAdapter, AssetWiring, PriceSync, FundingRateManager, and BasketFactory — each with plain-English summaries and "when to use" guidance.
 - [2026-04-15 UTC+07:00] Docs: curator narrative and decision framework in `ASSET_MANAGER_FLOW.md` — natural-language explanation of the curator role, typical session walkthrough, reserve management guidelines, position sizing heuristics, and fee policy guidance.
@@ -31,6 +57,13 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-15 UTC+07:00] Move PriceTicker from root layout (every page) to the landing page only, with server-side price fetching and 60s client hydration polling — eliminates ~22 polling queries on non-landing routes.
+- [2026-04-15 UTC+07:00] Reduce global `REFETCH_INTERVAL` from 15s to 60s for all contract-read polling hooks.
+- [2026-04-15 UTC+07:00] Tune `QueryClient` defaults: `staleTime: 10s`, `refetchOnWindowFocus: false` to prevent tab-focus refetch storms.
+- [2026-04-15 UTC+07:00] Replace framer-motion in global header mobile menu with CSS transitions; framer-motion no longer ships in the root layout chunk.
+- [2026-04-15 UTC+07:00] Dynamic-import recharts chart components (`SharePriceChart`, `AssetPricePanel`) to reduce initial bundle size on basket detail pages.
+- [2026-04-15 UTC+07:00] Lazy-load Privy provider via `next/dynamic` so the Privy SDK only loads when `NEXT_PUBLIC_PRIVY_APP_ID` is configured.
+- [2026-04-15 UTC+07:00] Add `serverExternalPackages: ["yahoo-finance2"]` and remove duplicate `yahoo-finance2` from root `package.json`.
 - [2026-04-15 UTC+07:00] Docs: renamed "Asset Manager Flow" to "Curator & Asset Manager Flow" in the docs registry and README index.
 - [2026-04-15 UTC+07:00] Docs: normalized cross-reference link paths across all docs files to use `./` prefix consistently; annotated repo-root links (`MODIFICATIONS.md`) as not in-app.
 - [2026-04-15 UTC+07:00] Docs: restyled doc page header with category label, cleaner typography, and source link in footer instead of header.
@@ -47,6 +80,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-15 UTC+07:00] Primer: replaced invalid SVG `rx="0 0 10 10"` on a `<rect>` in the Shared Liquidity illustration with a `<path>` that correctly draws bottom-only rounded corners, fixing browser console errors.
 - [2026-04-15 UTC+07:00] Baskets list: share price and trend deltas now use `formatPrice` (1e30 precision) instead of `formatUSDC` (1e6), fixing numeric overflow in basket cards.
 - [2026-04-15 UTC+07:00] Chain-Attributable Growth radar chart percentages now sum to 100% per metric across the three chains; radar chart rendering is scaled so polygons remain visually substantial.
 

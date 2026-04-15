@@ -17,6 +17,8 @@ vi.mock("wagmi", () => ({
 vi.mock("@/hooks/useBasketVault", () => ({
   useUSDCBalance: () => ({ data: 0n }),
   useUSDCAllowance: () => ({ data: 0n }),
+  useSimulateDeposit: () => ({ error: null }),
+  useSimulateRedeem: () => ({ error: null }),
   useApproveUSDC: () => ({
     approve: vi.fn(),
     receipt: { isSuccess: false, isError: false, error: null },
