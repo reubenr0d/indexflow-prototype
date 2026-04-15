@@ -149,6 +149,39 @@ export const GET_BASKET_TREND_SNAPSHOTS = gql`
   }
 `;
 
+export const GET_BASKETS_WEEK_SNAPSHOTS = gql`
+  query GetBasketsWeekSnapshots($ids: [String!]!) {
+    baskets(where: { id_in: $ids }) {
+      id
+      snapshots(where: { period: "7d" }, first: 2, orderBy: bucketStart, orderDirection: desc) {
+        id
+        period
+        bucketStart
+        bucketEnd
+        createdAt
+        updatedAt
+        sharePrice
+        basketPrice
+        usdcBalanceUsdc
+        perpAllocatedUsdc
+        tvlBookUsdc
+        totalSupplyShares
+        assetCount
+        depositFeeBps
+        redeemFeeBps
+        minReserveBps
+        requiredReserveUsdc
+        availableForPerpUsdc
+        collectedFeesUsdc
+        cumulativeFeesCollectedUsdc
+        openInterest
+        collateralLocked
+        positionCount
+      }
+    }
+  }
+`;
+
 export const GET_SHARE_PRICE_HISTORY = gql`
   query GetSharePriceHistory($id: ID!, $first: Int!) {
     basketSnapshots(
@@ -215,6 +248,23 @@ export const GET_USER_PORTFOLIO = gql`
         shareToken
         sharePrice
         basketPrice
+      }
+    }
+  }
+`;
+
+export const GET_TOKEN_HOLDER_ADDRESSES = gql`
+  query GetTokenHolderAddresses($first: Int!, $skip: Int!) {
+    userBasketPositions(
+      first: $first
+      skip: $skip
+      where: { shareBalance_gt: "0" }
+      orderBy: updatedAt
+      orderDirection: desc
+    ) {
+      id
+      user {
+        id
       }
     }
   }

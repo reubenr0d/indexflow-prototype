@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
-import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatCompact, formatUSDC, formatBps } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";

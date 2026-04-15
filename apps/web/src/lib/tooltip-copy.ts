@@ -32,6 +32,8 @@ export const TOOLTIP_COPY = {
     "Ratio of open interest to deposited capital. Shows how much notional exposure is generated per unit of capital.",
   sharePriceHistory:
     "Historical share price over time, showing how the basket's NAV per share has evolved.",
+  apy7d:
+    "Annualised percentage yield estimated from the 7-day share price change. Positive values indicate growth; negative values indicate decline. Not a guarantee of future returns.",
 
   // Fees and reserve policy
   depositFee: "Fee applied when users deposit USDC into the basket vault.",

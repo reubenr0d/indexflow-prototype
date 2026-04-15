@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
-import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";

@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { useReadContract } from "wagmi";
-import { OracleAdapterABI } from "@/abi/contracts";
+import { OracleAdapterABI } from "@/abi/OracleAdapter";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {

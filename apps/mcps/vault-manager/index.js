@@ -6,7 +6,7 @@ import { z } from "zod";
 import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
-import { classifySymbolWithSearch, symbolPolicyMessage } from "../shared/yahoo-symbol-policy.mjs";
+import { classifySymbolWithSearch, symbolPolicyMessage } from "../../shared/yahoo-symbol-policy.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env

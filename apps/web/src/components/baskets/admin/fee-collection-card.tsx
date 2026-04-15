@@ -8,7 +8,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
 import { useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
-import { BasketVaultABI } from "@/abi/contracts";
+import { BasketVaultABI } from "@/abi/BasketVault";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { usePostTxRefresh } from "@/hooks/usePostTxRefresh";
 import { type Address } from "viem";

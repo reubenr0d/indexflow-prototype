@@ -24,7 +24,7 @@ import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatAddress, formatTokenAmount, formatUSDC, formatUsd1e30, parseTokenAmountInput } from "@/lib/format";
 import { motion } from "framer-motion";
-import { PerpReaderABI } from "@/abi/contracts";
+import { PerpReaderABI } from "@/abi/PerpReader";
 import { type Address, zeroAddress } from "viem";
 
 const GMX_VAULT_READ_ABI = [

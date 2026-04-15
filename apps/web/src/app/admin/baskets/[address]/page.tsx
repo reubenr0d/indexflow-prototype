@@ -23,6 +23,7 @@ import {
   formatUsd1e30,
   formatSignedUsd1e30,
 } from "@/lib/format";
+import { formatApy } from "@/lib/apy";
 import { showToast } from "@/components/ui/toast";
 import { type Address } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
@@ -52,6 +53,7 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     blended,
     showAllocatedComposition,
     assetMeta,
+    apy7d,
     usdc,
   } = useBasketDashboardData(vault);
 
@@ -63,8 +65,11 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const netPnlSign = netPnL > 0n ? 1 : netPnL < 0n ? -1 : 0;
   const unrealisedSign = unrealisedPnL > 0n ? 1 : unrealisedPnL < 0n ? -1 : 0;
 
+  const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
+
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl) },
+    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign },
     { label: "Perp Allocated", value: formatUSDC(basketInfo?.perpAllocated ?? 0n) },
     ...(state?.registered
       ? [

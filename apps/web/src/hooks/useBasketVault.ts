@@ -2,7 +2,7 @@
 
 import { useReadContract, useReadContracts, useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
-import { BasketVaultABI } from "@/abi/contracts";
+import { BasketVaultABI } from "@/abi/BasketVault";
 import { ERC20ABI } from "@/abi/erc20";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { type Address } from "viem";

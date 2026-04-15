@@ -10,9 +10,11 @@ import { useAccount, usePublicClient, useReadContracts } from "wagmi";
 import { useQuery } from "@tanstack/react-query";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
-import { useUserPortfolioQuery } from "@/hooks/subgraph/useSubgraphQueries";
-import { BasketShareTokenABI } from "@/abi/contracts";
+import { useUserPortfolioQuery } from "@/hooks/subgraph/useUserPortfolio";
+import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
+import { BasketShareTokenABI } from "@/abi/BasketShareToken";
 import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
+import { computeApy, formatApy } from "@/lib/apy";
 import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -224,47 +226,19 @@ export default function PortfolioPage() {
               const holdingPnL = h.value - holdingCostBasis;
               const holdingRoiPct = holdingCostBasis > 0n ? Number((holdingPnL * 10000n) / holdingCostBasis) / 100 : 0;
               return (
-            <motion.div
+            <HoldingCard
               key={h.vault}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.05 }}
-            >
-              <Link href={`/baskets/${h.vault}`}>
-                <Card className="flex items-center justify-between p-6 transition-shadow hover:shadow-md">
-                  <div>
-                    <p className="font-semibold text-app-text">
-                      <InfoLabel label={h.name || "Basket"} tooltipKey="tableName" />
-                    </p>
-                    <p className="mt-0.5 text-sm text-app-muted">
-                      {formatShares(h.balance)} shares
-                    </p>
-                    {holdingCostBasis > 0n && (
-                      <p className="mt-0.5 text-xs text-app-muted">
-                        Cost basis {formatUSDC(holdingCostBasis)}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="text-right">
-                      <p className="font-semibold text-app-text">
-                        {formatUSDC(h.value)}
-                      </p>
-                      {holdingCostBasis > 0n && (
-                        <p className={`text-sm font-medium ${holdingPnL >= 0n ? "text-app-success" : "text-app-danger"}`}>
-                          {holdingPnL >= 0n ? "+" : "-"}{formatUSDC(holdingPnL >= 0n ? holdingPnL : -holdingPnL)} ({holdingRoiPct >= 0 ? "+" : ""}{holdingRoiPct.toFixed(2)}%)
-                        </p>
-                      )}
-                      <p className="text-xs text-app-muted">
-                        {formatUSDC(h.sharePrice)} / share
-                      </p>
-                      <p className="text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 text-app-muted" />
-                  </div>
-                </Card>
-              </Link>
-            </motion.div>
+              vault={h.vault as Address}
+              name={h.name}
+              balance={h.balance}
+              value={h.value}
+              sharePrice={h.sharePrice}
+              holdingCostBasis={holdingCostBasis}
+              holdingPnL={holdingPnL}
+              holdingRoiPct={holdingRoiPct}
+              perpBlendBps={perpBlendBps}
+              index={i}
+            />
               );
           })}
         </div>
@@ -280,5 +254,81 @@ export default function PortfolioPage() {
         </div>
       )}
     </PageWrapper>
+  );
+}
+
+function HoldingCard({
+  vault,
+  name,
+  balance,
+  value,
+  sharePrice,
+  holdingCostBasis,
+  holdingPnL,
+  holdingRoiPct,
+  perpBlendBps,
+  index,
+}: {
+  vault: Address;
+  name: string;
+  balance: bigint;
+  value: bigint;
+  sharePrice: bigint;
+  holdingCostBasis: bigint;
+  holdingPnL: bigint;
+  holdingRoiPct: number;
+  perpBlendBps: bigint;
+  index: number;
+}) {
+  const { data: trendData } = useBasketTrendSnapshots(vault);
+  const apy =
+    trendData?.week?.current && trendData?.week?.previous
+      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
+      : null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+    >
+      <Link href={`/baskets/${vault}`}>
+        <Card className="flex items-center justify-between p-6 transition-shadow hover:shadow-md">
+          <div>
+            <p className="font-semibold text-app-text">
+              <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
+            </p>
+            <p className="mt-0.5 text-sm text-app-muted">
+              {formatShares(balance)} shares
+            </p>
+            {holdingCostBasis > 0n && (
+              <p className="mt-0.5 text-xs text-app-muted">
+                Cost basis {formatUSDC(holdingCostBasis)}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <p className="font-semibold text-app-text">
+                {formatUSDC(value)}
+              </p>
+              {holdingCostBasis > 0n && (
+                <p className={`text-sm font-medium ${holdingPnL >= 0n ? "text-app-success" : "text-app-danger"}`}>
+                  {holdingPnL >= 0n ? "+" : "-"}{formatUSDC(holdingPnL >= 0n ? holdingPnL : -holdingPnL)} ({holdingRoiPct >= 0 ? "+" : ""}{holdingRoiPct.toFixed(2)}%)
+                </p>
+              )}
+              <p className={`text-xs font-semibold ${apy !== null && apy > 0 ? "text-app-success" : apy !== null && apy < 0 ? "text-app-danger" : "text-app-muted"}`}>
+                APY {formatApy(apy)}
+              </p>
+              <p className="text-xs text-app-muted">
+                {formatUSDC(sharePrice)} / share
+              </p>
+              <p className="text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
+            </div>
+            <ArrowUpRight className="h-4 w-4 text-app-muted" />
+          </div>
+        </Card>
+      </Link>
+    </motion.div>
   );
 }

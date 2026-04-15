@@ -1,13 +1,13 @@
 # Multi-Agent Framework
 
-Define autonomous vault management agents as markdown files. Each agent gets its own vault (auto-deployed on first run), persistent memory across cron runs, and access to MCP tool servers for on-chain operations and market data. No JavaScript required.
+Define autonomous vault management agents as markdown files. Each agent gets its own vault (auto-deployed on first run), persistent memory across cron runs, and access to MCP tool servers for on-chain operations and market data. Prompt/body edits reuse the remembered vault unless the deployment context changes or memory is missing. No JavaScript required.
 
 ## Quick Start
 
 ```bash
 # Install MCP server deps (one-time)
-npm --prefix apps/vault-manager-mcp install
-npm --prefix apps/yfinance-mcp install
+npm --prefix apps/mcps/vault-manager install
+npm --prefix apps/mcps/yfinance install
 
 # Run the sample agent
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
@@ -26,7 +26,7 @@ LLM_API_KEY=sk-... npm run agent:dry
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
 ```
 
-On first run, the agent automatically deploys its own vault. Subsequent runs manage that vault using saved memory.
+On first run, the agent automatically deploys its own vault. Subsequent runs manage that vault using saved memory. Editing the agent `.md` prompt/body does not create a replacement vault on its own.
 
 ---
 
@@ -183,7 +183,8 @@ Each agent manages exactly one vault. The runner handles deployment automaticall
 
 - **First run**: no memory exists, the runner instructs the agent to create a vault via `create_vault`, then captures the new address from the `create_vault` `vaultAddress` response (with `get_all_vaults` fallback only if needed).
 - **Subsequent runs**: the runner loads the vault address from memory and injects it into the system prompt.
-- **Agent file changes**: the runner computes a SHA-256 hash of the `.md` file. If the hash changes (new strategy, updated config, etc.), it triggers a new vault deployment. The old vault remains on-chain but is no longer managed.
+- **Agent file changes**: the runner still computes a SHA-256 hash of the `.md` file and stores it in memory, but hash changes are treated as metadata only. If the remembered vault address is still present, the agent keeps managing the same vault after prompt or strategy edits.
+- **Deployment changes**: when the deployment fingerprint changes (network key, `DEPLOYMENT_CONFIG`, or `RPC_URL`), the runner rotates stale memory into `archive/` and starts from a fresh vault context for that deployment.
 
 ---
 
@@ -240,12 +241,12 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 {
   "vault-manager-mcp": {
     "command": "node",
-    "args": ["apps/vault-manager-mcp/index.js"],
+    "args": ["apps/mcps/vault-manager/index.js"],
     "envPassthrough": ["DEPLOYMENT_CONFIG", "RPC_URL", "PRIVATE_KEY"]
   },
   "yfinance-mcp": {
     "command": "node",
-    "args": ["apps/yfinance-mcp/index.js"],
+    "args": ["apps/mcps/yfinance/index.js"],
     "envPassthrough": []
   }
 }
@@ -257,7 +258,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 | `args` | Arguments (paths relative to project root) |
 | `envPassthrough` | Env var names forwarded to the server process |
 
-To add a new MCP server: add the server code under `apps/`, then add an entry to `agents/mcp-servers.json`.
+To add a new MCP server: add the server code under `apps/mcps/`, then add an entry to `agents/mcp-servers.json`.
 
 ---
 
@@ -436,6 +437,7 @@ scripts/
   vault-agent.mjs         # Backward-compatible wrapper for sample-vault-manager
 
 apps/
-  vault-manager-mcp/      # MCP server (on-chain vault reads + writes)
-  yfinance-mcp/           # MCP server (Yahoo Finance search + quotes)
+  mcps/
+    vault-manager/        # MCP server (on-chain vault reads + writes)
+    yfinance/             # MCP server (Yahoo Finance search + quotes)
 ```

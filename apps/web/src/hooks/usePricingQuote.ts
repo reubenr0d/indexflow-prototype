@@ -2,7 +2,8 @@
 
 import { useMemo } from "react";
 import { useReadContract, useReadContracts } from "wagmi";
-import { OracleAdapterABI, PricingEngineABI } from "@/abi/contracts";
+import { OracleAdapterABI } from "@/abi/OracleAdapter";
+import { PricingEngineABI } from "@/abi/PricingEngine";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { PRICE_PRECISION, USDC_PRECISION, REFETCH_INTERVAL } from "@/lib/constants";

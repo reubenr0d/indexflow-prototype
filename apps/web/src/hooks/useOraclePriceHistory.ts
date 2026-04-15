@@ -13,7 +13,7 @@ import {
   filterHistoryWindow,
   sortAndDedupeHistory,
 } from "@/lib/oracle-price-history";
-import { useOraclePriceUpdatesQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { useOraclePriceUpdatesQuery } from "@/hooks/subgraph/useOraclePriceUpdates";
 
 const MAX_HISTORY_ROWS = 500;
 

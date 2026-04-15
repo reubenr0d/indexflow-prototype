@@ -1,13 +1,22 @@
 "use client";
 
 import { useEffect, useId, useMemo, useState } from "react";
-import mermaid from "mermaid";
 
-mermaid.initialize({
-  startOnLoad: false,
-  securityLevel: "loose",
-  theme: "neutral",
-});
+let mermaidReady: Promise<typeof import("mermaid")["default"]> | null = null;
+
+function getMermaid() {
+  if (!mermaidReady) {
+    mermaidReady = import("mermaid").then((m) => {
+      m.default.initialize({
+        startOnLoad: false,
+        securityLevel: "loose",
+        theme: "neutral",
+      });
+      return m.default;
+    });
+  }
+  return mermaidReady;
+}
 
 export function MermaidBlock({ chart }: { chart: string }) {
   const [svg, setSvg] = useState<string | null>(null);
@@ -21,6 +30,7 @@ export function MermaidBlock({ chart }: { chart: string }) {
 
     async function render() {
       try {
+        const mermaid = await getMermaid();
         const { svg: out } = await mermaid.render(renderId, chart);
         if (!cancelled) {
           setSvg(out);

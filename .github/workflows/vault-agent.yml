@@ -57,13 +57,8 @@ jobs:
           node-version: "22"
           cache: "npm"
 
-      - name: Install root npm dependencies
+      - name: Install dependencies
         run: npm ci
-
-      - name: Install MCP server dependencies
-        run: |
-          npm --prefix apps/vault-manager-mcp ci
-          npm --prefix apps/yfinance-mcp ci
 
       - name: Run Agent
         env:

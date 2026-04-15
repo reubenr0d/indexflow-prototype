@@ -328,6 +328,17 @@ function shouldInvalidateDeploymentMemory(state, nextDeploymentFingerprint) {
   return state.deploymentFingerprint !== nextDeploymentFingerprint;
 }
 
+function resolveVaultLifecycle(state, currentAgentFileHash) {
+  const needsNewVault = !state || !state.vaultAddress;
+  const agentFileChanged = Boolean(
+    state?.agentFileHash && state.agentFileHash !== currentAgentFileHash
+  );
+  return {
+    needsNewVault,
+    agentFileChanged,
+  };
+}
+
 function rotateFileToArchive(filePath, reasonTag) {
   if (!existsSync(filePath)) return null;
   const archiveDir = resolve(dirname(filePath), "archive");
@@ -944,21 +955,22 @@ export async function runAgent(agentName) {
     state = null;
     recentRuns = [];
   }
-  const needsNewVault =
-    !state || !state.vaultAddress || state.agentFileHash !== config.fileHash;
+  const { needsNewVault, agentFileChanged } = resolveVaultLifecycle(
+    state,
+    config.fileHash
+  );
 
   if (needsNewVault) {
     if (!state) {
       console.log("Memory: no state found — agent will deploy a new vault.");
-    } else if (state.agentFileHash !== config.fileHash) {
-      console.log(
-        "Memory: agent .md file changed — agent will deploy a new vault."
-      );
     } else {
       console.log("Memory: no vault address — agent will deploy a new vault.");
     }
   } else {
     console.log(`Memory: vault ${state.vaultAddress} (${state.vaultName})`);
+    if (agentFileChanged) {
+      console.log("Memory: agent .md file changed — reusing existing vault.");
+    }
   }
   if (recentRuns.length > 0) {
     console.log(
@@ -1529,6 +1541,7 @@ export const __agentRunnerInternals = {
   buildDeploymentFingerprint,
   shortHash,
   shouldInvalidateDeploymentMemory,
+  resolveVaultLifecycle,
   rotateFileToArchive,
   rotateAgentMemoryForDeploymentChange,
   parseAgentPolicy,

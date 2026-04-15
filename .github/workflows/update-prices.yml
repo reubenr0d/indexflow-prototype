@@ -22,6 +22,9 @@ jobs:
   update-prices:
     name: Update Prices (${{ matrix.network }})
     runs-on: ubuntu-latest
+    concurrency:
+      group: update-prices-${{ github.workflow }}-${{ matrix.network }}
+      cancel-in-progress: false
     if: >-
       github.event_name == 'schedule'
       || github.event_name == 'pull_request'

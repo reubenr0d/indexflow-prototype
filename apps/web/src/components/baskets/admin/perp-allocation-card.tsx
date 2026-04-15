@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { showToast } from "@/components/ui/toast";
-import { BasketVaultABI } from "@/abi/contracts";
+import { BasketVaultABI } from "@/abi/BasketVault";
 import { formatUSDC, parseUSDCInput } from "@/lib/format";
 import { useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";

@@ -183,7 +183,7 @@ export function DepositRedeemPanel({
   };
 
   return (
-    <Card className="sticky top-20 p-5">
+    <Card className="p-5">
       <SegmentedControl
         options={[
           { value: "deposit", label: "Deposit", icon: <ArrowDownToLine className="h-4 w-4" /> },

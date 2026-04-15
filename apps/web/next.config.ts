@@ -1,9 +1,19 @@
 import type { NextConfig } from "next";
-import path from "path";
 
 const nextConfig: NextConfig = {
-  turbopack: {
-    root: path.resolve(__dirname, ".."),
+  experimental: {
+    optimizePackageImports: [
+      "lucide-react",
+      "recharts",
+      "framer-motion",
+      "@privy-io/react-auth",
+      "wagmi",
+      "viem",
+      "@tanstack/react-query",
+      "graphql",
+      "graphql-request",
+      "react-markdown",
+    ],
   },
 };
 

@@ -3,7 +3,7 @@
 import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { type Address } from "viem";
-import { FundingRateManagerABI } from "@/abi/contracts";
+import { FundingRateManagerABI } from "@/abi/FundingRateManager";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";

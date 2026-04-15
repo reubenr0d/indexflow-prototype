@@ -60,6 +60,12 @@ export function formatCompact(value: number): string {
   return `$${value.toLocaleString()}`;
 }
 
+export function formatSignedCompact(value: number): string {
+  if (value === 0) return formatCompact(0);
+  const sign = value > 0 ? "+" : "-";
+  return `${sign}${formatCompact(Math.abs(value))}`;
+}
+
 export function formatShares(shares: bigint): string {
   const whole = shares / 1_000_000n;
   const frac = shares % 1_000_000n;

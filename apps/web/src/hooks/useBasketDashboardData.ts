@@ -2,7 +2,9 @@
 
 import { useMemo } from "react";
 import { useBasketInfo, useVaultPnL, useVaultState } from "@/hooks/usePerpReader";
-import { useBasketDetailQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { useBasketDetailQuery } from "@/hooks/subgraph/useBasketDetail";
+import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
+import { computeApy } from "@/lib/apy";
 import {
   useBasketFees,
   useMinReserveBps,
@@ -13,7 +15,7 @@ import {
 } from "@/hooks/useBasketVault";
 import { useOracleAssetMetaMap } from "@/hooks/useOracle";
 import { useReadContracts } from "wagmi";
-import { VaultAccountingABI } from "@/abi/contracts";
+import { VaultAccountingABI } from "@/abi/VaultAccounting";
 import { computeBlendedComposition, type PerpExposureAsset } from "@/lib/blendedComposition";
 import { encodePacked, keccak256, type Address } from "viem";
 import { getContracts } from "@/config/contracts";
@@ -182,6 +184,12 @@ export function useBasketDashboardData(vault: Address) {
   const hasNonZeroAllocation = blended.assetBlend.some((asset) => asset.blendBps > 0n);
   const showAllocatedComposition = hasExposureRows && hasNonZeroAllocation;
 
+  const { data: trendData } = useBasketTrendSnapshots(vault);
+  const apy7d =
+    trendData?.week?.current && trendData?.week?.previous
+      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
+      : null;
+
   return {
     basketInfo,
     state,
@@ -204,6 +212,7 @@ export function useBasketDashboardData(vault: Address) {
     blended,
     showAllocatedComposition,
     assetMeta,
+    apy7d,
     usdc,
     chainId,
   };

@@ -2,20 +2,18 @@ import { createConfig } from "@privy-io/wagmi";
 import { arbitrum, arbitrumSepolia, sepolia } from "wagmi/chains";
 import { createConfig as createWagmiConfig, http, mock } from "wagmi";
 import { anvil } from "viem/chains";
+import { isAnvilEnabled } from "@/lib/dev-mode";
 
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
-const includeAnvil =
-  isE2ETestMode ||
-  (typeof window !== "undefined" &&
-    ["localhost", "127.0.0.1"].includes(window.location.hostname));
+const includeAnvil = isE2ETestMode || isAnvilEnabled();
 
 function buildDefaultConfig() {
   if (includeAnvil) {
     return createConfig({
-      chains: [anvil, sepolia, arbitrumSepolia, arbitrum],
+      chains: [sepolia, anvil, arbitrumSepolia, arbitrum],
       transports: {
-        [anvil.id]: http("http://127.0.0.1:8545"),
         [sepolia.id]: http(),
+        [anvil.id]: http("http://127.0.0.1:8545"),
         [arbitrumSepolia.id]: http(),
         [arbitrum.id]: http(),
       },

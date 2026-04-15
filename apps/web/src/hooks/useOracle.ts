@@ -2,7 +2,8 @@
 
 import { useMemo } from "react";
 import { useReadContract, useReadContracts } from "wagmi";
-import { OracleAdapterABI, VaultAccountingABI } from "@/abi/contracts";
+import { OracleAdapterABI } from "@/abi/OracleAdapter";
+import { VaultAccountingABI } from "@/abi/VaultAccounting";
 import { ERC20ABI } from "@/abi/erc20";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";

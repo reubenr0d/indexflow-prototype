@@ -300,6 +300,8 @@ PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 n
 
 Config/env overrides: `DEPLOYMENT_CONFIG`, `RPC_URL`.
 
+GitHub automation: `.github/workflows/update-prices.yml` runs every 15 minutes and serializes overlapping runs per network using Actions `concurrency` (queue policy, no in-progress cancellation).
+
 **Registering new assets via admin UI**
 
 The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that lets operators discover any publicly-traded equity and register it on-chain as a `CustomRelayer` asset with an initial price seed. Ambiguous unsuffixed equities (for example `BHP`) are rejected and must be registered with an explicit exchange suffix (for example `BHP.AX`). Unique unsuffixed equities (for example `AAPL`) and non-equity symbols remain valid. Registered assets automatically appear in basket asset pickers.
@@ -311,7 +313,7 @@ For deterministic behavior, agents can also define policy frontmatter (for examp
 
 ```bash
 # Install MCP server deps (one-time)
-npm --prefix apps/vault-manager-mcp install
+npm --prefix apps/mcps/vault-manager install
 
 # Uses repo-root .env / .env.local if present (see Configuration above)
 
@@ -338,8 +340,11 @@ Agent run history is network-scoped to avoid cross-network context bleed: each a
 
 Agent memory is deployment-aware: the runner fingerprints the active deployment context (network key + `DEPLOYMENT_CONFIG` content + `RPC_URL`). When that fingerprint changes (for example after redeploying contracts), it automatically invalidates stale memory for that network by rotating `state.json` and `run-log.<network>.jsonl` into `agents/memory/<agent>/archive/`, then starts from a fresh vault context.
 
+Editing an agent markdown file does not, by itself, force a new vault. The runner updates the stored agent file hash for bookkeeping, but if the remembered vault address is still present and the deployment fingerprint is unchanged, subsequent runs keep managing the same vault.
+
 ## Documentation
 
+- `/primer` — visual long-scroll explainer page distilling the whitepaper and pitch deck into animated sections with inline SVG diagrams.
 - In-app wiki (web app):
   - `/docs` — searchable index sourced directly from repository markdown under `docs/*.md`.
   - Canonical routes:

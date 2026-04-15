@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "Perp infrastructure via GMX v1 fork with oracle-priced basket vaults",
   "private": true,
+  "workspaces": [
+    "apps/web",
+    "apps/push-worker",
+    "apps/subgraph",
+    "apps/mcps/vault-manager",
+    "apps/mcps/yfinance"
+  ],
   "scripts": {
     "build": "forge build",
     "test": "forge test",
@@ -31,8 +38,8 @@
     "agent": "node scripts/vault-agent.mjs",
     "agent:dry": "AGENT_DRY_RUN=1 node scripts/vault-agent.mjs",
     "agent:run": "node scripts/agent-runner.mjs",
-    "mcp:vault-manager": "node apps/vault-manager-mcp/index.js",
-    "mcp:yfinance": "node apps/yfinance-mcp/index.js"
+    "mcp:vault-manager": "node apps/mcps/vault-manager/index.js",
+    "mcp:yfinance": "node apps/mcps/yfinance/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

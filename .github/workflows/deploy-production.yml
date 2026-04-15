@@ -27,10 +27,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
-          cache-dependency-path: apps/push-worker/package-lock.json
 
-      - name: Install push-worker dependencies
-        run: npm ci --prefix apps/push-worker
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run push-worker tests
         run: npm run --prefix apps/push-worker test

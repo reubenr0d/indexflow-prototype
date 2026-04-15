@@ -8,6 +8,7 @@ import { __agentRunnerInternals } from "./agent-runner.mjs";
 const {
   buildDeploymentFingerprint,
   shouldInvalidateDeploymentMemory,
+  resolveVaultLifecycle,
   rotateFileToArchive,
   shortHash,
 } = __agentRunnerInternals;
@@ -20,6 +21,43 @@ test("shouldInvalidateDeploymentMemory handles legacy and fingerprint changes", 
   assert.equal(shouldInvalidateDeploymentMemory({ deploymentFingerprint: fpA }, fpA), false);
   assert.equal(shouldInvalidateDeploymentMemory({ deploymentFingerprint: fpA }, fpB), true);
   assert.equal(shouldInvalidateDeploymentMemory({ vaultAddress: "0xabc" }, fpA), true);
+});
+
+test("resolveVaultLifecycle reuses remembered vaults across agent file edits", () => {
+  const currentHash = "sha256:new";
+
+  assert.deepEqual(resolveVaultLifecycle(null, currentHash), {
+    needsNewVault: true,
+    agentFileChanged: false,
+  });
+
+  assert.deepEqual(
+    resolveVaultLifecycle(
+      {
+        vaultAddress: "0xabc",
+        agentFileHash: "sha256:old",
+      },
+      currentHash
+    ),
+    {
+      needsNewVault: false,
+      agentFileChanged: true,
+    }
+  );
+
+  assert.deepEqual(
+    resolveVaultLifecycle(
+      {
+        vaultAddress: "",
+        agentFileHash: "sha256:old",
+      },
+      currentHash
+    ),
+    {
+      needsNewVault: true,
+      agentFileChanged: true,
+    }
+  );
 });
 
 test("buildDeploymentFingerprint changes when deployment config content changes", () => {

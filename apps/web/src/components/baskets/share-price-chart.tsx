@@ -8,7 +8,7 @@ import { InfoLabel } from "@/components/ui/info-tooltip";
 import {
   useSharePriceHistory,
   type SharePricePoint,
-} from "@/hooks/subgraph/useSubgraphQueries";
+} from "@/hooks/subgraph/useSharePriceHistory";
 import { PRICE_PRECISION } from "@/lib/constants";
 import { TrendingUp } from "lucide-react";
 import {
@@ -99,7 +99,7 @@ export function SharePriceChart({ vault, compact }: { vault: Address; compact?: 
     return { change, pct, isPositive: change >= 0 };
   }, [chartData]);
 
-  const chartHeight = compact ? "h-48" : "h-48 lg:h-64";
+  const chartHeight = compact ? "h-48" : "h-48 lg:h-80";
 
   if (isLoading) {
     return (

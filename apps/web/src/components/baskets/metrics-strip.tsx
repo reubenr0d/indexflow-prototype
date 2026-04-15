@@ -18,8 +18,9 @@ export function MetricsStrip({ metrics, className }: MetricsStripProps) {
   return (
     <div
       className={cn(
-        "flex gap-px overflow-x-auto rounded-lg border border-app-border bg-app-border",
-        "snap-x snap-mandatory scrollbar-none",
+        "flex gap-px rounded-lg border border-app-border bg-app-border",
+        "overflow-x-auto snap-x snap-mandatory scrollbar-none",
+        "lg:flex-wrap lg:overflow-visible",
         className,
       )}
     >
@@ -38,7 +39,7 @@ export function MetricsStrip({ metrics, className }: MetricsStripProps) {
             key={m.label}
             className={cn(
               "flex min-w-[7.5rem] shrink-0 snap-start flex-col bg-app-surface px-4 py-3",
-              "first:rounded-l-lg last:rounded-r-lg",
+              "first:rounded-tl-lg last:rounded-br-lg lg:flex-1 lg:shrink lg:snap-align-none",
             )}
           >
             <span className="text-[10px] font-semibold uppercase tracking-wider text-app-muted">

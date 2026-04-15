@@ -5,7 +5,7 @@ import { useReadContracts } from "wagmi";
 import { type Address } from "viem";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { BasketVaultABI } from "@/abi/contracts";
+import { BasketVaultABI } from "@/abi/BasketVault";
 import { BasketCard } from "@/components/baskets/basket-card";
 import {
   getBasketSortTimestamp,
@@ -25,7 +25,7 @@ import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
-import { useBasketsOverviewQuery } from "@/hooks/subgraph/useSubgraphQueries";
+import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { type ComponentType } from "react";

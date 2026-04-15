@@ -3,7 +3,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { classifySymbolWithSearch } from "../shared/yahoo-symbol-policy.mjs";
+import { classifySymbolWithSearch } from "../../shared/yahoo-symbol-policy.mjs";
 
 // ---------------------------------------------------------------------------
 // Yahoo Finance client (lazy-loaded)

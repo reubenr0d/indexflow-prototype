@@ -281,6 +281,13 @@ Failure policy in updater:
 
 A GitHub Actions workflow (`.github/workflows/update-prices.yml`) runs `scripts/update-yahoo-finance-prices.js` on a **15-minute cron schedule** and on **manual dispatch** (Actions tab → "Update Prices" → "Run workflow").
 
+### Concurrency policy
+
+- Runs are serialized per network using job-level Actions concurrency:
+  - `group: update-prices-${{ github.workflow }}-${{ matrix.network }}`
+  - `cancel-in-progress: false`
+- If two Sepolia runs overlap (for example, schedule + manual), the second run queues and starts only after the first completes.
+
 ### Flow
 
 ```mermaid

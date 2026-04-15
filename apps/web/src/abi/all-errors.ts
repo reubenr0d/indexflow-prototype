@@ -1,13 +1,11 @@
 import type { Abi } from "viem";
-import {
-  BasketVaultABI,
-  BasketFactoryABI,
-  BasketShareTokenABI,
-  VaultAccountingABI,
-  OracleAdapterABI,
-  PricingEngineABI,
-  FundingRateManagerABI,
-} from "./contracts";
+import { BasketVaultABI } from "./BasketVault";
+import { BasketFactoryABI } from "./BasketFactory";
+import { BasketShareTokenABI } from "./BasketShareToken";
+import { VaultAccountingABI } from "./VaultAccounting";
+import { OracleAdapterABI } from "./OracleAdapter";
+import { PricingEngineABI } from "./PricingEngine";
+import { FundingRateManagerABI } from "./FundingRateManager";
 
 const ALL_ABIS: readonly Abi[] = [
   BasketVaultABI as unknown as Abi,

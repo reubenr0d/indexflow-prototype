@@ -243,14 +243,12 @@ impact:
 
 Illustrative only. Final numbers require economic modeling.
 
-| Allocation                     | Share | Notes                                   |
-| ------------------------------ | ----- | --------------------------------------- |
-| Emissions / Liquidity Mining   | 40%   | Released over 4 years, declining curve  |
-| Treasury / Protocol-Owned Liq. | 20%   | Governed by veTOKEN holders             |
-| Team / Contributors            | 15%   | 1-year cliff, 3-year vest              |
-| Backstop Pool Seed             | 10%   | Initial staking incentives              |
-| Community / Ecosystem          | 10%   | Grants, partnerships, integrations      |
-| Initial DEX Liquidity          | 5%    | TOKEN/USDC pool seeding                 |
+| Allocation           | Share | Notes                                  |
+| -------------------- | ----- | -------------------------------------- |
+| Liquidity            | 40%   | DEX pools, mining, protocol-owned liq. |
+| Ecosystem            | 35%   | Grants, partnerships, integrations     |
+| Team / Contributors  | 15%   | 1-year cliff, 3-year vest             |
+| Private Investors    | 10%   | Strategic round participants           |
 
 Total supply would be fixed (e.g., 100M tokens) with no inflation after
 the emission schedule completes.

@@ -11,7 +11,8 @@ import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { useReadContract, useWaitForTransactionReceipt, useConfig } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
-import { OracleAdapterABI, AssetWiringABI } from "@/abi/contracts";
+import { OracleAdapterABI } from "@/abi/OracleAdapter";
+import { AssetWiringABI } from "@/abi/AssetWiring";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {

@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Web3Provider } from "@/providers/Web3Provider";
+import { PriceTicker } from "@/components/layout/price-ticker";
 import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
 import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
 import { ToastContainer } from "@/components/ui/toast";
 import "./globals.css";
@@ -40,13 +42,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable} h-full antialiased`}>
+    <html lang="en" className={`dark ${sans.variable} ${mono.variable} h-full antialiased`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}` }} />
+      </head>
       <body className="min-h-full bg-app-bg text-app-text">
         <PwaBootstrap />
         <Web3Provider>
+          <PriceTicker />
           <Header />
           <ToastContainer />
           {children}
+          <Footer />
         </Web3Provider>
       </body>
     </html>

@@ -141,15 +141,9 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            apps/web/package-lock.json
 
-      - name: Install npm dependencies (root)
+      - name: Install npm dependencies
         run: npm ci
-
-      - name: Install npm dependencies (web)
-        run: npm ci --prefix apps/web
 
       - name: Check Solidity formatting
         run: forge fmt --check
@@ -176,15 +170,9 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
-          cache-dependency-path: |
-            package-lock.json
-            apps/web/package-lock.json
 
-      - name: Install npm dependencies (root)
+      - name: Install npm dependencies
         run: npm ci
-
-      - name: Install npm dependencies (web)
-        run: npm ci --prefix apps/web
 
       - name: Install Playwright browser
         run: npx --prefix apps/web playwright install --with-deps chromium
@@ -225,10 +213,9 @@ jobs:
         with:
           node-version: "22"
           cache: "npm"
-          cache-dependency-path: apps/push-worker/package-lock.json
 
-      - name: Install push-worker dependencies
-        run: npm ci --prefix apps/push-worker
+      - name: Install dependencies
+        run: npm ci
 
       - name: Run push-worker tests
         run: npm run --prefix apps/push-worker test

@@ -1,7 +1,7 @@
 "use client";
 
 import { useReadContract, useReadContracts } from "wagmi";
-import { PerpReaderABI } from "@/abi/contracts";
+import { PerpReaderABI } from "@/abi/PerpReader";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
@@ -71,6 +71,21 @@ export function useVaultPnL(vault: Address) {
     functionName: "getVaultPnL",
     args: [vault],
     query: { refetchInterval: REFETCH_INTERVAL },
+  });
+}
+
+export function useVaultPnLBatch(vaults: Address[]) {
+  const { chainId } = useDeploymentTarget();
+  const { perpReader } = getContracts(chainId);
+
+  return useReadContracts({
+    contracts: vaults.map((vault) => ({
+      address: perpReader,
+      abi: PerpReaderABI,
+      functionName: "getVaultPnL" as const,
+      args: [vault] as const,
+    })),
+    query: { enabled: vaults.length > 0, refetchInterval: REFETCH_INTERVAL },
   });
 }
 

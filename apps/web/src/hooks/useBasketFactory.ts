@@ -2,7 +2,7 @@
 
 import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
-import { BasketFactoryABI } from "@/abi/contracts";
+import { BasketFactoryABI } from "@/abi/BasketFactory";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";

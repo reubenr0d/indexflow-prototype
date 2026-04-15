@@ -33,7 +33,7 @@ If `forge` is not found, prepend `~/.foundry/bin` to `PATH` or call `/Users/reub
 
 If any contract ABI can change (function/event/error/signature changes), regenerate ABIs with commands. Do not manually edit:
 
-- `apps/web/src/abi/contracts.ts`
+- individual ABI files under `apps/web/src/abi/` (`BasketVault.ts`, `OracleAdapter.ts`, etc.) or the barrel `contracts.ts`
 - files under `apps/subgraph/abis/`
 
 Run:

@@ -9,6 +9,7 @@ import {
   parseDeploymentTarget,
   type DeploymentTarget,
 } from "@/lib/deployment";
+import { isAnvilEnabled, registerDevCommands } from "@/lib/dev-mode";
 
 type DeploymentContextValue = {
   target: DeploymentTarget;
@@ -28,6 +29,7 @@ function readInitialTarget(): DeploymentTarget {
   }
   if (isE2ETestMode) return "anvil";
   const stored = parseDeploymentTarget(localStorage.getItem(DEPLOYMENT_TARGET_STORAGE_KEY));
+  if (stored === "anvil" && !isAnvilEnabled()) return DEFAULT_DEPLOYMENT_TARGET;
   return stored ?? DEFAULT_DEPLOYMENT_TARGET;
 }
 
@@ -37,6 +39,10 @@ export function DeploymentProvider({ children }: { children: React.ReactNode }) 
   const setTarget = useCallback((nextTarget: DeploymentTarget) => {
     if (isE2ETestMode) return;
     setTargetState(nextTarget);
+  }, []);
+
+  useEffect(() => {
+    registerDevCommands();
   }, []);
 
   useEffect(() => {

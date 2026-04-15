@@ -25,9 +25,9 @@ import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
   type BasketActivityRow,
   useBasketActivitiesQuery,
-} from "@/hooks/subgraph/useSubgraphQueries";
+} from "@/hooks/subgraph/useBasketDetail";
 import { useAccount, useConfig, usePublicClient, useReadContract } from "wagmi";
-import { BasketShareTokenABI } from "@/abi/contracts";
+import { BasketShareTokenABI } from "@/abi/BasketShareToken";
 import {
   formatUSDC,
   formatBps,
@@ -37,6 +37,7 @@ import {
   formatUsd1e30,
   formatAssetId,
 } from "@/lib/format";
+import { formatApy } from "@/lib/apy";
 import { type Address, parseAbiItem } from "viem";
 import {
   Activity,
@@ -77,6 +78,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     blended,
     showAllocatedComposition,
     assetMeta,
+    apy7d,
   } = useBasketDashboardData(vault);
 
   const [historySkip, setHistorySkip] = useState(0);
@@ -121,9 +123,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const netPnlSign = netPnL > 0n ? 1 : netPnL < 0n ? -1 : 0;
   const unrealisedSign = unrealisedPnL > 0n ? 1 : unrealisedPnL < 0n ? -1 : 0;
 
+  const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
+
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl) },
     { label: "Share Price", value: formatPrice(basketInfo?.sharePrice ?? 0n) },
+    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign },
     { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0" },
     ...(hasPnLData
       ? [
@@ -144,15 +149,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   if (isInfoLoading) {
     return (
-      <PageWrapper>
-        <div className="grid gap-8 lg:grid-cols-5">
-          <div className="lg:col-span-3">
+      <PageWrapper className="py-6 sm:py-8">
+        <div className="grid gap-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
             <Skeleton className="mb-2 h-8 w-48" />
             <Skeleton className="mb-6 h-4 w-32" />
             <Skeleton className="mb-8 h-12 w-36" />
             <Skeleton className="h-64 w-full" />
           </div>
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-1">
             <Skeleton className="h-80 w-full rounded-2xl" />
           </div>
         </div>
@@ -161,7 +166,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   }
 
   return (
-    <PageWrapper>
+    <PageWrapper className="py-6 sm:py-8">
       {/* ── Hero card (compact) ── */}
       <Card className="mb-6 overflow-hidden border border-app-border shadow-[var(--shadow)]">
         <div className="relative overflow-hidden">
@@ -204,12 +209,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
       {/* ── Metrics strip ── */}
       <MetricsStrip metrics={metricsData} className="mb-6" />
 
-      {/* ── Main layout: flex column on mobile, 5-col grid on desktop ── */}
-      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-5 lg:gap-8">
+      {/* ── Main layout: flex column on mobile, 3-col grid on desktop ── */}
+      <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3 lg:gap-8">
 
-        {/* ── Deposit/Redeem panel ── */}
-        <div className="order-1 lg:order-none lg:col-span-2 lg:row-span-4">
-          <div className="lg:sticky lg:top-4">
+        {/* ── Sidebar: Deposit/Redeem + Composition ── */}
+        <div className="order-1 lg:order-none lg:col-span-1 lg:row-span-4">
+          <div className="lg:sticky lg:top-20 lg:space-y-6">
             <DepositRedeemPanel
               vault={vault}
               sharePrice={basketInfo?.sharePrice ?? 0n}
@@ -217,26 +222,37 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               redeemFeeBps={redeemFee ?? 0n}
               shareBalance={shareBalance as bigint | undefined}
             />
+            <div className="hidden lg:block">
+              <CompositionSidebar
+                blended={blended}
+                assetMeta={assetMeta}
+                reserveHealthy={reserveHealthy}
+                idleUsdc={idleUsdc}
+                requiredReserve={requiredReserve}
+                collectedFeesUsdc={collectedFeesUsdc}
+                showComposition={showAllocatedComposition}
+              />
+            </div>
           </div>
         </div>
 
         {/* ── Share price chart ── */}
-        <div className="order-2 lg:order-none lg:col-span-3">
+        <div className="order-2 lg:order-none lg:col-span-2">
           <SharePriceChart vault={vault} />
         </div>
 
         {/* ── Positions table ── */}
-        <div className="order-3 lg:order-none lg:col-span-3">
+        <div className="order-3 lg:order-none lg:col-span-2">
           <PositionsTable vault={vault} />
         </div>
 
         {/* ── Asset price panel ── */}
-        <div className="order-4 lg:order-none lg:col-span-3">
+        <div className="order-4 lg:order-none lg:col-span-2">
           <AssetPricePanel assetIds={configuredAssetIds} />
         </div>
 
-        {/* ── Composition sidebar ── */}
-        <div className="order-5 lg:order-none lg:col-span-3">
+        {/* ── Composition (mobile only, hidden on lg where it's in sidebar) ── */}
+        <div className="order-5 lg:hidden">
           <CompositionSidebar
             blended={blended}
             assetMeta={assetMeta}
@@ -249,14 +265,14 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
         </div>
 
         {/* ── Vault history ── */}
-        <div className="order-6 lg:order-none lg:col-span-3">
+        <div className="order-6 lg:order-none lg:col-span-2">
           <Card className="p-5">
             <SectionHeader
               icon={Clock3}
               title="Vault History"
               meta={`${historyRows.length} shown across ${historyGroups.length} day bucket${historyGroups.length === 1 ? "" : "s"}`}
             />
-            <div className="overflow-hidden rounded-xl border border-app-border">
+            <div className="max-h-[32rem] overflow-y-auto overflow-x-hidden rounded-xl border border-app-border">
               {historyRows.length === 0 ? (
                 <div className="flex flex-col items-center justify-center gap-2 px-6 py-10 text-center text-sm text-app-muted">
                   <CalendarDays className="h-5 w-5 text-app-muted" />

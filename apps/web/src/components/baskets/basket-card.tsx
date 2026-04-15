@@ -6,9 +6,10 @@ import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { TrendPill } from "@/components/ui/trend-pill";
 import { formatBps, formatUSDC } from "@/lib/format";
+import { computeApy, formatApy } from "@/lib/apy";
 import { type Address } from "viem";
 import { BasketIcon } from "./basket-icons";
-import { useBasketTrendSnapshots } from "@/hooks/subgraph/useSubgraphQueries";
+import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
 
 interface BasketCardProps {
   vault: Address;
@@ -44,6 +45,11 @@ export function BasketCard({
   const trend24h = trend24hProp ?? trendData?.day?.delta?.sharePrice ?? null;
   const trend7d = trend7dProp ?? trendData?.week?.delta?.sharePrice ?? null;
 
+  const apy =
+    trendData?.week?.current && trendData?.week?.previous
+      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
+      : null;
+
   const tvl = usdcBalance + perpAllocated;
   const perpShare = tvl > 0n ? `${Number((perpAllocated * 100n) / tvl)}% in perp` : "No perp allocation";
   const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {
@@ -71,13 +77,21 @@ export function BasketCard({
             </span>
           </div>
 
-          <div className="space-y-1">
-            <p className="font-mono text-2xl font-semibold tracking-tight text-app-text">
-              {formatUSDC(tvl)}
-            </p>
-            <div className="flex items-center gap-2 text-xs text-app-muted">
-              <BasketIcon name="tvl" className="text-app-accent" />
-              <span>TVL</span>
+          <div className="flex items-end justify-between gap-3">
+            <div className="space-y-1">
+              <p className="font-mono text-2xl font-semibold tracking-tight text-app-text">
+                {formatUSDC(tvl)}
+              </p>
+              <div className="flex items-center gap-2 text-xs text-app-muted">
+                <BasketIcon name="tvl" className="text-app-accent" />
+                <span>TVL</span>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className={`font-mono text-lg font-semibold ${apy !== null && apy > 0 ? "text-app-success" : apy !== null && apy < 0 ? "text-app-danger" : "text-app-muted"}`}>
+                {formatApy(apy)}
+              </p>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-app-muted">APY (7d)</p>
             </div>
           </div>
 

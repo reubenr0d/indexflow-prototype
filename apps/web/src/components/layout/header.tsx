@@ -11,7 +11,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { anvil } from "viem/chains";
+import { anvil, sepolia } from "viem/chains";
 import { getContracts } from "@/config/contracts";
 import { isPrivyConfigured } from "@/config/privy";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -20,22 +20,23 @@ import { showToast } from "@/components/ui/toast";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
-import { Sun, Moon, Menu, X, LogOut, Settings } from "lucide-react";
+import { Sun, Moon, Menu, X, LogOut, Settings, PieChart, Coins, Loader2 } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { NetworkSelector } from "@/components/layout/network-selector";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard" },
   { href: "/baskets", label: "Baskets" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/prices", label: "Prices" },
-  { href: "/settings", label: "Settings" },
+  { href: "/prices", label: "Assets" },
   { href: "/docs", label: "Docs" },
   { href: "/admin", label: "Admin" },
 ];
 
+const mobileOnlyItems = [
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/settings", label: "Settings" },
+];
+
 function isNavActive(pathname: string, href: string) {
-  if (href === "/dashboard") return pathname === "/dashboard";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
@@ -43,7 +44,13 @@ function truncateAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
-function PrivyConnectButton() {
+function PrivyConnectButton({
+  theme,
+  toggle,
+}: {
+  theme: "light" | "dark";
+  toggle: () => void;
+}) {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { address } = useAccount();
   const [showMenu, setShowMenu] = useState(false);
@@ -98,13 +105,33 @@ function PrivyConnectButton() {
               </div>
             )}
             <Link
+              href="/portfolio"
+              onClick={() => setShowMenu(false)}
+              className="flex w-full items-center gap-2 px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
+            >
+              <PieChart className="h-3.5 w-3.5" />
+              Portfolio
+            </Link>
+            <Link
               href="/settings"
               onClick={() => setShowMenu(false)}
-              className="flex w-full items-center gap-2 border-b border-app-border px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
+              className="flex w-full items-center gap-2 px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
             >
               <Settings className="h-3.5 w-3.5" />
               Settings
             </Link>
+            <button
+              type="button"
+              onClick={toggle}
+              className="flex w-full items-center gap-2 border-b border-app-border px-3 py-2 text-sm text-app-text transition-colors hover:bg-app-bg-subtle"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-3.5 w-3.5" />
+              ) : (
+                <Moon className="h-3.5 w-3.5" />
+              )}
+              {theme === "dark" ? "Light mode" : "Dark mode"}
+            </button>
             <button
               type="button"
               onClick={() => {
@@ -123,9 +150,57 @@ function PrivyConnectButton() {
   );
 }
 
-function ConnectWalletButton() {
+function ThemeToggleButton({
+  theme,
+  toggle,
+}: {
+  theme: "light" | "dark";
+  toggle: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      className="flex h-9 w-9 items-center justify-center rounded-md border border-app-border bg-app-surface text-app-muted transition-colors hover:border-app-border-strong hover:text-app-text"
+      aria-label="Toggle theme"
+    >
+      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+    </button>
+  );
+}
+
+function PrivyThemeToggleFallback({
+  theme,
+  toggle,
+}: {
+  theme: "light" | "dark";
+  toggle: () => void;
+}) {
+  const { ready, authenticated } = usePrivy();
+  if (ready && authenticated) return null;
+  return <ThemeToggleButton theme={theme} toggle={toggle} />;
+}
+
+function ThemeToggleFallback({
+  theme,
+  toggle,
+}: {
+  theme: "light" | "dark";
+  toggle: () => void;
+}) {
+  if (!isPrivyConfigured) return <ThemeToggleButton theme={theme} toggle={toggle} />;
+  return <PrivyThemeToggleFallback theme={theme} toggle={toggle} />;
+}
+
+function ConnectWalletButton({
+  theme,
+  toggle,
+}: {
+  theme: "light" | "dark";
+  toggle: () => void;
+}) {
   if (!isPrivyConfigured) return null;
-  return <PrivyConnectButton />;
+  return <PrivyConnectButton theme={theme} toggle={toggle} />;
 }
 
 export function Header() {
@@ -139,7 +214,7 @@ export function Header() {
   const { usdc } = getContracts(deploymentChainId);
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
-  const isLocalChain = walletChainId === anvil.id;
+  const isTestnet = walletChainId === anvil.id || walletChainId === sepolia.id;
   const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
   const onHome = pathname === "/";
@@ -160,7 +235,7 @@ export function Header() {
   });
 
   const handleMint = () => {
-    if (!address || !isLocalChain) return;
+    if (!address || !isTestnet) return;
     writeContract({
       address: usdc,
       abi: ERC20ABI,
@@ -200,23 +275,18 @@ export function Header() {
                 className="shrink-0"
                 aria-hidden
               >
-                <circle cx="16" cy="16" r="16" fill="currentColor" className="text-app-text" />
-                <polygon points="16,8 8,24 24,24" fill="currentColor" className="text-app-bg" />
+                <defs>
+                  <linearGradient id="if-grad" x1="0.5" y1="1" x2="0.5" y2="0">
+                    <stop offset="0%" stopColor="#0d9488" />
+                    <stop offset="100%" stopColor="#2dd4bf" />
+                  </linearGradient>
+                </defs>
+                <circle cx="16" cy="16" r="15.5" fill="white" stroke="currentColor" strokeOpacity="0.12" strokeWidth="1" />
+                <polygon points="16,8 8,24 24,24" fill="url(#if-grad)" />
               </svg>
               IndexFlow
             </Link>
-            <nav className="hidden items-center gap-0.5 md:flex">
-              <Link
-                href="/"
-                className={cn(
-                  "px-3 py-1.5 text-sm font-medium transition-colors",
-                  pathname === "/"
-                    ? "text-app-accent"
-                    : "text-app-muted hover:text-app-text"
-                )}
-              >
-                Home
-              </Link>
+            <nav className="hidden items-center gap-1 md:flex">
               {navItems.map((item) => {
                 const active = isNavActive(pathname, item.href);
                 return (
@@ -224,34 +294,33 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "flex flex-col items-center gap-1 px-3 py-1.5 text-sm font-medium transition-colors",
+                      "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                       active
-                        ? "text-app-text"
-                        : "text-app-muted hover:text-app-text"
+                        ? "bg-app-bg-subtle text-app-text"
+                        : "text-app-muted hover:bg-app-surface-hover hover:text-app-text"
                     )}
                   >
-                    <span>{item.label}</span>
-                    <span
-                      className={cn(
-                        "h-0.5 w-full max-w-[2rem] rounded-full transition-colors",
-                        active ? "bg-app-accent" : "bg-transparent"
-                      )}
-                    />
+                    {item.label}
                   </Link>
                 );
               })}
             </nav>
           </div>
           <div className="flex items-center gap-2">
-            {isLocalChain && (
+            {isTestnet && !onHome && (
               <button
                 type="button"
                 onClick={handleMint}
                 disabled={!canMint}
                 data-testid="mint-10k-usdc"
-                className="hidden h-9 rounded-md border border-app-border bg-app-surface px-3 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover disabled:pointer-events-none disabled:opacity-45 sm:inline-flex sm:items-center"
+                className="hidden h-9 items-center gap-1.5 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 text-sm font-medium text-emerald-600 transition-colors hover:border-emerald-500/50 hover:bg-emerald-500/15 disabled:pointer-events-none disabled:opacity-45 dark:text-emerald-400 sm:inline-flex"
               >
-                {isPending ? "Minting..." : "Mint 10k USDC"}
+                {isPending ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Coins className="h-3.5 w-3.5" />
+                )}
+                {isPending ? "Minting..." : "Mint 10,000 USDC"}
               </button>
             )}
             {isE2ETestMode && !isPrivyConfigured && !address && (
@@ -268,17 +337,10 @@ export function Header() {
             <div className="hidden sm:block">
               <NetworkSelector />
             </div>
-            <button
-              type="button"
-              onClick={toggle}
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-app-border bg-app-surface text-app-muted transition-colors hover:border-app-border-strong hover:text-app-text"
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </button>
             <div className="hidden sm:block">
-              <ConnectWalletButton />
+              <ConnectWalletButton theme={theme} toggle={toggle} />
             </div>
+            <ThemeToggleFallback theme={theme} toggle={toggle} />
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -299,15 +361,20 @@ export function Header() {
             className="fixed inset-x-0 top-14 z-30 overflow-hidden border-b border-app-border bg-app-surface md:hidden"
           >
             <nav className="space-y-0.5 p-3">
-              {isLocalChain && (
+              {isTestnet && !onHome && (
                 <button
                   type="button"
                   onClick={handleMint}
                   disabled={!canMint}
                   data-testid="mint-10k-usdc-mobile"
-                  className="mb-2 w-full rounded-md border border-app-border bg-app-bg-subtle px-3 py-2.5 text-left text-sm font-medium text-app-text disabled:pointer-events-none disabled:opacity-45"
+                  className="mb-2 flex w-full items-center gap-2 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-sm font-medium text-emerald-600 disabled:pointer-events-none disabled:opacity-45 dark:text-emerald-400"
                 >
-                  {isPending ? "Minting..." : "Mint 10k USDC"}
+                  {isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Coins className="h-4 w-4" />
+                  )}
+                  {isPending ? "Minting..." : "Mint 10,000 USDC"}
                 </button>
               )}
               {isE2ETestMode && !isPrivyConfigured && !address && (
@@ -321,17 +388,7 @@ export function Header() {
                   {isConnectPending ? "Connecting..." : "E2E Connect"}
                 </button>
               )}
-              <Link
-                href="/"
-                onClick={() => setMobileOpen(false)}
-                className={cn(
-                  "block rounded-md px-3 py-2.5 text-sm font-medium",
-                  pathname === "/" ? "bg-app-accent-dim text-app-accent" : "text-app-muted"
-                )}
-              >
-                Home
-              </Link>
-              {navItems.map((item) => {
+              {[...navItems, ...mobileOnlyItems].map((item) => {
                 const active = isNavActive(pathname, item.href);
                 return (
                   <Link
@@ -350,8 +407,20 @@ export function Header() {
               <div className="pt-2 sm:hidden">
                 <NetworkSelector />
               </div>
+              <button
+                type="button"
+                onClick={toggle}
+                className="flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-app-muted transition-colors hover:bg-app-surface-hover hover:text-app-text"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
+                {theme === "dark" ? "Light mode" : "Dark mode"}
+              </button>
               <div className="pt-2 sm:hidden">
-                <ConnectWalletButton />
+                <ConnectWalletButton theme={theme} toggle={toggle} />
               </div>
             </nav>
           </motion.div>
