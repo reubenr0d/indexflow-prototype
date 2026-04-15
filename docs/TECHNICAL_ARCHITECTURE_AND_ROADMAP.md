@@ -505,6 +505,111 @@ Concrete recommendations:
 - formalize manager admission and oracle admission as governed registries;
 - keep upgradeability off by default unless there is a compelling operational reason to add proxies.
 
+### Progressive decentralization roadmap
+
+`Recommended future design`
+
+The protocol adopts a permissionless launch model with a foundation entity as initial owner. Governance decentralization proceeds in four stages, each gated by operational maturity criteria rather than arbitrary timelines.
+
+#### Stage 0: Centralized launch (Day 1 through Month 1)
+
+Foundation multi-sig (3-of-5 Gnosis Safe) owns all first-party modules. Keeper EOAs operate oracle submissions and funding rate updates. No governance token exists. Foundation directors have full operational authority. Emergency pause is available to any multi-sig signer.
+
+Ownership surface at this stage:
+
+| Module | Owner | Emergency | Notes |
+| --- | --- | --- | --- |
+| `BasketVault` | Foundation Safe | `setPaused` via Safe | Per-basket owner is the Safe |
+| `BasketFactory` | Foundation Safe | N/A | Creates baskets owned by Safe |
+| `VaultAccounting` | Foundation Safe | `setPaused(true)` | Blocks capital and position mutations |
+| `OracleAdapter` | Foundation Safe | `deactivateAsset` | Keepers are Foundation-operated EOAs |
+| `PricingEngine` | Foundation Safe | N/A | Config-only, no pause |
+| `FundingRateManager` | Foundation Safe | N/A | Keepers are Foundation-operated EOAs |
+| `PriceSync` | Foundation Safe | N/A | `syncAll()` remains permissionless |
+| GMX fork modules | Foundation Safe (via `gov`) | GMX-native pause | `AssetWiring.govCall()` routes through Safe |
+
+Entry criteria: mainnet deployment complete, audit report published.
+
+#### Stage 1: Council governance (Month 1 through Month 3)
+
+- Expand multi-sig to 4-of-7 security council with external, independent members
+- Deploy OpenZeppelin `TimelockController` (48-hour delay) as the owner of all first-party modules
+- Security council Safe is the sole proposer/executor on the timelock
+- Emergency actions (pause, oracle disable, cap reduction) bypass the timelock via a dedicated emergency role on the council Safe
+- Oracle fully migrated to decentralized feeds (Chainlink, Pyth, or equivalent)
+- At least 2 independent keeper operators for oracle and funding submissions
+- Begin community feedback on governance token design
+
+```mermaid
+flowchart LR
+    Council["Security Council 4-of-7"]
+    Timelock["TimelockController 48h"]
+    Emergency["Emergency Role"]
+    Modules["Protocol Modules"]
+
+    Council -->|"propose + execute"| Timelock
+    Timelock -->|"48h delay"| Modules
+    Council -->|"pause / oracle disable"| Emergency
+    Emergency -->|"no delay"| Modules
+```
+
+Entry criteria: stable operation for 30+ days, no critical incidents, oracle fully decentralized, council members identified and onboarded.
+
+#### Stage 2: Token-assisted governance (Month 3 through Month 6+)
+
+- Foundation launches governance token (ERC-20 + vote delegation)
+- Token holders can propose and vote on slow-path actions:
+  - asset admission and removal
+  - chain expansion approvals
+  - fee policy changes
+  - treasury allocation (grants, POL, incentives)
+  - manager admission criteria
+- Security council retains emergency powers (pause, oracle override, cap changes)
+- All governance-approved proposals execute through the timelock
+- Token distribution begins per the approved allocation plan
+
+```mermaid
+flowchart LR
+    Holders["Token Holders"]
+    Governor["Governor Contract"]
+    Timelock2["TimelockController 48h"]
+    Council2["Security Council"]
+    EmergencyPath["Emergency Path"]
+    Modules2["Protocol Modules"]
+
+    Holders -->|"propose + vote"| Governor
+    Governor -->|"approved proposals"| Timelock2
+    Timelock2 -->|"48h delay"| Modules2
+    Council2 -->|"emergency only"| EmergencyPath
+    EmergencyPath -->|"no delay"| Modules2
+```
+
+Entry criteria: council governance stable for 60+ days, token contract audited, distribution plan finalized, community engagement sufficient for meaningful governance participation.
+
+#### Stage 3: Full protocol governance (Month 6 through Month 12+)
+
+- Token governance controls all non-emergency protocol parameters
+- Security council scope narrowed to emergency-only (pause, oracle override during outage)
+- Council membership itself becomes token-governed (token holders elect and remove council members)
+- Foundation role reduces to legal entity wrapper, treasury custody, and ecosystem grants
+- Labs operates as an independent service provider, no longer required for protocol operation
+
+Entry criteria: token governance operational for 90+ days, sufficient voter participation, no governance attacks, protocol revenue self-sustaining or treasury runway sufficient.
+
+#### Governance transition summary
+
+```mermaid
+flowchart LR
+    S0["Stage 0: Foundation Safe"]
+    S1["Stage 1: Council + Timelock"]
+    S2["Stage 2: Token + Council"]
+    S3["Stage 3: Token-First"]
+
+    S0 -->|"30+ days stable"| S1
+    S1 -->|"60+ days stable"| S2
+    S2 -->|"90+ days stable"| S3
+```
+
 ### Upgradeability
 
 `Implemented today`

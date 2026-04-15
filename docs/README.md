@@ -41,5 +41,5 @@ Testing, notifications, and operational tooling.
 Tokenomics, governance, and regulatory considerations.
 
 - [Utility Token & Tokenomics](./UTILITY_TOKEN_TOKENOMICS.md) — Backstop mechanics, redemption reserves, ve-model, emissions, and POL.
-- [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) — EU-focused regulatory planning and compliance checklist (draft).
+- [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) — Permissionless protocol launch pathway, foundation structure, progressive decentralization, and compliance requirements (draft).
 - [Agents Framework](./AGENTS_FRAMEWORK.md) — Multi-agent architecture, MCP tool reference, vault lifecycle workflows, and memory model.

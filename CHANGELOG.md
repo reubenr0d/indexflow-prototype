@@ -13,6 +13,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-15] Regulatory roadmap Phase 6 (regulated access tier) for post-launch institutional onboarding via a separately licensed Labs subsidiary.
+- [2026-04-15] Social media setup and bug bounty program scope added to the draft launch checklist in the regulatory roadmap.
+- [2026-04-15] Whitepaper: forward-looking paragraph on two-tier model (permissionless protocol + optional regulated service) in the Governance section.
 - [2026-04-15] Security headers: CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and Permissions-Policy via `next.config.ts` `headers()`.
 - [2026-04-15] Transaction simulation: `useSimulateDeposit` and `useSimulateRedeem` hooks pre-validate deposits and redemptions before submission; inline warning shown when simulation fails.
 - [2026-04-15] Branded error page (`error.tsx`) with retry action and not-found page (`not-found.tsx`) with navigation links.
@@ -57,6 +60,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-04-15] Regulatory roadmap rewritten for permissionless protocol pathway with foundation structure (Labs + Foundation + DAO), phased launch roadmap, and progressive decentralization sequence.
+- [2026-04-15] Technical architecture doc expanded with concrete 4-stage governance decentralization roadmap (centralized launch, council governance, token-assisted governance, full protocol governance) including ownership surface tables and mermaid diagrams.
+- [2026-04-15] README updated with mainnet readiness TODO checklist (smart contracts, legal/entity, infrastructure, governance, documentation).
 - [2026-04-15 UTC+07:00] Move PriceTicker from root layout (every page) to the landing page only, with server-side price fetching and 60s client hydration polling — eliminates ~22 polling queries on non-landing routes.
 - [2026-04-15 UTC+07:00] Reduce global `REFETCH_INTERVAL` from 15s to 60s for all contract-read polling hooks.
 - [2026-04-15 UTC+07:00] Tune `QueryClient` defaults: `staleTime: 10s`, `refetchOnWindowFocus: false` to prevent tab-focus refetch storms.

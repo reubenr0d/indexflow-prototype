@@ -135,6 +135,8 @@ This produces a healthier governance model. The token does not invent demand by 
 
 Capital formation follows the same logic. The first uses of capital are development, compliance, audit work, and reserve support. Only after liquidity credibility has been demonstrated does wider token market formation become strategically important.
 
+The protocol launches permissionless, but the architecture supports a future regulated access tier. Operators that hold their own financial-services licenses can build on IndexFlow immediately, using the permissionless contracts as execution and settlement infrastructure beneath their own compliance wrapper. Operators that lack their own licenses can be served by a separately licensed entity that provides KYC/KYB onboarding, compliant product issuance, NAV governance, and regulatory reporting on top of the same protocol. This two-tier model -- permissionless protocol plus optional regulated service -- serves both DeFi-native and institutional audiences without gating the protocol itself.
+
 ## Competitive Landscape
 
 The market around IndexFlow is best understood as an evolution of product design rather than a list of isolated competitors. That evolution is why this category can emerge now rather than earlier. Each wave solved a real problem. Each wave also left an architectural gap that the next generation tried to close.

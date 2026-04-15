@@ -33,6 +33,50 @@ Investor ──deposit USDC──► BasketVault ──allocate──► VaultAc
 Forked GMX v1 contracts (Solidity 0.6.12) providing the core position engine:
 Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 
+## Mainnet Readiness TODO
+
+### Smart Contracts
+
+- [ ] Engage audit firm (BasketVault, VaultAccounting, OracleAdapter, GMX integration, PriceSync, FundingRateManager, PricingEngine)
+- [ ] Address audit findings and re-verify fixes
+- [ ] Write mainnet deploy script (`DeployMainnet.s.sol` or chain-specific variant)
+- [ ] Deploy Gnosis Safe multi-sig as protocol owner
+- [ ] Deploy OpenZeppelin TimelockController for admin actions
+- [ ] Transfer all module ownership to multi-sig + timelock
+- [ ] Migrate oracle from Yahoo Finance relayer to Chainlink / Pyth / RedStone
+
+### Legal / Entity
+
+- [ ] Incorporate Foundation entity (Cayman Foundation Company)
+- [ ] Formalize Labs company
+- [ ] Execute Labs-Foundation services agreement and IP license
+- [ ] Draft and publish Terms of Service
+- [ ] Draft and publish risk disclosures
+- [ ] Implement frontend geo-blocking (U.S. + OFAC-sanctioned jurisdictions)
+- [ ] Integrate OFAC / sanctions wallet screening
+
+### Infrastructure
+
+- [ ] Production oracle integration (Chainlink / Pyth for all mainnet assets)
+- [ ] Monitoring and alerting (oracle staleness, reserve levels, pool utilization, position health)
+- [ ] Keeper redundancy (at least 2 independent operators)
+- [ ] Incident response runbook
+- [ ] Bug bounty program (Immunefi)
+
+### Governance
+
+- [ ] Foundation multi-sig (3-of-5 Gnosis Safe) deployed and funded
+- [ ] Security council members identified for Stage 1 expansion (4-of-7)
+- [ ] Progressive decentralization plan documented (see [docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md](docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md))
+- [ ] Governance token design (deferred to post-launch, design begins in Phase 2)
+
+### Documentation
+
+- [ ] Update deployment registry for mainnet ([docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md))
+- [ ] Finalize whitepaper ([docs/WHITEPAPER_DRAFT.md](docs/WHITEPAPER_DRAFT.md))
+- [ ] Publish audit report
+- [ ] Update regulatory roadmap post-foundation setup ([docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md))
+
 ## Tech Stack
 
 - **Solidity** -- 0.6.12 (GMX fork) + ^0.8.24 (new contracts)
@@ -377,7 +421,7 @@ Editing an agent markdown file does not, by itself, force a new vault. The runne
 - [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Deployment registry for Sepolia contracts, Subgraph indexing, and Google Cloud push-worker infrastructure (push notifications only).
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/PWA_PUSH_NOTIFICATIONS.md](docs/PWA_PUSH_NOTIFICATIONS.md) — PWA install behavior, push worker architecture, notification categories, and staging verification runbook.
-- [docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md) — Draft brainstorming memo for EU-first launch structuring, likely regulatory perimeter, phased workstreams, and launch-limiting assumptions.
+- [docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md) — Permissionless protocol launch pathway, foundation structure, progressive decentralization, and compliance requirements (draft).
 - [docs/README.md](docs/README.md) — Maintainer-facing map of canonical `/docs/*` routes and legacy alias redirects.
 - Basket trade flows in the web app include icon-based Deposit/Redeem tabs, a stable quote area, and inline transaction feedback so users can verify what will happen before they submit.
 
