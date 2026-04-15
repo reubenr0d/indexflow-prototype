@@ -7,6 +7,8 @@ Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on 
 
 ## Architecture
 
+A **coordination layer** (`src/coordination/`) complements each chain-local deployment: CCIP-linked modules synchronize pool reserve depth signals, relay deposit/redeem intents, and broadcast canonical oracle configuration across chains while execution and basket state remain anchored per deployment.
+
 ```
 Investor ──deposit USDC──► BasketVault ──allocate──► VaultAccounting ──► GMX Vault Pool
                 │                                        │
@@ -27,6 +29,13 @@ Investor ──deposit USDC──► BasketVault ──allocate──► VaultAc
 - **VaultAccounting** -- Per-vault capital tracking, PnL attribution, position management
 - **FundingRateManager** -- Oracle-anchored, imbalance-based funding rates
 - **PerpReader** -- Read-only aggregator for off-chain monitoring
+
+### Coordination Layer (`src/coordination/`)
+
+- **PoolReserveRegistry** -- TWAP-style pool depth tracking for cross-chain reserve visibility
+- **CCIPReserveMessenger** -- Delta-triggered reserve state sync over Chainlink CCIP
+- **IntentRouter** -- Deposit/redeem intent routing with escrow
+- **CrossChainIntentBridge**, **OracleConfigBroadcaster**, **OracleConfigReceiver** -- CCIP relay and canonical oracle parameter sync across chains
 
 ### GMX Fork (`src/gmx/`)
 
@@ -77,11 +86,73 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 - [ ] Publish audit report
 - [ ] Update regulatory roadmap post-foundation setup ([docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md))
 
+## Growth
+
+Progress tracker for the IndexFlow growth engine. Strategy, templates, and playbooks live in [`growth/`](growth/).
+
+### Content Infrastructure
+
+- [x] Growth strategy and 4-layer framework ([growth/README.md](growth/README.md))
+- [x] Content calendar with layer-tagged backlog ([growth/CONTENT_CALENDAR.md](growth/CONTENT_CALENDAR.md))
+- [x] VC outreach playbook ([growth/VC_OUTREACH_PLAYBOOK.md](growth/VC_OUTREACH_PLAYBOOK.md))
+- [x] Content templates (blog, tweet thread, Substack, LinkedIn, podcast pitch, Farcaster)
+- [x] Drafts workflow and naming conventions ([growth/drafts/README.md](growth/drafts/README.md))
+
+### Social Channels
+
+- [ ] Set up X / Twitter account
+- [ ] Set up Discord server
+- [x] Telegram community live
+
+### Content Production
+
+- [ ] First blog post published
+- [ ] First X thread published
+- [ ] First LinkedIn post published
+- [ ] First Substack issue published
+- [ ] First YouTube video published
+- [ ] First podcast pitch sent
+- [ ] First Farcaster cast published
+- [x] Cross-chain coordination layer content added to content calendar (blog, X threads, LinkedIn, Substack, YouTube)
+- [x] Technical breakdown blog draft: cross-chain coordination layer (`growth/drafts/2026-04-15-blog-cross-chain-coordination-layer.md`)
+- [x] X thread draft: cross-chain coordination layer (`growth/drafts/2026-04-15-thread-cross-chain-coordination.md`)
+
+### Lead Capture (Layer 2)
+
+- [ ] Testnet gated pilot pathway (email capture at vault creation)
+- [ ] Operator waitlist for mainnet early access
+- [ ] Lead magnet PDF: "The Asset Manager's Playbook"
+- [ ] Lead magnet PDF: "From TradFi Funds to DeFi Vaults"
+- [ ] Video Sales Letter (VSL) recorded and hosted
+
+### Lead Management (Layer 3)
+
+- [ ] Email nurture platform selected (Customer.io or similar)
+- [ ] Welcome email sequence configured
+- [ ] Behavioral trigger sequences configured
+- [ ] Lead scoring model implemented (Clay / HubSpot)
+
+### VC Pipeline
+
+- [ ] Clay workspace set up with enriched VC list
+- [ ] Sending domains configured and warmed (Instantly.ai)
+- [ ] LinkedIn automation configured (Expandi / HeyReach)
+- [ ] Signal monitoring live (Trigify / Midbound)
+- [ ] Trackable deck hosted (Docsend / Notion)
+- [ ] First Tier 1 outreach batch sent
+- [ ] First monthly investor update sent
+
+### Grants
+
+- [x] Grant blurb written ([growth/grants/blurb.md](growth/grants/blurb.md))
+- [ ] 0xLabs grant application submitted ([growth/grants/0xlabs-grant-application.md](growth/grants/0xlabs-grant-application.md))
+
 ## Tech Stack
 
 - **Solidity** -- 0.6.12 (GMX fork) + ^0.8.24 (new contracts)
 - **Foundry** -- Build, test, deploy
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
+- **Chainlink CCIP** -- Cross-chain messaging for the coordination layer (reserve sync, intents, oracle config relay)
 - **Target chains** -- Arbitrum, Ethereum Sepolia (testnet)
 
 ## Setup

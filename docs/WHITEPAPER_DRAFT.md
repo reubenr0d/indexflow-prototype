@@ -69,7 +69,7 @@ The reserve layer determines whether a share is redeemable with confidence. It i
 
 ### 5. Attribution and Governance Layer
 
-At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance.
+At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance. On-chain coordination of cross-chain pool state via TWAP tracking of gmxVault.poolAmounts(usdc), Chainlink CCIP state synchronization, and proportional intent routing.
 
 ## Basket Lifecycle: Deposit, Exposure, Valuation, Redemption
 
@@ -91,6 +91,8 @@ This structure avoids two common failure modes. The first is isolated fragmentat
 
 IndexFlow takes a middle path. Execution capacity is shared, while reserve discipline remains product-aware. That separation is what allows the protocol to benefit from capital efficiency while preserving the redemption-quality flywheel.
 
+GMX pool depth (poolAmounts[usdc]) serves as the routing signal for cross-chain liquidity coordination. The protocol can seed GMX pools via directPoolDeposit through governed VaultAccounting.seedPool() with per-epoch caps.
+
 ## Chain-Specific Deployment and Attribution Model
 
 IndexFlow is designed to be chain-agnostic at the protocol level and chain-specific at the deployment level.
@@ -104,6 +106,8 @@ The KPI surface is straightforward.
 TVL shows whether the product base is growing. Volume shows whether the shared liquidity layer is actually being used. Fees show whether supported activity is becoming economically meaningful. These outcomes can be tracked per deployment rather than lost inside a generic multichain narrative.
 
 This ring-fenced deployment model also creates better expansion logic. A chain does not need to underwrite a global pool with unclear spillovers. It can support a specific deployment, observe its metrics, and scale support according to results. That makes chain-attributable growth more accountable and more defensible than generalized incentive programs.
+
+While each chain maintains independent GMX pools, baskets, and KPIs, the coordination layer provides cross-chain visibility via the PoolReserveRegistry. Pool states are synced across chains using Chainlink CCIP, and deposits are proportionally routed based on available liquidity depth. Attribution remains per-chain: a deposit routed to Chain B credits Chain B's KPIs, preserving the ring-fenced growth model.
 
 ## Oracle, Pricing, and Market Integrity
 
@@ -200,3 +204,4 @@ For managers, issuers, and chain partners, that creates a clearer operating mode
 22. Sommelier Portfolio V1.5 architecture. https://sommelier-finance.gitbook.io/sommelier-documentation/smart-contracts/advanced-smart-contracts/portfolio-v1.5-contract-architecture
 23. Hyperliquid documentation. https://hyperliquid.gitbook.io/hyperliquid-docs
 24. dYdX Integration Documentation. https://docs.dydx.xyz/
+25. Chainlink CCIP Documentation. https://docs.chain.link/ccip

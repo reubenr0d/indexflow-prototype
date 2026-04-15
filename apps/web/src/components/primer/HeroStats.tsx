@@ -10,11 +10,11 @@ import { formatCompact, formatSignedCompact } from "@/lib/format";
 import { REFETCH_INTERVAL, USDC_PRECISION } from "@/lib/constants";
 
 export default function HeroStats() {
-  const { totalTvl, totalPnL, totalApy, basketCount, tokenHolderCount } =
+  const { totalTvl, totalPnL, totalApy, basketCount, tokenHolderCount, isLoading, isError } =
     useHeroProtocolStats();
   const { chainId } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
-  const { data: assetCount } = useReadContract({
+  const { data: assetCount, isLoading: assetCountLoading } = useReadContract({
     address: oracleAdapter,
     abi: OracleAdapterABI,
     functionName: "getAssetCount",
@@ -34,6 +34,7 @@ export default function HeroStats() {
       <div className="mt-4 flex flex-wrap gap-10">
         <StatCell
           label="Total TVL"
+          loading={isLoading}
           value={
             totalTvl != null
               ? formatCompact(Number(totalTvl / USDC_PRECISION))
@@ -42,26 +43,35 @@ export default function HeroStats() {
         />
         <StatCell
           label="Total PnL"
+          loading={isLoading}
           value={
             totalPnL != null
               ? formatSignedCompact(Number(totalPnL / USDC_PRECISION))
               : "--"
           }
         />
-        <StatCell label="Total APY" value={formatApy(totalApy)} />
+        <StatCell label="Total APY" loading={isLoading} value={formatApy(totalApy)} />
         <StatCell
           label="Baskets"
+          loading={isLoading}
           value={basketCount != null ? String(basketCount) : "--"}
         />
         <StatCell
           label="Assets tracked"
+          loading={assetCountLoading}
           value={assets != null ? String(assets) : "--"}
         />
         <StatCell
           label="Tokenholders"
+          loading={isLoading}
           value={tokenHolderCount != null ? String(tokenHolderCount) : "--"}
         />
       </div>
+      {isError && (
+        <p className="mt-3 text-xs text-red-400">
+          Unable to load stats from the subgraph — data may be stale.
+        </p>
+      )}
       <p className="mt-4 max-w-3xl text-xs leading-relaxed text-app-muted">
         These metrics reflect the current testnet deployment and are shown for
         product preview purposes, not live mainnet capital.
@@ -70,15 +80,27 @@ export default function HeroStats() {
   );
 }
 
-function StatCell({ label, value }: { label: string; value: string }) {
+function StatCell({
+  label,
+  value,
+  loading,
+}: {
+  label: string;
+  value: string;
+  loading?: boolean;
+}) {
   return (
     <div className="flex flex-col">
       <span className="text-[10px] font-semibold uppercase tracking-wider text-app-muted">
         {label}
       </span>
-      <span className="mt-0.5 font-mono text-base font-semibold text-app-text">
-        {value}
-      </span>
+      {loading ? (
+        <span className="mt-0.5 h-6 w-16 animate-pulse rounded bg-app-surface" />
+      ) : (
+        <span className="mt-0.5 font-mono text-base font-semibold text-app-text">
+          {value}
+        </span>
+      )}
     </div>
   );
 }

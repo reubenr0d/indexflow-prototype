@@ -462,6 +462,70 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         return _positions[posKey];
     }
 
+    // ─── Pool Seeding ──────────────────────────────────────────────
+
+    /// @notice Maximum USDC that may be seeded into the GMX pool per epoch.
+    uint256 public seedCapPerEpoch;
+    /// @notice Remaining seed cap for the current epoch.
+    uint256 public seedCapRemaining;
+    /// @notice Maximum USDC that may be unseeded from the GMX pool per epoch.
+    uint256 public unseedCapPerEpoch;
+    /// @notice Remaining unseed cap for the current epoch.
+    uint256 public unseedCapRemaining;
+    /// @notice Minimum pool floor that must be maintained after unseeding.
+    uint256 public minPoolFloor;
+
+    event PoolSeeded(uint256 amount, uint256 capRemaining);
+    event PoolUnseeded(uint256 amount, uint256 capRemaining);
+    event SeedCapReset(uint256 seedCap, uint256 unseedCap);
+
+    /// @notice Seed USDC into the GMX pool via directPoolDeposit (governance-only).
+    /// @param amount USDC amount to seed (pulled from msg.sender).
+    function seedPool(uint256 amount) external onlyOwner whenNotPaused {
+        require(amount > 0, "Amount required");
+        require(amount <= seedCapRemaining, "Epoch cap exceeded");
+        address usdcAddr = address(usdc);
+        usdc.safeTransferFrom(msg.sender, address(gmxVault), amount);
+        gmxVault.directPoolDeposit(usdcAddr);
+        seedCapRemaining -= amount;
+        emit PoolSeeded(amount, seedCapRemaining);
+    }
+
+    /// @notice Withdraw USDC from the GMX pool via sellUSDG (governance-only).
+    /// @param usdcAmount USDC amount to withdraw.
+    function unseedPool(uint256 usdcAmount) external onlyOwner whenNotPaused {
+        require(usdcAmount > 0, "Amount required");
+        require(usdcAmount <= unseedCapRemaining, "Unseed cap exceeded");
+        address usdcAddr = address(usdc);
+        uint256 poolAfter = gmxVault.poolAmounts(usdcAddr) - usdcAmount;
+        require(poolAfter >= minPoolFloor, "Below pool floor");
+        gmxVault.sellUSDG(usdcAddr, address(this));
+        unseedCapRemaining -= usdcAmount;
+        emit PoolUnseeded(usdcAmount, unseedCapRemaining);
+    }
+
+    /// @notice Reset epoch caps (called at epoch boundaries by governance).
+    function resetSeedCap() external onlyOwner {
+        seedCapRemaining = seedCapPerEpoch;
+        unseedCapRemaining = unseedCapPerEpoch;
+        emit SeedCapReset(seedCapPerEpoch, unseedCapPerEpoch);
+    }
+
+    /// @notice Set per-epoch seed cap.
+    function setSeedCapPerEpoch(uint256 cap) external onlyOwner {
+        seedCapPerEpoch = cap;
+    }
+
+    /// @notice Set per-epoch unseed cap.
+    function setUnseedCapPerEpoch(uint256 cap) external onlyOwner {
+        unseedCapPerEpoch = cap;
+    }
+
+    /// @notice Set minimum pool floor for unseeding.
+    function setMinPoolFloor(uint256 floor) external onlyOwner {
+        minPoolFloor = floor;
+    }
+
     // ─── Internal ────────────────────────────────────────────────
 
     /// @dev Free USDC for withdrawal: deposited + realised PnL - collateral locked in open legs (floored at 0).

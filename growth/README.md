@@ -46,7 +46,7 @@ Drive asset managers and institutional operators to encounter IndexFlow across m
 | Priority | Channel     | Audience                             | Cadence          | Purpose                                      |
 | -------- | ----------- | ------------------------------------ | ---------------- | -------------------------------------------- |
 | 1        | LinkedIn    | Fund managers, fintech execs, BD     | 3-5 posts/week   | Primary channel. Thought leadership, TLAs    |
-| 2        | SEO / Blog  | Asset managers researching the space | 2 articles/week  | Long-tail programmatic content, mini-tools   |
+| 2        | SEO / Blog  | Asset managers researching the space | 2 articles/week  | Long-tail programmatic content               |
 | 3        | X (Twitter) | Institutional DeFi, CT              | 3-5 posts/week   | Thought leadership threads, market thesis    |
 | 4        | Substack    | Warm leads, newsletter subscribers   | 1/week           | Deep narrative, vault operator insights      |
 | 5        | Podcast     | Institutional/fintech audiences      | 1-2 guests/month | Earned media, founder credibility            |
@@ -86,7 +86,7 @@ Programmatic content targeting long-tail queries where asset managers research:
 - "tokenized fund administration"
 - "onchain NAV pricing"
 
-Mini-tools (see Layer 2) serve as SEO magnets that rank for these queries and funnel traffic into capture mechanisms.
+Blog content and the live testnet serve as the primary conversion targets for SEO traffic, funnelling visitors into Layer 2 capture mechanisms.
 
 ---
 
@@ -94,14 +94,13 @@ Mini-tools (see Layer 2) serve as SEO magnets that rank for these queries and fu
 
 The biggest gap in most early-stage funnels. If the prospect is not ready for a call right now, you need a mechanism to catch them on the way out.
 
-### Mechanism 1: Mini-Tools (SEO + Email Capture)
+### Mechanism 1: Testnet Access (Product-Led Capture)
 
-Build and host on the IndexFlow domain. Each tool gates full results behind an email capture. These also rank for long-tail SEO.
+The live testnet is the primary capture mechanism. Visitors can browse baskets and documentation freely; gated actions (creating a vault, running a guided pilot) capture email or contact info.
 
-- **Basket Fee Calculator** -- input AUM, deposit/redeem volume, fee bps; output projected fee revenue as a vault operator.
-- **Reserve Ratio Simulator** -- model redemption headroom under different allocation/PnL scenarios.
-- **NAV vs Redeemable Liquidity Visualizer** -- interactive version of the core protocol insight, showing how allocation decisions affect exit liquidity.
-- **Structured Product Compliance Checklist** -- MiCA/MiFID self-assessment for onchain structured products.
+- **Open exploration** -- browse existing baskets, view live oracle prices, read docs. No gate.
+- **Guided pilot pathway** -- structured walkthrough: create a vault, set assets, allocate to perp, open a position. Gated behind email capture at vault creation.
+- **Operator waitlist** -- asset managers who want to run a vault on mainnet register interest for early access.
 
 ### Mechanism 2: Lead Magnets
 
@@ -143,7 +142,7 @@ Leads should never leave your world. They orbit in it until they are ready to bu
 
 **Behavioral triggers:**
 - Downloaded the playbook → sequence on custody model + regulatory approach.
-- Used the fee calculator → sequence on unit economics + fee policy best practices.
+- Explored testnet / created a vault → sequence on unit economics + fee policy best practices.
 - Watched VSL past 60% → direct outreach from team + calendar link.
 - Visited pricing/docs page twice → "book a walkthrough" email within hours.
 - Started application but did not complete → 30-min follow-up + next-day trust-building email.
@@ -174,7 +173,7 @@ Score leads in a CRM (Clay table or HubSpot):
 | ------ | ------ |
 | Title match (asset manager, portfolio manager, CIO, fintech founder) | High |
 | Firm AUM or employee count | High |
-| Content engagement depth (pages, visits, tool usage) | Medium |
+| Content engagement depth (pages, visits, testnet usage) | Medium |
 | Email engagement (opens, clicks) | Medium |
 | LinkedIn interaction with team posts | Medium |
 
@@ -213,7 +212,7 @@ Every piece of content maps to one of these pillars:
 - **P2 -- Market Thesis**: Why institutional-grade basket infrastructure matters now, from the asset manager's perspective.
 - **P3 -- Technical Credibility**: Architecture deep dives, oracle design, security posture. Builds trust with sophisticated operators.
 - **P4 -- Operator Stories**: How a vault session works, fee revenue modeling, reserve management decisions, operational patterns.
-- **P5 -- Regulatory Clarity**: MiCA compliance as competitive advantage, the "closed marketplace" insight, how regulatory work de-risks the decision to build on IndexFlow.
+- **P5 -- Regulatory Clarity**: Permissionless protocol model, Foundation/Labs/Frontend separation, progressive decentralization roadmap, frontend compliance (geo-blocking, OFAC screening, ToS). How mapping the regulatory perimeter early de-risks the decision to build on IndexFlow.
 - **P6 -- Unit Economics**: Fee model, funding rate mechanics, revenue projections for operators. Token design is secondary/deferred.
 
 ## Framing Principles
@@ -236,6 +235,10 @@ Canonical lines drawn from the whitepaper and primer. Use across content where n
 - "Structured exposure infrastructure."
 - "The novelty is not a new primitive. It is the architectural synthesis."
 - "This is not a generic DeFi app."
+- "The user should never pick the chain. The protocol should."
+- "Route by depth, not by default."
+- "Six contracts, zero chain pickers."
+- "TWAP the pool, sync the state, route the intent."
 
 ## Cross-Channel Workflow
 
@@ -263,11 +266,13 @@ Existing docs to repurpose (relative to repo root):
 | `docs/WHITEPAPER_DRAFT.md` | 5-8 blog posts, 15+ tweet threads, 3+ Substack issues |
 | `docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md` | 3-4 technical blog posts, YouTube explainer |
 | `docs/ASSET_MANAGER_FLOW.md` | Operator playbook content, VSL script, email sequences |
-| `docs/REGULATORY_ROADMAP_DRAFT.md` | 1 blog post, LinkedIn thought leadership series |
+| `docs/REGULATORY_ROADMAP_DRAFT.md` | 2-3 blog posts (permissionless model, foundation structure, progressive decentralization), LinkedIn series, Substack deep-dive, X thread |
 | `docs/INVESTOR_FLOW.md` | Demo video, tweet thread |
 | `docs/PERP_RISK_MATH.md` | Technical credibility thread |
 | `docs/SHARE_PRICE_AND_OPERATIONS.md` | NAV explainer content |
 | `docs/UTILITY_TOKEN_TOKENOMICS.md` | 1 blog post, 2 tweet threads |
+| `docs/CROSS_CHAIN_COORDINATION.md` | 4-5 technical blog posts, 3+ tweet threads, Substack deep-dive, YouTube architecture walkthrough |
+| `src/coordination/` | Code snippets for technical posts (TWAP accumulator, routing weights, intent lifecycle) |
 | Landing page primer sections | Screenshot-based social posts |
 | Pitch deck | Slide-by-slide LinkedIn/X content |
 

@@ -18,10 +18,11 @@ type RawTokenHolderPosition = {
 
 export function useHeroProtocolStats() {
   const { client, isAvailable } = useAvailableSubgraph();
-  const { data: baskets, isLoading: basketsLoading } = useBasketsOverviewQuery({
-    first: 500,
-    skip: 0,
-  });
+  const {
+    data: baskets,
+    isLoading: basketsLoading,
+    isError: basketsError,
+  } = useBasketsOverviewQuery({ first: 500, skip: 0 });
 
   const vaults = useMemo(() => (baskets ?? []).map((basket) => basket.vault as Address), [baskets]);
   const vaultPnL = useVaultPnLBatch(vaults);
@@ -112,5 +113,6 @@ export function useHeroProtocolStats() {
     totalApy,
     isLoading:
       basketsLoading || vaultPnL.isLoading || weekSnapshots.isLoading || tokenHolders.isLoading,
+    isError: basketsError || tokenHolders.isError,
   };
 }

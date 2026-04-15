@@ -11,8 +11,32 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Changed
+
+- [2026-04-16] Chains UI now queries per-chain pool states from the subgraph instead of a singleton aggregate. `usePoolReserveRegistryState` uses the new `GET_CHAIN_POOL_STATES` query, derives routing weights proportionally from pool depth, and reads actual chain selectors from indexed data.
+- [2026-04-16] Rename testnet faucet button label from "Mint 10,000 USDC" to "Mint 10,000 Test USDC" (desktop, mobile, and toast messages).
+- [2026-04-16] Chains page layout consolidation: merged the 4 overview stat cards, donut chart breakdown panels, and per-chain comparison cards into a single unified section with an inline donut chart and compact chain detail rows. Moved pending-intents stat into the intent activity section. Removed `chain-comparison-card.tsx`.
+- [2026-04-16] Dev compilation speed: dynamically import Header and ToastContainer in root layout, split `@privy-io/wagmi` out of the static module graph, disable Sentry replay/tracing in development. Reduces initial route compile from ~3 min to ~11 s. Fix pre-existing TS errors in `network-selector.tsx`, `contracts.ts`, and `privy.ts` for new deployment targets.
+- [2026-04-16] Chains UI overhaul: added chain brand icons (Arbitrum, Base, Optimism, Sepolia) with colored accent borders, utilization rings, reserved-vs-available split bars, and staleness indicators on comparison cards. Added layered donut chart combining liquidity distribution (outer ring) and routing weights (inner ring) with always-visible percentages. Stat cards and intent status badges now show icons.
+- [2026-04-15] `OracleAdapter` now supports `canonicalMode`, `configHash`, `hasBrokenFeeds`, and `setLocalFeedAddress`.
+- [2026-04-15] Web `DeploymentTarget` expanded to include `arbitrum-sepolia` and `arbitrum`.
+- [2026-04-15] Growth docs aligned with regulatory roadmap: reframed P5 pillar and all content titles/descriptions from "EU-first MiCA compliance" to permissionless protocol model (Foundation/Labs/Frontend separation, progressive decentralization, frontend compliance). Replaced mini-tools capture strategy (fee calculator, reserve simulator, NAV visualizer, compliance checklist) with testnet-gated capture (guided pilot pathway, operator waitlist). Added new content items for progressive decentralization stages, foundation structure, and regulated access tier. Updated README growth checklist to reflect testnet capture.
+
 ### Added
 
+- [2026-04-16] Subgraph v0.3.0: added `ChainPoolState` entity for per-chain pool tracking. Index `RemoteStateUpdated` events from `PoolReserveRegistry` so remote chain data is captured alongside local snapshots. Added `GET_CHAIN_POOL_STATES` query. Deployed to Graph Studio (Sepolia).
+- [2026-04-15] Subgraph v0.2.0: added `PoolReserveRegistry` and `IntentRouter` data sources with `PoolSnapshotEvent`, `CoordinationState`, `IntentAction`, `IntentStats` entities. Deployed to Graph Studio for Sepolia. Updated manifest generation to support optional coordination contracts on anvil.
+- [2026-04-15] Web: `/chains` page now queries subgraph for live coordination state and intent activity (with mock data fallback). Added intent activity table with status badges, stats row, and time-ago display. Updated `contracts.ts` with `poolReserveRegistry` and `intentRouter` addresses.
+- [2026-04-15] Deployed coordination layer contracts to Ethereum Sepolia: `PoolReserveRegistry`, `CCIPReserveMessenger`, `IntentRouter` (UUPS proxy), `CrossChainIntentBridge`, `OracleConfigBroadcaster`. All 6 contracts verified on Etherscan. Updated `sepolia-deployment.json` and `docs/DEPLOYMENTS.md`.
+- [2026-04-15] Growth: cross-chain coordination layer content added to content calendar (4 blog posts, 3 X threads, 2 LinkedIn posts, 1 Substack deep-dive, 1 YouTube walkthrough). Technical breakdown blog draft and X thread draft created under `growth/drafts/`. New key phrases added. Source material table updated with `docs/CROSS_CHAIN_COORDINATION.md` and `src/coordination/`.
+- [2026-04-15] Cross-chain coordination layer contracts: `PoolReserveRegistry` (TWAP-based pool depth tracking), `CCIPReserveMessenger` (delta-triggered state sync), `IntentRouter` (deposit/redeem intent routing with escrow), `CrossChainIntentBridge` (CCIP relay).
+- [2026-04-15] Oracle config sync: `OracleConfigBroadcaster` and `OracleConfigReceiver` for canonical oracle parameter enforcement via CCIP.
+- [2026-04-15] Pool seeding via `VaultAccounting.seedPool()` and `unseedPool()` with per-epoch governance caps.
+- [2026-04-15] Web: `/chains` UI page with cross-chain pool metrics, routing weights, and intent activity; coordination overview and per-chain comparison UI.
+- [2026-04-15] Privy smart wallet support for chain-invisible UX.
+- [2026-04-15] `script/DeployCoordination.s.sol` deploy script for the coordination layer.
+- [2026-04-15] Add Growth progress checklist to README with content infrastructure, social channels, content production, lead capture, lead management, VC pipeline, and grants sections.
+- [2026-04-15] Add 0x Labs grant application form, blurb, architecture diagram, and submission checklist under `growth/grants/`.
 - [2026-04-15] Growth strategy overhaul: restructured `growth/` around a ColdIQ-inspired 4-layer funnel framework (Generate, Capture, Manage, Close) targeting a single ICP (asset managers, fintech firms, institutional issuers, RWA operators). Reprioritized channels with LinkedIn at #1, added Layer 2 capture mechanisms (mini-tools, lead magnets, VSL, smart routing), Layer 3 nurture infrastructure (email sequences, behavioral triggers, lead scoring), and Layer 4 close pipeline. Chain partner outreach removed from scope (handled by 0xlabs). Added `growth/VC_OUTREACH_PLAYBOOK.md` for an automated VC fundraise pipeline with 3-tier scoring, multi-channel sequences, signal monitoring, and warm intro automation. Updated content calendar from 8-week sprint to rolling layer-tagged format. Updated blog, LinkedIn, and podcast templates for single-ICP focus.
 - [2026-04-15] Regulatory roadmap Phase 6 (regulated access tier) for post-launch institutional onboarding via a separately licensed Labs subsidiary.
 - [2026-04-15] Social media setup and bug bounty program scope added to the draft launch checklist in the regulatory roadmap.
@@ -30,6 +54,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-16] Fix `update-prices.yml` CI failure: declare explicit top-level `network` matrix key so the job-level `if` expression can resolve `matrix.network`.
+- [2026-04-15] Fix hero "Live testnet stats" showing "--" on deployed site: remove `graphql-request` from `optimizePackageImports` (v7.4 has no subpath exports, causing silent import failures in production builds) and add loading skeletons + error banner to `HeroStats` so subgraph failures are immediately visible.
 - [2026-04-15] Remove `graphql` from `optimizePackageImports` to fix Turbopack build crash caused by conflict with the built-in `serverExternalPackages` default list.
 - [2026-04-15] Toast container now announces to screen readers via `role="status"` and `aria-live="polite"`.
 - [2026-04-15] Deposit/redeem panel label now properly associated with input via `htmlFor`/`id` pairing.

@@ -3,7 +3,7 @@
 Local allowlist/ownership ledger for deployment operations.
 Agents must read this file before touching cloud resources.
 
-Last updated: 2026-04-11
+Last updated: 2026-04-15
 
 ## Policy
 
@@ -22,6 +22,13 @@ Last updated: 2026-04-11
 | GCP | `watchful-gear-493003-t8` | Cloud Run Service | `indexflow-push-worker` | production | agent | `read`, `deploy`, `update-config` | Serverless Web Push API/dispatch worker for PWA notifications | 2026-04-11 |
 | GCP | `watchful-gear-493003-t8` | Cloud Scheduler Job | `indexflow-push-realtime` | production | agent | `read`, `deploy`, `update-config` | Realtime dispatch trigger (`*/5 * * * *`) | 2026-04-11 |
 | GCP | `watchful-gear-493003-t8` | Cloud Scheduler Job | `indexflow-push-digest` | production | agent | `read`, `deploy`, `update-config` | Digest dispatch trigger (`0 */6 * * *`) | 2026-04-11 |
+
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `PoolReserveRegistry` (`0x970F75182913195D3594822DD456cD710E5C42B0`) | sepolia | agent | `read` | TWAP-based GMX pool depth tracking and proportional routing weights | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `CCIPReserveMessenger` (`0x2350D1689eD1A8a4654Ef45Fe5d25Bd5f432116a`) | sepolia | agent | `read` | Delta-triggered CCIP pool state broadcast/receive | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `IntentRouter` proxy (`0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556`) | sepolia | agent | `read`, `deploy` | UUPS-upgradeable intent escrow and execution router | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `IntentRouter` impl (`0x482d0530B1b1d6f49d5FC733a321E615B53CB711`) | sepolia | agent | `read` | IntentRouter logic implementation | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `CrossChainIntentBridge` (`0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27`) | sepolia | agent | `read` | Stateless CCIP relay for cross-chain deposit intents | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `OracleConfigBroadcaster` (`0x762C7080D391f9169cdeeD93c65Ad5016D67701A`) | sepolia | agent | `read` | Canonical oracle config broadcast via CCIP | 2026-04-15 |
 
 ## Update Template
 

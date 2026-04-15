@@ -1,0 +1,32 @@
+---
+description: Keep the Growth checklist in README.md up to date after growth-related tasks
+globs:
+  - growth/**
+alwaysApply: false
+---
+
+# Growth checklist maintenance
+
+After completing any growth-related task, update the **## Growth** checklist in `README.md` in the same edit session.
+
+## What triggers an update
+
+- Adding, renaming, or removing files under `growth/` (drafts, templates, playbooks, grant applications)
+- Setting up or changing social channel accounts (X, Discord, Telegram, etc.)
+- Publishing content (blog posts, tweets, LinkedIn posts, Substack issues, YouTube videos, podcast pitches, Farcaster casts)
+- Creating or completing lead magnets, VSL, or other Layer 2 capture assets
+- Configuring or changing Layer 3 nurture tooling (email platform, sequences, lead scoring)
+- Setting up or modifying VC pipeline tooling (Clay, Instantly, Expandi, Docsend, etc.)
+- Submitting or updating grant applications
+
+## What to do
+
+- **Check off** items that are now complete (`- [ ]` → `- [x]`).
+- **Add new items** when a growth workstream or deliverable is introduced that is not yet tracked.
+- **Remove or reword** items that are no longer relevant due to strategy changes.
+- Keep items grouped under the correct subheading (Content Infrastructure, Social Channels, Content Production, Lead Capture, Lead Management, VC Pipeline, Grants).
+
+## What to skip
+
+- Do not update the checklist for typo-only or formatting-only edits to growth files.
+- Do not duplicate information already captured by a CHANGELOG entry in the same session.

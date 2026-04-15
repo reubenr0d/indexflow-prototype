@@ -8,12 +8,14 @@ import {
   type DeploymentTarget,
 } from "@/lib/deployment";
 import { cn } from "@/lib/utils";
-import { Check, ChevronDown, Diamond, Hammer, type LucideIcon } from "lucide-react";
+import { Check, ChevronDown, Diamond, Hammer, Globe, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const NETWORK_ICON: Record<DeploymentTarget, LucideIcon> = {
   anvil: Hammer,
   sepolia: Diamond,
+  "arbitrum-sepolia": Diamond,
+  arbitrum: Globe,
 };
 
 export function NetworkSelector() {

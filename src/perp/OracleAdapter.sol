@@ -28,6 +28,13 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     /// @notice All asset ids ever configured while active (append-only; deactivated ids remain listed).
     bytes32[] public assetList;
 
+    /// @notice When true, `configureAsset` is restricted to the canonical receiver.
+    bool public canonicalMode;
+    /// @notice Address of the OracleConfigReceiver on this chain (only relevant in canonical mode).
+    address public canonicalReceiver;
+    /// @notice Order-independent hash of all active asset configs (excludes feedAddress).
+    bytes32 public configHash;
+
     /// @notice Emitted when `configureAsset` creates or updates an asset.
     event AssetConfigured(bytes32 indexed assetId, string symbol, FeedType feedType, address feedAddress);
     /// @notice Emitted when `deactivateAsset` runs.
@@ -38,6 +45,12 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     event KeeperUpdated(address indexed keeper, bool active);
     /// @notice Emitted when `setWirer` runs.
     event WirerSet(address indexed account, bool active);
+    /// @notice Emitted when a local feed address is set independently of canonical config.
+    event LocalFeedAddressSet(bytes32 indexed assetId, address feedAddress);
+    /// @notice Emitted when canonical mode is enabled.
+    event CanonicalModeEnabled(address indexed receiver);
+    /// @notice Emitted when canonical mode is disabled (emergency).
+    event CanonicalModeDisabled();
 
     /// @notice Custom relayer path had no stored price yet where required.
     error AssetNotFound(bytes32 assetId);
@@ -97,9 +110,20 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         uint256 stalenessThreshold,
         uint256 deviationBps,
         uint8 decimals_
-    ) external onlyOwnerOrWirer {
+    ) external {
+        if (canonicalMode) {
+            require(msg.sender == canonicalReceiver, "Config locked to canonical source");
+        } else {
+            require(msg.sender == owner() || wirers[msg.sender], "Not authorized");
+        }
+
         bytes32 assetId = keccak256(bytes(symbol));
         bool isNew = !_assetConfigs[assetId].active;
+
+        if (!isNew) {
+            bytes32 oldHash = _assetHash(assetId, _assetConfigs[assetId]);
+            configHash ^= oldHash;
+        }
 
         _assetConfigs[assetId] = AssetConfig({
             feedAddress: feedAddress,
@@ -116,6 +140,8 @@ contract OracleAdapter is IOracleAdapter, Ownable {
             assetList.push(assetId);
         }
 
+        configHash ^= _assetHash(assetId, _assetConfigs[assetId]);
+
         emit AssetConfigured(assetId, symbol, feedType, feedAddress);
     }
 
@@ -123,8 +149,41 @@ contract OracleAdapter is IOracleAdapter, Ownable {
     /// @param assetId Asset to deactivate.
     function deactivateAsset(bytes32 assetId) external onlyOwner {
         if (!_assetConfigs[assetId].active) revert AssetNotFound(assetId);
+        configHash ^= _assetHash(assetId, _assetConfigs[assetId]);
         _assetConfigs[assetId].active = false;
         emit AssetRemoved(assetId);
+    }
+
+    /// @notice Set canonical mode, locking `configureAsset` to the canonical CCIP receiver.
+    function setCanonicalMode(address _receiver) external onlyOwner {
+        canonicalReceiver = _receiver;
+        canonicalMode = true;
+        emit CanonicalModeEnabled(_receiver);
+    }
+
+    /// @notice Emergency disable canonical mode (e.g. if canonical chain is compromised).
+    function disableCanonicalMode() external onlyOwner {
+        canonicalMode = false;
+        emit CanonicalModeDisabled();
+    }
+
+    /// @notice Set the feed address for an asset without touching canonical config params.
+    /// @dev Allows local admin to point at chain-specific Chainlink aggregators.
+    function setLocalFeedAddress(bytes32 assetId, address feedAddress) external onlyOwnerOrWirer {
+        require(_assetConfigs[assetId].active, "Asset not configured");
+        configHash ^= _assetHash(assetId, _assetConfigs[assetId]);
+        _assetConfigs[assetId].feedAddress = feedAddress;
+        configHash ^= _assetHash(assetId, _assetConfigs[assetId]);
+        emit LocalFeedAddressSet(assetId, feedAddress);
+    }
+
+    /// @notice Returns true if any active asset has feedAddress == address(0).
+    function hasBrokenFeeds() external view returns (bool) {
+        for (uint256 i = 0; i < assetList.length; i++) {
+            AssetConfig memory cfg = _assetConfigs[assetList[i]];
+            if (cfg.active && cfg.feedAddress == address(0)) return true;
+        }
+        return false;
     }
 
     // ─── Price Submission (Custom Relayer) ────────────────────────
@@ -266,6 +325,11 @@ contract OracleAdapter is IOracleAdapter, Ownable {
             return price * 10 ** (30 - feedDecimals);
         }
         return price;
+    }
+
+    /// @dev Incremental XOR-based hash component for one asset (excludes feedAddress).
+    function _assetHash(bytes32 assetId, AssetConfig memory cfg) internal pure returns (bytes32) {
+        return keccak256(abi.encode(assetId, cfg.feedType, cfg.stalenessThreshold, cfg.deviationBps, cfg.decimals));
     }
 
     /// @dev First custom write skips check; subsequent compares relative move in BPS.

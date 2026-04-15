@@ -180,3 +180,68 @@ type ProtocolState @entity(immutable: false) {
   updatedAt: BigInt!
   updatedBlock: BigInt!
 }
+
+# ─── Coordination Layer ────────────────────────────────────────
+
+type PoolSnapshotEvent @entity(immutable: true) {
+  id: ID!
+  chainSelector: BigInt!
+  twapPoolAmount: BigInt!
+  instantPoolAmount: BigInt!
+  reservedAmount: BigInt!
+  availableLiquidity: BigInt!
+  utilizationBps: BigInt!
+  oracleConfigHash: Bytes!
+  hasBrokenFeeds: Boolean!
+  snapshotTimestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type CoordinationState @entity(immutable: false) {
+  id: ID!
+  latestTwapPoolAmount: BigInt!
+  latestAvailableLiquidity: BigInt!
+  latestUtilizationBps: BigInt!
+  latestSnapshotTimestamp: BigInt!
+  snapshotCount: BigInt!
+  updatedAt: BigInt!
+}
+
+type ChainPoolState @entity(immutable: false) {
+  id: ID!
+  chainSelector: BigInt!
+  twapPoolAmount: BigInt!
+  availableLiquidity: BigInt!
+  reservedAmount: BigInt!
+  utilizationBps: BigInt!
+  snapshotTimestamp: BigInt!
+  snapshotCount: BigInt!
+  updatedAt: BigInt!
+}
+
+type IntentAction @entity(immutable: true) {
+  id: ID!
+  intentId: BigInt!
+  user: Bytes!
+  intentType: String!
+  status: String!
+  amount: BigInt!
+  basketVault: Bytes
+  sharesOrUsdc: BigInt
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type IntentStats @entity(immutable: false) {
+  id: ID!
+  totalSubmitted: BigInt!
+  totalExecuted: BigInt!
+  totalRefunded: BigInt!
+  cumulativeVolumeUsdc: BigInt!
+  updatedAt: BigInt!
+}

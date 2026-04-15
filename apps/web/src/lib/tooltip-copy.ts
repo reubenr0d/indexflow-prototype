@@ -115,6 +115,28 @@ export const TOOLTIP_COPY = {
   pushDigestToggle: "Controls whether periodic digest notifications are sent.",
   pushInvestorAlerts: "Wallet-holder alerts for investor-facing vault events.",
   pushOperatorAlerts: "Operational alerts for risk controls and keeper-sensitive conditions.",
+
+  // Chain metrics (coordination layer) — aggregates on /chains overview
+  coordTotalPoolDepth:
+    "Sum of registered pool depth (USDC) across all chains in the coordination view.",
+  coordTotalAvailableLiquidity:
+    "Sum of pool depth minus reserved amounts across chains; headroom for new execution.",
+  coordActiveChains: "Number of chains with a pool reserve snapshot in the registry.",
+  coordPendingIntents:
+    "Cross-chain deposit or redeem intents awaiting execution or bridge finality.",
+
+  chainPoolDepth:
+    "Total USDC in the GMX execution pool on this chain. Deeper pools support larger positions with less slippage.",
+  chainAvailableLiquidity:
+    "Pool depth minus reserved amounts. The USDC available for new position execution.",
+  chainUtilization:
+    "Percentage of pool depth currently reserved for open positions.",
+  chainRoutingWeight:
+    "Proportion of auto-routed deposits directed to this chain, based on available liquidity depth.",
+  chainStaleness:
+    "How recently this chain's pool state was synced. Stale data is excluded from routing decisions.",
+  intentStatus:
+    "Current state of the deposit/redeem intent: pending, in-flight (cross-chain), executed, or refunded.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;

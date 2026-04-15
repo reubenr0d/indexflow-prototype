@@ -7,10 +7,18 @@ Configuration lives in `networks.json` and is auto-synced from web deployment fi
 - `apps/web/src/config/local-deployment.json` -> `anvil`
 - `apps/web/src/config/sepolia-deployment.json` -> `sepolia`
 
-- `anvil`
-- `sepolia`
+`generate-manifest` fails if any **required** contract address for the selected network is zero. Coordination layer contracts (`poolReserveRegistry`, `intentRouter`) are optional — a warning is printed if they have zero addresses, but the build still succeeds.
 
-`generate-manifest` fails if any required address for the selected network is zero.
+## Data Sources
+
+| Data Source | Contract | Events Indexed |
+|---|---|---|
+| BasketFactory | BasketFactory | BasketCreated |
+| VaultAccounting | VaultAccounting | Deposited, Redeemed, TopUp, etc. |
+| OracleAdapter | OracleAdapter | AssetConfigured, PriceUpdated, AssetRemoved |
+| PoolReserveRegistry | PoolReserveRegistry | PoolSnapshot, RemoteStateUpdated |
+| IntentRouter | IntentRouter | IntentSubmitted, IntentExecuted, IntentRefunded |
+| BasketVaultTemplate | BasketVault (dynamic) | Transfer, Deposit, Redeem |
 
 ## Commands
 
@@ -27,7 +35,7 @@ NETWORK=anvil npm run build
 
 # Deploy to Subgraph Studio
 npx graph auth <DEPLOY_KEY>
-export SUBGRAPH_SLUG=<slug>
+export SUBGRAPH_SLUG=indexflow-prototype
 NETWORK=sepolia npm run deploy
 ```
 

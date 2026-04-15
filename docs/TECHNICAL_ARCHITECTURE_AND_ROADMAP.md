@@ -1123,6 +1123,16 @@ The repo should add:
 - async-redemption / backstop tests once those modules exist;
 - multi-chain accounting segregation tests if chain-local instances are added.
 
+## Cross-Chain Coordination Layer
+
+`Implemented today` (coordination contracts and deploy script in repository)
+
+The repository adds a **coordination plane** on top of the existing basket and GMX-derived perp stack: each chain runs a **`PoolReserveRegistry`** that maintains a TWAP-style view of **GMX USDC pool depth**, optional **oracle health** bits, and **remote** snapshots ingested only from a wired **`CCIPReserveMessenger`**. That registry exposes **`getRoutingWeights`**, which splits basis points across the local chain and eligible remotes by **available liquidity** (pool amount minus reserved), while automatically zeroing chains that are **stale** or reporting **broken feeds**. **`CCIPReserveMessenger`** economizes on cross-chain fees by broadcasting only when the TWAP pool amount moves by at least a configured **delta threshold** (the bundled deploy script uses **5%**) or when a **maximum interval** elapses, and it validates **peers** plus **per-hour inbound rate limits** on receive.
+
+User-facing deposit orchestration is split between a **UUPS `IntentRouter`** (escrow, local **`submitAndExecute`**, keeper **`executeIntent`**, and **`refundIntent`** after **`maxEscrowDuration`**) and a **`CrossChainIntentBridge`** that relays **USDC plus intent metadata** over CCIP and **`deposit`**s on the destination vault, minting shares to the **same user address** on that chain. Product documentation frames **Privy smart wallets** as the natural way to obtain that same-address property across networks. Separately, **`OracleConfigBroadcaster`** on a **canonical** chain and **`OracleConfigReceiver`** on remotes push non-feed oracle parameters over CCIP; remotes apply them through **`OracleAdapter.configureAsset`** while preserving **chain-local feed addresses**, with **`canonicalMode`** locking configuration to the receiver when enabled.
+
+For contract-level detail, default parameter choices in **`script/DeployCoordination.s.sol`**, and an explicit trust / failure-mode table, see **[Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md)**.
+
 ## Appendix A: competitor comparisons with citations
 
 ### Design patterns relevant to IndexFlow

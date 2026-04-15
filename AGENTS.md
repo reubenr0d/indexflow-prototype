@@ -19,6 +19,12 @@ After each task, ensure documentation is current for any user/operator-visible c
 - If markdown docs and in-app docs describe the same workflow, update both in the same session.
 - If no documentation impact exists, explicitly verify no doc changes are needed before finishing.
 
+## Keep Growth Checklist Updated
+
+After growth-related tasks (content in `growth/`, social channel setup, content publishing, lead capture/management tooling, VC pipeline changes, grant submissions), update the **## Growth** checklist in `README.md` in the same session: check off completed items, add new items, or remove items that are no longer relevant.
+
+Skip updates for typo-only or formatting-only edits to growth files.
+
 ## Foundry Command Reliability In Agent Shell
 
 Do not rely on `cd` for Foundry commands in agent terminals. Prefer explicit project root and PATH:

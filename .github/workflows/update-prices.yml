@@ -33,6 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        network: [sepolia]
         include:
           - network: sepolia
             deployment_config: apps/web/src/config/sepolia-deployment.json

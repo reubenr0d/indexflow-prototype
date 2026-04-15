@@ -44,6 +44,8 @@ const targets = [
   ["basketFactory", "basketFactory"],
   ["vaultAccounting", "vaultAccounting"],
   ["oracleAdapter", "oracleAdapter"],
+  ["poolReserveRegistry", "poolReserveRegistry"],
+  ["intentRouter", "intentRouter"],
 ];
 
 for (const [deploymentKey, networkKey] of targets) {

@@ -16,6 +16,8 @@ type ContractAddresses = {
   usdc: Address;
   gmxVault: Address;
   assetWiring: Address;
+  poolReserveRegistry: Address;
+  intentRouter: Address;
 };
 
 type DeploymentFile = {
@@ -29,6 +31,8 @@ type DeploymentFile = {
   usdc: string;
   gmxVault: string;
   assetWiring?: string;
+  poolReserveRegistry?: string;
+  intentRouter?: string;
 };
 
 const ld = localDeployment as DeploymentFile;
@@ -46,6 +50,8 @@ const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
     usdc: ld.usdc as Address,
     gmxVault: ld.gmxVault as Address,
     assetWiring: (ld.assetWiring ?? "0x0000000000000000000000000000000000000000") as Address,
+    poolReserveRegistry: (ld.poolReserveRegistry ?? "0x0000000000000000000000000000000000000000") as Address,
+    intentRouter: (ld.intentRouter ?? "0x0000000000000000000000000000000000000000") as Address,
   },
   sepolia: {
     basketFactory: sd.basketFactory as Address,
@@ -58,6 +64,36 @@ const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
     usdc: sd.usdc as Address,
     gmxVault: sd.gmxVault as Address,
     assetWiring: (sd.assetWiring ?? "0x0000000000000000000000000000000000000000") as Address,
+    poolReserveRegistry: (sd.poolReserveRegistry ?? "0x0000000000000000000000000000000000000000") as Address,
+    intentRouter: (sd.intentRouter ?? "0x0000000000000000000000000000000000000000") as Address,
+  },
+  "arbitrum-sepolia": {
+    basketFactory: "0x0000000000000000000000000000000000000001" as Address,
+    vaultAccounting: "0x0000000000000000000000000000000000000002" as Address,
+    oracleAdapter: "0x0000000000000000000000000000000000000003" as Address,
+    perpReader: "0x0000000000000000000000000000000000000004" as Address,
+    pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
+    fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
+    priceSync: "0x0000000000000000000000000000000000000007" as Address,
+    usdc: "0x0000000000000000000000000000000000000008" as Address,
+    gmxVault: "0x0000000000000000000000000000000000000009" as Address,
+    assetWiring: "0x0000000000000000000000000000000000000000" as Address,
+    poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
+    intentRouter: "0x0000000000000000000000000000000000000000" as Address,
+  },
+  arbitrum: {
+    basketFactory: "0x0000000000000000000000000000000000000001" as Address,
+    vaultAccounting: "0x0000000000000000000000000000000000000002" as Address,
+    oracleAdapter: "0x0000000000000000000000000000000000000003" as Address,
+    perpReader: "0x0000000000000000000000000000000000000004" as Address,
+    pricingEngine: "0x0000000000000000000000000000000000000005" as Address,
+    fundingRateManager: "0x0000000000000000000000000000000000000006" as Address,
+    priceSync: "0x0000000000000000000000000000000000000007" as Address,
+    usdc: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" as Address,
+    gmxVault: "0x0000000000000000000000000000000000000008" as Address,
+    assetWiring: "0x0000000000000000000000000000000000000000" as Address,
+    poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
+    intentRouter: "0x0000000000000000000000000000000000000000" as Address,
   },
 };
 
@@ -75,6 +111,8 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     usdc: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831" as Address,
     gmxVault: "0x0000000000000000000000000000000000000008" as Address,
     assetWiring: "0x0000000000000000000000000000000000000000" as Address,
+    poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
+    intentRouter: "0x0000000000000000000000000000000000000000" as Address,
   },
   [arbitrumSepolia.id]: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -87,6 +125,8 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     usdc: "0x0000000000000000000000000000000000000008" as Address,
     gmxVault: "0x0000000000000000000000000000000000000009" as Address,
     assetWiring: "0x0000000000000000000000000000000000000000" as Address,
+    poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
+    intentRouter: "0x0000000000000000000000000000000000000000" as Address,
   },
 };
 

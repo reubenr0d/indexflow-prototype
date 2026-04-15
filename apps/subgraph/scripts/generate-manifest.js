@@ -26,7 +26,10 @@ if (!cfg) {
   fail(`Unknown NETWORK='${network}'. Available: ${Object.keys(networks).join(", ")}`);
 }
 
-for (const key of ["basketFactory", "vaultAccounting", "oracleAdapter"]) {
+const requiredContracts = ["basketFactory", "vaultAccounting", "oracleAdapter"];
+const optionalContracts = ["poolReserveRegistry", "intentRouter"];
+
+for (const key of requiredContracts) {
   const item = cfg[key];
   if (!item || typeof item.address !== "string") {
     fail(`Missing ${key}.address for network '${network}' in networks.json`);
@@ -39,6 +42,19 @@ for (const key of ["basketFactory", "vaultAccounting", "oracleAdapter"]) {
   }
 }
 
+for (const key of optionalContracts) {
+  const item = cfg[key];
+  if (!item || typeof item.address !== "string") {
+    fail(`Missing ${key}.address for network '${network}' in networks.json`);
+  }
+  if (typeof item.startBlock !== "number" || item.startBlock < 0) {
+    fail(`Invalid ${key}.startBlock for network '${network}'. Expected non-negative number.`);
+  }
+  if (zeroAddress.test(item.address)) {
+    console.log(`[generate-manifest] WARN: ${key} has zero address on '${network}' — data source will not index.`);
+  }
+}
+
 const replacements = {
   "{{network}}": network,
   "{{basketFactoryAddress}}": cfg.basketFactory.address,
@@ -47,6 +63,10 @@ const replacements = {
   "{{vaultAccountingStartBlock}}": String(cfg.vaultAccounting.startBlock),
   "{{oracleAdapterAddress}}": cfg.oracleAdapter.address,
   "{{oracleAdapterStartBlock}}": String(cfg.oracleAdapter.startBlock),
+  "{{poolReserveRegistryAddress}}": cfg.poolReserveRegistry.address,
+  "{{poolReserveRegistryStartBlock}}": String(cfg.poolReserveRegistry.startBlock),
+  "{{intentRouterAddress}}": cfg.intentRouter.address,
+  "{{intentRouterStartBlock}}": String(cfg.intentRouter.startBlock),
 };
 
 let content = template;

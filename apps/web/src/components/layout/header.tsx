@@ -26,6 +26,7 @@ import { NetworkSelector } from "@/components/layout/network-selector";
 const navItems = [
   { href: "/baskets", label: "Baskets" },
   { href: "/prices", label: "Assets" },
+  { href: "/chains", label: "Chains" },
   { href: "/docs", label: "Docs" },
   { href: "/admin", label: "Admin" },
 ];
@@ -221,7 +222,7 @@ export function Header() {
 
   useEffect(() => {
     if (receipt.isSuccess) {
-      showToast("success", "Minted 10,000 USDC");
+      showToast("success", "Minted 10,000 Test USDC");
     }
   }, [receipt.isSuccess]);
 
@@ -241,7 +242,7 @@ export function Header() {
       functionName: "mint",
       args: [address, 10_000n * 1_000_000n],
     });
-    showToast("pending", "Minting 10,000 USDC...");
+    showToast("pending", "Minting 10,000 Test USDC...");
   };
 
   const handleE2EConnect = () => {
@@ -319,7 +320,7 @@ export function Header() {
                 ) : (
                   <Coins className="h-3.5 w-3.5" />
                 )}
-                {isPending ? "Minting..." : "Mint 10,000 USDC"}
+                {isPending ? "Minting..." : "Mint 10,000 Test USDC"}
               </button>
             )}
             {isE2ETestMode && !isPrivyConfigured && !address && (
@@ -371,7 +372,7 @@ export function Header() {
               ) : (
                 <Coins className="h-4 w-4" />
               )}
-              {isPending ? "Minting..." : "Mint 10,000 USDC"}
+              {isPending ? "Minting..." : "Mint 10,000 Test USDC"}
             </button>
           )}
           {isE2ETestMode && !isPrivyConfigured && !address && (

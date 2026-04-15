@@ -1,8 +1,10 @@
-import { createConfig } from "@privy-io/wagmi";
+import { createConfig, http, mock } from "wagmi";
 import { arbitrum, arbitrumSepolia, sepolia } from "wagmi/chains";
-import { createConfig as createWagmiConfig, http, mock } from "wagmi";
 import { anvil } from "viem/chains";
 import { isAnvilEnabled } from "@/lib/dev-mode";
+
+export { arbitrum, arbitrumSepolia, sepolia };
+export { anvil };
 
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 const includeAnvil = isE2ETestMode || isAnvilEnabled();
@@ -36,7 +38,7 @@ function buildDefaultConfig() {
 export const defaultConfig = buildDefaultConfig();
 
 function buildE2EConfig() {
-  return createWagmiConfig({
+  return createConfig({
     chains: [anvil],
     connectors: [
       mock({

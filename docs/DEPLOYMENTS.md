@@ -78,6 +78,25 @@ Addresses:
 - `assetWiring`: `0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C`  
   https://sepolia.etherscan.io/address/0x7CD4d8a5E928BE091f8e652bc9D0F9E07874b90C
 
+### Coordination layer (Sepolia, deployed 2026-04-15)
+
+Deployed via `script/DeployCoordination.s.sol` on top of the existing Sepolia stack. All contracts verified on Etherscan.
+
+- `poolReserveRegistry`: `0x970F75182913195D3594822DD456cD710E5C42B0`  
+  https://sepolia.etherscan.io/address/0x970F75182913195D3594822DD456cD710E5C42B0
+- `ccipReserveMessenger`: `0x2350D1689eD1A8a4654Ef45Fe5d25Bd5f432116a`  
+  https://sepolia.etherscan.io/address/0x2350D1689eD1A8a4654Ef45Fe5d25Bd5f432116a
+- `intentRouter` (ERC1967 proxy): `0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556`  
+  https://sepolia.etherscan.io/address/0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556
+- `intentRouter` (implementation): `0x482d0530B1b1d6f49d5FC733a321E615B53CB711`  
+  https://sepolia.etherscan.io/address/0x482d0530B1b1d6f49d5FC733a321E615B53CB711
+- `crossChainIntentBridge`: `0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27`  
+  https://sepolia.etherscan.io/address/0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27
+- `oracleConfigBroadcaster`: `0x762C7080D391f9169cdeeD93c65Ad5016D67701A`  
+  https://sepolia.etherscan.io/address/0x762C7080D391f9169cdeeD93c65Ad5016D67701A
+
+Configuration: TWAP window 30 min, min snapshot interval 5 min, max staleness 1 hour, broadcast threshold 5%, max escrow duration 2 hours, min intent 100 USDC, CCIP fee token LINK (`0x779877A7B0D9E8603169DdbD7836e478b4624789`), chain selector `16015286601757825753`.
+
 ## Subgraph deployment (Sepolia indexed)
 
 Runtime: The Graph Studio

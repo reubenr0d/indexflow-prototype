@@ -1,3 +1,6 @@
-@openzeppelin/=node_modules/@openzeppelin/
+@openzeppelin/contracts@5.0.2/=node_modules/@openzeppelin/contracts-5.0.2/
+@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/
+@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
+@chainlink/contracts-ccip/=node_modules/@chainlink/contracts-ccip/
 forge-std/=lib/forge-std/src/
 solady/=lib/solady/src/

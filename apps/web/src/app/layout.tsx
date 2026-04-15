@@ -1,14 +1,23 @@
 import type { Metadata, Viewport } from "next";
+import dynamic from "next/dynamic";
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Web3Provider } from "@/providers/Web3Provider";
-import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { PriceTickerHydrated } from "@/components/layout/price-ticker";
+import { fetchTickerData } from "@/lib/ticker.server";
 import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
-import { ToastContainer } from "@/components/ui/toast";
 import { TourProvider } from "@/components/onboarding/tour-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+
+const Header = dynamic(
+  () => import("@/components/layout/header").then((m) => ({ default: m.Header })),
+);
+
+const ToastContainer = dynamic(
+  () => import("@/components/ui/toast").then((m) => ({ default: m.ToastContainer })),
+);
 
 const sans = Plus_Jakarta_Sans({
   variable: "--font-sans-app",
@@ -57,11 +66,13 @@ export const viewport: Viewport = {
   themeColor: "#0f172a",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const tickerData = await fetchTickerData().catch(() => []);
+
   return (
     <html lang="en" className={`dark ${sans.variable} ${mono.variable} h-full antialiased`}>
       <head>
@@ -71,6 +82,7 @@ export default function RootLayout({
         <PwaBootstrap />
         <Web3Provider>
           <TourProvider>
+            <PriceTickerHydrated initialData={tickerData} />
             <Header />
             <ToastContainer />
             {children}
