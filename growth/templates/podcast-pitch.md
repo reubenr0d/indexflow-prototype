@@ -31,13 +31,16 @@ I'm [your name], founder of IndexFlow. We're building on-chain basket vault infr
 [Choose one angle and customize. Delete the others.]
 
 **Angle A -- Market thesis (for generalist/macro shows):**
-Structured DeFi products are a $100B+ opportunity that barely exists on-chain today. We can talk about why the ETF model doesn't translate directly to DeFi, what institutional demand actually looks like, and how the competitive landscape (Enzyme, Set, Tokemak, GLP) misses the mark.
+Structured DeFi products are a $100B+ opportunity that barely exists on-chain today. We can talk about why asset managers are looking at onchain basket infrastructure, what institutional demand actually looks like, and how the competitive landscape (Enzyme, Set, Tokemak, GLP) misses the mark for professional operators.
 
 **Angle B -- Technical architecture (for builder/engineering shows):**
 We forked GMX v1 and built a shared liquidity pool with per-vault accounting on top. I can walk through the oracle design (Chainlink + custom relayer for equities and commodities), the NAV vs redeemable liquidity distinction, and how we handle funding rates. We also use AI agents to manage vault operations autonomously.
 
-**Angle C -- Regulation + institutional (for fintech/compliance shows):**
-We're taking an EU-first regulatory approach to DeFi structured products, which is unusual in this space. I can discuss how MiCA changes the calculus for on-chain fund products, why compliance is a competitive advantage rather than a cost center, and what the licensing landscape looks like for basket vaults.
+**Angle C -- Regulation + asset management (for fintech/compliance shows):**
+We're building onchain infrastructure for asset managers who want to launch structured DeFi products. I can discuss how MiCA changes the calculus for on-chain fund products, why compliance is a competitive advantage for operators, and what the licensing landscape looks like for basket vaults serving institutional allocators.
+
+**Angle D -- Operator economics (for fintech/asset management shows):**
+We can walk through the unit economics of running a basket vault on IndexFlow -- fee structures, reserve management, revenue projections. This is relevant for any asset manager evaluating whether onchain fund infrastructure is viable for their strategy.
 
 **About IndexFlow:**
 - Testnet live on Sepolia

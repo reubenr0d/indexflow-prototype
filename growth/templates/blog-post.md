@@ -9,9 +9,10 @@
 - **Title:** [Working title]
 - **SEO title:** [Under 60 chars -- this is what appears in search results]
 - **Meta description:** [Under 155 chars -- search result snippet]
-- **Pillar:** [P1 Education | P2 Thesis | P3 Technical | P4 Building in Public | P5 Regulatory | P6 Tokenomics]
-- **Target audience:** [DeFi natives | Institutional/fund managers | Developers | Chain partners]
-- **Calendar week:** [Week N]
+- **Pillar:** [P1 Vault Operator Education | P2 Market Thesis | P3 Technical Credibility | P4 Operator Stories | P5 Regulatory Clarity | P6 Unit Economics]
+- **Target audience:** [Asset managers | Fintech/fund managers | Institutional issuers | RWA operators]
+- **Funnel layer:** [L1 Generate | L2 Capture | L3 Manage | L4 Close]
+- **Temperature:** [Cold | Warm | Hot]
 - **Hook type:** [Data | Contrarian | Insider Knowledge | Curiosity Gap | Stakes | Personal Story]
 - **Target word count:** 1500-2500
 - **Source docs:** [List the docs/ files or sections this draws from]
@@ -20,7 +21,6 @@
   - [ ] X thread drafted
   - [ ] Standalone tweets extracted
   - [ ] LinkedIn post drafted
-  - [ ] Farcaster cast drafted
   - [ ] Substack mention planned
   - [ ] Telegram pin scheduled
 

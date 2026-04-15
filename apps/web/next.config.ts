@@ -38,7 +38,6 @@ const nextConfig: NextConfig = {
       "wagmi",
       "viem",
       "@tanstack/react-query",
-      "graphql",
       "graphql-request",
       "react-markdown",
     ],

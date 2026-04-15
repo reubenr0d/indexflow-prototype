@@ -1,6 +1,6 @@
-// __SW_BUILD_STAMP__ is replaced at build time by scripts/stamp-sw-version.mjs.
+// e99a3f4 is replaced at build time by scripts/stamp-sw-version.mjs.
 // Changing CACHE_VERSION causes the activate handler to purge stale caches.
-const CACHE_VERSION = "indexflow-shell-__SW_BUILD_STAMP__";
+const CACHE_VERSION = "indexflow-shell-e99a3f4";
 const SHELL_ASSETS = ["/", "/dashboard", "/baskets", "/portfolio", "/settings"];
 
 self.addEventListener("install", (event) => {

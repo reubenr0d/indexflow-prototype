@@ -7,9 +7,10 @@
 ## Metadata
 
 - **Topic:** [One-line description]
-- **Pillar:** [P1-P6]
-- **Calendar week:** [Week N]
-- **Audience:** [Institutional / Fund managers / Chain BD / General professional]
+- **Pillar:** [P1 Vault Operator Education | P2 Market Thesis | P3 Technical Credibility | P4 Operator Stories | P5 Regulatory Clarity | P6 Unit Economics]
+- **Funnel layer:** [L1 Generate | L2 Capture | L3 Manage | L4 Close]
+- **Temperature:** [Cold | Warm | Hot]
+- **Audience:** [Asset managers / Fintech execs / Institutional issuers / RWA operators]
 - **Source:** [Blog post or doc this is adapted from]
 - **Format:** [Text post | Carousel (multi-slide) | Image + text]
 
@@ -86,3 +87,4 @@ LinkedIn algorithm favors posts with **1200-1600 characters** (not words). Use *
 - LinkedIn posts with images get ~2x engagement. Attach a diagram, chart, or clean screenshot.
 - Best posting times: Tue-Thu, 08:00-10:00 in your target audience's timezone.
 - Regulatory and institutional content outperforms on LinkedIn compared to all other channels.
+- Asset manager and fund manager audiences respond best to P5 Regulatory and P6 Unit Economics content on this platform.

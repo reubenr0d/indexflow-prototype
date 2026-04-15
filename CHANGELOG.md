@@ -13,6 +13,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-15] Growth strategy overhaul: restructured `growth/` around a ColdIQ-inspired 4-layer funnel framework (Generate, Capture, Manage, Close) targeting a single ICP (asset managers, fintech firms, institutional issuers, RWA operators). Reprioritized channels with LinkedIn at #1, added Layer 2 capture mechanisms (mini-tools, lead magnets, VSL, smart routing), Layer 3 nurture infrastructure (email sequences, behavioral triggers, lead scoring), and Layer 4 close pipeline. Chain partner outreach removed from scope (handled by 0xlabs). Added `growth/VC_OUTREACH_PLAYBOOK.md` for an automated VC fundraise pipeline with 3-tier scoring, multi-channel sequences, signal monitoring, and warm intro automation. Updated content calendar from 8-week sprint to rolling layer-tagged format. Updated blog, LinkedIn, and podcast templates for single-ICP focus.
 - [2026-04-15] Regulatory roadmap Phase 6 (regulated access tier) for post-launch institutional onboarding via a separately licensed Labs subsidiary.
 - [2026-04-15] Social media setup and bug bounty program scope added to the draft launch checklist in the regulatory roadmap.
 - [2026-04-15] Whitepaper: forward-looking paragraph on two-tier model (permissionless protocol + optional regulated service) in the Governance section.
@@ -29,6 +30,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-15] Remove `graphql` from `optimizePackageImports` to fix Turbopack build crash caused by conflict with the built-in `serverExternalPackages` default list.
 - [2026-04-15] Toast container now announces to screen readers via `role="status"` and `aria-live="polite"`.
 - [2026-04-15] Deposit/redeem panel label now properly associated with input via `htmlFor`/`id` pairing.
 - [2026-04-15] Removed stale `/favicon.ico` reference from `manifest.ts` (only `icon.svg` exists; Next.js serves it automatically).
