@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { BasketCard } from "./basket-card";
+import { PRICE_PRECISION } from "@/lib/constants";
 
 vi.mock("next/link", () => ({
   default: ({ href, children }: { href: string; children: ReactNode }) =>
@@ -14,8 +15,8 @@ describe("BasketCard", () => {
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000002",
         name: "Momentum Basket",
-        sharePrice: 1_250_000n,
-        basketPrice: 1_250_000n,
+        sharePrice: PRICE_PRECISION * 125n / 100n,
+        basketPrice: PRICE_PRECISION * 125n / 100n,
         usdcBalance: 500_000_000n,
         perpAllocated: 250_000_000n,
         totalSupply: 1_000_000n,
@@ -41,8 +42,8 @@ describe("BasketCard", () => {
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000003",
         name: "Defensive Basket",
-        sharePrice: 1_000_000n,
-        basketPrice: 1_000_000n,
+        sharePrice: PRICE_PRECISION,
+        basketPrice: PRICE_PRECISION,
         usdcBalance: 100_000_000n,
         perpAllocated: 0n,
         totalSupply: 1_000_000n,

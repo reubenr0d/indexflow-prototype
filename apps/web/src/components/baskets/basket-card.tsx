@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { TrendPill } from "@/components/ui/trend-pill";
-import { formatBps, formatUSDC } from "@/lib/format";
+import { formatBps, formatPrice, formatUSDC } from "@/lib/format";
 import { computeApy, formatApy } from "@/lib/apy";
 import { type Address } from "viem";
 import { BasketIcon } from "./basket-icons";
@@ -55,7 +55,7 @@ export function BasketCard({
   const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {
     if (delta === undefined || delta === null) return `${label} --`;
     const abs = delta < 0n ? -delta : delta;
-    const value = formatUSDC(abs);
+    const value = formatPrice(abs);
     return `${label} ${delta > 0n ? "+" : delta < 0n ? "-" : ""}${value}`;
   };
 
@@ -101,7 +101,7 @@ export function BasketCard({
                 <BasketIcon name="sharePrice" />
                 <span>Share price</span>
               </div>
-              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{formatUSDC(sharePrice)}</p>
+              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{formatPrice(sharePrice)}</p>
             </div>
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">

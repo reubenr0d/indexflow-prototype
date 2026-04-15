@@ -1,62 +1,45 @@
-# Documentation Index
+# IndexFlow Protocol
 
-This index mirrors the in-app docs routes at `/docs` in the web app.
+IndexFlow is a structured-exposure protocol built around basket vaults that accept USDC, mint transferable basket shares, and optionally allocate capital into a shared perpetual-liquidity layer derived from a GMX v1 fork.
 
-## In-app docs map (canonical routes)
+This documentation covers the protocol architecture, operator guides, oracle infrastructure, and governance considerations.
 
-- `/docs` — searchable index built from repository markdown under `docs/*.md`.
-- `/docs/readme` — source: `docs/README.md`
-- `/docs/technical-architecture-roadmap` — source: `docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md`
-- `/docs/investor-flow` — source: `docs/INVESTOR_FLOW.md`
-- `/docs/asset-manager-flow` — source: `docs/ASSET_MANAGER_FLOW.md`
-- `/docs/perp-risk-math` — source: `docs/PERP_RISK_MATH.md`
-- `/docs/operator-interactions` — source: `docs/OPERATOR_INTERACTIONS.md`
-- `/docs/price-feed-flow` — source: `docs/PRICE_FEED_FLOW.md`
-- `/docs/oracle-supported-assets` — source: `docs/ORACLE_SUPPORTED_ASSETS.md`
-- `/docs/global-pool-management-flow` — source: `docs/GLOBAL_POOL_MANAGEMENT_FLOW.md`
-- `/docs/deployments` — source: `docs/DEPLOYMENTS.md`
-- `/docs/e2e-testing` — source: `docs/E2E_TESTING.md`
-- `/docs/share-price-and-operations` — source: `docs/SHARE_PRICE_AND_OPERATIONS.md`
-- `/docs/pwa-push-notifications` — source: `docs/PWA_PUSH_NOTIFICATIONS.md`
-- `/docs/utility-token-tokenomics` — source: `docs/UTILITY_TOKEN_TOKENOMICS.md`
-- `/docs/regulatory-roadmap-draft` — source: `docs/REGULATORY_ROADMAP_DRAFT.md`
-- `/docs/agents-framework` — source: `docs/AGENTS_FRAMEWORK.md`
+## Core Concepts
 
-## Legacy route aliases
+Start here to understand how the protocol works.
 
-These legacy in-app wiki routes are preserved for compatibility and redirect to canonical routes:
+- [Technical Architecture & Roadmap](./TECHNICAL_ARCHITECTURE_AND_ROADMAP.md) — Full system architecture, module map, NAV math, and development roadmap.
+- [Investor Flow](./INVESTOR_FLOW.md) — Deposit, redeem, share pricing, and what investors do and don't control.
+- [Share Price & Operations](./SHARE_PRICE_AND_OPERATIONS.md) — NAV calculation, share price mechanics, deposit/redeem math, and dry-run scripts.
 
-- `/docs/overview` -> `/docs/readme`
-- `/docs/investor` -> `/docs/investor-flow`
-- `/docs/operator` -> `/docs/asset-manager-flow`
-- `/docs/perp-risk-math` -> `/docs/perp-risk-math`
-- `/docs/operator-interactions` -> `/docs/operator-interactions`
-- `/docs/oracle-price-sync` -> `/docs/price-feed-flow`
-- `/docs/pool-management` -> `/docs/global-pool-management-flow`
-- `/docs/contracts-reference` -> `/docs/readme`
-- `/docs/troubleshooting` -> `/docs/readme`
-- `/docs/security-risk` -> `/docs/readme`
-- `/docs/pwa-notifications` -> `/docs/pwa-push-notifications`
+## Guides
 
-## Canonical markdown sources
+Step-by-step runbooks for curators, operators, and asset managers.
 
-- [README.md](./README.md)
-- [TECHNICAL_ARCHITECTURE_AND_ROADMAP.md](./TECHNICAL_ARCHITECTURE_AND_ROADMAP.md) — Technical Architecture & Roadmap
-- [INVESTOR_FLOW.md](./INVESTOR_FLOW.md)
-- [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md)
-- [PERP_RISK_MATH.md](./PERP_RISK_MATH.md)
-- [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md)
-- [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md)
-- [ORACLE_SUPPORTED_ASSETS.md](./ORACLE_SUPPORTED_ASSETS.md)
-- [GLOBAL_POOL_MANAGEMENT_FLOW.md](./GLOBAL_POOL_MANAGEMENT_FLOW.md)
-- [DEPLOYMENTS.md](./DEPLOYMENTS.md)
-- [E2E_TESTING.md](./E2E_TESTING.md)
-- [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md)
-- [PWA_PUSH_NOTIFICATIONS.md](./PWA_PUSH_NOTIFICATIONS.md)
-- [UTILITY_TOKEN_TOKENOMICS.md](./UTILITY_TOKEN_TOKENOMICS.md)
-- [REGULATORY_ROADMAP_DRAFT.md](./REGULATORY_ROADMAP_DRAFT.md)
-- [AGENTS_FRAMEWORK.md](./AGENTS_FRAMEWORK.md) — multi-agent framework: agent definitions, MCP tool reference, vault lifecycle, and memory
+- [Curator & Asset Manager Flow](./ASSET_MANAGER_FLOW.md) — What curators do, decision framework, basket setup, capital allocation, position management, and risk controls.
+- [Perp Risk Math](./PERP_RISK_MATH.md) — Leverage formulas, sizing heuristics, liquidation caveats, and pre/post-flight checklists.
+- [Operator Interactions](./OPERATOR_INTERACTIONS.md) — Contract call reference for every operator-callable function with plain-English summaries.
 
-## Sync expectation
+## Infrastructure
 
-When markdown files under `docs/` change, `/docs` reflects those changes automatically because content is rendered directly from repository markdown.
+Oracle feeds, deployments, and pool management.
+
+- [Price Feed Flow](./PRICE_FEED_FLOW.md) — OracleAdapter, PriceSync, Chainlink vs custom relayer, and keeper setup.
+- [Oracle & Supported Assets](./ORACLE_SUPPORTED_ASSETS.md) — Supported assets on Sepolia, Yahoo relayer integration, and adding new assets.
+- [Global Pool Management](./GLOBAL_POOL_MANAGEMENT_FLOW.md) — GMX buffer amounts, direct pool deposits, and the admin pool interface.
+- [Deployments](./DEPLOYMENTS.md) — Sepolia and local contract addresses, subgraph deployment, and refresh commands.
+
+## Operations
+
+Testing, notifications, and operational tooling.
+
+- [E2E Testing](./E2E_TESTING.md) — Playwright + Anvil setup, test modes, CI configuration, and RPC fallbacks.
+- [Push Notifications](./PWA_PUSH_NOTIFICATIONS.md) — PWA manifest, service worker, Cloud Run/Firestore infrastructure, and staging runbook.
+
+## Protocol
+
+Tokenomics, governance, and regulatory considerations.
+
+- [Utility Token & Tokenomics](./UTILITY_TOKEN_TOKENOMICS.md) — Backstop mechanics, redemption reserves, ve-model, emissions, and POL.
+- [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) — EU-focused regulatory planning and compliance checklist (draft).
+- [Agents Framework](./AGENTS_FRAMEWORK.md) — Multi-agent architecture, MCP tool reference, vault lifecycle workflows, and memory model.

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Institutional / terminal-adjacent palette — not “generic SaaS gray” */
 :root {
@@ -68,6 +69,7 @@
 
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 html:not(.dark) {
@@ -156,31 +158,10 @@ body {
   }
 }
 
-/* Scrolling price ticker */
+/* Hero price ticker — infinite marquee */
 @keyframes hero-ticker-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
-}
-
-.hero-ticker-scroll {
-  animation: hero-ticker-scroll 30s linear infinite;
-}
-
-.hero-ticker:hover .hero-ticker-scroll {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-ticker-scroll {
-    animation: none;
-    overflow-x: auto;
-  }
-}
-
-/* Hero price ticker — infinite marquee */
-@keyframes hero-ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 .hero-ticker-wrap {
@@ -206,8 +187,9 @@ body {
 /* Primer page hero */
 .primer-hero-bg {
   background:
-    radial-gradient(900px 500px at 70% 20%, var(--landing-grad-a), transparent 60%),
-    radial-gradient(700px 400px at 10% 80%, var(--landing-grad-c), transparent 55%),
+    radial-gradient(1100px 600px at 75% 10%, var(--landing-grad-a), transparent 58%),
+    radial-gradient(800px 500px at 5% 70%, var(--landing-grad-c), transparent 50%),
+    radial-gradient(600px 300px at 50% 50%, var(--landing-grad-b), transparent 65%),
     linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--surface) 90%, var(--accent) 10%) 100%);
 }
 
@@ -215,14 +197,128 @@ body {
   background-image:
     linear-gradient(var(--border) 1px, transparent 1px),
     linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 80%);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 90% 60% at 55% 30%, black 10%, rgba(0,0,0,0.25) 55%, transparent 85%);
 }
 
 .dark .primer-hero-grid {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* Noise texture — subtle grain over the hero */
+.primer-hero-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.04;
+}
+
+.dark .primer-hero-noise {
+  opacity: 0.06;
+}
+
+/* Animated floating orbs */
+@keyframes primer-orb-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  33%  { transform: translate3d(30px, -20px, 0) scale(1.04); }
+  66%  { transform: translate3d(-20px, 15px, 0) scale(0.97); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes primer-orb-drift-alt {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  40%  { transform: translate3d(-25px, -15px, 0) scale(1.06); }
+  70%  { transform: translate3d(15px, 20px, 0) scale(0.95); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+.primer-hero-orbs {
+  pointer-events: none;
+}
+
+.primer-hero-orbs::before,
+.primer-hero-orbs::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.primer-hero-orbs::before {
+  width: 500px;
+  height: 400px;
+  top: -5%;
+  right: -5%;
+  background: radial-gradient(closest-side, var(--landing-grad-a), transparent);
+  animation: primer-orb-drift 18s ease-in-out infinite;
+}
+
+.primer-hero-orbs::after {
+  width: 400px;
+  height: 350px;
+  bottom: 5%;
+  left: -8%;
+  background: radial-gradient(closest-side, var(--landing-grad-c), transparent);
+  animation: primer-orb-drift-alt 22s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primer-hero-orbs::before,
+  .primer-hero-orbs::after {
+    animation: none;
+  }
+}
+
+/* Edge vignette for hero illustration */
+.primer-hero-illustration-mask {
+  mask-image: radial-gradient(ellipse 85% 80% at 60% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 80% at 60% 50%, black 30%, transparent 80%);
+}
+
+/* Landing page reveal on first paint */
+
+@keyframes landing-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.landing-reveal {
+  animation: landing-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-reveal {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Section scroll-reveal (CSS-only, replaces framer-motion wrapper) */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Primer — reusable keyframes & utilities */

@@ -249,7 +249,7 @@ Greenfield `DeploySepolia` profile:
 
 - `BHP.AX` only: `FeedType.CustomRelayer`, `decimals=8`, `stalenessThreshold=86400`, `deviationBps=2000`.
 
-Operators can add further assets (e.g. `XAU` with Sepolia Chainlink `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, or more Yahoo Finance relayed tickers) via **Admin → Assets** or scripted `configureAsset`; see [docs/ORACLE_SUPPORTED_ASSETS.md](ORACLE_SUPPORTED_ASSETS.md).
+Operators can add further assets (e.g. `XAU` with Sepolia Chainlink `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`, or more Yahoo Finance relayed tickers) via **Admin → Assets** or scripted `configureAsset`; see [docs/ORACLE_SUPPORTED_ASSETS.md](./ORACLE_SUPPORTED_ASSETS.md).
 
 Yahoo Finance relayer path (config-free, on-chain driven):
 
@@ -358,4 +358,4 @@ sequenceDiagram
 
 ---
 
-For narrative investor-facing context, see [INVESTOR_FLOW.md](INVESTOR_FLOW.md). For upstream GMX differences, see [MODIFICATIONS.md](../MODIFICATIONS.md).
+For narrative investor-facing context, see [INVESTOR_FLOW.md](./INVESTOR_FLOW.md). For upstream GMX differences, see [MODIFICATIONS.md](../MODIFICATIONS.md) (repo root, not in-app docs).

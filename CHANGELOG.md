@@ -13,17 +13,69 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
-- [2026-04-15 UTC+07:00] Rewrote `growth/CONTENT_CALENDAR.md` with fully titled 8-week content plan (~83 pieces across Blog, X, Substack, LinkedIn, Farcaster, YouTube, and podcast channels), framing principles (60/30/10 rule, hook-first, brand voice), and canonical key phrases. Updated all templates with hook type reference and IndexFlow examples (`tweet-thread.md`), SEO metadata and framing checklist (`blog-post.md`), personal tone guide (`substack-issue.md`), character-count and carousel guidance (`linkedin-post.md`). Added framing principles and key phrases sections to `growth/README.md`.
-- [2026-04-15 UTC+07:00] Added `growth/` content marketing folder with 8-week fundraise content calendar (`CONTENT_CALENDAR.md`), channel strategy and source-material index (`README.md`), reusable templates for blog posts, X threads, Substack issues, LinkedIn posts, Farcaster casts, and podcast pitch emails (`templates/`), and a `drafts/` workspace with naming-convention docs.
+- [2026-04-15 UTC+07:00] Docs: contract call card component (`ContractCallCard`) for rendering contract interaction references as styled UI cards in markdown docs; triggered by `contract-call` fenced code blocks with YAML-like syntax for function, caller, inputs, effects, and revert conditions.
+- [2026-04-15 UTC+07:00] Docs: comprehensive contract interaction entries in `OPERATOR_INTERACTIONS.md` covering all operator-callable functions across BasketVault, VaultAccounting, OracleAdapter, AssetWiring, PriceSync, FundingRateManager, and BasketFactory — each with plain-English summaries and "when to use" guidance.
+- [2026-04-15 UTC+07:00] Docs: curator narrative and decision framework in `ASSET_MANAGER_FLOW.md` — natural-language explanation of the curator role, typical session walkthrough, reserve management guidelines, position sizing heuristics, and fee policy guidance.
+- [2026-04-15 UTC+07:00] Docs: "curator" alias for the asset-manager-flow docs route.
+- [2026-04-15 UTC+07:00] Docs: categorized sidebar navigation with collapsible category sections (Core Concepts, Guides, Infrastructure, Operations, Protocol).
+- [2026-04-15 UTC+07:00] Docs: previous/next document navigation footer on every doc page.
+- [2026-04-15 UTC+07:00] Docs: breadcrumb bar (Docs / Category / Title) above each doc header.
+- [2026-04-15 UTC+07:00] Docs: mobile "On this page" accordion for table of contents below xl breakpoint.
+- [2026-04-15 UTC+07:00] Docs: active heading tracking in TOC sidebar via IntersectionObserver.
+- [2026-04-15 UTC+07:00] Docs: clipboard copy button on fenced code blocks.
+- [2026-04-15 UTC+07:00] Docs: clickable anchor links on headings (hash icon on hover).
+- [2026-04-15 UTC+07:00] Docs: callout/admonition rendering for blockquotes prefixed with Note/Warning/Tip/Important.
+- [2026-04-15 UTC+07:00] Docs: category filter chips on the docs home page alongside search.
+- [2026-04-15 UTC+07:00] Docs: added 3 previously unregistered docs to the in-app registry (Utility Token & Tokenomics, Regulatory Roadmap, Agents Framework).
+- [2026-04-15 UTC+07:00] Installed `@tailwindcss/typography` for baseline prose styling.
+
+### Changed
+
+- [2026-04-15 UTC+07:00] Docs: renamed "Asset Manager Flow" to "Curator & Asset Manager Flow" in the docs registry and README index.
+- [2026-04-15 UTC+07:00] Docs: normalized cross-reference link paths across all docs files to use `./` prefix consistently; annotated repo-root links (`MODIFICATIONS.md`) as not in-app.
+- [2026-04-15 UTC+07:00] Docs: restyled doc page header with category label, cleaner typography, and source link in footer instead of header.
+- [2026-04-15 UTC+07:00] Docs: restyled docs home page with category-grouped cards, protocol-level hero text, and search + filter UI.
+- [2026-04-15 UTC+07:00] Docs: fixed ~35 broken cross-doc relative `.md` links by rewriting them to in-app `/docs/{slug}` routes.
+- [2026-04-15 UTC+07:00] Docs: fixed title casing inconsistencies ("Share Price And Operations" -> "Share Price & Operations", "Oracle Supported Assets" -> "Oracle & Supported Assets", etc.).
+- [2026-04-15 UTC+07:00] Docs: switched mermaid diagram theme from neutral to dark with protocol accent colors.
+- [2026-04-15 UTC+07:00] Docs: added smooth scroll behavior for anchor navigation.
+- [2026-04-15 UTC+07:00] Docs: rewrote `docs/README.md` from a route map to a proper protocol documentation welcome page.
+- [2026-04-15 UTC+07:00] Docs: added missing markdown component overrides (h4-h6, hr, strong, em, img) with consistent styling.
+- [2026-04-15 UTC+07:00] Docs: improved table styling with rounded container, uppercase tracking headers, and subtler row borders.
+- [2026-04-15 UTC+07:00] Landing page polish pass: restructured PrimerProblem into dual-audience layout (For Chains / For Investors) with shared Fragmented Capital bridge card, all in a single section; added mobile-friendly stacked layouts for SharedLiquidity and NAV diagrams; fixed PrimerWho hover glow (missing `group` class); moved PrimerToken icon tiles to CSS-variable theming; fixed token allocation legend overflow on mobile; added illustrative-data disclaimers to NAV and Attribution sections; cleaned up duplicate hero-ticker-scroll keyframes in globals.css; improved hero benefit icon readability; tuned ChapterNav active-state band; added gradient top divider to CTA section; updated GitHub CTA card copy.
+- [2026-04-15 UTC+07:00] Landing page performance: code-split 8 below-fold primer sections via `next/dynamic`; lazy-load HeroIllustration (464-line SVG + RAF parallax) and HeroStats (wagmi/subgraph data-fetching) so hero text and CTAs paint before heavy JS loads; replace framer-motion `useInView` in Section wrapper with CSS-only scroll-reveal transition; consolidate ChapterNav from 10 IntersectionObservers to 1.
 
 ### Fixed
 
+- [2026-04-15 UTC+07:00] Baskets list: share price and trend deltas now use `formatPrice` (1e30 precision) instead of `formatUSDC` (1e6), fixing numeric overflow in basket cards.
+- [2026-04-15 UTC+07:00] Chain-Attributable Growth radar chart percentages now sum to 100% per metric across the three chains; radar chart rendering is scaled so polygons remain visually substantial.
+
+### Changed
+
+- [2026-04-15 UTC+07:00] Added 6 new asset icons to hero illustration (watches, weed, ETFs, sneakers, diamonds, carbon credits); introduced 4th concentric ring, extra sparkles, and accent dots for the expanded orbit.
+- [2026-04-15 UTC+07:00] Shared Liquidity Engine diagram labels updated from generic terms (Execution, Price Discovery, Capital Efficiency) to pitch-deck-aligned terms (NAV Pricing, Redemption Liquidity, Execution Infra); icons reordered to match.
+- [2026-04-15 UTC+07:00] GitHub CTA card now notes the repo is private and directs users to request access on Telegram.
+- [2026-04-15 UTC+07:00] Added a smooth entrance reveal animation to the landing page (fade-in + subtle upward slide on first paint) with `prefers-reduced-motion` fallback, replacing the old blank/pulsing "Loading..." screen.
+- [2026-04-15 UTC+07:00] Homepage primer content is now server-side rendered instead of client-only (`ssr: false`), improving initial paint speed and SEO; `page.tsx` is a Server Component that renders the client primer subtree directly.
+
+### Added
+
+- [2026-04-15 UTC+07:00] Enhanced hero section with off-center full-bleed abstract geometric background; 10 asset-type icons orbit in glass-chip enclosures along gradient-stroked concentric rings with variable dash patterns; added 3-layer mouse parallax, staggered Framer Motion entrance, micro-sparkle flashes, constellation connection lines, warm gold accent, center triangle motif, edge vignette mask, noise texture, and animated floating orbs.
+- [2026-04-15 UTC+07:00] Rewrote `growth/CONTENT_CALENDAR.md` with fully titled 8-week content plan (~83 pieces across Blog, X, Substack, LinkedIn, Farcaster, YouTube, and podcast channels), framing principles (60/30/10 rule, hook-first, brand voice), and canonical key phrases. Updated all templates with hook type reference and IndexFlow examples (`tweet-thread.md`), SEO metadata and framing checklist (`blog-post.md`), personal tone guide (`substack-issue.md`), character-count and carousel guidance (`linkedin-post.md`). Added framing principles and key phrases sections to `growth/README.md`.
+- [2026-04-15 UTC+07:00] Added `growth/` content marketing folder with 8-week fundraise content calendar (`CONTENT_CALENDAR.md`), channel strategy and source-material index (`README.md`), reusable templates for blog posts, X threads, Substack issues, LinkedIn posts, Farcaster casts, and podcast pitch emails (`templates/`), and a `drafts/` workspace with naming-convention docs.
+
+### Removed
+
+- [2026-04-15 UTC+07:00] Remove husky git hooks (pre-commit, pre-push); linting, formatting, and lockfile checks are now CI-only.
+
+### Fixed
 - [2026-04-15 UTC+07:00] Primer hero gradient headline no longer clips descenders (e.g. in “liquidity”, “pricing”): slightly looser line-height on the `h1` and `padding-bottom` on `.primer-gradient-text`.
 - [2026-04-14 UTC+07:00] Eliminated flash of light theme on page load by statically rendering `dark` class on `<html>`, injecting a blocking localStorage-sync script before paint, and defaulting `color-scheme` to dark.
 - [2026-04-14 UTC+07:00] Fixed empty basket list caused by stale subgraph URL in `.env.local`; updated Graph Studio endpoint from pinned version `0.1.0` (404) to `version/latest`.
 
 ### Changed
 
+- [2026-04-15 UTC+07:00] Redesigned Shared Liquidity Engine diagram: moved feature benefits (Execution, Price Discovery, Capital Efficiency) to center column, replaced the "Shared Perp Pool" circle with a feature container, and added generic multi-chain deployment nodes (Chain A/B/C) on the right side with animated flow lines.
 - [2026-04-15 UTC+07:00] Homepage hero stats now include total tokenholders, computed as unique wallets currently holding basket share tokens across the indexed testnet baskets.
 - [2026-04-15 UTC+07:00] Homepage `Live testnet stats` badge now includes an animated red live indicator in the hero stats strip.
 - [2026-04-15 UTC+07:00] Homepage hero stats now show aggregate protocol PnL and TVL-weighted basket APY alongside TVL, basket count, and tracked assets. Added a visible testnet label/disclaimer so the summary is clearly framed as testnet data.

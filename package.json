@@ -18,7 +18,6 @@
     "test:e2e:ci": "npm --prefix apps/web run test:e2e:ci",
     "test:push-worker": "npm --prefix apps/push-worker run test",
     "lint:web": "npm --prefix apps/web run lint",
-    "prepare": "husky",
     "anvil": "anvil",
     "deploy:local": "PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/DeployLocal.s.sol:DeployLocal --rpc-url http://127.0.0.1:8545 --broadcast -vvv",
     "deploy:sepolia": "forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --broadcast -vvv",
@@ -46,8 +45,5 @@
     "@openzeppelin/contracts": "^5.2.0",
     "yahoo-finance2": "^3.14.0",
     "zod": "^4.3.6"
-  },
-  "devDependencies": {
-    "husky": "^9.1.7"
   }
 }

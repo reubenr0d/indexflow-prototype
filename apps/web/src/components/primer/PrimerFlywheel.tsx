@@ -11,14 +11,14 @@ const iconData = {
       "M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5",
       "M3 12c0 1.66 4 3 9 3s9-1.34 9-3",
     ],
-    animation: "primer-icon-float 3s ease-in-out infinite",
+    animStyle: { animationName: "primer-icon-float", animationDuration: "3s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" } as React.CSSProperties,
   },
   confidence: {
     paths: [
       "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
       "m9 12 2 2 4-4",
     ],
-    animation: "primer-icon-pulse 2.5s ease-in-out infinite",
+    animStyle: { animationName: "primer-icon-pulse", animationDuration: "2.5s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" } as React.CSSProperties,
   },
   deposits: {
     paths: [
@@ -26,13 +26,13 @@ const iconData = {
       "m6 11 6 6 6-6",
       "M19 21H5",
     ],
-    animation: "primer-icon-bounce 2s ease-in-out infinite",
+    animStyle: { animationName: "primer-icon-bounce", animationDuration: "2s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" } as React.CSSProperties,
   },
   trading: {
     paths: [
       "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",
     ],
-    animation: "primer-icon-pulse 3s ease-in-out infinite",
+    animStyle: { animationName: "primer-icon-pulse", animationDuration: "3s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" } as React.CSSProperties,
   },
 } as const;
 
@@ -49,7 +49,7 @@ const ICON_SIZE = 22;
 const NODE_R = 52;
 const GLOW_R = 62;
 
-export function PrimerFlywheel() {
+export default function PrimerFlywheel() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -132,12 +132,12 @@ export function PrimerFlywheel() {
               const a2 = (a2Deg * Math.PI) / 180;
               const aMid = (midDeg * Math.PI) / 180;
 
-              const sx = cx + R * Math.cos(a1);
-              const sy = cy + R * Math.sin(a1);
-              const ex = cx + R * Math.cos(a2);
-              const ey = cy + R * Math.sin(a2);
-              const mx = cx + (R + 28) * Math.cos(aMid);
-              const my = cy + (R + 28) * Math.sin(aMid);
+              const sx = Math.round((cx + R * Math.cos(a1)) * 1e4) / 1e4;
+              const sy = Math.round((cy + R * Math.sin(a1)) * 1e4) / 1e4;
+              const ex = Math.round((cx + R * Math.cos(a2)) * 1e4) / 1e4;
+              const ey = Math.round((cy + R * Math.sin(a2)) * 1e4) / 1e4;
+              const mx = Math.round((cx + (R + 28) * Math.cos(aMid)) * 1e4) / 1e4;
+              const my = Math.round((cy + (R + 28) * Math.sin(aMid)) * 1e4) / 1e4;
 
               const pathD = `M${sx},${sy} Q${mx},${my} ${ex},${ey}`;
 
@@ -151,7 +151,7 @@ export function PrimerFlywheel() {
                     strokeDasharray="6 4"
                     opacity="0.4"
                     markerEnd="url(#fly-arrowhead)"
-                    style={{ animation: "primer-dash-flow 1.5s linear infinite" }}
+                    style={{ animationName: "primer-dash-flow", animationDuration: "1.5s", animationTimingFunction: "linear", animationIterationCount: "infinite" }}
                   />
                   {/* Traveling dot */}
                   <circle r="3" fill="var(--accent)" opacity="0" filter="url(#fly-glow)">
@@ -178,8 +178,8 @@ export function PrimerFlywheel() {
           {/* Nodes */}
           {nodes.map((node, i) => {
             const a = (node.angle * Math.PI) / 180;
-            const nx = cx + R * Math.cos(a);
-            const ny = cy + R * Math.sin(a);
+            const nx = Math.round((cx + R * Math.cos(a)) * 1e4) / 1e4;
+            const ny = Math.round((cy + R * Math.sin(a)) * 1e4) / 1e4;
             const lines = node.label.split("\n");
             const icon = iconData[node.icon];
 
@@ -214,7 +214,7 @@ export function PrimerFlywheel() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     opacity="0.8"
-                    style={{ transformOrigin: "center", animation: icon.animation }}
+                    style={{ transformOrigin: "center", ...icon.animStyle }}
                   >
                     {icon.paths.map((d, pi) => (
                       <path key={pi} d={d} />

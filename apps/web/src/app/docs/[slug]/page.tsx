@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { DocsPageContent } from "@/components/docs/docs-page-content";
-import { getAllDocsRouteSlugs, getDocBySlug, resolveCanonicalDocsSlug } from "@/lib/docs.server";
+import { getAllDocsRouteSlugs, getDocBySlug, getDocNeighbors, resolveCanonicalDocsSlug } from "@/lib/docs.server";
 
 interface DocsRouteParams {
   params: Promise<{ slug: string }>;
@@ -39,5 +39,7 @@ export default async function DocsSlugPage({ params }: DocsRouteParams) {
     redirect(`/docs/${canonical}`);
   }
 
-  return <DocsPageContent doc={doc} />;
+  const { prev, next } = getDocNeighbors(slug);
+
+  return <DocsPageContent doc={doc} prev={prev} next={next} />;
 }

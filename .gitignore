@@ -18,3 +18,5 @@ node_modules/
 apps/web/test-results/
 apps/web/playwright-report/
 .vercel
+
+.DS_Store

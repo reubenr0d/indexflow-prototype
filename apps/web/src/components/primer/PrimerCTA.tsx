@@ -18,14 +18,14 @@ const actions: Action[] = [
   {
     Icon: ArrowRight,
     label: "Launch Testnet",
-    desc: "Deposit USDC into baskets managed by autonomous AI vault agents on Sepolia testnet.",
+    desc: "Baskets managed by autonomous AI vault agents on Sepolia testnet.",
     href: "/baskets",
     primary: true,
   },
   {
     Icon: Code,
     label: "View on GitHub",
-    desc: "Explore the source code, review the smart contracts, and contribute to the protocol.",
+    desc: "Explore the codebase — request access on Telegram.",
     href: "https://github.com/reubenr0d/indexflow-prototype",
     primary: false,
     external: true,
@@ -40,7 +40,7 @@ const actions: Action[] = [
   },
 ];
 
-export function PrimerCTA() {
+export default function PrimerCTA() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -50,6 +50,11 @@ export function PrimerCTA() {
       ref={ref}
       className="primer-section-glow primer-section-glow-tl relative py-24 sm:py-32"
     >
+      <div
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: "linear-gradient(90deg, transparent, var(--accent), transparent)" }}
+        aria-hidden
+      />
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

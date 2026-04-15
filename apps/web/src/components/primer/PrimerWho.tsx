@@ -28,7 +28,7 @@ const audiences = [
   },
 ];
 
-export function PrimerWho() {
+export default function PrimerWho() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -47,7 +47,7 @@ export function PrimerWho() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="primer-glow-card primer-glass flex flex-col rounded-xl border border-app-border p-7"
+            className="group primer-glow-card primer-glass flex flex-col rounded-xl border border-app-border p-7"
           >
             <div className="relative">
               <div

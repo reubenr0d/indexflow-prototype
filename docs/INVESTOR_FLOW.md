@@ -63,8 +63,8 @@ sequenceDiagram
 - Position size can be larger than posted collateral, so gains and losses are magnified versus the collateral amount.
 - If price moves sharply against a leveraged leg, the vault's perp position can be liquidated.
 - Liquidation and adverse perp PnL reduce vault value, which can lower basket NAV/share price.
-- For operator-level mechanics and risk controls, see [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md) and [SHARE_PRICE_AND_OPERATIONS.md](SHARE_PRICE_AND_OPERATIONS.md).
-- For full formulas and interaction-level checks used by operators, see [PERP_RISK_MATH.md](PERP_RISK_MATH.md) and [OPERATOR_INTERACTIONS.md](OPERATOR_INTERACTIONS.md).
+- For operator-level mechanics and risk controls, see [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md) and [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md).
+- For full formulas and interaction-level checks used by operators, see [PERP_RISK_MATH.md](./PERP_RISK_MATH.md) and [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md).
 
 ## What investors do **not** control
 
@@ -79,9 +79,9 @@ sequenceDiagram
 
 ## Related reading
 
-- [README.md](../README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).
-- [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md) — Basket/perp manager runbook: setup, allocation, position operations, risk controls, and caveats.
-- [MODIFICATIONS.md](../MODIFICATIONS.md) — Changes versus upstream GMX.
+- [README.md](./README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).
+- [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md) — Curator and asset manager runbook: setup, allocation, position operations, risk controls, and caveats.
+- [MODIFICATIONS.md](../MODIFICATIONS.md) — Changes versus upstream GMX (repo root, not in-app docs).
 
 ## UI visibility
 

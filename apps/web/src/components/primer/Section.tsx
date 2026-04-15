@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface SectionProps {
@@ -13,27 +12,36 @@ interface SectionProps {
 }
 
 export function Section({ id, children, className, fullHeight }: SectionProps) {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("visible");
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-80px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
       id={id}
-      ref={ref}
       className={cn(
         "relative overflow-hidden px-4 sm:px-6",
         fullHeight && "flex min-h-[calc(100vh-3.5rem)] items-center",
-        className
+        className,
       )}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto w-full max-w-5xl"
-      >
+      <div ref={ref} className="section-reveal mx-auto w-full max-w-5xl">
         {children}
-      </motion.div>
+      </div>
     </section>
   );
 }

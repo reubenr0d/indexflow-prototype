@@ -2,7 +2,7 @@
 
 This document explains the exact share pricing path in `BasketVault`, how to dry-run oracle update scripts safely, how admins update positions, and what happens when users withdraw after profitable trading.
 
-For broader architecture and feed lifecycle docs, see [README.md](../README.md), [PRICE_FEED_FLOW.md](PRICE_FEED_FLOW.md), and [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md).
+For broader architecture and feed lifecycle docs, see [README.md](./README.md), [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md), and [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md).
 
 ## 1) Share price calculation (current contracts)
 

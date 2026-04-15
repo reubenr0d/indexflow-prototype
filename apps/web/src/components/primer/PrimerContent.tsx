@@ -1,16 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { PrimerHero } from "./PrimerHero";
-import { PrimerProblem } from "./PrimerProblem";
-import { PrimerWhat } from "./PrimerWhat";
-import { PrimerWho } from "./PrimerWho";
-import { PrimerNAV } from "./PrimerNAV";
-import { PrimerFlywheel } from "./PrimerFlywheel";
-import { PrimerSharedLiquidity } from "./PrimerSharedLiquidity";
-import { PrimerAttribution } from "./PrimerAttribution";
-import { PrimerToken } from "./PrimerToken";
-import { PrimerCTA } from "./PrimerCTA";
+import PrimerProblem from "./PrimerProblem";
 import { ChapterNav, type Chapter } from "./ChapterNav";
+
+const PrimerWhat = dynamic(() => import("./PrimerWhat"));
+const PrimerWho = dynamic(() => import("./PrimerWho"));
+const PrimerNAV = dynamic(() => import("./PrimerNAV"));
+const PrimerFlywheel = dynamic(() => import("./PrimerFlywheel"));
+const PrimerSharedLiquidity = dynamic(() => import("./PrimerSharedLiquidity"));
+const PrimerAttribution = dynamic(() => import("./PrimerAttribution"));
+const PrimerToken = dynamic(() => import("./PrimerToken"));
+const PrimerCTA = dynamic(() => import("./PrimerCTA"));
 
 const chapters: Chapter[] = [
   { id: "hero", label: "Intro" },
@@ -27,7 +29,7 @@ const chapters: Chapter[] = [
 
 export default function PrimerContent() {
   return (
-    <div className="relative">
+    <div className="landing-reveal relative">
       <ChapterNav chapters={chapters} />
       <PrimerHero />
       <PrimerProblem />

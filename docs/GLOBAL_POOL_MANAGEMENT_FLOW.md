@@ -2,7 +2,7 @@
 
 This document covers **global GMX vault liquidity operations** exposed in the web admin, and how they differ from basket-level allocation.
 
-For basket owner actions (`allocateToPerp`, `withdrawFromPerp`), see [ASSET_MANAGER_FLOW.md](ASSET_MANAGER_FLOW.md).
+For basket owner actions (`allocateToPerp`, `withdrawFromPerp`), see [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md).
 
 ## Scope
 

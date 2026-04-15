@@ -1,23 +1,88 @@
-import type { DocsDocument } from "@/lib/docs-types";
+import type { DocsDocument, DocsNavItem } from "@/lib/docs-types";
 import { DocsMarkdownContent } from "@/components/docs/docs-markdown-content";
-import { docsHref } from "@/components/docs/docs-layout-nav";
+import { DocsToc } from "@/components/docs/docs-toc";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+
+function docsHref(slug: string) {
+  return `/docs/${slug}`;
+}
 
 function sourceHref(path: string): string {
   return `https://github.com/reubenr0d/indexflow-prototype/blob/main/${path}`;
 }
 
-export function DocsPageContent({ doc }: { doc: DocsDocument }) {
+function Breadcrumbs({ doc }: { doc: DocsDocument }) {
   return (
-    <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_16rem]">
-      <article className="space-y-8">
-        <header className="rounded-xl border border-app-border bg-app-surface p-5 sm:p-6">
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-app-accent">Repository Docs</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-app-text">{doc.title}</h1>
-          <p className="mt-2 text-sm leading-relaxed text-app-muted sm:text-base">{doc.summary}</p>
-          <div className="mt-4 grid gap-3 text-xs uppercase tracking-wide text-app-muted sm:grid-cols-2">
-            <p>Source: {doc.relativePath}</p>
-            <p>Last updated: {doc.lastUpdated}</p>
+    <nav className="flex items-center gap-1.5 text-xs text-app-muted" aria-label="Breadcrumb">
+      <a href="/docs" className="transition-colors hover:text-app-text">
+        Docs
+      </a>
+      <span className="text-app-border-strong">/</span>
+      <span className="text-app-muted/70">{doc.category}</span>
+      <span className="text-app-border-strong">/</span>
+      <span className="text-app-text">{doc.title}</span>
+    </nav>
+  );
+}
+
+function PrevNextNav({ prev, next }: { prev: DocsNavItem | null; next: DocsNavItem | null }) {
+  if (!prev && !next) return null;
+  return (
+    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+      {prev ? (
+        <a
+          href={docsHref(prev.slug)}
+          className="group flex items-center gap-3 rounded-lg border border-app-border bg-app-surface p-4 transition-colors hover:border-app-accent/40"
+        >
+          <ArrowLeft className="h-4 w-4 shrink-0 text-app-muted transition-colors group-hover:text-app-accent" />
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-app-muted">Previous</p>
+            <p className="truncate text-sm font-medium text-app-text">{prev.title}</p>
           </div>
+        </a>
+      ) : (
+        <div />
+      )}
+      {next ? (
+        <a
+          href={docsHref(next.slug)}
+          className="group flex items-center justify-end gap-3 rounded-lg border border-app-border bg-app-surface p-4 text-right transition-colors hover:border-app-accent/40"
+        >
+          <div className="min-w-0">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-app-muted">Next</p>
+            <p className="truncate text-sm font-medium text-app-text">{next.title}</p>
+          </div>
+          <ArrowRight className="h-4 w-4 shrink-0 text-app-muted transition-colors group-hover:text-app-accent" />
+        </a>
+      ) : (
+        <div />
+      )}
+    </div>
+  );
+}
+
+export function DocsPageContent({
+  doc,
+  prev,
+  next,
+}: {
+  doc: DocsDocument;
+  prev: DocsNavItem | null;
+  next: DocsNavItem | null;
+}) {
+  return (
+    <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_14rem]">
+      <article className="min-w-0 space-y-6">
+        <Breadcrumbs doc={doc} />
+
+        <header>
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-app-accent">
+            {doc.category}
+          </p>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight text-app-text sm:text-4xl">
+            {doc.title}
+          </h1>
+          <p className="mt-3 text-base leading-relaxed text-app-muted">{doc.summary}</p>
           {doc.slug !== doc.canonicalSlug && (
             <div className="mt-4 rounded-lg border border-app-warning/40 bg-app-warning/10 p-3 text-sm text-app-muted">
               This is a legacy docs route alias. Canonical path:{" "}
@@ -28,39 +93,34 @@ export function DocsPageContent({ doc }: { doc: DocsDocument }) {
           )}
         </header>
 
-        <section id="content" className="rounded-xl border border-app-border bg-app-surface p-5 sm:p-6">
+        {/* Mobile TOC (below xl) */}
+        <DocsToc toc={doc.toc} variant="mobile" />
+
+        <section id="content">
           <DocsMarkdownContent markdown={doc.content} />
         </section>
 
-        <footer className="rounded-lg border border-app-border bg-app-bg-subtle p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">Source</p>
+        <footer className="flex items-center justify-between rounded-lg border border-app-border/50 bg-app-bg-subtle/40 px-4 py-3">
+          <p className="text-xs text-app-muted">
+            Last updated {doc.lastUpdated}
+          </p>
           <a
             href={sourceHref(doc.relativePath)}
             target="_blank"
             rel="noreferrer"
-            className="mt-2 inline-flex rounded-md border border-app-border bg-app-surface px-3 py-1.5 font-mono text-xs text-app-muted hover:text-app-text"
+            className="inline-flex items-center gap-1.5 text-xs text-app-muted transition-colors hover:text-app-text"
           >
-            {doc.relativePath}
+            View source
+            <ExternalLink className="h-3 w-3" />
           </a>
         </footer>
+
+        <PrevNextNav prev={prev} next={next} />
       </article>
 
+      {/* Desktop TOC sidebar */}
       <aside className="hidden xl:block">
-        <div className="sticky top-20 rounded-lg border border-app-border bg-app-surface p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-app-muted">On This Page</p>
-          <nav className="mt-3 space-y-1.5">
-            {doc.toc.map((item) => (
-              <a
-                key={`${item.id}-${item.depth}`}
-                href={`#${item.id}`}
-                className="block text-xs font-medium uppercase tracking-wide text-app-muted hover:text-app-text"
-                style={{ paddingLeft: `${Math.max(item.depth - 1, 0) * 10}px` }}
-              >
-                {item.text}
-              </a>
-            ))}
-          </nav>
-        </div>
+        <DocsToc toc={doc.toc} variant="desktop" />
       </aside>
     </div>
   );

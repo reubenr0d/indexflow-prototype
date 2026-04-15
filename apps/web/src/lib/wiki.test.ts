@@ -5,10 +5,11 @@ import { LEGACY_DOCS_SLUGS } from "@/lib/wiki";
 describe("docs registry", () => {
   it("exposes all markdown docs from docs/", async () => {
     const docs = await getDocsManifest();
-    expect(docs).toHaveLength(13);
+    expect(docs).toHaveLength(16);
 
     const files = docs.map((doc) => doc.fileName).sort();
     expect(files).toEqual([
+      "AGENTS_FRAMEWORK.md",
       "ASSET_MANAGER_FLOW.md",
       "DEPLOYMENTS.md",
       "E2E_TESTING.md",
@@ -20,8 +21,10 @@ describe("docs registry", () => {
       "PRICE_FEED_FLOW.md",
       "PWA_PUSH_NOTIFICATIONS.md",
       "README.md",
+      "REGULATORY_ROADMAP_DRAFT.md",
       "SHARE_PRICE_AND_OPERATIONS.md",
       "TECHNICAL_ARCHITECTURE_AND_ROADMAP.md",
+      "UTILITY_TOKEN_TOKENOMICS.md",
     ]);
   });
 

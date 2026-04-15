@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
 import { Section, SectionLabel, SectionHeading } from "./Section";
 
 const steps = [
@@ -11,9 +12,10 @@ const steps = [
   { num: "02", label: "Mint", short: "Shares",
     desc: "Shares are issued at the current NAV-based price.",
     descLines: ["Shares are issued at the", "current NAV-based price."] },
-  { num: "03", label: "Allocate", short: "Perps",
+  { num: "03", label: "Manage", short: "Perps",
     desc: "The vault routes capital into perpetual positions.",
-    descLines: ["The vault routes capital into", "perpetual positions."] },
+    descLines: ["The vault routes capital into", "perpetual positions."],
+    role: "Asset Manager" as const },
   { num: "04", label: "Track", short: "PnL",
     desc: "Oracle-priced PnL is reflected in share value.",
     descLines: ["Oracle-priced PnL is", "reflected in share value."] },
@@ -72,10 +74,10 @@ function DesktopStageAnim({ index, cx }: { index: number; cx: number }) {
         <>
           {angles.map((angle, j) => {
             const rad = (angle * Math.PI) / 180;
-            const ex = cx + dist * Math.cos(rad);
-            const ey = cy + dist * Math.sin(rad);
-            const midX = cx + (dist * 0.5) * Math.cos(rad);
-            const midY = cy + (dist * 0.5) * Math.sin(rad);
+            const ex = Math.round((cx + dist * Math.cos(rad)) * 1e4) / 1e4;
+            const ey = Math.round((cy + dist * Math.sin(rad)) * 1e4) / 1e4;
+            const midX = Math.round((cx + (dist * 0.5) * Math.cos(rad)) * 1e4) / 1e4;
+            const midY = Math.round((cy + (dist * 0.5) * Math.sin(rad)) * 1e4) / 1e4;
             return (
               <g key={j}>
                 <line
@@ -110,10 +112,10 @@ function DesktopStageAnim({ index, cx }: { index: number; cx: number }) {
             strokeLinejoin="round"
             strokeDasharray="70"
             className="primer-stage-anim"
-            style={{ animation: "primer-sparkline 3s ease-in-out infinite" }}
+            style={{ animationName: "primer-sparkline", animationDuration: "3s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" }}
           />
           <circle r="3.5" fill="var(--accent)" className="primer-stage-anim"
-            style={{ animation: "primer-tracker-glow 1.5s ease-in-out infinite" }}
+            style={{ animationName: "primer-tracker-glow", animationDuration: "1.5s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" }}
           >
             <animateMotion
               dur="3s"
@@ -207,8 +209,8 @@ function MobileStageAnim({ index }: { index: number }) {
         <>
           {angles.map((angle, j) => {
             const rad = (angle * Math.PI) / 180;
-            const ex = c + dist * Math.cos(rad);
-            const ey = c + dist * Math.sin(rad);
+            const ex = Math.round((c + dist * Math.cos(rad)) * 1e4) / 1e4;
+            const ey = Math.round((c + dist * Math.sin(rad)) * 1e4) / 1e4;
             return (
               <g key={j}>
                 <line
@@ -244,10 +246,10 @@ function MobileStageAnim({ index }: { index: number }) {
             strokeLinejoin="round"
             strokeDasharray="35"
             className="primer-stage-anim"
-            style={{ animation: "primer-sparkline 3s ease-in-out infinite" }}
+            style={{ animationName: "primer-sparkline", animationDuration: "3s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" }}
           />
           <circle r="2" fill="var(--accent)" className="primer-stage-anim"
-            style={{ animation: "primer-tracker-glow 1.5s ease-in-out infinite" }}
+            style={{ animationName: "primer-tracker-glow", animationDuration: "1.5s", animationTimingFunction: "ease-in-out", animationIterationCount: "infinite" }}
           >
             <animateMotion
               dur="3s"
@@ -298,7 +300,7 @@ function MobileStageAnim({ index }: { index: number }) {
   );
 }
 
-export function PrimerWhat() {
+export default function PrimerWhat() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -310,7 +312,7 @@ export function PrimerWhat() {
       <div ref={ref} className="mt-16">
         {/* Desktop: horizontal flow */}
         <div className="hidden md:block">
-          <svg viewBox="0 0 900 220" className="w-full" aria-hidden>
+          <svg viewBox="0 0 900 240" className="w-full" aria-hidden>
             <defs>
               <radialGradient id="step-glow">
                 <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.15" />
@@ -370,8 +372,34 @@ export function PrimerWhat() {
                   >
                     {step.short}
                   </text>
+                  {"role" in step && step.role && (
+                    <g opacity="0.75">
+                      <svg
+                        x={cx - 32} y={157}
+                        width="10" height="10"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--accent)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+                        <path d="m9 12 2 2 4-4" />
+                      </svg>
+                      <text
+                        x={cx - 18} y={166}
+                        fontSize="8"
+                        fill="var(--accent)"
+                        fontFamily="var(--font-mono-app)"
+                        fontWeight="500"
+                      >
+                        {step.role}
+                      </text>
+                    </g>
+                  )}
                   <text
-                    x={cx} y={165}
+                    x={cx} y={"role" in step && step.role ? 182 : 165}
                     textAnchor="middle" fontSize="9.5"
                     fill="var(--text-muted)" opacity="0.7"
                   >
@@ -388,7 +416,7 @@ export function PrimerWhat() {
                         strokeWidth="1.5"
                         strokeDasharray="6 4"
                         opacity="0.65"
-                        style={{ animation: "primer-dash-flow 1.2s linear infinite" }}
+                        style={{ animationName: "primer-dash-flow", animationDuration: "1.2s", animationTimingFunction: "linear", animationIterationCount: "infinite" }}
                       />
                       <polygon
                         points={`${cx + 134},80 ${cx + 126},75 ${cx + 126},85`}
@@ -441,6 +469,12 @@ export function PrimerWhat() {
               </span>
               <div>
                 <p className="font-semibold text-app-text">{step.label} <span className="font-mono text-xs font-normal text-app-accent">{step.short}</span></p>
+                {"role" in step && step.role && (
+                  <span className="mt-1 inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium text-app-accent" style={{ background: "color-mix(in srgb, var(--accent) 12%, transparent)" }}>
+                    <ShieldCheck size={10} strokeWidth={2.5} aria-hidden />
+                    {step.role}
+                  </span>
+                )}
                 <p className="mt-0.5 text-xs leading-relaxed text-app-muted">{step.desc}</p>
               </div>
             </motion.div>

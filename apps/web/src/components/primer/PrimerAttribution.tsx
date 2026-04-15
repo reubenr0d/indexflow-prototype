@@ -20,9 +20,9 @@ interface ChainData extends Record<AxisKey, number> {
 }
 
 const chains: ChainData[] = [
-  { name: "Chain A", tvl: 85, vol: 72, fees: 60, users: 78, txns: 65, color: "#2dd4bf" },
-  { name: "Chain B", tvl: 60, vol: 55, fees: 45, users: 50, txns: 40, color: "#38bdf8" },
-  { name: "Chain C", tvl: 40, vol: 35, fees: 28, users: 30, txns: 22, color: "#818cf8" },
+  { name: "Chain A", tvl: 46, vol: 42, fees: 45, users: 49, txns: 51, color: "#2dd4bf" },
+  { name: "Chain B", tvl: 32, vol: 34, fees: 33, users: 31, txns: 31, color: "#38bdf8" },
+  { name: "Chain C", tvl: 22, vol: 24, fees: 22, users: 20, txns: 18, color: "#818cf8" },
 ];
 
 const CX = 100;
@@ -33,8 +33,11 @@ const ANGLES = RADAR_AXES.map((_, i) => (360 / RADAR_AXES.length) * i);
 
 function polar(angleDeg: number, radius: number) {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
-  return { x: CX + radius * Math.cos(rad), y: CY + radius * Math.sin(rad) };
+  const r4 = (v: number) => Math.round(v * 1e4) / 1e4;
+  return { x: r4(CX + radius * Math.cos(rad)), y: r4(CY + radius * Math.sin(rad)) };
 }
+
+const CHART_SCALE = 1.8;
 
 function RadarChart({
   chain,
@@ -48,7 +51,7 @@ function RadarChart({
   const values = RADAR_AXES.map((a) => chain[a.key]);
   const points = values
     .map((v, i) => {
-      const { x, y } = polar(ANGLES[i], (v / 100) * R);
+      const { x, y } = polar(ANGLES[i], Math.min((v / 100) * R * CHART_SCALE, R));
       return `${x},${y}`;
     })
     .join(" ");
@@ -118,7 +121,7 @@ function RadarChart({
           strokeLinejoin="round"
         />
         {values.map((v, i) => {
-          const { x, y } = polar(ANGLES[i], (v / 100) * R);
+          const { x, y } = polar(ANGLES[i], Math.min((v / 100) * R * CHART_SCALE, R));
           return (
             <circle
               key={i}
@@ -155,7 +158,7 @@ function RadarChart({
   );
 }
 
-export function PrimerAttribution() {
+export default function PrimerAttribution() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -166,14 +169,18 @@ export function PrimerAttribution() {
     >
       <SectionLabel>Chain-Attributable Growth</SectionLabel>
       <SectionHeading>
-        Ring-fenced deployments with independent KPIs
+        Ring-fenced deployments with <br />
+        independent KPIs
       </SectionHeading>
       <SectionBody>
         Each chain receives its own deployment instance, liquidity boundary,
-        and attribution model. No cross-chain dilution.
+        and attribution model. 
+        <br />
+        No cross-chain dilution.
       </SectionBody>
 
-      <div ref={ref} className="mt-14 grid gap-6 md:grid-cols-3">
+      <div ref={ref} className="mt-14">
+        <div className="grid gap-6 md:grid-cols-3">
         {chains.map((chain, ci) => (
           <motion.div
             key={chain.name}
@@ -218,6 +225,10 @@ export function PrimerAttribution() {
             </div>
           </motion.div>
         ))}
+        </div>
+        <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-app-muted/50">
+          Illustrative KPI distribution
+        </p>
       </div>
     </Section>
   );

@@ -10,7 +10,16 @@ function getMermaid() {
       m.default.initialize({
         startOnLoad: false,
         securityLevel: "loose",
-        theme: "neutral",
+        theme: "dark",
+        themeVariables: {
+          primaryColor: "#1a3a36",
+          primaryBorderColor: "#2dd4bf",
+          primaryTextColor: "#e9eef4",
+          lineColor: "#8b96a3",
+          secondaryColor: "#0c1016",
+          tertiaryColor: "#141b22",
+          fontFamily: "var(--font-sans-app), ui-sans-serif, system-ui, sans-serif",
+        },
       });
       return m.default;
     });

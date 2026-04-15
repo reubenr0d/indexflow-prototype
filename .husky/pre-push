@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-set -eu
-
-echo "husky pre-push: checking lockfile consistency..."
-npm ls --prefix . > /dev/null
-npm ls --prefix apps/web > /dev/null
-echo "husky pre-push: lockfiles OK"

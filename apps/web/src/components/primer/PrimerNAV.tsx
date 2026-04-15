@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Section, SectionLabel, SectionHeading, SectionBody } from "./Section";
 
-export function PrimerNAV() {
+export default function PrimerNAV() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -23,7 +23,59 @@ export function PrimerNAV() {
       </SectionBody>
 
       <div ref={ref} className="relative z-10 mt-16 flex flex-col items-center">
-        <svg viewBox="0 0 600 280" className="w-full max-w-2xl" aria-hidden>
+        {/* Mobile stacked layout */}
+        <div className="flex w-full max-w-sm flex-col gap-3 sm:hidden">
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformOrigin: "left" }}
+            className="rounded-lg border-2 border-app-accent/40 bg-app-accent/5 px-4 py-3"
+          >
+            <p className="text-center text-sm font-semibold text-app-accent">Full NAV</p>
+            <div className="mt-1 flex justify-between font-mono text-[10px] text-app-muted">
+              <span>IDLE USDC</span>
+              <span>ALLOCATED + PnL</span>
+            </div>
+          </motion.div>
+
+          <div className="flex justify-center text-app-muted/40">
+            <svg width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden>
+              <path d="M10 0v20m0 0l-5-5m5 5l5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+
+          <div className="flex gap-3">
+            <motion.div
+              initial={{ opacity: 0, scaleX: 0 }}
+              animate={isInView ? { opacity: 1, scaleX: 1 } : {}}
+              transition={{ delay: 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformOrigin: "left" }}
+              className="flex-[36] rounded-lg border-2 border-emerald-500/40 bg-emerald-500/5 px-3 py-3"
+            >
+              <p className="text-center text-xs font-semibold text-emerald-500">Redeemable</p>
+              <p className="mt-0.5 text-center font-mono text-[10px] text-app-muted">~36%</p>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="flex flex-[64] items-center justify-center rounded-lg border border-dashed border-red-500/20 bg-red-500/[0.03] px-3 py-3"
+            >
+              <p className="text-center font-mono text-[10px] text-red-400/70">NOT INSTANTLY REDEEMABLE</p>
+            </motion.div>
+          </div>
+
+          <p className="mt-2 text-center text-xs text-app-muted">
+            Reserve depth is a product-quality parameter, not a treasury setting.
+          </p>
+          <p className="text-center font-mono text-[9px] uppercase tracking-[0.2em] text-app-muted/50">
+            Illustrative — not live data
+          </p>
+        </div>
+
+        {/* Desktop SVG diagram */}
+        <svg viewBox="0 0 600 280" className="hidden w-full max-w-2xl sm:block" aria-hidden>
           <defs>
             <linearGradient id="nav-bar-grad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="var(--accent)" />
@@ -88,7 +140,7 @@ export function PrimerNAV() {
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.6, duration: 0.4 }}
           >
-            <line x1="140" y1="92" x2="140" y2="128" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="4 3" style={{ animation: "primer-dash-flow 1.2s linear infinite" }} />
+            <line x1="140" y1="92" x2="140" y2="128" stroke="var(--border-strong)" strokeWidth="1.5" strokeDasharray="4 3" style={{ animationName: "primer-dash-flow", animationDuration: "1.2s", animationTimingFunction: "linear", animationIterationCount: "infinite" }} />
           </motion.g>
 
           {/* Redeemable bar */}
@@ -120,8 +172,8 @@ export function PrimerNAV() {
               <animate attributeName="strokeWidth" values="1;2;1" dur="3s" begin="1.5s" repeatCount="indefinite" />
             </rect>
             <rect x="240" y="130" width="305" height="50" rx="4" fill="url(#gap-hatch)" />
-            <line x1="240" y1="140" x2="545" y2="140" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="5 4" style={{ animation: "primer-dash-flow 1.5s linear infinite" }} />
-            <line x1="240" y1="170" x2="545" y2="170" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="5 4" style={{ animation: "primer-dash-flow 1.5s linear infinite reverse" }} />
+            <line x1="240" y1="140" x2="545" y2="140" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="5 4" style={{ animationName: "primer-dash-flow", animationDuration: "1.5s", animationTimingFunction: "linear", animationIterationCount: "infinite" }} />
+            <line x1="240" y1="170" x2="545" y2="170" stroke="var(--border-strong)" strokeWidth="1" strokeDasharray="5 4" style={{ animationName: "primer-dash-flow", animationDuration: "1.5s", animationTimingFunction: "linear", animationIterationCount: "infinite", animationDirection: "reverse" }} />
             <text x="395" y="160" textAnchor="middle" fontSize="11" fill="var(--danger)" fontFamily="var(--font-mono-app)" opacity="0.7">
               NOT INSTANTLY REDEEMABLE
               <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="1.5s" repeatCount="indefinite" />
@@ -152,6 +204,9 @@ export function PrimerNAV() {
 
           <text x="300" y="240" textAnchor="middle" fontSize="12" fill="var(--text-muted)">
             Reserve depth is a product-quality parameter, not a treasury setting.
+          </text>
+          <text x="300" y="265" textAnchor="middle" fontSize="9" fill="var(--text-muted)" fontFamily="var(--font-mono-app)" opacity="0.5">
+            ILLUSTRATIVE — NOT LIVE DATA
           </text>
         </svg>
       </div>

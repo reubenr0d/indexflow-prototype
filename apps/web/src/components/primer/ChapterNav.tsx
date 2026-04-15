@@ -16,27 +16,22 @@ export function ChapterNav({ chapters }: ChapterNavProps) {
   const [active, setActive] = useState(chapters[0]?.id ?? "");
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-    const entries = new Map<string, boolean>();
-
+    const visibility = new Map<string, boolean>();
+    const observer = new IntersectionObserver(
+      (observed) => {
+        for (const entry of observed) {
+          visibility.set(entry.target.id, entry.isIntersecting);
+        }
+        const first = chapters.find((c) => visibility.get(c.id));
+        if (first) setActive(first.id);
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
+    );
     for (const ch of chapters) {
       const el = document.getElementById(ch.id);
-      if (!el) continue;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          entries.set(ch.id, entry.isIntersecting);
-          const first = chapters.find((c) => entries.get(c.id));
-          if (first) setActive(first.id);
-        },
-        { rootMargin: "-30% 0px -60% 0px", threshold: 0 }
-      );
-
-      observer.observe(el);
-      observers.push(observer);
+      if (el) observer.observe(el);
     }
-
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observer.disconnect();
   }, [chapters]);
 
   return (
