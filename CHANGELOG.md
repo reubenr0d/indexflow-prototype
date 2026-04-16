@@ -28,6 +28,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-16] Vercel build: add 10 s timeout to ticker RPC transport and 15 s race timeout in root layout to prevent static page generation from hanging when the public Sepolia RPC is slow; bump `staticPageGenerationTimeout` to 120 s as a safety net.
 - [2026-04-16] Chains layered donut: `Pie` segment `label` callback now types against Recharts' label render props (handles optional geometry fields and uses `percent` or `payload.pct`) so `next build` typecheck passes.
 - [2026-04-16] Mermaid diagrams now use the `base` theme with full flowchart `themeVariables` mapped to the app's color tokens, matching the landing page and blog aesthetic in both light and dark mode. Added CSS overrides for SVG elements (edge labels, cluster fills, markers) and `primer-glow-card` hover treatment on diagram containers.
 

@@ -4,7 +4,7 @@ import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Web3Provider } from "@/providers/Web3Provider";
 import { Footer } from "@/components/layout/footer";
 import { PriceTickerHydrated } from "@/components/layout/price-ticker";
-import { fetchTickerData } from "@/lib/ticker.server";
+import { fetchTickerData, type TickerAsset } from "@/lib/ticker.server";
 import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
 import { TourProvider } from "@/components/onboarding/tour-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -71,7 +71,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const tickerData = await fetchTickerData().catch(() => []);
+  const tickerData = await Promise.race([
+    fetchTickerData(),
+    new Promise<TickerAsset[]>((resolve) => setTimeout(() => resolve([]), 15_000)),
+  ]).catch(() => [] as TickerAsset[]);
 
   return (
     <html lang="en" className={`dark ${sans.variable} ${mono.variable} h-full antialiased`}>

@@ -20,13 +20,18 @@ export type TickerAsset = {
   priceTimestamp: string;
 };
 
+const TICKER_FETCH_TIMEOUT_MS = 10_000;
+
 export async function fetchTickerData(): Promise<TickerAsset[]> {
   const target = isDeploymentConfigured(DEFAULT_DEPLOYMENT_TARGET)
     ? DEFAULT_DEPLOYMENT_TARGET
     : "sepolia";
   const { oracleAdapter } = getContractsForDeploymentTarget(target);
 
-  const client = createPublicClient({ chain: sepolia, transport: http() });
+  const client = createPublicClient({
+    chain: sepolia,
+    transport: http(undefined, { timeout: TICKER_FETCH_TIMEOUT_MS }),
+  });
 
   const assetCount = await client.readContract({
     address: oracleAdapter,

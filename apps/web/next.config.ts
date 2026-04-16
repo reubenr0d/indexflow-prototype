@@ -41,6 +41,7 @@ const nextConfig: NextConfig = {
       "react-markdown",
     ],
   },
+  staticPageGenerationTimeout: 120,
   serverExternalPackages: ["yahoo-finance2"],
 };
 
