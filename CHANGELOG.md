@@ -11,6 +11,26 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Added
+
+- [2026-04-16] Blog post: "If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked" -- TradFi-oriented piece on redemption liquidity vs marks, allocator questions, and a plain-English IndexFlow framing, with hero SVG (`if-you-run-money-the-old-way-crypto-question.svg`).
+- [2026-04-16] Landing page: "Latest Insights" blog highlights section between the $FLOW and Get Started sections, showing the three most recent posts with scroll-in animations. Uses React Server Component composition pattern (async server component fetches posts, client component handles Framer Motion animations) for proper SSR with blog content in the initial HTML payload.
+- [2026-04-16] Blog post: "100 Chains, 100 Grant Programs, One Outcome: Temporary TVL" -- thought leadership on chain proliferation, fragmented liquidity, and broken grant attribution models, with custom SVG illustrations (liquidity fragmentation power-law chart, infrastructure flywheel vs incentive model comparison).
+
+### Changed
+
+- [2026-04-16] Growth grants: 0x Labs application Strategy row now separates **chain-local** KPIs (TVL, volume, fees per deployment) from **protocol-level** KPIs (protocol-retained fees, manager/vault adoption, shared perp pool utilization).
+- [2026-04-16] Blog listing cards: tag pills row uses a fixed height (`4.5rem`) with top alignment and `content-start` so titles start at the same vertical position whether tags occupy one or two rows (homepage “Latest Insights” and `/blog` grid).
+- [2026-04-16] Redesigned infrastructure-flywheel.svg blog illustration: amber/red decay palette for incentive model side, larger teal flywheel nodes (44px radius) with glow halos, static motion-marker dots on arcs, edge labels explaining the compounding cycle, background color washes for emotional contrast, vertical DECAY/COMPOUNDS annotations, and draining particles. Removed all SMIL/CSS animations (invisible in img-tag sandbox) so the static state is self-contained.
+- [2026-04-16] Growth grants: 0x Labs application materials now reference the public Google Drive logo URL; `docs/WHITEPAPER_DRAFT.pdf` regenerated from `docs/WHITEPAPER_DRAFT.md` (Chrome headless print from HTML rendered via `marked`). Replace the whitepaper file on the existing Drive link so downloads match the refreshed PDF.
+- [2026-04-16] Primer: move "Many baskets, many chains" (Shared Liquidity) section above "Core Constraint" (NAV) section in landing page flow.
+- [2026-04-16] Growth content rules updated to prefer custom SVG illustrations over mermaid flowcharts for blog conceptual diagrams. Updated blog post template framing checklist, content calendar framing principles, and `AGENTS.md` with illustration style guide (dark bg, teal accent, glow filters, dashed flow lines matching the landing page visual language).
+
+### Fixed
+
+- [2026-04-16] Chains layered donut: `Pie` segment `label` callback now types against Recharts' label render props (handles optional geometry fields and uses `percent` or `payload.pct`) so `next build` typecheck passes.
+- [2026-04-16] Mermaid diagrams now use the `base` theme with full flowchart `themeVariables` mapped to the app's color tokens, matching the landing page and blog aesthetic in both light and dark mode. Added CSS overrides for SVG elements (edge labels, cluster fills, markers) and `primer-glow-card` hover treatment on diagram containers.
+
 ### Changed
 
 - [2026-04-16] Chains UI now queries per-chain pool states from the subgraph instead of a singleton aggregate. `usePoolReserveRegistryState` uses the new `GET_CHAIN_POOL_STATES` query, derives routing weights proportionally from pool depth, and reads actual chain selectors from indexed data.
@@ -24,6 +44,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-16] Blog: publish "Five Waves of On-Chain Exposure: From Set Protocol to Structured Infrastructure" -- competitive landscape evolution post sourced from the whitepaper, with OG hero image and mermaid convergence diagram.
+- [2026-04-16] Blog SEO images: dynamic per-post OG images via `opengraph-image.tsx` (renders title, tags, date with brand styling), optional hero images in post layout and listing card thumbnails, JSON-LD `image` field always populated (falls back to auto-generated OG image URL).
+- [2026-04-16] In-app SEO blog at `/blog` and `/blog/[slug]`: filesystem-backed markdown posts with YAML frontmatter (`gray-matter`), reading time, tag system, JSON-LD `BlogPosting` structured data, `generateStaticParams` for pre-rendering, sitemap integration, and prev/next navigation. First post seeded from cross-chain coordination layer draft. Blog added to header nav and sitemap.
 - [2026-04-16] Subgraph v0.3.0: added `ChainPoolState` entity for per-chain pool tracking. Index `RemoteStateUpdated` events from `PoolReserveRegistry` so remote chain data is captured alongside local snapshots. Added `GET_CHAIN_POOL_STATES` query. Deployed to Graph Studio (Sepolia).
 - [2026-04-15] Subgraph v0.2.0: added `PoolReserveRegistry` and `IntentRouter` data sources with `PoolSnapshotEvent`, `CoordinationState`, `IntentAction`, `IntentStats` entities. Deployed to Graph Studio for Sepolia. Updated manifest generation to support optional coordination contracts on anvil.
 - [2026-04-15] Web: `/chains` page now queries subgraph for live coordination state and intent activity (with mock data fallback). Added intent activity table with status badges, stats row, and time-ago display. Updated `contracts.ts` with `poolReserveRegistry` and `intentRouter` addresses.

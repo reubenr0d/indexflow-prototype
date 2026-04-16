@@ -79,7 +79,7 @@ Before publishing, verify:
 - [ ] Contains a concrete example or worked number (not just abstractions)
 - [ ] Ends with a single, unmissable CTA
 - [ ] Is 80% education, 20% IndexFlow
-- [ ] Has at least one diagram, screenshot, or code snippet
+- [ ] Has at least one custom illustration, diagram, or code snippet (prefer custom SVG illustrations over mermaid flowcharts -- see `apps/web/public/blog/*.svg` for the visual language: dark background, teal `#2dd4bf` accent, `#38bdf8` sky secondary, glow filters, dashed flow lines, system-ui font)
 - [ ] Key phrases used where natural (see growth/README.md "Key Phrases" section)
 
 ## Notes
@@ -88,3 +88,4 @@ Before publishing, verify:
 - Front-load value -- assume 70% of readers drop off after the hook.
 - Link back to relevant docs/ pages for technical depth.
 - Brand voice: "smart colleague at a conference" -- precise, systems-language, confident. Not meme-y, not corporate.
+- **Illustrations**: prefer custom SVG illustrations (saved to `apps/web/public/blog/`) over mermaid flowcharts. Mermaid is acceptable for inline contract/architecture diagrams in technical posts, but conceptual diagrams (flywheels, comparisons, data visualizations) should use hand-crafted SVGs matching the landing page visual language. Reference existing SVGs in `apps/web/public/blog/` and primer components in `apps/web/src/components/primer/` for style.

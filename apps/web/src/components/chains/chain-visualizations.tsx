@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, type ComponentProps } from "react";
 import { Clock } from "lucide-react";
 import { getChainMeta } from "@/components/chains/chain-icons";
 import { InfoLabel } from "@/components/ui/info-tooltip";
@@ -33,21 +33,29 @@ interface RingDataPoint {
   formattedValue: string;
 }
 
-function renderSegmentLabel({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  pct,
-}: {
-  cx: number;
-  cy: number;
-  midAngle: number;
-  innerRadius: number;
-  outerRadius: number;
-  pct: number;
-}) {
+type PieLabelProp = ComponentProps<typeof Pie>["label"];
+type PieLabelFn = Extract<NonNullable<PieLabelProp>, (...args: never) => unknown>;
+type PieLabelArg = Parameters<PieLabelFn>[0];
+
+function renderSegmentLabel(raw: PieLabelArg) {
+  const { cx, cy, midAngle, innerRadius, outerRadius, percent, payload } = raw;
+  if (
+    cx == null ||
+    cy == null ||
+    midAngle == null ||
+    innerRadius == null ||
+    outerRadius == null
+  ) {
+    return null;
+  }
+
+  const ringPayload = payload as RingDataPoint | undefined;
+  const pct =
+    typeof ringPayload?.pct === "number"
+      ? ringPayload.pct
+      : percent != null
+        ? percent * 100
+        : 0;
   if (pct < 8) return null;
 
   const RADIAN = Math.PI / 180;

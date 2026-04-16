@@ -97,6 +97,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] VC outreach playbook ([growth/VC_OUTREACH_PLAYBOOK.md](growth/VC_OUTREACH_PLAYBOOK.md))
 - [x] Content templates (blog, tweet thread, Substack, LinkedIn, podcast pitch, Farcaster)
 - [x] Drafts workflow and naming conventions ([growth/drafts/README.md](growth/drafts/README.md))
+- [x] In-app SEO blog (`/blog`, `/blog/[slug]`) with frontmatter, JSON-LD, sitemap, reading time
 
 ### Social Channels
 
@@ -106,7 +107,9 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 
 ### Content Production
 
-- [ ] First blog post published
+- [x] First blog post published (cross-chain liquidity routing)
+- [x] Second blog post published (five waves of on-chain exposure)
+- [x] TradFi asset manager blog post published (`/blog/if-you-run-money-the-old-way-crypto-question`)
 - [ ] First X thread published
 - [ ] First LinkedIn post published
 - [ ] First Substack issue published
@@ -145,6 +148,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 ### Grants
 
 - [x] Grant blurb written ([growth/grants/blurb.md](growth/grants/blurb.md))
+- [x] 0x Labs grant draft: Strategy KPIs distinguish chain-local vs protocol-level metrics ([growth/grants/0xlabs-grant-application.md](growth/grants/0xlabs-grant-application.md))
 - [ ] 0xLabs grant application submitted ([growth/grants/0xlabs-grant-application.md](growth/grants/0xlabs-grant-application.md))
 
 ## Tech Stack

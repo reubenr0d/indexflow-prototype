@@ -1,0 +1,288 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" width="920" height="440" fill="none">
+  <defs>
+    <linearGradient id="bg-grad" x1="0" y1="0" x2="920" y2="440" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#080c14"/>
+      <stop offset="100%" stop-color="#0a1019"/>
+    </linearGradient>
+
+    <!-- Left side warm glow wash -->
+    <radialGradient id="left-wash" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Right side teal glow wash -->
+    <radialGradient id="right-wash" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Flywheel orbit ring gradient -->
+    <linearGradient id="ring-grad" gradientTransform="rotate(90)">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <!-- Flywheel node glow -->
+    <radialGradient id="node-glow">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Red glow for Capital Exits -->
+    <radialGradient id="red-glow">
+      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Divider gradient -->
+    <linearGradient id="divider-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0"/>
+      <stop offset="20%" stop-color="#2dd4bf" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.15"/>
+      <stop offset="80%" stop-color="#2dd4bf" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Glow filters -->
+    <filter id="glow-teal">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-red">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-soft">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Arrow markers -->
+    <marker id="arr-amber" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="7" markerHeight="5" orient="auto">
+      <path d="M0 0.5 L7 3 L0 5.5Z" fill="#f59e0b" opacity="0.4"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 8 6" refX="7" refY="3" markerWidth="7" markerHeight="5" orient="auto">
+      <path d="M0 0.5 L7 3 L0 5.5Z" fill="#ef4444" opacity="0.5"/>
+    </marker>
+    <marker id="arr-teal" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0 0.5 L9 4 L0 7.5Z" fill="#2dd4bf" opacity="0.65"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="440" rx="12" fill="url(#bg-grad)"/>
+
+  <!-- Subtle grid -->
+  <g stroke="#2dd4bf" stroke-opacity="0.03" stroke-width="0.5">
+    <line x1="0" y1="110" x2="920" y2="110"/>
+    <line x1="0" y1="220" x2="920" y2="220"/>
+    <line x1="0" y1="330" x2="920" y2="330"/>
+    <line x1="184" y1="0" x2="184" y2="440"/>
+    <line x1="460" y1="0" x2="460" y2="440"/>
+    <line x1="736" y1="0" x2="736" y2="440"/>
+  </g>
+
+  <!-- Background washes -->
+  <ellipse cx="210" cy="240" rx="200" ry="200" fill="url(#left-wash)"/>
+  <ellipse cx="680" cy="220" rx="220" ry="210" fill="url(#right-wash)"/>
+
+  <!-- Center divider -->
+  <line x1="445" y1="30" x2="445" y2="410" stroke="url(#divider-grad)" stroke-width="1.5"/>
+
+  <!-- ===================== LEFT: INCENTIVE MODEL ===================== -->
+
+  <!-- Title -->
+  <text x="210" y="46" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#f59e0b" opacity="0.7" letter-spacing="1.5">INCENTIVE MODEL</text>
+  <text x="210" y="62" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" font-weight="500" fill="#f59e0b" opacity="0.3" letter-spacing="2">LINEAR / TEMPORARY</text>
+
+  <!-- Node 1: Grant Tokens -->
+  <circle cx="210" cy="108" r="30" fill="#0f1419" stroke="#f59e0b" stroke-width="1.8" stroke-opacity="0.6"/>
+  <circle cx="210" cy="108" r="30" fill="#f59e0b" opacity="0.04"/>
+  <!-- Dollar/coin icon -->
+  <g transform="translate(199, 96)" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.7" fill="none">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="11" y1="7" x2="11" y2="15"/>
+    <line x1="8.5" y1="9" x2="13.5" y2="9"/>
+    <line x1="8.5" y1="13" x2="13.5" y2="13"/>
+  </g>
+  <text x="210" y="150" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#e5e7eb" opacity="0.8">Grant Tokens</text>
+
+  <!-- Arrow 1-2 -->
+  <line x1="210" y1="158" x2="210" y2="176" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1.2" marker-end="url(#arr-amber)"/>
+
+  <!-- Node 2: Liquidity Mining -->
+  <circle cx="210" cy="198" r="28" fill="#0f1419" stroke="#f59e0b" stroke-width="1.5" stroke-opacity="0.5"/>
+  <circle cx="210" cy="198" r="28" fill="#f59e0b" opacity="0.03"/>
+  <!-- Pickaxe icon -->
+  <g transform="translate(200, 187)" stroke="#f59e0b" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.6" fill="none">
+    <path d="M4 16l7-7"/>
+    <path d="M11 9l3-3 3 1 1 3-3 3z"/>
+    <path d="M16 6l2-2"/>
+  </g>
+  <text x="210" y="238" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="600" fill="#e5e7eb" opacity="0.7">Liquidity Mining</text>
+
+  <!-- Arrow 2-3 -->
+  <line x1="210" y1="246" x2="210" y2="262" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1.1" marker-end="url(#arr-amber)"/>
+
+  <!-- Node 3: TVL Spike -->
+  <circle cx="210" cy="282" r="26" fill="#0f1419" stroke="#f59e0b" stroke-width="1.3" stroke-opacity="0.4" stroke-dasharray="5 2"/>
+  <circle cx="210" cy="282" r="26" fill="#f59e0b" opacity="0.02"/>
+  <!-- Chart spike icon -->
+  <g transform="translate(201, 272)" stroke="#f59e0b" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.5" fill="none">
+    <polyline points="2,14 6,6 10,10 16,2"/>
+    <polyline points="12,2 16,2 16,6"/>
+  </g>
+  <text x="210" y="320" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#e5e7eb" opacity="0.55">TVL Spike</text>
+
+  <!-- Arrow 3-4 (dashed, shifting red) -->
+  <line x1="210" y1="328" x2="210" y2="344" stroke="#ef4444" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr-red)"/>
+
+  <!-- Node 4: Incentives End -->
+  <circle cx="210" cy="362" r="24" fill="#0f1419" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.45" stroke-dasharray="4 3"/>
+  <circle cx="210" cy="362" r="24" fill="#ef4444" opacity="0.03"/>
+  <!-- Timer/clock icon -->
+  <g transform="translate(201, 352)" stroke="#ef4444" stroke-width="1.3" stroke-linecap="round" opacity="0.5" fill="none">
+    <circle cx="9" cy="9" r="7"/>
+    <line x1="9" y1="5.5" x2="9" y2="9"/>
+    <line x1="9" y1="9" x2="12" y2="11"/>
+  </g>
+  <text x="210" y="398" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#e5e7eb" opacity="0.5">Incentives End</text>
+
+  <!-- Arrow 4 to Capital Exits zone -->
+  <line x1="210" y1="406" x2="210" y2="418" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1.2" marker-end="url(#arr-red)"/>
+
+  <!-- Red glow behind Capital Exits -->
+  <circle cx="210" cy="430" r="50" fill="url(#red-glow)"/>
+
+  <!-- Capital Exits: prominent red text -->
+  <text x="210" y="430" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#ef4444" opacity="0.85" letter-spacing="0.5">Capital Exits</text>
+
+  <!-- Scattered red particles draining outward -->
+  <line x1="170" y1="430" x2="130" y2="425" stroke="#ef4444" stroke-opacity="0.35" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <line x1="250" y1="430" x2="290" y2="425" stroke="#ef4444" stroke-opacity="0.35" stroke-width="0.8" stroke-dasharray="2 3"/>
+
+  <circle cx="122" cy="422" r="3" fill="#ef4444" opacity="0.35" filter="url(#glow-red)"/>
+  <circle cx="108" cy="418" r="2.5" fill="#ef4444" opacity="0.25"/>
+  <circle cx="96" cy="422" r="1.8" fill="#ef4444" opacity="0.18"/>
+  <circle cx="138" cy="432" r="2" fill="#ef4444" opacity="0.22"/>
+  <circle cx="116" cy="436" r="1.5" fill="#ef4444" opacity="0.14"/>
+
+  <circle cx="298" cy="422" r="3" fill="#ef4444" opacity="0.35" filter="url(#glow-red)"/>
+  <circle cx="312" cy="418" r="2.5" fill="#ef4444" opacity="0.25"/>
+  <circle cx="324" cy="422" r="1.8" fill="#ef4444" opacity="0.18"/>
+  <circle cx="282" cy="432" r="2" fill="#ef4444" opacity="0.22"/>
+  <circle cx="304" cy="436" r="1.5" fill="#ef4444" opacity="0.14"/>
+
+  <!-- Side annotation: decay arrow -->
+  <g opacity="0.15">
+    <line x1="128" y1="100" x2="128" y2="400" stroke="#ef4444" stroke-width="0.8"/>
+    <path d="M123 395 L128 405 L133 395" fill="none" stroke="#ef4444" stroke-width="0.8"/>
+  </g>
+  <text x="118" y="255" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8" fill="#ef4444" opacity="0.18" letter-spacing="3" transform="rotate(-90 118 255)">DECAY</text>
+
+  <!-- ===================== RIGHT: INFRASTRUCTURE MODEL ===================== -->
+
+  <!-- Title -->
+  <text x="680" y="46" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#2dd4bf" opacity="0.85" letter-spacing="1.5">INFRASTRUCTURE MODEL</text>
+  <text x="680" y="62" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" font-weight="500" fill="#2dd4bf" opacity="0.35" letter-spacing="2">COMPOUNDING / PERMANENT</text>
+
+  <!-- Outer rings (static) -->
+  <circle cx="680" cy="240" r="138" fill="none" stroke="#2dd4bf" stroke-width="0.8" opacity="0.06"/>
+  <circle cx="680" cy="240" r="145" fill="none" stroke="#2dd4bf" stroke-width="0.4" opacity="0.03"/>
+
+  <!-- Main orbit ring -->
+  <circle cx="680" cy="240" r="130" fill="none" stroke="url(#ring-grad)" stroke-width="2.5"/>
+
+  <!-- ===== Curved arrows between nodes (clockwise) with static dots ===== -->
+
+  <!-- Arc: Reserve Depth (top) to Redemption Confidence (right) -->
+  <path d="M 714 118 A 130 130 0 0 1 802 204" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.4" marker-end="url(#arr-teal)"/>
+  <circle cx="760" cy="148" r="2.5" fill="#2dd4bf" opacity="0.5" filter="url(#glow-teal)"/>
+  <circle cx="790" cy="178" r="2" fill="#2dd4bf" opacity="0.35"/>
+  <!-- Edge label -->
+  <text x="775" y="158" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" fill="#2dd4bf" opacity="0.3" transform="rotate(-45 775 158)">depth builds trust</text>
+
+  <!-- Arc: Redemption Confidence (right) to More Deposits (bottom) -->
+  <path d="M 802 276 A 130 130 0 0 1 714 362" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.4" marker-end="url(#arr-teal)"/>
+  <circle cx="800" cy="305" r="2.5" fill="#2dd4bf" opacity="0.5" filter="url(#glow-teal)"/>
+  <circle cx="770" cy="345" r="2" fill="#2dd4bf" opacity="0.35"/>
+  <!-- Edge label -->
+  <text x="796" y="326" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" fill="#2dd4bf" opacity="0.3" transform="rotate(45 796 326)">trust attracts capital</text>
+
+  <!-- Arc: More Deposits (bottom) to Volume + Fees (left) -->
+  <path d="M 646 362 A 130 130 0 0 1 558 276" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.4" marker-end="url(#arr-teal)"/>
+  <circle cx="600" cy="345" r="2.5" fill="#2dd4bf" opacity="0.5" filter="url(#glow-teal)"/>
+  <circle cx="572" cy="310" r="2" fill="#2dd4bf" opacity="0.35"/>
+  <!-- Edge label -->
+  <text x="585" y="336" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" fill="#2dd4bf" opacity="0.3" transform="rotate(-45 585 336)">capital generates fees</text>
+
+  <!-- Arc: Volume + Fees (left) to Reserve Depth (top) -->
+  <path d="M 558 204 A 130 130 0 0 1 646 118" fill="none" stroke="#2dd4bf" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.4" marker-end="url(#arr-teal)"/>
+  <circle cx="565" cy="168" r="2.5" fill="#2dd4bf" opacity="0.5" filter="url(#glow-teal)"/>
+  <circle cx="598" cy="138" r="2" fill="#2dd4bf" opacity="0.35"/>
+  <!-- Edge label -->
+  <text x="575" y="160" text-anchor="middle" font-family="ui-monospace, monospace" font-size="7.5" fill="#2dd4bf" opacity="0.3" transform="rotate(45 575 160)">fees fund depth</text>
+
+  <!-- ===== Flywheel Nodes ===== -->
+
+  <!-- Node: Reserve Depth (top, 12 o'clock) -->
+  <circle cx="680" cy="110" r="54" fill="url(#node-glow)"/>
+  <circle cx="680" cy="110" r="44" fill="#0f1419" stroke="#2dd4bf" stroke-width="2" filter="url(#glow-teal)"/>
+  <circle cx="680" cy="110" r="44" fill="#2dd4bf" opacity="0.05"/>
+  <!-- Database icon -->
+  <g transform="translate(667, 90)" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" fill="none">
+    <ellipse cx="13" cy="4" rx="10" ry="3.5"/>
+    <path d="M3 4v8c0 1.93 4.5 3.5 10 3.5s10-1.57 10-3.5V4"/>
+    <path d="M3 8c0 1.93 4.5 3.5 10 3.5s10-1.57 10-3.5"/>
+  </g>
+  <text x="680" y="128" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Reserve</text>
+  <text x="680" y="142" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Depth</text>
+
+  <!-- Node: Redemption Confidence (right, 3 o'clock) -->
+  <circle cx="810" cy="240" r="54" fill="url(#node-glow)"/>
+  <circle cx="810" cy="240" r="44" fill="#0f1419" stroke="#2dd4bf" stroke-width="2" filter="url(#glow-teal)"/>
+  <circle cx="810" cy="240" r="44" fill="#2dd4bf" opacity="0.05"/>
+  <!-- Shield-check icon -->
+  <g transform="translate(797, 220)" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" fill="none">
+    <path d="M13 2C10.2 4 7.5 5 4 5a1 1 0 0 0-1 1v7c0 4.5 3.2 7 10 9 6.8-2 10-4.5 10-9V6a1 1 0 0 0-1-1c-3.5 0-6.2-1-9-3z"/>
+    <path d="m9 14 3 3 5-5"/>
+  </g>
+  <text x="810" y="258" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Redemption</text>
+  <text x="810" y="272" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Confidence</text>
+
+  <!-- Node: More Deposits (bottom, 6 o'clock) -->
+  <circle cx="680" cy="370" r="54" fill="url(#node-glow)"/>
+  <circle cx="680" cy="370" r="44" fill="#0f1419" stroke="#2dd4bf" stroke-width="2" filter="url(#glow-teal)"/>
+  <circle cx="680" cy="370" r="44" fill="#2dd4bf" opacity="0.05"/>
+  <!-- Download/deposit icon -->
+  <g transform="translate(667, 350)" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" fill="none">
+    <path d="M13 3v14"/>
+    <path d="m7 11 6 6 6-6"/>
+    <path d="M4 22h18"/>
+  </g>
+  <text x="680" y="390" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">More</text>
+  <text x="680" y="404" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Deposits</text>
+
+  <!-- Node: Volume + Fees (left, 9 o'clock) -->
+  <circle cx="550" cy="240" r="54" fill="url(#node-glow)"/>
+  <circle cx="550" cy="240" r="44" fill="#0f1419" stroke="#2dd4bf" stroke-width="2" filter="url(#glow-teal)"/>
+  <circle cx="550" cy="240" r="44" fill="#2dd4bf" opacity="0.05"/>
+  <!-- Activity/sparkline icon -->
+  <g transform="translate(537, 222)" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" fill="none">
+    <path d="M24 14h-4l-3.5 10.5L10 3.5l-3.5 10.5H2"/>
+  </g>
+  <text x="550" y="258" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">Volume</text>
+  <text x="550" y="272" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#e5e7eb">+ Fees</text>
+
+  <!-- Center flywheel glow -->
+  <circle cx="680" cy="240" r="40" fill="#2dd4bf" opacity="0.015" filter="url(#glow-soft)"/>
+
+  <!-- Side annotation: growth arrow -->
+  <g opacity="0.12">
+    <path d="M880 370 C 875 240, 875 180, 880 80" fill="none" stroke="#2dd4bf" stroke-width="0.8"/>
+    <path d="M875 85 L880 75 L885 85" fill="none" stroke="#2dd4bf" stroke-width="0.8"/>
+  </g>
+  <text x="895" y="240" text-anchor="middle" font-family="ui-monospace, monospace" font-size="8" fill="#2dd4bf" opacity="0.15" letter-spacing="3" transform="rotate(-90 895 240)">COMPOUNDS</text>
+</svg>

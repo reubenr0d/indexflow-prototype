@@ -1,3 +1,4 @@
+import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
@@ -101,33 +102,39 @@ function HeadingAnchor({ id, depth, children, ...props }: { id?: string; depth: 
 }
 
 const components: Components = {
-  h1: ({ children, ...props }) => <HeadingAnchor depth={1} {...props}>{children}</HeadingAnchor>,
-  h2: ({ children, ...props }) => <HeadingAnchor depth={2} {...props}>{children}</HeadingAnchor>,
-  h3: ({ children, ...props }) => <HeadingAnchor depth={3} {...props}>{children}</HeadingAnchor>,
-  h4: ({ children, ...props }) => <HeadingAnchor depth={4} {...props}>{children}</HeadingAnchor>,
-  h5: ({ children, ...props }) => <HeadingAnchor depth={5} {...props}>{children}</HeadingAnchor>,
-  h6: ({ children, ...props }) => <HeadingAnchor depth={6} {...props}>{children}</HeadingAnchor>,
-  p: ({ children, ...props }) => (
-    <p className="mt-3 leading-7 text-app-muted" {...props}>
-      {children}
-    </p>
-  ),
-  ul: ({ children, ...props }) => (
+  h1: ({ children, node: _node, ...props }) => <HeadingAnchor depth={1} {...props}>{children}</HeadingAnchor>,
+  h2: ({ children, node: _node, ...props }) => <HeadingAnchor depth={2} {...props}>{children}</HeadingAnchor>,
+  h3: ({ children, node: _node, ...props }) => <HeadingAnchor depth={3} {...props}>{children}</HeadingAnchor>,
+  h4: ({ children, node: _node, ...props }) => <HeadingAnchor depth={4} {...props}>{children}</HeadingAnchor>,
+  h5: ({ children, node: _node, ...props }) => <HeadingAnchor depth={5} {...props}>{children}</HeadingAnchor>,
+  h6: ({ children, node: _node, ...props }) => <HeadingAnchor depth={6} {...props}>{children}</HeadingAnchor>,
+  p: ({ children, node: _node, ...props }) => {
+    const kids = React.Children.toArray(children);
+    if (kids.length === 1 && React.isValidElement(kids[0]) && (kids[0] as React.ReactElement<{ src?: string }>).props.src) {
+      return <>{children}</>;
+    }
+    return (
+      <p className="mt-3 leading-7 text-app-muted" {...props}>
+        {children}
+      </p>
+    );
+  },
+  ul: ({ children, node: _node, ...props }) => (
     <ul className="mt-3 list-disc space-y-2 pl-6 text-app-muted" {...props}>
       {children}
     </ul>
   ),
-  ol: ({ children, ...props }) => (
+  ol: ({ children, node: _node, ...props }) => (
     <ol className="mt-3 list-decimal space-y-2 pl-6 text-app-muted" {...props}>
       {children}
     </ol>
   ),
-  li: ({ children, ...props }) => (
+  li: ({ children, node: _node, ...props }) => (
     <li className="leading-7" {...props}>
       {children}
     </li>
   ),
-  a: ({ children, href, ...props }) => {
+  a: ({ children, href, node: _node, ...props }) => {
     const resolved = href ? rewriteDocsHref(href) : href;
     const isExternal = resolved?.startsWith("http");
     return (
@@ -142,20 +149,20 @@ const components: Components = {
       </a>
     );
   },
-  strong: ({ children, ...props }) => (
+  strong: ({ children, node: _node, ...props }) => (
     <strong className="font-semibold text-app-text" {...props}>{children}</strong>
   ),
-  em: ({ children, ...props }) => (
+  em: ({ children, node: _node, ...props }) => (
     <em className="text-app-muted/90" {...props}>{children}</em>
   ),
   hr: () => (
     <hr className="my-8 border-t border-app-border" />
   ),
-  img: ({ src, alt, ...props }) => (
+  img: ({ src, alt, node: _node, ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt ?? ""} className="mt-4 max-w-full rounded-lg border border-app-border" {...props} />
+    <img src={src} alt={alt ?? ""} className="mt-6 block w-full rounded-lg border border-app-border" {...props} />
   ),
-  blockquote: ({ children, ...props }) => {
+  blockquote: ({ children, node: _node, ...props }) => {
     const callout = detectCallout(children);
     if (callout) {
       const style = CALLOUT_STYLES[callout.kind];
@@ -172,7 +179,7 @@ const components: Components = {
       </blockquote>
     );
   },
-  table: ({ children, ...props }) => (
+  table: ({ children, node: _node, ...props }) => (
     <div className="mt-4 overflow-x-auto rounded-lg border border-app-border">
       <table className="w-full border-collapse text-sm text-app-muted" {...props}>
         {children}
@@ -180,17 +187,17 @@ const components: Components = {
     </div>
   ),
   pre: ({ children }) => <>{children}</>,
-  th: ({ children, ...props }) => (
+  th: ({ children, node: _node, ...props }) => (
     <th className="border-b border-app-border bg-app-surface px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-app-text" {...props}>
       {children}
     </th>
   ),
-  td: ({ children, ...props }) => (
+  td: ({ children, node: _node, ...props }) => (
     <td className="border-b border-app-border/50 px-3 py-2.5 align-top" {...props}>
       {children}
     </td>
   ),
-  code: ({ className, children, ...props }) => {
+  code: ({ className, children, node: _node, ...props }) => {
     const raw = codeToString(children).replace(/\n$/, "");
     const match = /language-([\w-]+)/.exec(className ?? "");
     const language = match?.[1]?.toLowerCase();

@@ -27,6 +27,7 @@ const navItems = [
   { href: "/baskets", label: "Baskets" },
   { href: "/prices", label: "Assets" },
   { href: "/chains", label: "Chains" },
+  { href: "/blog", label: "Blog" },
   { href: "/docs", label: "Docs" },
   { href: "/admin", label: "Admin" },
 ];

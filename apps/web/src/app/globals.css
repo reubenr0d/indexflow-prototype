@@ -485,6 +485,34 @@ body {
   left: auto;
 }
 
+/* Mermaid SVG overrides -- CSS vars ensure diagrams follow light/dark mode */
+.mermaid-themed .edgeLabel {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
+.mermaid-themed .cluster rect {
+  fill: var(--bg-subtle) !important;
+  stroke: var(--border) !important;
+}
+.mermaid-themed .cluster span {
+  color: var(--text-muted) !important;
+  fill: var(--text-muted) !important;
+}
+.mermaid-themed .label {
+  color: var(--text) !important;
+  fill: var(--text) !important;
+}
+.mermaid-themed .edgePaths .edgePath path {
+  stroke: var(--border-strong) !important;
+}
+.mermaid-themed .flowchart-link {
+  stroke: var(--border-strong) !important;
+}
+.mermaid-themed marker path {
+  fill: var(--border-strong) !important;
+  stroke: var(--border-strong) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .primer-gradient-text {
     animation: none;

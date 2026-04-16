@@ -19,8 +19,8 @@ The form has `<!-- TODO -->` markers for the few items that still need manual up
 | Start date | Done | Filled in: 04/04/2026 |
 | Pitch deck | Done | Linked: Google Slides URL |
 | Blurb Google Doc | Pending | Copy `blurb.md` content into a new Google Doc (anyone can edit), paste URL into form |
-| Whitepaper | Pending | Upload `docs/WHITEPAPER_DRAFT.pdf` to Google Drive, paste public link into form |
-| Logo | Pending | Upload `indexflow-logo.png` to Google Drive, paste public link into form |
+| Whitepaper | Link in form | Drive URL is in `0xlabs-grant-application.md`; after each local regen of `docs/WHITEPAPER_DRAFT.pdf`, re-upload or replace the file on Drive so the link serves the latest PDF |
+| Logo | Done | Public link: https://drive.google.com/file/d/1C3kMRC-9GRjQFVpFRqQJSiOqWl3BISvA/view?usp=sharing |
 | Architecture diagram | Pending | Upload `architecture-diagram.png` to Google Drive, paste public link into form |
 | Legal entity | Pending | Update when incorporated |
 | Lawyer/legal firm | Pending | Update when retained |

@@ -66,6 +66,15 @@ This deploys contracts to Docker Anvil, syncs subgraph network addresses, rebuil
 
 For bare-metal Anvil without Docker (no subgraph), use `npm run deploy:local` instead.
 
+## Blog Content Illustrations
+
+When creating blog posts (`content/blog/*.md`), prefer custom SVG illustrations over mermaid flowcharts for conceptual diagrams, comparisons, flywheels, and data visualizations.
+
+- Save SVGs to `apps/web/public/blog/` and reference via markdown image syntax (`![alt](/blog/filename.svg)`).
+- Match the landing page visual language: dark background (`#080c14`), teal accent (`#2dd4bf`), sky secondary (`#38bdf8`), glow filters (`feGaussianBlur`), dashed flow lines, `system-ui` font, rounded strokes 1-2px.
+- Reference existing blog SVGs and primer components (`apps/web/src/components/primer/`) for style.
+- Mermaid is acceptable for inline architecture diagrams and contract flow diagrams in technical posts (e.g. Solidity code + mermaid showing contract interactions), but should not be the default for every visual.
+
 ## Scope-Specific Rule (Web App)
 
 For work in `apps/web`, also follow [`apps/web/AGENTS.md`](/Users/reuben/Desktop/minestarters/code/snx-prototype/apps/web/AGENTS.md) (Next.js docs/version caveat).

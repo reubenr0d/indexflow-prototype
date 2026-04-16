@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { PrimerHero } from "./PrimerHero";
 import PrimerProblem from "./PrimerProblem";
@@ -19,15 +20,16 @@ const chapters: Chapter[] = [
   { id: "problem", label: "Why" },
   { id: "what", label: "Protocol" },
   { id: "who", label: "For Teams" },
+  { id: "shared", label: "Liquidity" },
   { id: "nav-insight", label: "NAV" },
   { id: "flywheel", label: "Flywheel" },
-  { id: "shared", label: "Liquidity" },
   { id: "attribution", label: "Growth" },
   { id: "token", label: "$FLOW" },
+  { id: "blog", label: "Blog" },
   { id: "cta", label: "Get Started" },
 ];
 
-export default function PrimerContent() {
+export default function PrimerContent({ blogSection }: { blogSection?: ReactNode }) {
   return (
     <div className="landing-reveal relative">
       <ChapterNav chapters={chapters} />
@@ -35,11 +37,12 @@ export default function PrimerContent() {
       <PrimerProblem />
       <PrimerWhat />
       <PrimerWho />
+      <PrimerSharedLiquidity />
       <PrimerNAV />
       <PrimerFlywheel />
-      <PrimerSharedLiquidity />
       <PrimerAttribution />
       <PrimerToken />
+      {blogSection}
       <PrimerCTA />
     </div>
   );

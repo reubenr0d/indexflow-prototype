@@ -18,6 +18,7 @@ Content is organized by **funnel layer**, not by week number. Each piece is tagg
 - **Educate before you pitch**: 80% education, 20% IndexFlow across all content
 - **Brand voice**: Institutional DeFi infrastructure tone -- precise, systems-language, confident. "Smart colleague at a conference."
 - **Core memeable distinction**: "Portfolio value and exit liquidity are not the same thing."
+- **Illustrations over flowcharts**: Blog posts should use custom SVG illustrations matching the landing page visual language (dark bg, teal accent, glow filters, dashed flow lines) for conceptual diagrams, comparisons, and data visualizations. Save to `apps/web/public/blog/` and reference via markdown images. Reserve mermaid for inline architecture/contract diagrams in technical posts. See existing SVGs and `apps/web/src/components/primer/` for style reference.
 
 ## Content Inventory Target (per month)
 
@@ -84,7 +85,7 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 - Hook type: Curiosity Gap
 - Shared pool mechanics, per-vault PnL attribution
 
-**"Cross-Chain Liquidity Routing Without Bridges: How TWAP + CCIP Replaces Manual Chain Selection"**
+**"Cross-Chain Liquidity Routing: How TWAP + CCIP Replaces Manual Chain Selection"**
 `[L1 | P3 Technical | Blog | Cold]`
 
 - Source: `docs/CROSS_CHAIN_COORDINATION.md`, `src/coordination/PoolReserveRegistry.sol`

@@ -1,45 +1,96 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState, useRef } from "react";
 
-let mermaidReady: Promise<typeof import("mermaid")["default"]> | null = null;
+type AppTheme = "dark" | "light";
 
-function getMermaid() {
-  if (!mermaidReady) {
-    mermaidReady = import("mermaid").then((m) => {
-      m.default.initialize({
-        startOnLoad: false,
-        securityLevel: "loose",
-        theme: "dark",
-        themeVariables: {
-          primaryColor: "#1a3a36",
-          primaryBorderColor: "#2dd4bf",
-          primaryTextColor: "#e9eef4",
-          lineColor: "#8b96a3",
-          secondaryColor: "#0c1016",
-          tertiaryColor: "#141b22",
-          fontFamily: "var(--font-sans-app), ui-sans-serif, system-ui, sans-serif",
-        },
-      });
-      return m.default;
-    });
+const THEME_VARS: Record<AppTheme, Record<string, string>> = {
+  dark: {
+    primaryColor: "#1a3a36",
+    primaryBorderColor: "#2dd4bf",
+    primaryTextColor: "#e9eef4",
+    lineColor: "#8b96a3",
+    secondaryColor: "#0c1016",
+    tertiaryColor: "#141b22",
+    mainBkg: "#0f1419",
+    nodeBorder: "#2dd4bf",
+    clusterBkg: "#0c1016",
+    clusterBorder: "#1a2733",
+    edgeLabelBackground: "#0f1419",
+    nodeTextColor: "#e9eef4",
+    textColor: "#8b96a3",
+    background: "transparent",
+    fontFamily: "var(--font-sans-app), ui-sans-serif, system-ui, sans-serif",
+  },
+  light: {
+    primaryColor: "#d1f0ec",
+    primaryBorderColor: "#0d9488",
+    primaryTextColor: "#0a0e12",
+    lineColor: "#5a6570",
+    secondaryColor: "#e9edf3",
+    tertiaryColor: "#f6f8fb",
+    mainBkg: "#ffffff",
+    nodeBorder: "#0d9488",
+    clusterBkg: "#f6f8fb",
+    clusterBorder: "#c8d0da",
+    edgeLabelBackground: "#ffffff",
+    nodeTextColor: "#0a0e12",
+    textColor: "#5a6570",
+    background: "transparent",
+    fontFamily: "var(--font-sans-app), ui-sans-serif, system-ui, sans-serif",
+  },
+};
+
+let mermaidModule: typeof import("mermaid")["default"] | null = null;
+
+async function getMermaid() {
+  if (!mermaidModule) {
+    const m = await import("mermaid");
+    mermaidModule = m.default;
   }
-  return mermaidReady;
+  return mermaidModule;
+}
+
+function resolveTheme(): AppTheme {
+  if (typeof document === "undefined") return "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
 export function MermaidBlock({ chart }: { chart: string }) {
   const [svg, setSvg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const renderCount = useRef(0);
 
   const reactId = useId();
-  const renderId = useMemo(() => `mermaid-${reactId.replace(/:/g, "")}`, [reactId]);
+  const baseId = useMemo(() => `mermaid-${reactId.replace(/:/g, "")}`, [reactId]);
+
+  const [appTheme, setAppTheme] = useState<AppTheme>(resolveTheme);
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setAppTheme(resolveTheme());
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
+    renderCount.current += 1;
+    const renderId = `${baseId}-${renderCount.current}`;
 
     async function render() {
       try {
         const mermaid = await getMermaid();
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "loose",
+          theme: "base",
+          themeVariables: THEME_VARS[appTheme],
+        });
         const { svg: out } = await mermaid.render(renderId, chart);
         if (!cancelled) {
           setSvg(out);
@@ -58,7 +109,7 @@ export function MermaidBlock({ chart }: { chart: string }) {
     return () => {
       cancelled = true;
     };
-  }, [chart, renderId]);
+  }, [chart, baseId, appTheme]);
 
   if (error) {
     return (
@@ -76,7 +127,7 @@ export function MermaidBlock({ chart }: { chart: string }) {
 
   return (
     <div
-      className="overflow-x-auto rounded-lg border border-app-border bg-app-surface p-4"
+      className="mermaid-themed primer-glow-card overflow-x-auto rounded-lg border border-app-border bg-app-surface p-4 [&_svg]:mx-auto"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
   );
