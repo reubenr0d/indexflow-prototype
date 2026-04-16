@@ -13,6 +13,8 @@
     "test:e2e:ci": "playwright test --project=chromium"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^3.0.53",
+    "@ai-sdk/react": "^3.0.167",
     "@privy-io/chains": "^0.1.4",
     "@privy-io/react-auth": "^3.21.0",
     "@privy-io/wagmi": "^4.0.4",
@@ -22,6 +24,7 @@
     "@tanstack/react-query": "^5.96.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
+    "ai": "^6.0.165",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",

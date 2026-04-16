@@ -13,6 +13,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-16] AI docs assistant: floating chat widget on `/docs` pages powered by OpenAI (gpt-4o-mini) that ingests all protocol docs and blog posts to answer user questions in real-time with streaming responses.
 - [2026-04-16] Token Allocation bar on the primer page now shows a "Draft" badge to indicate the split is preliminary.
 - [2026-04-16] Add Cross-Chain Coordination and Whitepaper Draft to in-app docs wiki, with sidebar navigation and routing.
 - [2026-04-16] "Chains" stat in the live testnet stats hero section, showing the number of configured testnet deployment targets.

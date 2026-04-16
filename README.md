@@ -493,6 +493,7 @@ Editing an agent markdown file does not, by itself, force a new vault. The runne
     - `/docs/pwa-push-notifications`
     - `/docs/regulatory-roadmap-draft`
   - Legacy wiki slugs remain supported as compatibility aliases and redirect to canonical routes.
+  - AI docs assistant: a floating chat widget on `/docs` pages lets users ask questions about the protocol. Powered by `gpt-4o-mini`, it ingests all docs and blog posts as context. Requires `LLM_API_KEY` in `apps/web/.env.local`.
 - Operator monitoring surfaces (web app):
   - `/prices` — live oracle status and current per-asset prices, with dynamic source badges (`Chainlink` or `Custom Oracle`).
   - `/prices/[assetId]` — per-asset historical `PriceUpdated` timeline + chart with 24H/7D/30D windows.
