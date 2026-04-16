@@ -28,7 +28,7 @@ Last updated: 2026-04-15
 | Ethereum Sepolia | Chain `11155111` | Smart Contract | `IntentRouter` proxy (`0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556`) | sepolia | agent | `read`, `deploy` | UUPS-upgradeable intent escrow and execution router | 2026-04-15 |
 | Ethereum Sepolia | Chain `11155111` | Smart Contract | `IntentRouter` impl (`0x482d0530B1b1d6f49d5FC733a321E615B53CB711`) | sepolia | agent | `read` | IntentRouter logic implementation | 2026-04-15 |
 | Ethereum Sepolia | Chain `11155111` | Smart Contract | `CrossChainIntentBridge` (`0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27`) | sepolia | agent | `read` | Stateless CCIP relay for cross-chain deposit intents | 2026-04-15 |
-| Ethereum Sepolia | Chain `11155111` | Smart Contract | `OracleConfigBroadcaster` (`0x762C7080D391f9169cdeeD93c65Ad5016D67701A`) | sepolia | agent | `read` | Canonical oracle config broadcast via CCIP | 2026-04-15 |
+| Ethereum Sepolia | Chain `11155111` | Smart Contract | `OracleConfigQuorum` (`0x762C7080D391f9169cdeeD93c65Ad5016D67701A`) | sepolia | agent | `read` | Quorum-based oracle config consensus via CCIP (address will change on redeploy) | 2026-04-15 |
 
 ## Update Template
 

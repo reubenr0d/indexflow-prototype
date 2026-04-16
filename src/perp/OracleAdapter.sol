@@ -30,7 +30,7 @@ contract OracleAdapter is IOracleAdapter, Ownable {
 
     /// @notice When true, `configureAsset` is restricted to the canonical receiver.
     bool public canonicalMode;
-    /// @notice Address of the OracleConfigReceiver on this chain (only relevant in canonical mode).
+    /// @notice Address of the config controller (e.g. OracleConfigQuorum) on this chain (only relevant in canonical mode).
     address public canonicalReceiver;
     /// @notice Order-independent hash of all active asset configs (excludes feedAddress).
     bytes32 public configHash;

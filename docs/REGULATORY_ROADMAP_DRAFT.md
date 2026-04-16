@@ -73,6 +73,101 @@ financial service.
 - **No utility/governance token at initial launch** -- token follows once
   decentralization milestones are met
 
+## Institutional access via operator licenses
+
+Licensed asset managers do not need to wait for a regulated access tier from
+IndexFlow. The permissionless protocol is designed so that operators with their
+own financial-services licenses can use it as execution and settlement
+infrastructure beneath their own compliance wrapper today.
+
+### How it works
+
+IndexFlow's on-chain flow is USDC-in / basket-shares-out. No underlying
+equities, commodities, or other reference assets are held in the contracts. The
+perp module provides synthetic exposure only. This means:
+
+- The only assets to custody are **USDC** and **BasketShareToken** (ERC-20).
+- There is no settlement of underlying instruments -- all PnL resolves in USDC.
+- Deposit and redeem are permissionless functions with no protocol-level
+  investor gating.
+
+A licensed manager can wrap this flow inside a standard regulated fund vehicle
+without any protocol changes.
+
+### Recommended structure
+
+```
+┌──────────────────────────────────┐
+│   Regulated Fund Vehicle         │
+│   (Cayman AIF / EU RAIF / etc)  │
+│                                  │
+│   - Licensed manager (AIFM,     │
+│     MiFID, SEC RIA, etc)        │
+│   - Qualified investors only     │
+│   - Full offering docs + risk    │
+│     disclosure                   │
+│   - Independent admin + auditor  │
+└──────────────┬───────────────────┘
+               │ USDC
+┌──────────────▼───────────────────┐
+│   Institutional Custodian        │
+│   (Fireblocks / Anchorage)      │
+│                                  │
+│   - Holds USDC + share tokens   │
+│   - Signs txns on behalf of fund│
+│   - Policy engine / whitelists  │
+└──────────────┬───────────────────┘
+               │ deposit() / redeem()
+┌──────────────▼───────────────────┐
+│   IndexFlow BasketVault          │
+│   (permissionless, on-chain)    │
+│                                  │
+│   - USDC in → shares out        │
+│   - Synthetic exposure via perps │
+│   - USDC out on redemption      │
+└──────────────────────────────────┘
+```
+
+### What the fund handles
+
+- KYC/KYB and investor qualification for its own investors
+- NAV verification (can be cross-checked against on-chain `getSharePrice()`)
+- Custody of USDC and basket share tokens via an institutional custodian
+- Regulatory reporting (AIFMD Annex IV, MiFIR, Form PF, or equivalent)
+- Risk disclosures covering smart contract risk, oracle risk, shared-pool
+  counterparty risk, synthetic derivatives classification, and redemption
+  liquidity constraints
+
+### What IndexFlow provides
+
+- Permissionless USDC-in / shares-out deposit and redeem infrastructure
+- On-chain NAV transparency via `getSharePrice()` and `PerpReader`
+- Synthetic exposure via the shared perpetual liquidity module
+- No counterparty relationship -- the protocol is software, not a service
+  provider
+
+### Precedent
+
+Crypto hedge funds and institutional allocators already use permissionless DeFi
+protocols (Uniswap, Aave, GMX, Lido, Compound) as execution infrastructure
+inside regulated fund vehicles. The protocol does not obtain a license; the
+fund operator does. None of these protocols built a regulated subsidiary for
+institutional access -- third-party custodians, fund administrators, and prime
+brokers built the compliance wrappers independently.
+
+### Important caveats
+
+- The synthetic-only design simplifies custody (only USDC + share tokens), but
+  synthetic exposure referencing equities or commodities is still classified as
+  a **derivative** under MiFID II, Dodd-Frank, and most major frameworks. The
+  manager's license must cover derivatives activity.
+- The shared perp pool is an unregulated venue. The manager must assess whether
+  their best-execution and counterparty-risk obligations permit use of an
+  unregulated execution venue and disclose this to investors.
+- IndexFlow is not a counterparty, custodian, or service provider to the fund.
+  The manager assumes full operational responsibility for interactions with the
+  protocol.
+
 ## What probably does not work
 
 These assumptions are high risk and should not be used as launch premises,
@@ -312,14 +407,22 @@ Deliverables:
 - published audit report and bug bounty
 - KPI dashboard for chain-specific attribution
 
-### Phase 6: Regulated access tier (post-launch)
+### Phase 6: Regulated access tier (optional, deferred)
+
+> **This phase is optional.** IndexFlow's core strategy is permanently
+> permissionless. Phase 6 describes a potential future business decision, not a
+> regulatory requirement for the protocol. Licensed operators can use IndexFlow
+> today under their own licenses without this tier -- see "Institutional access
+> via operator licenses" above.
 
 Goal: offer a licensed onboarding and product-management service for operators,
 issuers, and institutions that lack their own compliance infrastructure.
 
-The permissionless protocol layer remains unchanged. The regulated tier is an
-additional hosted service built on top of the same contracts by Labs or a
-dedicated Labs subsidiary.
+The permissionless protocol layer remains unchanged. The regulated tier would be
+an additional hosted service built on top of the same contracts by Labs or a
+dedicated Labs subsidiary. Whether to pursue this depends on market demand,
+licensing cost, and whether third-party service providers fill the gap
+independently.
 
 Steps:
 
@@ -355,11 +458,14 @@ and classification memo obtained.
 **Relationship to the permissionless protocol:**
 
 - Operators with their own licenses can build on the permissionless protocol at
-  any time without using this tier.
-- The regulated tier serves clients that want compliant access without obtaining
-  their own license.
+  any time without this tier. This is the primary institutional access path --
+  see "Institutional access via operator licenses" above.
+- The regulated tier, if pursued, would serve clients that want compliant access
+  without obtaining their own license.
 - Protocol governance and decentralization are not affected; the regulated
-  subsidiary is a consumer of the protocol, not a gatekeeper of it.
+  subsidiary would be a consumer of the protocol, not a gatekeeper of it.
+- If third-party custodians, fund administrators, or prime brokers build
+  compliant access to IndexFlow independently, this tier may not be needed.
 
 ## Progressive decentralization sequence
 
@@ -458,8 +564,8 @@ permissionless model, and should be treated as a separate workstream:
   without redundancy
 - broadening synthetic references beyond the first approved asset set without
   updating risk disclosures
-- operating a **regulated access tier** through Labs or a subsidiary (requires
-  its own licensing workstream; see Phase 6)
+- operating a **regulated access tier** through Labs or a subsidiary (optional;
+  requires its own licensing workstream if pursued; see Phase 6)
 
 ## Draft launch checklist
 
@@ -519,7 +625,8 @@ permissionless model, and should be treated as a separate workstream:
 - What is the minimum council size and composition for Stage 1?
 - What are the token distribution terms for the governance token (deferred to
   post-launch, but design should begin in Phase 2)?
-- Which EU member state for the regulated subsidiary (Phase 6)?
-- Should Labs license directly or use a regulated partner / white-label
-  arrangement?
-- Target timeline for the licensing application relative to mainnet launch?
+- If Phase 6 is pursued: which EU member state for the regulated subsidiary?
+- If Phase 6 is pursued: should Labs license directly or use a regulated
+  partner / white-label arrangement?
+- If Phase 6 is pursued: target timeline for the licensing application relative
+  to mainnet launch?

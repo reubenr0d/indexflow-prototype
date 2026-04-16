@@ -7,7 +7,7 @@ export function BlogPostCard({ post }: { post: BlogPostMeta }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="primer-glow-card group flex flex-col overflow-hidden rounded-xl border border-app-border bg-app-bg transition-colors"
+      className="primer-glow-card group flex h-full flex-col overflow-hidden rounded-xl border border-app-border bg-app-bg transition-colors"
     >
       {post.image && (
         <div className="aspect-[1200/630] overflow-hidden">
@@ -31,7 +31,7 @@ export function BlogPostCard({ post }: { post: BlogPostMeta }) {
         ))}
       </div>
 
-      <h3 className="mt-4 px-6 text-lg font-semibold leading-snug text-app-text group-hover:text-app-accent transition-colors">
+      <h3 className="mt-4 px-6 text-lg font-semibold leading-snug text-app-text group-hover:text-app-accent transition-colors line-clamp-2">
         {post.title}
       </h3>
 

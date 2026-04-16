@@ -190,6 +190,7 @@ Score leads in a CRM (Clay table or HubSpot):
 
 Not a pitch. A fit conversation. The VSL and nurture sequence already explained the product. The call explores:
 - Their current fund structure
+- Whether they hold their own financial-services license (AIFM, MiFID, SEC RIA, or equivalent) -- if so, they can use IndexFlow under their own compliance wrapper today rather than waiting for a regulated access tier
 - What assets they want to basket
 - Regulatory jurisdiction and compliance requirements
 - Timeline and launch goals
@@ -212,7 +213,7 @@ Every piece of content maps to one of these pillars:
 - **P2 -- Market Thesis**: Why institutional-grade basket infrastructure matters now, from the asset manager's perspective.
 - **P3 -- Technical Credibility**: Architecture deep dives, oracle design, security posture. Builds trust with sophisticated operators.
 - **P4 -- Operator Stories**: How a vault session works, fee revenue modeling, reserve management decisions, operational patterns.
-- **P5 -- Regulatory Clarity**: Permissionless protocol model, Foundation/Labs/Frontend separation, progressive decentralization roadmap, frontend compliance (geo-blocking, OFAC screening, ToS). How mapping the regulatory perimeter early de-risks the decision to build on IndexFlow.
+- **P5 -- Regulatory Clarity**: Permissionless protocol model, Foundation/Labs/Frontend separation, progressive decentralization roadmap, frontend compliance (geo-blocking, OFAC screening, ToS), institutional access via operator licenses (bring your own license). How mapping the regulatory perimeter early de-risks the decision to build on IndexFlow.
 - **P6 -- Unit Economics**: Fee model, funding rate mechanics, revenue projections for operators. Token design is secondary/deferred.
 
 ## Framing Principles

@@ -116,11 +116,11 @@ The `IntentRouter` is UUPS upgradeable (it holds user funds in escrow, so upgrad
 
 The final piece is Privy account abstraction. Each user gets a smart wallet that has the same address on every chain. When the `CrossChainIntentBridge` mints shares on a destination chain, they go to the same address the user logged in with. From the user's perspective, they deposited USDC and received basket shares. They never chose a chain, signed a bridge transaction, or worried about gas on the destination.
 
-## Oracle Consistency: One Canonical Source
+## Oracle Consistency: Quorum-Based Config Consensus
 
 Multi-chain deployments have an oracle drift problem: each chain's `OracleAdapter` could be configured with different staleness thresholds, deviation bands, or feed types, causing NAV discrepancies for the same basket across chains.
 
-The `OracleConfigBroadcaster` on the canonical chain reads asset configs from the local `OracleAdapter` and broadcasts them via CCIP to `OracleConfigReceiver` contracts on remote chains. Remote adapters enter `canonicalMode` where only the receiver can update config parameters. Chain-specific Chainlink feed addresses are preserved locally. This guarantees consistent oracle parameters everywhere without requiring manual coordination.
+`OracleConfigQuorum` solves this without relying on a single home chain. The same contract is deployed symmetrically on every chain. An admin on any chain proposes a config change; the proposal is broadcast to all peers via CCIP. Each peer stores the vote, and when a configurable quorum threshold (e.g. 2-of-3 chains) is reached with matching config hashes, the config is auto-applied to the local `OracleAdapter`. Chain-specific Chainlink feed addresses are preserved locally. This guarantees consistent oracle parameters everywhere without requiring manual coordination or trusting a single canonical chain.
 
 ## What This Means
 
@@ -128,7 +128,7 @@ The coordination layer changes the operational model for multi-chain structured 
 
 For vault operators, this means every chain stays liquid. For users, it means better execution regardless of which chain they happen to be connected to. For the protocol, it means TVL distributes according to actual execution capacity rather than social proof or marketing spend.
 
-The trust model is explicit: CCIP message delivery, keeper honesty for intent execution, and Privy wallet custody are the external dependencies. Everything else -- TWAP integrity, routing weights, escrow safety, oracle consistency -- is enforced on-chain with configurable circuit breakers and fallbacks.
+The trust model is explicit: CCIP message delivery, keeper honesty for intent execution, and Privy wallet custody are the external dependencies. Everything else -- TWAP integrity, routing weights, escrow safety, oracle config quorum -- is enforced on-chain with configurable circuit breakers and fallbacks.
 
 ## Get Started
 

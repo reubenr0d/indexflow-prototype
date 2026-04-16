@@ -27,7 +27,7 @@ Oracle feeds, deployments, and pool management.
 - [Price Feed Flow](./PRICE_FEED_FLOW.md) — OracleAdapter, PriceSync, Chainlink vs custom relayer, and keeper setup.
 - [Oracle & Supported Assets](./ORACLE_SUPPORTED_ASSETS.md) — Supported assets on Sepolia, Yahoo relayer integration, and adding new assets.
 - [Global Pool Management](./GLOBAL_POOL_MANAGEMENT_FLOW.md) — GMX buffer amounts, direct pool deposits, and the admin pool interface.
-- [Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md) — Pool depth TWAP, CCIP reserve sync, intent router / bridge, canonical oracle broadcast, and trust model.
+- [Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md) — Pool depth TWAP, CCIP reserve sync, intent router / bridge, quorum-based oracle config consensus, and trust model.
 - [Deployments](./DEPLOYMENTS.md) — Sepolia and local contract addresses, subgraph deployment, and refresh commands.
 
 ## Operations
@@ -42,5 +42,5 @@ Testing, notifications, and operational tooling.
 Tokenomics, governance, and regulatory considerations.
 
 - [Utility Token & Tokenomics](./UTILITY_TOKEN_TOKENOMICS.md) — Backstop mechanics, redemption reserves, ve-model, emissions, and POL.
-- [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) — Permissionless protocol launch pathway, foundation structure, progressive decentralization, and compliance requirements (draft).
+- [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) — Permissionless protocol launch pathway, institutional access via operator licenses, foundation structure, progressive decentralization, and compliance requirements (draft).
 - [Agents Framework](./AGENTS_FRAMEWORK.md) — Multi-agent architecture, MCP tool reference, vault lifecycle workflows, and memory model.

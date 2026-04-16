@@ -42,12 +42,14 @@ Proportional **split execution** across chains is not fully encoded inside `Inte
 - **Stateless CCIP relay** for **USDC + intent metadata**: only **`intentRouter`** may call **`routeCrossChain`**, which pulls USDC from the router and sends a CCIP message with **token transfer** to the destination bridge peer encoded in **`supportedChains`**.
 - **Inbound**: Validates source chain and bridge sender against **`supportedChains`**, decodes **`CrossChainPayload`** (`intentId`, `user`, `targetBasket`), reads bridged USDC from **`destTokenAmounts`**, optionally picks the **first factory basket** if `targetBasket` is zero, **`deposit`**s into the target **`BasketVault`**, and transfers minted **shares to `payload.user`** (the same address across chains when that address is a **Privy smart wallet**).
 
-### OracleConfigBroadcaster / OracleConfigReceiver
+### OracleConfigQuorum (`src/coordination/OracleConfigQuorum.sol`)
 
-- **`OracleConfigBroadcaster`** (canonical chain): Owner calls **`broadcastConfig`** / **`broadcastAllConfigs`** to read **`OracleAdapter`** asset configs and send **`CanonicalAssetConfig`** (symbol, feed type, staleness, deviation, decimals — **not** `feedAddress`) to each registered remote via CCIP.
-- **`OracleConfigReceiver`** (remote chain): On CCIP receive, checks **`canonicalChainSelector`** and **`canonicalBroadcaster`**, then calls **`oracleAdapter.configureAsset`** with canonical params while **preserving the existing local `feedAddress`** when the asset already exists (chain-specific Chainlink addresses). Emits **`AssetNeedsFeedAddress`** when no local feed was set.
+- **Symmetric deployment**: the same contract is deployed on every chain — no single canonical chain is required. Each instance registers its peers via **`addPeer(chainSelector, quorumAddress)`**.
+- **Propose and broadcast**: owner on any chain calls **`proposeConfig(symbol, feedType, staleness, deviation, decimals)`**. The quorum contract records the local vote, computes a **config hash** (matching `OracleAdapter._assetHash`, which excludes `feedAddress`), and broadcasts the proposal to all registered peers via CCIP.
+- **Quorum consensus**: each chain stores incoming votes keyed by **(assetId, sourceChainSelector)**. When **`quorumThreshold`** non-expired votes share the same config hash, the config is auto-applied to the local **`OracleAdapter`** (preserving the existing chain-specific `feedAddress`). Votes expire after **`proposalTtl`** (default 24 hours) to prevent stale votes from lingering.
+- **Emergency bypass**: owner may call **`forceApplyConfig`** to apply config locally without quorum (bootstrap or emergency).
 
-On **`OracleAdapter`**, **`setCanonicalMode(receiver)`** sets **`canonicalMode`** and **`canonicalReceiver`** so that **`configureAsset`** is only callable by that receiver when canonical mode is on; **`disableCanonicalMode`** is an owner emergency escape hatch. See `src/perp/OracleAdapter.sol`.
+On **`OracleAdapter`**, **`setCanonicalMode(quorumContract)`** locks **`configureAsset`** so only the quorum contract can apply config changes; **`disableCanonicalMode`** is an owner emergency escape hatch. See `src/perp/OracleAdapter.sol`.
 
 ## Trust Model and Failure Modes
 
@@ -70,6 +72,6 @@ Deploy and wire the coordination stack with Foundry:
 PATH="$HOME/.foundry/bin:$PATH" forge script script/DeployCoordination.s.sol --root /path/to/snx-prototype --rpc-url $RPC_URL --broadcast
 ```
 
-Required and optional environment variables are documented in **`script/DeployCoordination.s.sol`** (GMX vault, USDC, CCIP router, basket factory, oracle adapter, chain selector, fee token, treasury, canonical vs remote oracle path, optional peer wiring, keeper).
+Required and optional environment variables are documented in **`script/DeployCoordination.s.sol`** (GMX vault, USDC, CCIP router, basket factory, oracle adapter, chain selector, fee token, treasury, quorum threshold, proposal TTL, optional peer wiring, keeper).
 
-After deployment, register CCIP peers, supported bridge chains, **`registry.addRemoteChain`**, enable **`OracleAdapter.setCanonicalMode`** on remotes when using canonical oracle sync, and fund **`CCIPReserveMessenger`** with LINK (or native) for fees.
+After deployment, register CCIP peers, supported bridge chains, **`registry.addRemoteChain`**, set **`OracleAdapter.setCanonicalMode(quorumContract)`** to lock config to the quorum, wire **`OracleConfigQuorum.addPeer`** on each chain pointing at every other chain's quorum contract, and fund **`CCIPReserveMessenger`** with LINK (or native) for fees.

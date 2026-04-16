@@ -37,7 +37,7 @@ Structured DeFi products are a $100B+ opportunity that barely exists on-chain to
 We forked GMX v1 and built a shared liquidity pool with per-vault accounting on top. I can walk through the oracle design (Chainlink + custom relayer for equities and commodities), the NAV vs redeemable liquidity distinction, and how we handle funding rates. We also use AI agents to manage vault operations autonomously.
 
 **Angle C -- Regulation + asset management (for fintech/compliance shows):**
-We're building onchain infrastructure for asset managers who want to launch structured DeFi products. I can discuss how MiCA changes the calculus for on-chain fund products, why compliance is a competitive advantage for operators, and what the licensing landscape looks like for basket vaults serving institutional allocators.
+We're building onchain infrastructure for asset managers who want to launch structured DeFi products. Licensed managers can use IndexFlow under their own licenses today -- the protocol is execution infrastructure, not a counterparty. I can discuss how that "bring your own license" model works in practice, how MiCA changes the calculus for on-chain fund products, and what the licensing landscape looks like for basket vaults serving institutional allocators.
 
 **Angle D -- Operator economics (for fintech/asset management shows):**
 We can walk through the unit economics of running a basket vault on IndexFlow -- fee structures, reserve management, revenue projections. This is relevant for any asset manager evaluating whether onchain fund infrastructure is viable for their strategy.

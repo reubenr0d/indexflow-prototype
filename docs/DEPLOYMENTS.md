@@ -92,7 +92,7 @@ Deployed via `script/DeployCoordination.s.sol` on top of the existing Sepolia st
   https://sepolia.etherscan.io/address/0x482d0530B1b1d6f49d5FC733a321E615B53CB711
 - `crossChainIntentBridge`: `0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27`  
   https://sepolia.etherscan.io/address/0xad177ecAd0C6Ac73Daa46264097ff7ff9b887F27
-- `oracleConfigBroadcaster`: `0x762C7080D391f9169cdeeD93c65Ad5016D67701A`  
+- `oracleConfigQuorum`: `0x762C7080D391f9169cdeeD93c65Ad5016D67701A` *(pre-quorum deployment; address will change on redeploy)*  
   https://sepolia.etherscan.io/address/0x762C7080D391f9169cdeeD93c65Ad5016D67701A
 
 Configuration: TWAP window 30 min, min snapshot interval 5 min, max staleness 1 hour, broadcast threshold 5%, max escrow duration 2 hours, min intent 100 USDC, CCIP fee token LINK (`0x779877A7B0D9E8603169DdbD7836e478b4624789`), chain selector `16015286601757825753`.

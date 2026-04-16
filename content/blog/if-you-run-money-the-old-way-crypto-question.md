@@ -57,6 +57,8 @@ IndexFlow is structured **basket vault** infrastructure: investors deposit stabl
 
 IndexFlow also treats **where execution and pool liquidity live** as a protocol problem, not a retail UX problem. In multi-chain environments, asking every end user to pick the "right" chain is a hidden operational risk for the product layer. IndexFlow routes flow using **reserve and routing signals** so exposure products can aim at deeper execution liquidity without turning chain selection into a manual step for each depositor. (If you want the technical version of that story, it is written up in plain language alongside the rest of the system in the project documentation.)
 
+Because the entire on-chain flow is **USDC-in / shares-out** with synthetic-only exposure, there are no underlying equities or commodities to custody -- only USDC and basket share tokens. A licensed manager can wrap IndexFlow inside a standard fund vehicle with an institutional custodian (Fireblocks, Anchorage, or equivalent) and handle KYC, reporting, and investor qualification under their own license. The protocol is the execution layer; your fund is the compliance layer.
+
 If your job is to evaluate whether that design pattern fits your governance model, the next step is not conviction about tokens. It is **diligence**: read the architecture, run the testnet flow, and map the failure modes to the same risk framework you already use.
 
 ## A narrow disclaimer

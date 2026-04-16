@@ -99,7 +99,7 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 
 - Source: `docs/CROSS_CHAIN_COORDINATION.md`, `src/coordination/`
 - Hook type: Insider Knowledge
-- PoolReserveRegistry / CCIPReserveMessenger / IntentRouter / CrossChainIntentBridge / OracleConfigBroadcaster / OracleConfigReceiver -- why each exists as a separate contract, how the split addresses contract size limits, upgradeability for user-fund-holding contracts (UUPS), and stateless relays
+- PoolReserveRegistry / CCIPReserveMessenger / IntentRouter / CrossChainIntentBridge / OracleConfigQuorum -- why each exists as a separate contract, how the split addresses contract size limits, upgradeability for user-fund-holding contracts (UUPS), and stateless relays
 
 **"Intent-Based Routing for DeFi Deposits: Escrow, Keepers, and Proportional Flow"**
 `[L1 | P3 Technical | Blog | Cold]`
@@ -108,12 +108,12 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 - Hook type: Curiosity Gap
 - Intent lifecycle (submit → pending → execute/refund), escrow safety with automatic refund, keeper whitelist for basket selection, MEV protection via submitAndExecute, fee and griefing protection
 
-**"Oracle Consistency Across Chains: How One Canonical Source Prevents NAV Drift"**
+**"Oracle Consistency Across Chains: How Quorum-Based Config Consensus Prevents NAV Drift"**
 `[L1 | P3 Technical | Blog | Cold]`
 
-- Source: `src/perp/OracleAdapter.sol`, `src/coordination/OracleConfigBroadcaster.sol`
+- Source: `src/perp/OracleAdapter.sol`, `src/coordination/OracleConfigQuorum.sol`
 - Hook type: Data
-- Problem: each chain has its own OracleAdapter, nothing prevents config drift. Solution: canonical chain broadcasts via CCIP, remote adapters locked to receiver, configHash for defense-in-depth
+- Problem: each chain has its own OracleAdapter, nothing prevents config drift. Solution: symmetric quorum contract on every chain, N-of-M agreement before config applies, configHash for defense-in-depth, no single home chain dependency
 
 **"From USDC to Basket Exposure in One Transaction: The Vault Lifecycle"**
 `[L1 | P1 Education | Blog | Cold]`
@@ -142,6 +142,14 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 - Source: `docs/REGULATORY_ROADMAP_DRAFT.md` foundation structure section
 - Hook type: Contrarian
 - Entity chart, IP flow, why separation protects both the protocol and the operators building on it
+
+**"How Licensed Asset Managers Can Use Permissionless DeFi Infrastructure Today"**
+`[L1 | P5 Regulatory | Blog | Cold]`
+
+- Source: `docs/REGULATORY_ROADMAP_DRAFT.md` institutional access via operator licenses section
+- Hook type: Contrarian
+- Core argument: you don't need the protocol to get a license -- you bring your own. Licensed managers (AIFM, MiFID, SEC RIA) can wrap IndexFlow inside a standard fund vehicle with institutional custody, using the protocol as execution infrastructure. USDC-in/shares-out with synthetic-only exposure simplifies custody. Precedent: crypto hedge funds already use Uniswap, Aave, GMX this way.
+- **Priority: HIGH** -- directly addresses institutional adoption without requiring IndexFlow to build a regulated tier
 
 ### LinkedIn
 
@@ -228,14 +236,14 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 `[L1 | P3 Technical | X | Cold]`
 
 - Hook type: Insider Knowledge. 9 tweets.
-- Contract-by-contract walkthrough: PoolReserveRegistry, CCIPReserveMessenger, IntentRouter, CrossChainIntentBridge, OracleConfigBroadcaster, OracleConfigReceiver.
+- Contract-by-contract walkthrough: PoolReserveRegistry, CCIPReserveMessenger, IntentRouter, CrossChainIntentBridge, OracleConfigQuorum.
 - Source: `src/coordination/`
 
 **"Your DeFi app says it's multi-chain. But do all chains agree on the same oracle parameters?"**
 `[L1 | P3 Technical | X | Cold]`
 
 - Hook type: Stakes. 6 tweets.
-- Oracle config drift problem, canonical broadcast solution, configHash integrity check, hasBrokenFeeds fallback.
+- Oracle config drift problem, quorum-based config consensus solution, configHash integrity check, hasBrokenFeeds fallback.
 - Source: `src/perp/OracleAdapter.sol`, `docs/CROSS_CHAIN_COORDINATION.md`
 
 **"'Decentralize later' is what every protocol says. Here's our 4-stage plan with explicit entry criteria."**
@@ -366,12 +374,13 @@ Weekly issues for warm leads. Sample topics:
 
 - Competitive positioning through education
 
-**"The Regulated Access Tier: How Permissionless Protocols Can Serve Institutional Clients"**
+**"Bring Your Own License: How Institutional Operators Access Permissionless DeFi Infrastructure"**
 `[L3 | P5+P4 Regulatory/Operator | Substack | Warm]`
 
-- Source: `docs/REGULATORY_ROADMAP_DRAFT.md` Phase 6 (regulated access tier)
-- How a separately licensed subsidiary can offer KYC/KYB onboarding, compliant product issuance, and regulatory reporting on top of the same permissionless contracts
-- Key distinction: the protocol stays permissionless; the regulated tier is a service layer, not a gatekeeper
+- Source: `docs/REGULATORY_ROADMAP_DRAFT.md` institutional access via operator licenses section
+- Primary path: licensed managers wrap IndexFlow inside their own fund vehicle with institutional custody (Fireblocks, Anchorage), handling KYC/KYB, investor qualification, and regulatory reporting under their own license. The protocol is execution infrastructure, not a counterparty.
+- Secondary path (optional, deferred): a separately licensed subsidiary could offer compliant access for operators that lack their own license, but this is a future business decision, not a protocol requirement
+- Key distinction: the protocol stays permissionless; institutional access is operator-driven, not protocol-gated
 
 **"The Funding Rate Mechanism That Keeps the Shared Pool Solvent"**
 `[L3 | P3 Technical | Substack | Warm]`

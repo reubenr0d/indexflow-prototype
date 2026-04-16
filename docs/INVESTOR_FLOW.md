@@ -77,6 +77,24 @@ sequenceDiagram
 | Risk caps and pause | **VaultAccounting** owner (`maxOpenInterest`, `maxPositionSize`, `setPaused`) |
 | Emergency upgrades / admin keys | Deploy configuration and governance outside this doc |
 
+## Institutional access
+
+The deposit and redeem paths described above are the same for all participants,
+including institutional operators that wrap vault interaction inside their own
+regulated fund vehicles. A licensed asset manager can use an institutional
+custodian (Fireblocks, Anchorage, or equivalent) to hold USDC and basket share
+tokens, sign transactions on behalf of a fund, and interact with `BasketVault`
+through the same permissionless `deposit()` and `redeem()` functions. No
+protocol-level changes are required.
+
+Because the entire on-chain flow is USDC-in / shares-out with synthetic-only
+exposure, there are no underlying equities or commodities to custody -- only
+USDC and `BasketShareToken`.
+
+For the full institutional access pattern and compliance considerations, see
+[Institutional access via operator licenses](./REGULATORY_ROADMAP_DRAFT.md#institutional-access-via-operator-licenses)
+in the Regulatory Roadmap.
+
 ## Related reading
 
 - [README.md](./README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).

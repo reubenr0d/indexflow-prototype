@@ -69,7 +69,7 @@ The reserve layer determines whether a share is redeemable with confidence. It i
 
 ### 5. Attribution and Governance Layer
 
-At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance. On-chain coordination of cross-chain pool state via TWAP tracking of gmxVault.poolAmounts(usdc), Chainlink CCIP state synchronization, and proportional intent routing.
+At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance. On-chain coordination of cross-chain pool state via TWAP tracking of gmxVault.poolAmounts(usdc), Chainlink CCIP state synchronization, proportional intent routing, and quorum-based oracle config consensus across chains (no single home chain required).
 
 ## Basket Lifecycle: Deposit, Exposure, Valuation, Redemption
 
@@ -107,7 +107,7 @@ TVL shows whether the product base is growing. Volume shows whether the shared l
 
 This ring-fenced deployment model also creates better expansion logic. A chain does not need to underwrite a global pool with unclear spillovers. It can support a specific deployment, observe its metrics, and scale support according to results. That makes chain-attributable growth more accountable and more defensible than generalized incentive programs.
 
-While each chain maintains independent GMX pools, baskets, and KPIs, the coordination layer provides cross-chain visibility via the PoolReserveRegistry. Pool states are synced across chains using Chainlink CCIP, and deposits are proportionally routed based on available liquidity depth. Attribution remains per-chain: a deposit routed to Chain B credits Chain B's KPIs, preserving the ring-fenced growth model.
+While each chain maintains independent GMX pools, baskets, and KPIs, the coordination layer provides cross-chain visibility via the PoolReserveRegistry. Pool states are synced across chains using Chainlink CCIP, and deposits are proportionally routed based on available liquidity depth. Oracle configuration is kept consistent across chains through a quorum-based consensus mechanism: config changes proposed on any chain are broadcast to peers and auto-applied once a configurable N-of-M threshold is reached, removing single-chain dependency. Attribution remains per-chain: a deposit routed to Chain B credits Chain B's KPIs, preserving the ring-fenced growth model.
 
 ## Oracle, Pricing, and Market Integrity
 
@@ -139,7 +139,9 @@ This produces a healthier governance model. The token does not invent demand by 
 
 Capital formation follows the same logic. The first uses of capital are development, compliance, audit work, and reserve support. Only after liquidity credibility has been demonstrated does wider token market formation become strategically important.
 
-The protocol launches permissionless, but the architecture supports a future regulated access tier. Operators that hold their own financial-services licenses can build on IndexFlow immediately, using the permissionless contracts as execution and settlement infrastructure beneath their own compliance wrapper. Operators that lack their own licenses can be served by a separately licensed entity that provides KYC/KYB onboarding, compliant product issuance, NAV governance, and regulatory reporting on top of the same protocol. This two-tier model -- permissionless protocol plus optional regulated service -- serves both DeFi-native and institutional audiences without gating the protocol itself.
+The protocol launches permissionless, and the architecture is designed so that licensed operators can use it as infrastructure today. Operators that hold their own financial-services licenses (AIFM, MiFID, SEC RIA, or equivalent) can build on IndexFlow immediately, using the permissionless contracts as execution and settlement infrastructure beneath their own compliance wrapper -- a regulated fund vehicle, an institutional custodian, and the operator's own investor qualification and reporting obligations. Because the entire on-chain flow is USDC-in / basket-shares-out with synthetic-only exposure, custody requirements are simplified: no underlying equities or commodities are held in the contracts, so only USDC and basket share tokens need to be custodied. This is the same pattern used by crypto hedge funds that already route through Uniswap, Aave, and GMX under their own fund structures.
+
+A separately licensed entity that provides KYC/KYB onboarding, compliant product issuance, NAV governance, and regulatory reporting on top of the same protocol remains an optional future business decision, not a committed roadmap step. Whether to pursue it depends on market demand and whether third-party service providers fill the gap independently. See the [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) for details on both the operator-license path and the optional regulated access tier.
 
 ## Competitive Landscape
 

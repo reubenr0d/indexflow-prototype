@@ -50,6 +50,7 @@ export default function PrimerBlogClient({ posts }: { posts: BlogPostMeta[] }) {
           {posts.map((post, i) => (
             <motion.div
               key={post.slug}
+              className="h-full"
               initial={{ opacity: 0, y: 16 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{

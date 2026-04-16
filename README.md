@@ -7,7 +7,7 @@ Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on 
 
 ## Architecture
 
-A **coordination layer** (`src/coordination/`) complements each chain-local deployment: CCIP-linked modules synchronize pool reserve depth signals, relay deposit/redeem intents, and broadcast canonical oracle configuration across chains while execution and basket state remain anchored per deployment.
+A **coordination layer** (`src/coordination/`) complements each chain-local deployment: CCIP-linked modules synchronize pool reserve depth signals, relay deposit/redeem intents, and maintain quorum-based oracle config consensus across chains while execution and basket state remain anchored per deployment.
 
 ```
 Investor ──deposit USDC──► BasketVault ──allocate──► VaultAccounting ──► GMX Vault Pool
@@ -35,7 +35,7 @@ Investor ──deposit USDC──► BasketVault ──allocate──► VaultAc
 - **PoolReserveRegistry** -- TWAP-style pool depth tracking for cross-chain reserve visibility
 - **CCIPReserveMessenger** -- Delta-triggered reserve state sync over Chainlink CCIP
 - **IntentRouter** -- Deposit/redeem intent routing with escrow
-- **CrossChainIntentBridge**, **OracleConfigBroadcaster**, **OracleConfigReceiver** -- CCIP relay and canonical oracle parameter sync across chains
+- **CrossChainIntentBridge**, **OracleConfigQuorum** -- CCIP relay and quorum-based oracle config consensus across chains
 
 ### GMX Fork (`src/gmx/`)
 
@@ -156,7 +156,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - **Solidity** -- 0.6.12 (GMX fork) + ^0.8.24 (new contracts)
 - **Foundry** -- Build, test, deploy
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
-- **Chainlink CCIP** -- Cross-chain messaging for the coordination layer (reserve sync, intents, oracle config relay)
+- **Chainlink CCIP** -- Cross-chain messaging for the coordination layer (reserve sync, intents, oracle config quorum)
 - **Target chains** -- Arbitrum, Ethereum Sepolia (testnet)
 
 ## Setup

@@ -13,12 +13,18 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-16] Documented institutional "bring your own license" access pattern: licensed asset managers can use IndexFlow as permissionless execution infrastructure beneath their own compliance wrapper (regulated fund vehicle + institutional custodian). New section in regulatory roadmap, updated whitepaper, investor flow, blog, content calendar, growth strategy, podcast pitch template, and docs index. Reframed Phase 6 regulated access tier as optional and deferred throughout.
+- [2026-04-16] `OracleConfigQuorum` contract (`src/coordination/OracleConfigQuorum.sol`) -- symmetric N-of-M oracle config consensus via Chainlink CCIP, replacing the single-canonical-chain `OracleConfigBroadcaster` / `OracleConfigReceiver` pattern. Config changes proposed on any chain are broadcast to peers and auto-applied when `quorumThreshold` matching votes accumulate. Includes proposal TTL expiry, emergency `forceApplyConfig` bypass, and peer management.
+- [2026-04-16] `IOracleConfigQuorum` interface (`src/coordination/interfaces/IOracleConfigQuorum.sol`).
+- [2026-04-16] `OracleConfigQuorum` test suite (`test/OracleConfigQuorum.t.sol`) -- 16 tests covering single-chain propose (no apply), multi-chain quorum (apply), mismatched proposals, proposal expiry, emergency bypass, peer add/remove, threshold management, and feedAddress preservation.
+- [2026-04-16] Blog post: "Your Vault Manager Is a Markdown File" -- covers the multi-agent vault framework (agents as markdown, MCP tool servers, real Yahoo Finance prices on testnet, human vs AI management parity, safety rails), with custom hero SVG illustration.
 - [2026-04-16] Blog post: "If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked" -- TradFi-oriented piece on redemption liquidity vs marks, allocator questions, and a plain-English IndexFlow framing, with hero SVG (`if-you-run-money-the-old-way-crypto-question.svg`).
 - [2026-04-16] Landing page: "Latest Insights" blog highlights section between the $FLOW and Get Started sections, showing the three most recent posts with scroll-in animations. Uses React Server Component composition pattern (async server component fetches posts, client component handles Framer Motion animations) for proper SSR with blog content in the initial HTML payload.
 - [2026-04-16] Blog post: "100 Chains, 100 Grant Programs, One Outcome: Temporary TVL" -- thought leadership on chain proliferation, fragmented liquidity, and broken grant attribution models, with custom SVG illustrations (liquidity fragmentation power-law chart, infrastructure flywheel vs incentive model comparison).
 
 ### Changed
 
+- [2026-04-16] Replace canonical-chain oracle config sync with quorum-based consensus. Remove `OracleConfigBroadcaster` and `OracleConfigReceiver` contracts. Update `DeployCoordination.s.sol` to deploy symmetric `OracleConfigQuorum` on every chain (no `IS_CANONICAL` flag). Update all documentation, blog content, growth drafts, content calendar, and grant application to reflect the new architecture.
 - [2026-04-16] Growth grants: 0x Labs application Strategy row now separates **chain-local** KPIs (TVL, volume, fees per deployment) from **protocol-level** KPIs (protocol-retained fees, manager/vault adoption, shared perp pool utilization).
 - [2026-04-16] Blog listing cards: tag pills row uses a fixed height (`4.5rem`) with top alignment and `content-start` so titles start at the same vertical position whether tags occupy one or two rows (homepage “Latest Insights” and `/blog` grid).
 - [2026-04-16] Redesigned infrastructure-flywheel.svg blog illustration: amber/red decay palette for incentive model side, larger teal flywheel nodes (44px radius) with glow halos, static motion-marker dots on arcs, edge labels explaining the compounding cycle, background color washes for emotional contrast, vertical DECAY/COMPOUNDS annotations, and draining particles. Removed all SMIL/CSS animations (invisible in img-tag sandbox) so the static state is self-contained.
@@ -28,6 +34,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-16] Blog card grid: cards now stretch to equal heights regardless of title or description length (added `h-full` to card and wrapper, `line-clamp-2` on title); fixes both home page "Latest Insights" and `/blog` index grids.
 - [2026-04-16] Vercel build: add 10 s timeout to ticker RPC transport and 15 s race timeout in root layout to prevent static page generation from hanging when the public Sepolia RPC is slow; bump `staticPageGenerationTimeout` to 120 s as a safety net.
 - [2026-04-16] Chains layered donut: `Pie` segment `label` callback now types against Recharts' label render props (handles optional geometry fields and uses `percent` or `payload.pct`) so `next build` typecheck passes.
 - [2026-04-16] Mermaid diagrams now use the `base` theme with full flowchart `themeVariables` mapped to the app's color tokens, matching the landing page and blog aesthetic in both light and dark mode. Added CSS overrides for SVG elements (edge labels, cluster fills, markers) and `primer-glow-card` hover treatment on diagram containers.

@@ -77,8 +77,7 @@ Six contracts, zero chain pickers:
 - CCIPReserveMessenger: delta-triggered state sync
 - IntentRouter: escrow + execute/refund
 - CrossChainIntentBridge: CCIP relay
-- OracleConfigBroadcaster: canonical oracle sync
-- OracleConfigReceiver: enforce consistent params
+- OracleConfigQuorum: N-of-M oracle config consensus
 
 Route by depth, not by default.
 
@@ -94,7 +93,7 @@ Testnet coming soon -- try an intent-based deposit yourself.
 
 ## Standalone Tweets (extract 3-5 from thread)
 
-1. "Your DeFi app says it's multi-chain. But do all chains agree on the same oracle parameters? We built a canonical broadcast system via CCIP so they don't drift. Config hash integrity, automatic sync, chain-specific feed addresses preserved."
+1. "Your DeFi app says it's multi-chain. But do all chains agree on the same oracle parameters? We built quorum-based oracle config consensus via CCIP -- no single home chain required. N-of-M agreement, config hash integrity, chain-specific feed addresses preserved."
 
 2. "Most multi-chain routing is winner-take-all. Send everything to the deepest pool. That's how you kill the other chains. Proportional routing by available liquidity keeps every deployment alive."
 
