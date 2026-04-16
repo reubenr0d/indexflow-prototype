@@ -14,12 +14,14 @@ describe("deployment target helpers", () => {
   it("parses supported targets", () => {
     expect(parseDeploymentTarget("sepolia")).toBe("sepolia");
     expect(parseDeploymentTarget("anvil")).toBe("anvil");
+    expect(parseDeploymentTarget("fuji")).toBe("fuji");
     expect(parseDeploymentTarget("mainnet")).toBeNull();
   });
 
   it("returns expected chain ids", () => {
     expect(chainIdForDeploymentTarget("sepolia")).toBe(11155111);
     expect(chainIdForDeploymentTarget("anvil")).toBe(31337);
+    expect(chainIdForDeploymentTarget("fuji")).toBe(43113);
   });
 
   it("returns local subgraph URL for anvil", () => {

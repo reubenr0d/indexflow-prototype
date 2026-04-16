@@ -22,6 +22,7 @@ interface IIntentRouter {
 
     event IntentSubmitted(uint256 indexed id, address indexed user, uint256 amount, IntentType intentType);
     event IntentExecuted(uint256 indexed id, address indexed basketVault, uint256 sharesOrUsdc);
+    event IntentRoutedCrossChain(uint256 indexed intentId, uint64 indexed destChainSelector, uint256 amount);
     event IntentRefunded(uint256 indexed id, address indexed user, uint256 amount);
     event IntentSplit(uint256 indexed id, uint64[] chainSelectors, uint256[] amounts, uint256[] weights);
 
@@ -38,6 +39,18 @@ interface IIntentRouter {
 
     /// @notice Execute a pending intent by depositing into a basket (keeper-only).
     function executeIntent(uint256 intentId, address basketVault) external returns (uint256 sharesOrUsdc);
+
+    /// @notice Route a pending intent cross-chain via the CCIP bridge (keeper-only).
+    /// @param basketName Vault name for auto-deploy on destination (empty to skip).
+    /// @param depositFeeBps Deposit fee for auto-deployed vault.
+    /// @param redeemFeeBps Redeem fee for auto-deployed vault.
+    function executeIntentCrossChain(
+        uint256 intentId,
+        address targetBasket,
+        string calldata basketName,
+        uint256 depositFeeBps,
+        uint256 redeemFeeBps
+    ) external returns (bytes32 ccipMessageId);
 
     /// @notice Refund a timed-out pending intent (anyone can call after maxEscrowDuration).
     function refundIntent(uint256 intentId) external;

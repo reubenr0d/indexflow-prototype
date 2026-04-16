@@ -8,6 +8,7 @@ import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/U
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import {IIntentRouter} from "./interfaces/IIntentRouter.sol";
 import {IPoolReserveRegistry} from "./interfaces/IPoolReserveRegistry.sol";
+import {ICrossChainIntentBridge} from "./interfaces/ICrossChainIntentBridge.sol";
 
 interface IBasketVault {
     function deposit(uint256 usdcAmount) external returns (uint256 sharesMinted);
@@ -62,6 +63,8 @@ contract IntentRouter is IIntentRouter, OwnableUpgradeable, UUPSUpgradeable, Ree
     error InvalidBasket(address basket);
     error BasketMismatch(address expected, address provided);
     error NotLocalChain(uint64 target, uint64 local);
+    error NotRemoteChain(uint64 target);
+    error BridgeNotSet();
 
     modifier onlyKeeper() {
         if (!approvedKeepers[msg.sender]) revert NotKeeper();
@@ -223,6 +226,43 @@ contract IntentRouter is IIntentRouter, OwnableUpgradeable, UUPSUpgradeable, Ree
         activeIntentCount[intent.user]--;
 
         emit IntentExecuted(intentId, basketVault, sharesOrUsdc);
+    }
+
+    // ─── Execute cross-chain (keeper) ─────────────────────────────
+
+    /// @inheritdoc IIntentRouter
+    function executeIntentCrossChain(
+        uint256 intentId,
+        address targetBasket,
+        string calldata basketName,
+        uint256 depositFeeBps,
+        uint256 redeemFeeBps
+    ) external nonReentrant onlyKeeper returns (bytes32 ccipMessageId) {
+        Intent storage intent = intents[intentId];
+        if (intent.status != IntentStatus.PENDING) revert IntentNotPending(intentId);
+        if (intent.deadline > 0 && block.timestamp > intent.deadline) revert DeadlineExceeded();
+
+        uint64 target = intent.targetChain;
+        if (target == 0 || target == localChainSelector) revert NotRemoteChain(target);
+        if (bridge == address(0)) revert BridgeNotSet();
+
+        if (intent.targetBasket != address(0) && intent.targetBasket != targetBasket) {
+            revert BasketMismatch(intent.targetBasket, targetBasket);
+        }
+
+        registry.observe();
+
+        usdc.approve(bridge, intent.amount);
+        ccipMessageId = ICrossChainIntentBridge(bridge).routeCrossChain(
+            intentId, target, intent.amount, intent.user, targetBasket,
+            basketName, depositFeeBps, redeemFeeBps
+        );
+
+        intent.status = IntentStatus.IN_FLIGHT;
+        intent.ccipMessageId = ccipMessageId;
+        activeIntentCount[intent.user]--;
+
+        emit IntentRoutedCrossChain(intentId, target, intent.amount);
     }
 
     // ─── Refund ───────────────────────────────────────────────────

@@ -328,6 +328,19 @@ sequenceDiagram
 2. Add `arbitrum_sepolia` to the `workflow_dispatch` network choice list.
 3. Add the `ARBITRUM_SEPOLIA_RPC_URL` GitHub secret.
 
+For **Avalanche Fuji**, the same pattern applies:
+
+1. Add a matrix entry:
+
+   ```yaml
+   - network: fuji
+     deployment_config: apps/web/src/config/fuji-deployment.json
+     rpc_url_secret: FUJI_RPC_URL
+   ```
+
+2. Add `fuji` to the `workflow_dispatch` network choice list.
+3. Add the `FUJI_RPC_URL` GitHub secret.
+
 ### Manual trigger
 
 From the GitHub Actions tab, select **Update Prices**, click **Run workflow**, and optionally pick a specific network (default: `all`).

@@ -1,9 +1,10 @@
 import { type Address } from "viem";
-import { anvil } from "viem/chains";
+import { anvil, avalancheFuji } from "viem/chains";
 import { arbitrum, arbitrumSepolia, sepolia } from "wagmi/chains";
 import { type DeploymentTarget } from "@/lib/deployment";
 import localDeployment from "./local-deployment.json";
 import sepoliaDeployment from "./sepolia-deployment.json";
+import fujiDeployment from "./fuji-deployment.json";
 
 type ContractAddresses = {
   basketFactory: Address;
@@ -37,6 +38,7 @@ type DeploymentFile = {
 
 const ld = localDeployment as DeploymentFile;
 const sd = sepoliaDeployment as DeploymentFile;
+const fd = fujiDeployment as DeploymentFile;
 
 const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
   anvil: {
@@ -80,6 +82,20 @@ const BY_DEPLOYMENT_TARGET: Record<DeploymentTarget, ContractAddresses> = {
     assetWiring: "0x0000000000000000000000000000000000000000" as Address,
     poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
     intentRouter: "0x0000000000000000000000000000000000000000" as Address,
+  },
+  fuji: {
+    basketFactory: fd.basketFactory as Address,
+    vaultAccounting: fd.vaultAccounting as Address,
+    oracleAdapter: fd.oracleAdapter as Address,
+    perpReader: fd.perpReader as Address,
+    pricingEngine: fd.pricingEngine as Address,
+    fundingRateManager: fd.fundingRateManager as Address,
+    priceSync: (fd.priceSync ?? "0x0000000000000000000000000000000000000000") as Address,
+    usdc: fd.usdc as Address,
+    gmxVault: fd.gmxVault as Address,
+    assetWiring: (fd.assetWiring ?? "0x0000000000000000000000000000000000000000") as Address,
+    poolReserveRegistry: (fd.poolReserveRegistry ?? "0x0000000000000000000000000000000000000000") as Address,
+    intentRouter: (fd.intentRouter ?? "0x0000000000000000000000000000000000000000") as Address,
   },
   arbitrum: {
     basketFactory: "0x0000000000000000000000000000000000000001" as Address,
@@ -128,6 +144,7 @@ export const CONTRACT_ADDRESSES: Record<number, ContractAddresses> = {
     poolReserveRegistry: "0x0000000000000000000000000000000000000000" as Address,
     intentRouter: "0x0000000000000000000000000000000000000000" as Address,
   },
+  [avalancheFuji.id]: BY_DEPLOYMENT_TARGET.fuji,
 };
 
 export function getContractsForDeploymentTarget(target: DeploymentTarget): ContractAddresses {

@@ -701,6 +701,23 @@ function validatePolicyWriteBatch({
 }
 
 // ---------------------------------------------------------------------------
+// Thesis extraction from LLM summary
+// ---------------------------------------------------------------------------
+
+function extractThesis(summaryText) {
+  if (!summaryText) return null;
+  const sectionMatch = summaryText.match(
+    /(?:^|\n)#+?\s*(?:Vault\s+)?Thesis[:\s]*\n?([\s\S]*?)(?:\n#|\n\n\n|$)/i
+  );
+  if (sectionMatch) return sectionMatch[1].trim().slice(0, 500) || null;
+  const inlineMatch = summaryText.match(
+    /(?:^|\n)\*?\*?(?:Vault\s+)?Thesis\*?\*?:\s*(.+)/i
+  );
+  if (inlineMatch) return inlineMatch[1].trim().slice(0, 500) || null;
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Build system prompt with vault context, memory, and dry-run notice
 // ---------------------------------------------------------------------------
 
@@ -745,6 +762,19 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
         "\n";
     }
   }
+
+  // Current vault thesis
+  if (state?.thesis) {
+    prompt += "\n\n## Current Vault Thesis\n";
+    prompt += state.thesis + "\n";
+    prompt += "Update this thesis in your final summary if the strategy has evolved.";
+  }
+
+  // Action justifications
+  prompt += "\n\n## Action Justifications\n";
+  prompt += "For every write tool call, include a `justification` argument: a 1-2 sentence explanation\n";
+  prompt += "of why this action is being taken, citing market data or vault state that motivated it.\n";
+  prompt += "This justification is surfaced to investors in the vault history UI.";
 
   // Dry-run notice
   const dryRunNotice = DRY_RUN
@@ -909,6 +939,51 @@ async function confirmWriteBatchInteractively({
   } finally {
     rl.close();
   }
+}
+
+// ---------------------------------------------------------------------------
+// Publish agent metadata for web app consumption
+// ---------------------------------------------------------------------------
+
+function publishAgentMetadata(config, currentState, runSummary) {
+  if (!currentState?.vaultAddress) return;
+  const metaDir = resolve(PROJECT_ROOT, "apps/web/public/agent-metadata");
+  mkdirSync(metaDir, { recursive: true });
+  const addr = currentState.vaultAddress.toLowerCase();
+  const metaPath = resolve(metaDir, `${addr}.json`);
+
+  const recentActions = (runSummary.writeActions || [])
+    .filter((a) => !a.skipped && a.justification)
+    .map((a) => ({
+      tool: a.tool,
+      justification: a.justification,
+      timestamp: runSummary.finishedAt,
+      txHash: a.txHash || null,
+    }));
+
+  let existing = { recentActions: [] };
+  if (existsSync(metaPath)) {
+    try {
+      existing = JSON.parse(readFileSync(metaPath, "utf8"));
+    } catch {}
+  }
+
+  const allActions = [...recentActions, ...(existing.recentActions || [])].slice(
+    0,
+    20
+  );
+
+  const metadata = {
+    isAiManaged: true,
+    agentName: config.name,
+    agentDescription: config.description,
+    thesis: currentState.thesis || null,
+    lastRunAt: runSummary.finishedAt,
+    recentActions: allActions,
+  };
+
+  writeFileSync(metaPath, JSON.stringify(metadata, null, 2) + "\n");
+  console.log(`Metadata: published to ${metaPath}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -1120,6 +1195,7 @@ export async function runAgent(agentName) {
           tool: toolName,
           args,
           skipped: true,
+          justification: args.justification || null,
         });
         messages.push({
           role: "tool",
@@ -1147,10 +1223,15 @@ export async function runAgent(agentName) {
             tool: toolName,
             args,
             skipped: false,
+            justification: args.justification || null,
           });
         }
 
         const parsed = parseJsonText(content);
+        if (isWrite && parsed?.transactionHash) {
+          const lastAction = runSummary.writeActions[runSummary.writeActions.length - 1];
+          if (lastAction) lastAction.txHash = parsed.transactionHash;
+        }
         if (originalName === "get_vault_state" && parsed && typeof parsed === "object") {
           policyRuntime.latestVaultState = parsed;
         }
@@ -1436,6 +1517,8 @@ export async function runAgent(agentName) {
     // --- Persist memory ---
     runSummary.finishedAt = new Date().toISOString();
 
+    const extractedThesis = extractThesis(agentSummaryText);
+
     if (capturedVaultAddress) {
       const newState = {
         vaultAddress: capturedVaultAddress,
@@ -1449,8 +1532,19 @@ export async function runAgent(agentName) {
             : state?.deployedAt || runSummary.startedAt,
         lastRunAt: runSummary.finishedAt,
       };
+      if (extractedThesis) {
+        newState.thesis = extractedThesis;
+        newState.lastThesisUpdate = runSummary.finishedAt;
+      } else if (state?.thesis) {
+        newState.thesis = state.thesis;
+        newState.lastThesisUpdate = state.lastThesisUpdate;
+      }
       writeState(agentName, newState);
       console.log(`\nMemory: state saved (vault ${capturedVaultAddress})`);
+      if (extractedThesis) {
+        console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
+      }
+      publishAgentMetadata(config, newState, runSummary);
     } else if (state) {
       const updatedState = {
         ...state,
@@ -1459,7 +1553,15 @@ export async function runAgent(agentName) {
         deploymentConfigPath: deploymentContext.deploymentConfigPath,
         lastRunAt: runSummary.finishedAt,
       };
+      if (extractedThesis) {
+        updatedState.thesis = extractedThesis;
+        updatedState.lastThesisUpdate = runSummary.finishedAt;
+      }
       writeState(agentName, updatedState);
+      if (extractedThesis) {
+        console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
+      }
+      publishAgentMetadata(config, updatedState, runSummary);
     }
 
     const summarySnippet = agentSummaryText
@@ -1549,4 +1651,6 @@ export const __agentRunnerInternals = {
   getEligibleMomentumVolumeAssets,
   validatePolicyWriteBatch,
   parseWriteConfirmationCommand,
+  extractThesis,
+  publishAgentMetadata,
 };

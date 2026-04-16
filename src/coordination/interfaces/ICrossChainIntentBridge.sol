@@ -16,13 +16,19 @@ interface ICrossChainIntentBridge {
     /// @param amount USDC amount to transfer.
     /// @param user The user address to receive shares on the destination chain.
     /// @param targetBasket The basket on the destination chain (address(0) for any).
+    /// @param basketName Vault name for auto-deploy on destination (empty to skip).
+    /// @param depositFeeBps Deposit fee for auto-deployed vault.
+    /// @param redeemFeeBps Redeem fee for auto-deployed vault.
     function routeCrossChain(
         uint256 intentId,
         uint64 destChainSelector,
         uint256 amount,
         address user,
-        address targetBasket
-    ) external;
+        address targetBasket,
+        string calldata basketName,
+        uint256 depositFeeBps,
+        uint256 redeemFeeBps
+    ) external returns (bytes32 ccipMessageId);
 
     /// @notice Add a supported destination chain with its USDC token and bridge address.
     function addSupportedChain(uint64 chainSelector, address usdcOnChain, address bridgeOnChain) external;

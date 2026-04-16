@@ -113,6 +113,16 @@ require(usdcReturned <= idleUsdc, "Insufficient liquidity")
 
 Code refs: `src/vault/BasketVault.sol` `BasketVault.deposit()` `L142-L167`; `BasketVault.redeem()` `L172-L191`; `_totalVaultValue()` `L294-L296`; `_pricingNav()` `L299-L305`; `_idleUsdcExcludingFees()` `L309-L313`. Repo doc refs: `docs/SHARE_PRICE_AND_OPERATIONS.md`.
 
+### NAV verifiability
+
+`Implemented today`
+
+`getSharePrice()` and `getPricingNav()` are public view functions callable by anyone. The pricing formula is deterministic given chain state: idle USDC (excluding reserved fees), `perpAllocated`, and realized plus unrealized PnL from `VaultAccounting.getVaultPnL()`. Because computation is entirely on-chain, audit partners, fund administrators, and regulators can verify basket NAV at any block height by calling these functions against an archive node -- no off-chain administrator output is required.
+
+This on-chain verifiability distinguishes IndexFlow from traditional fund structures where NAV is computed off-chain by a fund administrator and must be taken on trust. In a regulated fund vehicle built on top of IndexFlow, the audit firm can independently cross-check the manager's reported NAV against the contract's own calculation, reducing the scope for valuation disputes and simplifying the valuation challenge procedure.
+
+Code refs: `src/vault/BasketVault.sol` `getSharePrice()` `L250-L256`; `getPricingNav()` `L290-L292`; `_pricingNav()` `L299-L305`; `src/perp/VaultAccounting.sol` `getVaultPnL()` `L406-L433`; `src/perp/PerpReader.sol` `getTotalVaultValue()` `L162-L171`.
+
 ### Reserve policy
 
 `Implemented today`
@@ -738,7 +748,8 @@ Recommended audit depth should focus on:
 3. oracle normalization, staleness, and deviation policy in `OracleAdapter`;
 4. GMX integration assumptions and price-sync timing;
 5. admin and emergency-role blast radius;
-6. any future backstop, token, or async-redemption module before deployment.
+6. the NAV computation path (`_pricingNav()`, `getSharePrice()`, `getVaultPnL()`) as a reliable audit surface for external parties cross-checking reported basket values;
+7. any future backstop, token, or async-redemption module before deployment.
 
 ### Suggested production rollout
 
@@ -1129,7 +1140,7 @@ The repo should add:
 
 The repository adds a **coordination plane** on top of the existing basket and GMX-derived perp stack: each chain runs a **`PoolReserveRegistry`** that maintains a TWAP-style view of **GMX USDC pool depth**, optional **oracle health** bits, and **remote** snapshots ingested only from a wired **`CCIPReserveMessenger`**. That registry exposes **`getRoutingWeights`**, which splits basis points across the local chain and eligible remotes by **available liquidity** (pool amount minus reserved), while automatically zeroing chains that are **stale** or reporting **broken feeds**. **`CCIPReserveMessenger`** economizes on cross-chain fees by broadcasting only when the TWAP pool amount moves by at least a configured **delta threshold** (the bundled deploy script uses **5%**) or when a **maximum interval** elapses, and it validates **peers** plus **per-hour inbound rate limits** on receive.
 
-User-facing deposit orchestration is split between a **UUPS `IntentRouter`** (escrow, local **`submitAndExecute`**, keeper **`executeIntent`**, and **`refundIntent`** after **`maxEscrowDuration`**) and a **`CrossChainIntentBridge`** that relays **USDC plus intent metadata** over CCIP and **`deposit`**s on the destination vault, minting shares to the **same user address** on that chain. Product documentation frames **Privy smart wallets** as the natural way to obtain that same-address property across networks. Separately, **`OracleConfigQuorum`** — deployed symmetrically on every chain — enables quorum-based oracle config consensus over CCIP. An admin on any chain proposes config changes; peers store votes, and when **`quorumThreshold`** matching proposals accumulate the config is auto-applied to the local **`OracleAdapter`** while preserving **chain-local feed addresses**. This replaces the single-canonical-chain broadcaster/receiver model with N-of-M consensus, removing any single chain as a point of failure for config updates.
+User-facing deposit orchestration is split between a **UUPS `IntentRouter`** (escrow, local **`submitAndExecute`**, keeper **`executeIntent`** / **`executeIntentCrossChain`**, and **`refundIntent`** after **`maxEscrowDuration`**) and a **`CrossChainIntentBridge`** that relays **USDC plus intent metadata** over CCIP and **`deposit`**s on the destination vault, minting shares to the **same user address** on that chain. If no vault exists on the destination chain, the bridge **auto-deploys** one via the destination's **`BasketFactory`** using vault config (name, fees) carried in the CCIP payload, transferring ownership to a configurable **`vaultOwner`** address. This eliminates the requirement for operators to pre-deploy vaults on every target chain before cross-chain routing can begin. Product documentation frames **Privy smart wallets** as the natural way to obtain that same-address property across networks. Separately, **`OracleConfigQuorum`** — deployed symmetrically on every chain — enables quorum-based oracle config consensus over CCIP. An admin on any chain proposes config changes; peers store votes, and when **`quorumThreshold`** matching proposals accumulate the config is auto-applied to the local **`OracleAdapter`** while preserving **chain-local feed addresses**. This replaces the single-canonical-chain broadcaster/receiver model with N-of-M consensus, removing any single chain as a point of failure for config updates.
 
 For contract-level detail, default parameter choices in **`script/DeployCoordination.s.sol`**, and an explicit trust / failure-mode table, see **[Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md)**.
 

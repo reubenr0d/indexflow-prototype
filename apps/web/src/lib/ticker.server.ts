@@ -1,14 +1,19 @@
 import "server-only";
 
-import { createPublicClient, http, type Address } from "viem";
-import { sepolia } from "viem/chains";
+import { createPublicClient, http, type Address, type Chain } from "viem";
+import { avalancheFuji, sepolia } from "viem/chains";
 import { OracleAdapterABI } from "@/abi/OracleAdapter";
 import {
   getContractsForDeploymentTarget,
   isDeploymentConfigured,
 } from "@/config/contracts";
-import { DEFAULT_DEPLOYMENT_TARGET } from "@/lib/deployment";
+import { DEFAULT_DEPLOYMENT_TARGET, type DeploymentTarget } from "@/lib/deployment";
 import { formatAssetId } from "@/lib/format";
+
+const CHAIN_BY_TARGET: Partial<Record<DeploymentTarget, Chain>> = {
+  sepolia,
+  fuji: avalancheFuji,
+};
 
 const MAX_TICKER_ASSETS = 8;
 
@@ -28,8 +33,9 @@ export async function fetchTickerData(): Promise<TickerAsset[]> {
     : "sepolia";
   const { oracleAdapter } = getContractsForDeploymentTarget(target);
 
+  const chain = CHAIN_BY_TARGET[target] ?? sepolia;
   const client = createPublicClient({
-    chain: sepolia,
+    chain,
     transport: http(undefined, { timeout: TICKER_FETCH_TIMEOUT_MS }),
   });
 

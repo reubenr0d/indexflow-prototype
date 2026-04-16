@@ -15,6 +15,7 @@ import {PriceSync} from "../src/perp/PriceSync.sol";
 import {AssetWiring} from "../src/perp/AssetWiring.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface ISimplePriceFeed {
     function setPrice(address token, uint256 price) external;
@@ -31,10 +32,16 @@ interface IVaultErrorController {
     function setErrors(address _vault, string[] calldata _errors) external;
 }
 
-/// @notice Deploy full stack to local Anvil and write `apps/web/src/config/local-deployment.json`.
-/// @dev BHP.AX is wired via `AssetWiring.wireAsset`; additional assets can be registered permissionlessly post-deploy.
-/// @dev Initial BHP.AX seed price is fetched live via `scripts/fetch-yf-asset-price.js` (`vm.ffi`), or `SEED_PRICE_RAW` if set.
-contract DeployLocal is Script {
+/// @notice Unified deploy script for any chain. Parameterized by CHAIN env var.
+/// @dev Usage: CHAIN=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --broadcast -vvv
+///
+/// Required env:
+///   CHAIN - chain name matching a key in config/chains.json (e.g. "local", "sepolia", "fuji")
+///
+/// Optional env:
+///   PRIVATE_KEY  - deployer private key (defaults to Anvil key 0 for "local")
+///   SEED_PRICE_RAW - override BHP.AX seed price (8-decimal raw)
+contract Deploy is Script {
     uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
 
     struct Deployed {
@@ -51,21 +58,40 @@ contract DeployLocal is Script {
     }
 
     function run() external {
-        uint256 deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
-        if (vm.envExists("PRIVATE_KEY")) {
+        string memory chainName = vm.envString("CHAIN");
+
+        string memory chainsJson = vm.readFile(string.concat(vm.projectRoot(), "/config/chains.json"));
+        string memory chainKey = string.concat(".", chainName);
+
+        string memory rpcAlias = vm.parseJsonString(chainsJson, string.concat(chainKey, ".rpcAlias"));
+        bool mockUsdc = vm.parseJsonBool(chainsJson, string.concat(chainKey, ".mockUsdc"));
+
+        uint256 deployerPrivateKey;
+        if (keccak256(bytes(chainName)) == keccak256("local")) {
+            deployerPrivateKey = uint256(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
+            if (vm.envExists("PRIVATE_KEY")) {
+                deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+            }
+        } else {
             deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         }
         address deployer = vm.addr(deployerPrivateKey);
         vm.startBroadcast(deployerPrivateKey);
 
         Deployed memory d;
-        d.usdc = address(new MockUSDC());
+
+        if (mockUsdc) {
+            d.usdc = address(new MockUSDC());
+        } else {
+            d.usdc = vm.parseJsonAddress(chainsJson, string.concat(chainKey, ".usdc"));
+            require(d.usdc != address(0), "Deploy: real USDC address required when mockUsdc=false");
+        }
 
         string memory symbol = "BHP.AX";
         uint256 seedRaw = YahooFinanceSeed.rawUsdPrice8(vm, symbol);
         console2.log("BHP.AX seed raw (8d USD, Yahoo or SEED_PRICE_RAW):", seedRaw);
 
-        address pfAddr = _deployGmx(d, deployer);
+        address pfAddr = _deployGmx(d, deployer, chainName);
 
         _deployPerp(d, deployer, pfAddr);
 
@@ -75,17 +101,21 @@ contract DeployLocal is Script {
 
         vm.stopBroadcast();
 
-        string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/local-deployment.json");
+        string memory outPath = string.concat(
+            vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json"
+        );
         vm.writeFile(outPath, _buildJson(d));
+        console2.log("=== Stack Deployed ===");
+        console2.log("Chain:", chainName);
         console2.log("Wrote", outPath);
     }
 
-    function _deployGmx(Deployed memory d, address deployer) internal returns (address pfAddr) {
+    function _deployGmx(Deployed memory d, address deployer, string memory chainName) internal returns (address pfAddr) {
         pfAddr = deployCode("SimplePriceFeed.sol:SimplePriceFeed");
         ISimplePriceFeed(pfAddr).setPrice(d.usdc, 1e30);
 
         address vaultMath = deployCode("VaultMath.sol:VaultMath");
-        d.gmxVault = _deployVaultWithLinkedVaultMath(vaultMath);
+        d.gmxVault = _deployVaultWithLinkedVaultMath(vaultMath, chainName);
         IGMXVault gmxVault = IGMXVault(d.gmxVault);
 
         address usdgAddr = deployCode("USDG.sol:USDG", abi.encode(d.gmxVault));
@@ -161,12 +191,9 @@ contract DeployLocal is Script {
         VaultAccounting(d.vaultAccounting).setWirer(d.basketFactory, true);
     }
 
-    /// @dev `vm.getCode` cannot load `Vault` while `VaultMath` is unlinked. Deploy the library, patch
-    ///      creation bytecode from the compiled artifact, then `CREATE`.
-    function _deployVaultWithLinkedVaultMath(address mathLib) internal returns (address addr) {
+    function _deployVaultWithLinkedVaultMath(address mathLib, string memory chainName) internal returns (address addr) {
         string memory json = vm.readFile("out/Vault.sol/Vault.json");
         string memory obj = vm.parseJsonString(json, ".bytecode.object");
-        // Marker from `bytecode.linkReferences` (changes if the qualified library path changes).
         string memory ph = "__$36c87766e6d22a740de7496ef4a84155d7$__";
         string memory libHex = _addressToHex40NoPrefix(mathLib);
         string memory linked = vm.replace(obj, ph, libHex);
@@ -174,7 +201,7 @@ contract DeployLocal is Script {
         assembly ("memory-safe") {
             addr := create(0, add(bytecode, 0x20), mload(bytecode))
         }
-        require(addr != address(0), "DeployLocal: Vault create failed");
+        require(addr != address(0), "Deploy: Vault create failed");
     }
 
     function _addressToHex40NoPrefix(address a) private pure returns (string memory) {

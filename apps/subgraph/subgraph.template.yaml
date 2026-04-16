@@ -156,6 +156,8 @@ dataSources:
           handler: handleIntentSubmitted
         - event: IntentExecuted(indexed uint256,indexed address,uint256)
           handler: handleIntentExecuted
+        - event: IntentRoutedCrossChain(indexed uint256,indexed uint64,uint256)
+          handler: handleIntentRoutedCrossChain
         - event: IntentRefunded(indexed uint256,indexed address,uint256)
           handler: handleIntentRefunded
       file: ./src/mappings/intentRouter.ts

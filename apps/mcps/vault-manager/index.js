@@ -192,9 +192,10 @@ function extractVaultAddressFromCreateVaultReceipt(rawJson) {
   }
 }
 
-function writeResult(rawReceipt, nextSteps) {
+function writeResult(rawReceipt, nextSteps, justification) {
   const tx = parseReceipt(rawReceipt);
   const result = { success: tx.status === "success", ...tx };
+  if (justification) result.justification = justification;
   if (nextSteps) result.next_steps = nextSteps;
   return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
 }
@@ -505,9 +506,10 @@ server.registerTool(
     inputSchema: {
       symbol: z.string().describe("Yahoo Finance ticker (e.g. 'BHP.AX', 'AAPL', 'GLEN.L')"),
       seedPriceUsd: z.number().positive().describe("Current price in USD from yfinance_quote (e.g. 45.20)"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ symbol, seedPriceUsd }) => {
+  async ({ symbol, seedPriceUsd, justification }) => {
     try {
       await validateWriteSymbolPolicy(symbol);
       const d = deployment();
@@ -517,7 +519,7 @@ server.registerTool(
         { tool: "get_oracle_assets", reason: "Verify the new asset appears and is active" },
         { tool: "set_vault_assets", reason: "Add the new asset to a vault's tracked assets" },
         { tool: "yfinance_search", reason: "Use exact exchange-suffixed symbols when a base ticker is ambiguous" },
-      ]);
+      ], justification);
     } catch (err) {
       if (err.code === "INVALID_SYMBOL_POLICY") {
         const c = err.classification ?? {};
@@ -554,25 +556,28 @@ server.registerTool(
       name: z.string().describe("Vault display name (e.g. 'Mining Basket')"),
       depositFeeBps: z.number().int().min(0).max(500).describe("Deposit fee in bps (e.g. 50 = 0.5%)"),
       redeemFeeBps: z.number().int().min(0).max(500).describe("Redeem fee in bps (e.g. 50 = 0.5%)"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ name, depositFeeBps, redeemFeeBps }) => {
+  async ({ name, depositFeeBps, redeemFeeBps, justification }) => {
     try {
       const d = deployment();
       const rawReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
       const tx = parseReceipt(rawReceipt);
       const vaultAddress = extractVaultAddressFromCreateVaultReceipt(rawReceipt);
+      const result = {
+        success: tx.status === "success",
+        ...tx,
+        vaultAddress,
+        next_steps: [
+          { tool: "set_vault_assets", reason: "Configure which assets the vault tracks", params_hint: { vault: vaultAddress } },
+        ],
+      };
+      if (justification) result.justification = justification;
       return {
         content: [{
           type: "text",
-          text: JSON.stringify({
-            success: tx.status === "success",
-            ...tx,
-            vaultAddress,
-            next_steps: [
-              { tool: "set_vault_assets", reason: "Configure which assets the vault tracks", params_hint: { vault: vaultAddress } },
-            ],
-          }, null, 2),
+          text: JSON.stringify(result, null, 2),
         }],
       };
     } catch (err) {
@@ -593,15 +598,16 @@ server.registerTool(
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
       assetIds: z.array(z.string()).describe("bytes32 asset IDs from get_oracle_assets (e.g. ['0x1a2b...', '0x3c4d...'])"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ vault, assetIds }) => {
+  async ({ vault, assetIds, justification }) => {
     try {
       const idsArg = `[${assetIds.join(",")}]`;
       const rawReceipt = castSend(vault, "setAssets(bytes32[])", [idsArg]);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify assets were set", params_hint: { vault } },
-      ]);
+      ], justification);
     } catch (err) {
       return writeError(err);
     }
@@ -620,15 +626,16 @@ server.registerTool(
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
       amount: z.string().describe("USDC in raw units (e.g. '1000000' = 1 USDC, '500000000' = 500 USDC)"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ vault, amount }) => {
+  async ({ vault, amount, justification }) => {
     try {
       const rawReceipt = castSend(vault, "allocateToPerp(uint256)", [amount]);
       return writeResult(rawReceipt, [
         { tool: "open_position", reason: "Open a perp position with the allocated capital", params_hint: { vault } },
         { tool: "get_vault_state", reason: "Verify updated allocation", params_hint: { vault } },
-      ]);
+      ], justification);
     } catch (err) {
       return writeError(err);
     }
@@ -647,14 +654,15 @@ server.registerTool(
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
       amount: z.string().describe("USDC in raw units (e.g. '1000000' = 1 USDC)"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ vault, amount }) => {
+  async ({ vault, amount, justification }) => {
     try {
       const rawReceipt = castSend(vault, "withdrawFromPerp(uint256)", [amount]);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify updated reserve and allocation", params_hint: { vault } },
-      ]);
+      ], justification);
     } catch (err) {
       if (err.message?.includes("InsufficientCapital")) {
         return toolError("INSUFFICIENT_CAPITAL", err.message,
@@ -682,9 +690,10 @@ server.registerTool(
       isLong: z.boolean().describe("true = long (profit when price rises), false = short"),
       size: z.string().describe("Position size in GMX USD (~1e30 per $1, e.g. '10000000000000000000000000000000000' = $10,000)"),
       collateral: z.string().describe("USDC collateral (6 decimals, e.g. '2000000000' = $2,000)"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ vault, assetId, isLong, size, collateral }) => {
+  async ({ vault, assetId, isLong, size, collateral, justification }) => {
     try {
       const d = deployment();
       const rawReceipt = castSend(
@@ -695,7 +704,7 @@ server.registerTool(
       return writeResult(rawReceipt, [
         { tool: "get_position_tracking", reason: "Verify the position was opened", params_hint: { vault, assetId, isLong } },
         { tool: "get_vault_pnl", reason: "Check updated PnL", params_hint: { vault } },
-      ]);
+      ], justification);
     } catch (err) {
       return writeError(err);
     }
@@ -718,9 +727,10 @@ server.registerTool(
       isLong: z.boolean().describe("true for long, false for short — must match the open position"),
       sizeDelta: z.string().describe("Size to reduce in GMX USD (~1e30 per $1)"),
       collateralDelta: z.string().describe("Collateral to withdraw in GMX units"),
+      justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ vault, assetId, isLong, sizeDelta, collateralDelta }) => {
+  async ({ vault, assetId, isLong, sizeDelta, collateralDelta, justification }) => {
     try {
       const d = deployment();
       const rawReceipt = castSend(
@@ -731,7 +741,7 @@ server.registerTool(
       return writeResult(rawReceipt, [
         { tool: "get_vault_pnl", reason: "Check updated realised PnL", params_hint: { vault } },
         { tool: "withdraw_from_perp", reason: "Withdraw freed capital back to vault if desired", params_hint: { vault } },
-      ]);
+      ], justification);
     } catch (err) {
       if (err.message?.includes("PositionNotFound")) {
         return toolError("POSITION_NOT_FOUND", err.message,

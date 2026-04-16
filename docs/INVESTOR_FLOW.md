@@ -26,6 +26,9 @@ Entry and exit pricing for shares is tied to mark-to-market vault NAV.
   - idle USDC (excluding reserved fees),
   - `perpAllocated` bookkeeping,
   - realised + unrealised PnL from `VaultAccounting.getVaultPnL`.
+- Anyone -- including audit firms, fund administrators, and regulators -- can
+  independently verify NAV by calling `getSharePrice()` on-chain at any block,
+  without relying on off-chain calculations or manager-reported values.
 - **PerpReader.getTotalVaultValue** — Also returns mark-to-market vault value and is useful for monitoring.
 - There is no weighted-base `getBasketPrice()` dependency in mint/redeem pricing.
 

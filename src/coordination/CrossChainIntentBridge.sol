@@ -16,12 +16,17 @@ interface IBasketVaultForBridge {
 
 interface IBasketFactoryForBridge {
     function getAllBaskets() external view returns (address[] memory);
+    function createBasket(string calldata name, uint256 depositFeeBps, uint256 redeemFeeBps)
+        external
+        returns (address);
 }
 
 /// @title CrossChainIntentBridge
 /// @notice Stateless relay that sends USDC + intent metadata cross-chain via CCIP.
 /// On the destination, it deposits USDC into the target basket and transfers shares
 /// to the user's address (same address across chains via Privy smart wallet).
+/// If no basket exists on the destination, auto-deploys one via the factory when
+/// vault config is present in the CCIP payload.
 contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownable {
     using SafeERC20 for IERC20;
 
@@ -29,6 +34,9 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
         uint256 intentId;
         address user;
         address targetBasket;
+        string basketName;
+        uint256 depositFeeBps;
+        uint256 redeemFeeBps;
     }
 
     struct SupportedChain {
@@ -42,9 +50,13 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
     IBasketFactoryForBridge public basketFactory;
     address public feeToken;
     uint256 public ccipGasLimit;
+    uint256 public ccipGasLimitWithDeploy;
+    address public vaultOwner;
 
     mapping(uint64 => SupportedChain) public supportedChains;
     uint64[] public supportedChainSelectors;
+
+    event BasketAutoDeployed(address indexed vault, string name);
 
     error UnsupportedChain(uint64 chainSelector);
     error OnlyIntentRouter();
@@ -67,6 +79,8 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
         usdc = IERC20(_usdc);
         basketFactory = IBasketFactoryForBridge(_basketFactory);
         ccipGasLimit = 400_000;
+        ccipGasLimitWithDeploy = 2_500_000;
+        vaultOwner = _owner;
     }
 
     // ─── Outbound ─────────────────────────────────────────────────
@@ -77,8 +91,11 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
         uint64 destChainSelector,
         uint256 amount,
         address user,
-        address targetBasket
-    ) external onlyIntentRouter {
+        address targetBasket,
+        string calldata basketName,
+        uint256 depositFeeBps,
+        uint256 redeemFeeBps
+    ) external onlyIntentRouter returns (bytes32 messageId) {
         SupportedChain memory dest = supportedChains[destChainSelector];
         if (!dest.active) revert UnsupportedChain(destChainSelector);
 
@@ -87,7 +104,10 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
         CrossChainPayload memory payload = CrossChainPayload({
             intentId: intentId,
             user: user,
-            targetBasket: targetBasket
+            targetBasket: targetBasket,
+            basketName: basketName,
+            depositFeeBps: depositFeeBps,
+            redeemFeeBps: redeemFeeBps
         });
 
         Client.EVMTokenAmount[] memory tokenAmounts = new Client.EVMTokenAmount[](1);
@@ -95,17 +115,18 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
 
         usdc.approve(getRouter(), amount);
 
+        uint256 gasLimit = bytes(basketName).length > 0 ? ccipGasLimitWithDeploy : ccipGasLimit;
+
         Client.EVM2AnyMessage memory message = Client.EVM2AnyMessage({
             receiver: abi.encode(dest.bridgeOnChain),
             data: abi.encode(payload),
             tokenAmounts: tokenAmounts,
             feeToken: feeToken,
-            extraArgs: Client._argsToBytes(Client.EVMExtraArgsV1({gasLimit: ccipGasLimit}))
+            extraArgs: Client._argsToBytes(Client.EVMExtraArgsV1({gasLimit: gasLimit}))
         });
 
         uint256 fee = IRouterClient(getRouter()).getFee(destChainSelector, message);
 
-        bytes32 messageId;
         if (feeToken == address(0)) {
             messageId = IRouterClient(getRouter()).ccipSend{value: fee}(destChainSelector, message);
         } else {
@@ -137,8 +158,12 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
         address targetBasket = payload.targetBasket;
         if (targetBasket == address(0)) {
             address[] memory baskets = basketFactory.getAllBaskets();
-            if (baskets.length == 0) revert NoBasketAvailable();
-            targetBasket = baskets[0];
+            if (baskets.length == 0) {
+                if (bytes(payload.basketName).length == 0) revert NoBasketAvailable();
+                targetBasket = _autoDeployBasket(payload.basketName, payload.depositFeeBps, payload.redeemFeeBps);
+            } else {
+                targetBasket = baskets[0];
+            }
         }
 
         usdc.approve(targetBasket, usdcReceived);
@@ -177,6 +202,26 @@ contract CrossChainIntentBridge is ICrossChainIntentBridge, CCIPReceiver, Ownabl
 
     function setBasketFactory(address _factory) external onlyOwner {
         basketFactory = IBasketFactoryForBridge(_factory);
+    }
+
+    function setVaultOwner(address _vaultOwner) external onlyOwner {
+        vaultOwner = _vaultOwner;
+    }
+
+    function setCcipGasLimitWithDeploy(uint256 _gasLimit) external onlyOwner {
+        ccipGasLimitWithDeploy = _gasLimit;
+    }
+
+    // ─── Internal ─────────────────────────────────────────────────
+
+    function _autoDeployBasket(
+        string memory _name,
+        uint256 _depositFeeBps,
+        uint256 _redeemFeeBps
+    ) private returns (address vault) {
+        vault = basketFactory.createBasket(_name, _depositFeeBps, _redeemFeeBps);
+        Ownable(vault).transferOwnership(vaultOwner);
+        emit BasketAutoDeployed(vault, _name);
     }
 
     receive() external payable {}

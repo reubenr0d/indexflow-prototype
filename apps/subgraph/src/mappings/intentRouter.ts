@@ -2,6 +2,7 @@ import { BigInt } from "@graphprotocol/graph-ts";
 import {
   IntentSubmitted,
   IntentExecuted,
+  IntentRoutedCrossChain,
   IntentRefunded,
 } from "../../generated/IntentRouter/IntentRouter";
 import { IntentAction, IntentStats } from "../../generated/schema";
@@ -12,6 +13,7 @@ function getOrCreateIntentStats(): IntentStats {
     stats = new IntentStats("singleton");
     stats.totalSubmitted = BigInt.zero();
     stats.totalExecuted = BigInt.zero();
+    stats.totalRoutedCrossChain = BigInt.zero();
     stats.totalRefunded = BigInt.zero();
     stats.cumulativeVolumeUsdc = BigInt.zero();
     stats.updatedAt = BigInt.zero();
@@ -60,6 +62,28 @@ export function handleIntentExecuted(event: IntentExecuted): void {
 
   const stats = getOrCreateIntentStats();
   stats.totalExecuted = stats.totalExecuted.plus(BigInt.fromI32(1));
+  stats.updatedAt = event.block.timestamp;
+  stats.save();
+}
+
+export function handleIntentRoutedCrossChain(event: IntentRoutedCrossChain): void {
+  const entityId = event.transaction.hash.toHexString().concat("-").concat(event.logIndex.toString());
+
+  const action = new IntentAction(entityId);
+  action.intentId = event.params.intentId;
+  action.user = event.transaction.from;
+  action.intentType = "DEPOSIT";
+  action.status = "ROUTED_CROSS_CHAIN";
+  action.amount = event.params.amount;
+  action.destChainSelector = event.params.destChainSelector;
+  action.timestamp = event.block.timestamp;
+  action.blockNumber = event.block.number;
+  action.txHash = event.transaction.hash;
+  action.logIndex = event.logIndex;
+  action.save();
+
+  const stats = getOrCreateIntentStats();
+  stats.totalRoutedCrossChain = stats.totalRoutedCrossChain.plus(BigInt.fromI32(1));
   stats.updatedAt = event.block.timestamp;
   stats.save();
 }

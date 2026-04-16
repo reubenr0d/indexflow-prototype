@@ -107,7 +107,7 @@ flowchart LR
 
 1. **Submit**: User calls `submitIntent()`. USDC is pulled into the router's escrow. The intent is recorded as PENDING.
 2. **Execute (local)**: A keeper calls `executeIntent()` to deposit the escrowed USDC into a basket vault on this chain, minting shares to the user. Or the user can call `submitAndExecute()` for immediate local execution with MEV protection.
-3. **Execute (cross-chain)**: The keeper routes the intent to `CrossChainIntentBridge`, which sends the USDC and intent metadata via CCIP to the destination chain. On arrival, the bridge deposits into the target basket vault and mints shares to the user's address.
+3. **Execute (cross-chain)**: The keeper calls `executeIntentCrossChain()`, which routes the intent to `CrossChainIntentBridge`. The bridge sends the USDC, intent metadata, and optional vault config via CCIP to the destination chain. On arrival, the destination bridge deposits into the target basket vault and mints shares to the user's address. If no vault exists on the destination chain yet, the bridge auto-deploys one via the local `BasketFactory` using the vault config from the CCIP payload — no pre-deployment required.
 4. **Refund**: If the intent sits in escrow longer than `maxEscrowDuration`, anyone can call `refundIntent()` to return the USDC to the user. No funds can be stuck.
 
 The `IntentRouter` is UUPS upgradeable (it holds user funds in escrow, so upgradeability is essential for bug fixes) and the `CrossChainIntentBridge` is stateless (it relays, never holds).

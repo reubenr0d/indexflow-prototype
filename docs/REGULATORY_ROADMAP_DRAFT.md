@@ -109,7 +109,9 @@ flowchart TB
 ### What the fund handles
 
 - KYC/KYB and investor qualification for its own investors
-- NAV verification (can be cross-checked against on-chain `getSharePrice()`)
+- NAV verification -- can be cross-checked against on-chain `getSharePrice()`;
+  audit partners and fund administrators can independently query the chain to
+  verify reported NAV without relying on the manager's own calculation
 - Custody of USDC and basket share tokens via an institutional custodian
 - Regulatory reporting (AIFMD Annex IV, MiFIR, Form PF, or equivalent)
 - Risk disclosures covering smart contract risk, oracle risk, shared-pool
@@ -119,7 +121,9 @@ flowchart TB
 ### What IndexFlow provides
 
 - Permissionless USDC-in / shares-out deposit and redeem infrastructure
-- On-chain NAV transparency via `getSharePrice()` and `PerpReader`
+- On-chain NAV transparency via `getSharePrice()` and `PerpReader` -- audit
+  partners, fund administrators, and regulators can independently verify basket
+  NAV at any block height by reading chain state directly
 - Synthetic exposure via the shared perpetual liquidity module
 - No counterparty relationship -- the protocol is software, not a service
   provider
@@ -312,6 +316,9 @@ Steps:
 
 - engage audit firm (scope: BasketVault, VaultAccounting, OracleAdapter, GMX
   integration, PriceSync, FundingRateManager, PricingEngine, AssetWiring)
+- include the on-chain NAV surface (`getSharePrice()`, `getPricingNav()`,
+  `PerpReader`) in the audit scope as a verifiable valuation primitive that
+  third-party auditors can use to cross-check reported basket values
 - address audit findings and re-verify fixes
 - establish bug bounty program (Immunefi recommended)
 - deploy monitoring and alerting (oracle staleness, reserve levels, pool
@@ -383,7 +390,9 @@ Steps:
 - implement compliant product issuance: transfer-restricted basket shares,
   investor qualification checks, redemption gating, and suspension procedures
 - establish NAV governance framework: documented valuation policy, stale-price
-  handling, valuation challenge procedures
+  handling, valuation challenge procedures; on-chain `getSharePrice()` serves as
+  a continuous, permissionless NAV reference that simplifies the valuation
+  challenge procedure -- the chain is the authoritative calculation engine
 - build regulatory reporting pipeline (AIFMD Annex IV, MiFIR transaction
   reports, or equivalent as required by the license)
 - draft institutional investor disclosures, subscription documents, and risk

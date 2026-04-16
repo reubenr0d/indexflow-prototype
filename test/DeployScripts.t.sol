@@ -2,20 +2,9 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import {DeployLocal} from "../script/DeployLocal.s.sol";
-import {DeploySepolia} from "../script/DeploySepolia.s.sol";
+import {Deploy} from "../script/Deploy.s.sol";
 
-contract DeployLocalHarness is DeployLocal {
-    function exposeBuildJson(Deployed memory d) external view returns (string memory) {
-        return _buildJson(d);
-    }
-
-    function exposeSetVaultErrors(address errCtrl, address vault) external {
-        _setVaultErrors(errCtrl, vault);
-    }
-}
-
-contract DeploySepoliaHarness is DeploySepolia {
+contract DeployHarness is Deploy {
     function exposeBuildJson(Deployed memory d) external view returns (string memory) {
         return _buildJson(d);
     }
@@ -40,16 +29,14 @@ contract MockErrorControllerCapture {
 }
 
 contract DeployScriptsTest is Test {
-    DeployLocalHarness internal localHarness;
-    DeploySepoliaHarness internal sepoliaHarness;
+    DeployHarness internal harness;
 
     function setUp() public {
-        localHarness = new DeployLocalHarness();
-        sepoliaHarness = new DeploySepoliaHarness();
+        harness = new DeployHarness();
     }
 
-    function test_buildJson_local_and_sepolia_contains_expected_keys() public view {
-        DeployLocal.Deployed memory d1 = DeployLocal.Deployed({
+    function test_buildJson_contains_expected_keys() public view {
+        Deploy.Deployed memory d = Deploy.Deployed({
             basketFactory: address(0x1111),
             vaultAccounting: address(0x2222),
             oracleAdapter: address(0x3333),
@@ -61,40 +48,19 @@ contract DeployScriptsTest is Test {
             gmxVault: address(0x9999),
             assetWiring: address(0xAAAA)
         });
-        string memory localJson = localHarness.exposeBuildJson(d1);
-        assertTrue(_contains(localJson, '"basketFactory"'));
-        assertTrue(_contains(localJson, vm.toString(address(0x1111))));
-        assertTrue(_contains(localJson, '"assetWiring"'));
-
-        DeploySepolia.Deployed memory d2 = DeploySepolia.Deployed({
-            basketFactory: address(0xBBBB),
-            vaultAccounting: address(0xCCCC),
-            oracleAdapter: address(0xDDDD),
-            perpReader: address(0xEEEE),
-            pricingEngine: address(0xF001),
-            fundingRateManager: address(0xF002),
-            priceSync: address(0xF003),
-            usdc: address(0xF004),
-            gmxVault: address(0xF005),
-            assetWiring: address(0xF006)
-        });
-        string memory sepoliaJson = sepoliaHarness.exposeBuildJson(d2);
-        assertTrue(_contains(sepoliaJson, '"vaultAccounting"'));
-        assertTrue(_contains(sepoliaJson, vm.toString(address(0xF006))));
+        string memory json = harness.exposeBuildJson(d);
+        assertTrue(_contains(json, '"basketFactory"'));
+        assertTrue(_contains(json, vm.toString(address(0x1111))));
+        assertTrue(_contains(json, '"assetWiring"'));
+        assertTrue(_contains(json, '"vaultAccounting"'));
     }
 
     function test_setVaultErrors_pushes_expected_array_shape() public {
-        MockErrorControllerCapture cap1 = new MockErrorControllerCapture();
-        localHarness.exposeSetVaultErrors(address(cap1), address(0x1234));
-        assertEq(cap1.lastLen(), 56);
-        assertEq(cap1.first(), "Vault: zero error");
-        assertEq(cap1.last(), "Vault: maxGasPrice exceeded");
-
-        MockErrorControllerCapture cap2 = new MockErrorControllerCapture();
-        sepoliaHarness.exposeSetVaultErrors(address(cap2), address(0x4321));
-        assertEq(cap2.lastLen(), 56);
-        assertEq(cap2.first(), "Vault: zero error");
-        assertEq(cap2.last(), "Vault: maxGasPrice exceeded");
+        MockErrorControllerCapture cap = new MockErrorControllerCapture();
+        harness.exposeSetVaultErrors(address(cap), address(0x1234));
+        assertEq(cap.lastLen(), 56);
+        assertEq(cap.first(), "Vault: zero error");
+        assertEq(cap.last(), "Vault: maxGasPrice exceeded");
     }
 
     function _contains(string memory text, string memory needle) internal pure returns (bool) {

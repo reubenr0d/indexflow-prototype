@@ -21,6 +21,7 @@ import { PositionsTable } from "@/components/baskets/positions-table";
 import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
 import {
   ActivityBadge,
+  AiOperatorBadge,
   type BasketHistoryRow,
   StatusChip,
   SectionHeader,
@@ -29,6 +30,7 @@ import {
   getBasketActivityMeta,
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
+import { useAgentMetadata } from "@/hooks/useAgentMetadata";
 import { BasketTour } from "@/components/onboarding/basket-tour";
 import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
@@ -50,11 +52,23 @@ import { formatApy } from "@/lib/apy";
 import { type Address, parseAbiItem } from "viem";
 import {
   Activity,
+  ArrowDownToLine,
+  ArrowUpFromLine,
+  Bot,
   CalendarDays,
   Clock3,
+  Coins,
   Copy,
+  Gauge,
+  Landmark,
+  Layers,
+  Lightbulb,
+  LineChart,
+  Scale,
   ShieldAlert,
   ShieldCheck,
+  Target,
+  TrendingUp,
 } from "lucide-react";
 import { showToast } from "@/components/ui/toast";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -105,6 +119,8 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     query: { enabled: !!userAddress && !!basketInfo?.shareToken },
   });
 
+  const { data: agentMeta } = useAgentMetadata(vault);
+
   const hasPnLData = unrealisedPnL !== 0n || realisedPnL !== 0n || (state?.registered ?? false);
 
   const historyRows = useMemo(
@@ -116,6 +132,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE && !shouldUseHistoryRpcFallback;
   const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
   const latestActivityMeta = historyRows[0] ? getBasketActivityMeta(historyRows[0]) : undefined;
+
+  const justificationMap = useMemo(() => {
+    if (!agentMeta?.recentActions) return new Map<string, string>();
+    const map = new Map<string, string>();
+    for (const a of agentMeta.recentActions) {
+      if (a.txHash && a.justification) map.set(a.txHash.toLowerCase(), a.justification);
+    }
+    return map;
+  }, [agentMeta]);
 
   const handleCopyShareToken = async () => {
     if (!basketInfo?.shareToken || typeof navigator === "undefined") return;
@@ -135,25 +160,25 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
 
   const metricsData = [
-    { label: "TVL", value: formatUSDC(tvl) },
-    { label: "Share Price", value: formatPrice(basketInfo?.sharePrice ?? 0n) },
-    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign },
-    { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0" },
+    { label: "TVL", value: formatUSDC(tvl), icon: Landmark },
+    { label: "Share Price", value: formatPrice(basketInfo?.sharePrice ?? 0n), icon: Coins },
+    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign, icon: TrendingUp },
+    { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0", icon: Layers },
     ...(hasPnLData
       ? [
-          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign },
-          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign },
+          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign, icon: Activity },
+          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign, icon: LineChart },
         ]
       : []),
     ...(state?.registered
       ? [
-          { label: "Open Interest", value: formatUsd1e30(state.openInterest) },
-          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x` },
-          { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%` },
+          { label: "Open Interest", value: formatUsd1e30(state.openInterest), icon: Target },
+          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x`, icon: Scale },
+          { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%`, icon: Gauge },
         ]
       : []),
-    { label: "Dep Fee", value: depositFee !== undefined ? formatBps(depositFee) : "--" },
-    { label: "Red Fee", value: redeemFee !== undefined ? formatBps(redeemFee) : "--" },
+    { label: "Dep Fee", value: depositFee !== undefined ? formatBps(depositFee) : "--", icon: ArrowDownToLine },
+    { label: "Red Fee", value: redeemFee !== undefined ? formatBps(redeemFee) : "--", icon: ArrowUpFromLine },
   ];
 
   if (isInfoLoading) {
@@ -201,6 +226,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               )}
             </div>
             <div className="flex flex-wrap items-center gap-2">
+              {agentMeta?.isAiManaged && <AiOperatorBadge />}
               <StatusChip
                 icon={reserveHealthy ? ShieldCheck : ShieldAlert}
                 label={reserveHealthy ? "Healthy" : "Below target"}
@@ -216,7 +242,23 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
         </div>
       </Card>
 
-      {/* ── Metrics strip ── */}
+      {/* ── Vault thesis (AI-managed vaults) ── */}
+      {agentMeta?.thesis && (
+        <Card className="mb-6 border-app-accent/20 bg-app-accent/5 p-4">
+          <div className="flex items-start gap-3">
+            <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-app-accent" />
+            <div>
+              <h3 className="text-sm font-semibold text-app-text">Vault Thesis</h3>
+              <p className="mt-1 text-sm leading-relaxed text-app-muted">{agentMeta.thesis}</p>
+              <p className="mt-2 text-xs text-app-muted">
+                Last updated {new Date(agentMeta.lastRunAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
+
+      {/* ── Metrics grid ── */}
       <div data-tour="metrics">
         <MetricsStrip metrics={metricsData} className="mb-6" />
       </div>
@@ -309,7 +351,11 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                       </div>
                       <div className="divide-y divide-app-border">
                         {group.rows.map((row) => (
-                          <HistoryRowView key={row.id} row={row} />
+                          <HistoryRowView
+                            key={row.id}
+                            row={row}
+                            justification={justificationMap.get(row.txHash.toLowerCase())}
+                          />
                         ))}
                       </div>
                     </div>
@@ -501,7 +547,7 @@ function useVaultHistoryFallback(vault: Address, enabled: boolean) {
   });
 }
 
-function HistoryRowView({ row }: { row: BasketHistoryRow | BasketActivityRow }) {
+function HistoryRowView({ row, justification }: { row: BasketHistoryRow | BasketActivityRow; justification?: string }) {
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
@@ -518,6 +564,12 @@ function HistoryRowView({ row }: { row: BasketHistoryRow | BasketActivityRow }) 
             .filter(Boolean)
             .join(" · ")}
         </p>
+        {justification && (
+          <p className="mt-1 flex items-center gap-1 text-xs italic text-app-muted">
+            <Bot className="h-3 w-3 shrink-0 text-app-accent" />
+            {justification}
+          </p>
+        )}
       </div>
       <div className="shrink-0 text-right">
         <p className="font-mono text-app-text">

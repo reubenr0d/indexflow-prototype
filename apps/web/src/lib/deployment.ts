@@ -1,4 +1,4 @@
-export type DeploymentTarget = "sepolia" | "anvil" | "arbitrum-sepolia" | "arbitrum";
+export type DeploymentTarget = "sepolia" | "anvil" | "arbitrum-sepolia" | "arbitrum" | "fuji";
 
 export const DEPLOYMENT_TARGET_STORAGE_KEY = "indexflow:deployment-target";
 export const DEFAULT_DEPLOYMENT_TARGET: DeploymentTarget = "sepolia";
@@ -8,6 +8,7 @@ export const DEPLOYMENT_CHAIN_ID: Record<DeploymentTarget, number> = {
   anvil: 31337,
   "arbitrum-sepolia": 421614,
   arbitrum: 42161,
+  fuji: 43113,
 };
 
 export function isDeploymentTarget(value: unknown): value is DeploymentTarget {
@@ -15,7 +16,8 @@ export function isDeploymentTarget(value: unknown): value is DeploymentTarget {
     value === "sepolia" ||
     value === "anvil" ||
     value === "arbitrum-sepolia" ||
-    value === "arbitrum"
+    value === "arbitrum" ||
+    value === "fuji"
   );
 }
 
@@ -44,6 +46,7 @@ export function deploymentLabel(target: DeploymentTarget): string {
     sepolia: "Sepolia",
     "arbitrum-sepolia": "Arbitrum Sepolia",
     arbitrum: "Arbitrum",
+    fuji: "Avalanche Fuji",
   };
   return labels[target];
 }

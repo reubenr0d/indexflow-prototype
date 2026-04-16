@@ -107,6 +107,45 @@
   },
   {
     "type": "function",
+    "name": "executeIntentCrossChain",
+    "inputs": [
+      {
+        "name": "intentId",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "targetBasket",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "basketName",
+        "type": "string",
+        "internalType": "string"
+      },
+      {
+        "name": "depositFeeBps",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "redeemFeeBps",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "ccipMessageId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "getIntent",
     "inputs": [
       {
@@ -772,6 +811,31 @@
   },
   {
     "type": "event",
+    "name": "IntentRoutedCrossChain",
+    "inputs": [
+      {
+        "name": "intentId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "destChainSelector",
+        "type": "uint64",
+        "indexed": true,
+        "internalType": "uint64"
+      },
+      {
+        "name": "amount",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
     "name": "IntentSplit",
     "inputs": [
       {
@@ -898,6 +962,11 @@
   },
   {
     "type": "error",
+    "name": "BridgeNotSet",
+    "inputs": []
+  },
+  {
+    "type": "error",
     "name": "DeadlineExceeded",
     "inputs": []
   },
@@ -950,6 +1019,17 @@
       },
       {
         "name": "local",
+        "type": "uint64",
+        "internalType": "uint64"
+      }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "NotRemoteChain",
+    "inputs": [
+      {
+        "name": "target",
         "type": "uint64",
         "internalType": "uint64"
       }

@@ -157,7 +157,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - **Foundry** -- Build, test, deploy
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
 - **Chainlink CCIP** -- Cross-chain messaging for the coordination layer (reserve sync, intents, oracle config quorum)
-- **Target chains** -- Arbitrum, Ethereum Sepolia (testnet)
+- **Target chains** -- Arbitrum, Ethereum Sepolia (testnet), Avalanche Fuji (testnet)
 
 ## Setup
 
@@ -189,8 +189,10 @@ Minimal root `.env` for Forge scripts:
 SEPOLIA_RPC_URL=
 ARBITRUM_RPC_URL=
 ARBITRUM_SEPOLIA_RPC_URL=
+FUJI_RPC_URL=
 ETHERSCAN_API_KEY=
 ARBISCAN_API_KEY=
+SNOWTRACE_API_KEY=
 ```
 
 ### Web App Environment
@@ -233,6 +235,9 @@ npm run deploy:local
 
 # Ethereum Sepolia (writes apps/web/src/config/sepolia-deployment.json)
 npm run deploy:sepolia
+
+# Avalanche Fuji (writes apps/web/src/config/fuji-deployment.json)
+npm run deploy:fuji
 ```
 
 ## Local Development (Docker Compose)
@@ -407,6 +412,13 @@ npm run update-prices:sepolia:dry
 
 # Broadcast submitPrices + syncAll (requires PRIVATE_KEY)
 PRIVATE_KEY=0x... npm run update-prices:sepolia
+```
+
+**Avalanche Fuji**
+
+```bash
+npm run update-prices:fuji:dry
+PRIVATE_KEY=0x... npm run update-prices:fuji
 ```
 
 **Local Anvil**

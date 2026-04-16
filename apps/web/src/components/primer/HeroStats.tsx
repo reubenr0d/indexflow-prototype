@@ -2,7 +2,7 @@
 
 import { useReadContract } from "wagmi";
 import { OracleAdapterABI } from "@/abi/OracleAdapter";
-import { getContracts } from "@/config/contracts";
+import { getContracts, CONFIGURED_DEPLOYMENT_TARGETS } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useHeroProtocolStats } from "@/hooks/useHeroProtocolStats";
 import { formatApy } from "@/lib/apy";
@@ -21,6 +21,9 @@ export default function HeroStats() {
     query: { refetchInterval: REFETCH_INTERVAL },
   });
   const assets = assetCount != null ? Number(assetCount) : null;
+  const chainCount = CONFIGURED_DEPLOYMENT_TARGETS.filter(
+    (t) => t !== "anvil" && t !== "arbitrum",
+  ).length;
 
   return (
     <div className="mt-10 border-t border-app-border pt-6">
@@ -56,6 +59,7 @@ export default function HeroStats() {
           loading={isLoading}
           value={basketCount != null ? String(basketCount) : "--"}
         />
+        <StatCell label="Chains" value={String(chainCount)} />
         <StatCell
           label="Assets tracked"
           loading={assetCountLoading}

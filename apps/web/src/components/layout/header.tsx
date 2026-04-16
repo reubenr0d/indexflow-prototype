@@ -11,7 +11,7 @@ import {
   useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { anvil, sepolia } from "viem/chains";
+import { anvil, avalancheFuji, sepolia } from "viem/chains";
 import { getContracts } from "@/config/contracts";
 import { isPrivyConfigured } from "@/config/privy";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
@@ -215,7 +215,7 @@ export function Header() {
   const { usdc } = getContracts(deploymentChainId);
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
-  const isTestnet = walletChainId === anvil.id || walletChainId === sepolia.id;
+  const isTestnet = walletChainId === anvil.id || walletChainId === sepolia.id || walletChainId === avalancheFuji.id;
   const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
   const onHome = pathname === "/";

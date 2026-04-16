@@ -6,6 +6,7 @@ import {
   Activity,
   ArrowDownToLine,
   ArrowUpFromLine,
+  Bot,
   Coins,
   Gauge,
   Layers3,
@@ -175,6 +176,12 @@ export function ActivityBadge({
     >
       <meta.icon className="h-4 w-4" />
     </span>
+  );
+}
+
+export function AiOperatorBadge({ className }: { className?: string }) {
+  return (
+    <StatusChip icon={Bot} label="AI Operator" tone="accent" className={className} />
   );
 }
 

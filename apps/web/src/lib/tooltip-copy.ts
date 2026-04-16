@@ -137,6 +137,12 @@ export const TOOLTIP_COPY = {
     "How recently this chain's pool state was synced. Stale data is excluded from routing decisions.",
   intentStatus:
     "Current state of the deposit/redeem intent: pending, in-flight (cross-chain), executed, or refunded.",
+
+  // AI agent vault management
+  aiOperator:
+    "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations.",
+  vaultThesis:
+    "The AI operator's current investment thesis — a summary of the strategy rationale and target exposures.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;

@@ -95,6 +95,45 @@ contract MockBasketFactory {
     }
 }
 
+contract MockCrossChainIntentBridge {
+    MockUSDCForRouter public usdc;
+    uint256 public lastIntentId;
+    uint64 public lastDestChain;
+    uint256 public lastAmount;
+    address public lastUser;
+    address public lastTargetBasket;
+    string public lastBasketName;
+    uint256 public lastDepositFeeBps;
+    uint256 public lastRedeemFeeBps;
+    bytes32 public constant MOCK_MESSAGE_ID = keccak256("mock-ccip-message");
+
+    constructor(address _usdc) {
+        usdc = MockUSDCForRouter(_usdc);
+    }
+
+    function routeCrossChain(
+        uint256 intentId,
+        uint64 destChainSelector,
+        uint256 amount,
+        address user,
+        address targetBasket,
+        string calldata basketName,
+        uint256 depositFeeBps,
+        uint256 redeemFeeBps
+    ) external returns (bytes32) {
+        usdc.transferFrom(msg.sender, address(this), amount);
+        lastIntentId = intentId;
+        lastDestChain = destChainSelector;
+        lastAmount = amount;
+        lastUser = user;
+        lastTargetBasket = targetBasket;
+        lastBasketName = basketName;
+        lastDepositFeeBps = depositFeeBps;
+        lastRedeemFeeBps = redeemFeeBps;
+        return MOCK_MESSAGE_ID;
+    }
+}
+
 contract MockGMXVaultForRouter {
     mapping(address => uint256) public poolAmounts;
     mapping(address => uint256) public reservedAmounts;
@@ -116,6 +155,7 @@ contract IntentRouterTest is Test {
     MockUSDCForRouter public usdc;
     MockBasketFactory public factory;
     MockBasketVault public basket;
+    MockCrossChainIntentBridge public mockBridge;
 
     address public owner = address(this);
     address public user = makeAddr("user");
@@ -149,6 +189,8 @@ contract IntentRouterTest is Test {
         ERC1967Proxy proxy = new ERC1967Proxy(address(routerImpl), initData);
         router = IntentRouter(address(proxy));
 
+        mockBridge = new MockCrossChainIntentBridge(address(usdc));
+        router.setBridge(address(mockBridge));
         router.addApprovedKeeper(keeper);
 
         // Fund user
@@ -322,5 +364,122 @@ contract IntentRouterTest is Test {
         vm.prank(keeper);
         vm.expectRevert(IntentRouter.DeadlineExceeded.selector);
         router.executeIntent(id, address(basket));
+    }
+
+    // ─── Cross-chain execution tests ──────────────────────────────
+
+    function test_executeIntentCrossChain() public {
+        uint64 remoteChain = 99;
+        address remoteBasket = makeAddr("remoteBasket");
+
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, remoteChain, address(0), 0);
+        assertEq(router.activeIntentCount(user), 1);
+
+        vm.prank(keeper);
+        bytes32 msgId = router.executeIntentCrossChain(id, remoteBasket, "", 0, 0);
+
+        assertEq(msgId, MockCrossChainIntentBridge(mockBridge).MOCK_MESSAGE_ID());
+
+        IIntentRouter.Intent memory intent = router.getIntent(id);
+        assertEq(uint256(intent.status), uint256(IIntentRouter.IntentStatus.IN_FLIGHT));
+        assertEq(intent.ccipMessageId, msgId);
+
+        assertEq(router.activeIntentCount(user), 0);
+        assertEq(usdc.balanceOf(address(router)), 0);
+        assertEq(usdc.balanceOf(address(mockBridge)), 1_000e6);
+
+        assertEq(mockBridge.lastIntentId(), id);
+        assertEq(mockBridge.lastDestChain(), remoteChain);
+        assertEq(mockBridge.lastAmount(), 1_000e6);
+        assertEq(mockBridge.lastUser(), user);
+        assertEq(mockBridge.lastTargetBasket(), remoteBasket);
+    }
+
+    function test_executeIntentCrossChain_withTargetBasket() public {
+        uint64 remoteChain = 99;
+        address remoteBasket = makeAddr("remoteBasket");
+
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, remoteChain, remoteBasket, 0);
+
+        vm.prank(keeper);
+        router.executeIntentCrossChain(id, remoteBasket, "", 0, 0);
+
+        assertEq(mockBridge.lastTargetBasket(), remoteBasket);
+    }
+
+    function test_executeIntentCrossChain_revertsNotRemoteChain() public {
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, localSelector, address(0), 0);
+
+        vm.prank(keeper);
+        vm.expectRevert(abi.encodeWithSelector(IntentRouter.NotRemoteChain.selector, localSelector));
+        router.executeIntentCrossChain(id, makeAddr("remoteBasket"), "", 0, 0);
+    }
+
+    function test_executeIntentCrossChain_revertsZeroChain() public {
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 0, address(0), 0);
+
+        vm.prank(keeper);
+        vm.expectRevert(abi.encodeWithSelector(IntentRouter.NotRemoteChain.selector, 0));
+        router.executeIntentCrossChain(id, makeAddr("remoteBasket"), "", 0, 0);
+    }
+
+    function test_executeIntentCrossChain_revertsBridgeNotSet() public {
+        router.setBridge(address(0));
+
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 99, address(0), 0);
+
+        vm.prank(keeper);
+        vm.expectRevert(IntentRouter.BridgeNotSet.selector);
+        router.executeIntentCrossChain(id, makeAddr("remoteBasket"), "", 0, 0);
+    }
+
+    function test_executeIntentCrossChain_revertsNotKeeper() public {
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 99, address(0), 0);
+
+        vm.prank(user);
+        vm.expectRevert(IntentRouter.NotKeeper.selector);
+        router.executeIntentCrossChain(id, makeAddr("remoteBasket"), "", 0, 0);
+    }
+
+    function test_executeIntentCrossChain_revertsBasketMismatch() public {
+        address remoteBasket = makeAddr("remoteBasket");
+        address wrongBasket = makeAddr("wrongBasket");
+
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 99, remoteBasket, 0);
+
+        vm.prank(keeper);
+        vm.expectRevert(abi.encodeWithSelector(IntentRouter.BasketMismatch.selector, remoteBasket, wrongBasket));
+        router.executeIntentCrossChain(id, wrongBasket, "", 0, 0);
+    }
+
+    function test_refundRevertsAfterCrossChainExecution() public {
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 99, address(0), 0);
+
+        vm.prank(keeper);
+        router.executeIntentCrossChain(id, makeAddr("remoteBasket"), "", 0, 0);
+
+        vm.warp(block.timestamp + 7201);
+        vm.expectRevert(abi.encodeWithSelector(IntentRouter.IntentNotPending.selector, id));
+        router.refundIntent(id);
+    }
+
+    function test_executeIntentCrossChain_withVaultConfig() public {
+        vm.prank(user);
+        uint256 id = router.submitIntent(1_000e6, 99, address(0), 0);
+
+        vm.prank(keeper);
+        router.executeIntentCrossChain(id, address(0), "Remote Basket", 50, 30);
+
+        assertEq(mockBridge.lastBasketName(), "Remote Basket");
+        assertEq(mockBridge.lastDepositFeeBps(), 50);
+        assertEq(mockBridge.lastRedeemFeeBps(), 30);
     }
 }

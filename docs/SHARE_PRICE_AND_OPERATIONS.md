@@ -23,6 +23,11 @@ If `vaultAccounting` is not set, `pricingNav = baseValue`.
 - Else:
   - `sharePrice = pricingNav * PRICE_PRECISION / totalSupply`
 
+Because this formula is entirely on-chain and deterministic given chain state,
+external auditors and fund administrators can verify NAV at any block by reading
+contract state directly -- no off-chain calculation or manager-reported values
+are required.
+
 ### `deposit(usdcAmount)` mint math
 
 - `fee = usdcAmount * depositFeeBps / 10_000`

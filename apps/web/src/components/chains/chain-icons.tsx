@@ -83,6 +83,18 @@ export function SepoliaIcon({ size, ...props }: IconProps) {
   );
 }
 
+export function AvalancheIcon({ size, ...props }: IconProps) {
+  return (
+    <svg {...defaultProps(size, props)}>
+      <rect width="24" height="24" rx="6" fill="#E84142" />
+      <path
+        d="M16.28 16.5H14.2c-.3 0-.45-.04-.6-.17-.15-.14-.26-.35-.26-.35l-1.3-2.42s-.08-.14-.16-.14-.15.14-.15.14L10.4 16c0 0-.1.2-.25.33-.15.14-.33.17-.6.17H7.72l4.16-7.5 4.4 7.5z"
+        fill="#fff"
+      />
+    </svg>
+  );
+}
+
 export function GenericChainIcon({ size, ...props }: IconProps) {
   return (
     <svg {...defaultProps(size, props)}>
@@ -103,6 +115,7 @@ export type ChainMeta = {
 };
 
 const arbitrum: ChainMeta = { name: "Arbitrum", icon: ArbitrumIcon, color: "#213147", accent: "#2dd4bf" };
+const avalancheFuji: ChainMeta = { name: "Avalanche Fuji", icon: AvalancheIcon, color: "#E84142", accent: "#f87171" };
 const base: ChainMeta = { name: "Base", icon: BaseIcon, color: "#0052FF", accent: "#14b8a6" };
 const optimism: ChainMeta = { name: "Optimism", icon: OptimismIcon, color: "#FF0420", accent: "#5eead4" };
 const sepolia: ChainMeta = { name: "Sepolia", icon: SepoliaIcon, color: "#8B5CF6", accent: "#99f6e4" };
@@ -110,6 +123,7 @@ const sepolia: ChainMeta = { name: "Sepolia", icon: SepoliaIcon, color: "#8B5CF6
 export const CHAIN_META: Record<string, ChainMeta> = {
   // EVM chain IDs
   "42161": arbitrum,
+  "43113": avalancheFuji,
   "8453": base,
   "10": optimism,
   "11155111": sepolia,

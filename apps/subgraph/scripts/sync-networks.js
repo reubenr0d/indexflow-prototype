@@ -7,6 +7,7 @@ const repoRoot = path.resolve(subgraphRoot, "..", "..");
 const networksPath = path.join(subgraphRoot, "networks.json");
 const localDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "local-deployment.json");
 const sepoliaDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "sepolia-deployment.json");
+const fujiDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "fuji-deployment.json");
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -39,6 +40,7 @@ function syncTarget(networks, networkName, deployment, deploymentKey, networkKey
 const networks = readJson(networksPath);
 const localDeployment = readJson(localDeploymentPath);
 const sepoliaDeployment = readJson(sepoliaDeploymentPath);
+const fujiDeployment = readJson(fujiDeploymentPath);
 
 const targets = [
   ["basketFactory", "basketFactory"],
@@ -51,6 +53,7 @@ const targets = [
 for (const [deploymentKey, networkKey] of targets) {
   syncTarget(networks, "anvil", localDeployment, deploymentKey, networkKey);
   syncTarget(networks, "sepolia", sepoliaDeployment, deploymentKey, networkKey);
+  syncTarget(networks, "fuji", fujiDeployment, deploymentKey, networkKey);
 }
 
 // Legacy key from earlier misconfiguration. Keep output canonical on Ethereum Sepolia.

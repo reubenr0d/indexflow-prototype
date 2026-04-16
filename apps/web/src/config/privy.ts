@@ -1,6 +1,6 @@
 import type { PrivyClientConfig } from "@privy-io/react-auth";
 import { addRpcUrlOverrideToChain } from "@privy-io/chains";
-import { anvil } from "viem/chains";
+import { anvil, avalancheFuji } from "viem/chains";
 import { sepolia, arbitrumSepolia, arbitrum } from "wagmi/chains";
 import { isAnvilEnabled } from "@/lib/dev-mode";
 
@@ -28,14 +28,14 @@ function buildPrivyConfig(): PrivyClientConfig {
     return {
       ...base,
       defaultChain: sepolia,
-      supportedChains: [sepolia, anvilWithRpc, arbitrumSepolia, arbitrum],
+      supportedChains: [sepolia, anvilWithRpc, arbitrumSepolia, arbitrum, avalancheFuji],
     };
   }
 
   return {
     ...base,
     defaultChain: sepolia,
-    supportedChains: [sepolia, arbitrumSepolia, arbitrum],
+    supportedChains: [sepolia, arbitrumSepolia, arbitrum, avalancheFuji],
   };
 }
 

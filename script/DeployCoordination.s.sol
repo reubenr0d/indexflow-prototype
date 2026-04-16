@@ -10,25 +10,22 @@ import {OracleConfigQuorum} from "../src/coordination/OracleConfigQuorum.sol";
 import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 /// @notice Deploy the cross-chain coordination layer and wire it to the existing stack.
-/// @dev Run with: forge script script/DeployCoordination.s.sol --rpc-url $RPC --broadcast
+/// @dev Usage: CHAIN=sepolia forge script script/DeployCoordination.s.sol --rpc-url sepolia --broadcast -vvv
 ///
-/// Required env vars:
-///   GMX_VAULT          - existing GMX vault address
-///   USDC               - USDC token address
-///   CCIP_ROUTER        - Chainlink CCIP router address
-///   BASKET_FACTORY     - existing BasketFactory address
-///   ORACLE_ADAPTER     - existing OracleAdapter address
-///   CHAIN_SELECTOR     - CCIP chain selector for this chain
-///   FEE_TOKEN          - LINK token (or 0x0 for native) for CCIP fees
+/// When CHAIN env var is set, reads chain constants from config/chains.json and existing
+/// contract addresses from apps/web/src/config/{CHAIN}-deployment.json. Writes coordination
+/// addresses back to the deployment JSON.
+///
+/// When CHAIN is not set, falls back to legacy env vars for backward compatibility:
+///   GMX_VAULT, USDC, CCIP_ROUTER, BASKET_FACTORY, ORACLE_ADAPTER, CHAIN_SELECTOR, FEE_TOKEN
+///
+/// Always required:
 ///   TREASURY           - protocol treasury for intent fees
-///   QUORUM_THRESHOLD   - N-of-M votes required for oracle config consensus (default: 1)
-///   PROPOSAL_TTL       - seconds before a config vote expires (default: 86400)
 ///
 /// Optional:
 ///   KEEPER             - approved keeper address for IntentRouter
-///   REMOTE_SELECTOR    - remote chain selector to register
-///   REMOTE_MESSENGER   - remote CCIPReserveMessenger address
-///   REMOTE_QUORUM      - remote OracleConfigQuorum address to register as peer
+///   QUORUM_THRESHOLD   - N-of-M votes required for oracle config consensus (default: 1)
+///   PROPOSAL_TTL       - seconds before a config vote expires (default: 86400)
 contract DeployCoordination is Script {
     struct Deployed {
         address poolReserveRegistry;
@@ -41,16 +38,50 @@ contract DeployCoordination is Script {
 
     function run() external returns (Deployed memory d) {
         address deployer = msg.sender;
-        address gmxVault = vm.envAddress("GMX_VAULT");
-        address usdc = vm.envAddress("USDC");
-        address ccipRouter = vm.envAddress("CCIP_ROUTER");
-        address basketFactory = vm.envAddress("BASKET_FACTORY");
-        address oracleAdapter = vm.envAddress("ORACLE_ADAPTER");
-        uint64 chainSelector = uint64(vm.envUint("CHAIN_SELECTOR"));
-        address feeToken = vm.envAddress("FEE_TOKEN");
+
+        address gmxVault;
+        address usdc;
+        address ccipRouter;
+        address basketFactory;
+        address oracleAdapter;
+        uint64 chainSelector;
+        address feeToken;
+        string memory chainName;
+        string memory deployJsonPath;
+
+        if (vm.envExists("CHAIN")) {
+            chainName = vm.envString("CHAIN");
+
+            string memory chainsJson = vm.readFile(string.concat(vm.projectRoot(), "/config/chains.json"));
+            string memory key = string.concat(".", chainName);
+
+            ccipRouter = vm.parseJsonAddress(chainsJson, string.concat(key, ".ccipRouter"));
+            chainSelector = uint64(vm.parseJsonUint(chainsJson, string.concat(key, ".ccipChainSelector")));
+            feeToken = vm.parseJsonAddress(chainsJson, string.concat(key, ".linkToken"));
+
+            deployJsonPath = string.concat(
+                vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json"
+            );
+            string memory deployJson = vm.readFile(deployJsonPath);
+            gmxVault = vm.parseJsonAddress(deployJson, ".gmxVault");
+            usdc = vm.parseJsonAddress(deployJson, ".usdc");
+            basketFactory = vm.parseJsonAddress(deployJson, ".basketFactory");
+            oracleAdapter = vm.parseJsonAddress(deployJson, ".oracleAdapter");
+        } else {
+            gmxVault = vm.envAddress("GMX_VAULT");
+            usdc = vm.envAddress("USDC");
+            ccipRouter = vm.envAddress("CCIP_ROUTER");
+            basketFactory = vm.envAddress("BASKET_FACTORY");
+            oracleAdapter = vm.envAddress("ORACLE_ADAPTER");
+            chainSelector = uint64(vm.envUint("CHAIN_SELECTOR"));
+            feeToken = vm.envAddress("FEE_TOKEN");
+        }
+
         address treasury = vm.envAddress("TREASURY");
         uint8 quorumThreshold = uint8(vm.envOr("QUORUM_THRESHOLD", uint256(1)));
         uint32 proposalTtl = uint32(vm.envOr("PROPOSAL_TTL", uint256(86_400)));
+
+        require(ccipRouter != address(0), "DeployCoordination: CCIP router required");
 
         vm.startBroadcast();
 
@@ -124,22 +155,30 @@ contract DeployCoordination is Script {
         );
         d.oracleConfigQuorum = address(quorum);
 
-        // 7. Wire remote peers (optional)
-        uint64 remoteSelector = uint64(vm.envOr("REMOTE_SELECTOR", uint256(0)));
-        if (remoteSelector > 0) {
-            address remoteMessenger = vm.envAddress("REMOTE_MESSENGER");
-            registry.addRemoteChain(remoteSelector);
-            messenger.addPeer(remoteSelector, remoteMessenger);
-
-            address remoteQuorum = vm.envOr("REMOTE_QUORUM", address(0));
-            if (remoteQuorum != address(0)) {
-                quorum.addPeer(remoteSelector, remoteQuorum);
-            }
-        }
-
         vm.stopBroadcast();
 
+        if (bytes(chainName).length > 0) {
+            _writeCoordinationJson(deployJsonPath, d);
+        }
+
         _logDeployment(d);
+    }
+
+    function _writeCoordinationJson(string memory path, Deployed memory d) internal {
+        string memory existing = vm.readFile(path);
+
+        string memory coordBlock = string.concat(
+            ',\n  "poolReserveRegistry": "', vm.toString(d.poolReserveRegistry),
+            '",\n  "ccipReserveMessenger": "', vm.toString(d.ccipReserveMessenger),
+            '",\n  "intentRouter": "', vm.toString(d.intentRouterProxy),
+            '",\n  "intentRouterImpl": "', vm.toString(d.intentRouterImpl),
+            '",\n  "crossChainIntentBridge": "', vm.toString(d.crossChainIntentBridge),
+            '",\n  "oracleConfigQuorum": "', vm.toString(d.oracleConfigQuorum), '"'
+        );
+
+        string memory updated = vm.replace(existing, '\n}\n', string.concat(coordBlock, '\n}\n'));
+        vm.writeFile(path, updated);
+        console.log("Coordination addresses appended to", path);
     }
 
     function _logDeployment(Deployed memory d) internal pure {

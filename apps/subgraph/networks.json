@@ -42,5 +42,27 @@
       "address": "0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556",
       "startBlock": 10665966
     }
+  },
+  "fuji": {
+    "basketFactory": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "vaultAccounting": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "oracleAdapter": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "poolReserveRegistry": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "intentRouter": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    }
   }
 }

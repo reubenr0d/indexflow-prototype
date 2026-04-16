@@ -20,6 +20,7 @@ Google Cloud resources in this repo are used only for serverless push notificati
 | --- | --- | --- | --- |
 | Local (Anvil) | `31337` | Deployed | `apps/web/src/config/local-deployment.json` |
 | Ethereum Sepolia | `11155111` | Deployed + verified | `apps/web/src/config/sepolia-deployment.json` |
+| Avalanche Fuji | `43113` | Not yet deployed | `apps/web/src/config/fuji-deployment.json` |
 | Arbitrum One | `42161` | Not deployed in this repo snapshot | N/A |
 | Arbitrum Sepolia | `421614` | Not deployed in this repo snapshot | N/A |
 
@@ -142,22 +143,64 @@ CI deployment path:
 - `.github/workflows/deploy-production.yml` deploys Cloud Run from `main`
 - same workflow reconciles Scheduler jobs and runs push health smoke checks
 
-## How to refresh
+## How to deploy
 
-- Local (Docker Compose workflow):
-  - First time: `npm run local:up` (starts Docker infra + deploys contracts + subgraph)
-  - Start UI: `npm run local:dev` (Next.js dev server on host, hot reloads)
-  - Redeploy after code changes: `npm run redeploy:local` (re-deploys contracts + subgraph; UI picks up new addresses via HMR)
-  - Teardown/reset volumes: `npm run local:down`
-  - Standalone contract-only deploy (bare Anvil, no Docker): `npm run deploy:local`
-- Sepolia:
-  - `npm run deploy:sepolia` (same Yahoo seed behavior; optional `SEED_PRICE_RAW` override)
-  - Optional verify pass:
-    - `forge script script/DeploySepolia.s.sol:DeploySepolia --rpc-url sepolia --private-key $PRIVATE_KEY --broadcast --resume --verify -vvv`
+### Unified deployment (any chain)
+
+All chains use a single parameterized deploy script (`script/Deploy.s.sol`) driven by the `CHAIN` env var. Chain-specific constants (CCIP router, selector, LINK token, etc.) are defined in `config/chains.json`.
+
+**Full deployment with peer wiring (recommended):**
+
+```bash
+# Deploy to a new chain and wire it to an existing chain
+./scripts/deploy-chain.sh <chain-name> --peer <existing-chain>
+
+# Examples:
+./scripts/deploy-chain.sh fuji --peer sepolia
+./scripts/deploy-chain.sh arbitrum-sepolia --peer sepolia
+```
+
+This runs three steps:
+1. `Deploy.s.sol` — base stack (GMX fork, oracle, perp layer, BasketFactory)
+2. `DeployCoordination.s.sol` — coordination layer (IntentRouter, CrossChainIntentBridge, PoolReserveRegistry, etc.)
+3. `WireCrossChainPeers.s.sol` — peer wiring in both directions
+
+**Individual steps (if needed):**
+
+```bash
+# Base stack only
+CHAIN=sepolia npm run deploy:sepolia
+
+# Coordination layer only (requires base stack deployed first)
+CHAIN=sepolia TREASURY=0x... npm run deploy:coordination -- --rpc-url sepolia
+
+# Wire peers only (requires both chains deployed with coordination)
+LOCAL_CHAIN=sepolia REMOTE_CHAIN=fuji npm run deploy:wire-peers -- --rpc-url sepolia
+LOCAL_CHAIN=fuji REMOTE_CHAIN=sepolia npm run deploy:wire-peers -- --rpc-url fuji
+```
+
+### Adding a new chain
+
+1. Add an entry to `config/chains.json` with the chain's CCIP router, selector, LINK token, etc.
+2. Add an RPC alias in `foundry.toml` under `[rpc_endpoints]` if not already present.
+3. Run `./scripts/deploy-chain.sh <chain-name> --peer <existing-chain>`.
+
+### Local (Docker Compose workflow)
+
+- First time: `npm run local:up` (starts Docker infra + deploys contracts + subgraph)
+- Start UI: `npm run local:dev` (Next.js dev server on host, hot reloads)
+- Redeploy after code changes: `npm run redeploy:local` (re-deploys contracts + subgraph; UI picks up new addresses via HMR)
+- Teardown/reset volumes: `npm run local:down`
+- Standalone contract-only deploy (bare Anvil, no Docker): `npm run deploy:local`
+
+### Verify pass (optional, after deploy)
+
+```bash
+CHAIN=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --private-key $PRIVATE_KEY --broadcast --resume --verify -vvv
+```
 
 Then update this file from:
 
-- `apps/web/src/config/local-deployment.json`
-- `apps/web/src/config/sepolia-deployment.json`
+- `apps/web/src/config/{chain}-deployment.json`
 - active Subgraph Studio query URL (for current production slug/version)
 - Cloud Run service URL and Scheduler job names (if changed)

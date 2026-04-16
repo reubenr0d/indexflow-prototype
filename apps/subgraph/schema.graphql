@@ -231,6 +231,7 @@ type IntentAction @entity(immutable: true) {
   amount: BigInt!
   basketVault: Bytes
   sharesOrUsdc: BigInt
+  destChainSelector: BigInt
   timestamp: BigInt!
   blockNumber: BigInt!
   txHash: Bytes!
@@ -241,6 +242,7 @@ type IntentStats @entity(immutable: false) {
   id: ID!
   totalSubmitted: BigInt!
   totalExecuted: BigInt!
+  totalRoutedCrossChain: BigInt!
   totalRefunded: BigInt!
   cumulativeVolumeUsdc: BigInt!
   updatedAt: BigInt!

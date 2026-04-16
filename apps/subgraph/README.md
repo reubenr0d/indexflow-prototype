@@ -6,6 +6,7 @@ Configuration lives in `networks.json` and is auto-synced from web deployment fi
 
 - `apps/web/src/config/local-deployment.json` -> `anvil`
 - `apps/web/src/config/sepolia-deployment.json` -> `sepolia`
+- `apps/web/src/config/fuji-deployment.json` -> `fuji`
 
 `generate-manifest` fails if any **required** contract address for the selected network is zero. Coordination layer contracts (`poolReserveRegistry`, `intentRouter`) are optional — a warning is printed if they have zero addresses, but the build still succeeds.
 
@@ -40,3 +41,4 @@ NETWORK=sepolia npm run deploy
 ```
 
 Set `NETWORK=sepolia` for Ethereum Sepolia indexing using `apps/web/src/config/sepolia-deployment.json`.
+Set `NETWORK=fuji` for Avalanche Fuji indexing using `apps/web/src/config/fuji-deployment.json`.

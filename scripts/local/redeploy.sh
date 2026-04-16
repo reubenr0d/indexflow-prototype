@@ -27,7 +27,7 @@ printf '[redeploy] Anvil ready (block %s)\n' "$(cast block-number --rpc-url "$RP
 # 2. Deploy contracts
 # ------------------------------------------------------------------
 printf '[redeploy] deploying contracts\n'
-PRIVATE_KEY="$PRIVATE_KEY" forge script script/DeployLocal.s.sol:DeployLocal \
+CHAIN=local PRIVATE_KEY="$PRIVATE_KEY" forge script script/Deploy.s.sol:Deploy \
   --root "$REPO_ROOT" \
   --rpc-url "$RPC_URL" \
   --broadcast \

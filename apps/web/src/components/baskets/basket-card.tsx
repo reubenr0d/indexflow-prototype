@@ -8,8 +8,10 @@ import { TrendPill } from "@/components/ui/trend-pill";
 import { formatBps, formatPrice, formatUSDC } from "@/lib/format";
 import { computeApy, formatApy } from "@/lib/apy";
 import { type Address } from "viem";
+import { Bot } from "lucide-react";
 import { BasketIcon } from "./basket-icons";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
+import { useAgentMetadata } from "@/hooks/useAgentMetadata";
 
 interface BasketCardProps {
   vault: Address;
@@ -41,6 +43,7 @@ export function BasketCard({
   trend7d: trend7dProp,
   index = 0,
 }: BasketCardProps) {
+  const { data: agentMeta } = useAgentMetadata(vault);
   const { data: trendData } = useBasketTrendSnapshots(vault);
   const trend24h = trend24hProp ?? trendData?.day?.delta?.sharePrice ?? null;
   const trend7d = trend7dProp ?? trendData?.week?.delta?.sharePrice ?? null;
@@ -71,10 +74,18 @@ export function BasketCard({
             <h3 className="min-w-0 text-sm font-semibold text-app-text">
               <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
             </h3>
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-app-border bg-app-bg-subtle px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-muted">
-              <BasketIcon name="fee" className="text-app-accent" />
-              {depositFee !== undefined ? `${formatBps(depositFee)} fee` : "Fee --"}
-            </span>
+            <div className="flex shrink-0 items-center gap-1.5">
+              {agentMeta?.isAiManaged && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-app-accent/25 bg-app-accent/10 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-accent">
+                  <Bot className="h-3 w-3" />
+                  AI
+                </span>
+              )}
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-app-border bg-app-bg-subtle px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-muted">
+                <BasketIcon name="fee" className="text-app-accent" />
+                {depositFee !== undefined ? `${formatBps(depositFee)} fee` : "Fee --"}
+              </span>
+            </div>
           </div>
 
           <div className="flex items-end justify-between gap-3">
