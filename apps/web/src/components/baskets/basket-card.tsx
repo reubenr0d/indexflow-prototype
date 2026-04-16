@@ -12,6 +12,7 @@ import { Bot } from "lucide-react";
 import { BasketIcon } from "./basket-icons";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
 import { useAgentMetadata } from "@/hooks/useAgentMetadata";
+import { CHAIN_META } from "@/components/chains/chain-icons";
 
 interface BasketCardProps {
   vault: Address;
@@ -28,6 +29,7 @@ interface BasketCardProps {
   trend24h?: bigint | null;
   trend7d?: bigint | null;
   index?: number;
+  chainId?: number;
 }
 
 export function BasketCard({
@@ -42,7 +44,10 @@ export function BasketCard({
   trend24h: trend24hProp,
   trend7d: trend7dProp,
   index = 0,
+  chainId,
 }: BasketCardProps) {
+  const chainMeta = chainId != null ? CHAIN_META[String(chainId)] : undefined;
+  const ChainIcon = chainMeta?.icon;
   const { data: agentMeta } = useAgentMetadata(vault);
   const { data: trendData } = useBasketTrendSnapshots(vault);
   const trend24h = trend24hProp ?? trendData?.day?.delta?.sharePrice ?? null;
@@ -75,6 +80,14 @@ export function BasketCard({
               <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
             </h3>
             <div className="flex shrink-0 items-center gap-1.5">
+              {ChainIcon && (
+                <span
+                  className="inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg-subtle px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-muted"
+                  title={chainMeta?.name}
+                >
+                  <ChainIcon size={12} />
+                </span>
+              )}
               {agentMeta?.isAiManaged && (
                 <span className="inline-flex items-center gap-1 rounded-full border border-app-accent/25 bg-app-accent/10 px-2 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.18em] text-app-accent">
                   <Bot className="h-3 w-3" />

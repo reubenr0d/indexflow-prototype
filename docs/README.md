@@ -27,7 +27,7 @@ Oracle feeds, deployments, and pool management.
 - [Price Feed Flow](./PRICE_FEED_FLOW.md) — OracleAdapter, PriceSync, Chainlink vs custom relayer, and keeper setup.
 - [Oracle & Supported Assets](./ORACLE_SUPPORTED_ASSETS.md) — Supported assets on Sepolia, Yahoo relayer integration, and adding new assets.
 - [Global Pool Management](./GLOBAL_POOL_MANAGEMENT_FLOW.md) — GMX buffer amounts, direct pool deposits, and the admin pool interface.
-- [Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md) — Pool depth TWAP, CCIP reserve sync, intent router / bridge, quorum-based oracle config consensus, and trust model.
+- [Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md) — Hub-and-spoke architecture, StateRelay, on-chain deposit routing guard, keeper-posted routing weights, cross-chain redemption fills, and trust model.
 - [Deployments](./DEPLOYMENTS.md) — Sepolia and local contract addresses, subgraph deployment, and refresh commands.
 
 ## Operations

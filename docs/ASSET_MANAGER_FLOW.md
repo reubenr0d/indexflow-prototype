@@ -6,6 +6,14 @@ A curator is the person (or agent) who owns and operates a basket vault. Think o
 
 The curator's core job is balancing two competing goals. On one side, they want to put capital to work through perp positions to generate returns that grow the vault's NAV and attract more depositors. On the other side, they need to keep enough idle USDC in the vault so that investors can redeem their shares on demand. Getting this balance right — keeping investors liquid while generating returns — is what separates a good curator from a bad one.
 
+**Hub-and-spoke topology:** Perp positions can only be opened on the **hub chain (Sepolia)**, where `VaultAccounting` and the GMX pool are deployed. Spoke chains (Fuji, and potentially 100+) are **deposit-only** — they accept investor USDC but have no perp module. As a curator, **you do not need to interact with spoke chains for perp operations**. All position management (`allocateToPerp`, `withdrawFromPerp`, `openPosition`, `closePosition`) happens exclusively on the Sepolia hub. The keeper service handles all cross-chain state synchronization automatically:
+
+- **Routing weights:** The keeper posts routing weights to `StateRelay` on every chain each epoch, steering new deposits toward Sepolia when more perp capital is needed.
+- **PnL propagation:** The keeper computes global NAV and posts `globalPnLAdjustment` to spoke chains so share prices stay consistent.
+- **Redemption fills:** When spoke-chain investors redeem more than the local idle USDC, the keeper orchestrates cross-chain CCIP fills from the hub.
+
+`allocateToPerp` uses Sepolia-local USDC only; spoke-chain USDC is not directly bridgeable to the perp module (the routing weights handle this indirectly by directing new deposits to the hub).
+
 Curators don't custody investor funds directly. The smart contracts enforce all accounting: capital moves between the vault and the perp module through on-chain transactions, positions are opened in the VaultAccounting contract's name (not the curator's wallet), and PnL flows back into the vault's NAV automatically. The curator's power is limited to the functions described in this document.
 
 For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md).
@@ -69,13 +77,13 @@ This is the one-time setup you do when creating a new basket vault. You are depl
    - `setMaxPositionSize(basketVault, cap)`
    - `setPaused(true/false)`
 
-### 2) Capital lifecycle
+### 2) Capital lifecycle (hub chain only)
 
-This is the bridge between the basket vault (where investor USDC sits) and the perp module (where you open leveraged positions). Moving capital to perp makes it available for trading but reduces investor redemption headroom. Moving it back does the opposite.
+This is the bridge between the basket vault (where investor USDC sits) and the perp module (where you open leveraged positions). Moving capital to perp makes it available for trading but reduces investor redemption headroom. Moving it back does the opposite. **These operations are only available on the hub chain (Sepolia)** where `VaultAccounting` is deployed.
 
-**When to allocate more to perp:** You have a trading thesis, idle capital is earning nothing, and your reserve ratio is comfortably above the minimum. Allocating more gives you a larger trading budget.
+**When to allocate more to perp:** You have a trading thesis, idle capital is earning nothing, and your reserve ratio is comfortably above the minimum. Allocating more gives you a larger trading budget. Consider the routing weights — if the keeper has steered deposits to the hub, you may have fresh USDC to deploy.
 
-**When to withdraw from perp:** You need to restore redemption liquidity, you've closed positions and want the realised profits back in the vault, or you're de-risking ahead of expected volatility.
+**When to withdraw from perp:** You need to restore redemption liquidity, you've closed positions and want the realised profits back in the vault, or you're de-risking ahead of expected volatility. On spoke chains, pending redemptions may be waiting for hub USDC to be bridged via `RedemptionReceiver`.
 
 1. `Basket owner -> BasketVault.allocateToPerp(amount)`
    - Internal: checks `vaultAccounting` is set.
@@ -90,9 +98,9 @@ This is the bridge between the basket vault (where investor USDC sits) and the p
    - Internal (VA): checks available capital and transfers USDC back to basket.
    - Internal (Basket): decrements `perpAllocated` up to zero (profit withdrawals can exceed principal allocation).
 
-### 3) Position lifecycle and PnL realization
+### 3) Position lifecycle and PnL realization (hub chain only)
 
-This is where you actually trade. You open leveraged positions on assets tracked by the oracle, and close them to realise gains or cut losses. Positions are held in the VaultAccounting contract's GMX account — not your personal wallet — so PnL is automatically attributed to the basket vault's NAV.
+This is where you actually trade. You open leveraged positions on assets tracked by the oracle, and close them to realise gains or cut losses. Positions are held in the VaultAccounting contract's GMX account — not your personal wallet — so PnL is automatically attributed to the basket vault's NAV. **All position operations happen on Sepolia only — you never need to switch to a spoke chain for perp trading.** The keeper service automatically propagates PnL to spoke chains via `StateRelay.globalPnLAdjustment` so share prices stay consistent across all chains without any curator intervention.
 
 **When to open a position:** You have a directional thesis on an asset, available capital to post as collateral, and the position fits within your risk limits (leverage, open interest caps, portfolio concentration).
 
@@ -138,6 +146,18 @@ Liquidation is the worst-case scenario for a curator. If a leveraged position mo
   - leverage constraints.
 - As a result, simple thresholds (for example, "about 20% adverse at 5x") are only approximations and can trigger earlier in live conditions.
 - Practical implication: losses from liquidated legs are borne by vault perp capital tracked in `VaultAccounting`, then flow into basket NAV/share price through realised and unrealised PnL accounting.
+
+---
+
+## Cross-chain routing and deposit steering
+
+In the hub-and-spoke model, the keeper service computes **routing weights** (inverse-proportional to each chain's idle USDC) and posts them to `StateRelay` on every chain each epoch. This creates an automatic capital steering mechanism:
+
+- When Sepolia (hub) needs more perp capital, the keeper assigns it a higher weight, directing new deposits there.
+- When a spoke chain has excess idle USDC relative to others, its weight drops, discouraging further deposits until the balance equalizes.
+- Each `BasketVault` can set `minDepositWeightBps` to enforce a minimum routing weight for accepting deposits. If a chain's weight drops below this threshold, deposits revert.
+
+As a curator, you should monitor routing weights to understand where capital is flowing. If your hub vault needs more USDC for perp allocation, the keeper will naturally steer deposits toward it. You do not need to manually bridge USDC between chains.
 
 ---
 

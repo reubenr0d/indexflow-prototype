@@ -8,19 +8,25 @@ import {
   type DeploymentTarget,
 } from "@/lib/deployment";
 import { cn } from "@/lib/utils";
-import { Check, ChevronDown, Diamond, Hammer, Globe, Mountain, type LucideIcon } from "lucide-react";
+import { Check, ChevronDown, Diamond, Hammer, Globe, Layers, Mountain, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const NETWORK_ICON: Record<DeploymentTarget, LucideIcon> = {
+const NETWORK_ICONS: Record<string, LucideIcon> = {
   anvil: Hammer,
+  local: Hammer,
   sepolia: Diamond,
   "arbitrum-sepolia": Diamond,
   arbitrum: Globe,
   fuji: Mountain,
 };
 
+function getNetworkIcon(target: string): LucideIcon {
+  return NETWORK_ICONS[target] ?? Globe;
+}
+
 export function NetworkSelector() {
-  const { target, setTarget, canSwitchTarget, isSubgraphEnabled } = useDeploymentTarget();
+  const { target, setTarget, canSwitchTarget, isSubgraphEnabled, viewMode, setViewMode, configuredTargets } =
+    useDeploymentTarget();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -34,12 +40,22 @@ export function NetworkSelector() {
 
   if (!canSwitchTarget || CONFIGURED_DEPLOYMENT_TARGETS.length < 2) return null;
 
-  function handleSelect(t: DeploymentTarget) {
+  const isAllChains = viewMode === "all";
+
+  function handleSelectChain(t: DeploymentTarget) {
     setTarget(t);
     setOpen(false);
   }
 
-  const TriggerIcon = NETWORK_ICON[target];
+  function handleSelectAll() {
+    setViewMode("all");
+    setOpen(false);
+  }
+
+  const TriggerIcon = isAllChains ? Layers : getNetworkIcon(target);
+  const triggerLabel = isAllChains
+    ? `All Chains (${configuredTargets.length})`
+    : deploymentLabel(target);
 
   return (
     <div ref={ref} className="relative">
@@ -52,7 +68,7 @@ export function NetworkSelector() {
         )}
       >
         <TriggerIcon className="h-4 w-4 text-app-muted" />
-        <span>{deploymentLabel(target)}</span>
+        <span>{triggerLabel}</span>
         {isSubgraphEnabled && (
           <span
             className="rounded bg-app-accent-dim px-1 py-px text-[10px] leading-none text-app-accent"
@@ -72,15 +88,37 @@ export function NetworkSelector() {
       {open && (
         <div className="absolute right-0 top-full z-50 mt-1.5 min-w-[12rem] overflow-hidden rounded-lg border border-app-border bg-app-surface shadow-xl">
           <div className="p-1">
+            {/* All Chains option */}
+            <button
+              type="button"
+              onClick={handleSelectAll}
+              className={cn(
+                "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
+                isAllChains
+                  ? "bg-app-bg-subtle font-medium text-app-text"
+                  : "text-app-muted hover:bg-app-surface-hover hover:text-app-text"
+              )}
+            >
+              <Layers className="h-4 w-4 shrink-0" />
+              <span className="flex-1">All Chains</span>
+              <span className="rounded bg-app-accent-dim px-1 py-px text-[10px] leading-none text-app-accent">
+                {configuredTargets.length}
+              </span>
+              {isAllChains && <Check className="h-3.5 w-3.5 shrink-0 text-app-accent" />}
+            </button>
+
+            <div className="my-1 border-t border-app-border" />
+
+            {/* Per-chain options */}
             {CONFIGURED_DEPLOYMENT_TARGETS.map((t) => {
-              const Icon = NETWORK_ICON[t];
+              const Icon = getNetworkIcon(t);
               const hasSg = getSubgraphUrlForTarget(t) !== null;
-              const isActive = t === target;
+              const isActive = !isAllChains && t === target;
               return (
                 <button
                   key={t}
                   type="button"
-                  onClick={() => handleSelect(t)}
+                  onClick={() => handleSelectChain(t)}
                   className={cn(
                     "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
                     isActive

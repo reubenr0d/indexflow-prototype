@@ -211,8 +211,9 @@ export function Header() {
   const { address } = useAccount();
   const { connect, connectors, isPending: isConnectPending } = useConnect();
   const walletChainId = useChainId();
-  const { chainId: deploymentChainId } = useDeploymentTarget();
-  const { usdc } = getContracts(deploymentChainId);
+  const { chainId: deploymentChainId, viewMode } = useDeploymentTarget();
+  const effectiveChainId = viewMode === "all" ? walletChainId : deploymentChainId;
+  const { usdc } = getContracts(effectiveChainId);
   const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
   const isTestnet = walletChainId === anvil.id || walletChainId === sepolia.id || walletChainId === avalancheFuji.id;

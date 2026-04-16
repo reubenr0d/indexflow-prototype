@@ -26,6 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
+import { useMultiChainBaskets } from "@/hooks/useMultiChainBaskets";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { type ComponentType } from "react";
@@ -49,8 +50,10 @@ export default function BasketsPage() {
   const [sort, setSort] = useState<SortKey>("tvl");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Set<BasketListFilterKey>>(new Set());
-  const { isSubgraphEnabled } = useDeploymentTarget();
+  const { isSubgraphEnabled, viewMode } = useDeploymentTarget();
+  const isAllChains = viewMode === "all";
 
+  const multiChain = useMultiChainBaskets();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
@@ -88,33 +91,46 @@ export default function BasketsPage() {
   const shouldUseRpcFallback =
     !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
 
-  const infoRows = useMemo<BasketInfoRow[]>(
-    () =>
-      shouldUseRpcFallback
-        ? rpcInfos.map((item) => ({
-            vault: item.vault,
-            name: item.name,
-            sharePrice: item.sharePrice,
-            basketPrice: item.basketPrice,
-            totalSupply: item.totalSupply,
-            usdcBalance: item.usdcBalance,
-            perpAllocated: item.perpAllocated,
-            assetCount: Number(item.assetCount ?? 0n),
-          }))
-        : subgraphData.map((item) => ({
-            vault: item.vault,
-            name: item.name,
-            sharePrice: item.sharePrice,
-            basketPrice: item.basketPrice,
-            totalSupply: item.totalSupply,
-            usdcBalance: item.usdcBalance,
-            perpAllocated: item.perpAllocated,
-            assetCount: Number(item.assetCount ?? 0n),
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
-          })),
-    [rpcInfos, shouldUseRpcFallback, subgraphData]
-  );
+  const infoRows = useMemo<(BasketInfoRow & { chainId?: number })[]>(() => {
+    if (isAllChains && multiChain.data) {
+      return multiChain.data.map((item) => ({
+        vault: item.vault,
+        name: item.name,
+        sharePrice: item.sharePrice,
+        basketPrice: item.basketPrice,
+        totalSupply: item.totalSupply,
+        usdcBalance: item.usdcBalance,
+        perpAllocated: item.perpAllocated,
+        assetCount: Number(item.assetCount ?? 0n),
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt,
+        chainId: item.chainId,
+      }));
+    }
+    return shouldUseRpcFallback
+      ? rpcInfos.map((item) => ({
+          vault: item.vault,
+          name: item.name,
+          sharePrice: item.sharePrice,
+          basketPrice: item.basketPrice,
+          totalSupply: item.totalSupply,
+          usdcBalance: item.usdcBalance,
+          perpAllocated: item.perpAllocated,
+          assetCount: Number(item.assetCount ?? 0n),
+        }))
+      : subgraphData.map((item) => ({
+          vault: item.vault,
+          name: item.name,
+          sharePrice: item.sharePrice,
+          basketPrice: item.basketPrice,
+          totalSupply: item.totalSupply,
+          usdcBalance: item.usdcBalance,
+          perpAllocated: item.perpAllocated,
+          assetCount: Number(item.assetCount ?? 0n),
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+        }));
+  }, [isAllChains, multiChain.data, rpcInfos, shouldUseRpcFallback, subgraphData]);
 
   const openInterestByVault = useMemo(() => {
     const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
@@ -172,10 +188,11 @@ export default function BasketsPage() {
     return items;
   }, [filteredRows, sort]);
 
-  const isLoading =
-    (shouldUseRpcFallback ? basketsLoading || infosLoading : subgraph.isLoading) ||
-    vaultStatesLoading ||
-    feesLoading;
+  const isLoading = isAllChains
+    ? multiChain.isLoading
+    : (shouldUseRpcFallback ? basketsLoading || infosLoading : subgraph.isLoading) ||
+      vaultStatesLoading ||
+      feesLoading;
 
   const toggleFilter = (value: BasketListFilterKey) => {
     setFilters((current) => {
@@ -258,7 +275,7 @@ export default function BasketsPage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sortedRows.map((info, i) => (
             <BasketCard
-              key={info.vault}
+              key={`${info.chainId ?? "default"}-${info.vault}`}
               vault={info.vault}
               name={info.name}
               sharePrice={info.sharePrice ?? 0n}
@@ -279,6 +296,7 @@ export default function BasketsPage() {
               trend24h={undefined}
               trend7d={undefined}
               index={i}
+              chainId={info.chainId}
             />
           ))}
         </div>

@@ -7,7 +7,8 @@
     "usdc": "0x0000000000000000000000000000000000000000",
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "local",
-    "mockUsdc": true
+    "mockUsdc": true,
+    "role": "hub"
   },
   "sepolia": {
     "chainId": 11155111,
@@ -17,7 +18,8 @@
     "usdc": "0x0000000000000000000000000000000000000000",
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "sepolia",
-    "mockUsdc": true
+    "mockUsdc": true,
+    "role": "hub"
   },
   "fuji": {
     "chainId": 43113,
@@ -27,7 +29,8 @@
     "usdc": "0x0000000000000000000000000000000000000000",
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "fuji",
-    "mockUsdc": true
+    "mockUsdc": true,
+    "role": "spoke"
   },
   "arbitrum-sepolia": {
     "chainId": 421614,
@@ -37,6 +40,7 @@
     "usdc": "0x0000000000000000000000000000000000000000",
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "arbitrum_sepolia",
-    "mockUsdc": true
+    "mockUsdc": true,
+    "role": "spoke"
   }
 }

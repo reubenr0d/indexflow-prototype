@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  CHAIN_REGISTRY,
   DEFAULT_DEPLOYMENT_TARGET,
   chainIdForDeploymentTarget,
   getSubgraphUrlForTarget,
+  isHubChain,
+  isSpokeChain,
   parseDeploymentTarget,
 } from "./deployment";
 
@@ -24,9 +27,19 @@ describe("deployment target helpers", () => {
     expect(chainIdForDeploymentTarget("fuji")).toBe(43113);
   });
 
+  it("returns 0 for unknown targets", () => {
+    expect(chainIdForDeploymentTarget("unknown-chain")).toBe(0);
+  });
+
   it("returns local subgraph URL for anvil", () => {
     const url = getSubgraphUrlForTarget("anvil");
     expect(url).toBe("http://localhost:8000/subgraphs/name/indexflow-prototype");
+  });
+
+  it("returns local subgraph URL for local alias", () => {
+    expect(getSubgraphUrlForTarget("local")).toBe(
+      "http://localhost:8000/subgraphs/name/indexflow-prototype",
+    );
   });
 
   it("returns null for anvil in e2e test mode", () => {
@@ -58,5 +71,32 @@ describe("deployment target helpers", () => {
     process.env.NEXT_PUBLIC_SUBGRAPH_URL = "   ";
     expect(getSubgraphUrlForTarget("sepolia")).toBeNull();
     process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalEnv;
+  });
+});
+
+describe("chain registry", () => {
+  it("includes all chains from chains.json", () => {
+    expect(CHAIN_REGISTRY.sepolia).toBeDefined();
+    expect(CHAIN_REGISTRY.fuji).toBeDefined();
+    expect(CHAIN_REGISTRY.local).toBeDefined();
+    expect(CHAIN_REGISTRY["arbitrum-sepolia"]).toBeDefined();
+  });
+
+  it("includes anvil alias for local", () => {
+    expect(CHAIN_REGISTRY.anvil.chainId).toBe(CHAIN_REGISTRY.local.chainId);
+  });
+
+  it("identifies hub and spoke chains correctly", () => {
+    expect(isHubChain("sepolia")).toBe(true);
+    expect(isHubChain("anvil")).toBe(true);
+    expect(isSpokeChain("fuji")).toBe(true);
+    expect(isSpokeChain("arbitrum-sepolia")).toBe(true);
+    expect(isHubChain("fuji")).toBe(false);
+    expect(isSpokeChain("sepolia")).toBe(false);
+  });
+
+  it("returns false for unknown chain roles", () => {
+    expect(isHubChain("nonexistent")).toBe(false);
+    expect(isSpokeChain("nonexistent")).toBe(false);
   });
 });

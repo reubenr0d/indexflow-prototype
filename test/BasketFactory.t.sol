@@ -31,12 +31,14 @@ contract BasketFactoryTest is Test {
         factory = new BasketFactory(address(usdc), oracle, owner);
     }
 
-    function test_constructor_reverts_on_zero_addresses() public {
+    function test_constructor_reverts_on_zero_usdc() public {
         vm.expectRevert("USDC required");
         new BasketFactory(address(0), oracle, owner);
+    }
 
-        vm.expectRevert("Oracle required");
-        new BasketFactory(address(usdc), address(0), owner);
+    function test_constructor_allows_zero_oracle_for_spokes() public {
+        BasketFactory spokeFactory = new BasketFactory(address(usdc), address(0), owner);
+        assertEq(spokeFactory.oracleAdapter(), address(0));
     }
 
     function test_setters_are_owner_gated() public {
@@ -55,9 +57,9 @@ contract BasketFactoryTest is Test {
         assertEq(factory.oracleAdapter(), address(0x999));
     }
 
-    function test_setOracleAdapter_reverts_on_zero() public {
-        vm.expectRevert("Oracle required");
+    function test_setOracleAdapter_allows_zero_for_spokes() public {
         factory.setOracleAdapter(address(0));
+        assertEq(factory.oracleAdapter(), address(0));
     }
 
     function test_createBasket_withoutPerpWiring() public {

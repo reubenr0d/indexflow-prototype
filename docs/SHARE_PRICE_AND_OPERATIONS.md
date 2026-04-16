@@ -12,10 +12,27 @@ Source: `src/vault/BasketVault.sol`.
 
 - `idleUsdc = usdc.balanceOf(vault) - collectedFees` (floored at 0)
 - `baseValue = idleUsdc + perpAllocated`
-- `pricingNav = baseValue + realisedPnL + unrealisedPnL` from `vaultAccounting.getVaultPnL(vault)` (floored at 0)
+- `localPnL = realisedPnL + unrealisedPnL` from `vaultAccounting.getVaultPnL(vault)` (hub only; zero on spokes where `vaultAccounting` is not set)
+- `globalAdj = stateRelay.getGlobalPnLAdjustment(vault)` — keeper-posted adjustment that propagates hub perp performance to spoke chains. Excluded if stale (past `maxStaleness`). Zero if `stateRelay` is not wired.
+- `pricingNav = max(baseValue + localPnL + globalAdj, 0)`
 - `PRICE_PRECISION = 1e30`
 
-If `vaultAccounting` is not set, `pricingNav = baseValue`.
+On spoke chains, `vaultAccounting` is `address(0)` so `localPnL = 0` and `perpAllocated = 0`. The effective formula simplifies to:
+
+- **Spoke:** `_pricingNav() = idleUsdc + globalPnLAdjustment`
+- **Hub:** `_pricingNav() = idleUsdc + perpAllocated + localPnL + globalPnLAdjustment`
+
+The keeper posts the zero-sum complement so hub + spoke adjustments net out correctly across the protocol.
+
+### Global NAV (keeper-computed)
+
+The keeper service computes a protocol-wide NAV each epoch:
+
+```
+globalNav = sum(all chains' idle USDC) + hub perpAllocated + hub perp PnL
+```
+
+This is broken down per-chain as a `globalPnLAdjustment` posted to `StateRelay.updateState()` on every chain. Each spoke receives a share of the hub's perp PnL proportional to its idle USDC, so share prices stay consistent across all chains without requiring spoke chains to have any perp infrastructure.
 
 ### `getSharePrice()`
 
@@ -27,6 +44,18 @@ Because this formula is entirely on-chain and deterministic given chain state,
 external auditors and fund administrators can verify NAV at any block by reading
 contract state directly -- no off-chain calculation or manager-reported values
 are required.
+
+### Cross-chain share price consistency
+
+Share price consistency across all chains relies on the keeper posting timely
+`globalPnLAdjustment` values to `StateRelay` on every chain each epoch (default
+60s). The adjustment propagates hub perp performance to spoke chains so that a
+share minted on Fuji has the same NAV-based price as a share minted on Sepolia.
+
+If the adjustment becomes stale (past `maxStaleness`), it is excluded from
+`_pricingNav()` and the spoke share price reverts to idle-USDC-only until the
+keeper refreshes it. Operators should monitor `StateRelay.lastUpdateTime` for
+staleness alerts (see [KEEPER_OPERATIONS.md](./KEEPER_OPERATIONS.md)).
 
 ### `deposit(usdcAmount)` mint math
 
@@ -45,12 +74,13 @@ Where `navBefore` is `pricingNav` read before the transfer/mint.
 - `fee = gross * redeemFeeBps / 10_000`
 - `usdcReturned = gross - fee`
 
-Liquidity guard:
+Liquidity guard and pending queue:
 
 - `availableUsdc = usdc.balanceOf(vault) - collectedFees`
-- Redemption requires `usdcReturned <= availableUsdc`
+- If `availableUsdc >= usdcReturned`: full payout, shares burned immediately.
+- If `availableUsdc < usdcReturned`: partial fill from available USDC, pro-rata shares burned, remainder queued as a `PendingRedemption`. The user's remaining shares are locked in the vault contract until a keeper bridges USDC (via `RedemptionReceiver` on spokes) and calls `processPendingRedemption(id)`.
 
-Meaning: even if NAV is high from profitable perp PnL, the vault still needs idle USDC on hand to pay redemptions.
+This is especially relevant on spoke chains where all USDC may have been deployed to the hub for perp positions. The pending redemption queue replaces the previous hard revert on insufficient liquidity.
 
 ## 2) Admin position updates and accounting effects
 

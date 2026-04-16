@@ -28,13 +28,14 @@ function setCooldownUntil(until: number) {
 export function useAutoSwitchChain() {
   const { isConnected, connector, address } = useAccount();
   const walletChainId = useChainId();
-  const { chainId: targetChainId, target, setTarget } = useDeploymentTarget();
+  const { chainId: targetChainId, target, setTarget, viewMode } = useDeploymentTarget();
   const { switchChainAsync } = useSwitchChain();
   const inFlightRef = useRef(false);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") return;
     if (!isConnected) return;
+    if (viewMode === "all") return;
 
     const mappedTarget = deploymentTargetForChainId(walletChainId);
     if (mappedTarget && mappedTarget !== target) {
@@ -68,5 +69,5 @@ export function useAutoSwitchChain() {
       .finally(() => {
         inFlightRef.current = false;
       });
-  }, [address, connector?.id, isConnected, setTarget, switchChainAsync, target, targetChainId, walletChainId]);
+  }, [address, connector?.id, isConnected, setTarget, switchChainAsync, target, targetChainId, viewMode, walletChainId]);
 }

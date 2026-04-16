@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {IPoolReserveRegistry} from "./interfaces/IPoolReserveRegistry.sol";
+import {IStateRelay} from "./interfaces/IStateRelay.sol";
 import {IGMXVault} from "../perp/interfaces/IGMXVault.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -43,6 +44,9 @@ contract PoolReserveRegistry is IPoolReserveRegistry, Ownable {
 
     // --- Oracle config hash (read from OracleAdapter if wired, else 0) ---
     address public oracleAdapter;
+
+    // --- StateRelay delegation (hub-and-spoke) ---
+    IStateRelay public stateRelay;
 
     error OnlyMessenger();
     error StaleRemoteState();
@@ -94,6 +98,12 @@ contract PoolReserveRegistry is IPoolReserveRegistry, Ownable {
 
     function setOracleAdapter(address _oracleAdapter) external onlyOwner {
         oracleAdapter = _oracleAdapter;
+    }
+
+    /// @notice Delegate routing weights to a StateRelay. When set, `getRoutingWeights()`
+    /// reads from the relay instead of computing from local/remote pool states.
+    function setStateRelay(address _stateRelay) external onlyOwner {
+        stateRelay = IStateRelay(_stateRelay);
     }
 
     function setTwapWindow(uint32 _twapWindow) external onlyOwner {
@@ -258,6 +268,10 @@ contract PoolReserveRegistry is IPoolReserveRegistry, Ownable {
         view
         returns (uint64[] memory chainSelectors, uint256[] memory weights, uint256[] memory amounts)
     {
+        if (address(stateRelay) != address(0)) {
+            return stateRelay.getRoutingWeights();
+        }
+
         uint256 remoteCount = remoteChainSelectors.length;
         uint256 totalChains = 1 + remoteCount;
 

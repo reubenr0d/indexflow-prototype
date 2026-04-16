@@ -69,7 +69,7 @@ The reserve layer determines whether a share is redeemable with confidence. It i
 
 ### 5. Attribution and Governance Layer
 
-At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance. On-chain coordination of cross-chain pool state via TWAP tracking of gmxVault.poolAmounts(usdc), Chainlink CCIP state synchronization, proportional intent routing, and quorum-based oracle config consensus across chains (no single home chain required).
+At the top sits the coordination layer: chain-specific deployment boundaries, KPI attribution, support allocation, and later-stage token governance. Cross-chain coordination follows a hub-and-spoke topology described in detail in a later section.
 
 ## Basket Lifecycle: Deposit, Exposure, Valuation, Redemption
 
@@ -91,7 +91,7 @@ This structure avoids two common failure modes. The first is isolated fragmentat
 
 IndexFlow takes a middle path. Execution capacity is shared, while reserve discipline remains product-aware. That separation is what allows the protocol to benefit from capital efficiency while preserving the redemption-quality flywheel.
 
-GMX pool depth (poolAmounts[usdc]) serves as the routing signal for cross-chain liquidity coordination. The protocol can seed GMX pools via directPoolDeposit through governed VaultAccounting.seedPool() with per-epoch caps.
+GMX execution depth exists only on the hub chain. Spoke vaults hold idle USDC as redemption reserves; perp capital allocation and GMX pool seeding (`VaultAccounting.seedPool()`) are hub-only operations. USDC deposited on spoke chains never bridges for perp capital — perps use only hub-local USDC. The full cross-chain architecture and its implications for reserve design are described in the Cross-Chain Architecture section below.
 
 ## Chain-Specific Deployment and Attribution Model
 
@@ -107,7 +107,115 @@ TVL shows whether the product base is growing. Volume shows whether the shared l
 
 This ring-fenced deployment model also creates better expansion logic. A chain does not need to underwrite a global pool with unclear spillovers. It can support a specific deployment, observe its metrics, and scale support according to results. That makes chain-attributable growth more accountable and more defensible than generalized incentive programs.
 
-While each chain maintains independent GMX pools, baskets, and KPIs, the coordination layer provides cross-chain visibility via the PoolReserveRegistry. Pool states are synced across chains using Chainlink CCIP, and deposits are proportionally routed based on available liquidity depth. When a cross-chain intent targets a chain where no vault has been deployed yet, the bridge can auto-deploy a vault on the destination via the local BasketFactory using config carried in the CCIP payload, removing the need for operators to pre-deploy on every chain before routing can begin. Oracle configuration is kept consistent across chains through a quorum-based consensus mechanism: config changes proposed on any chain are broadcast to peers and auto-applied once a configurable N-of-M threshold is reached, removing single-chain dependency. Attribution remains per-chain: a deposit routed to Chain B credits Chain B's KPIs, preserving the ring-fenced growth model.
+Attribution remains per-chain even as the protocol operates cross-chain. A deposit on Chain B credits Chain B's KPIs. A redemption from Chain C is measured against Chain C's reserve depth. The hub-and-spoke coordination model described in the next section preserves this ring-fenced growth model while enabling capital to flow between chains when operationally necessary.
+
+## Cross-Chain Architecture: Hub-and-Spoke Model
+
+IndexFlow uses a hub-and-spoke topology for cross-chain coordination. This section describes the model in detail, covering its motivation, the contracts involved, deposit routing, share pricing, cross-chain redemptions, and the scalability properties that follow from these design choices.
+
+### Motivation and Design Constraints
+
+A naive approach to multi-chain structured products would replicate the full stack — oracles, perpetual venues, accounting, and reserve management — on every supported chain. That approach fails on three dimensions. First, oracle infrastructure and perp liquidity are expensive to bootstrap and fragment depth. Second, cross-chain state synchronization becomes an O(N²) messaging problem that grows unmanageably as chains are added. Third, every chain becomes a potential source of pricing inconsistency if oracle feeds or venue behavior diverge.
+
+IndexFlow addresses these constraints by concentrating all perp infrastructure on a single hub chain and reducing spoke chains to minimal deposit-and-reserve surfaces. The result is a system where adding a new chain requires deploying only three lightweight contracts rather than replicating an entire execution stack.
+
+### Hub Chain
+
+The hub chain (Sepolia in testnet; a production-grade EVM L1 or L2 in mainnet) hosts the complete execution infrastructure:
+
+- **OracleAdapter** and price feeds for all supported assets.
+- **GMX perpetual liquidity** and the shared execution pool.
+- **VaultAccounting**, which tracks capital allocation, PnL, and pool positions.
+- **PricingEngine**, which computes basket valuations from oracle data and position state.
+- **BasketVault** instances that can allocate capital into perps via `allocateToPerp()`.
+- **StateRelay**, which receives keeper-posted state like all other chains.
+
+The hub is the authoritative source of perp PnL. All other chains derive their PnL view from keeper-posted adjustments rather than from local position data.
+
+### Spoke Chains
+
+Each spoke chain is a deposit-only surface with minimal infrastructure:
+
+- **BasketVault** — accepts USDC deposits, issues basket shares, holds idle USDC as local reserve, and enforces the deposit routing guard. Spoke vaults do not have `allocateToPerp()` capability; they cannot open or manage perp positions.
+- **StateRelay** — a lightweight contract that stores keeper-posted routing weights and per-vault global NAV adjustments.
+- **RedemptionReceiver** — a Chainlink CCIP receiver that accepts keeper-initiated USDC transfers for cross-chain redemption fills.
+- **BasketFactory** — creates new basket vaults on the spoke.
+- **MockUSDC / USDC** — the deposit collateral token.
+
+No oracles, no GMX pools, no `VaultAccounting`, and no `PricingEngine` are deployed on spokes. This minimal footprint is what enables scaling to a large number of chains without proportional infrastructure cost.
+
+### StateRelay Contract
+
+`StateRelay` is deployed on every chain, hub and spokes alike. It serves as the on-chain cache for two categories of keeper-posted data:
+
+**Routing weights.** A basis-point table mapping each chain to a deposit weight. Weights across all chains sum to 10,000 bps. The keeper computes weights inversely proportional to each chain's idle USDC: under-funded chains receive higher weight to steer deposits toward them. Each `StateRelay` instance caches its own chain's weight in a `localWeight` field for O(1) reads by `BasketVault.deposit()`.
+
+**Per-vault global NAV adjustments.** Signed integer adjustments that allow spoke vaults to reflect the hub's perp PnL in their share price calculations. The hub's adjustment is always zero (it reads PnL directly from `VaultAccounting`). Each spoke receives its pro-rata share of hub PnL as a signed adjustment.
+
+State updates are gated to a registered keeper address and require strictly monotonic timestamps to prevent replay. Weights must sum to 10,000 bps (enforced on-chain). A `maxStaleness` parameter controls how long an adjustment remains valid before the vault falls back to local-only NAV.
+
+### On-Chain Deposit Routing
+
+Deposits are local transactions. A user on a spoke chain deposits USDC into that spoke's `BasketVault` and receives basket shares in the same transaction. No cross-chain messaging occurs on the deposit path.
+
+The routing guard ensures balanced capital distribution. When `BasketVault.deposit()` is called, it checks `StateRelay.getLocalWeight()` against the vault's `minDepositWeightBps` threshold. If the spoke's weight falls below the threshold — meaning the chain already holds a disproportionately large share of total idle capital — the deposit reverts. This prevents capital concentration on any single chain without requiring synchronous cross-chain coordination.
+
+The frontend reads the full weight table from any chain's `StateRelay` (all instances hold identical data after a keeper epoch) and orchestrates multi-chain deposit splitting. Given a deposit amount, the UI divides it proportionally across chains according to their weights and presents the split to the user. The user approves and signs one transaction per target chain. Each chain independently enforces its own routing guard, so the on-chain invariant holds even if the frontend is bypassed.
+
+### Global NAV and Consistent Share Pricing
+
+Share pricing must be consistent across all chains. A basket share minted on Spoke A and a basket share minted on Spoke B represent the same proportional claim on the product's total value, including perp PnL that accrues only on the hub.
+
+The keeper achieves this by computing a global NAV for each vault:
+
+```
+globalNAV = Σ(idleUSDC across all chains) + hubPerpPnL
+```
+
+Each chain's `BasketVault._pricingNav()` combines its local idle USDC with the keeper-posted `globalPnLAdjustment` from `StateRelay`:
+
+- **Hub vault:** reads `VaultAccounting.getVaultPnL()` directly for perp PnL. The keeper posts a zero adjustment for the hub.
+- **Spoke vault:** `VaultAccounting` is not deployed, so local PnL is zero. The keeper posts a signed adjustment equal to `(spokeDeposits / totalDeposits) × hubPerpPnL`, which the vault adds to its local idle USDC to compute pricing NAV.
+
+The result is that `getSharePrice()` returns the same value on every chain (within the precision of the keeper's last epoch). Share fungibility is maintained without requiring oracles or perp state on spokes.
+
+If a `StateRelay` adjustment becomes stale (older than `maxStaleness`), the vault excludes it from pricing and reverts to local-only NAV. This is a conservative fallback: the share price may temporarily diverge from the global value, but it will not reflect outdated PnL data.
+
+### Cross-Chain Redemptions
+
+Redemptions are designed around a principle of local-first fulfillment with asynchronous cross-chain backfill.
+
+**Local redemption.** When a user redeems basket shares on any chain, the vault first attempts to pay entirely from local idle USDC. If reserves are sufficient, the redemption completes in a single transaction: shares are burned, USDC is transferred, and no cross-chain interaction is needed.
+
+**Partial fill and pending queue.** When local reserves are insufficient to cover the full redemption, the vault executes a partial fill: it pays what it can from available USDC and locks the remaining shares in the vault as a `PendingRedemption`. The vault emits a `RedemptionQueued` event with the redemption ID, the shortfall amount, and the redeemer's address.
+
+**Keeper-initiated cross-chain fill.** The off-chain keeper monitors `RedemptionQueued` events across all chains. When a pending redemption is detected, the keeper identifies a chain with excess reserves — typically the hub or a spoke with disproportionately high idle USDC — and initiates a Chainlink CCIP USDC transfer from the excess chain to the spoke's `RedemptionReceiver` contract. The CCIP message includes a payload specifying the target vault and redemption ID.
+
+**RedemptionReceiver processing.** The `RedemptionReceiver` contract on the spoke chain validates the inbound CCIP transfer against a `trustedSenders` allowlist (keyed by source chain selector). On successful validation, it forwards the received USDC to the target vault and calls `processPendingRedemption(id)`. The vault burns the locked shares and transfers USDC to the redeemer, completing the redemption.
+
+CCIP is used exclusively for redemption fills. No deposit flow, weight update, or NAV adjustment depends on cross-chain messaging. This isolation means that a CCIP outage delays cross-chain redemption fills but does not block deposits, local redemptions, or state updates.
+
+### USDC Isolation: Spoke Capital Never Bridges for Perps
+
+A critical design invariant is that USDC deposited on spoke chains never leaves the spoke for perp capital allocation. Perp positions on the hub chain use only hub-local USDC — capital deposited directly on the hub or seeded there during initial deployment.
+
+This invariant simplifies the trust model. Spoke depositors know that their USDC remains on the chain where they deposited it (except when it is sent to another spoke to fill a redemption shortfall, which is a conservative liquidity operation rather than a speculative capital deployment). It also eliminates bridge risk on the deposit-to-perp path: there is no scenario in which a bridge failure or exploit drains spoke deposits into a compromised execution venue.
+
+The tradeoff is that hub perp capacity is bounded by hub-local capital. This is an intentional constraint. Scaling perp capacity is a hub-side concern addressed through direct hub deposits, protocol-owned liquidity, or future hub-to-hub expansion — not by siphoning spoke reserves.
+
+### Scalability Properties
+
+The hub-and-spoke model is designed to scale to 100+ spoke chains. The properties that enable this are:
+
+**Minimal spoke infrastructure.** Each spoke deploys only `BasketVault`, `StateRelay`, `RedemptionReceiver`, `BasketFactory`, and a USDC token. No oracles, perp venues, or accounting contracts are needed. Deploying a new spoke is a scripted operation that takes minutes.
+
+**O(N) keeper operations.** The keeper reads state from N chains and posts updates to N chains. There is no O(N²) cross-chain messaging. Weight computation is a single centralized calculation; the keeper posts the same table to every `StateRelay` via direct RPC calls rather than CCIP messages.
+
+**No per-chain oracle infrastructure.** Oracles and price feeds exist only on the hub. Spokes receive their PnL view through keeper-posted adjustments. Adding a spoke does not require bootstrapping a new oracle network or securing additional price feed subscriptions.
+
+**Graceful spoke failure.** If a spoke chain becomes unavailable, the keeper excludes it from the next weight computation and its weight drops to zero, steering deposits to the remaining chains. Pending redemptions on the unavailable spoke are delayed but not lost. No other chain is affected.
+
+**Independent chain attribution.** Despite the shared keeper and hub PnL source, each spoke maintains its own TVL, deposit volume, and redemption metrics. Attribution does not require cross-chain tracing — a deposit on Chain B is credited to Chain B, period. This preserves the ring-fenced growth model even at scale.
 
 ## Oracle, Pricing, and Market Integrity
 
@@ -186,26 +294,27 @@ For managers, issuers, and chain partners, that creates a clearer operating mode
 3. Global Pool Management Flow. Repository document.
 4. Asset Manager Flow. Repository document.
 5. Investor Flow. Repository document.
-6. Utility Token Tokenomics. Repository planning document.
-7. IndexFlow slide deck: Perp-Driven Basket Vaults, Infrastructure for Measurable Liquidity Growth.
+6. Cross-Chain Coordination Layer. Repository document.
+7. Utility Token Tokenomics. Repository planning document.
+8. IndexFlow slide deck: Perp-Driven Basket Vaults, Infrastructure for Measurable Liquidity Growth.
 
 ### External References
 
-8. Synthetix documentation. https://docs.synthetix.io/
-9. Index Coop, Index Protocol. https://docs.indexcoop.com/index-coop-community-handbook/protocol/index-protocol
-10. Index Coop, Set Protocol V2. https://docs.indexcoop.com/index-coop-community-handbook/protocol/set-protocol-v2
-11. Enzyme Vault overview. https://docs.enzyme.finance/onyx-user-documentation/enzyme-vault/overview
-12. ERC-4626: Tokenized Vault Standard. https://eips.ethereum.org/EIPS/eip-4626
-13. ERC-7540: Asynchronous Tokenized Vaults. https://eips.ethereum.org/EIPS/eip-7540
-14. Uniswap v2 Whitepaper. https://docs.uniswap.org/whitepaper.pdf
-15. GMX providing liquidity documentation. https://docs.gmx.io/docs/providing-liquidity
-16. GMX V1 liquidity documentation. https://docs.gmx.io/docs/providing-liquidity/v1/
-17. Gains Network gToken vaults. https://docs.gains.trade/liquidity-farming-pools/gtoken-vaults
-18. Jupiter Perpetuals overview. https://station.jup.ag/assets/files/Jupiter-Perpetuals-Feb-2024-66183264a9656eef393cedfb0e2d5db1.pdf
-19. Drift documentation. https://docs.drift.trade/
-20. Drift JIT auctions. https://docs.drift.trade/developers/market-makers/jit-auctions
-21. Drift Safety Module. https://docs.drift.trade/protocol/risk-and-safety/drift-safety-module
-22. Sommelier Portfolio V1.5 architecture. https://sommelier-finance.gitbook.io/sommelier-documentation/smart-contracts/advanced-smart-contracts/portfolio-v1.5-contract-architecture
-23. Hyperliquid documentation. https://hyperliquid.gitbook.io/hyperliquid-docs
-24. dYdX Integration Documentation. https://docs.dydx.xyz/
-25. Chainlink CCIP Documentation. https://docs.chain.link/ccip
+9. Synthetix documentation. https://docs.synthetix.io/
+10. Index Coop, Index Protocol. https://docs.indexcoop.com/index-coop-community-handbook/protocol/index-protocol
+11. Index Coop, Set Protocol V2. https://docs.indexcoop.com/index-coop-community-handbook/protocol/set-protocol-v2
+12. Enzyme Vault overview. https://docs.enzyme.finance/onyx-user-documentation/enzyme-vault/overview
+13. ERC-4626: Tokenized Vault Standard. https://eips.ethereum.org/EIPS/eip-4626
+14. ERC-7540: Asynchronous Tokenized Vaults. https://eips.ethereum.org/EIPS/eip-7540
+15. Uniswap v2 Whitepaper. https://docs.uniswap.org/whitepaper.pdf
+16. GMX providing liquidity documentation. https://docs.gmx.io/docs/providing-liquidity
+17. GMX V1 liquidity documentation. https://docs.gmx.io/docs/providing-liquidity/v1/
+18. Gains Network gToken vaults. https://docs.gains.trade/liquidity-farming-pools/gtoken-vaults
+19. Jupiter Perpetuals overview. https://station.jup.ag/assets/files/Jupiter-Perpetuals-Feb-2024-66183264a9656eef393cedfb0e2d5db1.pdf
+20. Drift documentation. https://docs.drift.trade/
+21. Drift JIT auctions. https://docs.drift.trade/developers/market-makers/jit-auctions
+22. Drift Safety Module. https://docs.drift.trade/protocol/risk-and-safety/drift-safety-module
+23. Sommelier Portfolio V1.5 architecture. https://sommelier-finance.gitbook.io/sommelier-documentation/smart-contracts/advanced-smart-contracts/portfolio-v1.5-contract-architecture
+24. Hyperliquid documentation. https://hyperliquid.gitbook.io/hyperliquid-docs
+25. dYdX Integration Documentation. https://docs.dydx.xyz/
+26. Chainlink CCIP Documentation. https://docs.chain.link/ccip

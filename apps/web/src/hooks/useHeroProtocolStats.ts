@@ -5,18 +5,27 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { computeApy } from "@/lib/apy";
 import { USDC_PRECISION } from "@/lib/constants";
-import { GET_TOKEN_HOLDER_ADDRESSES } from "@/lib/subgraph/queries";
-import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
+import { type DeploymentTarget } from "@/lib/deployment";
+import { GET_BASKETS_OVERVIEW, GET_TOKEN_HOLDER_ADDRESSES } from "@/lib/subgraph/queries";
+import { getSubgraphClientForTarget } from "@/lib/subgraph/client";
+import { toBasketOverviewRows } from "@/lib/subgraph/transform";
+import { useBasketsOverviewQuery, type BasketOverview } from "@/hooks/subgraph/useBasketOverview";
 import { useBasketsWeekSnapshots } from "@/hooks/subgraph/useBasketTrends";
 import { useVaultPnLBatch } from "@/hooks/usePerpReader";
 import { DEFAULT_PAGE_SIZE, useAvailableSubgraph } from "@/hooks/subgraph/useSubgraphShared";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 
 type RawTokenHolderPosition = {
   id: string;
   user?: { id: string } | null;
 };
 
-export function useHeroProtocolStats() {
+type ChainBasketsResult = {
+  baskets: BasketOverview[];
+  target: DeploymentTarget;
+};
+
+function useSingleChainHeroStats() {
   const { client, isAvailable } = useAvailableSubgraph();
   const {
     data: baskets,
@@ -115,4 +124,95 @@ export function useHeroProtocolStats() {
       basketsLoading || vaultPnL.isLoading || weekSnapshots.isLoading || tokenHolders.isLoading,
     isError: basketsError || tokenHolders.isError,
   };
+}
+
+async function fetchChainBaskets(target: DeploymentTarget): Promise<ChainBasketsResult | null> {
+  const client = getSubgraphClientForTarget(target);
+  if (!client) return null;
+  const result = await client.request<{ baskets: Array<Record<string, string>> }>(
+    GET_BASKETS_OVERVIEW,
+    { first: 500, skip: 0 }
+  );
+  const baskets = toBasketOverviewRows(result.baskets) as BasketOverview[];
+  return { baskets, target };
+}
+
+async function fetchChainHolders(target: DeploymentTarget): Promise<Set<string>> {
+  const client = getSubgraphClientForTarget(target);
+  if (!client) return new Set();
+  const holderIds = new Set<string>();
+  let skip = 0;
+  while (true) {
+    const result = await client.request<{ userBasketPositions: RawTokenHolderPosition[] }>(
+      GET_TOKEN_HOLDER_ADDRESSES,
+      { first: DEFAULT_PAGE_SIZE, skip }
+    );
+    const rows = result.userBasketPositions ?? [];
+    rows.forEach((row) => {
+      if (row.user?.id) holderIds.add(row.user.id.toLowerCase());
+    });
+    if (rows.length < DEFAULT_PAGE_SIZE) break;
+    skip += DEFAULT_PAGE_SIZE;
+  }
+  return holderIds;
+}
+
+function useAllChainsHeroStats() {
+  const { configuredTargets } = useDeploymentTarget();
+
+  const allBaskets = useQuery({
+    queryKey: ["multichain", "heroBaskets", ...configuredTargets],
+    queryFn: async () => {
+      const results = await Promise.all(configuredTargets.map(fetchChainBaskets));
+      return results.filter(Boolean) as ChainBasketsResult[];
+    },
+    staleTime: 15_000,
+    retry: 1,
+  });
+
+  const allHolders = useQuery({
+    queryKey: ["multichain", "heroHolders", ...configuredTargets],
+    queryFn: async () => {
+      const sets = await Promise.all(configuredTargets.map(fetchChainHolders));
+      const union = new Set<string>();
+      sets.forEach((s) => s.forEach((id) => union.add(id)));
+      return union.size;
+    },
+    staleTime: 15_000,
+    retry: 1,
+  });
+
+  const totalTvl = useMemo(() => {
+    if (!allBaskets.data) return null;
+    return allBaskets.data.reduce((sum, chain) => {
+      return chain.baskets.reduce(
+        (s, b) => s + (b.usdcBalance ?? 0n) + (b.perpAllocated ?? 0n),
+        sum
+      );
+    }, 0n);
+  }, [allBaskets.data]);
+
+  const basketCount = useMemo(() => {
+    if (!allBaskets.data) return null;
+    return allBaskets.data.reduce((sum, chain) => sum + chain.baskets.length, 0);
+  }, [allBaskets.data]);
+
+  return {
+    basketCount,
+    tokenHolderCount: allHolders.data ?? null,
+    totalTvl,
+    totalPnL: null as bigint | null,
+    totalApy: null as number | null,
+    isLoading: allBaskets.isLoading || allHolders.isLoading,
+    isError: allBaskets.isError || allHolders.isError,
+  };
+}
+
+export function useHeroProtocolStats() {
+  const { viewMode } = useDeploymentTarget();
+  const single = useSingleChainHeroStats();
+  const multi = useAllChainsHeroStats();
+
+  if (viewMode === "all") return multi;
+  return single;
 }

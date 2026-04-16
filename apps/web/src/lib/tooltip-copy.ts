@@ -122,8 +122,8 @@ export const TOOLTIP_COPY = {
   coordTotalAvailableLiquidity:
     "Sum of pool depth minus reserved amounts across chains; headroom for new execution.",
   coordActiveChains: "Number of chains with a pool reserve snapshot in the registry.",
-  coordPendingIntents:
-    "Cross-chain deposit or redeem intents awaiting execution or bridge finality.",
+  coordPendingRedemptions:
+    "Cross-chain redemptions awaiting keeper fill via CCIP from the hub chain.",
 
   chainPoolDepth:
     "Total USDC in the GMX execution pool on this chain. Deeper pools support larger positions with less slippage.",
@@ -132,11 +132,29 @@ export const TOOLTIP_COPY = {
   chainUtilization:
     "Percentage of pool depth currently reserved for open positions.",
   chainRoutingWeight:
-    "Proportion of auto-routed deposits directed to this chain, based on available liquidity depth.",
+    "Keeper-posted weight for this chain, controlling the maximum share of global deposits it can accept. Inverse-proportional to current reserves.",
   chainStaleness:
-    "How recently this chain's pool state was synced. Stale data is excluded from routing decisions.",
-  intentStatus:
-    "Current state of the deposit/redeem intent: pending, in-flight (cross-chain), executed, or refunded.",
+    "How recently this chain's StateRelay was updated by the keeper. Stale data causes the deposit routing guard to reject deposits.",
+
+  // Hub-and-spoke coordination
+  hubChain:
+    "The hub chain runs the perpetual liquidity layer and is the sole source of perp execution. Spoke chains relay state from the hub and accept deposits, but do not run perps. Currently Sepolia in testnet.",
+  spokeChain:
+    "A deposit-only chain that accepts USDC, mints basket shares, and holds reserves. Perp execution happens on the hub; the spoke receives routing weights and PnL adjustments via StateRelay.",
+  routingWeightsOverview:
+    "Keeper-computed weights that control how deposits are distributed across chains. Weights are inverse-proportional to each chain's share of total reserves — underweight chains attract more deposits, creating a self-balancing effect.",
+  depositRoutingGuard:
+    "On-chain guard in BasketVault that caps deposits per chain based on keeper-posted routing weights from StateRelay. Prevents any spoke from exceeding its weight allocation.",
+  chainSelector:
+    "Network selector showing all deployed chains. 'All Chains' aggregates read-only data; transactions route to the wallet's current chain.",
+  splitDepositView:
+    "UI breakdown showing how a deposit will be distributed across chains based on current routing weights. Each leg is a separate on-chain transaction.",
+  pendingRedemptions:
+    "Redemptions that exceeded the spoke vault's idle USDC. The keeper sources USDC from the hub and fills them via CCIP through the RedemptionReceiver.",
+  globalNavAdjustment:
+    "Per-chain PnL adjustment posted by the keeper via StateRelay each epoch. Ensures spoke share prices reflect the hub's perp PnL even though spokes don't run perps. Calculated as each chain's pro-rata share of global PnL based on its TVL weight.",
+  stateRelay:
+    "On-chain contract that receives keeper-posted state each epoch: routing weights, global NAV, and per-chain PnL adjustments. Replaces the CCIP mesh used in the prior architecture.",
 
   // AI agent vault management
   aiOperator:

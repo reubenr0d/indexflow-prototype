@@ -652,6 +652,179 @@ reverts:
 
 ---
 
+## StateRelay interactions (keeper / protocol operator)
+
+StateRelay stores keeper-posted routing weights and per-vault global NAV adjustments. Deployed on every chain (hub and spokes). The keeper posts the same weight table to all instances each epoch.
+
+### `updateState`
+
+Posts routing weights and per-vault PnL adjustments from the keeper service. This is the primary cross-chain state synchronization function.
+
+**When to use:** Called automatically by the keeper service each epoch (default 60s). Manual use for testing or emergency weight overrides.
+
+```contract-call
+function: StateRelay.updateState(chains, weights, vaults, pnlAdjustments, ts)
+caller: Keeper
+inputs:
+  - chains: uint64[] array of CCIP chain selectors
+  - weights: uint256[] array of routing weights in bps (must sum to 10000)
+  - vaults: address[] array of vault addresses
+  - pnlAdjustments: int256[] array of per-vault PnL adjustments (USDC 1e6 units)
+  - ts: uint48 timestamp (must be greater than lastUpdateTime)
+effects:
+  - Replaces the stored weight table
+  - Caches this chain's weight in localWeight for O(1) deposit guard reads
+  - Updates globalPnLAdjustment and pnlUpdateTime for each vault
+  - Updates lastUpdateTime
+reverts:
+  - Caller is not the keeper
+  - Timestamp not greater than lastUpdateTime
+  - chains and weights arrays have different lengths
+  - vaults and pnlAdjustments arrays have different lengths
+  - Weights do not sum to 10000 bps
+```
+
+### `setKeeper`
+
+Grants the keeper role to a new address.
+
+```contract-call
+function: StateRelay.setKeeper(keeper)
+caller: StateRelay owner
+inputs:
+  - keeper: new keeper address
+effects:
+  - Updates the keeper address
+reverts:
+  - Caller is not the owner
+```
+
+### `setMaxStaleness`
+
+Configures how long a PnL adjustment remains valid before `getGlobalPnLAdjustment` marks it as stale.
+
+```contract-call
+function: StateRelay.setMaxStaleness(maxStaleness)
+caller: StateRelay owner
+inputs:
+  - maxStaleness: uint48 seconds
+effects:
+  - Updates the staleness threshold
+reverts:
+  - Caller is not the owner
+```
+
+### View functions
+
+- `getLocalWeight()` — Returns the cached routing weight for this chain. Used by `BasketVault.deposit()` as the routing guard.
+- `getRoutingWeights()` — Returns the full weight table (chain selectors + weights).
+- `getGlobalPnLAdjustment(vault)` — Returns the keeper-posted PnL adjustment and a staleness flag. Used by `BasketVault._pricingNav()`.
+
+---
+
+## BasketVault cross-chain interactions
+
+### `setStateRelay`
+
+Wires the cross-chain state relay for routing weights and global NAV adjustments.
+
+```contract-call
+function: BasketVault.setStateRelay(stateRelay)
+caller: Basket owner
+inputs:
+  - stateRelay: address of the StateRelay contract (may be zero to unset)
+effects:
+  - Sets the state relay used by deposit routing guard and _pricingNav()
+reverts:
+  - Caller is not the vault owner
+```
+
+### `setMinDepositWeightBps`
+
+Sets the minimum local routing weight required for deposits to be accepted. When the keeper posts a weight below this threshold for the local chain, deposits revert.
+
+```contract-call
+function: BasketVault.setMinDepositWeightBps(bps)
+caller: Basket owner
+inputs:
+  - bps: minimum weight in basis points (0 = accept deposits regardless)
+effects:
+  - Gates future deposit() calls against this threshold via stateRelay.getLocalWeight()
+reverts:
+  - Caller is not the vault owner
+  - bps exceeds 10000
+```
+
+### `setKeeper`
+
+Sets the keeper address authorized to process pending redemptions.
+
+```contract-call
+function: BasketVault.setKeeper(keeper)
+caller: Basket owner
+inputs:
+  - keeper: address (may be zero to unset)
+effects:
+  - Updates the keeper role for processPendingRedemption
+reverts:
+  - Caller is not the vault owner
+```
+
+### `processPendingRedemption`
+
+Completes a queued cross-chain redemption after sufficient USDC has been bridged to the vault.
+
+**When to use:** After `RedemptionReceiver` delivers bridged USDC from the hub (or after a manual USDC top-up). Called by the keeper or the `RedemptionReceiver` contract itself.
+
+```contract-call
+function: BasketVault.processPendingRedemption(id)
+caller: Keeper
+inputs:
+  - id: uint256 pending redemption ID
+effects:
+  - Marks the pending redemption as completed
+  - Burns the locked shares held by the vault
+  - Transfers the owed USDC to the original redeemer
+reverts:
+  - Caller is not the keeper
+  - Redemption already completed
+  - Insufficient idle USDC to cover the owed amount
+```
+
+---
+
+## RedemptionReceiver interactions (spoke chains)
+
+RedemptionReceiver is a CCIP receiver deployed on spoke chains. It accepts keeper-initiated USDC transfers for redemption shortfall fills.
+
+### `setTrustedSender`
+
+Registers a trusted sender for a source chain (typically the hub's keeper relay).
+
+```contract-call
+function: RedemptionReceiver.setTrustedSender(chainSelector, sender)
+caller: RedemptionReceiver owner
+inputs:
+  - chainSelector: uint64 source chain CCIP selector
+  - sender: address of the trusted sender on the source chain
+effects:
+  - Updates the trusted sender mapping for inbound CCIP messages
+reverts:
+  - Caller is not the owner
+```
+
+### `_ccipReceive` (internal, CCIP-triggered)
+
+Automatically called by the CCIP router when a cross-chain message arrives. Forwards USDC to the target vault and triggers `processPendingRedemption`.
+
+---
+
+## IntentRouter / CrossChainIntentBridge (hub-only, legacy)
+
+> **Note:** In the hub-and-spoke architecture, `IntentRouter` and `CrossChainIntentBridge` are deployed on the **hub chain only** as part of the legacy coordination layer. New spoke deployments use `StateRelay` for deposit routing and `RedemptionReceiver` for cross-chain redemption fills. The intent-based flow remains functional on the hub for direct cross-chain deposit orchestration but is not required for spoke-chain operation.
+
+---
+
 ## BasketFactory interactions (factory owner)
 
 These are factory-level operations that affect the defaults for newly created baskets. Most curators will never call these — they are for the protocol operator who deployed the factory.
@@ -716,12 +889,81 @@ Operators usually call BasketVault or VaultAccounting, not GMX core directly in 
 - `closePosition` forwards to GMX `decreasePosition` and updates realised accounting.
 - Liquidation conditions remain determined by GMX validation logic (loss/collateral, fees, leverage constraints).
 
+---
+
+## Operational procedures
+
+### Deploying a new spoke chain
+
+New spoke chains can be deployed using either the batch script or the individual Forge script:
+
+**Batch deploy (all chains from `config/chains.json`):**
+
+```bash
+bash scripts/deploy-all.sh
+```
+
+This reads `config/chains.json`, uses `Deploy.s.sol` for hub chains and `DeploySpoke.s.sol` for spokes, and prints a hub/spoke summary at exit. Use `--chain <name>` to target a single chain, or `--dry-run` to preview without broadcasting.
+
+**Single spoke deploy:**
+
+```bash
+PATH="/Users/reuben/.foundry/bin:$PATH" forge script script/DeploySpoke.s.sol:DeploySpoke \
+  --rpc-url <spoke-rpc> --broadcast -vvv \
+  --root /Users/reuben/Desktop/minestarters/code/snx-prototype
+```
+
+After deploying, add the chain's entry to `config/chains.json` (if not already present), generate the deployment JSON, and restart the keeper service so it picks up the new chain.
+
+### Keeper service management
+
+The keeper service (`services/keeper/`) runs as a long-lived Node.js process that posts `StateRelay.updateState()` to every chain each epoch.
+
+```bash
+# Development
+cd services/keeper && npm run dev
+
+# Production
+cd services/keeper && npm run build && npm start
+```
+
+Required env vars: `PRIVATE_KEY`, plus an RPC URL for each chain (e.g. `SEPOLIA_RPC_URL`, `FUJI_RPC_URL`). The epoch interval defaults to 60s and is configurable via `EPOCH_INTERVAL_MS`.
+
+For full keeper setup and operations, see [KEEPER_OPERATIONS.md](./KEEPER_OPERATIONS.md).
+
+### Monitoring StateRelay staleness
+
+Each `StateRelay` instance tracks `lastUpdateTime`. If the keeper stops posting updates, PnL adjustments become stale after `maxStaleness` seconds and are excluded from `_pricingNav()`, causing spoke share prices to revert to idle-USDC-only.
+
+Monitor:
+- `StateRelay.lastUpdateTime()` — compare against current block timestamp.
+- `StateRelay.getGlobalPnLAdjustment(vault)` — returns a `stale` boolean alongside the adjustment value.
+- Keeper logs — the keeper prints timestamps and confirmation block numbers each epoch.
+
+Set up alerts when `block.timestamp - lastUpdateTime > maxStaleness / 2` to catch issues before they affect pricing.
+
+### Handling pending redemptions
+
+When a spoke-chain redemption exceeds idle USDC, the vault creates a `PendingRedemption`. The keeper detects these and orchestrates CCIP fills:
+
+1. Keeper reads pending redemptions from spoke `BasketVault` contracts.
+2. Keeper initiates a CCIP USDC transfer from the hub to the spoke's `RedemptionReceiver`.
+3. `RedemptionReceiver._ccipReceive()` receives the USDC and calls `BasketVault.processPendingRedemption(id)`.
+4. The vault burns the locked shares and transfers the owed USDC to the redeemer.
+
+If automatic fills fail, an operator can manually top up the spoke vault with USDC (via `topUpReserve` or direct transfer) and call `processPendingRedemption(id)` with the keeper address.
+
+---
+
 ## Quick remediation map
 
 - **Authorization revert** — Verify wallet role and contract ownership.
 - **Mapping/precondition revert** — Verify vault registration, pause state, and asset mapping.
 - **Capital/cap revert** — Reduce request size or free capital first.
 - **Unexpected PnL output** — Verify price sync freshness, fees/funding context, and execution timing.
+- **Deposit revert ("Chain not accepting deposits")** — Check `StateRelay.getLocalWeight()` against the vault's `minDepositWeightBps`. The keeper may have reduced the chain's weight.
+- **Stale share price on spoke** — Check `StateRelay.lastUpdateTime()` and keeper health. Restart keeper if needed.
+- **Pending redemption stuck** — Verify the keeper is running and the hub has sufficient idle USDC. Manually bridge USDC and call `processPendingRedemption` if needed.
 
 ## Related docs
 
@@ -729,3 +971,4 @@ Operators usually call BasketVault or VaultAccounting, not GMX core directly in 
 - [PERP_RISK_MATH.md](./PERP_RISK_MATH.md) — Leverage formulas, sizing heuristics, and liquidation caveats.
 - [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md) — NAV calculation and share price mechanics.
 - [PRICE_FEED_FLOW.md](./PRICE_FEED_FLOW.md) — Oracle, PriceSync, and keeper setup.
+- [KEEPER_OPERATIONS.md](./KEEPER_OPERATIONS.md) — Keeper service setup, monitoring, and troubleshooting.

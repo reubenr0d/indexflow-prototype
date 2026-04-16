@@ -31,19 +31,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Subgraph Configuration
 
-Set the subgraph endpoint to enable hybrid GraphQL + RPC reads:
+Set subgraph endpoints to enable hybrid GraphQL + RPC reads:
 
 ```bash
+# Per-chain subgraph URLs (preferred for multi-chain)
+NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA=https://api.studio.thegraph.com/query/<id>/<slug>/version/latest
+NEXT_PUBLIC_SUBGRAPH_URL_FUJI=https://api.studio.thegraph.com/query/<id>/<slug>/version/latest
+
+# Fallback for all chains without a dedicated URL (set automatically by local:dev)
 NEXT_PUBLIC_SUBGRAPH_URL=http://localhost:8000/subgraphs/name/indexflow-prototype
 ```
 
-This is set automatically by `npm run local:dev`.
+`npm run local:dev` sets the fallback automatically.
 
 Read policy:
 
 - Subgraph URL set and healthy: indexed/list/history views use subgraph-first.
 - URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
 - Live-critical values (wallet balances and risk state) continue to read from RPC.
+- "All Chains" view queries all configured per-chain subgraphs in parallel and aggregates results.
 
 ## Push Notifications
 

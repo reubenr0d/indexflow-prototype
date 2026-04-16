@@ -7,13 +7,23 @@ Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on 
 
 ## Architecture
 
-A **coordination layer** (`src/coordination/`) complements each chain-local deployment: CCIP-linked modules synchronize pool reserve depth signals, relay deposit/redeem intents, and maintain quorum-based oracle config consensus across chains while execution and basket state remain anchored per deployment.
+**Hub-and-spoke topology:** Sepolia is the sole hub chain running the full perp stack (VaultAccounting, GMX pool, OracleAdapter, etc.). Spoke chains (Fuji, and potentially 100+) are deposit-only with `StateRelay` for routing weights and NAV adjustments. A keeper service posts state to all chains each epoch.
 
 ```
-Investor ──deposit USDC──► BasketVault ──allocate──► VaultAccounting ──► GMX Vault Pool
-                │                                        │
-          mint shares                              position PnL
-          (NAV-priced)                             (tracked per vault)
+                    ┌─── Spoke (Fuji) ────────────────────────┐
+                    │  Investor ──► BasketVault ──► StateRelay │
+                    │       │         (deposit-only)           │
+                    │  mint shares    RedemptionReceiver ◄─┐   │
+                    └─────────────────────────────────────┼───┘
+                                                         │ CCIP
+┌─── Hub (Sepolia) ──────────────────────────────────────┼───┐
+│  Investor ──► BasketVault ──► VaultAccounting ──► GMX Pool │
+│       │           │                │                       │
+│  mint shares  StateRelay      position PnL                 │
+│  (NAV-priced)                 (tracked per vault)          │
+│                                                            │
+│  Keeper ──► StateRelay.updateState() (routing + PnL)       │
+└────────────────────────────────────────────────────────────┘
 ```
 
 ### Basket Layer (`src/vault/`)
@@ -32,10 +42,38 @@ Investor ──deposit USDC──► BasketVault ──allocate──► VaultAc
 
 ### Coordination Layer (`src/coordination/`)
 
-- **PoolReserveRegistry** -- TWAP-style pool depth tracking for cross-chain reserve visibility
-- **CCIPReserveMessenger** -- Delta-triggered reserve state sync over Chainlink CCIP
-- **IntentRouter** -- Deposit/redeem intent routing with escrow
-- **CrossChainIntentBridge**, **OracleConfigQuorum** -- CCIP relay and quorum-based oracle config consensus across chains
+- **StateRelay** -- Keeper-posted routing weights and per-vault global PnL adjustments; deposit routing guard via `getLocalWeight()`
+- **RedemptionReceiver** -- CCIP receiver on spoke chains for keeper-bridged USDC redemption fills
+- **PoolReserveRegistry** -- TWAP-style pool depth tracking (hub, legacy)
+- **CCIPReserveMessenger** -- Delta-triggered reserve state sync over Chainlink CCIP (hub, legacy)
+- **IntentRouter** -- Deposit/redeem intent routing with escrow (hub only)
+- **CrossChainIntentBridge**, **OracleConfigQuorum** -- CCIP relay and quorum-based oracle config consensus (hub only)
+
+### Keeper Service (`services/keeper/`)
+
+- Off-chain Node.js epoch loop: reads all chains, computes inverse-proportional routing weights and per-spoke PnL adjustments, posts `StateRelay.updateState()` to every chain each epoch
+
+### Contracts per chain type
+
+| Contract | Hub (Sepolia) | Spoke (Fuji, ...) | Notes |
+| --- | --- | --- | --- |
+| `BasketFactory` | Yes | Yes (no oracle) | Spoke factory passes `address(0)` for oracle |
+| `BasketVault` | Yes | Yes | Spoke vaults have `vaultAccounting = address(0)` |
+| `BasketShareToken` | Yes | Yes | Created by factory per basket |
+| `VaultAccounting` | Yes | No | Perp capital tracking, hub only |
+| `OracleAdapter` | Yes | No | Price feeds, hub only |
+| `PricingEngine` | Yes | No | Execution quotes, hub only |
+| `FundingRateManager` | Yes | No | GMX funding, hub only |
+| `PriceSync` | Yes | No | Oracle→GMX sync, hub only |
+| `PerpReader` | Yes | No | Read aggregation, hub only |
+| `AssetWiring` | Yes | No | Asset bootstrap, hub only |
+| `GMX fork` | Yes | No | Shared liquidity pool, hub only |
+| `StateRelay` | Yes | Yes | Routing weights + PnL adjustments |
+| `RedemptionReceiver` | No | Yes | CCIP inbound for redemption fills |
+| `PoolReserveRegistry` | Yes (legacy) | No | Superseded by StateRelay |
+| `USDC` (or MockUSDC) | Yes | Yes | Deposit/redemption token |
+
+Hub deployments use `script/Deploy.s.sol`. Spoke deployments use `script/DeploySpoke.s.sol` (deploys only USDC, BasketFactory, and StateRelay). The `scripts/deploy-all.sh` script reads `config/chains.json` and selects the correct script per chain role.
 
 ### GMX Fork (`src/gmx/`)
 
@@ -156,8 +194,10 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - **Solidity** -- 0.6.12 (GMX fork) + ^0.8.24 (new contracts)
 - **Foundry** -- Build, test, deploy
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
-- **Chainlink CCIP** -- Cross-chain messaging for the coordination layer (reserve sync, intents, oracle config quorum)
-- **Target chains** -- Arbitrum, Ethereum Sepolia (testnet), Avalanche Fuji (testnet)
+- **Chainlink CCIP** -- Cross-chain messaging for coordination layer (StateRelay sync, RedemptionReceiver fills, oracle config quorum)
+- **Keeper service** -- Node.js/TypeScript epoch loop for routing weights and PnL adjustments (`services/keeper/`)
+- **Hub chain** -- Ethereum Sepolia (testnet) — full perp stack
+- **Spoke chains** -- Avalanche Fuji (testnet), Arbitrum Sepolia (planned) — deposit-only with StateRelay
 
 ## Setup
 
@@ -202,7 +242,9 @@ The Next.js web app reads `apps/web/.env.local` (or shell). Required and optiona
 | Variable | Required | Description |
 | --- | --- | --- |
 | `NEXT_PUBLIC_PRIVY_APP_ID` | Yes | Privy app ID from [dashboard.privy.io](https://dashboard.privy.io) |
-| `NEXT_PUBLIC_SUBGRAPH_URL` | No | Subgraph endpoint (auto-set by `local:dev`) |
+| `NEXT_PUBLIC_SUBGRAPH_URL` | No | Fallback subgraph endpoint (auto-set by `local:dev`) |
+| `NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA` | No | Per-chain subgraph endpoint for Sepolia |
+| `NEXT_PUBLIC_SUBGRAPH_URL_FUJI` | No | Per-chain subgraph endpoint for Avalanche Fuji |
 | `NEXT_PUBLIC_PUSH_SERVICE_URL` | No | Cloud Run push-worker base URL used by `/settings` for preferences/subscription APIs |
 | `NEXT_PUBLIC_E2E_TEST_MODE` | No | Set to `1` for deterministic E2E mock wallet |
 
@@ -225,18 +267,26 @@ The push worker service (Cloud Run) requires:
 
 ## Deployment
 
+**Hub vs spoke:** Hub chains (Sepolia) deploy the full perp stack via `Deploy.s.sol`. Spoke chains (Fuji, etc.) deploy deposit-only infrastructure via `DeploySpoke.s.sol`. The `deploy-all.sh` script reads `config/chains.json` and selects the correct script per chain role.
+
 Deploy scripts pull a live **Yahoo Finance** quote for `BHP.AX` (8-decimal USD raw) via Node (`scripts/fetch-yf-asset-price.js` and Foundry `ffi`). The script writes `cache/yf-seed-price.txt` (gitignored); Solidity reads it with `vm.readFile` so the seed is not passed through `ffi` stdout (which can mis-decode decimal ASCII). **Node** must be on `PATH`, and the machine needs **outbound network** access unless you pin a seed.
 
 - **Offline / no Yahoo:** set `SEED_PRICE_RAW` to the 8-decimal raw integer (e.g. `4500000000` for \$45.00) so deploy skips FFI.
 
 ```bash
-# Local (Anvil)
+# Deploy all chains (reads config/chains.json, picks Deploy.s.sol or DeploySpoke.s.sol per role)
+./scripts/deploy-all.sh
+
+# Deploy a single chain
+./scripts/deploy-all.sh --chain fuji
+
+# Local (Anvil, hub role)
 npm run deploy:local
 
-# Ethereum Sepolia (writes apps/web/src/config/sepolia-deployment.json)
+# Ethereum Sepolia (hub — writes apps/web/src/config/sepolia-deployment.json)
 npm run deploy:sepolia
 
-# Avalanche Fuji (writes apps/web/src/config/fuji-deployment.json)
+# Avalanche Fuji (spoke — writes apps/web/src/config/fuji-deployment.json)
 npm run deploy:fuji
 ```
 
@@ -343,8 +393,9 @@ Set `NEXT_PUBLIC_SUBGRAPH_URL` in Vercel (or `.env.local`) to the Studio query U
 
 Runtime note:
 
-- The web app enables subgraph reads for any deployment target (`sepolia` or `anvil`) when `NEXT_PUBLIC_SUBGRAPH_URL` is configured. `npm run local:dev` sets this automatically for local development.
-- When `NEXT_PUBLIC_SUBGRAPH_URL` is unset, unavailable, or subgraph rows are unusable, affected views fall back to RPC data paths.
+- The web app enables subgraph reads for any deployment target (`sepolia` or `anvil`) when a subgraph URL is configured. Per-chain URLs (`NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA`, `NEXT_PUBLIC_SUBGRAPH_URL_FUJI`) take precedence; `NEXT_PUBLIC_SUBGRAPH_URL` is the fallback. `npm run local:dev` sets the fallback automatically for local development.
+- When no subgraph URL is available, affected views fall back to RPC data paths.
+- The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
 
 ## Operations
 
@@ -368,6 +419,26 @@ For basket/perp operator responsibilities (capital allocation, position manageme
 **Funding** — Keepers authorized on **FundingRateManager** call **`updateFundingRate`** so the GMX vault’s funding parameters stay in line with your policy (often on a schedule tied to `fundingInterval`).
 
 Automation (e.g. cron, Gelato, Chainlink Automation) is optional: it only replaces manually sending the same transactions.
+
+**Cross-chain keeper service**
+
+The keeper service (`services/keeper/`) is required for hub-and-spoke operation:
+
+```bash
+# Start the keeper (reads all chains from config/chains.json)
+PRIVATE_KEY=0x... SEPOLIA_RPC_URL=... FUJI_RPC_URL=... npm run keeper:start
+
+# Configure epoch interval (default 60s)
+EPOCH_INTERVAL_MS=30000 npm run keeper:start
+```
+
+Each epoch the keeper:
+1. Reads vault reserves and hub PnL across all deployed chains.
+2. Computes routing weights (inverse-proportional to idle USDC per chain).
+3. Computes per-vault global PnL adjustments (hub PnL distributed pro-rata).
+4. Posts `StateRelay.updateState()` to every chain.
+
+The keeper also monitors pending redemptions on spoke chains and bridges USDC from the hub via CCIP to fill them through `RedemptionReceiver`.
 
 **Reserve liquidity controls**
 

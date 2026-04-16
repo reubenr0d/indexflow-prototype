@@ -12,7 +12,7 @@ import { REFETCH_INTERVAL, USDC_PRECISION } from "@/lib/constants";
 export default function HeroStats() {
   const { totalTvl, totalPnL, totalApy, basketCount, tokenHolderCount, isLoading, isError } =
     useHeroProtocolStats();
-  const { chainId } = useDeploymentTarget();
+  const { chainId, viewMode, configuredTargets } = useDeploymentTarget();
   const { oracleAdapter } = getContracts(chainId);
   const { data: assetCount, isLoading: assetCountLoading } = useReadContract({
     address: oracleAdapter,
@@ -24,6 +24,7 @@ export default function HeroStats() {
   const chainCount = CONFIGURED_DEPLOYMENT_TARGETS.filter(
     (t) => t !== "anvil" && t !== "arbitrum",
   ).length;
+  const isAllChains = viewMode === "all";
 
   return (
     <div className="mt-10 border-t border-app-border pt-6">
@@ -33,6 +34,11 @@ export default function HeroStats() {
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500" />
         </span>
         Live testnet stats
+        {isAllChains && (
+          <span className="ml-1 normal-case tracking-normal text-app-muted">
+            across {configuredTargets.length} chains
+          </span>
+        )}
       </div>
       <div className="mt-4 flex flex-wrap gap-10">
         <StatCell

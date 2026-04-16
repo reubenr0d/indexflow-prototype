@@ -9,10 +9,22 @@ This document describes what **basket share holders** interact with and how valu
 
 ## Deposit and redeem (typical investor path)
 
-1. **Deposit** — You approve USDC and call `BasketVault.deposit(amount)`. The vault takes a **deposit fee** (if configured), then mints shares using **NAV-based pricing**.
-2. **Redeem** — You call `redeem(shares)`. The vault burns shares and returns USDC from the same **NAV-based pricing path**, minus any **redeem fee**, subject to **idle USDC liquidity actually held in the basket vault** (computed from on-hand USDC and excluding reserved fees in `collectedFees`).
+### Deposit (with cross-chain routing guard)
 
-Entry and exit pricing for shares is tied to mark-to-market vault NAV.
+1. **Choose a chain** — The protocol runs a **hub-and-spoke** topology: Sepolia is the sole perp chain (hub), while spoke chains (Fuji, and potentially 100+) accept deposits only. The web UI shows a **split view** with each chain's routing weight and available capacity.
+   - **Single-chain deposit:** If you select one chain, the UI checks whether that chain's local weight meets the `minDepositWeightBps` threshold. If the weight is below threshold, the UI prompts you to switch to a multi-chain split or pick a different chain.
+   - **Multi-chain deposit:** The UI shows a split breakdown across eligible chains, proportional to their routing weights. You approve and submit one deposit transaction per chain.
+2. **On-chain guard** — When you call `BasketVault.deposit(amount)`, the vault checks `StateRelay.getLocalWeight() >= minDepositWeightBps`. If the local chain's weight is below the threshold, the transaction reverts with `"Chain not accepting deposits"`. This prevents deposits on chains the keeper has flagged as over-allocated.
+3. **Minting** — After the routing check, the vault takes a **deposit fee** (if configured) and mints shares using **NAV-based pricing** (which includes a keeper-posted **global PnL adjustment** — see pricing below).
+
+### Redeem (with pending queue for cross-chain fills)
+
+1. **Redeem** — You call `redeem(shares)`. The vault prices your shares against the current `_pricingNav()` and deducts any **redeem fee**.
+2. **Instant fill** — If the vault holds enough **idle USDC** (on-hand balance minus reserved fees), you receive the full payout immediately and your shares are burned. The UI displays this as an **instant redemption**.
+3. **Partial fill + pending queue** — If idle USDC is insufficient (common on spoke chains where perp capital lives on Sepolia), the vault **partially fills** from whatever USDC is available, burns the corresponding pro-rata shares, and **queues the remainder** as a `PendingRedemption`. Your remaining shares are locked in the vault (transferred to the contract). The UI shows the **instant portion** (filled immediately) and the **pending portion** (awaiting cross-chain fill).
+4. **Cross-chain fill** — The keeper service detects pending redemptions, initiates a CCIP transfer of USDC from the hub chain, and the `RedemptionReceiver` on the spoke chain receives the bridged USDC and calls `processPendingRedemption(id)` to complete payout. The UI updates the redemption status from pending to completed.
+
+Entry and exit pricing for shares is tied to mark-to-market vault NAV, including keeper-posted global PnL adjustments from the hub's perp positions.
 
 ## Liquidity model (as implemented)
 
@@ -22,10 +34,11 @@ Entry and exit pricing for shares is tied to mark-to-market vault NAV.
 
 ## Pricing and valuation views
 
-- **`getSharePrice()`** — Uses mark-to-market NAV:
+- **`getSharePrice()`** — Uses mark-to-market NAV (`_pricingNav()`):
   - idle USDC (excluding reserved fees),
   - `perpAllocated` bookkeeping,
-  - realised + unrealised PnL from `VaultAccounting.getVaultPnL`.
+  - realised + unrealised PnL from `VaultAccounting.getVaultPnL` (hub only; zero on spokes),
+  - **keeper-posted global PnL adjustment** from `stateRelay.getGlobalPnLAdjustment(vault)` — this propagates hub perp performance to spoke vaults so share prices stay consistent across chains. Stale adjustments (past `maxStaleness`) are excluded.
 - Anyone -- including audit firms, fund administrators, and regulators -- can
   independently verify NAV by calling `getSharePrice()` on-chain at any block,
   without relying on off-chain calculations or manager-reported values.
@@ -34,32 +47,36 @@ Entry and exit pricing for shares is tied to mark-to-market vault NAV.
 
 ## Perp allocation (operator / vault owner path)
 
-Moving USDC into or out of the shared perp pool is **not** something passive shareholders do on-chain; both flows are **`onlyOwner`** on the basket vault.
+Moving USDC into or out of the shared perp pool is **not** something passive shareholders do on-chain; both flows are **`onlyOwner`** on the basket vault. **Perp allocation is only available on the hub chain (Sepolia)** where `VaultAccounting` and the GMX pool are deployed. Spoke-chain vaults have no `vaultAccounting` wired.
 
 ```mermaid
 sequenceDiagram
     participant Inv as Investor
-    participant BV as BasketVault
-    participant VA as VaultAccounting
-    participant GMX as GMXVault
+    participant BV as BasketVault (any chain)
+    participant SR as StateRelay
+    participant VA as VaultAccounting (hub only)
+    participant GMX as GMXVault (hub only)
 
     Inv->>BV: deposit USDC
+    BV->>SR: getLocalWeight() routing guard
     BV->>Inv: mint BasketShareToken
-    Note over BV: basket oracle pricing
+    Note over BV: NAV includes keeper-posted global PnL
 
     participant Op as VaultOwner
-    Op->>BV: allocateToPerp USDC
+    Op->>BV: allocateToPerp USDC (hub only)
     BV->>VA: depositCapital
     Note over VA,GMX: capital available for GMX legs
 
     Op->>VA: openPosition closePosition
     VA->>GMX: increase decrease position
     Note over VA: PnL attributed per basket vault
+    Note over SR: keeper propagates PnL adjustments to all chains
 ```
 
-- **`allocateToPerp` / `withdrawFromPerp`** — Move USDC between the basket vault and **VaultAccounting** (subject to `maxPerpAllocation` if set).
+- **`allocateToPerp` / `withdrawFromPerp`** — Move USDC between the basket vault and **VaultAccounting** (subject to `maxPerpAllocation` if set). **Hub-only**: these functions require `vaultAccounting` to be set, which is only the case on Sepolia.
 - **Positions** — Opened in **VaultAccounting**’s name on GMX; PnL flows back as USDC when positions are reduced. The basket vault’s **`perpAllocated`** is an accounting entry; actual balances live in **VaultAccounting** / GMX until withdrawn.
-- **Investor implication** — If more capital is allocated to perp, investor redemption headroom falls until the owner pulls funds back with `withdrawFromPerp` (or new reserve USDC is added).
+- **Investor implication** — If more capital is allocated to perp, investor redemption headroom on the hub falls until the owner pulls funds back with `withdrawFromPerp` (or new reserve USDC is added). Spoke-chain redemptions rely on keeper-bridged USDC for any shortfall.
+- **Routing weights** — The keeper service steers new deposits toward Sepolia when more perp capital is needed by assigning it a higher weight in `StateRelay`. Spoke chains with excess idle USDC get lower weights.
 
 ## Leverage risk in plain language
 
@@ -78,6 +95,9 @@ sequenceDiagram
 | Whether GMX sees the same prices as the oracle | **Keepers / anyone** running **PriceSync** + feed permissions (see README) |
 | Funding parameters on GMX | **FundingRateManager** keepers / owner |
 | Risk caps and pause | **VaultAccounting** owner (`maxOpenInterest`, `maxPositionSize`, `setPaused`) |
+| Cross-chain routing weights and deposit acceptance | **Keeper service** via **StateRelay** (`updateState`) |
+| Global PnL adjustment for spoke pricing | **Keeper service** via **StateRelay** (`globalPnLAdjustment`) |
+| Pending redemption processing | **Keeper** (`processPendingRedemption`) + **RedemptionReceiver** (CCIP) |
 | Emergency upgrades / admin keys | Deploy configuration and governance outside this doc |
 
 ## Institutional access

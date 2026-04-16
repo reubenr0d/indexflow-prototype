@@ -7,3 +7,5 @@ export { OracleAdapterABI } from "./OracleAdapter";
 export { PricingEngineABI } from "./PricingEngine";
 export { FundingRateManagerABI } from "./FundingRateManager";
 export { AssetWiringABI } from "./AssetWiring";
+export { StateRelayABI } from "./StateRelay";
+export { RedemptionReceiverABI } from "./RedemptionReceiver";

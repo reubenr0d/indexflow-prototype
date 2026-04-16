@@ -36,28 +36,39 @@ The repo’s supporting docs already explain this operating model from both inve
 
 ## System overview and module map
 
-The current repository is best understood as a basket layer on top of a shared GMX-derived perp stack with a separate monitoring surface and a deployment/wiring surface.
+The current repository is best understood as a **hub-and-spoke** architecture: a basket layer on top of a shared GMX-derived perp stack on the hub chain (Sepolia), with deposit-only spoke chains connected via a `StateRelay`-based coordination plane.
 
 ```mermaid
 flowchart LR
-    User[Investor / Operator] -->|deposit USDC| BasketVault[BasketVault]
-    BasketVault -->|mint / burn| ShareToken[BasketShareToken]
-    BasketVault -->|allocate capital| VaultAccounting[VaultAccounting]
-    VaultAccounting -->|increasePosition / decreasePosition| GMXVault[GMX Vault Pool]
-    OracleAdapter[OracleAdapter] --> BasketVault
-    OracleAdapter --> PricingEngine[PricingEngine]
-    OracleAdapter --> PriceSync[PriceSync]
-    PriceSync --> SimplePriceFeed[GMX SimplePriceFeed]
-    FundingRateManager[FundingRateManager] --> GMXVault
-    PerpReader[PerpReader] --> BasketVault
-    PerpReader --> VaultAccounting
-    PerpReader --> GMXVault
-    AssetWiring[AssetWiring] --> OracleAdapter
-    AssetWiring --> VaultAccounting
-    AssetWiring --> FundingRateManager
-    AssetWiring --> PriceSync
-    Supporter[External supporter] -->|topUpReserve| BasketVault
-    Supporter -->|directPoolDeposit| GMXVault
+    subgraph Hub [Hub Chain - Sepolia]
+        User[Investor / Operator] -->|deposit USDC| BasketVault[BasketVault]
+        BasketVault -->|mint / burn| ShareToken[BasketShareToken]
+        BasketVault -->|allocate capital| VaultAccounting[VaultAccounting]
+        VaultAccounting -->|increasePosition / decreasePosition| GMXVault[GMX Vault Pool]
+        OracleAdapter[OracleAdapter] --> BasketVault
+        OracleAdapter --> PricingEngine[PricingEngine]
+        OracleAdapter --> PriceSync[PriceSync]
+        PriceSync --> SimplePriceFeed[GMX SimplePriceFeed]
+        FundingRateManager[FundingRateManager] --> GMXVault
+        AssetWiring[AssetWiring] --> OracleAdapter
+    end
+
+    subgraph Spoke [Spoke Chains - Fuji, ...]
+        SpokeUser[Investor] -->|deposit USDC| SpokeBV[BasketVault]
+        SpokeBV -->|mint / burn| SpokeShare[BasketShareToken]
+        SpokeBV -->|routing guard| SpokeSR[StateRelay]
+        SpokeBV -->|NAV adjustment| SpokeSR
+        RedemptionRx[RedemptionReceiver] -->|CCIP fill| SpokeBV
+    end
+
+    subgraph Keeper [Keeper Service]
+        KeeperSvc[Keeper] -->|updateState| HubSR[StateRelay Hub]
+        KeeperSvc -->|updateState| SpokeSR
+        KeeperSvc -->|bridge USDC| RedemptionRx
+    end
+
+    BasketVault -->|routing guard| HubSR
+    BasketVault -->|NAV adjustment| HubSR
 ```
 
 ### Current module map
@@ -74,7 +85,10 @@ flowchart LR
 | `PriceSync` | Implemented today | Syncs `OracleAdapter` prices into GMX `SimplePriceFeed` | `Ownable` + wirers; sync itself is permissionless | `src/perp/PriceSync.sol` `L7-L183` |
 | `PerpReader` | Implemented today | Read aggregation for dashboards and monitoring | Stateless, immutable references | `src/perp/PerpReader.sol` `L11-L262` |
 | `AssetWiring` | Implemented today | One-transaction local/testnet asset bootstrap across oracle, GMX, and perp stack | `Ownable` for `govCall`, but `wireAsset()` is permissionless | `src/perp/AssetWiring.sol` `L19-L86` |
-| Deploy scripts | Implemented today | Local stack deployment, GMX fork bootstrapping, keeper wiring, BHP.AX seeding | Deployer-controlled scripts | `script/DeployLocal.s.sol` `L34-L162` |
+| `StateRelay` | Implemented today | Keeper-posted routing weights and per-vault global PnL adjustments; deposit routing guard | `Ownable` + keeper | `src/coordination/StateRelay.sol` |
+| `RedemptionReceiver` | Implemented today | CCIP receiver on spoke chains for keeper-bridged USDC redemption fills | `CCIPReceiver`, `Ownable` | `src/coordination/RedemptionReceiver.sol` |
+| Keeper service | Implemented today | Off-chain epoch loop: reads all chains, computes routing weights and PnL adjustments, posts to StateRelay | Node.js service, `PRIVATE_KEY`-authed | `services/keeper/src/index.ts` |
+| Deploy scripts | Implemented today | Hub + spoke deployment, GMX fork bootstrapping, keeper wiring, BHP.AX seeding | Deployer-controlled scripts | `script/Deploy.s.sol`; `script/DeploySpoke.s.sol` |
 | Subgraph | Implemented today | Basket state, activity, snapshots, exposure, protocol state | Off-chain indexer | `apps/subgraph/schema.graphql` `L1-L182`; `apps/subgraph/src/mappings/helpers.ts` `L74-L222` |
 
 ### Read-model surface
@@ -92,10 +106,14 @@ The current basket accounting model is:
 ```text
 idleUsdc = max(usdc.balanceOf(vault) - collectedFees, 0)
 bookValue = idleUsdc + perpAllocated
-pricingNav = max(bookValue + realisedPnL + unrealisedPnL, 0)
+localPnL  = realisedPnL + unrealisedPnL    (from vaultAccounting; 0 on spokes)
+globalAdj = stateRelay.getGlobalPnLAdjustment(vault)  (0 if stale or unset)
+pricingNav = max(bookValue + localPnL + globalAdj, 0)
 sharePrice = PRICE_PRECISION                      if totalSupply == 0
 sharePrice = pricingNav * PRICE_PRECISION / totalSupply otherwise
 ```
+
+On spoke chains, `vaultAccounting` is `address(0)` so `localPnL = 0`. The keeper-posted `globalAdj` propagates hub perp performance to spokes for consistent share pricing across chains.
 
 Deposit minting and redemption math are:
 
@@ -166,20 +184,25 @@ On-chain basket composition is presently a list of active asset ids, not a weigh
 
 This is enough for asset admission and basket identification, but not enough for a formal “index methodology” section. This document should therefore describe the current repo as supporting basket asset sets with manager-directed perp exposure, not yet fully weighted on-chain indices.
 
-### Sequence: deposit flow
+### Sequence: deposit flow (with routing guard)
 
 ```mermaid
 sequenceDiagram
     participant User
     participant BasketVault
+    participant SR as StateRelay
     participant ShareToken as BasketShareToken
-    participant Oracle as OracleAdapter
     participant Perp as VaultAccounting
 
     User->>BasketVault: deposit(usdcAmount)
+    BasketVault->>SR: getLocalWeight() (if stateRelay wired)
+    SR-->>BasketVault: localWeight
+    BasketVault->>BasketVault: require weight >= minDepositWeightBps
     BasketVault->>BasketVault: read totalSupply
-    BasketVault->>Perp: getVaultPnL(vault) if wired
+    BasketVault->>Perp: getVaultPnL(vault) if wired (hub only)
     Perp-->>BasketVault: unrealisedPnL, realisedPnL
+    BasketVault->>SR: getGlobalPnLAdjustment(vault) if wired
+    SR-->>BasketVault: globalAdj (excluded if stale)
     BasketVault->>BasketVault: compute navBefore and fee
     User->>BasketVault: transfer USDC
     BasketVault->>ShareToken: mint(user, sharesMinted)
@@ -188,7 +211,7 @@ sequenceDiagram
 
 Code refs: `src/vault/BasketVault.sol` `BasketVault.deposit()` `L142-L167`; `src/vault/BasketShareToken.sol` `mint()` `L34-L36`; `src/perp/VaultAccounting.sol` `getVaultPnL()` `L406-L433`.
 
-### Sequence: redemption flow
+### Sequence: redemption flow (with pending queue)
 
 ```mermaid
 sequenceDiagram
@@ -196,17 +219,26 @@ sequenceDiagram
     participant BasketVault
     participant ShareToken as BasketShareToken
     participant Perp as VaultAccounting
+    participant RR as RedemptionReceiver
+    participant Keeper
 
     User->>BasketVault: redeem(sharesToBurn)
-    BasketVault->>Perp: getVaultPnL(vault) if wired
+    BasketVault->>Perp: getVaultPnL(vault) if wired (hub only)
     Perp-->>BasketVault: unrealisedPnL, realisedPnL
-    BasketVault->>BasketVault: compute grossAmount, fee, usdcReturned
+    BasketVault->>BasketVault: compute grossAmount, fee, totalOwed
     BasketVault->>BasketVault: availableUsdc = balance - collectedFees
     alt enough idle reserve
         BasketVault->>ShareToken: burn(user, sharesToBurn)
-        BasketVault-->>User: transfer usdcReturned
-    else reserve insufficient
-        BasketVault--x User: revert "Insufficient liquidity"
+        BasketVault-->>User: transfer totalOwed
+    else partial fill + pending queue
+        BasketVault->>ShareToken: burn(user, partialShares)
+        BasketVault-->>User: transfer available USDC
+        BasketVault->>ShareToken: transferFrom(user, vault, remainderShares)
+        BasketVault->>BasketVault: queue PendingRedemption(id)
+        Note over Keeper,RR: keeper bridges USDC from hub via CCIP
+        RR->>BasketVault: processPendingRedemption(id)
+        BasketVault->>ShareToken: burn(vault, lockedShares)
+        BasketVault-->>User: transfer remainder USDC
     end
 ```
 
@@ -263,7 +295,7 @@ The current first-party solvency model has four layers:
 
 Code refs: `src/vault/BasketVault.sol` `allocateToPerp()` `L198-L212`; `setMaxPerpAllocation()` `L125-L127`; `getAvailableForPerpUsdc()` `L266-L270`; `src/perp/VaultAccounting.sol` `_availableCapital()` `L468-L472`.
 
-This gives the system reasonable operational brakes, but it does **not** create a complete first-party loss waterfall. There is no insurance fund, no explicit backstop vault, no socialized-loss module, and no asynchronous withdrawal queue in repo code today.
+This gives the system reasonable operational brakes. Additionally, the hub-and-spoke architecture adds a fifth layer: **pending redemption queue** on spoke chains, where redemptions that exceed local idle USDC are partially filled and the remainder is queued for keeper-driven cross-chain fill via `RedemptionReceiver`. This is a partial asynchronous redemption mechanism, though it is not a complete first-party loss waterfall. There is no insurance fund, no explicit backstop vault, and no socialized-loss module in repo code today.
 
 ### Sequence: allocate-to-perps flow
 
@@ -777,6 +809,8 @@ Recommended audit depth should focus on:
 | `PriceSync` | Oracle-to-GMX price propagation | `owner`, `wirers` | Non-upgradeable | Array + index map for mapped assets; permissionless sync path |
 | `PerpReader` | Read aggregation | none | Non-upgradeable | Immutable references only |
 | `AssetWiring` | Local/testnet asset bootstrap | `owner` for `govCall`; `wireAsset()` permissionless | Non-upgradeable | References to all core modules and GMX vault |
+| `StateRelay` | Keeper-posted routing weights, per-vault global PnL adjustments, deposit routing guard | `owner`, `keeper` | Non-upgradeable | `_chainSelectors`, `_weights`, `localWeight` cache, per-vault `globalPnLAdjustment` + `pnlUpdateTime` maps, `maxStaleness` |
+| `RedemptionReceiver` | CCIP receiver for cross-chain redemption fills on spoke chains | `owner` (trusted sender admin); inbound calls via CCIP router | Non-upgradeable | Immutable `usdc`; per-source-chain `trustedSenders` mapping |
 
 ### Solidity interface pack
 
@@ -963,9 +997,45 @@ interface IAssetWiring {
     function wireAsset(string calldata symbol, uint256 seedPriceRaw8) external;
     function govCall(address target, bytes calldata data) external returns (bytes memory);
 }
+
+interface IStateRelay {
+    function updateState(
+        uint64[] calldata chains,
+        uint256[] calldata weights,
+        address[] calldata vaults,
+        int256[] calldata pnlAdjustments,
+        uint48 ts
+    ) external;
+
+    function setKeeper(address keeper) external;
+    function setMaxStaleness(uint48 maxStaleness) external;
+
+    function getLocalWeight() external view returns (uint256 weight);
+    function getRoutingWeights()
+        external
+        view
+        returns (uint64[] memory chainSelectors, uint256[] memory weights, uint256[] memory amounts);
+    function getGlobalPnLAdjustment(address vault) external view returns (int256 pnl, bool isStale);
+    function keeper() external view returns (address);
+    function lastUpdateTime() external view returns (uint48);
+    function maxStaleness() external view returns (uint48);
+    function localChainSelector() external view returns (uint64);
+    function localWeight() external view returns (uint256);
+}
+
+interface IRedemptionReceiver {
+    struct RedemptionFillPayload {
+        address targetVault;
+        uint256 redemptionId;
+    }
+
+    function setTrustedSender(uint64 chainSelector, address sender) external;
+    function trustedSenders(uint64 chainSelector) external view returns (address);
+    function usdc() external view returns (address);
+}
 ```
 
-Interface source refs: `src/vault/BasketVault.sol`; `src/vault/BasketFactory.sol`; `src/vault/BasketShareToken.sol`; `src/perp/interfaces/IPerp.sol`; `src/perp/interfaces/IOracleAdapter.sol`; `src/perp/PricingEngine.sol`; `src/perp/FundingRateManager.sol`; `src/perp/PriceSync.sol`; `src/perp/AssetWiring.sol`.
+Interface source refs: `src/vault/BasketVault.sol`; `src/vault/BasketFactory.sol`; `src/vault/BasketShareToken.sol`; `src/perp/interfaces/IPerp.sol`; `src/perp/interfaces/IOracleAdapter.sol`; `src/perp/PricingEngine.sol`; `src/perp/FundingRateManager.sol`; `src/perp/PriceSync.sol`; `src/perp/AssetWiring.sol`; `src/coordination/interfaces/IStateRelay.sol`; `src/coordination/StateRelay.sol`; `src/coordination/RedemptionReceiver.sol`.
 
 ### TypeScript call shapes
 
@@ -1050,6 +1120,8 @@ ABI source ref: `apps/web/src/abi/contracts.ts`.
 | `FundingRateManager` | `FundingConfigured`, `FundingRateUpdated`, `FundingIntervalUpdated`, `KeeperUpdated`, `WirerSet` |
 | `PriceSync` | `Synced`, `MappingAdded`, `MappingRemoved`, `WirerSet` |
 | `AssetWiring` | `AssetWired` |
+| `StateRelay` / `IStateRelay` | `StateUpdated`, `KeeperUpdated`, `MaxStalenessUpdated` |
+| `RedemptionReceiver` | `RedemptionFillReceived`, `TrustedSenderSet` |
 
 ### Gas and security annotations for hot paths
 
@@ -1064,6 +1136,8 @@ ABI source ref: `apps/web/src/abi/contracts.ts`.
 | `VaultAccounting.getVaultPnL()` | O(n) over open position keys | `gmxVault.getPositionDelta`, funding-rate read | View-only but can become expensive with many legs; funding comment in interface/docs should be reconciled with implementation |
 | `OracleAdapter.submitPrices()` | loop over asset ids | none beyond storage writes | Deviation and staleness policy reduce bad submissions; relies on keeper trust |
 | `PriceSync.syncAll()` | loop over mapped assets | `oracleAdapter.getPrice`, `simplePriceFeed.setPrice` | Permissionless sync helps liveness; stale sync policy depends on oracle freshness |
+| `StateRelay.updateState()` | O(n) loop over chains for local-weight cache, O(m) over vaults for PnL storage | none beyond storage writes | Keeper-only; weight sum validated to 10,000 bps on-chain; timestamps must be strictly monotonic |
+| `RedemptionReceiver._ccipReceive()` | CCIP message decoding, one ERC-20 transfer, one external call | `usdc.safeTransfer`, `vault.processPendingRedemption` | Trusted-sender validation per source chain; reverts on zero USDC or untrusted sender |
 
 ### Storage notes
 
@@ -1131,16 +1205,49 @@ The repo should add:
 - stale-oracle and price-dispersion tests on both read and sync surfaces;
 - repeated-increase / partial-close position-tracking tests;
 - stress tests for correlated profitable closes across more than two baskets;
-- async-redemption / backstop tests once those modules exist;
-- multi-chain accounting segregation tests if chain-local instances are added.
+- pending redemption queue tests for partial fills, keeper processing, and RedemptionReceiver CCIP flows;
+- StateRelay staleness and routing weight validation tests;
+- multi-chain accounting segregation tests for hub-spoke NAV consistency.
 
 ## Cross-Chain Coordination Layer
 
-`Implemented today` (coordination contracts and deploy script in repository)
+`Implemented today` (coordination contracts, keeper service, and deploy scripts in repository)
 
-The repository adds a **coordination plane** on top of the existing basket and GMX-derived perp stack: each chain runs a **`PoolReserveRegistry`** that maintains a TWAP-style view of **GMX USDC pool depth**, optional **oracle health** bits, and **remote** snapshots ingested only from a wired **`CCIPReserveMessenger`**. That registry exposes **`getRoutingWeights`**, which splits basis points across the local chain and eligible remotes by **available liquidity** (pool amount minus reserved), while automatically zeroing chains that are **stale** or reporting **broken feeds**. **`CCIPReserveMessenger`** economizes on cross-chain fees by broadcasting only when the TWAP pool amount moves by at least a configured **delta threshold** (the bundled deploy script uses **5%**) or when a **maximum interval** elapses, and it validates **peers** plus **per-hour inbound rate limits** on receive.
+### Hub-and-spoke topology
 
-User-facing deposit orchestration is split between a **UUPS `IntentRouter`** (escrow, local **`submitAndExecute`**, keeper **`executeIntent`** / **`executeIntentCrossChain`**, and **`refundIntent`** after **`maxEscrowDuration`**) and a **`CrossChainIntentBridge`** that relays **USDC plus intent metadata** over CCIP and **`deposit`**s on the destination vault, minting shares to the **same user address** on that chain. If no vault exists on the destination chain, the bridge **auto-deploys** one via the destination's **`BasketFactory`** using vault config (name, fees) carried in the CCIP payload, transferring ownership to a configurable **`vaultOwner`** address. This eliminates the requirement for operators to pre-deploy vaults on every target chain before cross-chain routing can begin. Product documentation frames **Privy smart wallets** as the natural way to obtain that same-address property across networks. Separately, **`OracleConfigQuorum`** — deployed symmetrically on every chain — enables quorum-based oracle config consensus over CCIP. An admin on any chain proposes config changes; peers store votes, and when **`quorumThreshold`** matching proposals accumulate the config is auto-applied to the local **`OracleAdapter`** while preserving **chain-local feed addresses**. This replaces the single-canonical-chain broadcaster/receiver model with N-of-M consensus, removing any single chain as a point of failure for config updates.
+The protocol uses a **hub-and-spoke** architecture. **Sepolia is the sole hub chain**: it runs the full perp stack (`VaultAccounting`, GMX pool, `OracleAdapter`, `PriceSync`, etc.). **Spoke chains** (Fuji, and potentially 100+) are **deposit-only**: they deploy `BasketVault`, `BasketShareToken`, `BasketFactory`, and `StateRelay` but have no perp module. This separation means:
+
+- All leveraged positions are opened on Sepolia only.
+- Spoke-chain vaults accept deposits and issue shares, but their NAV includes a keeper-posted `globalPnLAdjustment` to reflect hub perp performance.
+- Redemptions on spoke chains that exceed local idle USDC are partially filled, with the remainder queued as a `PendingRedemption` for keeper-driven cross-chain fill via `RedemptionReceiver`.
+
+### StateRelay (routing weights and global NAV)
+
+Each chain deploys a **`StateRelay`** that stores keeper-posted data:
+
+- **Routing weights** — CCIP chain selectors mapped to basis-point weights (must sum to 10,000). The keeper computes weights inversely proportional to each chain's idle USDC, directing new deposits toward chains that need more capital (typically the hub when perp allocation needs refilling).
+- **Per-vault global PnL adjustments** — Signed USDC values that propagate hub perp PnL to spoke vaults for consistent share pricing. Adjustments older than `maxStaleness` are excluded from `_pricingNav()`.
+- **Local weight cache** — `getLocalWeight()` is an O(1) read used by `BasketVault.deposit()` as the on-chain routing guard. If the local weight falls below `minDepositWeightBps`, deposits revert.
+
+### RedemptionReceiver (CCIP cross-chain fills)
+
+**`RedemptionReceiver`** is a CCIP receiver deployed on spoke chains. When the keeper bridges USDC from the hub to fill a pending redemption, the receiver:
+1. Validates the sender against a `trustedSenders` mapping (per source chain).
+2. Forwards USDC to the target `BasketVault`.
+3. Calls `processPendingRedemption(id)` to complete the payout.
+
+### Keeper service
+
+The off-chain **keeper service** (`services/keeper/`) runs an epoch loop:
+1. **Read phase** — Queries all chains in parallel for vault lists, idle USDC, `perpAllocated`, and hub PnL.
+2. **Compute phase** — Calculates routing weights (inverse-proportional to idle USDC) and per-chain PnL adjustments (hub PnL distributed pro-rata by chain deposits).
+3. **Write phase** — Posts `StateRelay.updateState()` to every chain with the same weight table and per-vault PnL adjustments.
+
+Epoch interval is configurable via `EPOCH_INTERVAL_MS` (default 60s).
+
+### Legacy coordination layer (hub-only)
+
+The repository also includes a **legacy coordination plane** deployed on the hub: **`PoolReserveRegistry`** (TWAP pool depth tracking), **`CCIPReserveMessenger`** (delta-triggered reserve sync), **`IntentRouter`** (UUPS deposit/redeem intent routing with escrow), **`CrossChainIntentBridge`** (CCIP relay with auto-vault-deploy), and **`OracleConfigQuorum`** (symmetric N-of-M oracle config consensus). These remain functional on the hub but are **not required for spoke-chain operation** — spokes use `StateRelay` and `RedemptionReceiver` instead.
 
 For contract-level detail, default parameter choices in **`script/DeployCoordination.s.sol`**, and an explicit trust / failure-mode table, see **[Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md)**.
 
@@ -1195,7 +1302,7 @@ Interpretation for IndexFlow:
 
 ## Appendix C: open questions and repo/code mismatches
 
-1. `BasketVault.redeem()` is strictly synchronous and idle-reserve-bounded. There is no async redemption queue or partial-fill mechanism in current code. Code ref: `src/vault/BasketVault.sol` `L172-L191`.
+1. `BasketVault.redeem()` now supports partial fills with a pending redemption queue for cross-chain fills. If idle USDC is insufficient, the vault partially fills from available reserves and queues the remainder as a `PendingRedemption`. The keeper bridges USDC from the hub via `RedemptionReceiver` and calls `processPendingRedemption(id)` to complete payout. Code ref: `src/vault/BasketVault.sol`.
 2. Reserve policy uses `_totalVaultValue()` rather than full `pricingNav`, so reserve gating excludes realized and unrealized PnL. Code refs: `src/vault/BasketVault.sol` `L260-L270`, `L294-L305`.
 3. On-chain basket composition is an asset-id list, not a weighted index methodology. Code refs: `src/vault/BasketVault.sol` `L23-L26`, `L88-L98`.
 4. `PerpReader.getTotalVaultValue()` uses raw USDC balance and does not subtract `collectedFees`, while `BasketVault._pricingNav()` excludes fees. This is a read-model mismatch. Code refs: `src/perp/PerpReader.sol` `L162-L171`; `src/vault/BasketVault.sol` `L309-L313`.

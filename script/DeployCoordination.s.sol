@@ -83,7 +83,9 @@ contract DeployCoordination is Script {
 
         require(ccipRouter != address(0), "DeployCoordination: CCIP router required");
 
-        vm.startBroadcast();
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        deployer = vm.addr(deployerPrivateKey);
+        vm.startBroadcast(deployerPrivateKey);
 
         // 1. PoolReserveRegistry
         PoolReserveRegistry registry = new PoolReserveRegistry(

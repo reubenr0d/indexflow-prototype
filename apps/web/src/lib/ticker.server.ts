@@ -10,7 +10,7 @@ import {
 import { DEFAULT_DEPLOYMENT_TARGET, type DeploymentTarget } from "@/lib/deployment";
 import { formatAssetId } from "@/lib/format";
 
-const CHAIN_BY_TARGET: Partial<Record<DeploymentTarget, Chain>> = {
+const CHAIN_BY_TARGET: Record<string, Chain> = {
   sepolia,
   fuji: avalancheFuji,
 };

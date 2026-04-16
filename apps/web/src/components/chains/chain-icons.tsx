@@ -132,6 +132,7 @@ export const CHAIN_META: Record<string, ChainMeta> = {
   "15971525489660198786": base,
   "3734403246176062136": optimism,
   "16015286601757825753": sepolia,
+  "14767482510784806043": avalancheFuji,
 };
 
 export function getChainMeta(selector: bigint | string): ChainMeta {

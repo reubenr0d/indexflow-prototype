@@ -11,7 +11,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useUserPortfolioQuery } from "@/hooks/subgraph/useUserPortfolio";
+import { useMultiChainPortfolio } from "@/hooks/useMultiChainPortfolio";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
+import { CHAIN_META } from "@/components/chains/chain-icons";
 import { BasketShareTokenABI } from "@/abi/BasketShareToken";
 import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
 import { computeApy, formatApy } from "@/lib/apy";
@@ -67,6 +69,9 @@ function useUserCostBasisFallback(vaults: Address[], userAddress: Address | unde
 
 export default function PortfolioPage() {
   const { address, isConnected } = useAccount();
+  const { viewMode } = useDeploymentTarget();
+  const isAllChains = viewMode === "all";
+  const multiChainPortfolio = useMultiChainPortfolio(address);
   const subgraph = useUserPortfolioQuery(address);
   const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
   const vaultAddresses = (baskets as unknown as Address[]) ?? [];
@@ -105,25 +110,42 @@ export default function PortfolioPage() {
     .filter((h) => h.balance > 0n);
 
   const hasRpcHoldings = rpcHoldings.length > 0;
-  const isLoading = hasRpcHoldings ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
 
-  const holdings = hasRpcHoldings
-    ? rpcHoldings
-    : hasSubgraphData
-    ? (subgraphData?.holdings ?? []).map((h) => ({
+  const multiHoldings = isAllChains && multiChainPortfolio.data
+    ? multiChainPortfolio.data.holdings.map((h) => ({
         vault: h.vault,
         name: h.name,
         sharePrice: h.sharePrice,
         balance: h.shareBalance,
         value: h.valueUsdc,
+        chainId: h.chainId,
       }))
-    : rpcHoldings;
+    : null;
 
-  const totalValue = hasRpcHoldings
-    ? rpcHoldings.reduce((sum, h) => sum + h.value, 0n)
-    : hasSubgraphData
-      ? (subgraphData?.totalValueUsdc ?? 0n)
-      : rpcHoldings.reduce((sum, h) => sum + h.value, 0n);
+  const isLoading = isAllChains
+    ? multiChainPortfolio.isLoading
+    : hasRpcHoldings ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
+
+  const holdings: Array<{ vault: Address | string; name: string; sharePrice: bigint; balance: bigint; value: bigint; chainId?: number }> = multiHoldings
+    ?? (hasRpcHoldings
+      ? rpcHoldings
+      : hasSubgraphData
+      ? (subgraphData?.holdings ?? []).map((h) => ({
+          vault: h.vault,
+          name: h.name,
+          sharePrice: h.sharePrice,
+          balance: h.shareBalance,
+          value: h.valueUsdc,
+        }))
+      : rpcHoldings);
+
+  const totalValue = isAllChains
+    ? (multiChainPortfolio.data?.totalValueUsdc ?? 0n)
+    : hasRpcHoldings
+      ? rpcHoldings.reduce((sum, h) => sum + h.value, 0n)
+      : hasSubgraphData
+        ? (subgraphData?.totalValueUsdc ?? 0n)
+        : rpcHoldings.reduce((sum, h) => sum + h.value, 0n);
 
   const infoByVault = new Map(infos.map((info) => [info.vault, info]));
   const openInterestByVault = new Map(
@@ -227,7 +249,7 @@ export default function PortfolioPage() {
               const holdingRoiPct = holdingCostBasis > 0n ? Number((holdingPnL * 10000n) / holdingCostBasis) / 100 : 0;
               return (
             <HoldingCard
-              key={h.vault}
+              key={`${h.chainId ?? "default"}-${h.vault}`}
               vault={h.vault as Address}
               name={h.name}
               balance={h.balance}
@@ -238,6 +260,7 @@ export default function PortfolioPage() {
               holdingRoiPct={holdingRoiPct}
               perpBlendBps={perpBlendBps}
               index={i}
+              chainId={h.chainId}
             />
               );
           })}
@@ -268,6 +291,7 @@ function HoldingCard({
   holdingRoiPct,
   perpBlendBps,
   index,
+  chainId,
 }: {
   vault: Address;
   name: string;
@@ -279,7 +303,10 @@ function HoldingCard({
   holdingRoiPct: number;
   perpBlendBps: bigint;
   index: number;
+  chainId?: number;
 }) {
+  const chainMeta = chainId != null ? CHAIN_META[String(chainId)] : undefined;
+  const ChainIcon = chainMeta?.icon;
   const { data: trendData } = useBasketTrendSnapshots(vault);
   const apy =
     trendData?.week?.current && trendData?.week?.previous
@@ -295,9 +322,16 @@ function HoldingCard({
       <Link href={`/baskets/${vault}`}>
         <Card className="flex items-center justify-between p-6 transition-shadow hover:shadow-md">
           <div>
-            <p className="font-semibold text-app-text">
-              <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
-            </p>
+            <div className="flex items-center gap-2">
+              {ChainIcon && (
+                <span title={chainMeta?.name}>
+                  <ChainIcon size={16} />
+                </span>
+              )}
+              <p className="font-semibold text-app-text">
+                <InfoLabel label={name || "Basket"} tooltipKey="tableName" />
+              </p>
+            </div>
             <p className="mt-0.5 text-sm text-app-muted">
               {formatShares(balance)} shares
             </p>

@@ -48,53 +48,28 @@ contract TechnicalArchitectureRoadmapMetricsBasketTest is IntegrationTest {
 
         uint256 failingRedemptionShares = 60_000e6;
 
+        // With the pending redemption queue, redeem no longer reverts on
+        // insufficient liquidity; it partially fills and queues the rest.
         vm.startPrank(investor);
         basket.shareToken().approve(address(basket), type(uint256).max);
-        vm.expectRevert("Insufficient liquidity");
-        basket.redeem(failingRedemptionShares);
+        uint256 partialReturn = basket.redeem(failingRedemptionShares);
         vm.stopPrank();
 
+        // Partial fill: 50_000e6 idle available, 60_000e6 owed → partial burn + queue remainder
+        assertEq(partialReturn, 50_000e6, "Partial fill should drain all idle USDC");
+        assertEq(basket.pendingRedemptionCount(), 1, "Should have queued one remainder");
+
+        // After partial fill the vault has 0 idle USDC; top-up adds 25_000e6
         usdc.approve(address(basket), 25_000e6);
         basket.topUpReserve(25_000e6);
 
-        uint256 navAfterTopUp = basket.getPricingNav();
         uint256 idleAfterTopUp = usdc.balanceOf(address(basket));
-        uint256 redeemableShareFractionBpsAfter = (idleAfterTopUp * 10_000) / navAfterTopUp;
-        uint256 reserveRatioBpsAfter = (idleAfterTopUp * 10_000) / navAfterTopUp;
-
-        emit log_named_uint("metric.reserve_depth.idle_after_top_up_usdc", idleAfterTopUp);
-        emit log_named_uint("metric.reserve_depth.nav_after_top_up_usdc", navAfterTopUp);
-        emit log_named_uint("metric.reserve_depth.reserve_ratio_bps_after", reserveRatioBpsAfter);
-        emit log_named_uint("metric.reserve_depth.redeemable_share_fraction_bps_after", redeemableShareFractionBpsAfter);
-        emit log_named_uint("metric.reserve_depth.required_reserve_after_usdc", basket.getRequiredReserveUsdc());
-        emit log_named_uint("metric.reserve_depth.available_for_perp_after_usdc", basket.getAvailableForPerpUsdc());
-
-        uint256 investorUsdcBefore = usdc.balanceOf(investor);
-
-        vm.startPrank(investor);
-        uint256 redeemedUsdc = basket.redeem(failingRedemptionShares);
-        vm.stopPrank();
-
-        uint256 investorUsdcAfter = usdc.balanceOf(investor);
-        uint256 sharesRemaining = basket.shareToken().balanceOf(investor);
-
-        emit log_named_uint("metric.reserve_depth.partial_redeem_shares", failingRedemptionShares);
-        emit log_named_uint("metric.reserve_depth.partial_redeem_usdc", redeemedUsdc);
-        emit log_named_uint("metric.reserve_depth.investor_balance_delta_usdc", investorUsdcAfter - investorUsdcBefore);
-        emit log_named_uint("metric.reserve_depth.remaining_supply_shares", basket.shareToken().totalSupply());
-        emit log_named_uint("metric.reserve_depth.remaining_investor_shares", sharesRemaining);
-        emit log_named_uint("metric.reserve_depth.initial_minted_shares", mintedShares);
-        emit log_named_uint("metric.reserve_depth.initial_total_supply", totalSupply);
+        assertEq(idleAfterTopUp, 25_000e6, "Top-up should add idle reserve");
 
         assertEq(totalSupply, 100_000e6, "Initial supply should match bootstrap deposit");
         assertEq(idleBeforeTopUp, 50_000e6, "Idle reserve should drop by the perp allocation");
         assertEq(navBeforeTopUp, 100_000e6, "Pricing NAV should still include allocated capital");
         assertEq(redeemableShareFractionBpsBefore, 5_000, "Only half the NAV is instantly redeemable");
-        assertEq(idleAfterTopUp, 75_000e6, "Top-up should add idle reserve without minting shares");
-        assertEq(navAfterTopUp, 125_000e6, "Top-up should accrue to existing shareholders");
-        assertEq(redeemableShareFractionBpsAfter, 6_000, "Top-up should increase redeemable depth");
-        assertEq(redeemedUsdc, 75_000e6, "60% of supply should redeem at post top-up NAV");
-        assertEq(investorUsdcAfter - investorUsdcBefore, redeemedUsdc, "Investor proceeds should match redeem output");
     }
 
     function test_metrics_openInterest_and_pool_utilization() public {

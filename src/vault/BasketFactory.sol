@@ -22,11 +22,10 @@ contract BasketFactory is Ownable {
     event BasketCreated(address indexed creator, address indexed vault, address shareToken, string name);
 
     /// @param _usdc USDC address for new vaults.
-    /// @param _oracleAdapter Initial oracle adapter.
+    /// @param _oracleAdapter Initial oracle adapter (may be address(0) on spoke chains).
     /// @param _owner Factory owner.
     constructor(address _usdc, address _oracleAdapter, address _owner) Ownable(_owner) {
         require(_usdc != address(0), "USDC required");
-        require(_oracleAdapter != address(0), "Oracle required");
         usdc = _usdc;
         oracleAdapter = _oracleAdapter;
     }
@@ -40,7 +39,6 @@ contract BasketFactory is Ownable {
     /// @notice Update oracle adapter used for subsequent `createBasket` calls.
     /// @param _oracleAdapter Oracle adapter address.
     function setOracleAdapter(address _oracleAdapter) external onlyOwner {
-        require(_oracleAdapter != address(0), "Oracle required");
         oracleAdapter = _oracleAdapter;
     }
 

@@ -52,7 +52,8 @@ contract WireCrossChainPeers is Script {
         require(localBridge != address(0), "WirePeers: local bridge not deployed");
         require(remoteBridge != address(0), "WirePeers: remote bridge not deployed");
 
-        vm.startBroadcast();
+        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        vm.startBroadcast(deployerPrivateKey);
 
         // 1. Bridge: register remote chain's bridge as supported peer
         CrossChainIntentBridge(payable(localBridge)).addSupportedChain(

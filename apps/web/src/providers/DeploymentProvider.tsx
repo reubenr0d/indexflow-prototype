@@ -5,10 +5,14 @@ import {
   chainIdForDeploymentTarget,
   DEFAULT_DEPLOYMENT_TARGET,
   DEPLOYMENT_TARGET_STORAGE_KEY,
+  VIEW_MODE_STORAGE_KEY,
   getSubgraphUrlForTarget,
+  isValidViewMode,
   parseDeploymentTarget,
   type DeploymentTarget,
+  type ViewMode,
 } from "@/lib/deployment";
+import { CONFIGURED_DEPLOYMENT_TARGETS } from "@/config/contracts";
 import { isAnvilEnabled, registerDevCommands } from "@/lib/dev-mode";
 
 type DeploymentContextValue = {
@@ -18,6 +22,9 @@ type DeploymentContextValue = {
   isSubgraphEnabled: boolean;
   subgraphUrl: string | null;
   canSwitchTarget: boolean;
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+  configuredTargets: DeploymentTarget[];
 };
 
 const DeploymentContext = createContext<DeploymentContextValue | null>(null);
@@ -33,12 +40,26 @@ function readInitialTarget(): DeploymentTarget {
   return stored ?? DEFAULT_DEPLOYMENT_TARGET;
 }
 
+function readInitialViewMode(): ViewMode {
+  if (typeof window === "undefined") return "single";
+  if (isE2ETestMode) return "single";
+  const stored = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
+  return isValidViewMode(stored) ? stored : "single";
+}
+
 export function DeploymentProvider({ children }: { children: React.ReactNode }) {
   const [target, setTargetState] = useState<DeploymentTarget>(readInitialTarget);
+  const [viewMode, setViewModeState] = useState<ViewMode>(readInitialViewMode);
 
   const setTarget = useCallback((nextTarget: DeploymentTarget) => {
     if (isE2ETestMode) return;
     setTargetState(nextTarget);
+    setViewModeState("single");
+  }, []);
+
+  const setViewMode = useCallback((mode: ViewMode) => {
+    if (isE2ETestMode) return;
+    setViewModeState(mode);
   }, []);
 
   useEffect(() => {
@@ -50,18 +71,29 @@ export function DeploymentProvider({ children }: { children: React.ReactNode }) 
     localStorage.setItem(DEPLOYMENT_TARGET_STORAGE_KEY, target);
   }, [target]);
 
+  useEffect(() => {
+    if (isE2ETestMode) return;
+    localStorage.setItem(VIEW_MODE_STORAGE_KEY, viewMode);
+  }, [viewMode]);
+
   const value = useMemo<DeploymentContextValue>(() => {
     const effectiveTarget = isE2ETestMode ? "anvil" : target;
     const url = getSubgraphUrlForTarget(effectiveTarget);
+    const anySubgraph = viewMode === "all"
+      ? CONFIGURED_DEPLOYMENT_TARGETS.some((t) => getSubgraphUrlForTarget(t) !== null)
+      : url !== null;
     return {
       target: effectiveTarget,
       setTarget,
       chainId: chainIdForDeploymentTarget(effectiveTarget),
-      isSubgraphEnabled: url !== null,
-      subgraphUrl: url,
+      isSubgraphEnabled: anySubgraph,
+      subgraphUrl: viewMode === "all" ? null : url,
       canSwitchTarget: !isE2ETestMode,
+      viewMode: isE2ETestMode ? "single" : viewMode,
+      setViewMode,
+      configuredTargets: CONFIGURED_DEPLOYMENT_TARGETS,
     };
-  }, [setTarget, target]);
+  }, [setTarget, setViewMode, target, viewMode]);
 
   return <DeploymentContext.Provider value={value}>{children}</DeploymentContext.Provider>;
 }

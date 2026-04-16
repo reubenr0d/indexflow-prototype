@@ -11,6 +11,8 @@ const contracts = [
   "PricingEngine",
   "FundingRateManager",
   "AssetWiring",
+  "StateRelay",
+  "RedemptionReceiver",
 ];
 
 const outDir = path.join(__dirname, "..", "out");

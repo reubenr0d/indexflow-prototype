@@ -8,6 +8,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {BasketShareToken} from "./BasketShareToken.sol";
 import {IOracleAdapter} from "../perp/interfaces/IOracleAdapter.sol";
 import {IPerp} from "../perp/interfaces/IPerp.sol";
+import {IStateRelay} from "../coordination/interfaces/IStateRelay.sol";
 
 /// @title BasketVault
 /// @notice Basket vault with perp-driven pricing: deposit USDC, mint shares priced from mark-to-market NAV.
@@ -36,6 +37,8 @@ contract BasketVault is ReentrancyGuard, Ownable {
     IOracleAdapter public oracleAdapter;
     /// @notice Perp capital bridge (optional until set).
     IPerp public vaultAccounting;
+    /// @notice Cross-chain state relay for routing weights and global PnL adjustments.
+    IStateRelay public stateRelay;
 
     AssetAllocation[] public assets;
 
@@ -53,11 +56,32 @@ contract BasketVault is ReentrancyGuard, Ownable {
     /// @notice Minimum idle reserve target in basis points over total vault value.
     uint256 public minReserveBps;
 
+    /// @notice Minimum local routing weight (bps) for deposits to be accepted.
+    /// 0 = accept deposits regardless of weight (backward compat).
+    uint256 public minDepositWeightBps;
+
+    /// @notice Authorised keeper for cross-chain redemption processing.
+    address public keeper;
+
     /// @notice Human-readable basket name.
     string public name;
 
+    // ─── Pending Redemptions ────────────────────────────────────
+    struct PendingRedemption {
+        address user;
+        uint256 sharesLocked;
+        uint256 usdcOwed;
+        uint48 timestamp;
+        bool completed;
+    }
+
+    mapping(uint256 => PendingRedemption) public pendingRedemptions;
+    uint256 public pendingRedemptionCount;
+
     event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted);
     event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned);
+    event RedemptionQueued(uint256 indexed id, address indexed user, uint256 sharesLocked, uint256 usdcOwed);
+    event RedemptionProcessed(uint256 indexed id, address indexed user, uint256 usdcPaid);
     event AllocatedToPerp(uint256 amount);
     event WithdrawnFromPerp(uint256 amount);
     event AssetsUpdated(uint256 assetCount);
@@ -65,17 +89,23 @@ contract BasketVault is ReentrancyGuard, Ownable {
     event ReservePolicyUpdated(uint256 minReserveBps);
     event ReserveToppedUp(address indexed from, uint256 amount);
 
+    modifier onlyKeeper() {
+        require(msg.sender == keeper, "Only keeper");
+        _;
+    }
+
     /// @param _name Basket display name (also used for share token name).
     /// @param _usdc USDC address.
     /// @param _oracleAdapter `OracleAdapter` address.
     /// @param _owner Ownable admin.
     constructor(string memory _name, address _usdc, address _oracleAdapter, address _owner) Ownable(_owner) {
         require(_usdc != address(0), "USDC required");
-        require(_oracleAdapter != address(0), "Oracle required");
 
         name = _name;
         usdc = IERC20(_usdc);
-        oracleAdapter = IOracleAdapter(_oracleAdapter);
+        if (_oracleAdapter != address(0)) {
+            oracleAdapter = IOracleAdapter(_oracleAdapter);
+        }
 
         string memory tokenName = string.concat(_name, " Share");
         shareToken = new BasketShareToken(tokenName, "BSKT", address(this));
@@ -83,14 +113,17 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     // ─── Configuration ───────────────────────────────────────────
 
-    /// @notice Replace configured basket assets; each asset must be active on the oracle.
+    /// @notice Replace configured basket assets; each asset must be active on the oracle
+    /// (validation skipped on spokes where oracleAdapter is not set).
     /// @param assetIds Oracle asset ids.
     function setAssets(bytes32[] calldata assetIds) external onlyOwner {
         require(assetIds.length > 0, "No assets");
 
         delete assets;
         for (uint256 i = 0; i < assetIds.length; i++) {
-            require(oracleAdapter.isAssetActive(assetIds[i]), "Asset not active in oracle");
+            if (address(oracleAdapter) != address(0)) {
+                require(oracleAdapter.isAssetActive(assetIds[i]), "Asset not active in oracle");
+            }
             assets.push(AssetAllocation({assetId: assetIds[i]}));
         }
 
@@ -134,6 +167,25 @@ contract BasketVault is ReentrancyGuard, Ownable {
         emit ReservePolicyUpdated(bps);
     }
 
+    /// @notice Wire the cross-chain state relay for routing weights and global NAV.
+    /// @param _stateRelay StateRelay address (may be zero to unset).
+    function setStateRelay(address _stateRelay) external onlyOwner {
+        stateRelay = IStateRelay(_stateRelay);
+    }
+
+    /// @notice Set the keeper address authorised to process pending redemptions.
+    /// @param _keeper Keeper address (may be zero to unset).
+    function setKeeper(address _keeper) external onlyOwner {
+        keeper = _keeper;
+    }
+
+    /// @notice Minimum local routing weight (bps) required for deposits. 0 = no restriction.
+    /// @param bps Threshold in basis points.
+    function setMinDepositWeightBps(uint256 bps) external onlyOwner {
+        require(bps <= BPS_DENOMINATOR, "Invalid weight bps");
+        minDepositWeightBps = bps;
+    }
+
     // ─── Deposit / Redeem ────────────────────────────────────────
 
     /// @notice Deposit USDC and receive basket shares at current NAV-based share price.
@@ -142,6 +194,11 @@ contract BasketVault is ReentrancyGuard, Ownable {
     function deposit(uint256 usdcAmount) external nonReentrant returns (uint256 sharesMinted) {
         require(usdcAmount > 0, "Amount required");
         require(assets.length > 0, "No assets configured");
+
+        if (address(stateRelay) != address(0)) {
+            uint256 weight = stateRelay.getLocalWeight();
+            require(weight >= minDepositWeightBps, "Chain not accepting deposits");
+        }
 
         uint256 totalSupply = shareToken.totalSupply();
         uint256 navBefore = _pricingNav();
@@ -167,8 +224,10 @@ contract BasketVault is ReentrancyGuard, Ownable {
     }
 
     /// @notice Redeem basket shares for USDC at current NAV-based share price.
+    /// If local reserves are insufficient, fills what it can and queues the remainder
+    /// as a pending redemption for keeper-driven cross-chain fill.
     /// @param sharesToBurn Shares to burn from `msg.sender`.
-    /// @return usdcReturned Net USDC after redeem fee.
+    /// @return usdcReturned Net USDC paid out immediately (may be less than full owed amount).
     function redeem(uint256 sharesToBurn) external nonReentrant returns (uint256 usdcReturned) {
         require(sharesToBurn > 0, "Amount required");
         require(shareToken.balanceOf(msg.sender) >= sharesToBurn, "Insufficient shares");
@@ -178,16 +237,58 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
         uint256 grossAmount = (sharesToBurn * _pricingNav()) / totalSupply;
         uint256 fee = (grossAmount * redeemFeeBps) / BPS_DENOMINATOR;
-        usdcReturned = grossAmount - fee;
+        uint256 totalOwed = grossAmount - fee;
         collectedFees += fee;
 
-        uint256 availableUsdc = usdc.balanceOf(address(this)) - collectedFees;
-        require(usdcReturned <= availableUsdc, "Insufficient liquidity");
+        uint256 available = _idleUsdcExcludingFees();
 
-        shareToken.burn(msg.sender, sharesToBurn);
-        usdc.safeTransfer(msg.sender, usdcReturned);
+        if (available >= totalOwed) {
+            shareToken.burn(msg.sender, sharesToBurn);
+            usdc.safeTransfer(msg.sender, totalOwed);
+            emit Redeemed(msg.sender, sharesToBurn, totalOwed);
+            return totalOwed;
+        }
 
-        emit Redeemed(msg.sender, sharesToBurn, usdcReturned);
+        // Partial fill from local reserves + queue remainder
+        uint256 partialShares;
+        if (available > 0) {
+            partialShares = (sharesToBurn * available) / totalOwed;
+            if (partialShares > 0) {
+                shareToken.burn(msg.sender, partialShares);
+                usdc.safeTransfer(msg.sender, available);
+                emit Redeemed(msg.sender, partialShares, available);
+            }
+        }
+
+        uint256 remainderShares = sharesToBurn - partialShares;
+        uint256 remainderUsdc = totalOwed - available;
+
+        shareToken.transferFrom(msg.sender, address(this), remainderShares);
+        uint256 id = pendingRedemptionCount++;
+        pendingRedemptions[id] = PendingRedemption({
+            user: msg.sender,
+            sharesLocked: remainderShares,
+            usdcOwed: remainderUsdc,
+            timestamp: uint48(block.timestamp),
+            completed: false
+        });
+        emit RedemptionQueued(id, msg.sender, remainderShares, remainderUsdc);
+
+        return available;
+    }
+
+    /// @notice Process a pending redemption after keeper bridges sufficient USDC.
+    /// @param id Pending redemption id.
+    function processPendingRedemption(uint256 id) external onlyKeeper nonReentrant {
+        PendingRedemption storage pr = pendingRedemptions[id];
+        require(!pr.completed, "Already completed");
+        require(_idleUsdcExcludingFees() >= pr.usdcOwed, "Insufficient bridged USDC");
+
+        pr.completed = true;
+        shareToken.burn(address(this), pr.sharesLocked);
+        usdc.safeTransfer(pr.user, pr.usdcOwed);
+
+        emit RedemptionProcessed(id, pr.user, pr.usdcOwed);
     }
 
     // ─── Perp Capital Allocation ─────────────────────────────────
@@ -295,13 +396,25 @@ contract BasketVault is ReentrancyGuard, Ownable {
         return _idleUsdcExcludingFees() + perpAllocated;
     }
 
-    /// @dev Mark-to-market NAV = on-vault value + realised + unrealised perp PnL (if accounting is wired).
+    /// @dev Mark-to-market NAV = on-vault value + local perp PnL + keeper-posted global adjustment.
+    /// On spokes: vaultAccounting is address(0), so localPnL = 0. NAV = idle USDC + globalAdj.
+    /// On hub: both local PnL and globalAdj contribute (globalAdj is the zero-sum complement).
     function _pricingNav() internal view returns (uint256) {
         uint256 base = _totalVaultValue();
-        if (address(vaultAccounting) == address(0)) return base;
 
-        (int256 unrealisedPnL, int256 realisedPnL) = vaultAccounting.getVaultPnL(address(this));
-        int256 total = int256(base) + realisedPnL + unrealisedPnL;
+        int256 localPnL;
+        if (address(vaultAccounting) != address(0)) {
+            (int256 unrealisedPnL, int256 realisedPnL) = vaultAccounting.getVaultPnL(address(this));
+            localPnL = unrealisedPnL + realisedPnL;
+        }
+
+        int256 globalAdj;
+        if (address(stateRelay) != address(0)) {
+            (int256 pnl, bool stale) = stateRelay.getGlobalPnLAdjustment(address(this));
+            if (!stale) globalAdj = pnl;
+        }
+
+        int256 total = int256(base) + localPnL + globalAdj;
         return total > 0 ? uint256(total) : 0;
     }
 

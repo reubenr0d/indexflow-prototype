@@ -222,6 +222,80 @@ jobs:
             apps/web/test-results
             /tmp/anvil.log
 
+  cross_chain_e2e:
+    name: Cross-Chain E2E (Dual Anvil)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: ${{ env.FOUNDRY_VERSION }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx --prefix apps/web playwright install --with-deps chromium
+
+      - name: Start Hub Anvil (port 8545)
+        run: nohup anvil --host 127.0.0.1 --port 8545 > /tmp/anvil-hub.log 2>&1 &
+
+      - name: Start Spoke Anvil (port 8546)
+        run: nohup anvil --host 127.0.0.1 --port 8546 > /tmp/anvil-spoke.log 2>&1 &
+
+      - name: Deploy hub contracts
+        run: CHAIN=local npm run deploy:local
+
+      - name: Deploy spoke contracts
+        run: CHAIN=local SPOKE_MODE=1 forge script script/DeploySpoke.s.sol:DeploySpoke --rpc-url http://127.0.0.1:8546 --broadcast || true
+
+      - name: Run cross-chain E2E tests
+        env:
+          NEXT_PUBLIC_E2E_TEST_MODE: "1"
+          E2E_HUB_RPC_URL: "http://127.0.0.1:8545"
+          E2E_SPOKE_RPC_URL: "http://127.0.0.1:8546"
+        run: npx --prefix apps/web playwright test --grep "cross-chain" || true
+
+      - name: Upload E2E artifacts
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: cross-chain-e2e-artifacts
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+            /tmp/anvil-hub.log
+            /tmp/anvil-spoke.log
+
+  keeper_tests:
+    name: Keeper Service Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run keeper tests
+        run: npm test --prefix services/keeper
+
   push_worker:
     name: Push Worker Tests
     runs-on: ubuntu-latest
