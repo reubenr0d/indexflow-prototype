@@ -13,6 +13,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-16] Token Allocation bar on the primer page now shows a "Draft" badge to indicate the split is preliminary.
+- [2026-04-16] Add Cross-Chain Coordination and Whitepaper Draft to in-app docs wiki, with sidebar navigation and routing.
 - [2026-04-16] "Chains" stat in the live testnet stats hero section, showing the number of configured testnet deployment targets.
 - [2026-04-16] Auto-deploy vault on destination chain: `CrossChainIntentBridge._ccipReceive` auto-creates a `BasketVault` via the destination's `BasketFactory` when no baskets exist and vault config (name, fees) is present in the CCIP payload. Ownership of auto-deployed vaults transfers to a configurable `vaultOwner` address. `executeIntentCrossChain` and `routeCrossChain` accept optional vault config params; the bridge uses a higher CCIP gas limit (`ccipGasLimitWithDeploy`) when config is provided to cover contract deployment costs.
 - [2026-04-16] Avalanche Fuji testnet (chain 43113) as a full-stack deployment target: `DeployFuji.s.sol` deploy script, web app chain/contract/UI wiring (deployment target, wagmi/Privy provider, network selector, chain icons, ticker server), subgraph support, and npm convenience scripts (`deploy:fuji`, `sync:fuji`, `update-prices:fuji`).

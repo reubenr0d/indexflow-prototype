@@ -80,6 +80,12 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     aliases: ["pool-management"],
   },
   {
+    fileName: "CROSS_CHAIN_COORDINATION.md",
+    slug: "cross-chain-coordination",
+    title: "Cross-Chain Coordination",
+    category: "Infrastructure",
+  },
+  {
     fileName: "DEPLOYMENTS.md",
     slug: "deployments",
     title: "Deployments",
@@ -114,6 +120,12 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     fileName: "AGENTS_FRAMEWORK.md",
     slug: "agents-framework",
     title: "Agents Framework",
+    category: "Protocol",
+  },
+  {
+    fileName: "WHITEPAPER_DRAFT.md",
+    slug: "whitepaper",
+    title: "Whitepaper",
     category: "Protocol",
   },
 ];

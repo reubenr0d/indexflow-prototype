@@ -103,8 +103,11 @@ export default function PrimerToken() {
         transition={{ delay: 0.5, duration: 0.5 }}
         className="mt-12 rounded-xl border border-app-border bg-app-bg p-6"
       >
-        <p className="mb-4 font-mono text-xs font-semibold uppercase tracking-wider text-app-muted">
+        <p className="mb-4 flex items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider text-app-muted">
           Token Allocation
+          <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold normal-case tracking-normal text-amber-400">
+            Draft
+          </span>
         </p>
         <div className="flex h-7 gap-0.5 overflow-hidden rounded-full">
           {allocSegments.map((seg) => (
