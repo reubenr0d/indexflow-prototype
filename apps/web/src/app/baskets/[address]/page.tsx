@@ -224,8 +224,8 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
       {/* ── Main layout: flex column on mobile, 3-col grid on desktop ── */}
       <div className="flex flex-col gap-6 lg:grid lg:grid-cols-3 lg:gap-8">
 
-        {/* ── Sidebar: Deposit/Redeem + Composition ── */}
-        <div className="order-1 lg:order-none lg:col-span-1 lg:row-span-4">
+        {/* ── Sidebar: Deposit/Redeem + Composition (right on desktop) ── */}
+        <div className="order-1 lg:order-none lg:col-span-1 lg:col-start-3 lg:row-span-4 lg:row-start-1">
           <div className="lg:sticky lg:top-20 lg:space-y-6" data-tour="deposit-panel">
             <DepositRedeemPanel
               vault={vault}

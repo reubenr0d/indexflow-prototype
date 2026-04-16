@@ -96,36 +96,14 @@ without any protocol changes.
 
 ### Recommended structure
 
-```
-┌──────────────────────────────────┐
-│   Regulated Fund Vehicle         │
-│   (Cayman AIF / EU RAIF / etc)  │
-│                                  │
-│   - Licensed manager (AIFM,     │
-│     MiFID, SEC RIA, etc)        │
-│   - Qualified investors only     │
-│   - Full offering docs + risk    │
-│     disclosure                   │
-│   - Independent admin + auditor  │
-└──────────────┬───────────────────┘
-               │ USDC
-┌──────────────▼───────────────────┐
-│   Institutional Custodian        │
-│   (Fireblocks / Anchorage)      │
-│                                  │
-│   - Holds USDC + share tokens   │
-│   - Signs txns on behalf of fund│
-│   - Policy engine / whitelists  │
-└──────────────┬───────────────────┘
-               │ deposit() / redeem()
-┌──────────────▼───────────────────┐
-│   IndexFlow BasketVault          │
-│   (permissionless, on-chain)    │
-│                                  │
-│   - USDC in → shares out        │
-│   - Synthetic exposure via perps │
-│   - USDC out on redemption      │
-└──────────────────────────────────┘
+```mermaid
+flowchart TB
+    Fund["Regulated Fund Vehicle\n(Cayman AIF / EU RAIF / etc)\n\n- Licensed manager (AIFM, MiFID, SEC RIA)\n- Qualified investors only\n- Full offering docs + risk disclosure\n- Independent admin + auditor"]
+    Custodian["Institutional Custodian\n(Fireblocks / Anchorage)\n\n- Holds USDC + share tokens\n- Signs txns on behalf of fund\n- Policy engine / whitelists"]
+    Vault["IndexFlow BasketVault\n(permissionless, on-chain)\n\n- USDC in, shares out\n- Synthetic exposure via perps\n- USDC out on redemption"]
+
+    Fund -->|"USDC"| Custodian
+    Custodian -->|"deposit() / redeem()"| Vault
 ```
 
 ### What the fund handles
@@ -194,45 +172,14 @@ operating entity. The standard structure uses three components:
 
 ### Entity chart
 
-```
-┌─────────────────────────────────────────┐
-│         IndexFlow Foundation            │
-│     (Cayman Foundation Company)         │
-│                                         │
-│  - Owns protocol IP (licensed from Labs)│
-│  - Deploys and governs smart contracts  │
-│  - Holds treasury / protocol reserves   │
-│  - No shareholders, no profit motive    │
-│  - Directors + supervisor as required   │
-│  - Custodies governance token supply    │
-│    (when launched)                       │
-└────────────────┬────────────────────────┘
-                 │ services agreement
-                 │ + IP license
-┌────────────────▼────────────────────────┐
-│          IndexFlow Labs                 │
-│    (Operating company, any jurisdiction)│
-│                                         │
-│  - Employs developers                   │
-│  - Builds protocol software             │
-│  - Operates hosted frontend             │
-│  - Signs vendor contracts (auditors,    │
-│    oracle providers, infra)             │
-│  - Licenses IP to Foundation            │
-│  - Can raise equity funding separately  │
-└────────────────┬────────────────────────┘
-                 │ frontend operation
-                 │ + compliance scope
-┌────────────────▼────────────────────────┐
-│         Hosted Frontend                 │
-│                                         │
-│  - app.indexflow.xyz (or similar)       │
-│  - Geo-blocking (U.S. + restricted)     │
-│  - OFAC / sanctions wallet screening    │
-│  - Terms of service + risk disclosures  │
-│  - Operated by Labs under agreement     │
-│    with Foundation                      │
-└─────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    Foundation["IndexFlow Foundation\n(Cayman Foundation Company)\n\n- Owns protocol IP (licensed from Labs)\n- Deploys and governs smart contracts\n- Holds treasury / protocol reserves\n- No shareholders, no profit motive\n- Custodies governance token supply"]
+    Labs["IndexFlow Labs\n(Operating company)\n\n- Employs developers\n- Builds protocol software\n- Operates hosted frontend\n- Signs vendor contracts\n- Licenses IP to Foundation"]
+    Frontend["Hosted Frontend\n\n- app.indexflow.xyz\n- Geo-blocking (U.S. + restricted)\n- OFAC / sanctions wallet screening\n- Terms of service + risk disclosures\n- Operated by Labs under agreement"]
+
+    Foundation -->|"services agreement + IP license"| Labs
+    Labs -->|"frontend operation + compliance scope"| Frontend
 ```
 
 ### Responsibilities

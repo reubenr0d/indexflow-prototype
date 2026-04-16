@@ -22,6 +22,10 @@ Legacy entries that predate this rule may remain without timestamps.
 - [2026-04-16] Landing page: "Latest Insights" blog highlights section between the $FLOW and Get Started sections, showing the three most recent posts with scroll-in animations. Uses React Server Component composition pattern (async server component fetches posts, client component handles Framer Motion animations) for proper SSR with blog content in the initial HTML payload.
 - [2026-04-16] Blog post: "100 Chains, 100 Grant Programs, One Outcome: Temporary TVL" -- thought leadership on chain proliferation, fragmented liquidity, and broken grant attribution models, with custom SVG illustrations (liquidity fragmentation power-law chart, infrastructure flywheel vs incentive model comparison).
 
+### Fixed
+
+- [2026-04-16] Regulatory roadmap draft: convert ASCII box-drawing diagrams (institutional structure, entity chart) to Mermaid flowcharts so they render correctly in the docs viewer.
+
 ### Changed
 
 - [2026-04-16] Replace canonical-chain oracle config sync with quorum-based consensus. Remove `OracleConfigBroadcaster` and `OracleConfigReceiver` contracts. Update `DeployCoordination.s.sol` to deploy symmetric `OracleConfigQuorum` on every chain (no `IS_CANONICAL` flag). Update all documentation, blog content, growth drafts, content calendar, and grant application to reflect the new architecture.
