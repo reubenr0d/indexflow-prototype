@@ -1,3 +1,4 @@
+# Schema v0.4.2 - 2026-04-19 deployment refresh
 type Basket @entity(immutable: false) {
   id: ID!
   creator: Bytes!
