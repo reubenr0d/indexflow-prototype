@@ -151,7 +151,7 @@ export function SharePriceChart({ vault, compact }: { vault: Address; compact?: 
               {priceChange.isPositive ? "+" : ""}
               {priceChange.pct.toFixed(2)}%
             </span>
-            {" "}({data?.source === "rpc" ? "RPC" : "subgraph"})
+            {" "}(subgraph)
           </span>
         )}
       </div>

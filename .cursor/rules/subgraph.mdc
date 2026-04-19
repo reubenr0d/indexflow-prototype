@@ -1,0 +1,31 @@
+---
+description: Subgraph development rules
+globs:
+  - apps/subgraph/**
+---
+
+# Subgraph Development
+
+## Network Sync Requirements
+
+When subgraph schema or mappings change, ensure `networks.json` stays in sync with deployed contract addresses.
+
+Run sync script after contract deployments:
+
+```bash
+node apps/subgraph/scripts/sync-networks.js
+```
+
+## ABI Sync From Contracts
+
+Subgraph ABIs must match the deployed contract ABIs. After contract changes:
+
+```bash
+for c in BasketFactory BasketVault BasketShareToken VaultAccounting OracleAdapter; do jq '.abi' "out/$c.sol/$c.json" > "apps/subgraph/abis/$c.json"; done
+```
+
+`ERC20.json` is a stable external ABI and is not regenerated.
+
+## Local Development
+
+When running the local Docker stack (`npm run local:up`), use `npm run redeploy:local` after contract or subgraph changes to rebuild and redeploy.

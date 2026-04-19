@@ -227,7 +227,33 @@
   },
   {
     "type": "function",
+    "name": "keeper",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "maxPerpAllocation",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "minDepositWeightBps",
     "inputs": [],
     "outputs": [
       {
@@ -292,6 +318,58 @@
   },
   {
     "type": "function",
+    "name": "pendingRedemptionCount",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "pendingRedemptions",
+    "inputs": [
+      {
+        "name": "",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "user",
+        "type": "address",
+        "internalType": "address"
+      },
+      {
+        "name": "sharesLocked",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "usdcOwed",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint48",
+        "internalType": "uint48"
+      },
+      {
+        "name": "completed",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "perpAllocated",
     "inputs": [],
     "outputs": [
@@ -302,6 +380,19 @@
       }
     ],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "processPendingRedemption",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",
@@ -375,10 +466,36 @@
   },
   {
     "type": "function",
+    "name": "setKeeper",
+    "inputs": [
+      {
+        "name": "_keeper",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "setMaxPerpAllocation",
     "inputs": [
       {
         "name": "cap",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setMinDepositWeightBps",
+    "inputs": [
+      {
+        "name": "bps",
         "type": "uint256",
         "internalType": "uint256"
       }
@@ -414,6 +531,19 @@
   },
   {
     "type": "function",
+    "name": "setStateRelay",
+    "inputs": [
+      {
+        "name": "_stateRelay",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "setVaultAccounting",
     "inputs": [
       {
@@ -434,6 +564,19 @@
         "name": "",
         "type": "address",
         "internalType": "contract BasketShareToken"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "stateRelay",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "contract IStateRelay"
       }
     ],
     "stateMutability": "view"
@@ -610,6 +753,62 @@
       },
       {
         "name": "usdcReturned",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RedemptionProcessed",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "user",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "usdcPaid",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RedemptionQueued",
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "user",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "sharesLocked",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "usdcOwed",
         "type": "uint256",
         "indexed": false,
         "internalType": "uint256"

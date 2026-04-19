@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
@@ -18,47 +18,42 @@ import { Plus, X } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
-import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 
 export default function AdminBasketsPage() {
   const [showCreate, setShowCreate] = useState(false);
-  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
-  const { data: baskets, isLoading: rpcLoading } = useAllBaskets();
-  const vaultAddresses = (baskets as unknown as Address[]) ?? [];
-  const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
+  const { data: baskets } = useAllBaskets();
+  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
-  const rpcInfos = ((basketInfos as unknown as Array<{
-    vault: Address;
-    name: string;
-    usdcBalance: bigint;
-    perpAllocated: bigint;
-    assetCount: bigint;
-  }>) ?? []);
-  const hasRpcData = rpcInfos.length > 0;
-  const shouldUseRpcFallback =
-    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
-  const isLoading = shouldUseRpcFallback ? rpcLoading : subgraph.isLoading;
-  const infos = shouldUseRpcFallback
-    ? rpcInfos
-    : subgraphData.map((item) => ({
+  const subgraphData = useMemo(
+    () => (Array.isArray(subgraph.data) ? subgraph.data : []),
+    [subgraph.data]
+  );
+  const isLoading = subgraph.isLoading;
+
+  const infos = useMemo(
+    () =>
+      subgraphData.map((item) => ({
         vault: item.vault,
         name: item.name,
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
         assetCount: item.assetCount,
-      }));
-
-  const openInterestByVault = new Map(
-    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
-      vaultAddresses[i],
-      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
-    ])
+      })),
+    [subgraphData]
   );
+
+  const openInterestByVault = useMemo(() => {
+    const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
+    return new Map(
+      vaultAddresses.map((vault, i) => [
+        vault,
+        states[i]?.status === "success" ? states[i]?.result?.openInterest ?? 0n : 0n,
+      ])
+    );
+  }, [vaultAddresses, vaultStates]);
 
   return (
     <PageWrapper>

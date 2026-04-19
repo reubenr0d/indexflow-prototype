@@ -14,6 +14,8 @@ export const GET_BASKETS_OVERVIEW = gql`
       perpAllocatedUsdc
       tvlBookUsdc
       totalSupplyShares
+      depositFeeBps
+      redeemFeeBps
       createdAt
       updatedAt
     }

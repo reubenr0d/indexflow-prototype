@@ -17,6 +17,8 @@ export type BasketOverview = {
   perpAllocated: bigint;
   tvlBookUsdc: bigint;
   totalSupply: bigint;
+  depositFeeBps: bigint;
+  redeemFeeBps: bigint;
   createdAt: bigint;
   updatedAt: bigint;
 };

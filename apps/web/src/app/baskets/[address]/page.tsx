@@ -1,7 +1,6 @@
 "use client";
 
 import { use, useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -37,7 +36,7 @@ import {
   type BasketActivityRow,
   useBasketActivitiesQuery,
 } from "@/hooks/subgraph/useBasketDetail";
-import { useAccount, useConfig, usePublicClient, useReadContract } from "wagmi";
+import { useAccount, useConfig, useReadContract } from "wagmi";
 import { BasketShareTokenABI } from "@/abi/BasketShareToken";
 import {
   formatUSDC,
@@ -49,7 +48,7 @@ import {
   formatAssetId,
 } from "@/lib/format";
 import { formatApy } from "@/lib/apy";
-import { type Address, parseAbiItem } from "viem";
+import { type Address } from "viem";
 import {
   Activity,
   ArrowDownToLine,
@@ -72,7 +71,6 @@ import {
 } from "lucide-react";
 import { showToast } from "@/components/ui/toast";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
-import { getContracts } from "@/config/contracts";
 
 const HISTORY_PAGE_SIZE = 20;
 
@@ -106,10 +104,6 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const [historySkip, setHistorySkip] = useState(0);
   const subgraphHistory = useBasketActivitiesQuery(vault, HISTORY_PAGE_SIZE, historySkip);
-  const shouldUseHistoryRpcFallback =
-    !subgraphHistory.isLoading &&
-    (subgraphHistory.isError || !subgraphHistory.data || subgraphHistory.data.length === 0);
-  const fallbackHistory = useVaultHistoryFallback(vault, shouldUseHistoryRpcFallback);
 
   const { data: shareBalance } = useReadContract({
     address: basketInfo?.shareToken,
@@ -124,12 +118,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const hasPnLData = unrealisedPnL !== 0n || realisedPnL !== 0n || (state?.registered ?? false);
 
   const historyRows = useMemo(
-    () =>
-      ((subgraphHistory.data && subgraphHistory.data.length > 0 ? subgraphHistory.data : fallbackHistory.data) ??
-        []) as BasketHistoryRow[],
-    [subgraphHistory.data, fallbackHistory.data],
+    () => (subgraphHistory.data ?? []) as BasketHistoryRow[],
+    [subgraphHistory.data],
   );
-  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE && !shouldUseHistoryRpcFallback;
+  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
   const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
   const latestActivityMeta = historyRows[0] ? getBasketActivityMeta(historyRows[0]) : undefined;
 
@@ -376,175 +368,6 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
       </div>
     </PageWrapper>
   );
-}
-
-function useVaultHistoryFallback(vault: Address, enabled: boolean) {
-  const { chainId } = useDeploymentTarget();
-  const publicClient = usePublicClient({ chainId });
-  const { vaultAccounting } = getContracts(chainId);
-
-  return useQuery({
-    queryKey: ["vault-history-rpc", chainId, vault],
-    enabled: enabled && !!publicClient,
-    queryFn: async (): Promise<BasketHistoryRow[]> => {
-      if (!publicClient) return [];
-
-      const [deposits, redeems, allocations, withdrawals, opens, closes, pnls] = await Promise.all([
-        publicClient.getLogs({
-          address: vault,
-          event: parseAbiItem("event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted)"),
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vault,
-          event: parseAbiItem("event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned)"),
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vault,
-          event: parseAbiItem("event AllocatedToPerp(uint256 amount)"),
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vault,
-          event: parseAbiItem("event WithdrawnFromPerp(uint256 amount)"),
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vaultAccounting,
-          event: parseAbiItem(
-            "event PositionOpened(address indexed vault, bytes32 indexed asset, bool isLong, uint256 size, uint256 collateral)",
-          ),
-          args: { vault },
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vaultAccounting,
-          event: parseAbiItem(
-            "event PositionClosed(address indexed vault, bytes32 indexed asset, bool isLong, int256 realisedPnL)",
-          ),
-          args: { vault },
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-        publicClient.getLogs({
-          address: vaultAccounting,
-          event: parseAbiItem("event PnLRealized(address indexed vault, int256 amount)"),
-          args: { vault },
-          fromBlock: 0n,
-          toBlock: "latest",
-        }),
-      ]);
-
-      const rows: BasketHistoryRow[] = [];
-
-      for (const l of deposits) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "deposit",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          amountUsdc: l.args.usdcAmount,
-        });
-      }
-      for (const l of redeems) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "redeem",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          amountUsdc: l.args.usdcReturned,
-        });
-      }
-      for (const l of allocations) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "allocateToPerp",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          amountUsdc: l.args.amount,
-        });
-      }
-      for (const l of withdrawals) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "withdrawFromPerp",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          amountUsdc: l.args.amount,
-        });
-      }
-      for (const l of opens) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "positionOpened",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          size: l.args.size,
-          amountUsdc: l.args.collateral,
-          assetId: l.args.asset,
-          isLong: l.args.isLong,
-        });
-      }
-      for (const l of closes) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "positionClosed",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          pnl: l.args.realisedPnL,
-          assetId: l.args.asset,
-          isLong: l.args.isLong,
-        });
-      }
-      for (const l of pnls) {
-        rows.push({
-          id: `${l.transactionHash}-${l.logIndex}`,
-          activityType: "pnlRealized",
-          timestamp: 0n,
-          txHash: l.transactionHash,
-          pnl: l.args.amount,
-        });
-      }
-
-      const blockNumbers = Array.from(
-        new Set(
-          [...deposits, ...redeems, ...allocations, ...withdrawals, ...opens, ...closes, ...pnls].map(
-            (l) => l.blockNumber,
-          ),
-        ),
-      );
-      const blocks = await Promise.all(blockNumbers.map((blockNumber) => publicClient.getBlock({ blockNumber })));
-      const tsByBlock = new Map(blocks.map((b) => [b.number, b.timestamp]));
-
-      const logEntries = [
-        ...deposits,
-        ...redeems,
-        ...allocations,
-        ...withdrawals,
-        ...opens,
-        ...closes,
-        ...pnls,
-      ];
-
-      for (const row of rows) {
-        const log = logEntries.find((entry) => `${entry.transactionHash}-${entry.logIndex}` === row.id);
-        if (log) {
-          row.timestamp = tsByBlock.get(log.blockNumber) ?? 0n;
-        }
-      }
-
-      rows.sort((a, b) => Number(b.timestamp - a.timestamp));
-      return rows.slice(0, HISTORY_PAGE_SIZE);
-    },
-    staleTime: 15_000,
-    retry: 1,
-  });
 }
 
 function HistoryRowView({ row, justification }: { row: BasketHistoryRow | BasketActivityRow; justification?: string }) {

@@ -17,8 +17,8 @@ export default function PrimerNAV() {
       <SectionHeading>NAV does not mean redeemable liquidity</SectionHeading>
       <SectionBody>
         Portfolio value and exit liquidity are different state variables.
-        IndexFlow defines that difference as the gap between full NAV and
-        redeemable liquidity — and treats it as the primary architectural
+        IndexFlow defines that difference as the gap between 
+        full NAV and redeemable liquidity, and treats it as the primary architectural
         constraint.
       </SectionBody>
 

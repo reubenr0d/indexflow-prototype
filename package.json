@@ -46,7 +46,10 @@
     "agent:dry": "AGENT_DRY_RUN=1 node scripts/vault-agent.mjs",
     "agent:run": "node scripts/agent-runner.mjs",
     "mcp:vault-manager": "node apps/mcps/vault-manager/index.js",
-    "mcp:yfinance": "node apps/mcps/yfinance/index.js"
+    "mcp:yfinance": "node apps/mcps/yfinance/index.js",
+    "seed:fetch-prices": "node scripts/fetch-historical-prices.js BHP.AX XAU XAG GLEN.L",
+    "seed:sepolia": "npm run seed:fetch-prices && CHAIN=sepolia forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url sepolia --broadcast -vvv",
+    "seed:local": "npm run seed:fetch-prices && CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url local --broadcast -vvv"
   },
   "dependencies": {
     "@chainlink/contracts-ccip": "^1.6.4",

@@ -16,6 +16,7 @@ import {AssetWiring} from "../src/perp/AssetWiring.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import {StateRelay} from "../src/coordination/StateRelay.sol";
 
 interface ISimplePriceFeed {
     function setPrice(address token, uint256 price) external;
@@ -55,6 +56,7 @@ contract Deploy is Script {
         address usdc;
         address gmxVault;
         address assetWiring;
+        address stateRelay;
     }
 
     function run() external {
@@ -65,6 +67,7 @@ contract Deploy is Script {
 
         string memory rpcAlias = vm.parseJsonString(chainsJson, string.concat(chainKey, ".rpcAlias"));
         bool mockUsdc = vm.parseJsonBool(chainsJson, string.concat(chainKey, ".mockUsdc"));
+        uint64 ccipChainSelector = uint64(vm.parseJsonUint(chainsJson, string.concat(chainKey, ".ccipChainSelector")));
 
         uint256 deployerPrivateKey;
         if (keccak256(bytes(chainName)) == keccak256("local")) {
@@ -98,6 +101,8 @@ contract Deploy is Script {
         _deployAssetWiring(d, deployer, pfAddr, symbol, seedRaw);
 
         _deployBasketFactory(d, deployer);
+
+        _deployStateRelay(d, deployer, ccipChainSelector);
 
         vm.stopBroadcast();
 
@@ -191,6 +196,12 @@ contract Deploy is Script {
         VaultAccounting(d.vaultAccounting).setWirer(d.basketFactory, true);
     }
 
+    function _deployStateRelay(Deployed memory d, address deployer, uint64 ccipChainSelector) internal {
+        uint48 maxStaleness = 300; // 5 minutes default
+        StateRelay relay = new StateRelay(ccipChainSelector, maxStaleness, deployer, deployer);
+        d.stateRelay = address(relay);
+    }
+
     function _deployVaultWithLinkedVaultMath(address mathLib, string memory chainName) internal returns (address addr) {
         string memory json = vm.readFile("out/Vault.sol/Vault.json");
         string memory obj = vm.parseJsonString(json, ".bytecode.object");
@@ -249,6 +260,9 @@ contract Deploy is Script {
             '",\n',
             '  "assetWiring": "',
             vm.toString(d.assetWiring),
+            '",\n',
+            '  "stateRelay": "',
+            vm.toString(d.stateRelay),
             '"\n',
             "}\n"
         );

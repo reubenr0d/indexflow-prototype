@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { CHAIN_REGISTRY } from "@/lib/deployment";
-import localDeployment from "./local-deployment.json";
 import sepoliaDeployment from "./sepolia-deployment.json";
 import fujiDeployment from "./fuji-deployment.json";
 import {
@@ -11,12 +10,6 @@ import {
 } from "./contracts";
 
 describe("contract address resolution", () => {
-  it("resolves anvil deployment addresses from local deployment config", () => {
-    const contracts = getContractsForDeploymentTarget("anvil");
-    expect(contracts.basketFactory.toLowerCase()).toBe(localDeployment.basketFactory.toLowerCase());
-    expect(contracts.usdc.toLowerCase()).toBe(localDeployment.usdc.toLowerCase());
-  });
-
   it("resolves sepolia deployment addresses from sepolia deployment config", () => {
     const contracts = getContractsForDeploymentTarget("sepolia");
     expect(contracts.basketFactory.toLowerCase()).toBe(sepoliaDeployment.basketFactory.toLowerCase());
@@ -30,7 +23,6 @@ describe("contract address resolution", () => {
   });
 
   it("keeps compatibility chain resolver behavior via chain id", () => {
-    expect(getContracts(CHAIN_REGISTRY.anvil.chainId).usdc.toLowerCase()).toBe(localDeployment.usdc.toLowerCase());
     expect(getContracts(CHAIN_REGISTRY.sepolia.chainId).usdc.toLowerCase()).toBe(sepoliaDeployment.usdc.toLowerCase());
     expect(getContracts(CHAIN_REGISTRY.fuji.chainId).usdc.toLowerCase()).toBe(fujiDeployment.usdc.toLowerCase());
   });
@@ -50,7 +42,6 @@ describe("deployment configuration detection", () => {
   it("reports configured targets as configured", () => {
     expect(isDeploymentConfigured("sepolia")).toBe(true);
     expect(isDeploymentConfigured("fuji")).toBe(true);
-    expect(isDeploymentConfigured("anvil")).toBe(true);
   });
 
   it("reports unconfigured targets as not configured", () => {

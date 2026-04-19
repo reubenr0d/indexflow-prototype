@@ -1,0 +1,249 @@
+type Basket @entity(immutable: false) {
+  id: ID!
+  creator: Bytes!
+  vault: Bytes!
+  shareToken: Bytes!
+  name: String!
+  createdAt: BigInt!
+  createdBlock: BigInt!
+
+  assetCount: BigInt!
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  maxPerpAllocation: BigInt!
+
+  usdcBalanceUsdc: BigInt!
+  basketPrice: BigInt!
+  sharePrice: BigInt!
+  tvlBookUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  totalSupplyShares: BigInt!
+
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  totalDepositCount: BigInt!
+  totalRedeemCount: BigInt!
+  cumulativeTopUpUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+
+  assets: [BasketAsset!]! @derivedFrom(field: "basket")
+  exposures: [BasketExposure!]! @derivedFrom(field: "basket")
+  activities: [BasketActivity!]! @derivedFrom(field: "basket")
+  snapshots: [BasketSnapshot!]! @derivedFrom(field: "basket")
+}
+
+type BasketSnapshot @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  period: String!
+  bucketStart: BigInt!
+  bucketEnd: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+
+  sharePrice: BigInt!
+  basketPrice: BigInt!
+  usdcBalanceUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  tvlBookUsdc: BigInt!
+  totalSupplyShares: BigInt!
+  assetCount: BigInt!
+
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  requiredReserveUsdc: BigInt!
+  availableForPerpUsdc: BigInt!
+  collectedFeesUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  openInterest: BigInt!
+  collateralLocked: BigInt!
+  positionCount: BigInt!
+}
+
+type BasketAsset @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  assetId: Bytes!
+  active: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type BasketExposure @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  assetId: Bytes!
+  longSize: BigInt!
+  shortSize: BigInt!
+  netSize: BigInt!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type User @entity(immutable: false) {
+  id: ID!
+  address: Bytes!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  positions: [UserBasketPosition!]! @derivedFrom(field: "user")
+}
+
+type UserBasketPosition @entity(immutable: false) {
+  id: ID!
+  user: User!
+  basket: Basket!
+  shareBalance: BigInt!
+  netDepositedUsdc: BigInt!
+  netRedeemedUsdc: BigInt!
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  lastActivityAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type BasketActivity @entity(immutable: true) {
+  id: ID!
+  basket: Basket!
+  activityType: String!
+  user: User
+  assetId: Bytes
+  isLong: Boolean
+  amountUsdc: BigInt
+  shares: BigInt
+  size: BigInt
+  collateral: BigInt
+  pnl: BigInt
+  recipient: Bytes
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type VaultStateCurrent @entity(immutable: false) {
+  id: ID!
+  basket: Basket!
+  registered: Boolean!
+  paused: Boolean!
+  depositedCapital: BigInt!
+  realisedPnl: BigInt!
+  openInterest: BigInt!
+  positionCount: BigInt!
+  collateralLocked: BigInt!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type AssetMeta @entity(immutable: false) {
+  id: ID!
+  assetId: Bytes!
+  symbol: String
+  feedType: Int!
+  feedAddress: Bytes!
+  active: Boolean!
+  latestPrice: BigInt
+  latestPriceTimestamp: BigInt
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type OraclePriceUpdate @entity(immutable: true) {
+  id: ID!
+  assetId: Bytes!
+  price: BigInt!
+  priceTimestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type AssetTokenMapUpdate @entity(immutable: true) {
+  id: ID!
+  assetId: Bytes!
+  token: Bytes!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type ProtocolState @entity(immutable: false) {
+  id: ID!
+  paused: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+# ─── Coordination Layer ────────────────────────────────────────
+
+type PoolSnapshotEvent @entity(immutable: true) {
+  id: ID!
+  chainSelector: BigInt!
+  twapPoolAmount: BigInt!
+  instantPoolAmount: BigInt!
+  reservedAmount: BigInt!
+  availableLiquidity: BigInt!
+  utilizationBps: BigInt!
+  oracleConfigHash: Bytes!
+  hasBrokenFeeds: Boolean!
+  snapshotTimestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type CoordinationState @entity(immutable: false) {
+  id: ID!
+  latestTwapPoolAmount: BigInt!
+  latestAvailableLiquidity: BigInt!
+  latestUtilizationBps: BigInt!
+  latestSnapshotTimestamp: BigInt!
+  snapshotCount: BigInt!
+  updatedAt: BigInt!
+}
+
+type ChainPoolState @entity(immutable: false) {
+  id: ID!
+  chainSelector: BigInt!
+  twapPoolAmount: BigInt!
+  availableLiquidity: BigInt!
+  reservedAmount: BigInt!
+  utilizationBps: BigInt!
+  snapshotTimestamp: BigInt!
+  snapshotCount: BigInt!
+  updatedAt: BigInt!
+}
+
+type IntentAction @entity(immutable: true) {
+  id: ID!
+  intentId: BigInt!
+  user: Bytes!
+  intentType: String!
+  status: String!
+  amount: BigInt!
+  basketVault: Bytes
+  sharesOrUsdc: BigInt
+  destChainSelector: BigInt
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type IntentStats @entity(immutable: false) {
+  id: ID!
+  totalSubmitted: BigInt!
+  totalExecuted: BigInt!
+  totalRoutedCrossChain: BigInt!
+  totalRefunded: BigInt!
+  cumulativeVolumeUsdc: BigInt!
+  updatedAt: BigInt!
+}

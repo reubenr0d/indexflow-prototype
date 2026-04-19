@@ -13,7 +13,6 @@ import {
   type ViewMode,
 } from "@/lib/deployment";
 import { CONFIGURED_DEPLOYMENT_TARGETS } from "@/config/contracts";
-import { isAnvilEnabled, registerDevCommands } from "@/lib/dev-mode";
 
 type DeploymentContextValue = {
   target: DeploymentTarget;
@@ -30,26 +29,27 @@ type DeploymentContextValue = {
 const DeploymentContext = createContext<DeploymentContextValue | null>(null);
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
-function readInitialTarget(): DeploymentTarget {
-  if (typeof window === "undefined") {
-    return isE2ETestMode ? "anvil" : DEFAULT_DEPLOYMENT_TARGET;
-  }
-  if (isE2ETestMode) return "anvil";
+/** SSR + first client paint must match; persist restore runs in useEffect. */
+function ssrSafeInitialTarget(): DeploymentTarget {
+  return DEFAULT_DEPLOYMENT_TARGET;
+}
+
+function readStoredTargetFromBrowser(): DeploymentTarget {
+  if (isE2ETestMode) return DEFAULT_DEPLOYMENT_TARGET;
   const stored = parseDeploymentTarget(localStorage.getItem(DEPLOYMENT_TARGET_STORAGE_KEY));
-  if (stored === "anvil" && !isAnvilEnabled()) return DEFAULT_DEPLOYMENT_TARGET;
   return stored ?? DEFAULT_DEPLOYMENT_TARGET;
 }
 
-function readInitialViewMode(): ViewMode {
-  if (typeof window === "undefined") return "single";
+function readStoredViewModeFromBrowser(): ViewMode {
   if (isE2ETestMode) return "single";
   const stored = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
   return isValidViewMode(stored) ? stored : "single";
 }
 
 export function DeploymentProvider({ children }: { children: React.ReactNode }) {
-  const [target, setTargetState] = useState<DeploymentTarget>(readInitialTarget);
-  const [viewMode, setViewModeState] = useState<ViewMode>(readInitialViewMode);
+  const [target, setTargetState] = useState<DeploymentTarget>(ssrSafeInitialTarget);
+  const [viewMode, setViewModeState] = useState<ViewMode>("single");
+  const [hasRestoredPreferences, setHasRestoredPreferences] = useState(false);
 
   const setTarget = useCallback((nextTarget: DeploymentTarget) => {
     if (isE2ETestMode) return;
@@ -63,29 +63,30 @@ export function DeploymentProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    registerDevCommands();
+    setTargetState(readStoredTargetFromBrowser());
+    setViewModeState(readStoredViewModeFromBrowser());
+    setHasRestoredPreferences(true);
   }, []);
 
   useEffect(() => {
-    if (isE2ETestMode) return;
+    if (isE2ETestMode || !hasRestoredPreferences) return;
     localStorage.setItem(DEPLOYMENT_TARGET_STORAGE_KEY, target);
-  }, [target]);
+  }, [target, hasRestoredPreferences]);
 
   useEffect(() => {
-    if (isE2ETestMode) return;
+    if (isE2ETestMode || !hasRestoredPreferences) return;
     localStorage.setItem(VIEW_MODE_STORAGE_KEY, viewMode);
-  }, [viewMode]);
+  }, [viewMode, hasRestoredPreferences]);
 
   const value = useMemo<DeploymentContextValue>(() => {
-    const effectiveTarget = isE2ETestMode ? "anvil" : target;
-    const url = getSubgraphUrlForTarget(effectiveTarget);
+    const url = getSubgraphUrlForTarget(target);
     const anySubgraph = viewMode === "all"
       ? CONFIGURED_DEPLOYMENT_TARGETS.some((t) => getSubgraphUrlForTarget(t) !== null)
       : url !== null;
     return {
-      target: effectiveTarget,
+      target,
       setTarget,
-      chainId: chainIdForDeploymentTarget(effectiveTarget),
+      chainId: chainIdForDeploymentTarget(target),
       isSubgraphEnabled: anySubgraph,
       subgraphUrl: viewMode === "all" ? null : url,
       canSwitchTarget: !isE2ETestMode,

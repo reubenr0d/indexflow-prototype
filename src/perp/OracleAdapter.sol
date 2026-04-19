@@ -229,6 +229,27 @@ contract OracleAdapter is IOracleAdapter, Ownable {
         }
     }
 
+    /// @notice Seed historical price data with explicit timestamps (testnet seeding).
+    /// @param assetId Configured custom asset id.
+    /// @param prices_ Chronologically ordered raw prices in `decimals_` from config.
+    /// @param timestamps_ Parallel array of unix timestamps for each price entry.
+    /// @dev Owner-only, skips deviation validation. The last entry becomes the current stored price.
+    function seedHistoricalPrices(bytes32 assetId, uint256[] calldata prices_, uint256[] calldata timestamps_)
+        external
+        onlyOwner
+    {
+        AssetConfig memory cfg = _assetConfigs[assetId];
+        if (!cfg.active) revert AssetNotActive(assetId);
+        require(prices_.length == timestamps_.length, "Length mismatch");
+
+        for (uint256 i = 0; i < prices_.length; i++) {
+            if (prices_[i] == 0) revert InvalidPrice();
+            uint256 normalizedPrice = _normalize(prices_[i], cfg.decimals);
+            _prices[assetId] = PriceData({price: normalizedPrice, timestamp: timestamps_[i]});
+            emit PriceUpdated(assetId, normalizedPrice, timestamps_[i]);
+        }
+    }
+
     // ─── Price Reading ───────────────────────────────────────────
 
     /// @notice Latest price: Chainlink round data or last keeper price for custom assets.

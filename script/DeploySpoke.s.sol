@@ -4,9 +4,10 @@ pragma solidity ^0.8.24;
 import "forge-std/Script.sol";
 import {BasketFactory} from "../src/vault/BasketFactory.sol";
 import {StateRelay} from "../src/coordination/StateRelay.sol";
+import {RedemptionReceiver} from "../src/coordination/RedemptionReceiver.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 
-/// @notice Lightweight spoke deploy script. Only deploys MockUSDC + BasketFactory + StateRelay.
+/// @notice Lightweight spoke deploy script. Deploys MockUSDC + BasketFactory + StateRelay + RedemptionReceiver.
 /// Skips the entire GMX/perp/oracle stack (VaultAccounting, OracleAdapter, FundingRateManager,
 /// PricingEngine, PerpReader, PriceSync, AssetWiring, IntentRouter, IntentBridge, etc.).
 ///
@@ -23,6 +24,7 @@ contract DeploySpoke is Script {
     struct SpokeDeployed {
         address basketFactory;
         address stateRelay;
+        address redemptionReceiver;
         address usdc;
     }
 
@@ -35,6 +37,7 @@ contract DeploySpoke is Script {
         bool mockUsdc = vm.parseJsonBool(chainsJson, string.concat(chainKey, ".mockUsdc"));
         uint64 ccipChainSelector =
             uint64(vm.parseJsonUint(chainsJson, string.concat(chainKey, ".ccipChainSelector")));
+        address ccipRouter = vm.parseJsonAddress(chainsJson, string.concat(chainKey, ".ccipRouter"));
 
         uint256 deployerPrivateKey;
         if (keccak256(bytes(chainName)) == keccak256("local")) {
@@ -73,7 +76,13 @@ contract DeploySpoke is Script {
         StateRelay relay = new StateRelay(ccipChainSelector, maxStaleness, keeperAddr, deployer);
         d.stateRelay = address(relay);
 
-        // 3. BasketFactory (no oracle on spokes — pass address(0))
+        // 3. RedemptionReceiver (CCIP receiver for cross-chain redemption fills)
+        if (ccipRouter != address(0)) {
+            RedemptionReceiver receiver = new RedemptionReceiver(ccipRouter, d.usdc, deployer);
+            d.redemptionReceiver = address(receiver);
+        }
+
+        // 4. BasketFactory (no oracle on spokes — pass address(0))
         BasketFactory bf = new BasketFactory(d.usdc, address(0), deployer);
         d.basketFactory = address(bf);
 
@@ -88,18 +97,19 @@ contract DeploySpoke is Script {
     }
 
     function _buildJson(SpokeDeployed memory d) internal view returns (string memory) {
-        return string.concat(
+        string memory base = string.concat(
             "{\n",
             '  "basketFactory": "',
             vm.toString(d.basketFactory),
             '",\n',
             '  "stateRelay": "',
             vm.toString(d.stateRelay),
-            '",\n',
-            '  "usdc": "',
-            vm.toString(d.usdc),
-            '"\n',
-            "}\n"
+            '",\n'
         );
+        string memory receiver = d.redemptionReceiver != address(0)
+            ? string.concat('  "redemptionReceiver": "', vm.toString(d.redemptionReceiver), '",\n')
+            : "";
+        string memory tail = string.concat('  "usdc": "', vm.toString(d.usdc), '"\n', "}\n");
+        return string.concat(base, receiver, tail);
     }
 }

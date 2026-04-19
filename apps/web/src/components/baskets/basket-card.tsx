@@ -119,20 +119,13 @@ export function BasketCard({
             </div>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+          <div className="mt-5 grid grid-cols-2 gap-3">
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
                 <BasketIcon name="sharePrice" />
                 <span>Share price</span>
               </div>
               <p className="mt-2 font-mono text-sm font-semibold text-app-text">{formatPrice(sharePrice)}</p>
-            </div>
-            <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
-              <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
-                <BasketIcon name="assets" />
-                <span>Assets</span>
-              </div>
-              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{assetCount}</p>
             </div>
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
@@ -145,17 +138,8 @@ export function BasketCard({
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
-            <TrendPill direction={trend24h === undefined || trend24h === null || trend24h === 0n ? "flat" : trend24h > 0n ? "up" : "down"}>
-              {formatTrendText("24h", trend24h)}
-            </TrendPill>
-            <TrendPill direction={trend7d === undefined || trend7d === null || trend7d === 0n ? "flat" : trend7d > 0n ? "up" : "down"}>
-              {formatTrendText("7d", trend7d)}
-            </TrendPill>
-          </div>
-
           <div className="mt-4 flex-1">
-            <div className="mb-1 h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
               <div
                 className="h-full rounded-full bg-app-accent transition-all"
                 style={{
@@ -163,13 +147,15 @@ export function BasketCard({
                 }}
               />
             </div>
-            <p className="text-xs text-app-muted">
-              {perpBlendBps !== undefined
-                ? `${formatBps(perpBlendBps)} perp sleeve`
-                : perpAllocated > 0n
-                  ? `${Number((perpAllocated * 100n) / (tvl || 1n))}% in perp`
-                  : "No perp allocation"}
-            </p>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <TrendPill direction={trend24h === undefined || trend24h === null || trend24h === 0n ? "flat" : trend24h > 0n ? "up" : "down"}>
+              {formatTrendText("24h", trend24h)}
+            </TrendPill>
+            <TrendPill direction={trend7d === undefined || trend7d === null || trend7d === 0n ? "flat" : trend7d > 0n ? "up" : "down"}>
+              {formatTrendText("7d", trend7d)}
+            </TrendPill>
           </div>
         </Card>
       </Link>

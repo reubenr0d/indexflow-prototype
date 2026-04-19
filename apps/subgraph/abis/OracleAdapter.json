@@ -76,6 +76,45 @@
   },
   {
     "type": "function",
+    "name": "canonicalMode",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "canonicalReceiver",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "configHash",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "configureAsset",
     "inputs": [
       {
@@ -122,6 +161,13 @@
         "internalType": "bytes32"
       }
     ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "disableCanonicalMode",
+    "inputs": [],
     "outputs": [],
     "stateMutability": "nonpayable"
   },
@@ -265,6 +311,19 @@
   },
   {
     "type": "function",
+    "name": "hasBrokenFeeds",
+    "inputs": [],
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool",
+        "internalType": "bool"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
     "name": "isAssetActive",
     "inputs": [
       {
@@ -342,6 +401,42 @@
   },
   {
     "type": "function",
+    "name": "seedHistoricalPrices",
+    "inputs": [
+      {
+        "name": "assetId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "prices_",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "timestamps_",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setCanonicalMode",
+    "inputs": [
+      {
+        "name": "_receiver",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "setKeeper",
     "inputs": [
       {
@@ -353,6 +448,24 @@
         "name": "active",
         "type": "bool",
         "internalType": "bool"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "setLocalFeedAddress",
+    "inputs": [
+      {
+        "name": "assetId",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "feedAddress",
+        "type": "address",
+        "internalType": "address"
       }
     ],
     "outputs": [],
@@ -490,6 +603,25 @@
   },
   {
     "type": "event",
+    "name": "CanonicalModeDisabled",
+    "inputs": [],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "CanonicalModeEnabled",
+    "inputs": [
+      {
+        "name": "receiver",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
     "name": "KeeperUpdated",
     "inputs": [
       {
@@ -503,6 +635,25 @@
         "type": "bool",
         "indexed": false,
         "internalType": "bool"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "LocalFeedAddressSet",
+    "inputs": [
+      {
+        "name": "assetId",
+        "type": "bytes32",
+        "indexed": true,
+        "internalType": "bytes32"
+      },
+      {
+        "name": "feedAddress",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
       }
     ],
     "anonymous": false

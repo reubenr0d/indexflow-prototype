@@ -23,37 +23,37 @@
   },
   "sepolia": {
     "basketFactory": {
-      "address": "0x914f089F2D216343E625dDF3bD69E0662Bd9BfA2",
-      "startBlock": 10630646
+      "address": "0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4",
+      "startBlock": 10689396
     },
     "vaultAccounting": {
-      "address": "0xfd9cd5D80f867A6cCC0356F82Dc6b84231889a45",
-      "startBlock": 10630646
+      "address": "0xc7aa05ccaea98dc26b8739a19b79875b1432ce43",
+      "startBlock": 10689378
     },
     "oracleAdapter": {
-      "address": "0x511FD51308f013eBB33c8264E8cc038e6Db9a24D",
-      "startBlock": 10630646
+      "address": "0x69329fec8c0ef120ee56379941d8d367b593d399",
+      "startBlock": 10689376
     },
     "poolReserveRegistry": {
-      "address": "0x970F75182913195D3594822DD456cD710E5C42B0",
-      "startBlock": 10665966
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
     },
     "intentRouter": {
-      "address": "0x1198Cde5Abe79E3aB67981Cd9352D5a0d480F556",
-      "startBlock": 10665966
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
     }
   },
   "fuji": {
     "basketFactory": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x743194BAAe87A8A518739a1eB71f04773b46d42e",
       "startBlock": 0
     },
     "vaultAccounting": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x32E2A385aA9540d5119ceAA2Ecf4FD97a1e002e0",
       "startBlock": 0
     },
     "oracleAdapter": {
-      "address": "0x0000000000000000000000000000000000000000",
+      "address": "0x0E07EA10A1fF1412B9D93F7A38b6498eDaAcf419",
       "startBlock": 0
     },
     "poolReserveRegistry": {

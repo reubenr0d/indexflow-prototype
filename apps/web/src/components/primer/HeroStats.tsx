@@ -22,7 +22,7 @@ export default function HeroStats() {
   });
   const assets = assetCount != null ? Number(assetCount) : null;
   const chainCount = CONFIGURED_DEPLOYMENT_TARGETS.filter(
-    (t) => t !== "anvil" && t !== "arbitrum",
+    (t) => t !== "arbitrum",
   ).length;
   const isAllChains = viewMode === "all";
 

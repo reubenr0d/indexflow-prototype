@@ -21,6 +21,8 @@ export function toBasketOverviewRows(rows: Array<Record<string, string>>) {
     perpAllocated: parseBigInt(b.perpAllocatedUsdc),
     tvlBookUsdc: parseBigInt(b.tvlBookUsdc),
     totalSupply: parseBigInt(b.totalSupplyShares),
+    depositFeeBps: parseBigInt(b.depositFeeBps),
+    redeemFeeBps: parseBigInt(b.redeemFeeBps),
     createdAt: parseBigInt(b.createdAt),
     updatedAt: parseBigInt(b.updatedAt),
   }));

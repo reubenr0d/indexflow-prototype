@@ -6,66 +6,19 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { InfoLabel } from "@/components/ui/info-tooltip";
-import { useAccount, usePublicClient, useReadContracts } from "wagmi";
-import { useQuery } from "@tanstack/react-query";
-import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useAccount } from "wagmi";
 import { useUserPortfolioQuery } from "@/hooks/subgraph/useUserPortfolio";
 import { useMultiChainPortfolio } from "@/hooks/useMultiChainPortfolio";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
 import { CHAIN_META } from "@/components/chains/chain-icons";
-import { BasketShareTokenABI } from "@/abi/BasketShareToken";
 import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
 import { computeApy, formatApy } from "@/lib/apy";
-import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
-import { computeBlendedComposition } from "@/lib/blendedComposition";
+import { USDC_PRECISION } from "@/lib/constants";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Wallet, ArrowUpRight, TrendingUp, TrendingDown } from "lucide-react";
-import { type Address, parseAbiItem } from "viem";
-
-function useUserCostBasisFallback(vaults: Address[], userAddress: Address | undefined, enabled: boolean) {
-  const { chainId } = useDeploymentTarget();
-  const publicClient = usePublicClient({ chainId });
-
-  return useQuery({
-    queryKey: ["user-cost-basis-rpc", chainId, userAddress, vaults.join(",")],
-    enabled: enabled && !!publicClient && !!userAddress && vaults.length > 0,
-    queryFn: async (): Promise<Map<Address, bigint>> => {
-      if (!publicClient || !userAddress) return new Map();
-
-      const results = await Promise.all(
-        vaults.map(async (vault) => {
-          const [deposits, redeems] = await Promise.all([
-            publicClient.getLogs({
-              address: vault,
-              event: parseAbiItem("event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted)"),
-              args: { user: userAddress },
-              fromBlock: 0n,
-              toBlock: "latest",
-            }),
-            publicClient.getLogs({
-              address: vault,
-              event: parseAbiItem("event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned)"),
-              args: { user: userAddress },
-              fromBlock: 0n,
-              toBlock: "latest",
-            }),
-          ]);
-
-          const totalDeposited = deposits.reduce((sum, l) => sum + (l.args.usdcAmount ?? 0n), 0n);
-          const totalRedeemed = redeems.reduce((sum, l) => sum + (l.args.usdcReturned ?? 0n), 0n);
-          return [vault, totalDeposited - totalRedeemed] as const;
-        })
-      );
-
-      return new Map(results);
-    },
-    staleTime: 30_000,
-    retry: 1,
-  });
-}
+import { type Address } from "viem";
 
 export default function PortfolioPage() {
   const { address, isConnected } = useAccount();
@@ -73,43 +26,9 @@ export default function PortfolioPage() {
   const isAllChains = viewMode === "all";
   const multiChainPortfolio = useMultiChainPortfolio(address);
   const subgraph = useUserPortfolioQuery(address);
-  const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
-  const vaultAddresses = (baskets as unknown as Address[]) ?? [];
-  const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
-  const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
-
-  const infos = (basketInfos as unknown as Array<{
-    vault: Address;
-    shareToken: Address;
-    name: string;
-    sharePrice: bigint;
-    usdcBalance: bigint;
-    perpAllocated: bigint;
-  }>) ?? [];
-
-  const balanceQueries = useReadContracts({
-    contracts: infos.map((info) => ({
-      address: info.shareToken,
-      abi: BasketShareTokenABI,
-      functionName: "balanceOf" as const,
-      args: address ? [address] as const : undefined,
-    })),
-    query: { enabled: isConnected && infos.length > 0 },
-  });
 
   const hasSubgraphData = Boolean(subgraph.data && !subgraph.isError);
   const subgraphData = hasSubgraphData ? subgraph.data : null;
-  const rpcIsLoading = basketsLoading || infosLoading || balanceQueries.isLoading;
-
-  const rpcHoldings = infos
-    .map((info, i) => {
-      const balance = balanceQueries.data?.[i]?.result as bigint | undefined;
-      const value = balance && info.sharePrice ? (balance * info.sharePrice) / PRICE_PRECISION : 0n;
-      return { ...info, balance: balance ?? 0n, value };
-    })
-    .filter((h) => h.balance > 0n);
-
-  const hasRpcHoldings = rpcHoldings.length > 0;
 
   const multiHoldings = isAllChains && multiChainPortfolio.data
     ? multiChainPortfolio.data.holdings.map((h) => ({
@@ -119,60 +38,51 @@ export default function PortfolioPage() {
         balance: h.shareBalance,
         value: h.valueUsdc,
         chainId: h.chainId,
+        netDepositedUsdc: h.netDepositedUsdc,
+        netRedeemedUsdc: h.netRedeemedUsdc,
       }))
     : null;
 
-  const isLoading = isAllChains
-    ? multiChainPortfolio.isLoading
-    : hasRpcHoldings ? rpcIsLoading : hasSubgraphData ? subgraph.isLoading : rpcIsLoading;
+  const isLoading = isAllChains ? multiChainPortfolio.isLoading : subgraph.isLoading;
 
-  const holdings: Array<{ vault: Address | string; name: string; sharePrice: bigint; balance: bigint; value: bigint; chainId?: number }> = multiHoldings
-    ?? (hasRpcHoldings
-      ? rpcHoldings
-      : hasSubgraphData
+  const holdings: Array<{
+    vault: Address | string;
+    name: string;
+    sharePrice: bigint;
+    balance: bigint;
+    value: bigint;
+    chainId?: number;
+    netDepositedUsdc?: bigint;
+    netRedeemedUsdc?: bigint;
+  }> = multiHoldings
+    ?? (hasSubgraphData
       ? (subgraphData?.holdings ?? []).map((h) => ({
           vault: h.vault,
           name: h.name,
           sharePrice: h.sharePrice,
           balance: h.shareBalance,
           value: h.valueUsdc,
+          netDepositedUsdc: h.netDepositedUsdc,
+          netRedeemedUsdc: h.netRedeemedUsdc,
         }))
-      : rpcHoldings);
+      : []);
 
   const totalValue = isAllChains
     ? (multiChainPortfolio.data?.totalValueUsdc ?? 0n)
-    : hasRpcHoldings
-      ? rpcHoldings.reduce((sum, h) => sum + h.value, 0n)
-      : hasSubgraphData
-        ? (subgraphData?.totalValueUsdc ?? 0n)
-        : rpcHoldings.reduce((sum, h) => sum + h.value, 0n);
-
-  const infoByVault = new Map(infos.map((info) => [info.vault, info]));
-  const openInterestByVault = new Map(
-    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
-      vaultAddresses[i],
-      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
-    ])
-  );
-
-  const holdingVaults = useMemo(() => holdings.map((h) => h.vault as Address), [holdings]);
-  const shouldUseCostBasisFallback =
-    !subgraph.isLoading && (subgraph.isError || !subgraphData || (subgraphData.holdings ?? []).length === 0);
-  const costBasisFallback = useUserCostBasisFallback(holdingVaults, address, shouldUseCostBasisFallback);
+    : (subgraphData?.totalValueUsdc ?? 0n);
 
   const costBasisByVault = useMemo(() => {
-    if (hasSubgraphData && subgraphData?.holdings) {
-      const m = new Map<string, bigint>();
-      for (const h of subgraphData.holdings) {
-        m.set(h.vault, h.netDepositedUsdc - h.netRedeemedUsdc);
+    const m = new Map<string, bigint>();
+    for (const h of holdings) {
+      if (h.netDepositedUsdc !== undefined && h.netRedeemedUsdc !== undefined) {
+        m.set(h.vault as string, h.netDepositedUsdc - h.netRedeemedUsdc);
       }
-      return m;
     }
-    return costBasisFallback.data ?? new Map<string, bigint>();
-  }, [costBasisFallback.data, hasSubgraphData, subgraphData]);
+    return m;
+  }, [holdings]);
 
   const totalCostBasis = useMemo(
-    () => holdings.reduce((sum, h) => sum + (costBasisByVault.get(h.vault) ?? 0n), 0n),
+    () => holdings.reduce((sum, h) => sum + (costBasisByVault.get(h.vault as string) ?? 0n), 0n),
     [costBasisByVault, holdings]
   );
   const totalPnL = totalValue - totalCostBasis;
@@ -237,14 +147,7 @@ export default function PortfolioPage() {
       ) : holdings.length > 0 ? (
         <div className="space-y-3">
           {holdings.map((h, i) => {
-              const info = infoByVault.get(h.vault as Address);
-              const perpBlendBps = computeBlendedComposition(
-                info?.usdcBalance ?? 0n,
-                info?.perpAllocated ?? 0n,
-                openInterestByVault.get(h.vault as Address) ?? 0n,
-                []
-              ).perpBlendBps;
-              const holdingCostBasis = costBasisByVault.get(h.vault) ?? 0n;
+              const holdingCostBasis = costBasisByVault.get(h.vault as string) ?? 0n;
               const holdingPnL = h.value - holdingCostBasis;
               const holdingRoiPct = holdingCostBasis > 0n ? Number((holdingPnL * 10000n) / holdingCostBasis) / 100 : 0;
               return (
@@ -258,7 +161,6 @@ export default function PortfolioPage() {
               holdingCostBasis={holdingCostBasis}
               holdingPnL={holdingPnL}
               holdingRoiPct={holdingRoiPct}
-              perpBlendBps={perpBlendBps}
               index={i}
               chainId={h.chainId}
             />
@@ -289,7 +191,6 @@ function HoldingCard({
   holdingCostBasis,
   holdingPnL,
   holdingRoiPct,
-  perpBlendBps,
   index,
   chainId,
 }: {
@@ -301,7 +202,6 @@ function HoldingCard({
   holdingCostBasis: bigint;
   holdingPnL: bigint;
   holdingRoiPct: number;
-  perpBlendBps: bigint;
   index: number;
   chainId?: number;
 }) {
@@ -357,7 +257,6 @@ function HoldingCard({
               <p className="text-xs text-app-muted">
                 {formatUSDC(sharePrice)} / share
               </p>
-              <p className="text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
             </div>
             <ArrowUpRight className="h-4 w-4 text-app-muted" />
           </div>

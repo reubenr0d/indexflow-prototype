@@ -1,6 +1,12 @@
 ---
 description: Update CHANGELOG.md when making substantive code or config changes
-alwaysApply: true
+alwaysApply: false
+globs:
+  - src/**
+  - apps/**
+  - scripts/**
+  - script/**
+  - package.json
 ---
 
 # Changelog maintenance

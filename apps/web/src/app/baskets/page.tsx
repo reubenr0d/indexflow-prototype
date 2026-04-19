@@ -1,11 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useReadContracts } from "wagmi";
 import { type Address } from "viem";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { BasketVaultABI } from "@/abi/BasketVault";
 import { BasketCard } from "@/components/baskets/basket-card";
 import {
   getBasketSortTimestamp,
@@ -24,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { useMultiChainBaskets } from "@/hooks/useMultiChainBaskets";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
@@ -44,52 +42,28 @@ const FILTER_OPTIONS: Array<{
   { value: "highTvl", label: "High TVL", icon: ({ className }) => <BasketIcon name="highTvl" className={className} /> },
 ];
 
-type BasketInfoRow = BasketListItem;
+type BasketInfoRow = BasketListItem & { depositFeeBps?: bigint };
 
 export default function BasketsPage() {
   const [sort, setSort] = useState<SortKey>("tvl");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Set<BasketListFilterKey>>(new Set());
-  const { isSubgraphEnabled, viewMode } = useDeploymentTarget();
+  const { viewMode } = useDeploymentTarget();
   const isAllChains = viewMode === "all";
 
   const multiChain = useMultiChainBaskets();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
-  const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
-  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
-  const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
-  const { data: vaultStates, isLoading: vaultStatesLoading } = useVaultStateBatch(vaultAddresses);
-  const { data: feeRows, isLoading: feesLoading } = useReadContracts({
-    contracts: vaultAddresses.map((vault) => ({
-      address: vault,
-      abi: BasketVaultABI,
-      functionName: "depositFeeBps" as const,
-    })),
-    query: { enabled: vaultAddresses.length > 0 },
-  });
 
   const subgraphData = useMemo(
     () => (Array.isArray(subgraph.data) ? subgraph.data : []),
     [subgraph.data]
   );
 
-  const rpcInfos = useMemo(
-    () =>
-      ((basketInfos as unknown as Array<{
-        vault: Address;
-        name: string;
-        sharePrice: bigint;
-        basketPrice: bigint;
-        totalSupply: bigint;
-        usdcBalance: bigint;
-        perpAllocated: bigint;
-        assetCount: bigint;
-      }>) ?? []),
-    [basketInfos]
+  const { data: baskets } = useAllBaskets();
+  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
+  const { data: vaultStates, isLoading: vaultStatesLoading } = useVaultStateBatch(
+    isAllChains ? [] : vaultAddresses
   );
-  const hasRpcData = rpcInfos.length > 0;
-  const shouldUseRpcFallback =
-    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
 
   const infoRows = useMemo<(BasketInfoRow & { chainId?: number })[]>(() => {
     if (isAllChains && multiChain.data) {
@@ -102,37 +76,29 @@ export default function BasketsPage() {
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
         assetCount: Number(item.assetCount ?? 0n),
+        depositFeeBps: item.depositFeeBps,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt,
         chainId: item.chainId,
       }));
     }
-    return shouldUseRpcFallback
-      ? rpcInfos.map((item) => ({
-          vault: item.vault,
-          name: item.name,
-          sharePrice: item.sharePrice,
-          basketPrice: item.basketPrice,
-          totalSupply: item.totalSupply,
-          usdcBalance: item.usdcBalance,
-          perpAllocated: item.perpAllocated,
-          assetCount: Number(item.assetCount ?? 0n),
-        }))
-      : subgraphData.map((item) => ({
-          vault: item.vault,
-          name: item.name,
-          sharePrice: item.sharePrice,
-          basketPrice: item.basketPrice,
-          totalSupply: item.totalSupply,
-          usdcBalance: item.usdcBalance,
-          perpAllocated: item.perpAllocated,
-          assetCount: Number(item.assetCount ?? 0n),
-          createdAt: item.createdAt,
-          updatedAt: item.updatedAt,
-        }));
-  }, [isAllChains, multiChain.data, rpcInfos, shouldUseRpcFallback, subgraphData]);
+    return subgraphData.map((item) => ({
+      vault: item.vault,
+      name: item.name,
+      sharePrice: item.sharePrice,
+      basketPrice: item.basketPrice,
+      totalSupply: item.totalSupply,
+      usdcBalance: item.usdcBalance,
+      perpAllocated: item.perpAllocated,
+      assetCount: Number(item.assetCount ?? 0n),
+      depositFeeBps: item.depositFeeBps,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    }));
+  }, [isAllChains, multiChain.data, subgraphData]);
 
   const openInterestByVault = useMemo(() => {
+    if (isAllChains) return new Map<Address, bigint>();
     const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
     return new Map(
       vaultAddresses.map((vault, i) => [
@@ -140,26 +106,15 @@ export default function BasketsPage() {
         states[i]?.status === "success" ? states[i]?.result?.openInterest ?? 0n : 0n,
       ])
     );
-  }, [vaultAddresses, vaultStates]);
-
-  const feeByVault = useMemo(() => {
-    const rows = (feeRows as Array<{ result?: bigint; status: string }> | undefined) ?? [];
-    return new Map(
-      vaultAddresses.map((vault, i) => [
-        vault,
-        rows[i]?.status === "success" ? rows[i]?.result : undefined,
-      ])
-    );
-  }, [feeRows, vaultAddresses]);
+  }, [isAllChains, vaultAddresses, vaultStates]);
 
   const rows = useMemo(
     () =>
       infoRows.map((info) => ({
         ...info,
-        depositFeeBps: feeByVault.get(info.vault),
         openInterest: openInterestByVault.get(info.vault) ?? 0n,
       })),
-    [feeByVault, infoRows, openInterestByVault]
+    [infoRows, openInterestByVault]
   );
 
   const highTvlThreshold = useMemo(() => getHighTvlThreshold(rows), [rows]);
@@ -190,9 +145,7 @@ export default function BasketsPage() {
 
   const isLoading = isAllChains
     ? multiChain.isLoading
-    : (shouldUseRpcFallback ? basketsLoading || infosLoading : subgraph.isLoading) ||
-      vaultStatesLoading ||
-      feesLoading;
+    : subgraph.isLoading || vaultStatesLoading;
 
   const toggleFilter = (value: BasketListFilterKey) => {
     setFilters((current) => {
@@ -289,7 +242,7 @@ export default function BasketsPage() {
                 computeBlendedComposition(
                   info.usdcBalance ?? 0n,
                   info.perpAllocated ?? 0n,
-                  openInterestByVault.get(info.vault) ?? 0n,
+                  info.openInterest ?? 0n,
                   []
                 ).perpBlendBps
               }

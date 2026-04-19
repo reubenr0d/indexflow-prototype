@@ -56,19 +56,28 @@ fi
 
 RPC_ALIAS=$(jq -r ".[\"$CHAIN\"].rpcAlias" "$CHAINS_FILE")
 CCIP_ROUTER=$(jq -r ".[\"$CHAIN\"].ccipRouter" "$CHAINS_FILE")
+CHAIN_ROLE=$(jq -r ".[\"$CHAIN\"].role" "$CHAINS_FILE")
 ZERO_ADDR="0x0000000000000000000000000000000000000000"
 
 echo "═══════════════════════════════════════════════"
-echo "  Deploying to: $CHAIN (rpc: $RPC_ALIAS)"
+echo "  Deploying to: $CHAIN (rpc: $RPC_ALIAS, role: $CHAIN_ROLE)"
 echo "═══════════════════════════════════════════════"
 
-# ── Step 1: Deploy base stack ────────────────────────────────────────
+# ── Step 1: Deploy base stack (use correct script based on role) ─────
 echo ""
-echo "[1/3] Deploying base stack..."
-CHAIN="$CHAIN" "$FORGE" script script/Deploy.s.sol:Deploy \
-  --root "$REPO_ROOT" \
-  --rpc-url "$RPC_ALIAS" \
-  $FORGE_FLAGS
+if [ "$CHAIN_ROLE" = "spoke" ]; then
+  echo "[1/3] Deploying spoke stack (StateRelay + RedemptionReceiver + BasketFactory)..."
+  CHAIN="$CHAIN" "$FORGE" script script/DeploySpoke.s.sol:DeploySpoke \
+    --root "$REPO_ROOT" \
+    --rpc-url "$RPC_ALIAS" \
+    $FORGE_FLAGS
+else
+  echo "[1/3] Deploying hub stack (full perp + StateRelay)..."
+  CHAIN="$CHAIN" "$FORGE" script script/Deploy.s.sol:Deploy \
+    --root "$REPO_ROOT" \
+    --rpc-url "$RPC_ALIAS" \
+    $FORGE_FLAGS
+fi
 
 DEPLOY_JSON="$REPO_ROOT/apps/web/src/config/${CHAIN}-deployment.json"
 if [ ! -f "$DEPLOY_JSON" ]; then
@@ -77,10 +86,13 @@ if [ ! -f "$DEPLOY_JSON" ]; then
 fi
 echo "[1/3] Base stack deployed. Config: $DEPLOY_JSON"
 
-# ── Step 2: Deploy coordination layer (if CCIP configured) ──────────
-if [ "$CCIP_ROUTER" != "$ZERO_ADDR" ]; then
+# ── Step 2: Deploy coordination layer (hub only, if CCIP configured) ─
+# Spoke chains get StateRelay + RedemptionReceiver from DeploySpoke.s.sol.
+# Hub chains optionally deploy legacy coordination contracts (IntentRouter, etc.)
+# which are now deprecated but kept for backward compatibility.
+if [ "$CHAIN_ROLE" = "hub" ] && [ "$CCIP_ROUTER" != "$ZERO_ADDR" ]; then
   echo ""
-  echo "[2/3] Deploying coordination layer..."
+  echo "[2/3] Deploying legacy coordination layer (hub only)..."
 
   if [ -z "${TREASURY:-}" ]; then
     TREASURY=$(jq -r '.basketFactory' "$DEPLOY_JSON")
@@ -95,7 +107,7 @@ if [ "$CCIP_ROUTER" != "$ZERO_ADDR" ]; then
   echo "[2/3] Coordination layer deployed."
 else
   echo ""
-  echo "[2/3] Skipping coordination (CCIP router is zero for $CHAIN)"
+  echo "[2/3] Skipping legacy coordination (spoke chain or CCIP router is zero)"
 fi
 
 # ── Step 3: Wire peers (if --peer specified) ─────────────────────────

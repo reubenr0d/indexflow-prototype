@@ -1,6 +1,11 @@
 ---
 description: Run Foundry forge in agent terminal without relying on cd (sandbox limitation)
-alwaysApply: true
+alwaysApply: false
+globs:
+  - src/**/*.sol
+  - script/**/*.sol
+  - test/**/*.sol
+  - foundry.toml
 ---
 
 # Forge / agent terminal

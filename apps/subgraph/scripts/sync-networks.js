@@ -9,6 +9,8 @@ const localDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", 
 const sepoliaDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "sepolia-deployment.json");
 const fujiDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "fuji-deployment.json");
 
+const OPTIONAL_COORDINATION_KEYS = ["poolReserveRegistry", "intentRouter"];
+
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
@@ -37,6 +39,65 @@ function syncTarget(networks, networkName, deployment, deploymentKey, networkKey
   }
 }
 
+function isZeroAddress(addr) {
+  return typeof addr !== "string" || /^0x0{40}$/i.test(addr);
+}
+
+/**
+ * When coordination contracts are not in the web deployment JSON (or are unset),
+ * clear stale subgraph addresses so generate-manifest does not index wrong contracts.
+ */
+function syncOptionalCoordination(networks, networkName, deployment) {
+  for (const key of OPTIONAL_COORDINATION_KEYS) {
+    ensureTarget(networks, networkName, key);
+    const v = deployment[key];
+    if (typeof v !== "string" || v.length < 10 || isZeroAddress(v)) {
+      networks[networkName][key].address = "0x0000000000000000000000000000000000000000";
+      networks[networkName][key].startBlock = 0;
+    }
+  }
+}
+
+/**
+ * Infer deployment block from Foundry broadcast receipts (Sepolia main deploy only).
+ */
+function inferSepoliaStartBlocksFromBroadcast(networks, deployment) {
+  const broadcastPath = path.join(repoRoot, "broadcast", "Deploy.s.sol", "11155111", "run-latest.json");
+  if (!fs.existsSync(broadcastPath)) {
+    return;
+  }
+  let run;
+  try {
+    run = readJson(broadcastPath);
+  } catch {
+    return;
+  }
+  const receipts = Array.isArray(run.receipts) ? run.receipts : [];
+  /** @type {Map<string, number>} */
+  const addrToBlock = new Map();
+  for (const r of receipts) {
+    const ca = r.contractAddress;
+    if (typeof ca !== "string" || !ca.startsWith("0x")) continue;
+    const bn = r.blockNumber;
+    if (bn === undefined || bn === null) continue;
+    const block = typeof bn === "string" ? parseInt(bn, 16) : Number(bn);
+    if (!Number.isFinite(block)) continue;
+    const key = ca.toLowerCase();
+    const prev = addrToBlock.get(key);
+    if (prev === undefined || block < prev) addrToBlock.set(key, block);
+  }
+  const coreKeys = ["basketFactory", "vaultAccounting", "oracleAdapter"];
+  for (const k of coreKeys) {
+    const addr = deployment[k];
+    if (typeof addr !== "string" || addr.length < 10) continue;
+    const b = addrToBlock.get(addr.toLowerCase());
+    if (b !== undefined) {
+      ensureTarget(networks, "sepolia", k);
+      networks.sepolia[k].startBlock = b;
+    }
+  }
+}
+
 const networks = readJson(networksPath);
 const localDeployment = readJson(localDeploymentPath);
 const sepoliaDeployment = readJson(sepoliaDeploymentPath);
@@ -55,6 +116,12 @@ for (const [deploymentKey, networkKey] of targets) {
   syncTarget(networks, "sepolia", sepoliaDeployment, deploymentKey, networkKey);
   syncTarget(networks, "fuji", fujiDeployment, deploymentKey, networkKey);
 }
+
+syncOptionalCoordination(networks, "anvil", localDeployment);
+syncOptionalCoordination(networks, "sepolia", sepoliaDeployment);
+syncOptionalCoordination(networks, "fuji", fujiDeployment);
+
+inferSepoliaStartBlocksFromBroadcast(networks, sepoliaDeployment);
 
 // Legacy key from earlier misconfiguration. Keep output canonical on Ethereum Sepolia.
 if (networks["arbitrum-sepolia"]) {

@@ -2,29 +2,6 @@
 
 These rules apply to work in this repository unless a deeper-scope `AGENTS.md` overrides them.
 
-## Keep Changelog Updated
-
-When changes are substantive (code, build/deploy config, scripts, dependencies), update `CHANGELOG.md` in the same session under `## [Unreleased]`.
-
-Skip changelog edits for typo-only/comment-only/format-only changes or purely internal refactors with no observable effect.
-
-## Keep README And Docs Updated
-
-After each task, ensure documentation is current for any user/operator-visible change:
-
-- Update `README.md` for command, setup, config, deployment, or workflow changes.
-- Update relevant files under `docs/` when behavior, architecture, or operational flow changes.
-- For web-app-visible behavior, also update in-app docs content in `apps/web/src/lib/wiki.ts` (and `apps/web/src/lib/tooltip-copy.ts` when labels/tooltips change).
-- Keep `docs/README.md` (in-app wiki map) aligned when adding/removing/relabeling `/docs` routes or sections.
-- If markdown docs and in-app docs describe the same workflow, update both in the same session.
-- If no documentation impact exists, explicitly verify no doc changes are needed before finishing.
-
-## Keep Growth Checklist Updated
-
-After growth-related tasks (content in `growth/`, social channel setup, content publishing, lead capture/management tooling, VC pipeline changes, grant submissions), update the **## Growth** checklist in `README.md` in the same session: check off completed items, add new items, or remove items that are no longer relevant.
-
-Skip updates for typo-only or formatting-only edits to growth files.
-
 ## Foundry Command Reliability In Agent Shell
 
 Do not rely on `cd` for Foundry commands in agent terminals. Prefer explicit project root and PATH:
@@ -65,19 +42,6 @@ npm run redeploy:local
 This deploys contracts to Docker Anvil, syncs subgraph network addresses, rebuilds and deploys the subgraph to graph-node, and updates `apps/web/src/config/local-deployment.json`. The Next.js dev server (started with `npm run local:dev`) picks up new addresses via HMR.
 
 For bare-metal Anvil without Docker (no subgraph), use `npm run deploy:local` instead.
-
-## Blog Content Illustrations
-
-When creating blog posts (`content/blog/*.md`), prefer custom SVG illustrations over mermaid flowcharts for conceptual diagrams, comparisons, flywheels, and data visualizations.
-
-- Save SVGs to `apps/web/public/blog/` and reference via markdown image syntax (`![alt](/blog/filename.svg)`).
-- Match the landing page visual language: dark background (`#080c14`), teal accent (`#2dd4bf`), sky secondary (`#38bdf8`), glow filters (`feGaussianBlur`), dashed flow lines, `system-ui` font, rounded strokes 1-2px.
-- Reference existing blog SVGs and primer components (`apps/web/src/components/primer/`) for style.
-- Mermaid is acceptable for inline architecture diagrams and contract flow diagrams in technical posts (e.g. Solidity code + mermaid showing contract interactions), but should not be the default for every visual.
-
-## Scope-Specific Rule (Web App)
-
-For work in `apps/web`, also follow [`apps/web/AGENTS.md`](/Users/reuben/Desktop/minestarters/code/snx-prototype/apps/web/AGENTS.md) (Next.js docs/version caveat).
 
 ## Deployment Safety Rules (All Agents)
 

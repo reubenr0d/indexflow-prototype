@@ -227,7 +227,7 @@ export function useOracleAssetLabelMap() {
   const labelMap = useMemo(() => {
     const m = new Map<`0x${string}`, string>();
     data.forEach((asset) => {
-      m.set(asset.idHex, asset.label);
+      m.set(asset.idHex.toLowerCase() as `0x${string}`, asset.label);
     });
     return m;
   }, [data]);
@@ -244,7 +244,7 @@ export function useOracleAssetMetaMap() {
   const metaMap = useMemo(() => {
     const m = new Map<`0x${string}`, { name: string; address?: Address }>();
     data.forEach((asset) => {
-      m.set(asset.idHex, { name: asset.name, address: asset.address });
+      m.set(asset.idHex.toLowerCase() as `0x${string}`, { name: asset.name, address: asset.address });
     });
     return m;
   }, [data]);

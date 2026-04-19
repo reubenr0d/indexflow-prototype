@@ -2,6 +2,21 @@ import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 import { withSentryConfig } from "@sentry/nextjs";
 
+/** Plain http:// origins blocked by connect-src https: — needed for local Graph Node + Anvil in next dev. */
+const localDevConnectOrigins =
+  process.env.NODE_ENV === "development"
+    ? [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:8545",
+        "http://localhost:8545",
+        "http://127.0.0.1:8546",
+        "http://localhost:8546",
+      ].join(" ")
+    : "";
+
+const connectSrc = ["'self'", "https:", "wss:", "https://*.sentry.io", localDevConnectOrigins].filter(Boolean).join(" ");
+
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
@@ -17,7 +32,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https: wss: https://*.sentry.io",
+      `connect-src ${connectSrc}`,
       "frame-src 'self' https://auth.privy.io",
       "object-src 'none'",
       "base-uri 'self'",

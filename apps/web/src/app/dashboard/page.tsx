@@ -1,12 +1,13 @@
 "use client";
 
+import { useMemo } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { StatCard } from "@/components/ui/stat-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatUSDC, formatCompact, formatBps } from "@/lib/format";
@@ -17,33 +18,21 @@ import { ArrowUpRight } from "lucide-react";
 import { type Address } from "viem";
 
 export default function DashboardPage() {
-  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 200, skip: 0 });
 
-  const { data: baskets, isLoading: basketsLoading } = useAllBaskets();
-  const vaultAddresses = (baskets as unknown as Address[]) ?? [];
-  const { data: basketInfos, isLoading: infosLoading } = useBasketInfoBatch(vaultAddresses);
+  const { data: baskets } = useAllBaskets();
+  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
-  const rpcInfos = ((basketInfos as unknown as Array<{
-    vault: Address;
-    name: string;
-    basketPrice: bigint;
-    sharePrice: bigint;
-    totalSupply: bigint;
-    usdcBalance: bigint;
-    perpAllocated: bigint;
-  }>) ?? []);
-  const hasRpcData = rpcInfos.length > 0;
-  const rpcIsLoading = basketsLoading || infosLoading;
-  const shouldUseRpcFallback =
-    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
-  const isLoading = shouldUseRpcFallback ? rpcIsLoading : subgraph.isLoading;
+  const subgraphData = useMemo(
+    () => (Array.isArray(subgraph.data) ? subgraph.data : []),
+    [subgraph.data]
+  );
+  const isLoading = subgraph.isLoading;
 
-  const infos = shouldUseRpcFallback
-    ? rpcInfos
-    : subgraphData.map((item) => ({
+  const infos = useMemo(
+    () =>
+      subgraphData.map((item) => ({
         vault: item.vault,
         name: item.name,
         basketPrice: item.basketPrice,
@@ -51,27 +40,40 @@ export default function DashboardPage() {
         totalSupply: item.totalSupply,
         usdcBalance: item.usdcBalance,
         perpAllocated: item.perpAllocated,
-      }));
-
-  const openInterestByVault = new Map(
-    ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? []).map((s, i) => [
-      vaultAddresses[i],
-      s.status === "success" ? s.result?.openInterest ?? 0n : 0n,
-    ])
+      })),
+    [subgraphData]
   );
 
-  const totalTVL = infos.reduce(
-    (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
-    0n
+  const openInterestByVault = useMemo(() => {
+    const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
+    return new Map(
+      vaultAddresses.map((vault, i) => [
+        vault,
+        states[i]?.status === "success" ? states[i]?.result?.openInterest ?? 0n : 0n,
+      ])
+    );
+  }, [vaultAddresses, vaultStates]);
+
+  const totalTVL = useMemo(
+    () =>
+      infos.reduce(
+        (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
+        0n
+      ),
+    [infos]
   );
 
-  const sortedBaskets = [...infos]
-    .sort((a, b) => {
-      const tvlA = (a.usdcBalance ?? 0n) + (a.perpAllocated ?? 0n);
-      const tvlB = (b.usdcBalance ?? 0n) + (b.perpAllocated ?? 0n);
-      return tvlB > tvlA ? 1 : -1;
-    })
-    .slice(0, 6);
+  const sortedBaskets = useMemo(
+    () =>
+      [...infos]
+        .sort((a, b) => {
+          const tvlA = (a.usdcBalance ?? 0n) + (a.perpAllocated ?? 0n);
+          const tvlB = (b.usdcBalance ?? 0n) + (b.perpAllocated ?? 0n);
+          return tvlB > tvlA ? 1 : -1;
+        })
+        .slice(0, 6),
+    [infos]
+  );
 
   return (
     <PageWrapper>

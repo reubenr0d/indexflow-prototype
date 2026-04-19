@@ -1,0 +1,39 @@
+---
+description: Rules for Solidity contract development
+globs:
+  - src/**/*.sol
+  - test/**/*.sol
+---
+
+# Solidity Contract Development
+
+## ABI Regeneration Policy (No Manual ABI Edits)
+
+If any contract ABI can change (function/event/error/signature changes), regenerate ABIs with commands. Do not manually edit:
+
+- individual ABI files under `apps/web/src/abi/` (`BasketVault.ts`, `OracleAdapter.ts`, etc.) or the barrel `contracts.ts`
+- files under `apps/subgraph/abis/`
+
+Run:
+
+```bash
+PATH="/Users/reuben/.foundry/bin:$PATH" forge build --root /Users/reuben/Desktop/minestarters/code/snx-prototype
+node scripts/extract-abis.js
+for c in BasketFactory BasketVault BasketShareToken VaultAccounting OracleAdapter; do jq '.abi' "out/$c.sol/$c.json" > "apps/subgraph/abis/$c.json"; done
+```
+
+`ERC20.json` in `apps/subgraph/abis/` is a stable external ABI and is not regenerated from local `out/`.
+
+## Local Redeploy Rule (When Docker Compose Is Running)
+
+When contract or subgraph code changes and the local Docker stack is running (`npm run local:up`), redeploy instead of leaving stale deployments.
+
+Use:
+
+```bash
+npm run redeploy:local
+```
+
+This deploys contracts to Docker Anvil, syncs subgraph network addresses, rebuilds and deploys the subgraph to graph-node, and updates `apps/web/src/config/local-deployment.json`. The Next.js dev server (started with `npm run local:dev`) picks up new addresses via HMR.
+
+For bare-metal Anvil without Docker (no subgraph), use `npm run deploy:local` instead.

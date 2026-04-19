@@ -30,7 +30,7 @@ function PrevNextNav({
       {prev ? (
         <Link
           href={`/blog/${prev.slug}`}
-          className="group flex items-center gap-3 rounded-lg border border-app-border bg-app-surface p-4 transition-colors hover:border-app-accent/40"
+          className="group flex min-w-0 items-center gap-3 rounded-lg border border-app-border bg-app-surface p-4 transition-colors hover:border-app-accent/40"
         >
           <ArrowLeft className="h-4 w-4 shrink-0 text-app-muted transition-colors group-hover:text-app-accent" />
           <div className="min-w-0">
@@ -48,7 +48,7 @@ function PrevNextNav({
       {next ? (
         <Link
           href={`/blog/${next.slug}`}
-          className="group flex items-center justify-end gap-3 rounded-lg border border-app-border bg-app-surface p-4 text-right transition-colors hover:border-app-accent/40"
+          className="group flex min-w-0 items-center justify-end gap-3 rounded-lg border border-app-border bg-app-surface p-4 text-right transition-colors hover:border-app-accent/40"
         >
           <div className="min-w-0">
             <p className="text-[10px] font-bold uppercase tracking-wider text-app-muted">
@@ -84,7 +84,7 @@ export function BlogPostLayout({
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
       <div className="grid gap-8 xl:grid-cols-[minmax(0,1fr)_14rem]">
-        <article className="mx-auto min-w-0 max-w-3xl space-y-6">
+        <article className="min-w-0 space-y-6 xl:mx-auto xl:max-w-3xl">
           <Breadcrumbs post={post} />
 
           <header>

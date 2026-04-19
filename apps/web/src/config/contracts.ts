@@ -4,7 +4,6 @@ import {
   type DeploymentConfig,
   CHAIN_REGISTRY,
 } from "@/lib/deployment";
-import localDeployment from "./local-deployment.json";
 import sepoliaDeployment from "./sepolia-deployment.json";
 import fujiDeployment from "./fuji-deployment.json";
 
@@ -45,8 +44,6 @@ function deploymentToAddresses(d: DeploymentConfig): ContractAddresses {
 }
 
 const DEPLOYMENT_FILES: Record<string, DeploymentConfig> = {
-  anvil: localDeployment as DeploymentConfig,
-  local: localDeployment as DeploymentConfig,
   sepolia: sepoliaDeployment as DeploymentConfig,
   fuji: fujiDeployment as DeploymentConfig,
 };

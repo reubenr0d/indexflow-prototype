@@ -1,13 +1,13 @@
 "use client";
 
+import { useMemo } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { StatCard } from "@/components/ui/stat-card";
 import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useBasketInfoBatch, useVaultStateBatch } from "@/hooks/usePerpReader";
+import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
-import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { formatCompact, formatUSDC, formatBps } from "@/lib/format";
 import { USDC_PRECISION } from "@/lib/constants";
 import { computeBlendedComposition } from "@/lib/blendedComposition";
@@ -24,41 +24,55 @@ const quickLinks = [
 ];
 
 export default function AdminOverview() {
-  const { isSubgraphEnabled } = useDeploymentTarget();
   const subgraph = useBasketsOverviewQuery({ first: 500, skip: 0 });
 
   const { data: baskets } = useAllBaskets();
-  const vaultAddresses = (baskets as unknown as Address[]) ?? [];
-  const { data: basketInfos } = useBasketInfoBatch(vaultAddresses);
+  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
   const { data: vaultStates } = useVaultStateBatch(vaultAddresses);
 
-  const subgraphData = Array.isArray(subgraph.data) ? subgraph.data : [];
-  const rpcInfos = ((basketInfos as unknown as Array<{ usdcBalance: bigint; perpAllocated: bigint }>) ?? []);
-  const hasRpcData = rpcInfos.length > 0;
-  const shouldUseRpcFallback =
-    !isSubgraphEnabled || subgraph.isError || (subgraph.isSuccess && subgraphData.length === 0 && hasRpcData);
-  const infos = shouldUseRpcFallback
-    ? rpcInfos
-    : subgraphData.map((item) => ({
-        usdcBalance: item.usdcBalance,
-        perpAllocated: item.perpAllocated,
-      }));
-
-  const totalOpenInterest = ((vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [])
-    .reduce((sum, s) => sum + (s.status === "success" ? s.result?.openInterest ?? 0n : 0n), 0n);
-
-  const totalTVL = infos.reduce(
-    (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
-    0n
+  const subgraphData = useMemo(
+    () => (Array.isArray(subgraph.data) ? subgraph.data : []),
+    [subgraph.data]
   );
 
-  const totalPerp = infos.reduce((sum, info) => sum + (info.perpAllocated ?? 0n), 0n);
-  const aggregatePerpBlendBps = computeBlendedComposition(
-    totalTVL - totalPerp,
-    totalPerp,
-    totalOpenInterest,
-    []
-  ).perpBlendBps;
+  const infos = useMemo(
+    () =>
+      subgraphData.map((item) => ({
+        usdcBalance: item.usdcBalance,
+        perpAllocated: item.perpAllocated,
+      })),
+    [subgraphData]
+  );
+
+  const totalOpenInterest = useMemo(() => {
+    const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
+    return states.reduce((sum, s) => sum + (s.status === "success" ? s.result?.openInterest ?? 0n : 0n), 0n);
+  }, [vaultStates]);
+
+  const totalTVL = useMemo(
+    () =>
+      infos.reduce(
+        (sum, info) => sum + (info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n),
+        0n
+      ),
+    [infos]
+  );
+
+  const totalPerp = useMemo(
+    () => infos.reduce((sum, info) => sum + (info.perpAllocated ?? 0n), 0n),
+    [infos]
+  );
+
+  const aggregatePerpBlendBps = useMemo(
+    () =>
+      computeBlendedComposition(
+        totalTVL - totalPerp,
+        totalPerp,
+        totalOpenInterest,
+        []
+      ).perpBlendBps,
+    [totalOpenInterest, totalPerp, totalTVL]
+  );
 
   return (
     <PageWrapper>

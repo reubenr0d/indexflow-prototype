@@ -61,12 +61,11 @@ export default function PrimerFlywheel() {
     <Section id="flywheel" className="primer-section-glow primer-section-glow-tl py-24 sm:py-32">
       <SectionLabel>The Flywheel</SectionLabel>
       <SectionHeading>
-        Liquidity compounds ecosystem growth
+        Liquidity compounds across chains
       </SectionHeading>
       <SectionBody>
-        Every additional unit of reserve depth compounds into higher ecosystem
-        activity. <br />
-        The cycle reinforces itself.
+        Deposits route automatically to chains with available capacity. <br />
+        Reserve depth grows, confidence follows, and the cycle reinforces itself.
       </SectionBody>
 
       <div ref={ref} className="relative z-10 mt-16 flex justify-center">

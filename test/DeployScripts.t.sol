@@ -46,13 +46,16 @@ contract DeployScriptsTest is Test {
             priceSync: address(0x7777),
             usdc: address(0x8888),
             gmxVault: address(0x9999),
-            assetWiring: address(0xAAAA)
+            assetWiring: address(0xAAAA),
+            stateRelay: address(0xBBBB)
         });
         string memory json = harness.exposeBuildJson(d);
         assertTrue(_contains(json, '"basketFactory"'));
         assertTrue(_contains(json, vm.toString(address(0x1111))));
         assertTrue(_contains(json, '"assetWiring"'));
         assertTrue(_contains(json, '"vaultAccounting"'));
+        assertTrue(_contains(json, '"stateRelay"'));
+        assertTrue(_contains(json, vm.toString(address(0xBBBB))));
     }
 
     function test_setVaultErrors_pushes_expected_array_shape() public {
