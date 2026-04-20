@@ -11,6 +11,10 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Fixed
+
+- [2026-04-19] Per-vault position tracking in `VaultAccounting`: track vault-specific size, collateral, and blended average entry price instead of reading GMX aggregate values. Fixes incorrect PnL attribution when multiple vaults trade the same (asset, direction) pair. `openPosition` now accumulates size and blends entry prices on repeated increases; `closePosition` uses vault-specific size for proportional collateral-at-risk calculation; `getVaultPnL` calculates unrealized PnL using each vault's own entry price via new `_calculateDelta` helper. Position count now only increments for new positions (not repeated increases). New tests: `test_multiVault_sameLongPosition_*`, `test_multiVault_repeatedIncrease_*`, `test_multiVault_partialClose_*`.
+
 ### Changed
 
 - [2026-04-17] Remove Anvil/local network support from the UI: the network selector no longer shows Anvil as an option, and all local development references are removed from chain registry, deployment config, and wallet providers. E2E tests retain an isolated Anvil wagmi config for automated testing. Users with Anvil stored in localStorage will automatically fall back to Sepolia.
@@ -72,6 +76,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-19] `/chains` production build: add `intentStatus` and `coordPendingIntents` to `TOOLTIP_COPY` so `InfoLabel` / `StatCard` tooltip keys and the empty-state `TOOLTIP_COPY.intentStatus` reference typecheck.
 - [2026-04-17] Asset names display correctly on basket detail page: normalize oracle asset map keys to lowercase so composition sidebar and asset price panel lookups match lowercased asset IDs from subgraph/on-chain sources.
 - [2026-04-17] `DeploymentProvider`: restore deployment target and view mode from `localStorage` after mount with SSR-safe initial state, fixing React hydration mismatches (e.g. network selector icon/label when "All Chains" was saved). Persist effects wait until restore completes so defaults do not overwrite stored preferences.
 - [2026-04-17] Web app CSP: in `next dev`, `connect-src` now allows `http://` to local Graph Node (`:8000`) and Anvil (`:8545`/`:8546`) on `localhost` / `127.0.0.1`, fixing blocked subgraph and RPC fetches (production headers unchanged).

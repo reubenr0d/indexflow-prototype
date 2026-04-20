@@ -14,7 +14,8 @@ import {IOracleAdapter} from "./interfaces/IOracleAdapter.sol";
 /// @dev Tracks capital allocation, PnL attribution, and position management per registered basket vault.
 /// All GMX positions are opened in this contract's name; `assetTokens` must map each logical `bytes32` asset id
 /// to the GMX index token address. USDC precision (6) for token amounts; GMX position size/delta in USD (~1e30).
-/// Unrealised PnL from `getVaultPnL` uses GMX `getPositionDelta` and excludes funding accrual.
+/// Per-vault position tracking: each vault's size, collateral, and average entry price are tracked independently
+/// to support correct PnL attribution when multiple vaults trade the same (asset, direction) pair.
 contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     using SafeERC20 for IERC20;
     uint256 private constant FUNDING_RATE_PRECISION = 1_000_000;
@@ -38,7 +39,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     mapping(bytes32 => uint256) internal _openKeyIndex;
 
     /// @notice Local mirror of one GMX leg for a basket vault.
-    /// @dev `collateralUsdc` tracks USDC this module sent for this leg; GMX `collateral` may differ in encoding.
+    /// @dev Tracks vault-specific values independent of GMX aggregate to support multi-vault same-direction positions.
     struct PositionTracking {
         /// @notice Basket vault that owns this leg.
         address vault;
@@ -46,15 +47,15 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         bytes32 asset;
         /// @notice True if long index token against USDC collateral.
         bool isLong;
-        /// @notice Position size from GMX after the last sync (USD units).
+        /// @notice Vault-specific position size (USD units). Accumulated on open, decremented on close.
         uint256 size;
-        /// @notice Collateral as reported by GMX.
+        /// @notice Vault-specific collateral tracking (deprecated, kept for struct layout).
         uint256 collateral;
-        /// @notice USDC amount allocated from this contract into the position (tracking).
+        /// @notice USDC amount allocated by this vault into the position.
         uint256 collateralUsdc;
-        /// @notice Average entry price from GMX.
+        /// @notice Vault-specific weighted-average entry price (blended on repeated increases).
         uint256 averagePrice;
-        /// @notice Entry cumulative funding rate snapshot from GMX.
+        /// @notice Entry cumulative funding rate snapshot.
         uint256 entryFundingRate;
         /// @notice Whether this key currently has an open position.
         bool exists;
@@ -269,6 +270,8 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @param size Position size in GMX USD units.
     /// @param collateral USDC collateral to send to GMX for this increase.
     /// @dev Enforces optional `maxOpenInterest` / `maxPositionSize`. Reverts `AssetTokenNotMapped` if unmapped.
+    /// Tracks vault-specific size and blended average price to support correct PnL attribution when
+    /// multiple vaults trade the same (asset, direction).
     function openPosition(address vault, bytes32 asset, bool isLong, uint256 size, uint256 collateral)
         external
         override
@@ -299,31 +302,43 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         gmxVault.increasePosition(address(this), collateralToken, indexToken, size, isLong);
 
         bytes32 posKey = _positionKey(vault, asset, isLong);
+        PositionTracking storage pos = _positions[posKey];
 
-        bool wasOpen = _positions[posKey].exists;
+        // Get current entry price and funding rate from GMX for this increase
+        uint256 currentPrice = gmxVault.getMaxPrice(indexToken);
+        uint256 entryFunding = _safeCumulativeFundingRate(collateralToken);
 
-        (uint256 posSize, uint256 posCollateral, uint256 avgPrice, uint256 entryFunding,,,,) =
-            gmxVault.getPosition(address(this), collateralToken, indexToken, isLong);
+        bool isNewPosition = !pos.exists;
 
-        _positions[posKey] = PositionTracking({
-            vault: vault,
-            asset: asset,
-            isLong: isLong,
-            size: posSize,
-            collateral: posCollateral,
-            collateralUsdc: collateral,
-            averagePrice: avgPrice,
-            entryFundingRate: entryFunding,
-            exists: true
-        });
-
-        if (!wasOpen) {
+        if (pos.exists) {
+            // Add to existing position: blend average price using weighted average
+            // newAvgPrice = (oldSize * oldAvgPrice + newSize * currentPrice) / (oldSize + newSize)
+            pos.averagePrice = (pos.size * pos.averagePrice + size * currentPrice) / (pos.size + size);
+            pos.size += size;
+            pos.collateralUsdc += collateral;
+            pos.collateral += collateral;
+            // Keep existing entryFundingRate for funding calculation continuity
+        } else {
+            // New position: track vault-specific values
+            _positions[posKey] = PositionTracking({
+                vault: vault,
+                asset: asset,
+                isLong: isLong,
+                size: size,
+                collateral: collateral,
+                collateralUsdc: collateral,
+                averagePrice: currentPrice,
+                entryFundingRate: entryFunding,
+                exists: true
+            });
             _pushOpenPositionKey(vault, posKey);
         }
 
         vs.openInterest += size;
         vs.collateralLocked += collateral;
-        vs.positionCount++;
+        if (isNewPosition) {
+            vs.positionCount++;
+        }
 
         emit PositionOpened(vault, asset, isLong, size, collateral);
     }
@@ -335,6 +350,8 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @param sizeDelta GMX size reduction (USD units).
     /// @param collateralDelta Collateral to withdraw per GMX semantics.
     /// @dev Reverts `PositionNotFound` if no tracked position. Updates `realisedPnL` from returned USDC vs collateral at risk.
+    /// Uses vault-specific size tracking for correct proportional PnL attribution when multiple vaults
+    /// share the same GMX position.
     function closePosition(address vault, bytes32 asset, bool isLong, uint256 sizeDelta, uint256 collateralDelta)
         external
         override
@@ -347,6 +364,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         bytes32 posKey = _positionKey(vault, asset, isLong);
         PositionTracking storage pos = _positions[posKey];
         if (!pos.exists) revert PositionNotFound(posKey);
+        require(sizeDelta <= pos.size, "Size exceeds position");
 
         address indexToken = assetTokens[asset];
 
@@ -362,22 +380,25 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         VaultState storage vs = _vaultStates[vault];
         vs.openInterest -= sizeDelta;
 
-        // Update or remove position tracking
-        (uint256 remaining,,,,,,,) = gmxVault.getPosition(address(this), collateralToken, indexToken, isLong);
-
         // PnL = returned USDC - proportional collateral that was at risk
+        // Use vault-specific pos.size for proportional calculation (not GMX aggregate)
         uint256 collateralAtRisk;
-        if (remaining == 0) {
+        if (sizeDelta >= pos.size) {
+            // Full close of this vault's position
             collateralAtRisk = pos.collateralUsdc;
             pos.exists = false;
+            pos.size = 0;
+            pos.collateralUsdc = 0;
+            pos.collateral = 0;
             _removeOpenPositionKey(vault, posKey);
             vs.positionCount--;
-            vs.collateralLocked -= pos.collateralUsdc;
+            vs.collateralLocked -= collateralAtRisk;
         } else {
+            // Partial close: proportional collateral based on vault's own size
             collateralAtRisk = (pos.collateralUsdc * sizeDelta) / pos.size;
-            pos.size = remaining;
+            pos.size -= sizeDelta;
             pos.collateralUsdc -= collateralAtRisk;
-            pos.collateral -= collateralDelta;
+            pos.collateral = pos.collateral > collateralDelta ? pos.collateral - collateralDelta : 0;
             vs.collateralLocked -= collateralAtRisk;
         }
 
@@ -399,9 +420,10 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
 
     /// @notice Aggregate mark-to-market unrealised PnL for all open legs of `vault` (GMX USD precision, ~1e30).
     /// @param vault Basket vault address.
-    /// @return unrealised Sum of signed `getPositionDelta` across open legs.
+    /// @return unrealised Sum of vault-specific price deltas across open legs.
     /// @return realised Cumulative realised PnL stored on the vault state.
-    /// @dev Unrealised includes price delta and accrued funding estimate from cumulative funding rates.
+    /// @dev Uses vault-specific entry prices for accurate PnL when multiple vaults share the same GMX position.
+    /// Includes accrued funding estimate from cumulative funding rates.
     /// Skips legs with unmapped `assetTokens`.
     function getVaultPnL(address vault) external view override returns (int256 unrealised, int256 realised) {
         realised = _vaultStates[vault].realisedPnL;
@@ -415,15 +437,14 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             address indexToken = assetTokens[p.asset];
             if (indexToken == address(0)) continue;
 
-            (bool hasProfit, uint256 delta) =
-                gmxVault.getPositionDelta(address(this), collateralToken, indexToken, p.isLong);
+            // Get current price from GMX (conservative: minPrice for longs, maxPrice for shorts)
+            uint256 currentPrice = p.isLong ? gmxVault.getMinPrice(indexToken) : gmxVault.getMaxPrice(indexToken);
 
-            if (hasProfit) {
-                unrealised += int256(delta);
-            } else {
-                unrealised -= int256(delta);
-            }
+            // Calculate vault-specific delta using vault's own entry price and size
+            int256 delta = _calculateDelta(p.size, p.averagePrice, currentPrice, p.isLong);
+            unrealised += delta;
 
+            // Funding fee estimate
             uint256 cumulativeFundingRate = _safeCumulativeFundingRate(collateralToken);
             if (cumulativeFundingRate > p.entryFundingRate && p.size > 0) {
                 uint256 fundingRateDelta = cumulativeFundingRate - p.entryFundingRate;
@@ -574,5 +595,31 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         if (ok && data.length >= 32) {
             rate = abi.decode(data, (uint256));
         }
+    }
+
+    /// @dev Calculate PnL delta for a position using vault-specific entry price.
+    /// @param size Position size in GMX USD units (~1e30).
+    /// @param avgPrice Average entry price in GMX USD units (~1e30).
+    /// @param currentPrice Current market price in GMX USD units (~1e30).
+    /// @param isLong True for long position.
+    /// @return Signed PnL delta: positive for profit, negative for loss.
+    function _calculateDelta(uint256 size, uint256 avgPrice, uint256 currentPrice, bool isLong)
+        internal
+        pure
+        returns (int256)
+    {
+        if (avgPrice == 0 || size == 0) return 0;
+
+        bool hasProfit = isLong ? currentPrice > avgPrice : currentPrice < avgPrice;
+
+        uint256 priceDiff;
+        if (hasProfit) {
+            priceDiff = isLong ? currentPrice - avgPrice : avgPrice - currentPrice;
+        } else {
+            priceDiff = isLong ? avgPrice - currentPrice : currentPrice - avgPrice;
+        }
+
+        uint256 delta = (size * priceDiff) / avgPrice;
+        return hasProfit ? int256(delta) : -int256(delta);
     }
 }

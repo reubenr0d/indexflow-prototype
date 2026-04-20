@@ -7,16 +7,16 @@ Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on 
 
 ## Architecture
 
-**Hub-and-spoke topology:** Sepolia is the sole hub chain running the full perp stack (VaultAccounting, GMX pool, OracleAdapter, etc.). Spoke chains (Fuji, and potentially 100+) are deposit-only with `StateRelay` for routing weights and NAV adjustments. A keeper service posts state to all chains each epoch.
+**Hub-and-spoke topology:** One **hub** chain runs the full perp stack (VaultAccounting, GMX pool, OracleAdapter, etc.). **Spoke** chains are deposit-only with `StateRelay` for routing weights and NAV adjustments; the layout can scale to many spokes as configured in [`config/chains.json`](config/chains.json). A keeper service posts state to all chains each epoch.
 
 ```
-                    ┌─── Spoke (Fuji) ────────────────────────┐
+                    ┌─── Spoke ───────────────────────────────┐
                     │  Investor ──► BasketVault ──► StateRelay │
                     │       │         (deposit-only)           │
                     │  mint shares    RedemptionReceiver ◄─┐   │
                     └─────────────────────────────────────┼───┘
                                                          │ CCIP
-┌─── Hub (Sepolia) ──────────────────────────────────────┼───┐
+┌─── Hub ────────────────────────────────────────────────┼───┐
 │  Investor ──► BasketVault ──► VaultAccounting ──► GMX Pool │
 │       │           │                │                       │
 │  mint shares  StateRelay      position PnL                 │
@@ -55,7 +55,9 @@ Perp-driven basket vaults backed by a shared perpetual liquidity pool, built on 
 
 ### Contracts per chain type
 
-| Contract | Hub (Sepolia) | Spoke (Fuji, ...) | Notes |
+Exact hub/spoke rollout is defined in [`config/chains.json`](config/chains.json).
+
+| Contract | Hub | Spoke | Notes |
 | --- | --- | --- | --- |
 | `BasketFactory` | Yes | Yes (no oracle) | Spoke factory passes `address(0)` for oracle |
 | `BasketVault` | Yes | Yes | Spoke vaults have `vaultAccounting = address(0)` |
@@ -196,8 +198,8 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - **OpenZeppelin** 5.x -- ERC20, Ownable, ReentrancyGuard
 - **Chainlink CCIP** -- Cross-chain messaging for coordination layer (StateRelay sync, RedemptionReceiver fills, oracle config quorum)
 - **Keeper service** -- Node.js/TypeScript epoch loop for routing weights and PnL adjustments (`services/keeper/`)
-- **Hub chain** -- Ethereum Sepolia (testnet) — full perp stack
-- **Spoke chains** -- Avalanche Fuji (testnet), Arbitrum Sepolia (planned) — deposit-only with StateRelay
+- **Hub chain** — public testnet (or equivalent) with the full perp stack; see [`config/chains.json`](config/chains.json)
+- **Spoke chains** — additional networks, deposit-only with `StateRelay`; roles and RPC aliases are configured alongside the hub
 
 ## Setup
 
@@ -223,17 +225,7 @@ Environment templates (all variables documented with comments):
 - **Repo root:** copy [`.env.example`](.env.example) to `.env` for Foundry RPC URLs, explorer keys, deploy overrides, agents, and scripts that read the root `.env` / `.env.local`.
 - **Web app:** copy [`apps/web/.env.example`](apps/web/.env.example) to `apps/web/.env.local` for `NEXT_PUBLIC_*` and Playwright/E2E vars.
 
-Minimal root `.env` for Forge scripts:
-
-```
-SEPOLIA_RPC_URL=
-ARBITRUM_RPC_URL=
-ARBITRUM_SEPOLIA_RPC_URL=
-FUJI_RPC_URL=
-ETHERSCAN_API_KEY=
-ARBISCAN_API_KEY=
-SNOWTRACE_API_KEY=
-```
+For Forge scripts and root-level tooling, set RPC URLs and explorer API keys in `.env` using [`.env.example`](.env.example) as the template; variable names align with [`foundry.toml`](foundry.toml) `[rpc_endpoints]` and `[etherscan]`.
 
 ### Web App Environment
 
@@ -243,8 +235,7 @@ The Next.js web app reads `apps/web/.env.local` (or shell). Required and optiona
 | --- | --- | --- |
 | `NEXT_PUBLIC_PRIVY_APP_ID` | Yes | Privy app ID from [dashboard.privy.io](https://dashboard.privy.io) |
 | `NEXT_PUBLIC_SUBGRAPH_URL` | No | Fallback subgraph endpoint (auto-set by `local:dev`) |
-| `NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA` | No | Per-chain subgraph endpoint for Sepolia |
-| `NEXT_PUBLIC_SUBGRAPH_URL_FUJI` | No | Per-chain subgraph endpoint for Avalanche Fuji |
+| `NEXT_PUBLIC_SUBGRAPH_URL_<NETWORK_KEY>` | No | Per-deployment-target subgraph URL; `<NETWORK_KEY>` is the uppercase deployment target key (see [`apps/web/.env.example`](apps/web/.env.example)) |
 | `NEXT_PUBLIC_PUSH_SERVICE_URL` | No | Cloud Run push-worker base URL used by `/settings` for preferences/subscription APIs |
 | `NEXT_PUBLIC_E2E_TEST_MODE` | No | Set to `1` for deterministic E2E mock wallet |
 
@@ -267,7 +258,7 @@ The push worker service (Cloud Run) requires:
 
 ## Deployment
 
-**Hub vs spoke:** Hub chains (Sepolia) deploy the full perp stack via `Deploy.s.sol`. Spoke chains (Fuji, etc.) deploy deposit-only infrastructure via `DeploySpoke.s.sol`. The `deploy-all.sh` script reads `config/chains.json` and selects the correct script per chain role.
+**Hub vs spoke:** Hub chains deploy the full perp stack via `Deploy.s.sol`. Spoke chains deploy deposit-only infrastructure via `DeploySpoke.s.sol`. The `deploy-all.sh` script reads [`config/chains.json`](config/chains.json) and selects the correct script per chain role.
 
 Deploy scripts pull a live **Yahoo Finance** quote for `BHP.AX` (8-decimal USD raw) via Node (`scripts/fetch-yf-asset-price.js` and Foundry `ffi`). The script writes `cache/yf-seed-price.txt` (gitignored); Solidity reads it with `vm.readFile` so the seed is not passed through `ffi` stdout (which can mis-decode decimal ASCII). **Node** must be on `PATH`, and the machine needs **outbound network** access unless you pin a seed.
 
@@ -277,18 +268,19 @@ Deploy scripts pull a live **Yahoo Finance** quote for `BHP.AX` (8-decimal USD r
 # Deploy all chains (reads config/chains.json, picks Deploy.s.sol or DeploySpoke.s.sol per role)
 ./scripts/deploy-all.sh
 
-# Deploy a single chain
-./scripts/deploy-all.sh --chain fuji
+# Deploy a single chain (<key> is the network id in config/chains.json)
+./scripts/deploy-all.sh --chain <key>
 
 # Local (Anvil, hub role)
 npm run deploy:local
 
-# Ethereum Sepolia (hub — writes apps/web/src/config/sepolia-deployment.json)
-npm run deploy:sepolia
+# Hub public testnet (writes apps/web/src/config/<target>-deployment.json for the hub key)
+CHAIN=<hubKey> forge script script/Deploy.s.sol:Deploy --rpc-url <rpcAlias> --broadcast -vvv
 
-# Avalanche Fuji (spoke — writes apps/web/src/config/fuji-deployment.json)
-npm run deploy:fuji
+# Additional deploy:* shortcuts (per configured network) live in package.json
 ```
+
+`<hubKey>` must match the `chain` field for the hub entry in `config/chains.json`. `<rpcAlias>` must match an endpoint name in [`foundry.toml`](foundry.toml) `[rpc_endpoints]` (the same alias you pass to `forge script --rpc-url`).
 
 ## Local Development (Docker Compose)
 
@@ -352,7 +344,7 @@ npm run local:down
 ### Web app runtime contract wiring
 
 - Deployment target persists in `localStorage` and follows the network selector.
-- `apps/web/src/config/sepolia-deployment.json` is used when target is `sepolia`.
+- For each deployment target key, the app loads `apps/web/src/config/<target>-deployment.json` when that target is selected (see deploy script outputs under `apps/web/src/config/`).
 - `apps/web/src/config/local-deployment.json` is used when target is `anvil`.
 - Authentication uses **Privy** (email, Google, or external wallets like MetaMask). Set `NEXT_PUBLIC_PRIVY_APP_ID` from [dashboard.privy.io](https://dashboard.privy.io).
 - The app is installable as a PWA (`/manifest.webmanifest`, `public/sw.js`). Notification preferences are managed in **Settings** (`/settings`).
@@ -374,18 +366,18 @@ npm --prefix apps/subgraph run sync:networks
 # generate + build for local indexing
 NETWORK=anvil npm --prefix apps/subgraph run build
 
-# generate + build for Ethereum Sepolia indexing
-NETWORK=sepolia npm --prefix apps/subgraph run build
+# generate + build for a hosted / public testnet target (<deployment_target> matches subgraph network config)
+NETWORK=<deployment_target> npm --prefix apps/subgraph run build
 ```
 
-### Deploying to Subgraph Studio (Sepolia)
+### Deploying to Subgraph Studio
 
 ```bash
 # authenticate (one-time, deploy key from https://thegraph.com/studio/)
 npx graph auth <DEPLOY_KEY>
 
 # deploy
-NETWORK=sepolia SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
+NETWORK=<deployment_target> SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
 ```
 
 Set `NEXT_PUBLIC_SUBGRAPH_URL` in Vercel (or `.env.local`) to the Studio query URL, e.g.
@@ -393,7 +385,7 @@ Set `NEXT_PUBLIC_SUBGRAPH_URL` in Vercel (or `.env.local`) to the Studio query U
 
 Runtime note:
 
-- The web app enables subgraph reads for any deployment target (`sepolia` or `anvil`) when a subgraph URL is configured. Per-chain URLs (`NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA`, `NEXT_PUBLIC_SUBGRAPH_URL_FUJI`) take precedence; `NEXT_PUBLIC_SUBGRAPH_URL` is the fallback. `npm run local:dev` sets the fallback automatically for local development.
+- The web app enables subgraph reads for any deployment target when a subgraph URL is configured. Per-target `NEXT_PUBLIC_SUBGRAPH_URL_<NETWORK_KEY>` values (see [`apps/web/.env.example`](apps/web/.env.example)) take precedence; `NEXT_PUBLIC_SUBGRAPH_URL` is the fallback. `npm run local:dev` sets the fallback automatically for local development.
 - When no subgraph URL is available, affected views fall back to RPC data paths.
 - The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
 
@@ -426,7 +418,8 @@ The keeper service (`services/keeper/`) is required for hub-and-spoke operation:
 
 ```bash
 # Start the keeper (reads all chains from config/chains.json)
-PRIVATE_KEY=0x... SEPOLIA_RPC_URL=... FUJI_RPC_URL=... npm run keeper:start
+# Set PRIVATE_KEY and the RPC env vars from .env.example for every network the keeper touches.
+PRIVATE_KEY=0x... npm run keeper:start
 
 # Configure epoch interval (default 60s)
 EPOCH_INTERVAL_MS=30000 npm run keeper:start
@@ -461,36 +454,20 @@ The keeper also monitors pending redemptions on spoke chains and bridges USDC fr
 forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast
 ```
 
-**Sepolia sync helpers (uses `apps/web/src/config/sepolia-deployment.json`)**
+**Hub deployment sync helpers** — use the `sync:*` and `submit-sync:*` scripts in [`package.json`](package.json); each sets `DEPLOYMENT_CONFIG` to the matching `apps/web/src/config/<target>-deployment.json` and `--rpc-url` for that target.
 
-```bash
-npm run sync:sepolia
-npm run submit-sync:sepolia
-```
-
-**Default oracle profile (greenfield `DeployLocal` / `DeploySepolia`)**
+**Default oracle profile (greenfield `DeployLocal` / hub testnet deploy)**
 
 - Only **`BHP.AX`** is registered, as `FeedType.CustomRelayer` (`stalenessThreshold=86400`, `deviationBps=2000`), for the Yahoo Finance relayer path.
-- Add more symbols (including `FeedType.Chainlink` feeds such as Sepolia XAU/USD at `0xC5981F461d74c46eB4b0CF3f4Ec79f025573B0Ea`) via **Admin → Assets** or a customized deploy script.
+- Add more symbols (including `FeedType.Chainlink` feeds on your hub network) via **Admin → Assets** or a customized deploy script; see [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md).
 
 **Yahoo Finance price relayer (config-free, on-chain driven)**
 
 `scripts/update-yahoo-finance-prices.js` enumerates all active `CustomRelayer` assets from the `OracleAdapter` contract on-chain, reads their stored `assetSymbols`, fetches Yahoo Finance quotes, converts non-USD currencies via FX rates, and submits 8-decimal USD prices to `submitPrices` + `syncAll`. No local config file is needed.
 
-```bash
-# Dry-run (no tx broadcast)
-npm run update-prices:sepolia:dry
+**Public testnets (hub / spoke)**
 
-# Broadcast submitPrices + syncAll (requires PRIVATE_KEY)
-PRIVATE_KEY=0x... npm run update-prices:sepolia
-```
-
-**Avalanche Fuji**
-
-```bash
-npm run update-prices:fuji:dry
-PRIVATE_KEY=0x... npm run update-prices:fuji
-```
+Use the matching `update-prices:*` and `update-prices:*:dry` scripts in [`package.json`](package.json); each wires `DEPLOYMENT_CONFIG` and `RPC_URL` for its target.
 
 **Local Anvil**
 
@@ -535,9 +512,9 @@ LLM_API_KEY=sk-... npm run agent:dry
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
 ```
 
-A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents on Sepolia with manual dispatch and an `agent_name` parameter. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
+A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents against the configured hub testnet / CI network with manual dispatch and an `agent_name` parameter. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
 
-Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl` (for example `run-log.sepolia.jsonl`, `run-log.local.jsonl`). Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
+Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl`. Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 
 Agent memory is deployment-aware: the runner fingerprints the active deployment context (network key + `DEPLOYMENT_CONFIG` content + `RPC_URL`). When that fingerprint changes (for example after redeploying contracts), it automatically invalidates stale memory for that network by rotating `state.json` and `run-log.<network>.jsonl` into `agents/memory/<agent>/archive/`, then starts from a fresh vault context.
 
@@ -576,8 +553,8 @@ Editing an agent markdown file does not, by itself, force a new vault. The runne
 - [docs/OPERATOR_INTERACTIONS.md](docs/OPERATOR_INTERACTIONS.md) — Per-contract interaction matrix with inputs, checks, state deltas, and post-tx verification steps.
 - [docs/GLOBAL_POOL_MANAGEMENT_FLOW.md](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md) — Global GMX pool operations in Admin → Pool: buffer management and direct pool funding flow.
 - [docs/PRICE_FEED_FLOW.md](docs/PRICE_FEED_FLOW.md) — OracleAdapter → PriceSync → SimplePriceFeed lifecycle, GMX vault reads, and admin wiring (Mermaid sequence diagrams).
-- [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Sepolia-focused asset registry showing each supported symbol and its oracle source (Chainlink feed or Yahoo Finance relayer).
-- [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Deployment registry for Sepolia contracts, Subgraph indexing, and Google Cloud push-worker infrastructure (push notifications only).
+- [docs/ORACLE_SUPPORTED_ASSETS.md](docs/ORACLE_SUPPORTED_ASSETS.md) — Asset registry for the current public testnet deployment: each supported symbol and its oracle source (Chainlink feed or Yahoo Finance relayer).
+- [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) — Deployment registry for live contracts, Subgraph indexing, and Google Cloud push-worker infrastructure (push notifications only).
 - [docs/E2E_TESTING.md](docs/E2E_TESTING.md) — Playwright + Anvil E2E runbook, CI wiring, and lifecycle scope.
 - [docs/PWA_PUSH_NOTIFICATIONS.md](docs/PWA_PUSH_NOTIFICATIONS.md) — PWA install behavior, push worker architecture, notification categories, and staging verification runbook.
 - [docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md) — Permissionless protocol launch pathway, foundation structure, progressive decentralization, and compliance requirements (draft).
