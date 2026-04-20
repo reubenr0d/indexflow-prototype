@@ -1,6 +1,6 @@
 ---
 title: "Cross-Chain Liquidity Routing: Hub-and-Spoke Deposit Splitting with On-Chain Guards"
-description: "How IndexFlow's hub-and-spoke architecture uses keeper-posted routing weights, on-chain deposit guards, and UI-driven deposit splitting to distribute capital across 100+ spoke chains."
+description: "How IndexFlow's hub-and-spoke architecture uses keeper-posted routing weights, a per-chain on-chain deposit eligibility guard, and a Privy-backed UI stepper to recommend deposit splits across 100+ spoke chains."
 date: "2026-04-15"
 author: "Reuben Rodrigues"
 tags: ["cross-chain", "CCIP", "liquidity", "hub-and-spoke"]
@@ -10,7 +10,7 @@ image: "/blog/cross-chain-liquidity-routing.png"
 
 Every multi-chain DeFi app makes you pick the chain. Arbitrum or Optimism? Base or Avalanche? You pick wrong, you get worse execution, higher slippage, or an illiquid pool. And nobody tells you which chain was the right one until after you've committed.
 
-We deleted the chain picker. IndexFlow's hub-and-spoke coordination layer posts routing weights from a keeper, enforces them with an on-chain deposit guard, and splits deposits across spoke chains in the UI -- so users see one deposit flow while capital distributes proportionally to where execution liquidity is deepest.
+We deleted the chain picker. IndexFlow's hub-and-spoke coordination layer posts routing weights from a keeper, enforces eligibility with an on-chain deposit guard on each `BasketVault`, and **computes** the recommended split in the web app from that weight table. Users walk a stepper of one transaction per chain; **Privy** (embedded smart wallet) handles chain switching and signing so the same address can execute each leg without a manual wallet dance.
 
 ## Why Hub-and-Spoke
 
@@ -37,25 +37,28 @@ flowchart TD
   Weights -->|"updateState()"| RelayB["StateRelay (Spoke B)"]
 ```
 
-The keeper posts weights, global NAV, and per-chain PnL adjustments every epoch. Each `StateRelay` stores the latest state with a timestamp. Stale state (older than a configurable threshold) causes the deposit guard to reject deposits -- the protocol never routes capital using outdated information.
+The keeper posts weights and per-vault PnL adjustments every epoch. Each `StateRelay` stores the latest values with timestamps. For **pricing**, if a posted global PnL adjustment is older than `maxStaleness`, the vault stops applying it until the next keeper update (spokes fall back to on-vault USDC only for the adjustment term). The **deposit** path does not use that staleness flag: it only compares the chain's cached routing weight to a vault-level threshold, as below.
 
 ## On-Chain Deposit Routing Guard
 
-Spoke chains enforce routing discipline at the contract level. `BasketVault` includes a deposit routing guard that checks the caller's deposit amount against the chain's routing weight from `StateRelay`:
+The contract does **not** recompute how much of a deposit should land on each chain. That split is a **client** concern (see below). On-chain, `BasketVault.deposit()` only answers whether **this** chain is still meant to accept deposits at all, given the latest keeper-posted weight for this chain.
+
+When a `StateRelay` is wired, `deposit()` requires the cached local weight to clear a per-vault minimum (basis points). Chains the keeper has marked as **over-allocated** (low weight in the global table) fall below that threshold and **reject every deposit** until weights move again:
 
 ```solidity
-uint256 maxDeposit = (globalNav * chainWeight) / 10_000;
-uint256 currentReserves = _idleUSDC();
-require(currentReserves + amount <= maxDeposit, "RoutingGuard: exceeds chain weight");
+if (address(stateRelay) != address(0)) {
+    uint256 weight = stateRelay.getLocalWeight();
+    require(weight >= minDepositWeightBps, "Chain not accepting deposits");
+}
 ```
 
-The guard prevents any single chain from accepting more capital than its weight allows. If Spoke A has a 20% weight and the global NAV is $10M, deposits to Spoke A are capped at $2M total reserves. Once a chain reaches its cap, further deposits revert -- the UI steers users to chains with remaining capacity.
+`minDepositWeightBps` is owner-configurable (zero means no restriction, for backward compatibility). There is no `amount`-based cap derived from global NAV in `deposit()`; discipline is whether this chain's **posted weight is still high enough** (the keeper still treats it as under-capacity relative to peers) to clear the threshold, not a per-tx reserve ceiling.
 
-This is enforced on-chain, not just in the UI. Even if someone bypasses the frontend and calls the vault directly, the guard holds.
+This is enforced on-chain, not just in the UI. Even if someone bypasses the frontend and calls the vault directly, an over-allocated chain still reverts until the keeper posts a higher weight for it.
 
 ## UI-Driven Deposit Splitting
 
-The frontend reads routing weights from `StateRelay` on each chain and presents a split deposit view. When a user enters a deposit amount, the UI shows how the deposit will be divided across chains:
+The frontend reads the routing weight table from `StateRelay` (any instance after a keeper epoch; the table is replicated per chain) and presents a split deposit view. When a user enters a deposit amount, the UI shows how the deposit will be divided across chains:
 
 ```mermaid
 flowchart LR
@@ -65,9 +68,9 @@ flowchart LR
   UI -->|"25% ($2,500)"| Hub["Hub"]
 ```
 
-Each leg is a separate on-chain transaction. The UI presents them as a stepper -- deposit to Chain A, switch network, deposit to Chain B, switch network, deposit to Hub. Privy smart wallets make network switching seamless since the user's address is the same everywhere.
+Each leg is a separate on-chain transaction. The stepper walks the user chain by chain; **Privy** drives approve/deposit sends for the embedded wallet so network switches stay in one product flow. The user's address is the same on every chain.
 
-Users can also deposit to a single chain if they prefer. The split view is a recommendation, not a requirement. The on-chain guard ensures no chain exceeds its weight regardless of how the user chooses to distribute.
+Users can also deposit to a single chain if they prefer. The split view is a recommendation, not a requirement. Each chain's vault still applies its own weight threshold: you cannot "force" deposits onto a chain the keeper has marked as closed for deposits, no matter how the UI splits the rest.
 
 ## Cross-Chain Redemptions
 
@@ -86,18 +89,25 @@ flowchart LR
   Receiver -->|"fill remaining"| User
 ```
 
-The `RedemptionReceiver` validates inbound CCIP messages, matches them to pending redemption IDs, and transfers USDC to the redeemer. The UI shows redemption status in real time -- instant fills for small redemptions within idle reserves, pending status with keeper fill progress for larger ones.
+The `RedemptionReceiver` validates inbound CCIP messages, forwards USDC into the target vault, and calls `processPendingRedemption(id)` so the vault completes payout to the user. The UI shows redemption status in real time -- instant fills for small redemptions within idle reserves, pending status with keeper fill progress for larger ones.
 
 ## PnL Distribution
 
-Spoke chains don't run perps, but their share price must reflect the hub's perp PnL. The keeper computes a global PnL adjustment each epoch and posts it to every chain's `StateRelay`. Each spoke's `BasketVault._pricingNav()` includes this adjustment when calculating share price:
+Spoke chains don't run perps, but their share price must reflect the hub's perp PnL. The keeper posts a signed **per-vault** global adjustment on every `StateRelay`. `BasketVault._pricingNav()` combines on-vault value, local perp PnL (hub only), and that global term when it is not stale:
 
 ```solidity
-int256 pnlAdjustment = stateRelay.getChainPnlAdjustment(localChainSelector);
-uint256 adjustedNav = uint256(int256(idleNav) + pnlAdjustment);
+uint256 base = idleUsdcExcludingFees + perpAllocated;
+// Hub: localPnL from VaultAccounting. Spoke: localPnL = 0.
+int256 globalAdj;
+if (address(stateRelay) != address(0)) {
+    (int256 pnl, bool stale) = stateRelay.getGlobalPnLAdjustment(address(this));
+    if (!stale) globalAdj = pnl;
+}
+int256 total = int256(base) + localPnL + globalAdj;
+uint256 nav = total > 0 ? uint256(total) : 0;
 ```
 
-This ensures share prices stay consistent across chains even though perp execution only happens on the hub. A user who deposited on Spoke A sees the same share price movement as a user on the hub, proportional to their chain's share of global TVL.
+This keeps share pricing aligned with hub execution while deposits and redemptions stay ordinary EVM calls on each chain.
 
 ## Chain-Invisible UX via Privy Smart Wallets
 
@@ -109,7 +119,7 @@ Hub-and-spoke replaces the mesh coordination model with something that scales. A
 
 For spoke chains, the value proposition is pure: deposit infrastructure with routing discipline and share price consistency, backed by the hub's perp execution engine. For users, it means deposits split intelligently across chains without manual chain selection. For the protocol, it means scaling to 100+ chains without coordination overhead growing faster than TVL.
 
-The trust model is explicit: keeper liveness for state posting and redemption fills, CCIP message delivery for cross-chain redemptions, and Privy wallet custody are the external dependencies. Routing weight enforcement and deposit caps are on-chain with no off-chain bypass.
+The trust model is explicit: keeper liveness for state posting and redemption fills, CCIP message delivery for cross-chain redemptions, and Privy wallet custody are the external dependencies. Whether a chain accepts deposits at all is enforced on-chain via the weight threshold; how users **allocate** size across chains is enforced by UX plus economics, not by a second on-chain router.
 
 ## Get Started
 
