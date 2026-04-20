@@ -9,7 +9,7 @@ const localDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", 
 const sepoliaDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "sepolia-deployment.json");
 const fujiDeploymentPath = path.join(repoRoot, "apps", "web", "src", "config", "fuji-deployment.json");
 
-const OPTIONAL_COORDINATION_KEYS = ["poolReserveRegistry", "intentRouter"];
+const OPTIONAL_COORDINATION_KEYS = ["stateRelay"];
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -107,8 +107,7 @@ const targets = [
   ["basketFactory", "basketFactory"],
   ["vaultAccounting", "vaultAccounting"],
   ["oracleAdapter", "oracleAdapter"],
-  ["poolReserveRegistry", "poolReserveRegistry"],
-  ["intentRouter", "intentRouter"],
+  ["stateRelay", "stateRelay"],
 ];
 
 for (const [deploymentKey, networkKey] of targets) {

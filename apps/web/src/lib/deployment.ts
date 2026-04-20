@@ -1,3 +1,5 @@
+import { getConfiguredSubgraphUrlForTarget } from "@/config/subgraphs";
+
 export type DeploymentTarget = string;
 export type ViewMode = "single" | "all";
 export type ChainRole = "hub" | "spoke";
@@ -21,11 +23,6 @@ export type DeploymentConfig = {
   priceSync?: string;
   gmxVault?: string;
   assetWiring?: string;
-  poolReserveRegistry?: string;
-  ccipReserveMessenger?: string;
-  intentRouter?: string;
-  intentRouterImpl?: string;
-  crossChainIntentBridge?: string;
   oracleConfigQuorum?: string;
   stateRelay?: string;
 };
@@ -96,25 +93,16 @@ export function getChainRole(target: string): ChainRole | undefined {
   return CHAIN_REGISTRY[target]?.role;
 }
 
-const SUBGRAPH_URL_BY_TARGET: Record<string, string | undefined> = {
-  sepolia: process.env.NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA,
-  fuji: process.env.NEXT_PUBLIC_SUBGRAPH_URL_FUJI,
-};
-
 /**
  * Returns the subgraph URL for a given target.
  * - e2e test mode: always null (pure RPC, no subgraph dependency).
- * - per-chain: uses NEXT_PUBLIC_SUBGRAPH_URL_{SEPOLIA,FUJI} from env.
- * - fallback: uses NEXT_PUBLIC_SUBGRAPH_URL for targets without a dedicated env var.
+ * - runtime: reads per-chain URLs from `src/config/subgraphs.json`.
  */
 export function getSubgraphUrlForTarget(
   target: DeploymentTarget,
 ): string | null {
   if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") return null;
-  const perChain = SUBGRAPH_URL_BY_TARGET[target]?.trim() ?? "";
-  if (perChain.length > 0) return perChain;
-  const fallback = process.env.NEXT_PUBLIC_SUBGRAPH_URL?.trim() ?? "";
-  return fallback.length > 0 ? fallback : null;
+  return getConfiguredSubgraphUrlForTarget(target);
 }
 
 export function isValidViewMode(value: unknown): value is ViewMode {

@@ -110,57 +110,25 @@ dataSources:
       file: ./src/mappings/oracleAdapter.ts
 
   - kind: ethereum/contract
-    name: PoolReserveRegistry
+    name: StateRelay
     network: {{network}}
     source:
-      address: '{{poolReserveRegistryAddress}}'
-      abi: PoolReserveRegistry
-      startBlock: {{poolReserveRegistryStartBlock}}
+      address: '{{stateRelayAddress}}'
+      abi: StateRelay
+      startBlock: {{stateRelayStartBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - PoolSnapshotEvent
-        - CoordinationState
         - ChainPoolState
       abis:
-        - name: PoolReserveRegistry
-          file: ./abis/PoolReserveRegistry.json
+        - name: StateRelay
+          file: ./abis/StateRelay.json
       eventHandlers:
-        - event: PoolSnapshot((uint64,uint256,uint256,uint256,uint256,uint256,bytes32,bool,uint48))
-          handler: handlePoolSnapshot
-        - event: RemoteStateUpdated(indexed uint64,uint256,uint256)
-          handler: handleRemoteStateUpdated
-      file: ./src/mappings/poolReserveRegistry.ts
-
-  - kind: ethereum/contract
-    name: IntentRouter
-    network: {{network}}
-    source:
-      address: '{{intentRouterAddress}}'
-      abi: IntentRouter
-      startBlock: {{intentRouterStartBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.7
-      language: wasm/assemblyscript
-      entities:
-        - IntentAction
-        - IntentStats
-      abis:
-        - name: IntentRouter
-          file: ./abis/IntentRouter.json
-      eventHandlers:
-        - event: IntentSubmitted(indexed uint256,indexed address,uint256,uint8)
-          handler: handleIntentSubmitted
-        - event: IntentExecuted(indexed uint256,indexed address,uint256)
-          handler: handleIntentExecuted
-        - event: IntentRoutedCrossChain(indexed uint256,indexed uint64,uint256)
-          handler: handleIntentRoutedCrossChain
-        - event: IntentRefunded(indexed uint256,indexed address,uint256)
-          handler: handleIntentRefunded
-      file: ./src/mappings/intentRouter.ts
+        - event: StateUpdated(indexed uint48,uint256,uint256)
+          handler: handleStateUpdated
+      file: ./src/mappings/stateRelay.ts
 
 templates:
   - kind: ethereum/contract

@@ -8,6 +8,7 @@ import {
   isSpokeChain,
   parseDeploymentTarget,
 } from "./deployment";
+import { SUBGRAPH_URL_BY_TARGET } from "@/config/subgraphs";
 
 describe("deployment target helpers", () => {
   it("defaults to sepolia", () => {
@@ -29,28 +30,22 @@ describe("deployment target helpers", () => {
     expect(chainIdForDeploymentTarget("unknown-chain")).toBe(0);
   });
 
-  it("returns null for sepolia in e2e test mode even with subgraph URL set", () => {
+  it("returns null for sepolia in e2e test mode even with configured URL", () => {
     const originalE2E = process.env.NEXT_PUBLIC_E2E_TEST_MODE;
-    const originalUrl = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
     process.env.NEXT_PUBLIC_E2E_TEST_MODE = "1";
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "https://example.com/subgraph";
     expect(getSubgraphUrlForTarget("sepolia")).toBeNull();
     process.env.NEXT_PUBLIC_E2E_TEST_MODE = originalE2E;
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalUrl;
   });
 
-  it("returns env subgraph URL for sepolia when set", () => {
-    const originalEnv = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "https://example.com/subgraph";
-    expect(getSubgraphUrlForTarget("sepolia")).toBe("https://example.com/subgraph");
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalEnv;
+  it("returns configured subgraph URL for sepolia", () => {
+    expect(getSubgraphUrlForTarget("sepolia")).toBe(
+      SUBGRAPH_URL_BY_TARGET.sepolia
+    );
   });
 
-  it("returns null for sepolia when env is empty", () => {
-    const originalEnv = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = "   ";
-    expect(getSubgraphUrlForTarget("sepolia")).toBeNull();
-    process.env.NEXT_PUBLIC_SUBGRAPH_URL = originalEnv;
+  it("returns null for targets with missing or blank config URLs", () => {
+    expect(getSubgraphUrlForTarget("fuji")).toBeNull();
+    expect(getSubgraphUrlForTarget("arbitrum-sepolia")).toBeNull();
   });
 });
 

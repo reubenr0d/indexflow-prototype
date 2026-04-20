@@ -27,7 +27,7 @@ if (!cfg) {
 }
 
 const requiredContracts = ["basketFactory", "vaultAccounting", "oracleAdapter"];
-const optionalContracts = ["poolReserveRegistry", "intentRouter"];
+const optionalContracts = ["stateRelay"];
 
 for (const key of requiredContracts) {
   const item = cfg[key];
@@ -63,10 +63,8 @@ const replacements = {
   "{{vaultAccountingStartBlock}}": String(cfg.vaultAccounting.startBlock),
   "{{oracleAdapterAddress}}": cfg.oracleAdapter.address,
   "{{oracleAdapterStartBlock}}": String(cfg.oracleAdapter.startBlock),
-  "{{poolReserveRegistryAddress}}": cfg.poolReserveRegistry.address,
-  "{{poolReserveRegistryStartBlock}}": String(cfg.poolReserveRegistry.startBlock),
-  "{{intentRouterAddress}}": cfg.intentRouter.address,
-  "{{intentRouterStartBlock}}": String(cfg.intentRouter.startBlock),
+  "{{stateRelayAddress}}": cfg.stateRelay.address,
+  "{{stateRelayStartBlock}}": String(cfg.stateRelay.startBlock),
 };
 
 let content = template;

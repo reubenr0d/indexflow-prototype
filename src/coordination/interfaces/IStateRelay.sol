@@ -30,7 +30,7 @@ interface IStateRelay {
     /// @notice Full routing weight table posted by the keeper.
     /// @return chainSelectors Ordered chain selectors.
     /// @return weights Corresponding basis-point weights.
-    /// @return amounts Always zeros (compatibility shim for PoolReserveRegistry consumers).
+    /// @return amounts Always zeros (compatibility placeholder for legacy consumers).
     function getRoutingWeights()
         external
         view

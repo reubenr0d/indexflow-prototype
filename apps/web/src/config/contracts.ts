@@ -20,8 +20,6 @@ export type ContractAddresses = {
   usdc: Address;
   gmxVault: Address;
   assetWiring: Address;
-  poolReserveRegistry: Address;
-  intentRouter: Address;
   stateRelay?: Address;
 };
 
@@ -37,8 +35,6 @@ function deploymentToAddresses(d: DeploymentConfig): ContractAddresses {
     usdc: (d.usdc ?? ZERO) as Address,
     gmxVault: (d.gmxVault ?? ZERO) as Address,
     assetWiring: (d.assetWiring ?? ZERO) as Address,
-    poolReserveRegistry: (d.poolReserveRegistry ?? ZERO) as Address,
-    intentRouter: (d.intentRouter ?? ZERO) as Address,
     stateRelay: d.stateRelay ? (d.stateRelay as Address) : undefined,
   };
 }

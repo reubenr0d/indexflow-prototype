@@ -47,6 +47,21 @@ export function getQuoteAmountLabel(mode: Mode, amount: bigint) {
   return mode === "deposit" ? `${formatUSDC(amount)} USDC` : `${formatShares(amount)} shares`;
 }
 
+export function getSimulationErrorMessage(mode: Mode, error: unknown): string {
+  const raw = error instanceof Error ? error.message : String(error ?? "");
+
+  if (mode === "deposit" && raw.includes("Chain not accepting deposits")) {
+    return "This chain is not accepting deposits right now. Wait for the next keeper update or deposit on another chain.";
+  }
+  if (mode === "redeem" && raw.includes("Insufficient liquidity")) {
+    return "Not enough idle USDC is available for this redemption size. Try a smaller redeem and wait for liquidity to refill.";
+  }
+  if (mode === "redeem") {
+    return "This redemption is likely to fail. Check your share balance and available vault liquidity.";
+  }
+  return "This deposit is likely to fail. Check your balance and chain routing status.";
+}
+
 export function DepositRedeemPanel({
   vault,
   sharePrice,
@@ -98,6 +113,7 @@ export function DepositRedeemPanel({
     mode === "redeem" ? address : undefined
   );
   const simulationError = mode === "deposit" ? simDepositError : simRedeemError;
+  const simulationErrorMessage = simulationError ? getSimulationErrorMessage(mode, simulationError) : null;
 
   const needsApproval =
     mode === "deposit" &&
@@ -115,6 +131,7 @@ export function DepositRedeemPanel({
       : 0n;
 
   const isProcessing = isApproving || isDepositing || isRedeeming;
+  const blockedBySimulation = parsedAmount > 0n && !needsApproval && Boolean(simulationError);
   const balance = mode === "deposit" ? usdcBalance : shareBalance;
   const hasAmount = parsedAmount > 0n;
   const actionMeta = getPanelPrimaryActionMeta({
@@ -184,6 +201,11 @@ export function DepositRedeemPanel({
     if (mode === "deposit" && needsApproval) {
       approve(usdc, vault, parsedAmount);
       showToast("pending", "Approving USDC...");
+      return;
+    }
+
+    if (blockedBySimulation) {
+      showToast("error", simulationErrorMessage ?? "Transaction is likely to fail.");
       return;
     }
 
@@ -271,9 +293,9 @@ export function DepositRedeemPanel({
         </p>
       </div>
 
-      {simulationError && parsedAmount > 0n && !needsApproval && (
+      {blockedBySimulation && (
         <p className="mb-3 rounded-md border border-app-danger/30 bg-app-danger/5 px-3 py-2 text-xs text-app-danger">
-          This transaction is likely to fail. Check your balance and try a smaller amount.
+          {simulationErrorMessage}
         </p>
       )}
 
@@ -288,7 +310,7 @@ export function DepositRedeemPanel({
         <Button
           size="lg"
           className="w-full"
-          disabled={parsedAmount === 0n || isProcessing}
+          disabled={parsedAmount === 0n || isProcessing || blockedBySimulation}
           onClick={handleSubmit}
           data-testid="deposit-redeem-submit"
         >

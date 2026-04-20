@@ -44,6 +44,8 @@ interface IVaultErrorController {
 ///   SEED_PRICE_RAW - override BHP.AX seed price (8-decimal raw)
 contract Deploy is Script {
     uint256 constant INITIAL_USDC_BUFFER = 200_000e6;
+    uint256 constant INITIAL_GMX_MINT = 10_000_000e6;
+    uint256 constant INITIAL_GMX_POOL_SEED = 1_000_000e6;
 
     struct Deployed {
         address basketFactory;
@@ -137,8 +139,8 @@ contract Deploy is Script {
         gmxVault.setFees(0, 0, 0, 0, 0, 0, 5e30, 0, false);
         gmxVault.setTokenConfig(d.usdc, 6, 10000, 0, 0, true, false);
 
-        MockUSDC(d.usdc).mint(deployer, 10_000_000e6);
-        MockUSDC(d.usdc).transfer(d.gmxVault, 1_000_000e6);
+        MockUSDC(d.usdc).mint(deployer, INITIAL_GMX_MINT);
+        MockUSDC(d.usdc).transfer(d.gmxVault, INITIAL_GMX_POOL_SEED);
         gmxVault.directPoolDeposit(d.usdc);
         gmxVault.setBufferAmount(d.usdc, INITIAL_USDC_BUFFER);
     }

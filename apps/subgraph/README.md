@@ -8,7 +8,7 @@ Configuration lives in `networks.json` and is auto-synced from web deployment fi
 - `apps/web/src/config/sepolia-deployment.json` -> `sepolia`
 - `apps/web/src/config/fuji-deployment.json` -> `fuji`
 
-`generate-manifest` fails if any **required** contract address for the selected network is zero. Coordination layer contracts (`poolReserveRegistry`, `intentRouter`) are optional — a warning is printed if they have zero addresses, but the build still succeeds.
+`generate-manifest` fails if any **required** contract address for the selected network is zero. `stateRelay` is optional — a warning is printed if it has a zero address, but the build still succeeds.
 
 ## Data Sources
 
@@ -17,8 +17,7 @@ Configuration lives in `networks.json` and is auto-synced from web deployment fi
 | BasketFactory | BasketFactory | BasketCreated |
 | VaultAccounting | VaultAccounting | Deposited, Redeemed, TopUp, etc. |
 | OracleAdapter | OracleAdapter | AssetConfigured, PriceUpdated, AssetRemoved |
-| PoolReserveRegistry | PoolReserveRegistry | PoolSnapshot, RemoteStateUpdated |
-| IntentRouter | IntentRouter | IntentSubmitted, IntentExecuted, IntentRefunded |
+| StateRelay | StateRelay | StateUpdated (routing weights projection) |
 | BasketVaultTemplate | BasketVault (dynamic) | Transfer, Deposit, Redeem |
 
 ## Commands

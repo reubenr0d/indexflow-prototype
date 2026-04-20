@@ -11,6 +11,7 @@ export type MultiChainQueryOpts<TData, TResult> = {
   aggregate: (results: Map<DeploymentTarget, TData>) => TResult;
   enabled?: boolean;
   staleTime?: number;
+  runInSingleMode?: boolean;
 };
 
 export type MultiChainQueryResult<TData, TResult> = {
@@ -18,21 +19,23 @@ export type MultiChainQueryResult<TData, TResult> = {
   isLoading: boolean;
   isError: boolean;
   perChain: Map<DeploymentTarget, TData>;
+  failedTargets: DeploymentTarget[];
 };
 
 /**
  * Fan-out a query across all configured deployment targets in parallel,
  * then merge the results using the provided `aggregate` function.
  *
- * Only runs when viewMode === "all". When viewMode === "single", returns
- * empty results so callers can fall back to single-chain hooks.
+ * By default, only runs when viewMode === "all". Set `runInSingleMode`
+ * to fan out even when viewMode === "single".
  */
 export function useMultiChainQuery<TData, TResult>(
   opts: MultiChainQueryOpts<TData, TResult>,
 ): MultiChainQueryResult<TData, TResult> {
   const { viewMode, configuredTargets } = useDeploymentTarget();
   const isAll = viewMode === "all";
-  const enabled = (opts.enabled ?? true) && isAll;
+  const shouldRun = opts.runInSingleMode ? true : isAll;
+  const enabled = (opts.enabled ?? true) && shouldRun;
 
   const queries = useQueries({
     queries: configuredTargets.map((target) => ({
@@ -46,22 +49,27 @@ export function useMultiChainQuery<TData, TResult>(
 
   const perChain = useMemo(() => {
     const map = new Map<DeploymentTarget, TData>();
-    if (!isAll) return map;
+    if (!shouldRun) return map;
     queries.forEach((q, i) => {
       if (q.data != null) {
         map.set(configuredTargets[i], q.data as TData);
       }
     });
     return map;
-  }, [configuredTargets, isAll, queries]);
+  }, [configuredTargets, queries, shouldRun]);
+
+  const failedTargets = useMemo(() => {
+    if (!shouldRun) return [];
+    return configuredTargets.filter((_, i) => queries[i]?.isError);
+  }, [configuredTargets, queries, shouldRun]);
 
   const isLoading = queries.some((q) => q.isLoading);
-  const isError = queries.some((q) => q.isError);
+  const isError = failedTargets.length > 0;
 
   const data = useMemo(() => {
-    if (!isAll || isLoading || perChain.size === 0) return undefined;
+    if (!shouldRun || isLoading || perChain.size === 0) return undefined;
     return opts.aggregate(perChain);
-  }, [isAll, isLoading, opts, perChain]);
+  }, [isLoading, opts, perChain, shouldRun]);
 
-  return { data, isLoading, isError, perChain };
+  return { data, isLoading, isError, perChain, failedTargets };
 }

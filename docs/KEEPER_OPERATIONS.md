@@ -57,7 +57,19 @@ npm run build
 npm start
 ```
 
-The keeper logs each epoch with chain-level details:
+### One-shot epoch (after deploy or seed)
+
+Forge deploy and seed scripts trigger a single keeper epoch at the end so `StateRelay` emits `StateUpdated` and subgraphs can populate `/chains` data without starting the long-lived process first.
+
+From the **repository root**:
+
+```bash
+npm run keeper:once
+```
+
+This builds `services/keeper`, sets `KEEPER_ONCE=1`, and loads `.env` from the repo root via `DOTENV_CONFIG_PATH` when `.env` exists. To skip (for example in CI), set `SKIP_KEEPER_ONCE=1`.
+
+Example logs from a long-lived run (same epoch shape as `keeper:once`):
 
 ```
 [keeper 2026-04-17T12:00:00.000Z] ─── Epoch start ───

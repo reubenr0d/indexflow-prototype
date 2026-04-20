@@ -1,9 +1,8 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { useAvailableSubgraph } from "@/hooks/subgraph/useSubgraphShared";
+import { type DeploymentTarget } from "@/lib/deployment";
+import { useMultiChainSubgraphQuery } from "@/hooks/useMultiChainSubgraphQuery";
 import { GET_CHAIN_POOL_STATES } from "@/lib/subgraph/queries";
-import { USDC_PRECISION } from "@/lib/constants";
 
 export type ChainState = {
   chainSelector: bigint;
@@ -16,7 +15,7 @@ export type ChainState = {
   timestamp: number;
 };
 
-type RawChainPoolState = {
+export type RawChainPoolState = {
   id: string;
   chainSelector: string;
   twapPoolAmount: string;
@@ -28,46 +27,14 @@ type RawChainPoolState = {
   updatedAt: string;
 };
 
-const MOCK_CHAINS: ChainState[] = [
-  {
-    chainSelector: 42161n,
-    poolDepth: 18_200_000n * USDC_PRECISION,
-    reservedAmount: 6_100_000n * USDC_PRECISION,
-    availableLiquidity: 12_100_000n * USDC_PRECISION,
-    utilizationBps: 3352,
-    routingWeight: 4200,
-    staleness: 8,
-    timestamp: Math.floor(Date.now() / 1000) - 8,
-  },
-  {
-    chainSelector: 8453n,
-    poolDepth: 14_800_000n * USDC_PRECISION,
-    reservedAmount: 4_200_000n * USDC_PRECISION,
-    availableLiquidity: 10_600_000n * USDC_PRECISION,
-    utilizationBps: 2838,
-    routingWeight: 3400,
-    staleness: 14,
-    timestamp: Math.floor(Date.now() / 1000) - 14,
-  },
-  {
-    chainSelector: 10n,
-    poolDepth: 9_400_000n * USDC_PRECISION,
-    reservedAmount: 3_800_000n * USDC_PRECISION,
-    availableLiquidity: 5_600_000n * USDC_PRECISION,
-    utilizationBps: 4043,
-    routingWeight: 2400,
-    staleness: 22,
-    timestamp: Math.floor(Date.now() / 1000) - 22,
-  },
-];
-
 export type PoolReserveRegistryView = {
   chains: ChainState[];
   isLoading: boolean;
-  isPlaceholder: boolean;
+  isEmpty: boolean;
+  failedTargets: DeploymentTarget[];
 };
 
-function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[] {
+export function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[] {
   const nowSec = Math.floor(Date.now() / 1000);
 
   let totalPool = 0n;
@@ -97,34 +64,35 @@ function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[] {
   });
 }
 
-export function usePoolReserveRegistryState(): PoolReserveRegistryView {
-  const { client, isAvailable } = useAvailableSubgraph();
+export type RawChainPoolStateResult = {
+  chainPoolStates: RawChainPoolState[];
+};
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["subgraph", "chainPoolStates"],
-    queryFn: async () => {
-      if (!client) return null;
-      const result = await client.request<{
-        chainPoolStates: RawChainPoolState[];
-      }>(GET_CHAIN_POOL_STATES);
-      return result.chainPoolStates;
-    },
-    enabled: isAvailable,
+export function aggregateChainPoolStates(results: Map<DeploymentTarget, RawChainPoolStateResult>): ChainState[] {
+  const allRows: RawChainPoolState[] = [];
+  for (const result of results.values()) {
+    allRows.push(...result.chainPoolStates);
+  }
+  if (allRows.length === 0) return [];
+  return transformChainPoolStates(allRows);
+}
+
+export function usePoolReserveRegistryState(): PoolReserveRegistryView {
+  const { data, isLoading, failedTargets } = useMultiChainSubgraphQuery<
+    RawChainPoolStateResult,
+    ChainState[]
+  >({
+    queryKeyPrefix: ["chainPoolStates"],
+    document: GET_CHAIN_POOL_STATES,
+    aggregate: aggregateChainPoolStates,
     staleTime: 15_000,
-    retry: 1,
+    runInSingleMode: true,
   });
 
-  if (data && data.length > 0) {
-    return {
-      chains: transformChainPoolStates(data),
-      isLoading: false,
-      isPlaceholder: false,
-    };
-  }
-
   return {
-    chains: MOCK_CHAINS,
-    isLoading: isAvailable && isLoading,
-    isPlaceholder: true,
+    chains: data ?? [],
+    isLoading,
+    isEmpty: !isLoading && (data?.length ?? 0) === 0,
+    failedTargets,
   };
 }

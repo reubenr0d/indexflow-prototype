@@ -315,20 +315,6 @@ export const GET_ORACLE_PRICE_UPDATES = gql`
   }
 `;
 
-export const GET_COORDINATION_STATE = gql`
-  query GetCoordinationState {
-    coordinationState(id: "singleton") {
-      id
-      latestTwapPoolAmount
-      latestAvailableLiquidity
-      latestUtilizationBps
-      latestSnapshotTimestamp
-      snapshotCount
-      updatedAt
-    }
-  }
-`;
-
 export const GET_CHAIN_POOL_STATES = gql`
   query GetChainPoolStates {
     chainPoolStates(orderBy: twapPoolAmount, orderDirection: desc) {
@@ -341,35 +327,6 @@ export const GET_CHAIN_POOL_STATES = gql`
       snapshotTimestamp
       snapshotCount
       updatedAt
-    }
-  }
-`;
-
-export const GET_RECENT_INTENTS = gql`
-  query GetRecentIntents($first: Int!, $skip: Int!) {
-    intentActions(
-      first: $first
-      skip: $skip
-      orderBy: timestamp
-      orderDirection: desc
-    ) {
-      id
-      intentId
-      user
-      intentType
-      status
-      amount
-      basketVault
-      sharesOrUsdc
-      timestamp
-      blockNumber
-      txHash
-    }
-    intentStats(id: "singleton") {
-      totalSubmitted
-      totalExecuted
-      totalRefunded
-      cumulativeVolumeUsdc
     }
   }
 `;

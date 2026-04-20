@@ -49,7 +49,7 @@ function requireEnv(name: string): string {
 
 // ── Bootstrap ─────────────────────────────────────────────────────
 
-const PROJECT_ROOT = resolve(import.meta.dirname, "../../../..");
+const PROJECT_ROOT = resolve(import.meta.dirname, "../../..");
 
 function loadChainsConfig(): Record<string, ChainConfig> {
   const raw = readFileSync(resolve(PROJECT_ROOT, "config/chains.json"), "utf-8");
@@ -298,7 +298,13 @@ async function main() {
   // Run first epoch immediately
   await runEpoch(contexts);
 
-  // Then loop
+  const runOnce =
+    process.env.KEEPER_ONCE === "1" || process.env.KEEPER_ONCE === "true";
+  if (runOnce) {
+    log("KEEPER_ONCE set — exiting after one epoch.");
+    process.exit(0);
+  }
+
   setInterval(() => {
     runEpoch(contexts).catch((err) => {
       logError("Epoch failed", err);

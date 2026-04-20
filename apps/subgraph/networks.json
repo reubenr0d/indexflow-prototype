@@ -19,6 +19,10 @@
     "intentRouter": {
       "address": "0x0000000000000000000000000000000000000000",
       "startBlock": 0
+    },
+    "stateRelay": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
     }
   },
   "sepolia": {
@@ -41,6 +45,10 @@
     "intentRouter": {
       "address": "0x0000000000000000000000000000000000000000",
       "startBlock": 0
+    },
+    "stateRelay": {
+      "address": "0x26f2457dff4b4fad3a153efe6e3d1a95609a25a6",
+      "startBlock": 10696760
     }
   },
   "fuji": {
@@ -62,6 +70,10 @@
     },
     "intentRouter": {
       "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 0
+    },
+    "stateRelay": {
+      "address": "0x7c00248d9b1435b82ACf2F44D1E9634D0876ea49",
       "startBlock": 0
     }
   }

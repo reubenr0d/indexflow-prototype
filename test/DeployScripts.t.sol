@@ -12,6 +12,18 @@ contract DeployHarness is Deploy {
     function exposeSetVaultErrors(address errCtrl, address vault) external {
         _setVaultErrors(errCtrl, vault);
     }
+
+    function exposeInitialUsdcBuffer() external pure returns (uint256) {
+        return INITIAL_USDC_BUFFER;
+    }
+
+    function exposeInitialGmxMint() external pure returns (uint256) {
+        return INITIAL_GMX_MINT;
+    }
+
+    function exposeInitialGmxPoolSeed() external pure returns (uint256) {
+        return INITIAL_GMX_POOL_SEED;
+    }
 }
 
 contract MockErrorControllerCapture {
@@ -64,6 +76,12 @@ contract DeployScriptsTest is Test {
         assertEq(cap.lastLen(), 56);
         assertEq(cap.first(), "Vault: zero error");
         assertEq(cap.last(), "Vault: maxGasPrice exceeded");
+    }
+
+    function test_hub_seed_constants_remain_expected() public view {
+        assertEq(harness.exposeInitialGmxMint(), 10_000_000e6);
+        assertEq(harness.exposeInitialGmxPoolSeed(), 1_000_000e6);
+        assertEq(harness.exposeInitialUsdcBuffer(), 200_000e6);
     }
 
     function _contains(string memory text, string memory needle) internal pure returns (bool) {

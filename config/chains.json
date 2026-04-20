@@ -30,7 +30,16 @@
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "fuji",
     "mockUsdc": true,
-    "role": "spoke"
+    "role": "spoke",
+    "bootstrap": {
+      "enabled": true,
+      "basketName": "Fuji Bootstrap Basket",
+      "assetSymbol": "USDC",
+      "reserveAmount": "100000000000",
+      "depositFeeBps": "0",
+      "redeemFeeBps": "0",
+      "minReserveBps": "1000"
+    }
   },
   "arbitrum-sepolia": {
     "chainId": 421614,
@@ -41,6 +50,15 @@
     "gmxVault": "0x0000000000000000000000000000000000000000",
     "rpcAlias": "arbitrum_sepolia",
     "mockUsdc": true,
-    "role": "spoke"
+    "role": "spoke",
+    "bootstrap": {
+      "enabled": true,
+      "basketName": "Arbitrum Sepolia Bootstrap Basket",
+      "assetSymbol": "USDC",
+      "reserveAmount": "100000000000",
+      "depositFeeBps": "0",
+      "redeemFeeBps": "0",
+      "minReserveBps": "1000"
+    }
   }
 }

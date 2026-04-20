@@ -12,6 +12,7 @@ export type MultiChainSubgraphQueryOpts<TRaw, TResult> = {
   aggregate: (results: Map<DeploymentTarget, TRaw>) => TResult;
   enabled?: boolean;
   staleTime?: number;
+  runInSingleMode?: boolean;
 };
 
 /**
@@ -32,5 +33,6 @@ export function useMultiChainSubgraphQuery<TRaw, TResult>(
     aggregate: opts.aggregate,
     enabled: opts.enabled,
     staleTime: opts.staleTime,
+    runInSingleMode: opts.runInSingleMode,
   });
 }

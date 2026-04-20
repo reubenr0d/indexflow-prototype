@@ -15,7 +15,7 @@ npm run local:dev
 npm run redeploy:local
 ```
 
-`local:dev` sets `NEXT_PUBLIC_SUBGRAPH_URL` to the local graph-node automatically. The dev server picks up contract address changes in `src/config/local-deployment.json` via HMR.
+The dev server picks up contract address changes in `src/config/local-deployment.json` via HMR.
 
 See the root `README.md` **Local Development** section for full details.
 
@@ -31,23 +31,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Subgraph Configuration
 
-Set subgraph endpoints to enable hybrid GraphQL + RPC reads:
+Configure subgraph endpoints in `src/config/subgraphs.json` to enable hybrid GraphQL + RPC reads:
 
 ```bash
-# Per-chain subgraph URLs (preferred for multi-chain)
-NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA=https://api.studio.thegraph.com/query/<id>/<slug>/version/latest
-NEXT_PUBLIC_SUBGRAPH_URL_FUJI=https://api.studio.thegraph.com/query/<id>/<slug>/version/latest
-
-# Fallback for all chains without a dedicated URL (set automatically by local:dev)
-NEXT_PUBLIC_SUBGRAPH_URL=http://localhost:8000/subgraphs/name/indexflow-prototype
+{
+  "sepolia": "https://api.studio.thegraph.com/query/<id>/<slug>/version/latest",
+  "fuji": "https://api.studio.thegraph.com/query/<id>/<slug>/version/latest"
+}
 ```
-
-`npm run local:dev` sets the fallback automatically.
 
 Read policy:
 
-- Subgraph URL set and healthy: indexed/list/history views use subgraph-first.
-- URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
+- Per-chain URL set and healthy: indexed/list/history views use subgraph-first.
+- Per-chain URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
 - Live-critical values (wallet balances and risk state) continue to read from RPC.
 - "All Chains" view queries all configured per-chain subgraphs in parallel and aggregates results.
 

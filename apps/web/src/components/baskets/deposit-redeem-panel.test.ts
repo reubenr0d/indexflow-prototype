@@ -3,6 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
   DepositRedeemPanel,
+  getSimulationErrorMessage,
   getModeStateOnSwitch,
   getQuoteAmountLabel,
 } from "./deposit-redeem-panel";
@@ -89,5 +90,14 @@ describe("DepositRedeemPanel", () => {
     expect(getPanelPrimaryActionMeta({ hasAddress: false, mode: "deposit", needsApproval: false, isProcessing: false }).label).toBe("Connect Wallet");
     expect(getPanelPrimaryActionMeta({ hasAddress: true, mode: "deposit", needsApproval: true, isProcessing: false }).label).toBe("Approve USDC");
     expect(getPanelPrimaryActionMeta({ hasAddress: true, mode: "redeem", needsApproval: false, isProcessing: false }).label).toBe("Redeem");
+  });
+
+  it("maps routing guard and liquidity simulation failures to explicit copy", () => {
+    expect(
+      getSimulationErrorMessage("deposit", new Error("execution reverted: Chain not accepting deposits")),
+    ).toContain("not accepting deposits");
+    expect(
+      getSimulationErrorMessage("redeem", new Error("execution reverted: Insufficient liquidity")),
+    ).toContain("Not enough idle USDC");
   });
 });

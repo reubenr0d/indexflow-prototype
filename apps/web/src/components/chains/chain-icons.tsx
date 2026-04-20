@@ -127,7 +127,7 @@ export const CHAIN_META: Record<string, ChainMeta> = {
   "8453": base,
   "10": optimism,
   "11155111": sepolia,
-  // CCIP chain selectors (used by PoolReserveRegistry)
+  // CCIP chain selectors (used by StateRelay routing tables)
   "4949039107694359620": arbitrum,
   "15971525489660198786": base,
   "3734403246176062136": optimism,

@@ -11,7 +11,7 @@ Last updated: 2026-04-17
 | Hub contracts | Ethereum Sepolia (`11155111`) | Full basket/perp protocol: BasketVault, VaultAccounting, GMX pool, OracleAdapter, StateRelay | `apps/web/src/config/sepolia-deployment.json` |
 | Spoke contracts | Avalanche Fuji (`43113`), and future spokes | Deposit-only: BasketVault, BasketFactory, StateRelay, RedemptionReceiver (no perp module) | `apps/web/src/config/fuji-deployment.json` |
 | Keeper service | Node.js (self-hosted or Cloud Run) | Epoch loop: routing weights + PnL adjustments posted to StateRelay on every chain | `services/keeper/` |
-| Subgraph | The Graph Studio (per-chain) | Indexed read model for web and push-trigger scans | `NEXT_PUBLIC_SUBGRAPH_URL_{SEPOLIA,FUJI}` (web) and `SUBGRAPH_URL` (push worker) |
+| Subgraph | The Graph Studio (per-chain) | Indexed read model for web and push-trigger scans | `apps/web/src/config/subgraphs.json` (web) and `SUBGRAPH_URL` (push worker) |
 | Push worker | Google Cloud Run + Cloud Scheduler + Firestore | Web Push subscription, preferences, dispatch, and digest delivery | `.github/workflows/deploy-production.yml` + GCP secrets |
 
 Google Cloud resources in this repo are used only for serverless push notifications. They are not used for contract deployment, execution, or oracle keeper writes.
@@ -71,7 +71,7 @@ Config file: `apps/web/src/config/local-deployment.json`
 
 Runtime note: the web app maps `anvil` to local deployment addresses, persists the selected target in browser `localStorage`, and keeps it aligned with the wallet chain selector in the connect button.
 
-Subgraph note: per-chain subgraph URLs (`NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA`, `NEXT_PUBLIC_SUBGRAPH_URL_FUJI`) take precedence; `NEXT_PUBLIC_SUBGRAPH_URL` is the fallback for chains without a dedicated URL. If no URL is available for a chain, the app falls back to RPC data paths. The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
+Subgraph note: web reads per-chain subgraph URLs from `apps/web/src/config/subgraphs.json`. If no URL is configured for a chain, the app falls back to RPC data paths for that chain. The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
 
 - `basketFactory`: `0xD5ac451B0c50B9476107823Af206eD814a2e2580`
 - `vaultAccounting`: `0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9`
@@ -184,7 +184,7 @@ Runtime: The Graph Studio
 
 Purpose: indexed query layer used by:
 
-- web app read paths (`NEXT_PUBLIC_SUBGRAPH_URL_{SEPOLIA,FUJI}` or fallback `NEXT_PUBLIC_SUBGRAPH_URL`)
+- web app read paths (`apps/web/src/config/subgraphs.json`)
 - push-worker trigger scans (`SUBGRAPH_URL`)
 
 Canonical workflow:
@@ -199,7 +199,7 @@ NETWORK=sepolia SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
 
 After deploy:
 
-- set web app per-chain subgraph URLs (`NEXT_PUBLIC_SUBGRAPH_URL_SEPOLIA`, `NEXT_PUBLIC_SUBGRAPH_URL_FUJI`) or fallback `NEXT_PUBLIC_SUBGRAPH_URL` to the Studio query URLs (Vercel + local env as needed)
+- set web app per-chain subgraph URLs in `apps/web/src/config/subgraphs.json` to the Studio query URLs
 - set push worker `SUBGRAPH_URL` to the same or equivalent production query URL
 
 ## Google Cloud deployment (push notifications only)

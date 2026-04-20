@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ──────────────────────────────────────────────────────────────────────
-# deploy-chain.sh — Deploy full stack + coordination + peer wiring
+# deploy-chain.sh — Deploy hub/spoke stacks + StateRelay wiring
 #
 # Usage:
 #   ./scripts/deploy-chain.sh <chain-name> [--peer <existing-chain>]
@@ -21,8 +21,8 @@ FORGE_FLAGS="--broadcast -vvv"
 usage() {
   echo "Usage: $0 <chain-name> [--peer <existing-chain>]"
   echo ""
-  echo "Deploys full stack + coordination layer to <chain-name>."
-  echo "If --peer is specified, wires cross-chain peers in both directions."
+  echo "Deploys stack to <chain-name> and wires StateRelay to vaults."
+  echo "If --peer is specified, also wires peer chain vaults and optional spoke trusted sender."
   exit 1
 }
 
@@ -55,9 +55,7 @@ if ! jq -e ".[\"$CHAIN\"]" "$CHAINS_FILE" > /dev/null 2>&1; then
 fi
 
 RPC_ALIAS=$(jq -r ".[\"$CHAIN\"].rpcAlias" "$CHAINS_FILE")
-CCIP_ROUTER=$(jq -r ".[\"$CHAIN\"].ccipRouter" "$CHAINS_FILE")
 CHAIN_ROLE=$(jq -r ".[\"$CHAIN\"].role" "$CHAINS_FILE")
-ZERO_ADDR="0x0000000000000000000000000000000000000000"
 
 echo "═══════════════════════════════════════════════"
 echo "  Deploying to: $CHAIN (rpc: $RPC_ALIAS, role: $CHAIN_ROLE)"
@@ -86,31 +84,15 @@ if [ ! -f "$DEPLOY_JSON" ]; then
 fi
 echo "[1/3] Base stack deployed. Config: $DEPLOY_JSON"
 
-# ── Step 2: Deploy coordination layer (hub only, if CCIP configured) ─
-# Spoke chains get StateRelay + RedemptionReceiver from DeploySpoke.s.sol.
-# Hub chains optionally deploy legacy coordination contracts (IntentRouter, etc.)
-# which are now deprecated but kept for backward compatibility.
-if [ "$CHAIN_ROLE" = "hub" ] && [ "$CCIP_ROUTER" != "$ZERO_ADDR" ]; then
-  echo ""
-  echo "[2/3] Deploying legacy coordination layer (hub only)..."
+echo ""
+echo "[2/3] Wiring StateRelay on $CHAIN..."
+CHAIN="$CHAIN" "$FORGE" script script/WireStateRelay.s.sol:WireStateRelay \
+  --root "$REPO_ROOT" \
+  --rpc-url "$RPC_ALIAS" \
+  $FORGE_FLAGS
+echo "[2/3] StateRelay wiring complete on $CHAIN."
 
-  if [ -z "${TREASURY:-}" ]; then
-    TREASURY=$(jq -r '.basketFactory' "$DEPLOY_JSON")
-    echo "  TREASURY not set, defaulting to deployer (basketFactory owner)"
-  fi
-
-  CHAIN="$CHAIN" TREASURY="$TREASURY" "$FORGE" script script/DeployCoordination.s.sol:DeployCoordination \
-    --root "$REPO_ROOT" \
-    --rpc-url "$RPC_ALIAS" \
-    $FORGE_FLAGS
-
-  echo "[2/3] Coordination layer deployed."
-else
-  echo ""
-  echo "[2/3] Skipping legacy coordination (spoke chain or CCIP router is zero)"
-fi
-
-# ── Step 3: Wire peers (if --peer specified) ─────────────────────────
+# ── Step 3: Wire peer StateRelay/trusted sender (if --peer specified) ─
 if [ -n "$PEER_CHAIN" ]; then
   if ! jq -e ".[\"$PEER_CHAIN\"]" "$CHAINS_FILE" > /dev/null 2>&1; then
     echo "Error: peer chain '$PEER_CHAIN' not found in $CHAINS_FILE"
@@ -125,27 +107,57 @@ if [ -n "$PEER_CHAIN" ]; then
     exit 1
   fi
 
+  PEER_ROLE=$(jq -r ".[\"$PEER_CHAIN\"].role" "$CHAINS_FILE")
+  THIS_SELECTOR=$(jq -r ".[\"$CHAIN\"].ccipChainSelector" "$CHAINS_FILE")
+  PEER_SELECTOR=$(jq -r ".[\"$PEER_CHAIN\"].ccipChainSelector" "$CHAINS_FILE")
+
+  HUB_CHAIN=""
+  HUB_SELECTOR=""
+  SPOKE_CHAIN=""
+  SPOKE_RPC=""
+  if [ "$CHAIN_ROLE" = "hub" ] && [ "$PEER_ROLE" = "spoke" ]; then
+    HUB_CHAIN="$CHAIN"
+    HUB_SELECTOR="$THIS_SELECTOR"
+    SPOKE_CHAIN="$PEER_CHAIN"
+    SPOKE_RPC="$PEER_RPC_ALIAS"
+  elif [ "$CHAIN_ROLE" = "spoke" ] && [ "$PEER_ROLE" = "hub" ]; then
+    HUB_CHAIN="$PEER_CHAIN"
+    HUB_SELECTOR="$PEER_SELECTOR"
+    SPOKE_CHAIN="$CHAIN"
+    SPOKE_RPC="$RPC_ALIAS"
+  fi
+
+  HUB_SENDER_VALUE="${HUB_SENDER:-}"
+  if [ -z "$HUB_SENDER_VALUE" ] && [ -n "${PRIVATE_KEY:-}" ]; then
+    HUB_SENDER_VALUE=$(cast wallet address "$PRIVATE_KEY" 2>/dev/null || true)
+  fi
+
   echo ""
-  echo "[3/3] Wiring peers: $CHAIN <-> $PEER_CHAIN"
-
-  echo "  Wiring $CHAIN -> $PEER_CHAIN..."
-  LOCAL_CHAIN="$CHAIN" REMOTE_CHAIN="$PEER_CHAIN" \
-    "$FORGE" script script/WireCrossChainPeers.s.sol:WireCrossChainPeers \
-    --root "$REPO_ROOT" \
-    --rpc-url "$RPC_ALIAS" \
-    $FORGE_FLAGS
-
-  echo "  Wiring $PEER_CHAIN -> $CHAIN..."
-  LOCAL_CHAIN="$PEER_CHAIN" REMOTE_CHAIN="$CHAIN" \
-    "$FORGE" script script/WireCrossChainPeers.s.sol:WireCrossChainPeers \
+  echo "[3/3] Wiring StateRelay on peer chain: $PEER_CHAIN"
+  CHAIN="$PEER_CHAIN" "$FORGE" script script/WireStateRelay.s.sol:WireStateRelay \
     --root "$REPO_ROOT" \
     --rpc-url "$PEER_RPC_ALIAS" \
     $FORGE_FLAGS
+
+  if [ -n "$SPOKE_CHAIN" ] && [ -n "$HUB_SELECTOR" ] && [ -n "$HUB_SENDER_VALUE" ]; then
+    echo "  Wiring spoke RedemptionReceiver trusted sender ($SPOKE_CHAIN <- $HUB_CHAIN)"
+    CHAIN="$SPOKE_CHAIN" HUB_CHAIN_SELECTOR="$HUB_SELECTOR" HUB_SENDER="$HUB_SENDER_VALUE" \
+      "$FORGE" script script/WireStateRelay.s.sol:WireStateRelay \
+      --root "$REPO_ROOT" \
+      --rpc-url "$SPOKE_RPC" \
+      $FORGE_FLAGS
+  fi
 
   echo "[3/3] Peer wiring complete."
 else
   echo ""
   echo "[3/3] No --peer specified, skipping peer wiring."
+fi
+
+if [ "$CHAIN" != "local" ]; then
+  echo ""
+  echo "[keeper] Running one StateRelay epoch (bootstrap subgraph /chains data)..."
+  sh "$REPO_ROOT/scripts/run-keeper-once.sh" || echo "Warning: keeper-once failed — run: npm run keeper:once (or set SKIP_KEEPER_ONCE=1 to skip next time)"
 fi
 
 echo ""

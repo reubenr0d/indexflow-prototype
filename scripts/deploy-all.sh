@@ -192,5 +192,20 @@ if [ ${#FAILED_CHAINS[@]} -gt 0 ]; then
   exit 1
 fi
 
+if ! $DRY_RUN && [ ${#DEPLOYED_CHAINS[@]} -gt 0 ]; then
+  run_keeper=false
+  for c in "${DEPLOYED_CHAINS[@]}"; do
+    if [ "$c" != "local" ]; then
+      run_keeper=true
+      break
+    fi
+  done
+  if $run_keeper; then
+    echo ""
+    info "Running keeper once (StateRelay bootstrap)..."
+    sh "$REPO_ROOT/scripts/run-keeper-once.sh" || warn "keeper-once failed — run: npm run keeper:once"
+  fi
+fi
+
 echo ""
 success "All deployments complete."

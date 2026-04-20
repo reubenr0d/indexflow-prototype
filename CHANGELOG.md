@@ -13,6 +13,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-20] Subgraph `networks.json` missing `stateRelay` entry (still had legacy `poolReserveRegistry`/`intentRouter`), causing deployed subgraph to not index `StateUpdated` events and `/chains` page to show no data. Ran `sync:networks`, set `stateRelay.startBlock` to keeper update block, redeployed to The Graph Studio (v0.4.4).
+- [2026-04-20] Keeper service `PROJECT_ROOT` resolved one directory above the repo when loading `config/chains.json` and deployment JSONs, causing immediate startup failure; path now uses three parent segments from `services/keeper/src` (and `dist`).
 - [2026-04-19] Per-vault position tracking in `VaultAccounting`: track vault-specific size, collateral, and blended average entry price instead of reading GMX aggregate values. Fixes incorrect PnL attribution when multiple vaults trade the same (asset, direction) pair. `openPosition` now accumulates size and blends entry prices on repeated increases; `closePosition` uses vault-specific size for proportional collateral-at-risk calculation; `getVaultPnL` calculates unrealized PnL using each vault's own entry price via new `_calculateDelta` helper. Position count now only increments for new positions (not repeated increases). New tests: `test_multiVault_sameLongPosition_*`, `test_multiVault_repeatedIncrease_*`, `test_multiVault_partialClose_*`.
 
 ### Changed
@@ -31,6 +33,7 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-20] Post-deploy and post-seed keeper bootstrap: `npm run keeper:once` (`scripts/run-keeper-once.sh`) runs a single `StateRelay` epoch (`KEEPER_ONCE=1`); wired to `deploy:sepolia`, `deploy:fuji`, `seed:sepolia`, `scripts/deploy-chain.sh` (non-local), `scripts/deploy-all.sh` (non-local deploys), and `scripts/deploy-coordination.sh`. Set `SKIP_KEEPER_ONCE=1` to skip.
 - [2026-04-19] `scripts/resume-forge-broadcast.sh`: resumes `forge script --broadcast --resume` with `--slow`, long `--timeout` (default 30m), exponential sleep between attempts, optional auto-`source` of repo `.env`, Foundry bin appended to `PATH`, and optional `FORGE_RPC_OVERRIDE` when the default RPC drops receipt polling.
 - [2026-04-18] Complete cross-chain coordination deployment infrastructure: `Deploy.s.sol` now deploys `StateRelay` on hub chains, `DeploySpoke.s.sol` deploys `StateRelay` + `RedemptionReceiver` on spoke chains, `deploy-chain.sh` uses correct script based on chain role from `config/chains.json`, new `WireStateRelay.s.sol` script wires vaults to StateRelay and RedemptionReceiver trusted senders post-deploy, new `deploy-coordination.sh` orchestrates full hub+spoke deployment with wiring.
 - [2026-04-17] Coordination layer redeployed to Sepolia with current core contracts: `PoolReserveRegistry` (0xEA3F5EC162F0b583B10E2e14506aC1e0aD4Cf449), `CCIPReserveMessenger` (0x26ffdD8c87c4057C13e8Ce3491953Bd1e4B6Fe6B), `IntentRouter` proxy (0xa71220762Ff6C0e8D55d492da3265D56C279d2cE), `CrossChainIntentBridge` (0x1aC98b06a556815C1e0FfE46fdD69Ed489435b8F), `OracleConfigQuorum` (0x446A26005bc82FcC7eB725413229ecBF65366548). Previous coordination deployment was wired to stale core contracts after Deploy.s.sol redeploy.

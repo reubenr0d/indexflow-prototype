@@ -124,10 +124,12 @@ export const TOOLTIP_COPY = {
   coordActiveChains: "Number of chains with a pool reserve snapshot in the registry.",
   coordPendingRedemptions:
     "Cross-chain redemptions awaiting keeper fill via CCIP from the hub chain.",
-  coordPendingIntents:
-    "Intents currently in pending state: submitted to the router and awaiting execution, refund, or further coordination.",
-  intentStatus:
-    "Recent deposit and redemption intents across chains: type, amount, status (pending, in flight, executed, refunded), and timing. Appears when the subgraph indexes intent router events.",
+  coordWeightIntegrity:
+    "Sanity check that keeper-posted routing weights sum to exactly 10,000 basis points. A mismatch indicates malformed relay state.",
+  coordKeeperFreshness:
+    "Time since the most recent StateRelay update observed by the indexer. Fresh updates keep deposit routing and pricing adjustments reliable.",
+  coordStaleChains:
+    "Number of chains whose latest relay update is older than the expected keeper window.",
 
   chainPoolDepth:
     "Total USDC in the GMX execution pool on this chain. Deeper pools support larger positions with less slippage.",
