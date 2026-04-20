@@ -2,9 +2,38 @@
 
 import { AdminSidebar } from "@/components/layout/admin-sidebar";
 import { isPrivyConfigured } from "@/config/privy";
-import { usePrivy } from "@privy-io/react-auth";
+import { usePrivy, useConnectWallet, useWallets } from "@privy-io/react-auth";
 import { useAccount } from "wagmi";
-import { Shield } from "lucide-react";
+import { Shield, Wallet } from "lucide-react";
+
+function AdminWalletConnect() {
+  const { connectWallet } = useConnectWallet();
+  const { wallets } = useWallets();
+  const externalWallet = wallets.find((w) => w.walletClientType !== "privy");
+
+  if (externalWallet) {
+    return (
+      <div className="flex items-center gap-2 rounded-md border border-app-border bg-app-surface px-3 py-1.5 text-sm">
+        <Wallet className="h-4 w-4 text-app-accent" />
+        <span className="text-app-muted">Admin:</span>
+        <span className="font-mono text-app-text">
+          {externalWallet.address.slice(0, 6)}...{externalWallet.address.slice(-4)}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => connectWallet()}
+      className="flex items-center gap-2 rounded-md border border-app-border bg-app-surface px-3 py-1.5 text-sm font-medium text-app-text transition-colors hover:border-app-border-strong hover:bg-app-surface-hover"
+    >
+      <Wallet className="h-4 w-4" />
+      Connect Admin Wallet
+    </button>
+  );
+}
 
 function PrivyAdminGate({ children }: { children: React.ReactNode }) {
   const { ready, authenticated } = usePrivy();
@@ -51,7 +80,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <Gate>
       <div className="flex min-h-[calc(100vh-3.5rem)]">
         <AdminSidebar />
-        <div className="flex-1 pb-20 lg:pb-0">{children}</div>
+        <div className="flex-1 pb-20 lg:pb-0">
+          {isPrivyConfigured && (
+            <div className="flex justify-end border-b border-app-border bg-app-bg-subtle px-4 py-2">
+              <AdminWalletConnect />
+            </div>
+          )}
+          {children}
+        </div>
       </div>
     </Gate>
   );

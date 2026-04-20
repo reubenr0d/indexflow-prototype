@@ -47,8 +47,8 @@
       "startBlock": 0
     },
     "stateRelay": {
-      "address": "0x26f2457dff4b4fad3a153efe6e3d1a95609a25a6",
-      "startBlock": 10696760
+      "address": "0xB837E0d12b16e14C57d829337578ed4111479CD9",
+      "startBlock": 10697050
     }
   },
   "fuji": {
@@ -73,8 +73,8 @@
       "startBlock": 0
     },
     "stateRelay": {
-      "address": "0x7c00248d9b1435b82ACf2F44D1E9634D0876ea49",
-      "startBlock": 0
+      "address": "0x0A564071Fb11A0b84314f0B78AC69C5742Db22A2",
+      "startBlock": 54370513
     }
   }
 }

@@ -180,6 +180,7 @@ async function writeStateUpdate(
   ctx: ChainContext,
   chains: bigint[],
   weights: bigint[],
+  amounts: bigint[],
   vaults: string[],
   pnlAdjustments: bigint[],
   ts: number,
@@ -196,7 +197,7 @@ async function writeStateUpdate(
   );
 
   log(`  → Sending updateState to ${ctx.name} (${vaults.length} vaults)`);
-  const tx = await relay.updateState(chains, weights, vaults, pnlAdjustments, ts);
+  const tx = await relay.updateState(chains, weights, amounts, vaults, pnlAdjustments, ts);
   const receipt = await tx.wait();
   log(`  ✓ ${ctx.name} updateState confirmed in block ${receipt?.blockNumber}`);
 }
@@ -254,6 +255,19 @@ async function runEpoch(contexts: ChainContext[]) {
   const weights = routingWeights.map((w) => w.weightBps);
   const ts = Math.floor(Date.now() / 1000);
 
+  // Build amounts array (idle USDC per chain, in same order as chains)
+  const amounts: bigint[] = chains.map((chainSel) => {
+    const result = readResults.find(
+      (r) => BigInt(r.ctx.config.ccipChainSelector) === chainSel,
+    );
+    return result?.idleUsdc ?? 0n;
+  });
+
+  log("  Idle USDC amounts:");
+  for (let i = 0; i < chains.length; i++) {
+    log(`    chain ${chains[i]}: ${ethers.formatUnits(amounts[i], 6)} USDC`);
+  }
+
   // Collect all vaults and their PnL adjustments across chains.
   // Each vault on a given chain gets that chain's pnlAdjustment.
   const allVaults: string[] = [];
@@ -273,7 +287,7 @@ async function runEpoch(contexts: ChainContext[]) {
 
   // Write phase: post state to every chain's StateRelay
   const writePromises = contexts.map((ctx) =>
-    writeStateUpdate(ctx, chains, weights, allVaults, allPnl, ts).catch((err) => {
+    writeStateUpdate(ctx, chains, weights, amounts, allVaults, allPnl, ts).catch((err) => {
       logError(`Failed to update ${ctx.name}`, err);
     }),
   );

@@ -105,13 +105,18 @@ contract CrossChainIntegrationTest is Test {
         ts++;
         vm.warp(ts);
 
+        uint256[] memory a = new uint256[](chains.length);
+        for (uint256 i = 0; i < chains.length; i++) {
+            a[i] = 100_000e6;
+        }
+
         address[] memory v = new address[](1);
         int256[] memory p = new int256[](1);
         v[0] = vault;
         p[0] = pnlAdj;
 
         vm.prank(keeperAddr);
-        relay.updateState(chains, weights, v, p, ts);
+        relay.updateState(chains, weights, a, v, p, ts);
     }
 
     function _twoChainWeights(uint256 w1, uint256 w2)

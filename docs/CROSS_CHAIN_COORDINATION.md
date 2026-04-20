@@ -209,6 +209,38 @@ The frontend reads `StateRelay.getRoutingWeights()` across all chains and presen
 3. The user approves and signs one transaction per target chain.
 4. Each chain's `BasketVault.deposit()` independently enforces the `minDepositWeightBps` guard.
 
+### Automated Multi-Chain Deposit Flow (Privy Users)
+
+For users authenticated via Privy with embedded wallets, the frontend provides an automated multi-chain deposit flow that handles all transactions seamlessly:
+
+1. **Routing Preview:** When the user enters a deposit amount and has "All Chains" view mode selected, the UI shows a routing breakdown with chain names, allocation percentages, and per-chain amounts.
+
+2. **Confirmation:** A slide-up drawer presents the full routing breakdown with a visual bar chart. The user confirms once to start all transactions.
+
+3. **Parallel Execution:** All chain transactions execute simultaneously:
+   - For each target chain, the wallet switches chains automatically
+   - If USDC allowance is insufficient, an approve transaction is sent first
+   - The deposit transaction follows immediately after approval
+   - All chains process in parallel, not sequentially
+
+4. **Status Tracking:** Per-chain status indicators show:
+   - Switching chain
+   - Approving USDC
+   - Depositing
+   - Success / Error
+
+5. **Minimizable UI:** Users can minimize the deposit drawer to a floating pill showing progress (e.g., "Depositing... 2/3 chains"). Transactions continue in the background.
+
+6. **Gas Sponsorship:** When using Privy embedded wallets, gas fees are sponsored via Privy's `sendTransaction({ sponsor: true })` — users pay no gas.
+
+**Key components:**
+- `useParallelChainDeposits` hook — manages parallel execution state
+- `useRoutingWeights` hook — fetches weights from `StateRelay`
+- `MultiChainDepositDrawer` — the UI flow (preview → executing → complete)
+- `ChainDepositRow` — per-chain status display
+
+**Fallback:** If routing weights are unavailable or the user is not using Privy, the standard single-chain deposit flow is used.
+
 ## Trust Model and Failure Modes
 
 | Risk | Mitigation |

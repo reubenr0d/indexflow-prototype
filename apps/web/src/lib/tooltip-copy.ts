@@ -110,6 +110,18 @@ export const TOOLTIP_COPY = {
   txConfirmed: "The current transaction confirmed successfully.",
   txFailed: "The current transaction failed and can be retried after checking the error.",
 
+  // Multi-chain deposit flow
+  multiChainDeposit:
+    "Automated deposit flow that splits your USDC across multiple chains based on current routing weights. All transactions execute in parallel for fastest completion.",
+  multiChainDepositRouting:
+    "Your deposit is automatically distributed across chains based on keeper-posted routing weights. Underweight chains receive more deposits, creating a self-balancing effect.",
+  multiChainDepositStatus:
+    "Real-time status for each chain's approval and deposit transactions. You can minimize this view and transactions will continue in the background.",
+  multiChainDepositMinimize:
+    "Minimize the deposit modal to a floating indicator. Transactions continue processing in the background and you can restore the full view at any time.",
+  multiChainDepositParallel:
+    "All chain transactions are executed simultaneously using Privy's embedded wallet. Gas fees are sponsored — you only need to approve the transactions once.",
+
   // Push notification settings
   pushMasterToggle: "Master switch for all real-time push notification categories.",
   pushDigestToggle: "Controls whether periodic digest notifications are sent.",

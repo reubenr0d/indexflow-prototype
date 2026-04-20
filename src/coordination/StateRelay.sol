@@ -21,6 +21,7 @@ contract StateRelay is IStateRelay, Ownable {
 
     uint64[] internal _chainSelectors;
     uint256[] internal _weights;
+    uint256[] internal _amounts;
 
     /// @notice Cached weight for this chain, updated on each `updateState` call.
     uint256 public localWeight;
@@ -66,18 +67,21 @@ contract StateRelay is IStateRelay, Ownable {
     function updateState(
         uint64[] calldata chains,
         uint256[] calldata weights,
+        uint256[] calldata amounts,
         address[] calldata vaults,
         int256[] calldata pnlAdjustments,
         uint48 ts
     ) external onlyKeeper {
         if (ts <= lastUpdateTime) revert StaleTimestamp();
         if (chains.length != weights.length) revert LengthMismatch();
+        if (chains.length != amounts.length) revert LengthMismatch();
         if (vaults.length != pnlAdjustments.length) revert LengthMismatch();
 
         _validateWeights(weights);
 
         _chainSelectors = chains;
         _weights = weights;
+        _amounts = amounts;
 
         // Cache this chain's weight for O(1) deposit guard
         uint256 cached;
@@ -114,11 +118,12 @@ contract StateRelay is IStateRelay, Ownable {
         uint256 len = _chainSelectors.length;
         chainSelectors = new uint64[](len);
         weights = new uint256[](len);
-        amounts = new uint256[](len); // zeros for compat
+        amounts = new uint256[](len);
 
         for (uint256 i = 0; i < len; i++) {
             chainSelectors[i] = _chainSelectors[i];
             weights[i] = _weights[i];
+            amounts[i] = i < _amounts.length ? _amounts[i] : 0;
         }
     }
 

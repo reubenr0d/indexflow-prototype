@@ -51,15 +51,17 @@ contract PendingRedemptionTest is Test {
     function _postPnL(int256 adj) internal {
         uint64[] memory c = new uint64[](1);
         uint256[] memory w = new uint256[](1);
+        uint256[] memory a = new uint256[](1);
         c[0] = localSelector;
         w[0] = 10000;
+        a[0] = 100_000e6;
         address[] memory v = new address[](1);
         int256[] memory p = new int256[](1);
         v[0] = address(vault);
         p[0] = adj;
 
         vm.prank(keeperAddr);
-        relay.updateState(c, w, v, p, uint48(block.timestamp));
+        relay.updateState(c, w, a, v, p, uint48(block.timestamp));
     }
 
     function testRedeem_instantWhenSufficientLocal() public {

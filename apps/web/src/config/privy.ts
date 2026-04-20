@@ -8,8 +8,11 @@ export const isPrivyConfigured = privyAppId.length > 0;
 export const privyConfig: PrivyClientConfig = {
   embeddedWallets: {
     ethereum: {
-      createOnLogin: "users-without-wallets",
+      createOnLogin: "all-users",
     },
+  },
+  externalWallets: {
+    disableAllExternalWallets: true,
   },
   appearance: {
     walletChainType: "ethereum-only",

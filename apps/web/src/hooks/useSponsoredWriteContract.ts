@@ -6,7 +6,7 @@ import {
   useWriteContract as useWagmiWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { useSendTransaction } from "@privy-io/react-auth";
+import { useSendTransaction, useWallets } from "@privy-io/react-auth";
 import { isPrivyConfigured } from "@/config/privy";
 
 type WriteParams = {
@@ -16,6 +16,42 @@ type WriteParams = {
   args?: readonly unknown[];
   value?: bigint;
 };
+
+export class SponsorshipError extends Error {
+  public readonly originalError: Error;
+  public readonly isGasRelated: boolean;
+
+  constructor(message: string, originalError: Error, isGasRelated: boolean) {
+    super(message);
+    this.name = "SponsorshipError";
+    this.originalError = originalError;
+    this.isGasRelated = isGasRelated;
+  }
+}
+
+function isSponsorshipFailure(error: Error): boolean {
+  const message = error.message.toLowerCase();
+  return (
+    message.includes("insufficient") ||
+    message.includes("gas") ||
+    message.includes("sponsor") ||
+    message.includes("funds") ||
+    message.includes("balance")
+  );
+}
+
+function wrapSponsorshipError(error: Error): Error {
+  if (isSponsorshipFailure(error)) {
+    return new SponsorshipError(
+      `Gas sponsorship failed: ${error.message}. ` +
+        "Please verify that gas sponsorship is enabled in the Privy Dashboard, " +
+        "the correct chains are configured, and client-side transactions are allowed.",
+      error,
+      true
+    );
+  }
+  return error;
+}
 
 /**
  * Drop-in replacement for wagmi's `useWriteContract` that sponsors gas
@@ -36,10 +72,14 @@ export function useSponsoredWriteContract() {
 
 function useSponsoredInner() {
   const { sendTransaction } = useSendTransaction();
+  const { wallets } = useWallets();
   const [hash, setHash] = useState<`0x${string}` | undefined>();
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const isCallingRef = useRef(false);
+
+  const activeWallet = wallets.find((w) => w.walletClientType === "privy");
+  const isEmbeddedWallet = Boolean(activeWallet);
 
   const reset = useCallback(() => {
     setHash(undefined);
@@ -50,6 +90,17 @@ function useSponsoredInner() {
   const writeContractAsync = useCallback(
     async (params: WriteParams): Promise<`0x${string}`> => {
       if (isCallingRef.current) throw new Error("Transaction already in progress");
+      
+      if (!isEmbeddedWallet) {
+        throw new SponsorshipError(
+          "Gas sponsorship requires a Privy embedded wallet. " +
+            "You are currently using an external wallet (e.g. MetaMask). " +
+            "Please log out and log back in with email or social login to use an embedded wallet.",
+          new Error("External wallet detected"),
+          true
+        );
+      }
+      
       isCallingRef.current = true;
       setIsPending(true);
       setError(null);
@@ -75,7 +126,8 @@ function useSponsoredInner() {
         setHash(txHash);
         return txHash;
       } catch (e) {
-        const err = e instanceof Error ? e : new Error(String(e));
+        const rawErr = e instanceof Error ? e : new Error(String(e));
+        const err = wrapSponsorshipError(rawErr);
         setError(err);
         throw err;
       } finally {
@@ -83,7 +135,7 @@ function useSponsoredInner() {
         isCallingRef.current = false;
       }
     },
-    [sendTransaction]
+    [sendTransaction, isEmbeddedWallet]
   );
 
   const writeContract = useCallback(

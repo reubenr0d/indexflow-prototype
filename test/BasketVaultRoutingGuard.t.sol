@@ -44,23 +44,28 @@ contract BasketVaultRoutingGuardTest is Test {
     function _postWeights(uint256 localWeight) internal {
         uint64[] memory c = new uint64[](1);
         uint256[] memory w = new uint256[](1);
+        uint256[] memory a = new uint256[](1);
         c[0] = localSelector;
         w[0] = localWeight;
+        a[0] = 100_000e6;
 
         if (localWeight < 10000) {
             c = new uint64[](2);
             w = new uint256[](2);
+            a = new uint256[](2);
             c[0] = localSelector;
             c[1] = 9999;
             w[0] = localWeight;
             w[1] = 10000 - localWeight;
+            a[0] = 100_000e6;
+            a[1] = 50_000e6;
         }
 
         address[] memory v = new address[](0);
         int256[] memory p = new int256[](0);
 
         vm.prank(keeper);
-        relay.updateState(c, w, v, p, nextTs);
+        relay.updateState(c, w, a, v, p, nextTs);
         nextTs++;
     }
 

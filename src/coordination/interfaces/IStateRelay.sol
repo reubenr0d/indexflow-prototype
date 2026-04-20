@@ -12,12 +12,14 @@ interface IStateRelay {
     /// @notice Post routing weights and per-vault PnL adjustments.
     /// @param chains CCIP chain selectors in the weight table.
     /// @param weights Basis-point weights (must sum to 10_000).
+    /// @param amounts Per-chain idle USDC amounts (6 decimals).
     /// @param vaults Vault addresses receiving PnL adjustments.
     /// @param pnlAdjustments Signed per-vault NAV adjustment (6 decimals, USDC scale).
     /// @param ts Keeper-sourced epoch timestamp; must be strictly greater than the last.
     function updateState(
         uint64[] calldata chains,
         uint256[] calldata weights,
+        uint256[] calldata amounts,
         address[] calldata vaults,
         int256[] calldata pnlAdjustments,
         uint48 ts
@@ -30,7 +32,7 @@ interface IStateRelay {
     /// @notice Full routing weight table posted by the keeper.
     /// @return chainSelectors Ordered chain selectors.
     /// @return weights Corresponding basis-point weights.
-    /// @return amounts Always zeros (compatibility placeholder for legacy consumers).
+    /// @return amounts Per-chain idle USDC amounts (6 decimals).
     function getRoutingWeights()
         external
         view

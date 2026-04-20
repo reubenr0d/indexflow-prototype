@@ -31,18 +31,19 @@ export function handleStateUpdated(event: StateUpdated): void {
 
   const chainSelectors = routing.value.value0;
   const weights = routing.value.value1;
+  const amounts = routing.value.value2;
   if (chainSelectors.length != weights.length) return;
 
   for (let i = 0; i < chainSelectors.length; i++) {
     const chainSelector = chainSelectors[i];
     const weight = weights[i];
+    const amount = i < amounts.length ? amounts[i] : BigInt.zero();
     const chain = getOrCreateChainPoolState(chainSelector);
 
-    // Keep compatibility with existing web reads that derive routing from
-    // twapPoolAmount proportions. Liquidity/utilization are unavailable on
-    // StateRelay and remain zero until pool snapshots are indexed.
+    // twapPoolAmount stores the routing weight for compatibility with existing queries
     chain.twapPoolAmount = weight;
-    chain.availableLiquidity = BigInt.zero();
+    // availableLiquidity now comes from keeper-posted idle USDC amounts
+    chain.availableLiquidity = amount;
     chain.reservedAmount = BigInt.zero();
     chain.utilizationBps = BigInt.zero();
     chain.snapshotTimestamp = event.params.timestamp;

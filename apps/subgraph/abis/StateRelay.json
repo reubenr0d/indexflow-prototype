@@ -275,6 +275,11 @@
         "internalType": "uint256[]"
       },
       {
+        "name": "amounts",
+        "type": "uint256[]",
+        "internalType": "uint256[]"
+      },
+      {
         "name": "vaults",
         "type": "address[]",
         "internalType": "address[]"

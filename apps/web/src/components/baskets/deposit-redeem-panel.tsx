@@ -26,8 +26,11 @@ import {
   getPanelPrimaryActionMeta,
   type PanelMode,
 } from "@/components/ui/icon-helpers";
-import { ArrowDownToLine, ArrowUpToLine } from "lucide-react";
+import { ArrowDownToLine, ArrowUpToLine, Layers } from "lucide-react";
 import { type Address } from "viem";
+import { MultiChainDepositDrawer } from "./multi-chain-deposit-drawer";
+import { SponsorshipErrorDialog, isSponsorshipError } from "./sponsorship-error-dialog";
+import { isPrivyConfigured } from "@/config/privy";
 
 type Mode = PanelMode;
 
@@ -71,9 +74,14 @@ export function DepositRedeemPanel({
 }: DepositRedeemPanelProps) {
   const [mode, setMode] = useState<Mode>("deposit");
   const [amount, setAmount] = useState("");
+  const [isMultiChainDrawerOpen, setIsMultiChainDrawerOpen] = useState(false);
+  const [showSponsorshipError, setShowSponsorshipError] = useState(false);
+  const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
   const { address } = useAccount();
-  const { chainId } = useDeploymentTarget();
+  const { chainId, viewMode } = useDeploymentTarget();
   const { usdc } = getContracts(chainId);
+
+  const isMultiChainEnabled = isPrivyConfigured && viewMode === "all";
 
   const { data: usdcBalance } = useUSDCBalance(usdc, address);
   const { data: allowance } = useUSDCAllowance(usdc, address, vault);
@@ -163,6 +171,22 @@ export function DepositRedeemPanel({
     fallbackMessage: "Deposit failed",
   });
 
+  useEffect(() => {
+    if (isDepositError && depositError && isSponsorshipError(depositError)) {
+      const msg = depositError instanceof Error ? depositError.message : String(depositError);
+      setSponsorshipErrorMessage(msg);
+      setShowSponsorshipError(true);
+    }
+  }, [isDepositError, depositError]);
+
+  useEffect(() => {
+    if (isApproveError && approveError && isSponsorshipError(approveError)) {
+      const msg = approveError instanceof Error ? approveError.message : String(approveError);
+      setSponsorshipErrorMessage(msg);
+      setShowSponsorshipError(true);
+    }
+  }, [isApproveError, approveError]);
+
   useContractErrorToast({
     writeError: redeemError,
     writeIsError: isRedeemError,
@@ -198,14 +222,19 @@ export function DepositRedeemPanel({
   const handleSubmit = () => {
     if (!address || parsedAmount === 0n) return;
 
-    if (mode === "deposit" && needsApproval) {
-      approve(usdc, vault, parsedAmount);
-      showToast("pending", "Approving USDC...");
+    if (blockedBySimulation) {
+      showToast("error", simulationErrorMessage ?? "Transaction is likely to fail.");
       return;
     }
 
-    if (blockedBySimulation) {
-      showToast("error", simulationErrorMessage ?? "Transaction is likely to fail.");
+    if (mode === "deposit" && isMultiChainEnabled) {
+      setIsMultiChainDrawerOpen(true);
+      return;
+    }
+
+    if (mode === "deposit" && needsApproval) {
+      approve(usdc, vault, parsedAmount);
+      showToast("pending", "Approving USDC...");
       return;
     }
 
@@ -217,6 +246,11 @@ export function DepositRedeemPanel({
 
     redeem(vault, parsedAmount);
     showToast("pending", "Redeeming...");
+  };
+
+  const handleMultiChainDepositSuccess = () => {
+    setAmount("");
+    showToast("success", "Multi-chain deposit complete");
   };
 
   return (
@@ -299,6 +333,15 @@ export function DepositRedeemPanel({
         </p>
       )}
 
+      {mode === "deposit" && isMultiChainEnabled && (
+        <div className="mb-3 flex items-center gap-2 rounded-md border border-app-accent/30 bg-app-accent/5 px-3 py-2">
+          <Layers className="h-4 w-4 text-app-accent" />
+          <p className="text-xs text-app-muted">
+            Multi-chain deposit enabled. Your deposit will be automatically routed across chains.
+          </p>
+        </div>
+      )}
+
       {!address ? (
         <Button variant="secondary" size="lg" className="w-full" disabled>
           <span className="inline-flex items-center gap-2">
@@ -315,11 +358,40 @@ export function DepositRedeemPanel({
           data-testid="deposit-redeem-submit"
         >
           <span className="inline-flex items-center gap-2">
-            {actionMeta.icon}
-            {actionMeta.label}
+            {mode === "deposit" && isMultiChainEnabled ? (
+              <>
+                <Layers className="h-4 w-4" />
+                Multi-Chain Deposit
+              </>
+            ) : (
+              <>
+                {actionMeta.icon}
+                {actionMeta.label}
+              </>
+            )}
           </span>
         </Button>
       )}
+
+      <MultiChainDepositDrawer
+        open={isMultiChainDrawerOpen}
+        onOpenChange={setIsMultiChainDrawerOpen}
+        amount={parsedAmount}
+        vaultAddress={vault}
+        sharePrice={sharePrice}
+        depositFeeBps={depositFeeBps}
+        onSuccess={handleMultiChainDepositSuccess}
+      />
+
+      <SponsorshipErrorDialog
+        open={showSponsorshipError}
+        onOpenChange={setShowSponsorshipError}
+        errorMessage={sponsorshipErrorMessage}
+        onRetry={() => {
+          setShowSponsorshipError(false);
+          handleSubmit();
+        }}
+      />
     </Card>
   );
 }

@@ -108,14 +108,14 @@ async function readChain(ctx) {
     return { ctx, vaults, idleUsdc, perpAllocated, hubPnL };
 }
 // ── Write phase ───────────────────────────────────────────────────
-async function writeStateUpdate(ctx, chains, weights, vaults, pnlAdjustments, ts) {
+async function writeStateUpdate(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
     if (!ctx.deployment.stateRelay) {
         log(`  ⚠ No stateRelay deployed on ${ctx.name}, skipping write`);
         return;
     }
     const relay = new ethers.Contract(ctx.deployment.stateRelay, StateRelayABI, ctx.signer);
     log(`  → Sending updateState to ${ctx.name} (${vaults.length} vaults)`);
-    const tx = await relay.updateState(chains, weights, vaults, pnlAdjustments, ts);
+    const tx = await relay.updateState(chains, weights, amounts, vaults, pnlAdjustments, ts);
     const receipt = await tx.wait();
     log(`  ✓ ${ctx.name} updateState confirmed in block ${receipt?.blockNumber}`);
 }
@@ -160,6 +160,15 @@ async function runEpoch(contexts) {
     const chains = routingWeights.map((w) => w.chainSelector);
     const weights = routingWeights.map((w) => w.weightBps);
     const ts = Math.floor(Date.now() / 1000);
+    // Build amounts array (idle USDC per chain, in same order as chains)
+    const amounts = chains.map((chainSel) => {
+        const result = readResults.find((r) => BigInt(r.ctx.config.ccipChainSelector) === chainSel);
+        return result?.idleUsdc ?? 0n;
+    });
+    log("  Idle USDC amounts:");
+    for (let i = 0; i < chains.length; i++) {
+        log(`    chain ${chains[i]}: ${ethers.formatUnits(amounts[i], 6)} USDC`);
+    }
     // Collect all vaults and their PnL adjustments across chains.
     // Each vault on a given chain gets that chain's pnlAdjustment.
     const allVaults = [];
@@ -173,7 +182,7 @@ async function runEpoch(contexts) {
         }
     }
     // Write phase: post state to every chain's StateRelay
-    const writePromises = contexts.map((ctx) => writeStateUpdate(ctx, chains, weights, allVaults, allPnl, ts).catch((err) => {
+    const writePromises = contexts.map((ctx) => writeStateUpdate(ctx, chains, weights, amounts, allVaults, allPnl, ts).catch((err) => {
         logError(`Failed to update ${ctx.name}`, err);
     }));
     await Promise.all(writePromises);
@@ -190,7 +199,11 @@ async function main() {
     log(`Active chains: ${contexts.map((c) => c.name).join(", ")}`);
     // Run first epoch immediately
     await runEpoch(contexts);
-    // Then loop
+    const runOnce = process.env.KEEPER_ONCE === "1" || process.env.KEEPER_ONCE === "true";
+    if (runOnce) {
+        log("KEEPER_ONCE set — exiting after one epoch.");
+        process.exit(0);
+    }
     setInterval(() => {
         runEpoch(contexts).catch((err) => {
             logError("Epoch failed", err);

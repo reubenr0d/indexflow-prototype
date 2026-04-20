@@ -45,13 +45,16 @@ contract BasketVaultGlobalNavTest is Test {
         c[0] = relay.localChainSelector();
         w[0] = 10000;
 
+        uint256[] memory a = new uint256[](1);
+        a[0] = 100_000e6;
+
         address[] memory v = new address[](1);
         int256[] memory p = new int256[](1);
         v[0] = vault;
         p[0] = adj;
 
         vm.prank(keeper);
-        relay.updateState(c, w, v, p, uint48(block.timestamp));
+        relay.updateState(c, w, a, v, p, uint48(block.timestamp));
     }
 
     function testPricingNav_spokeMode() public {
