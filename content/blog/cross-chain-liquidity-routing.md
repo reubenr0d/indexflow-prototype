@@ -14,11 +14,9 @@ We deleted the chain picker. IndexFlow's hub-and-spoke coordination layer posts 
 
 ## Why Hub-and-Spoke
 
-The first version of cross-chain coordination used a CCIP mesh: every chain broadcast pool state to every other chain, and an `IntentRouter` escrowed funds while keepers decided where to route them. That works for 2-3 chains. It does not work for 100.
+Hub-and-spoke keeps coordination costs linear in the number of chains. Sepolia is the hub -- the sole chain running the perpetual liquidity layer. Spoke chains are deposit-only: they accept USDC, mint basket shares, and hold reserves, but all perp execution happens on the hub.
 
-A mesh of N chains requires O(N²) CCIP messages per sync epoch. At 10 chains that's 90 messages. At 50 chains that's 2,450 messages. CCIP fees scale linearly per message, so the coordination layer becomes more expensive than the deposits it's routing.
-
-Hub-and-spoke collapses this to O(N). Sepolia is the hub -- the sole chain running the perpetual liquidity layer. Spoke chains are deposit-only: they accept USDC, mint basket shares, and hold reserves, but all perp execution happens on the hub. A `StateRelay` contract on each chain receives keeper-posted state (routing weights, global PnL adjustments) in a single transaction per epoch. No mesh, no quadratic messaging, no `IntentRouter` escrow.
+A `StateRelay` contract on each chain receives keeper-posted state (routing weights, global PnL adjustments) in a single transaction per epoch. The keeper reads every chain, computes the global table, and writes the result back to each chain directly. That keeps the coordination layer operationally simple even as the number of spokes grows.
 
 ## The Signal: Inverse-Proportional Routing
 
@@ -115,7 +113,7 @@ Each user gets a Privy smart wallet with the same address on every chain. Deposi
 
 ## What This Means
 
-Hub-and-spoke replaces the mesh coordination model with something that scales. Adding a new spoke chain requires deploying a `BasketVault`, a `StateRelay`, and registering the chain in the keeper's config. No new CCIP peer wiring, no quadratic message growth, no `IntentRouter` escrow complexity.
+Hub-and-spoke scales cleanly. Adding a new spoke chain requires deploying a `BasketVault`, a `StateRelay`, and registering the chain in the keeper's config. The keeper can then incorporate that chain into the routing table and PnL distribution loop without changing the core deposit flow.
 
 For spoke chains, the value proposition is pure: deposit infrastructure with routing discipline and share price consistency, backed by the hub's perp execution engine. For users, it means deposits split intelligently across chains without manual chain selection. For the protocol, it means scaling to 100+ chains without coordination overhead growing faster than TVL.
 
