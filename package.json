@@ -54,6 +54,7 @@
     "@chainlink/contracts-ccip": "^1.6.4",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@openzeppelin/contracts": "^5.2.0",
+    "permissionless": "^0.2.57",
     "zod": "^4.3.6"
   }
 }

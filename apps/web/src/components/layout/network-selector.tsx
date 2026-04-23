@@ -60,6 +60,7 @@ export function NetworkSelector() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        data-testid="network-selector-trigger"
         className={cn(
           "flex h-9 items-center gap-1.5 rounded-md border px-2.5 text-xs font-medium transition-colors",
           "border-app-border bg-app-surface text-app-text hover:border-app-border-strong hover:bg-app-surface-hover"
@@ -90,6 +91,7 @@ export function NetworkSelector() {
             <button
               type="button"
               onClick={handleSelectAll}
+              data-testid="network-option-all"
               className={cn(
                 "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
                 isAllChains
@@ -117,6 +119,7 @@ export function NetworkSelector() {
                   key={t}
                   type="button"
                   onClick={() => handleSelectChain(t)}
+                  data-testid={`network-option-${t}`}
                   className={cn(
                     "flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-sm transition-colors",
                     isActive

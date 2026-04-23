@@ -1,0 +1,43 @@
+name: Keeper
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: keeper-${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  keeper:
+    name: Keeper Epoch
+    runs-on: ubuntu-latest
+    env:
+      PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+      SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+      FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
+      ARBITRUM_SEPOLIA_RPC_URL: ${{ secrets.ARBITRUM_SEPOLIA_RPC_URL }}
+      KEEPER_ONCE: "1"
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Build keeper
+        run: npm --prefix services/keeper run build
+
+      - name: Run one keeper epoch
+        run: node services/keeper/dist/index.js

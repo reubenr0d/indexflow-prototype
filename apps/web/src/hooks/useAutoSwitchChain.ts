@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAccount, useChainId, useSwitchChain } from "wagmi";
 import { showToast } from "@/components/ui/toast";
-import { deploymentLabel, deploymentTargetForChainId } from "@/lib/deployment";
+import { deploymentLabel } from "@/lib/deployment";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 
 const COOLDOWN_MS = 30_000;
@@ -28,7 +28,7 @@ function setCooldownUntil(until: number) {
 export function useAutoSwitchChain() {
   const { isConnected, connector, address } = useAccount();
   const walletChainId = useChainId();
-  const { chainId: targetChainId, target, setTarget, viewMode } = useDeploymentTarget();
+  const { chainId: targetChainId, target, viewMode } = useDeploymentTarget();
   const { switchChainAsync } = useSwitchChain();
   const inFlightRef = useRef(false);
 
@@ -37,12 +37,6 @@ export function useAutoSwitchChain() {
     if (!isConnected) return;
     if (viewMode === "all") return;
 
-    const mappedTarget = deploymentTargetForChainId(walletChainId);
-    if (mappedTarget && mappedTarget !== target) {
-      setTarget(mappedTarget);
-      setCooldownUntil(0);
-      return;
-    }
     if (walletChainId === targetChainId) {
       setCooldownUntil(0);
       return;
@@ -69,5 +63,5 @@ export function useAutoSwitchChain() {
       .finally(() => {
         inFlightRef.current = false;
       });
-  }, [address, connector?.id, isConnected, setTarget, switchChainAsync, target, targetChainId, viewMode, walletChainId]);
+  }, [address, connector?.id, isConnected, switchChainAsync, target, targetChainId, viewMode, walletChainId]);
 }

@@ -16,11 +16,12 @@ interface SponsorshipErrorDialogProps {
   onOpenChange: (open: boolean) => void;
   errorMessage?: string;
   onRetry?: () => void;
+  actionLabel?: string;
 }
 
 const PRIVY_DASHBOARD_URL = "https://dashboard.privy.io/apps?page=gas_sponsorship";
 
-const TROUBLESHOOTING_STEPS = [
+export const SPONSORSHIP_TROUBLESHOOTING_STEPS = [
   {
     title: "Use Embedded Wallet",
     description: "Gas sponsorship only works with Privy embedded wallets. Log in with email/social, not MetaMask.",
@@ -31,7 +32,7 @@ const TROUBLESHOOTING_STEPS = [
   },
   {
     title: "Configure Chains",
-    description: "Enable sponsorship for Sepolia, Avalanche Fuji, and Arbitrum Sepolia",
+    description: "Enable native sponsorship for Sepolia and Arbitrum Sepolia. Fuji uses Smart Wallets (4337) with paymaster/bundler config.",
   },
   {
     title: "Allow Client Transactions",
@@ -45,6 +46,10 @@ const TROUBLESHOOTING_STEPS = [
     title: "Verify Balance",
     description: "Ensure your sponsorship account has sufficient funds",
   },
+  {
+    title: "Fallback: Add Sepolia ETH",
+    description: "If sponsorship is unavailable, fund the wallet with a small amount of Sepolia ETH for gas.",
+  },
 ];
 
 export function SponsorshipErrorDialog({
@@ -52,6 +57,7 @@ export function SponsorshipErrorDialog({
   onOpenChange,
   errorMessage,
   onRetry,
+  actionLabel = "this transaction",
 }: SponsorshipErrorDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -62,7 +68,7 @@ export function SponsorshipErrorDialog({
           </div>
           <DialogTitle className="text-center">Gas Sponsorship Failed</DialogTitle>
           <DialogDescription className="text-center">
-            Transaction gas could not be sponsored. This usually means Privy Dashboard settings need to be configured.
+            Gas could not be sponsored for {actionLabel}. This usually means wallet setup or Privy sponsorship settings need attention.
           </DialogDescription>
         </DialogHeader>
 
@@ -76,7 +82,7 @@ export function SponsorshipErrorDialog({
         <div className="space-y-2">
           <p className="text-sm font-medium text-app-text">Troubleshooting Steps</p>
           <ol className="space-y-2">
-            {TROUBLESHOOTING_STEPS.map((step, index) => (
+            {SPONSORSHIP_TROUBLESHOOTING_STEPS.map((step, index) => (
               <li
                 key={index}
                 className="flex gap-3 rounded-lg border border-app-border bg-app-bg-subtle p-2.5"

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
+import { useSmartWallets } from "@privy-io/react-auth/smart-wallets";
 import {
   useApproveUSDC,
   useDeposit,
@@ -78,13 +79,16 @@ export function DepositRedeemPanel({
   const [showSponsorshipError, setShowSponsorshipError] = useState(false);
   const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
   const { address } = useAccount();
+  const { client: smartWalletClient } = useSmartWallets();
   const { chainId, viewMode } = useDeploymentTarget();
   const { usdc } = getContracts(chainId);
+  const activeAddress =
+    chainId === 43113 ? (smartWalletClient?.account?.address as Address | undefined) : address;
 
   const isMultiChainEnabled = isPrivyConfigured && viewMode === "all";
 
-  const { data: usdcBalance } = useUSDCBalance(usdc, address);
-  const { data: allowance } = useUSDCAllowance(usdc, address, vault);
+  const { data: usdcBalance } = useUSDCBalance(usdc, activeAddress);
+  const { data: allowance } = useUSDCAllowance(usdc, activeAddress, vault);
 
   const {
     approve,
@@ -113,12 +117,12 @@ export function DepositRedeemPanel({
   const { error: simDepositError } = useSimulateDeposit(
     vault,
     mode === "deposit" ? parsedAmount : 0n,
-    mode === "deposit" ? address : undefined
+    mode === "deposit" ? activeAddress : undefined
   );
   const { error: simRedeemError } = useSimulateRedeem(
     vault,
     mode === "redeem" ? parsedAmount : 0n,
-    mode === "redeem" ? address : undefined
+    mode === "redeem" ? activeAddress : undefined
   );
   const simulationError = mode === "deposit" ? simDepositError : simRedeemError;
   const simulationErrorMessage = simulationError ? getSimulationErrorMessage(mode, simulationError) : null;
@@ -139,11 +143,15 @@ export function DepositRedeemPanel({
       : 0n;
 
   const isProcessing = isApproving || isDepositing || isRedeeming;
-  const blockedBySimulation = parsedAmount > 0n && !needsApproval && Boolean(simulationError);
+  const blockedBySimulation =
+    parsedAmount > 0n &&
+    !needsApproval &&
+    Boolean(simulationError) &&
+    !(mode === "deposit" && isMultiChainEnabled);
   const balance = mode === "deposit" ? usdcBalance : shareBalance;
   const hasAmount = parsedAmount > 0n;
   const actionMeta = getPanelPrimaryActionMeta({
-    hasAddress: Boolean(address),
+    hasAddress: Boolean(activeAddress),
     mode,
     needsApproval,
     isProcessing,
@@ -220,7 +228,7 @@ export function DepositRedeemPanel({
   };
 
   const handleSubmit = () => {
-    if (!address || parsedAmount === 0n) return;
+    if (!activeAddress || parsedAmount === 0n) return;
 
     if (blockedBySimulation) {
       showToast("error", simulationErrorMessage ?? "Transaction is likely to fail.");
@@ -342,7 +350,7 @@ export function DepositRedeemPanel({
         </div>
       )}
 
-      {!address ? (
+      {!activeAddress ? (
         <Button variant="secondary" size="lg" className="w-full" disabled>
           <span className="inline-flex items-center gap-2">
             {actionMeta.icon}

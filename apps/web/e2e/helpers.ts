@@ -131,14 +131,23 @@ async function doPrivyLogin(page: Page) {
       await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
     }
   }
-  const wallet = page.locator('[data-testid="privy-connected-wallet"]');
+  const wallet = page.locator('[data-testid="privy-connected-wallet"]').first();
   await wallet.waitFor({ state: 'visible', timeout: 30_000 });
 }
 
 export async function connectWallet(page: Page) {
-  const privyWallet = page.locator('[data-testid="privy-connected-wallet"]');
+  const privyWallet = page.locator('[data-testid="privy-connected-wallet"]').first();
+  const waitForAddress = async (attempts = 20) => {
+    for (let i = 0; i < attempts; i++) {
+      const addr = await privyWallet.getAttribute('data-address').catch(() => null);
+      if (addr && /^0x[a-fA-F0-9]{40}$/.test(addr)) return true;
+      await page.waitForTimeout(1_000);
+    }
+    return false;
+  };
 
   if (await privyWallet.isVisible({ timeout: 8_000 }).catch(() => false)) {
+    await waitForAddress();
     return;
   }
 
@@ -158,8 +167,17 @@ export async function connectWallet(page: Page) {
         for (let i = 0; i < PRIVY_TEST_OTP.length && i < count; i++) {
           await otpInputs.nth(i).fill(PRIVY_TEST_OTP[i]);
         }
+      } else if (count >= 1) {
+        const otpInput = otpInputs.first();
+        await otpInput.click();
+        await otpInput.fill('');
+        await page.keyboard.type(PRIVY_TEST_OTP, { delay: 80 });
+      } else {
+        await page.keyboard.type(PRIVY_TEST_OTP, { delay: 80 });
       }
+      await page.keyboard.press('Enter');
       await privyWallet.waitFor({ state: 'visible', timeout: 30_000 });
+      await waitForAddress();
       return;
     }
   }
@@ -171,6 +189,9 @@ export async function connectWallet(page: Page) {
   const mobileButton = page.getByTestId('e2e-connect-wallet-mobile');
   if (await mobileButton.isVisible()) {
     await mobileButton.click();
+  }
+  if (await privyWallet.isVisible({ timeout: 20_000 }).catch(() => false)) {
+    await waitForAddress();
   }
 }
 

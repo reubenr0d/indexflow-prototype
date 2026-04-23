@@ -5,11 +5,14 @@ import { encodeFunctionData, type Abi, type Address } from "viem";
 import {
   useWriteContract as useWagmiWriteContract,
   useWaitForTransactionReceipt,
+  useChainId,
 } from "wagmi";
-import { useSendTransaction, useWallets } from "@privy-io/react-auth";
 import { isPrivyConfigured } from "@/config/privy";
+import { sponsorshipStrategyForChainId } from "@/lib/sponsorship";
+import { useSponsoredTransactionAdapter } from "./useSponsoredTransactionAdapter";
 
 type WriteParams = {
+  chainId?: number;
   address: Address;
   abi: Abi | readonly unknown[];
   functionName: string;
@@ -44,8 +47,9 @@ function wrapSponsorshipError(error: Error): Error {
   if (isSponsorshipFailure(error)) {
     return new SponsorshipError(
       `Gas sponsorship failed: ${error.message}. ` +
-        "Please verify that gas sponsorship is enabled in the Privy Dashboard, " +
-        "the correct chains are configured, and client-side transactions are allowed.",
+        "Please verify your Privy sponsorship setup for this chain " +
+        "(native sponsorship for Sepolia/Arbitrum Sepolia or 4337 smart wallet sponsorship for Fuji), " +
+        "and confirm client-side transactions are allowed.",
       error,
       true
     );
@@ -71,15 +75,14 @@ export function useSponsoredWriteContract() {
 }
 
 function useSponsoredInner() {
-  const { sendTransaction } = useSendTransaction();
-  const { wallets } = useWallets();
+  const chainId = useChainId();
+  const { embeddedWallet, sendSponsoredTx } = useSponsoredTransactionAdapter();
   const [hash, setHash] = useState<`0x${string}` | undefined>();
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const isCallingRef = useRef(false);
 
-  const activeWallet = wallets.find((w) => w.walletClientType === "privy");
-  const isEmbeddedWallet = Boolean(activeWallet);
+  const isEmbeddedWallet = Boolean(embeddedWallet);
 
   const reset = useCallback(() => {
     setHash(undefined);
@@ -107,26 +110,29 @@ function useSponsoredInner() {
       setHash(undefined);
 
       try {
+        const txChainId = params.chainId ?? chainId;
         const data = encodeFunctionData({
           abi: params.abi as Abi,
           functionName: params.functionName,
           args: params.args as unknown[],
         });
 
-        const receipt = await sendTransaction(
-          {
-            to: params.address,
-            data,
-            ...(params.value != null ? { value: params.value } : {}),
-          },
-          { sponsor: true }
-        );
+        const receipt = await sendSponsoredTx({
+          chainId: txChainId,
+          to: params.address,
+          data,
+          ...(params.value != null ? { value: params.value } : {}),
+        });
 
         const txHash = receipt.hash;
         setHash(txHash);
         return txHash;
       } catch (e) {
         const rawErr = e instanceof Error ? e : new Error(String(e));
+        const txChainId = params.chainId ?? chainId;
+        if (sponsorshipStrategyForChainId(txChainId) === "smart_wallet_4337") {
+          rawErr.message = `Fuji smart-wallet sponsorship failed: ${rawErr.message}`;
+        }
         const err = wrapSponsorshipError(rawErr);
         setError(err);
         throw err;
@@ -135,7 +141,7 @@ function useSponsoredInner() {
         isCallingRef.current = false;
       }
     },
-    [sendTransaction, isEmbeddedWallet]
+    [chainId, isEmbeddedWallet, sendSponsoredTx]
   );
 
   const writeContract = useCallback(

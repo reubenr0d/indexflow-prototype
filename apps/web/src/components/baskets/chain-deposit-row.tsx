@@ -83,6 +83,9 @@ export function ChainDepositRow({
 
   return (
     <div
+      data-testid={`chain-deposit-row-${chainId}`}
+      data-status={status}
+      data-chain-name={meta.name}
       className={cn(
         "rounded-lg border bg-app-bg-subtle p-3 transition-all",
         isActive ? "border-app-accent/50 ring-1 ring-app-accent/20" : "border-app-border",

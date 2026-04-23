@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { usePrivy } from "@privy-io/react-auth";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
 import {
   useAccount,
   useChainId,
   useConnect,
   useWaitForTransactionReceipt,
-  useWriteContract,
 } from "wagmi";
+import { type Address } from "viem";
 import { arbitrumSepolia, avalancheFuji, sepolia } from "viem/chains";
 import { getContracts } from "@/config/contracts";
 import { isPrivyConfigured } from "@/config/privy";
@@ -18,10 +18,13 @@ import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { ERC20ABI } from "@/abi/erc20";
 import { showToast } from "@/components/ui/toast";
 import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
+import { useSponsoredTransactionAdapter } from "@/hooks/useSponsoredTransactionAdapter";
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X, LogOut, Settings, PieChart, Coins, Loader2 } from "lucide-react";
 import { NetworkSelector } from "@/components/layout/network-selector";
+import { SponsorshipErrorDialog, isSponsorshipError } from "@/components/baskets/sponsorship-error-dialog";
 
 const navItems = [
   { href: "/baskets", label: "Baskets" },
@@ -36,6 +39,22 @@ const mobileOnlyItems = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "/settings", label: "Settings" },
 ];
+
+export const TEST_USDC_MINT_AMOUNT = 10_000n * 1_000_000n;
+
+export function buildMintTestUsdcCall(address: Address, usdc: Address) {
+  return {
+    address: usdc,
+    abi: ERC20ABI,
+    functionName: "mint" as const,
+    args: [address, TEST_USDC_MINT_AMOUNT] as const,
+  };
+}
+
+export function getMintSponsorshipErrorMessage(error: unknown): string | null {
+  if (!isSponsorshipError(error)) return null;
+  return error instanceof Error ? error.message : String(error);
+}
 
 function isNavActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
@@ -53,7 +72,10 @@ function PrivyConnectButton({
   toggle: () => void;
 }) {
   const { ready, authenticated, login, logout, user } = usePrivy();
-  const { address } = useAccount();
+  const { wallets } = useWallets();
+  const { address: wagmiAddress } = useAccount();
+  const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === "privy");
+  const address = (wagmiAddress ?? embeddedWallet?.address) as Address | undefined;
   const [showMenu, setShowMenu] = useState(false);
 
   if (!ready) {
@@ -208,14 +230,20 @@ export function Header() {
   const pathname = usePathname();
   const { theme, toggle } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { address } = useAccount();
+  const { address: wagmiAddress } = useAccount();
+  const { wallets } = useWallets();
+  const embeddedWallet = wallets.find((wallet) => wallet.walletClientType === "privy");
+  const address = (wagmiAddress ?? embeddedWallet?.address) as Address | undefined;
   const { connect, connectors, isPending: isConnectPending } = useConnect();
   const walletChainId = useChainId();
   const { chainId: deploymentChainId, viewMode } = useDeploymentTarget();
   const effectiveChainId = viewMode === "all" ? walletChainId : deploymentChainId;
   const { usdc } = getContracts(effectiveChainId);
-  const { writeContract, data: hash, isPending, error, isError } = useWriteContract();
+  const { writeContract, data: hash, isPending, error, isError } = useSponsoredWriteContract();
+  const { getSenderAddress } = useSponsoredTransactionAdapter();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [showSponsorshipError, setShowSponsorshipError] = useState(false);
+  const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
   const isTestnet = walletChainId === sepolia.id || walletChainId === avalancheFuji.id || walletChainId === arbitrumSepolia.id;
   const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
@@ -229,22 +257,43 @@ export function Header() {
   }, [receipt.isSuccess]);
 
   useContractErrorToast({
-    writeError: error,
-    writeIsError: isError,
-    receiptError: receipt.error,
-    receiptIsError: receipt.isError,
+    writeError: isError && isSponsorshipError(error) ? null : error,
+    writeIsError: isError && !isSponsorshipError(error),
+    receiptError: receipt.isError && isSponsorshipError(receipt.error) ? null : receipt.error,
+    receiptIsError: receipt.isError && !isSponsorshipError(receipt.error),
     fallbackMessage: "Mint failed",
   });
 
+  useEffect(() => {
+    if (isError) {
+      const message = getMintSponsorshipErrorMessage(error);
+      if (message) {
+        setSponsorshipErrorMessage(message);
+        setShowSponsorshipError(true);
+      }
+      return;
+    }
+    if (receipt.isError) {
+      const message = getMintSponsorshipErrorMessage(receipt.error);
+      if (message) {
+        setSponsorshipErrorMessage(message);
+        setShowSponsorshipError(true);
+      }
+    }
+  }, [error, isError, receipt.error, receipt.isError]);
+
   const handleMint = () => {
     if (!address || !isTestnet) return;
-    writeContract({
-      address: usdc,
-      abi: ERC20ABI,
-      functionName: "mint",
-      args: [address, 10_000n * 1_000_000n],
-    });
-    showToast("pending", "Minting 10,000 Test USDC...");
+    void (async () => {
+      // Fuji sponsorship uses a smart-wallet sender address; mint to the same recipient
+      // address that the UI balance hooks read for the selected chain.
+      const recipient = (await getSenderAddress(effectiveChainId)) ?? address;
+      writeContract({
+        ...buildMintTestUsdcCall(recipient, usdc),
+        chainId: effectiveChainId,
+      });
+      showToast("pending", "Minting 10,000 Test USDC...");
+    })();
   };
 
   const handleE2EConnect = () => {
@@ -353,6 +402,14 @@ export function Header() {
           </div>
         </div>
       </header>
+
+      <SponsorshipErrorDialog
+        open={showSponsorshipError}
+        onOpenChange={setShowSponsorshipError}
+        errorMessage={sponsorshipErrorMessage}
+        actionLabel="minting test USDC"
+        onRetry={handleMint}
+      />
 
       <div
         className={cn(

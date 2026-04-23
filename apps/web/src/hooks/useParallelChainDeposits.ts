@@ -2,8 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { encodeFunctionData, type Address, type Abi } from "viem";
-import { useAccount, useSwitchChain, usePublicClient } from "wagmi";
-import { useSendTransaction, useWallets } from "@privy-io/react-auth";
+import { useAccount } from "wagmi";
 import { isPrivyConfigured } from "@/config/privy";
 import { getContracts } from "@/config/contracts";
 import { BasketVaultABI } from "@/abi/BasketVault";
@@ -11,6 +10,8 @@ import { ERC20ABI } from "@/abi/erc20";
 import { type ChainWeight } from "./useRoutingWeights";
 import { CHAIN_REGISTRY, deploymentTargetForChainId } from "@/lib/deployment";
 import { SponsorshipError } from "./useSponsoredWriteContract";
+import { sponsorshipStrategyForChainId } from "@/lib/sponsorship";
+import { useSponsoredTransactionAdapter } from "./useSponsoredTransactionAdapter";
 
 export type ChainTxStatus = "idle" | "switching" | "approving" | "depositing" | "success" | "error";
 
@@ -39,6 +40,9 @@ interface ChainVaultMapping {
   vaultAddress: Address;
 }
 
+const MIN_SPLIT_AMOUNT_USDC = 10_000_000n; // 10 USDC (6 decimals)
+const CHAIN_TX_TIMEOUT_MS = 900_000; // 15 minutes
+
 function selectorToChainId(selector: bigint): number | null {
   for (const [, cfg] of Object.entries(CHAIN_REGISTRY)) {
     if (cfg.ccipChainSelector === selector.toString()) {
@@ -60,9 +64,31 @@ export function computeDepositSplits(
 ): { chainId: number; chainSelector: bigint; chainName: string; amount: bigint; percentage: number }[] {
   const activeWeights = weights.filter((w) => w.weightBps > 0);
   const totalWeight = activeWeights.reduce((s, w) => s + w.weightBps, 0);
-  if (totalWeight === 0 || activeWeights.length === 0) return [];
+  if (totalWeight === 0 || activeWeights.length === 0 || totalAmount <= 0n) return [];
 
-  let remaining = totalAmount;
+  const eligibleWeights = activeWeights
+    .map((w) => ({ w, chainId: selectorToChainId(w.chainSelector) }))
+    .filter((entry): entry is { w: ChainWeight; chainId: number } => entry.chainId !== null);
+  if (eligibleWeights.length === 0) return [];
+
+  // For tiny totals, route entirely to the highest-weight chain to avoid "shares too small" reverts.
+  const minRequiredForSplit = MIN_SPLIT_AMOUNT_USDC * BigInt(eligibleWeights.length);
+  if (totalAmount < minRequiredForSplit) {
+    const top = eligibleWeights.reduce((best, current) =>
+      current.w.weightBps > best.w.weightBps ? current : best
+    );
+    return [
+      {
+        chainId: top.chainId,
+        chainSelector: top.w.chainSelector,
+        chainName: top.w.chainName || chainIdToName(top.chainId),
+        amount: totalAmount,
+        percentage: 100,
+      },
+    ];
+  }
+
+  let bonusRemaining = totalAmount - minRequiredForSplit;
   const splits: {
     chainId: number;
     chainSelector: bigint;
@@ -71,18 +97,16 @@ export function computeDepositSplits(
     percentage: number;
   }[] = [];
 
-  for (let i = 0; i < activeWeights.length; i++) {
-    const w = activeWeights[i];
-    const isLast = i === activeWeights.length - 1;
-    const chainId = selectorToChainId(w.chainSelector);
-    
-    if (!chainId) continue;
+  for (let i = 0; i < eligibleWeights.length; i++) {
+    const { w, chainId } = eligibleWeights[i];
+    const isLast = i === eligibleWeights.length - 1;
+    const bonus = isLast
+      ? bonusRemaining
+      : (bonusRemaining * BigInt(w.weightBps)) / BigInt(totalWeight);
+    if (!isLast) bonusRemaining -= bonus;
 
-    const amount = isLast
-      ? remaining
-      : (totalAmount * BigInt(w.weightBps)) / BigInt(totalWeight);
-    
-    if (!isLast) remaining -= amount;
+    const amount = MIN_SPLIT_AMOUNT_USDC + bonus;
+    const percentage = Number((amount * 10_000n) / totalAmount) / 100;
 
     if (amount > 0n) {
       splits.push({
@@ -90,7 +114,7 @@ export function computeDepositSplits(
         chainSelector: w.chainSelector,
         chainName: w.chainName || chainIdToName(chainId),
         amount,
-        percentage: (w.weightBps / totalWeight) * 100,
+        percentage,
       });
     }
   }
@@ -102,14 +126,9 @@ export function useParallelChainDeposits() {
   const isE2E = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
   const useSponsored = isPrivyConfigured && !isE2E;
   
-  const { address } = useAccount();
-  const { switchChainAsync } = useSwitchChain();
-  const publicClient = usePublicClient();
-  const { sendTransaction } = useSendTransaction();
-  const { wallets } = useWallets();
-  
-  const activeWallet = wallets.find((w) => w.walletClientType === "privy");
-  const isEmbeddedWallet = Boolean(activeWallet);
+  const { address: connectedAddress } = useAccount();
+  const { embeddedWallet, getSenderAddress, sendSponsoredTx } = useSponsoredTransactionAdapter();
+  const isEmbeddedWallet = Boolean(embeddedWallet);
 
   const [state, setState] = useState<ParallelDepositsState>({
     isExecuting: false,
@@ -165,68 +184,120 @@ export function useParallelChainDeposits() {
           );
         }
         
-        updateChainStatus(chainId, { status: "switching" });
-        await switchChainAsync({ chainId });
-
         if (signal.aborted) throw new Error("Aborted");
 
         const contracts = getContracts(chainId);
         const usdc = contracts.usdc;
-
-        const allowance = await publicClient?.readContract({
-          address: usdc,
-          abi: ERC20ABI,
-          functionName: "allowance",
-          args: [address!, vaultAddress],
-        }) as bigint;
-
-        if (signal.aborted) throw new Error("Aborted");
-
-        if (allowance < amount) {
-          updateChainStatus(chainId, { status: "approving" });
-
-          const approveData = encodeFunctionData({
-            abi: ERC20ABI as Abi,
-            functionName: "approve",
-            args: [vaultAddress, amount],
-          });
-
-          if (useSponsored) {
-            const receipt = await sendTransaction(
-              { to: usdc, data: approveData },
-              { sponsor: true, uiOptions: { showWalletUIs: false } }
-            );
-            updateChainStatus(chainId, { approveTxHash: receipt.hash });
-          } else {
-            throw new Error("Non-Privy transactions not yet supported in parallel mode");
-          }
+        const senderAddress = await getSenderAddress(chainId);
+        if (!senderAddress) {
+          throw new SponsorshipError(
+            `Unable to resolve sender address for chain ${chainId}.`,
+            new Error("Missing chain sender"),
+            true
+          );
         }
 
-        if (signal.aborted) throw new Error("Aborted");
-
-        updateChainStatus(chainId, { status: "depositing" });
-
+        updateChainStatus(chainId, { status: "switching" });
         const depositData = encodeFunctionData({
           abi: BasketVaultABI as Abi,
           functionName: "deposit",
           args: [amount],
         });
+        const approveData = encodeFunctionData({
+          abi: ERC20ABI as Abi,
+          functionName: "approve",
+          args: [vaultAddress, amount],
+        });
+        const sendWithGuard = async <T>(
+          actionLabel: "approval" | "deposit",
+          action: () => Promise<T>
+        ): Promise<T> =>
+          new Promise<T>((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+              cleanup();
+              reject(
+                new Error(
+                  `Timed out waiting for ${chainIdToName(chainId)} ${actionLabel} confirmation after ${CHAIN_TX_TIMEOUT_MS / 1000}s. ` +
+                    "Privy native sponsorship may be stalled or unresponsive."
+                )
+              );
+            }, CHAIN_TX_TIMEOUT_MS);
 
-        if (useSponsored) {
-          const receipt = await sendTransaction(
-            { to: vaultAddress, data: depositData },
-            { sponsor: true, uiOptions: { showWalletUIs: false } }
-          );
-          updateChainStatus(chainId, { 
-            depositTxHash: receipt.hash,
-            status: "success" 
+            const onAbort = () => {
+              cleanup();
+              reject(new Error(`${actionLabel} aborted on ${chainIdToName(chainId)}.`));
+            };
+
+            const cleanup = () => {
+              clearTimeout(timeoutId);
+              signal.removeEventListener("abort", onAbort);
+            };
+
+            signal.addEventListener("abort", onAbort, { once: true });
+
+            action()
+              .then((result) => {
+                cleanup();
+                resolve(result);
+              })
+              .catch((error) => {
+                cleanup();
+                reject(error);
+              });
           });
-        } else {
-          throw new Error("Non-Privy transactions not yet supported in parallel mode");
+
+        const sendDeposit = async () => {
+          updateChainStatus(chainId, { status: "depositing" });
+          if (!useSponsored) {
+            throw new Error("Non-Privy transactions not yet supported in parallel mode");
+          }
+          const strategy = sponsorshipStrategyForChainId(chainId);
+          const receipt = await sendWithGuard("deposit", () =>
+            sendSponsoredTx({
+              chainId,
+              to: vaultAddress,
+              data: depositData,
+              sponsor: strategy !== "native_sponsor",
+              showWalletUIs: strategy !== "native_sponsor",
+            })
+          );
+          updateChainStatus(chainId, { depositTxHash: receipt.hash, status: "success" });
+        };
+
+        try {
+          await sendDeposit();
+        } catch (depositErr) {
+          const depositMessage = depositErr instanceof Error ? depositErr.message.toLowerCase() : String(depositErr).toLowerCase();
+          const needsApproval =
+            depositMessage.includes("allowance") ||
+            depositMessage.includes("approve") ||
+            depositMessage.includes("insufficient allowance");
+          if (!needsApproval) throw depositErr;
+
+          if (signal.aborted) throw new Error("Aborted");
+          updateChainStatus(chainId, { status: "approving" });
+          if (!useSponsored) {
+            throw new Error("Non-Privy transactions not yet supported in parallel mode");
+          }
+          const strategy = sponsorshipStrategyForChainId(chainId);
+          const approveReceipt = await sendWithGuard("approval", () =>
+            sendSponsoredTx({
+              chainId,
+              to: usdc,
+              data: approveData,
+              sponsor: strategy !== "native_sponsor",
+              showWalletUIs: strategy !== "native_sponsor",
+            })
+          );
+          updateChainStatus(chainId, { approveTxHash: approveReceipt.hash });
+
+          if (signal.aborted) throw new Error("Aborted");
+          await sendDeposit();
         }
       } catch (err) {
         if (signal.aborted) return;
         const rawMessage = err instanceof Error ? err.message : String(err);
+        const strategy = sponsorshipStrategyForChainId(chainId);
         const lowerMessage = rawMessage.toLowerCase();
         
         const isSponsorshipFailure =
@@ -234,11 +305,21 @@ export function useParallelChainDeposits() {
           lowerMessage.includes("gas") ||
           lowerMessage.includes("sponsor") ||
           lowerMessage.includes("funds") ||
-          lowerMessage.includes("balance");
+          lowerMessage.includes("balance") ||
+          lowerMessage.includes("timed out");
+        const isBalanceFailure =
+          lowerMessage.includes("insufficient balance") ||
+          lowerMessage.includes("transfer amount exceeds balance") ||
+          lowerMessage.includes("erc20: transfer amount exceeds balance") ||
+          lowerMessage.includes("insufficient funds");
         
-        const message = isSponsorshipFailure
-          ? `Gas sponsorship failed: ${rawMessage}. Check Privy Dashboard settings.`
-          : rawMessage;
+        const message = isBalanceFailure
+          ? `${chainIdToName(chainId)} deposit failed: insufficient balance. ${rawMessage}`
+          : isSponsorshipFailure
+            ? strategy === "smart_wallet_4337"
+              ? `Fuji smart-wallet sponsorship failed: ${rawMessage}. Check Privy Smart Wallet + paymaster/bundler settings.`
+              : `Gas sponsorship failed: ${rawMessage}. Check Privy Dashboard native sponsorship settings.`
+            : rawMessage;
         
         updateChainStatus(chainId, { status: "error", error: message });
         
@@ -248,7 +329,7 @@ export function useParallelChainDeposits() {
         throw err;
       }
     },
-    [address, isEmbeddedWallet, publicClient, sendTransaction, switchChainAsync, updateChainStatus, useSponsored]
+    [getSenderAddress, isEmbeddedWallet, sendSponsoredTx, updateChainStatus, useSponsored]
   );
 
   const execute = useCallback(
@@ -256,7 +337,7 @@ export function useParallelChainDeposits() {
       splits: { chainId: number; chainSelector: bigint; chainName: string; amount: bigint; percentage: number }[],
       vaultMappings: ChainVaultMapping[]
     ) => {
-      if (!address || splits.length === 0) return;
+      if ((!useSponsored && !connectedAddress) || splits.length === 0) return;
 
       abortControllerRef.current?.abort();
       const controller = new AbortController();
@@ -281,14 +362,14 @@ export function useParallelChainDeposits() {
         hasErrors: false,
       });
 
-      const promises = splits.map(async (split) => {
+      for (const split of splits) {
         const vaultAddress = vaultMap.get(split.chainId);
         if (!vaultAddress) {
           updateChainStatus(split.chainId, {
             status: "error",
             error: "No vault address configured for this chain",
           });
-          return;
+          continue;
         }
 
         try {
@@ -296,13 +377,11 @@ export function useParallelChainDeposits() {
         } catch {
           // Error already handled in executeChainDeposit
         }
-      });
-
-      await Promise.allSettled(promises);
+      }
 
       setState((prev) => ({ ...prev, isExecuting: false }));
     },
-    [address, executeChainDeposit, updateChainStatus]
+    [connectedAddress, executeChainDeposit, updateChainStatus, useSponsored]
   );
 
   const reset = useCallback(() => {

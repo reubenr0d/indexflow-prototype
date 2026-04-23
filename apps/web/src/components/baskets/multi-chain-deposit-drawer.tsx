@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { type Address } from "viem";
 import { useAccount } from "wagmi";
+import { useWallets } from "@privy-io/react-auth";
 import { CheckCircle2, Loader2, AlertTriangle } from "lucide-react";
 import {
   Drawer,
@@ -52,7 +53,7 @@ export function MultiChainDepositDrawer({
 }: MultiChainDepositDrawerProps) {
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent>
+      <DrawerContent data-testid="multi-chain-drawer-content">
         <MultiChainDepositDrawerContent
           amount={amount}
           vaultAddress={vaultAddress}
@@ -85,6 +86,9 @@ function MultiChainDepositDrawerContent({
 }: DrawerContentProps) {
   const { setMinimizedContent } = useDrawer();
   const { address } = useAccount();
+  const { wallets } = useWallets();
+  const embeddedAddress = wallets.find((wallet) => wallet.walletClientType === "privy")?.address;
+  const senderAddress = address ?? embeddedAddress;
   const { configuredTargets } = useDeploymentTarget();
   
   const [phase, setPhase] = useState<DrawerPhase>("preview");
@@ -162,10 +166,10 @@ function MultiChainDepositDrawerContent({
   }, [depositState.isExecuting, depositState.completedCount, depositState.totalCount, depositState.hasErrors, depositState.chainStatuses, onSuccess]);
 
   const handleConfirm = useCallback(async () => {
-    if (!address || splits.length === 0) return;
+    if (!senderAddress || splits.length === 0) return;
     setPhase("executing");
     await execute(splits, vaultMappings);
-  }, [address, splits, vaultMappings, execute]);
+  }, [senderAddress, splits, vaultMappings, execute]);
 
   const handleRetry = useCallback(() => {
     reset();
@@ -197,6 +201,7 @@ function MultiChainDepositDrawerContent({
   if (weightsLoading) {
     return (
       <>
+        <div data-testid="multi-chain-drawer-phase" data-phase="loading" className="hidden" />
         {sponsorshipDialog}
         <DrawerHeader>
           <DrawerTitle>Multi-Chain Deposit</DrawerTitle>
@@ -212,6 +217,7 @@ function MultiChainDepositDrawerContent({
   if (splits.length === 0) {
     return (
       <>
+        <div data-testid="multi-chain-drawer-phase" data-phase="no-routing" className="hidden" />
         {sponsorshipDialog}
         <DrawerHeader>
           <DrawerTitle>Multi-Chain Deposit</DrawerTitle>
@@ -243,6 +249,7 @@ function MultiChainDepositDrawerContent({
   if (phase === "preview") {
     return (
       <>
+        <div data-testid="multi-chain-drawer-phase" data-phase="preview" className="hidden" />
         {sponsorshipDialog}
         <DrawerHeader>
           <DrawerTitle>Confirm Multi-Chain Deposit</DrawerTitle>
@@ -263,7 +270,7 @@ function MultiChainDepositDrawerContent({
           <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleConfirm} disabled={!address}>
+          <Button data-testid="multi-chain-confirm-deposit" onClick={handleConfirm} disabled={!senderAddress}>
             Confirm Deposit
           </Button>
         </DrawerFooter>
@@ -274,6 +281,7 @@ function MultiChainDepositDrawerContent({
   if (phase === "executing") {
     return (
       <>
+        <div data-testid="multi-chain-drawer-phase" data-phase="executing" className="hidden" />
         {sponsorshipDialog}
         <DrawerHeader>
           <DrawerTitle>Depositing...</DrawerTitle>
@@ -302,6 +310,7 @@ function MultiChainDepositDrawerContent({
   if (phase === "complete") {
     return (
       <>
+        <div data-testid="multi-chain-drawer-phase" data-phase="complete" className="hidden" />
         {sponsorshipDialog}
         <DrawerHeader>
           <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-app-success/10">
@@ -331,6 +340,7 @@ function MultiChainDepositDrawerContent({
 
   return (
     <>
+      <div data-testid="multi-chain-drawer-phase" data-phase="error" className="hidden" />
       {sponsorshipDialog}
       <DrawerHeader>
         <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-app-danger/10">
