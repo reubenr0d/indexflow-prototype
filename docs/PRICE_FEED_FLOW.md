@@ -316,6 +316,50 @@ sequenceDiagram
 | `SEPOLIA_RPC_URL` | Sepolia RPC endpoint; passed as `RPC_URL` (for `cast` and reads). |
 | `KEEPERHUB_API_KEY` | Optional. If set, the script sends `submitPrices` / `syncAll` via KeeperHub instead of `cast send`. The workflow sets `KEEPERHUB_NETWORK` to the matrix `network` (e.g. `sepolia`); the script can also infer the chain from `*-deployment.json` or `KEEPERHUB_NETWORK` / `AGENT_NETWORK` env. **Do not** pass the RPC URL as the KeeperHub network. |
 
+### KeeperHub one-time setup per network
+
+When using KeeperHub, the **KeeperHub-managed wallet** (not the local `PRIVATE_KEY` from `.env`) signs `submitPrices` and `syncAll`. That wallet must be authorized as a keeper on `OracleAdapter`.
+
+1. Find the wallet address. With `KEEPERHUB_API_KEY` set:
+
+   ```bash
+   curl -s https://app.keeperhub.com/api/integrations \
+     -H "Authorization: Bearer $KEEPERHUB_API_KEY" | jq '.[] | {id,name,walletAddress}'
+   ```
+
+2. Confirm not already authorized (returns `false`):
+
+   ```bash
+   PATH="$HOME/.foundry/bin:$PATH" cast call <OracleAdapter> \
+     'keepers(address)(bool)' <KH_WALLET> --rpc-url "$SEPOLIA_RPC_URL"
+   ```
+
+3. As the OracleAdapter owner, authorize:
+
+   ```bash
+   PATH="$HOME/.foundry/bin:$PATH" cast send <OracleAdapter> \
+     'setKeeper(address,bool)' <KH_WALLET> true \
+     --rpc-url "$SEPOLIA_RPC_URL" --private-key "$PRIVATE_KEY"
+   ```
+
+4. Top up the KeeperHub wallet with a small amount of native gas (~0.01 ETH on Sepolia is plenty for many days of `submitPrices` + `syncAll` runs).
+
+### Deviation guard and re-seeding
+
+`OracleAdapter.submitPrices` reverts with `DeviationTooLarge(assetId, oldPrice, newPrice, maxDeviationBps)` (selector `0xbdecbfb7`) when a new submission moves more than `deviationBps` (e.g. 2000 = 20%) vs the stored price. KeeperHub returns `status: "failed"` for the corresponding execution; `GET /api/execute/<id>/status` exposes the full revert data.
+
+If a stale or mis-seeded historical price is the cause, the OracleAdapter owner can bypass the deviation check via `seedHistoricalPrices`:
+
+```bash
+NOW=$(date +%s)
+PATH="$HOME/.foundry/bin:$PATH" cast send <OracleAdapter> \
+  'seedHistoricalPrices(bytes32,uint256[],uint256[])' \
+  <ASSET_ID> "[<RAW_PRICE_AT_8_DECIMALS>]" "[$NOW]" \
+  --rpc-url "$SEPOLIA_RPC_URL" --private-key "$PRIVATE_KEY"
+```
+
+`scripts/update-yahoo-finance-prices.js` automatically fetches `/api/execute/<id>/status` (and falls back to the workflow logs endpoint) when KeeperHub reports failure, so the next run will print the underlying revert.
+
 ### Adding a new network
 
 1. Add a matrix entry in `update-prices.yml`:

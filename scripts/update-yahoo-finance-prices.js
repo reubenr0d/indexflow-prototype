@@ -227,7 +227,22 @@ async function executeViaKeeperHub(network, contractAddress, functionName, funct
         console.log(`[KeeperHub]   Explorer: ${result.explorerUrl}`);
       }
     } else {
-      console.error(`[KeeperHub] ✗ ${functionName} failed: ${result.error}`);
+      const { formatKeeperHubFailureResult: fmtFail } = await import("../lib/keeperhub.mjs");
+      const detail = result.error || fmtFail(result);
+      console.error(`[KeeperHub] ✗ ${functionName} failed: ${detail}`);
+      if (result.executionId) {
+        console.error(`[KeeperHub]   executionId=${result.executionId} status=${result.status}`);
+        try {
+          const logs = await keeperHubClient.getExecutionLogs(result.executionId);
+          console.error(
+            `[KeeperHub]   logs (retries=${logs.retryCount}, gasEstimates=${logs.gasEstimates.length}):`
+          );
+          const summary = logs.logs.length > 0 ? logs.logs : logs.raw;
+          console.error(JSON.stringify(summary, null, 2));
+        } catch (logErr) {
+          console.error(`[KeeperHub]   could not fetch execution logs: ${logErr.message}`);
+        }
+      }
     }
 
     return result.success;
