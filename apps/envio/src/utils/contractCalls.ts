@@ -1,4 +1,4 @@
-import { createPublicClient, http, type Address } from "viem";
+import { createPublicClient, http, type Address, type Chain } from "viem";
 import { sepolia, avalancheFuji, arbitrumSepolia } from "viem/chains";
 
 import basketVaultAbi from "../../abis/BasketVault.json";
@@ -7,10 +7,26 @@ import vaultAccountingAbi from "../../abis/VaultAccounting.json";
 import erc20Abi from "../../abis/ERC20.json";
 import stateRelayAbi from "../../abis/StateRelay.json";
 
-type ClientChain = typeof sepolia | typeof avalancheFuji | typeof arbitrumSepolia;
+const localHub: Chain = {
+  id: 31337,
+  name: "Local Hub",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["http://127.0.0.1:8545"] },
+  },
+};
+
+const localSpoke: Chain = {
+  id: 31338,
+  name: "Local Spoke",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["http://127.0.0.1:8546"] },
+  },
+};
 
 type ChainConfig = {
-  chain: ClientChain;
+  chain: Chain;
   rpcUrl: string;
 };
 
@@ -18,6 +34,8 @@ const CHAIN_CONFIG: Record<number, ChainConfig> = {
   11155111: { chain: sepolia, rpcUrl: "https://sepolia.rpc.hypersync.xyz" },
   43113: { chain: avalancheFuji, rpcUrl: "https://fuji.rpc.hypersync.xyz" },
   421614: { chain: arbitrumSepolia, rpcUrl: "https://arbitrum-sepolia.rpc.hypersync.xyz" },
+  31337: { chain: localHub, rpcUrl: "http://127.0.0.1:8545" },
+  31338: { chain: localSpoke, rpcUrl: "http://127.0.0.1:8546" },
 };
 
 const clientCache = new Map<number, ReturnType<typeof createPublicClient>>();

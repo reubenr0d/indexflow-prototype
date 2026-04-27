@@ -36,6 +36,8 @@ const CHAINS_JSON: Record<string, ChainConfig> = {
   sepolia: { chainId: 11155111, ccipChainSelector: "16015286601757825753", role: "hub", rpcAlias: "sepolia", mockUsdc: true },
   fuji: { chainId: 43113, ccipChainSelector: "14767482510784806043", role: "spoke", rpcAlias: "fuji", mockUsdc: true },
   "arbitrum-sepolia": { chainId: 421614, ccipChainSelector: "3478487238524512106", role: "spoke", rpcAlias: "arbitrum_sepolia", mockUsdc: true },
+  local: { chainId: 31337, ccipChainSelector: "1", role: "hub", rpcAlias: "local", mockUsdc: true },
+  "local-spoke": { chainId: 31338, ccipChainSelector: "2", role: "spoke", rpcAlias: "local_spoke", mockUsdc: true },
 };
 
 export const CHAIN_REGISTRY: Record<string, ChainConfig> = {
@@ -48,6 +50,8 @@ const CHAIN_LABELS: Record<string, string> = {
   fuji: "Avalanche Fuji",
   "arbitrum-sepolia": "Arbitrum Sepolia",
   arbitrum: "Arbitrum",
+  local: "Local Hub",
+  "local-spoke": "Local Spoke",
 };
 
 export const DEPLOYMENT_CHAIN_ID: Record<string, number> = Object.fromEntries(
@@ -95,14 +99,20 @@ export function getChainRole(target: string): ChainRole | undefined {
 
 /**
  * Returns the subgraph URL for a given target.
- * - e2e test mode: always null (pure RPC, no subgraph dependency).
- * - runtime: reads per-chain URLs from `src/config/subgraphs.json`.
+ * - e2e test mode: uses Envio URL if set, otherwise null
+ * - runtime: reads per-chain URLs from `src/config/subgraphs.json` or uses Envio URL
  */
 export function getSubgraphUrlForTarget(
   target: DeploymentTarget,
 ): string | null {
-  if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") return null;
-  return getConfiguredSubgraphUrlForTarget(target);
+  const envioUrl = getConfiguredSubgraphUrlForTarget(target);
+  // In E2E test mode, only use Envio (unified URL), not per-chain subgraphs
+  if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") {
+    // NEXT_PUBLIC_ENVIO_URL enables Envio in E2E tests
+    if (process.env.NEXT_PUBLIC_ENVIO_URL?.trim()) return envioUrl;
+    return null;
+  }
+  return envioUrl;
 }
 
 export function isValidViewMode(value: unknown): value is ViewMode {

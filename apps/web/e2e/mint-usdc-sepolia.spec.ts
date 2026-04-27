@@ -456,4 +456,3 @@ test('mint on all available networks and execute split deposit', async ({ page }
   await runSplitDeposit(page);
 });
 
-});

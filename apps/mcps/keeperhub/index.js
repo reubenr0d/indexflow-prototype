@@ -85,6 +85,65 @@ async function keeperHubRequest(method, path, body = null) {
   return data;
 }
 
+/**
+ * Coalesce tool args to a JS array for `JSON.stringify`ing to the KeeperHub API.
+ * OpenAI's tool `parameters` format requires `array` schemas to declare `items`, so
+ * we avoid `z.array(z.any())` in Zod. Callers may pass a JSON string (supports
+ * nested arrays) or a plain array of primitives/arrays of strings.
+ * @param {unknown} value
+ * @returns {unknown[]}
+ */
+function coalesceJsonArrayArg(value) {
+  if (value == null || value === "") return [];
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") {
+    try {
+      const p = JSON.parse(value);
+      return Array.isArray(p) ? p : [p];
+    } catch {
+      return [];
+    }
+  }
+  return [];
+}
+
+/** @param {unknown} value */
+function normalizeAbiParam(value) {
+  if (value == null) return null;
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+  return value;
+}
+
+// JSON Schema: `array` must have `items` (OpenAI rejects `z.array(z.any())`). Nested calldata: use a JSON string.
+const optionalFunctionArgs = z
+  .union([
+    z.string().describe("JSON string of a JSON array (use for nested args, e.g. setAssets)"),
+    z.array(z.union([z.string(), z.number(), z.boolean(), z.array(z.string())])),
+  ])
+  .optional()
+  .describe(
+    "Function arguments: JSON string of a JSON array, or a one-level / bytes32[] array. " +
+    "For deeply nested calldata, prefer a JSON string.",
+  );
+
+const optionalAbiArg = z
+  .union([
+    z.string().describe("JSON string: ABI as array of fragments, or a single function fragment"),
+    z.array(
+      z
+        .object({ type: z.string() })
+        .passthrough()
+        .describe("One ABI item (e.g. type+name+inputs)"),
+    ),
+  ])
+  .optional();
+
 // ---------------------------------------------------------------------------
 // MCP Server
 // ---------------------------------------------------------------------------
@@ -214,8 +273,8 @@ server.registerTool(
       network: z.enum(SUPPORTED_NETWORKS).describe("Target network (e.g. 'sepolia', 'arbitrum')"),
       contractAddress: z.string().describe("Contract address (0x...)"),
       functionName: z.string().describe("Function name to call (e.g. 'transfer', 'balanceOf')"),
-      functionArgs: z.array(z.any()).optional().describe("Function arguments as array"),
-      abi: z.array(z.any()).optional().describe("Contract ABI (required for non-standard functions)"),
+      functionArgs: optionalFunctionArgs,
+      abi: optionalAbiArg,
       value: z.string().optional().describe("ETH value to send with call (in wei)"),
       justification: z.string().optional().describe("Why this call is being made (for audit trail)"),
     },
@@ -226,9 +285,12 @@ server.registerTool(
         network,
         contractAddress,
         functionName,
-        functionArgs: JSON.stringify(functionArgs || []),
+        functionArgs: JSON.stringify(coalesceJsonArrayArg(functionArgs)),
       };
-      if (abi) body.abi = typeof abi === "string" ? abi : JSON.stringify(abi);
+      if (abi) {
+        const a = normalizeAbiParam(abi);
+        body.abi = typeof a === "string" ? a : JSON.stringify(a);
+      }
       if (value) body.value = value;
 
       const result = await keeperHubRequest("POST", "/execute/contract-call", body);
@@ -280,14 +342,14 @@ server.registerTool(
       network: z.enum(SUPPORTED_NETWORKS).describe("Target network"),
       checkContract: z.string().describe("Contract to read from (0x...)"),
       checkFunction: z.string().describe("Function to call for the check"),
-      checkArgs: z.array(z.any()).optional().describe("Arguments for check function"),
+      checkArgs: optionalFunctionArgs,
       condition: z.object({
         operator: z.enum(["gt", "gte", "lt", "lte", "eq", "neq"]).describe("Comparison operator"),
         value: z.string().describe("Value to compare against"),
       }).describe("Condition to evaluate"),
       executeContract: z.string().describe("Contract to execute on if condition met"),
       executeFunction: z.string().describe("Function to execute"),
-      executeArgs: z.array(z.any()).optional().describe("Arguments for execute function"),
+      executeArgs: optionalFunctionArgs,
       justification: z.string().optional().describe("Why this action is being taken"),
     },
   },
@@ -297,12 +359,12 @@ server.registerTool(
         network,
         contractAddress: checkContract,
         functionName: checkFunction,
-        functionArgs: JSON.stringify(checkArgs || []),
+        functionArgs: JSON.stringify(coalesceJsonArrayArg(checkArgs)),
         condition,
         action: {
           contractAddress: executeContract,
           functionName: executeFunction,
-          functionArgs: JSON.stringify(executeArgs || []),
+          functionArgs: JSON.stringify(coalesceJsonArrayArg(executeArgs)),
         },
       });
 

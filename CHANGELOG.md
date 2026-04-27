@@ -13,6 +13,9 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-04-27] KeeperHub MCP: `execute_contract_call` and `execute_check_and_execute` no longer use `z.array(z.any())` in tool schemas; OpenAI rejects that JSON Schema (array missing `items`). Replaced with unions of JSON `string` and typed arrays, plus `coalesceJsonArrayArg` / `normalizeAbiParam` so agents can call these tools in `agent:0g` (0g-vault-manager) without `invalid_function_parameters` 400s.
+- [2026-04-27] Vault Manager MCP: `set_vault_assets` now passes `setAssets` arguments to KeeperHub as a nested `bytes32[]` (one ABI argument) instead of a single cast-style bracket string, which previously produced failed encodings. KeeperHub failure messages no longer show `undefined` — `lib/keeperhub.mjs` normalizes `error`/`message`/nested `result` and exports `formatKeeperHubFailureResult` for clearer agent-visible errors.
+- [2026-04-27] Vault Manager MCP: KeeperHub writes no longer use human-readable ABI strings (`function allocateToPerp(uint256)`), which the KeeperHub API does not resolve; the server now receives standard JSON ABI fragments (from `apps/subgraph/abis` and `apps/mcps/vault-manager/abis/wireAsset.json`) so `allocate_to_perp` and other write tools work when `KEEPERHUB_API_KEY` is set.
 - [2026-04-20] Subgraph `networks.json` missing `stateRelay` entry (still had legacy `poolReserveRegistry`/`intentRouter`), causing deployed subgraph to not index `StateUpdated` events and `/chains` page to show no data. Ran `sync:networks`, set `stateRelay.startBlock` to keeper update block, redeployed to The Graph Studio (v0.4.4).
 - [2026-04-20] Keeper service `PROJECT_ROOT` resolved one directory above the repo when loading `config/chains.json` and deployment JSONs, causing immediate startup failure; path now uses three parent segments from `services/keeper/src` (and `dist`).
 - [2026-04-19] Per-vault position tracking in `VaultAccounting`: track vault-specific size, collateral, and blended average entry price instead of reading GMX aggregate values. Fixes incorrect PnL attribution when multiple vaults trade the same (asset, direction) pair. `openPosition` now accumulates size and blends entry prices on repeated increases; `closePosition` uses vault-specific size for proportional collateral-at-risk calculation; `getVaultPnL` calculates unrealized PnL using each vault's own entry price via new `_calculateDelta` helper. Position count now only increments for new positions (not repeated increases). New tests: `test_multiVault_sameLongPosition_*`, `test_multiVault_repeatedIncrease_*`, `test_multiVault_partialClose_*`.
@@ -33,6 +36,32 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-27] Price keeper, APY, and PnL E2E test suite (`price-apy-pnl.spec.ts`):
+  - Oracle price submission via admin UI and RPC
+  - APY display verification in basket detail and list views
+  - Realized and unrealized PnL metric testing
+  - Positions table PnL display verification
+  - Price change effects on unrealized PnL
+  - Share price and TVL consistency checks
+- [2026-04-27] Added `data-testid` attributes for metrics UI testing:
+  - MetricsStrip component now supports `testId` property per metric cell
+  - Basket detail page: `metric-tvl`, `metric-share-price`, `metric-apy`, `metric-net-pnl`, `metric-unrealised-pnl`, etc.
+  - Admin basket detail page: same metrics plus `metric-perp-allocated`, `metric-positions`
+  - Positions table: `positions-table-body`, `position-row-*`, `position-pnl`, `position-pnl-pct`
+- [2026-04-27] Comprehensive Envio E2E test suite (`envio-comprehensive.spec.ts`):
+  - Redemption flow testing: deposit-then-redeem with balance verification, max redeem share balance display
+  - Chains tab verification: `/chains` page metrics, routing state after keeper updates
+  - UI value verification: TVL display after deposits, share balance updates, fee percentage display
+  - Envio data consistency: basket data matches UI, deposit count tracking
+- [2026-04-27] Envio-based cross-chain E2E tests with dual local Anvil chains:
+  - Added local chain support to Envio indexer (`config.local.yaml`, `contractCalls.ts` with local hub/spoke viem chains)
+  - New `local-spoke` chain config (chain ID 31338) in `config/chains.json` and web app `CHAIN_REGISTRY`
+  - New `gen-local-config.js` script generates Envio config from deployment JSONs with actual contract addresses
+  - New `envio-cross-chain.spec.ts` Playwright tests: routing weights display, multi-chain deposit drawer, Envio indexing verification, portfolio aggregation across chains
+  - Extended `cross-chain-setup.ts` with Envio GraphQL helpers (`envioQuery`, `envioGetBaskets`, `envioGetUserPositions`, `envioGetChainPoolStates`, `waitForEnvioDeposit`, `waitForEnvioReady`)
+  - Updated CI `cross_chain_e2e` job to start Envio dev server alongside dual Anvil instances and pass `NEXT_PUBLIC_ENVIO_URL`
+  - New npm scripts: `dev:local` and `gen-local-config` in `apps/envio/package.json`
+  - Updated E2E_TESTING.md with cross-chain Envio setup instructions
 - [2026-04-27] 0G Network + KeeperHub integration for decentralized AI agent infrastructure:
   - **0G Storage MCP server** (`apps/mcps/0g-storage/`): Provides decentralized persistent memory via 0G KV store (real-time state) and Log layer (run history). Tools: `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read`, `get_storage_info`.
   - **0G Compute integration** in `agent-runner.mjs`: Supports 0G Compute Network as LLM backend with OpenAI-compatible API. Includes broker initialization, per-request auth headers, and TEE response verification. Fallback to OpenAI when `ZG_COMPUTE_PROVIDER` not set.

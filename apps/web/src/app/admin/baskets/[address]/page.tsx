@@ -76,23 +76,23 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
 
   const metricsData = [
-    { label: "TVL", value: formatUSDC(tvl) },
-    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign },
-    { label: "Perp Allocated", value: formatUSDC(basketInfo?.perpAllocated ?? 0n) },
+    { label: "TVL", value: formatUSDC(tvl), testId: "metric-tvl" },
+    { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign, testId: "metric-apy" },
+    { label: "Perp Allocated", value: formatUSDC(basketInfo?.perpAllocated ?? 0n), testId: "metric-perp-allocated" },
     ...(state?.registered
       ? [
-          { label: "Open Interest", value: formatUsd1e30(state.openInterest) },
-          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign },
-          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign },
-          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x` },
-          { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%` },
-          { label: "Positions", value: String(state.positionCount) },
+          { label: "Open Interest", value: formatUsd1e30(state.openInterest), testId: "metric-open-interest" },
+          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign, testId: "metric-net-pnl" },
+          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign, testId: "metric-unrealised-pnl" },
+          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x`, testId: "metric-leverage" },
+          { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%`, testId: "metric-capital-util" },
+          { label: "Positions", value: String(state.positionCount), testId: "metric-positions" },
         ]
       : []),
-    { label: "Dep Fee", value: depositFee !== undefined ? formatBps(depositFee) : "--" },
-    { label: "Red Fee", value: redeemFee !== undefined ? formatBps(redeemFee) : "--" },
-    { label: "Avail Perp", value: formatUSDC(availableForPerp) },
-    { label: "Reserve", value: formatBps(minReserveBps ?? 0n) },
+    { label: "Dep Fee", value: depositFee !== undefined ? formatBps(depositFee) : "--", testId: "metric-deposit-fee" },
+    { label: "Red Fee", value: redeemFee !== undefined ? formatBps(redeemFee) : "--", testId: "metric-redeem-fee" },
+    { label: "Avail Perp", value: formatUSDC(availableForPerp), testId: "metric-avail-perp" },
+    { label: "Reserve", value: formatBps(minReserveBps ?? 0n), testId: "metric-reserve" },
   ];
 
   return (

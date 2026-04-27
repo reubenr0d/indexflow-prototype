@@ -1,0 +1,12 @@
+[
+  {
+    "type": "function",
+    "name": "wireAsset",
+    "inputs": [
+      { "name": "symbol", "type": "string", "internalType": "string" },
+      { "name": "seedPriceRaw8", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  }
+]

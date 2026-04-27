@@ -7,6 +7,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
 import { classifySymbolWithSearch, symbolPolicyMessage } from "../../shared/yahoo-symbol-policy.mjs";
+import { formatKeeperHubFailureResult } from "../../../lib/keeperhub.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -39,6 +40,53 @@ async function initKeeperHub() {
 
 // Initialize KeeperHub on startup
 initKeeperHub().catch(() => {});
+
+// JSON ABI for KeeperHub /execute/contract-call (not human-readable "function ..." strings).
+// Subgraph ABIs are regenerated with forge; wireAsset matches apps/web/src/abi/AssetWiring.ts.
+const SUBGRAPH_ABI_ROOT = "apps/subgraph/abis";
+const WIRE_ASSET_ABI_PATH = "apps/mcps/vault-manager/abis/wireAsset.json";
+
+/** @type {Record<string, { file: string, name?: string, wholeFile?: boolean }>} */
+const WRITE_SIG_TO_ABI = {
+  "wireAsset(string,uint256)": { file: WIRE_ASSET_ABI_PATH, wholeFile: true },
+  "createBasket(string,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketFactory.json`, name: "createBasket" },
+  "setAssets(bytes32[])": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "setAssets" },
+  "allocateToPerp(uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "allocateToPerp" },
+  "withdrawFromPerp(uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "withdrawFromPerp" },
+  "openPosition(address,bytes32,bool,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/VaultAccounting.json`, name: "openPosition" },
+  "closePosition(address,bytes32,bool,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/VaultAccounting.json`, name: "closePosition" },
+};
+
+/** @type {Record<string, unknown[]>} */
+let _keeperHubAbiFileCache = {};
+
+/**
+ * @param {string} sig - cast-style signature, e.g. "allocateToPerp(uint256)"
+ * @returns {unknown[]} - JSON ABI array with exactly one function entry
+ */
+function getKeeperHubAbiForWriteSig(sig) {
+  const spec = WRITE_SIG_TO_ABI[sig];
+  if (!spec) {
+    throw new Error(`Unknown write signature for KeeperHub: ${sig}`);
+  }
+  const abs = isAbsolute(spec.file) ? spec.file : resolve(PROJECT_ROOT, spec.file);
+  if (!_keeperHubAbiFileCache[abs]) {
+    if (!existsSync(abs)) {
+      throw new Error(`ABI file not found: ${abs}`);
+    }
+    _keeperHubAbiFileCache[abs] = JSON.parse(readFileSync(abs, "utf8"));
+  }
+  const parsed = _keeperHubAbiFileCache[abs];
+  if (spec.wholeFile) {
+    return parsed;
+  }
+  const name = spec.name;
+  const item = parsed.find((x) => x?.type === "function" && x.name === name);
+  if (!item) {
+    throw new Error(`Function ${name} not found in ${spec.file}`);
+  }
+  return [item];
+}
 
 function deploymentPath() {
   const p = DEPLOYMENT_CONFIG;
@@ -174,17 +222,14 @@ function castSendDirect(contractAddr, sig, args = []) {
 }
 
 async function castSendViaKeeperHub(contractAddr, sig, args = [], justification = "") {
-  // Parse function signature to get name and types
   const sigMatch = sig.match(/^(\w+)\((.*)\)$/);
   if (!sigMatch) {
     throw new Error(`Invalid function signature: ${sig}`);
   }
 
   const functionName = sigMatch[1];
-  const paramTypes = sigMatch[2] ? sigMatch[2].split(",").map(t => t.trim()) : [];
-
-  // Build ABI fragment
-  const abiFragment = `function ${sig}`;
+  // KeeperHub expects standard JSON-ABI function objects (see services/keeper, update-yahoo-finance-prices).
+  const jsonAbi = getKeeperHubAbiForWriteSig(sig);
 
   try {
     console.error(`[KeeperHub] Executing ${functionName} on ${contractAddr.slice(0, 10)}...`);
@@ -195,7 +240,7 @@ async function castSendViaKeeperHub(contractAddr, sig, args = [], justification 
         contractAddress: contractAddr,
         functionName,
         functionArgs: args,
-        abi: [abiFragment],
+        abi: jsonAbi,
         justification: justification || `Agent: ${functionName}`,
       },
       {
@@ -218,7 +263,7 @@ async function castSendViaKeeperHub(contractAddr, sig, args = [], justification 
         keeperHub: true,
       });
     } else {
-      throw new Error(`KeeperHub execution failed: ${result.error}`);
+      throw new Error(`KeeperHub execution failed: ${formatKeeperHubFailureResult(result)}`);
     }
   } catch (err) {
     console.error(`[KeeperHub] Error: ${err.message}`);
@@ -226,9 +271,17 @@ async function castSendViaKeeperHub(contractAddr, sig, args = [], justification 
   }
 }
 
-async function castSend(contractAddr, sig, args = [], justification = "") {
+/**
+ * @param {string} contractAddr
+ * @param {string} sig
+ * @param {string[]} args - arguments for `cast send` (e.g. bracket string for calldata arrays)
+ * @param {string} justification
+ * @param {{ keeperFunctionArgs?: string[] }} [options] - if set, used for KeeperHub only when abi-encoding must differ from cast (e.g. setAssets bytes32[] must be a nested array, not a single bracket string)
+ */
+async function castSend(contractAddr, sig, args = [], justification = "", options = {}) {
   if (keeperHubClient) {
-    return await castSendViaKeeperHub(contractAddr, sig, args, justification);
+    const kArgs = options.keeperFunctionArgs != null ? options.keeperFunctionArgs : args;
+    return await castSendViaKeeperHub(contractAddr, sig, kArgs, justification);
   }
   return castSendDirect(contractAddr, sig, args);
 }
@@ -687,7 +740,10 @@ server.registerTool(
   async ({ vault, assetIds, justification }) => {
     try {
       const idsArg = `[${assetIds.join(",")}]`;
-      const rawReceipt = await castSend(vault, "setAssets(bytes32[])", [idsArg], justification);
+      // `cast` wants one bracket string; KeeperHub/ABI encoding wants one function arg = `bytes32[]` as a nested JS array
+      const rawReceipt = await castSend(vault, "setAssets(bytes32[])", [idsArg], justification, {
+        keeperFunctionArgs: [assetIds],
+      });
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify assets were set", params_hint: { vault } },
       ], justification);

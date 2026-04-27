@@ -8,7 +8,9 @@
     "watch": "tsc --watch",
     "codegen": "envio codegen",
     "dev": "envio dev",
-    "start": "envio start"
+    "dev:local": "node scripts/gen-local-config.mjs && envio dev --config config.local.generated.yaml",
+    "start": "envio start",
+    "gen-local-config": "node scripts/gen-local-config.mjs"
   },
   "dependencies": {
     "envio": "2.32.12",

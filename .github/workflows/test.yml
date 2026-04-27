@@ -223,7 +223,7 @@ jobs:
             /tmp/anvil.log
 
   cross_chain_e2e:
-    name: Cross-Chain E2E (Dual Anvil)
+    name: Cross-Chain E2E (Dual Anvil + Envio)
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -248,24 +248,57 @@ jobs:
       - name: Install Playwright browser
         run: npx --prefix apps/web playwright install --with-deps chromium
 
-      - name: Start Hub Anvil (port 8545)
-        run: nohup anvil --host 127.0.0.1 --port 8545 > /tmp/anvil-hub.log 2>&1 &
+      - name: Start Hub Anvil (port 8545, chain ID 31337)
+        run: nohup anvil --host 127.0.0.1 --port 8545 --chain-id 31337 > /tmp/anvil-hub.log 2>&1 &
 
-      - name: Start Spoke Anvil (port 8546)
-        run: nohup anvil --host 127.0.0.1 --port 8546 > /tmp/anvil-spoke.log 2>&1 &
+      - name: Start Spoke Anvil (port 8546, chain ID 31338)
+        run: nohup anvil --host 127.0.0.1 --port 8546 --chain-id 31338 > /tmp/anvil-spoke.log 2>&1 &
+
+      - name: Wait for Anvil nodes
+        run: |
+          for i in {1..30}; do
+            curl -s http://127.0.0.1:8545 -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' && break
+            sleep 1
+          done
+          for i in {1..30}; do
+            curl -s http://127.0.0.1:8546 -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_chainId","params":[],"id":1}' && break
+            sleep 1
+          done
 
       - name: Deploy hub contracts
         run: CHAIN=local npm run deploy:local
 
       - name: Deploy spoke contracts
-        run: CHAIN=local SPOKE_MODE=1 forge script script/DeploySpoke.s.sol:DeploySpoke --rpc-url http://127.0.0.1:8546 --broadcast || true
+        run: CHAIN=local-spoke forge script script/DeploySpoke.s.sol:DeploySpoke --rpc-url http://127.0.0.1:8546 --broadcast || true
+
+      - name: Generate Envio local config
+        working-directory: apps/envio
+        run: node scripts/gen-local-config.mjs
+
+      - name: Install Envio dependencies
+        working-directory: apps/envio
+        run: npm ci
+
+      - name: Start Envio dev server
+        working-directory: apps/envio
+        run: |
+          npx envio dev --config config.local.generated.yaml > /tmp/envio.log 2>&1 &
+          echo "Waiting for Envio..."
+          for i in {1..60}; do
+            curl -s http://127.0.0.1:8080/health && break
+            sleep 2
+          done
 
       - name: Run cross-chain E2E tests
         env:
           NEXT_PUBLIC_E2E_TEST_MODE: "1"
+          NEXT_PUBLIC_ENVIO_URL: "http://127.0.0.1:8080/v1/graphql"
           E2E_HUB_RPC_URL: "http://127.0.0.1:8545"
           E2E_SPOKE_RPC_URL: "http://127.0.0.1:8546"
-        run: npx --prefix apps/web playwright test --grep "cross-chain" || true
+          E2E_HUB_CHAIN_ID: "31337"
+          E2E_SPOKE_CHAIN_ID: "31338"
+          E2E_ENVIO_URL: "http://127.0.0.1:8080/v1/graphql"
+        run: npx --prefix apps/web playwright test --grep "cross-chain|Envio" || true
 
       - name: Upload E2E artifacts
         if: failure()
@@ -277,6 +310,7 @@ jobs:
             apps/web/test-results
             /tmp/anvil-hub.log
             /tmp/anvil-spoke.log
+            /tmp/envio.log
 
   keeper_tests:
     name: Keeper Service Tests

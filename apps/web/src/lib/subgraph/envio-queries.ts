@@ -1,29 +1,21 @@
 import { gql } from "graphql-request";
-import { ENVIO_UNIFIED_URL } from "@/config/subgraphs";
-import {
-  ENVIO_GET_BASKETS_OVERVIEW,
-  ENVIO_GET_BASKET_DETAIL,
-  ENVIO_GET_BASKET_TREND_SNAPSHOTS,
-  ENVIO_GET_BASKETS_WEEK_SNAPSHOTS,
-  ENVIO_GET_SHARE_PRICE_HISTORY,
-  ENVIO_GET_BASKET_ACTIVITIES,
-  ENVIO_GET_USER_PORTFOLIO,
-  ENVIO_GET_TOKEN_HOLDER_ADDRESSES,
-  ENVIO_GET_ADMIN_VAULT_STATES,
-  ENVIO_GET_ORACLE_PRICE_UPDATES,
-  ENVIO_GET_CHAIN_POOL_STATES,
-} from "./envio-queries";
 
-const isEnvioMode = ENVIO_UNIFIED_URL.length > 0;
+/**
+ * Envio/Hasura-compatible GraphQL queries.
+ * These use Hasura's query syntax which differs from The Graph:
+ * - PascalCase entity names (Basket vs baskets)
+ * - Object-based filters (chainId: { _eq: $chainId } vs chainId: $chainId)
+ * - order_by syntax vs orderBy/orderDirection
+ * - limit/offset vs first/skip
+ */
 
-const GRAPH_GET_BASKETS_OVERVIEW = gql`
+export const ENVIO_GET_BASKETS_OVERVIEW = gql`
   query GetBasketsOverview($first: Int!, $skip: Int!, $chainId: Int!) {
-    baskets(
-      first: $first
-      skip: $skip
-      where: { chainId: $chainId }
-      orderBy: updatedAt
-      orderDirection: desc
+    baskets: Basket(
+      limit: $first
+      offset: $skip
+      where: { chainId: { _eq: $chainId } }
+      order_by: { updatedAt: desc }
     ) {
       id
       chainId
@@ -45,9 +37,9 @@ const GRAPH_GET_BASKETS_OVERVIEW = gql`
   }
 `;
 
-const GRAPH_GET_BASKET_DETAIL = gql`
-  query GetBasketDetail($id: ID!, $activityFirst: Int!, $activitySkip: Int!) {
-    basket(id: $id) {
+export const ENVIO_GET_BASKET_DETAIL = gql`
+  query GetBasketDetail($id: ID!) {
+    basket: Basket_by_pk(id: $id) {
       id
       name
       vault
@@ -63,7 +55,7 @@ const GRAPH_GET_BASKET_DETAIL = gql`
       redeemFeeBps
       minReserveBps
       maxPerpAllocation
-      exposures(orderBy: netSize, orderDirection: desc) {
+      exposures(order_by: { netSize: desc }) {
         id
         assetId
         longSize
@@ -71,13 +63,13 @@ const GRAPH_GET_BASKET_DETAIL = gql`
         netSize
         updatedAt
       }
-      assets(where: { active: true }, orderBy: updatedAt, orderDirection: desc) {
+      assets(where: { active: { _eq: true } }, order_by: { updatedAt: desc }) {
         id
         assetId
         active
         updatedAt
       }
-      activities(first: $activityFirst, skip: $activitySkip, orderBy: timestamp, orderDirection: desc) {
+      activities(limit: 100, order_by: { timestamp: desc }) {
         id
         activityType
         user {
@@ -95,7 +87,7 @@ const GRAPH_GET_BASKET_DETAIL = gql`
         txHash
       }
     }
-    vaultStateCurrent(id: $id) {
+    vaultStateCurrent: VaultStateCurrent_by_pk(id: $id) {
       id
       registered
       paused
@@ -109,13 +101,12 @@ const GRAPH_GET_BASKET_DETAIL = gql`
   }
 `;
 
-const GRAPH_GET_BASKET_TREND_SNAPSHOTS = gql`
+export const ENVIO_GET_BASKET_TREND_SNAPSHOTS = gql`
   query GetBasketTrendSnapshots($id: ID!) {
-    daySnapshots: basketSnapshots(
-      where: { basket_: { id: $id }, period: "1d" }
-      first: 2
-      orderBy: bucketStart
-      orderDirection: desc
+    daySnapshots: BasketSnapshot(
+      where: { basket: { id: { _eq: $id } }, period: { _eq: "1d" } }
+      limit: 2
+      order_by: { bucketStart: desc }
     ) {
       id
       period
@@ -141,11 +132,10 @@ const GRAPH_GET_BASKET_TREND_SNAPSHOTS = gql`
       collateralLocked
       positionCount
     }
-    weekSnapshots: basketSnapshots(
-      where: { basket_: { id: $id }, period: "7d" }
-      first: 2
-      orderBy: bucketStart
-      orderDirection: desc
+    weekSnapshots: BasketSnapshot(
+      where: { basket: { id: { _eq: $id } }, period: { _eq: "7d" } }
+      limit: 2
+      order_by: { bucketStart: desc }
     ) {
       id
       period
@@ -174,12 +164,12 @@ const GRAPH_GET_BASKET_TREND_SNAPSHOTS = gql`
   }
 `;
 
-const GRAPH_GET_BASKETS_WEEK_SNAPSHOTS = gql`
+export const ENVIO_GET_BASKETS_WEEK_SNAPSHOTS = gql`
   query GetBasketsWeekSnapshots($ids: [String!]!) {
-    baskets(where: { id_in: $ids }) {
+    baskets: Basket(where: { id: { _in: $ids } }) {
       id
       vault
-      snapshots(where: { period: "7d" }, first: 2, orderBy: bucketStart, orderDirection: desc) {
+      snapshots(where: { period: { _eq: "7d" } }, limit: 2, order_by: { bucketStart: desc }) {
         id
         period
         bucketStart
@@ -208,13 +198,12 @@ const GRAPH_GET_BASKETS_WEEK_SNAPSHOTS = gql`
   }
 `;
 
-const GRAPH_GET_SHARE_PRICE_HISTORY = gql`
+export const ENVIO_GET_SHARE_PRICE_HISTORY = gql`
   query GetSharePriceHistory($id: ID!, $first: Int!) {
-    basketSnapshots(
-      where: { basket_: { id: $id }, period: "1d" }
-      first: $first
-      orderBy: bucketStart
-      orderDirection: asc
+    basketSnapshots: BasketSnapshot(
+      where: { basket: { id: { _eq: $id } }, period: { _eq: "1d" } }
+      limit: $first
+      order_by: { bucketStart: asc }
     ) {
       bucketStart
       updatedAt
@@ -224,14 +213,13 @@ const GRAPH_GET_SHARE_PRICE_HISTORY = gql`
   }
 `;
 
-const GRAPH_GET_BASKET_ACTIVITIES = gql`
+export const ENVIO_GET_BASKET_ACTIVITIES = gql`
   query GetBasketActivities($id: String!, $first: Int!, $skip: Int!) {
-    basketActivities(
-      where: { basket_: { id: $id } }
-      first: $first
-      skip: $skip
-      orderBy: timestamp
-      orderDirection: desc
+    basketActivities: BasketActivity(
+      where: { basket: { id: { _eq: $id } } }
+      limit: $first
+      offset: $skip
+      order_by: { timestamp: desc }
     ) {
       id
       activityType
@@ -252,17 +240,16 @@ const GRAPH_GET_BASKET_ACTIVITIES = gql`
   }
 `;
 
-const GRAPH_GET_USER_PORTFOLIO = gql`
-  query GetUserPortfolio($userAddress: Bytes!, $chainId: Int!, $first: Int!) {
-    userBasketPositions(
-      first: $first
+export const ENVIO_GET_USER_PORTFOLIO = gql`
+  query GetUserPortfolio($userAddress: String!, $chainId: Int!, $first: Int!) {
+    userBasketPositions: UserBasketPosition(
+      limit: $first
       where: {
-        chainId: $chainId
-        user_: { address: $userAddress, chainId: $chainId }
-        shareBalance_gt: "0"
+        chainId: { _eq: $chainId }
+        user: { address: { _eq: $userAddress }, chainId: { _eq: $chainId } }
+        shareBalance: { _gt: "0" }
       }
-      orderBy: updatedAt
-      orderDirection: desc
+      order_by: { updatedAt: desc }
     ) {
       id
       shareBalance
@@ -283,14 +270,13 @@ const GRAPH_GET_USER_PORTFOLIO = gql`
   }
 `;
 
-const GRAPH_GET_TOKEN_HOLDER_ADDRESSES = gql`
+export const ENVIO_GET_TOKEN_HOLDER_ADDRESSES = gql`
   query GetTokenHolderAddresses($first: Int!, $skip: Int!) {
-    userBasketPositions(
-      first: $first
-      skip: $skip
-      where: { shareBalance_gt: "0" }
-      orderBy: updatedAt
-      orderDirection: desc
+    userBasketPositions: UserBasketPosition(
+      limit: $first
+      offset: $skip
+      where: { shareBalance: { _gt: "0" } }
+      order_by: { updatedAt: desc }
     ) {
       id
       user {
@@ -300,14 +286,13 @@ const GRAPH_GET_TOKEN_HOLDER_ADDRESSES = gql`
   }
 `;
 
-const GRAPH_GET_ADMIN_VAULT_STATES = gql`
+export const ENVIO_GET_ADMIN_VAULT_STATES = gql`
   query GetAdminVaultStates($first: Int!, $skip: Int!, $chainId: Int!) {
-    vaultStateCurrents(
-      first: $first
-      skip: $skip
-      where: { chainId: $chainId }
-      orderBy: updatedAt
-      orderDirection: desc
+    vaultStateCurrents: VaultStateCurrent(
+      limit: $first
+      offset: $skip
+      where: { chainId: { _eq: $chainId } }
+      order_by: { updatedAt: desc }
     ) {
       id
       registered
@@ -329,13 +314,12 @@ const GRAPH_GET_ADMIN_VAULT_STATES = gql`
   }
 `;
 
-const GRAPH_GET_ORACLE_PRICE_UPDATES = gql`
-  query GetOraclePriceUpdates($assetId: Bytes!, $chainId: Int!, $minTimestamp: BigInt!, $first: Int!) {
-    oraclePriceUpdates(
-      where: { assetId: $assetId, chainId: $chainId, priceTimestamp_gte: $minTimestamp }
-      first: $first
-      orderBy: priceTimestamp
-      orderDirection: desc
+export const ENVIO_GET_ORACLE_PRICE_UPDATES = gql`
+  query GetOraclePriceUpdates($assetId: String!, $chainId: Int!, $minTimestamp: String!, $first: Int!) {
+    oraclePriceUpdates: OraclePriceUpdate(
+      where: { assetId: { _eq: $assetId }, chainId: { _eq: $chainId }, priceTimestamp: { _gte: $minTimestamp } }
+      limit: $first
+      order_by: { priceTimestamp: desc }
     ) {
       id
       assetId
@@ -349,9 +333,9 @@ const GRAPH_GET_ORACLE_PRICE_UPDATES = gql`
   }
 `;
 
-const GRAPH_GET_CHAIN_POOL_STATES = gql`
+export const ENVIO_GET_CHAIN_POOL_STATES = gql`
   query GetChainPoolStates {
-    chainPoolStates(orderBy: twapPoolAmount, orderDirection: desc) {
+    chainPoolStates: ChainPoolState(order_by: { twapPoolAmount: desc }) {
       id
       chainSelector
       twapPoolAmount
@@ -364,15 +348,3 @@ const GRAPH_GET_CHAIN_POOL_STATES = gql`
     }
   }
 `;
-
-export const GET_BASKETS_OVERVIEW = isEnvioMode ? ENVIO_GET_BASKETS_OVERVIEW : GRAPH_GET_BASKETS_OVERVIEW;
-export const GET_BASKET_DETAIL = isEnvioMode ? ENVIO_GET_BASKET_DETAIL : GRAPH_GET_BASKET_DETAIL;
-export const GET_BASKET_TREND_SNAPSHOTS = isEnvioMode ? ENVIO_GET_BASKET_TREND_SNAPSHOTS : GRAPH_GET_BASKET_TREND_SNAPSHOTS;
-export const GET_BASKETS_WEEK_SNAPSHOTS = isEnvioMode ? ENVIO_GET_BASKETS_WEEK_SNAPSHOTS : GRAPH_GET_BASKETS_WEEK_SNAPSHOTS;
-export const GET_SHARE_PRICE_HISTORY = isEnvioMode ? ENVIO_GET_SHARE_PRICE_HISTORY : GRAPH_GET_SHARE_PRICE_HISTORY;
-export const GET_BASKET_ACTIVITIES = isEnvioMode ? ENVIO_GET_BASKET_ACTIVITIES : GRAPH_GET_BASKET_ACTIVITIES;
-export const GET_USER_PORTFOLIO = isEnvioMode ? ENVIO_GET_USER_PORTFOLIO : GRAPH_GET_USER_PORTFOLIO;
-export const GET_TOKEN_HOLDER_ADDRESSES = isEnvioMode ? ENVIO_GET_TOKEN_HOLDER_ADDRESSES : GRAPH_GET_TOKEN_HOLDER_ADDRESSES;
-export const GET_ADMIN_VAULT_STATES = isEnvioMode ? ENVIO_GET_ADMIN_VAULT_STATES : GRAPH_GET_ADMIN_VAULT_STATES;
-export const GET_ORACLE_PRICE_UPDATES = isEnvioMode ? ENVIO_GET_ORACLE_PRICE_UPDATES : GRAPH_GET_ORACLE_PRICE_UPDATES;
-export const GET_CHAIN_POOL_STATES = isEnvioMode ? ENVIO_GET_CHAIN_POOL_STATES : GRAPH_GET_CHAIN_POOL_STATES;
