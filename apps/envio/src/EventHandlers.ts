@@ -420,18 +420,19 @@ async function syncExposure(
   });
 }
 
-BasketFactory.BasketCreated.contractRegister(async ({ event, context }) => {
-  context.addBasketVault(event.params.vault);
+BasketFactory.BasketCreated.contractRegister(({ event, context }) => {
+  context.addBasketVault(lc(event.params.vault));
 });
 
 BasketFactory.BasketCreated.handler(async ({ event, context }) => {
   const chainId = toInt(event.chainId);
-  const basket = await refreshBasketFromChain(context, chainId, event.params.vault, event.block);
+  const vaultAddress = lc(event.params.vault);
+  const basket = await refreshBasketFromChain(context, chainId, vaultAddress, event.block);
 
   context.Basket.set({
     ...basket,
     creator: lc(event.params.creator),
-    vault: lc(event.params.vault),
+    vault: vaultAddress,
     shareToken: lc(event.params.shareToken),
     name: event.params.name,
     createdAt: ts(event.block),
@@ -441,7 +442,16 @@ BasketFactory.BasketCreated.handler(async ({ event, context }) => {
   });
 
   await ensureVaultState(context, basket, chainId, event.block);
-  await syncBasketAssets(context, chainId, event.params.vault, event.block);
+
+  try {
+    await syncBasketAssets(context, chainId, vaultAddress, event.block);
+  } catch (error) {
+    console.error("BasketCreated syncBasketAssets failed", {
+      chainId,
+      vaultAddress,
+      error: String(error),
+    });
+  }
 });
 
 BasketVault.Deposited.handler(async ({ event, context }) => {
