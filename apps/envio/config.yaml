@@ -7,50 +7,50 @@ contracts:
     abi_file_path: ./abis/BasketFactory.json
     handler: ./src/EventHandlers.ts
     events:
-      - event: BasketCreated(address creator, address vault, address shareToken, string name)
+      - event: BasketCreated
 
   - name: BasketVault
     abi_file_path: ./abis/BasketVault.json
     handler: ./src/EventHandlers.ts
     events:
-      - event: Deposited(address user, uint256 usdcAmount, uint256 sharesMinted)
-      - event: Redeemed(address user, uint256 sharesBurned, uint256 usdcReturned)
-      - event: AllocatedToPerp(uint256 amount)
-      - event: WithdrawnFromPerp(uint256 amount)
-      - event: AssetsUpdated(uint256 assetCount)
-      - event: FeesCollected(address to, uint256 amount)
-      - event: ReservePolicyUpdated(uint256 minReserveBps)
-      - event: ReserveToppedUp(address from, uint256 amount)
+      - event: Deposited
+      - event: Redeemed
+      - event: AllocatedToPerp
+      - event: WithdrawnFromPerp
+      - event: AssetsUpdated
+      - event: FeesCollected
+      - event: ReservePolicyUpdated
+      - event: ReserveToppedUp
 
   - name: VaultAccounting
     abi_file_path: ./abis/VaultAccounting.json
     handler: ./src/EventHandlers.ts
     events:
-      - event: VaultRegistered(address vault)
-      - event: VaultDeregistered(address vault)
-      - event: AssetTokenMapped(bytes32 assetId, address token)
-      - event: CapitalDeposited(address vault, uint256 amount)
-      - event: CapitalWithdrawn(address vault, uint256 amount)
-      - event: PositionOpened(address vault, bytes32 asset, bool isLong, uint256 size, uint256 collateral)
-      - event: PositionClosed(address vault, bytes32 asset, bool isLong, int256 realisedPnL)
-      - event: PnLRealized(address vault, int256 amount)
-      - event: MaxOpenInterestSet(address vault, uint256 cap)
-      - event: MaxPositionSizeSet(address vault, uint256 cap)
-      - event: PauseToggled(bool paused)
+      - event: VaultRegistered
+      - event: VaultDeregistered
+      - event: AssetTokenMapped
+      - event: CapitalDeposited
+      - event: CapitalWithdrawn
+      - event: PositionOpened
+      - event: PositionClosed
+      - event: PnLRealized
+      - event: MaxOpenInterestSet
+      - event: MaxPositionSizeSet
+      - event: PauseToggled
 
   - name: OracleAdapter
     abi_file_path: ./abis/OracleAdapter.json
     handler: ./src/EventHandlers.ts
     events:
-      - event: AssetConfigured(bytes32 assetId, string symbol, uint8 feedType, address feedAddress)
-      - event: AssetRemoved(bytes32 assetId)
-      - event: PriceUpdated(bytes32 assetId, uint256 price, uint256 timestamp)
+      - event: AssetConfigured
+      - event: AssetRemoved
+      - event: PriceUpdated
 
   - name: StateRelay
     abi_file_path: ./abis/StateRelay.json
     handler: ./src/EventHandlers.ts
     events:
-      - event: StateUpdated(uint256 timestamp, uint256 chainCount, uint256 vaultCount)
+      - event: StateUpdated
 
 networks:
   - id: 11155111 # Sepolia
