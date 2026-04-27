@@ -11,17 +11,13 @@ type ClientChain = typeof sepolia | typeof avalancheFuji | typeof arbitrumSepoli
 
 type ChainConfig = {
   chain: ClientChain;
-  rpcUrl?: string;
+  rpcUrl: string;
 };
 
-function envValue(key: string): string | undefined {
-  return process.env[key] ?? process.env[`ENVIO_${key}`];
-}
-
 const CHAIN_CONFIG: Record<number, ChainConfig> = {
-  11155111: { chain: sepolia, rpcUrl: envValue("SEPOLIA_RPC_URL") },
-  43113: { chain: avalancheFuji, rpcUrl: envValue("FUJI_RPC_URL") },
-  421614: { chain: arbitrumSepolia, rpcUrl: envValue("ARBITRUM_SEPOLIA_RPC_URL") },
+  11155111: { chain: sepolia, rpcUrl: "https://sepolia.rpc.hypersync.xyz" },
+  43113: { chain: avalancheFuji, rpcUrl: "https://fuji.rpc.hypersync.xyz" },
+  421614: { chain: arbitrumSepolia, rpcUrl: "https://arbitrum-sepolia.rpc.hypersync.xyz" },
 };
 
 const clientCache = new Map<number, ReturnType<typeof createPublicClient>>();
@@ -31,7 +27,7 @@ function getClient(chainId: number) {
   if (existing) return existing;
 
   const cfg = CHAIN_CONFIG[chainId];
-  if (!cfg?.rpcUrl) return null;
+  if (!cfg) return null;
 
   const client = createPublicClient({
     chain: cfg.chain,

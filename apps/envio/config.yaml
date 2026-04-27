@@ -55,8 +55,6 @@ contracts:
 networks:
   - id: 11155111 # Sepolia
     start_block: 10689376
-    rpc_config:
-      url: https://sepolia.drpc.org
     contracts:
       - name: BasketFactory
         address: 0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4
@@ -74,8 +72,6 @@ networks:
 
   - id: 43113 # Avalanche Fuji
     start_block: 54206983
-    rpc_config:
-      url: https://api.avax-test.network/ext/bc/C/rpc
     contracts:
       - name: BasketFactory
         address: 0x743194baae87a8a518739a1eb71f04773b46d42e
