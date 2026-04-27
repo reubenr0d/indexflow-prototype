@@ -313,7 +313,8 @@ sequenceDiagram
 | Secret | Purpose |
 |--------|---------|
 | `KEEPER_PRIVATE_KEY` | Keeper wallet private key; passed as `PRIVATE_KEY` to the script. Job **fails** if unset. |
-| `SEPOLIA_RPC_URL` | Sepolia RPC endpoint; passed as `RPC_URL`. |
+| `SEPOLIA_RPC_URL` | Sepolia RPC endpoint; passed as `RPC_URL` (for `cast` and reads). |
+| `KEEPERHUB_API_KEY` | Optional. If set, the script sends `submitPrices` / `syncAll` via KeeperHub instead of `cast send`. The workflow sets `KEEPERHUB_NETWORK` to the matrix `network` (e.g. `sepolia`); the script can also infer the chain from `*-deployment.json` or `KEEPERHUB_NETWORK` / `AGENT_NETWORK` env. **Do not** pass the RPC URL as the KeeperHub network. |
 
 ### Adding a new network
 

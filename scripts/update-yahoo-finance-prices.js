@@ -6,6 +6,8 @@ const { execFileSync } = require("child_process");
 
 const DEFAULT_DEPLOYMENT_CONFIG = "apps/web/src/config/sepolia-deployment.json";
 const DEFAULT_RPC_URL = "sepolia";
+/** Used when inferring chain for KeeperHub (API wants "sepolia", not the RPC URL). */
+const DEFAULT_KEEPERHUB_NETWORK = "sepolia";
 const PRICE_DECIMALS = 8;
 
 // KeeperHub integration for reliable transaction execution
@@ -28,6 +30,22 @@ async function initKeeperHub() {
 function resolvePath(input, fallback) {
   const candidate = input ?? fallback;
   return path.isAbsolute(candidate) ? candidate : path.join(process.cwd(), candidate);
+}
+
+/**
+ * KeeperHub's execute API expects a short network id (e.g. "sepolia"), not `RPC_URL`
+ * (an https URL is rejected as "Unsupported network" and is redacted in CI logs as "***").
+ */
+function resolveKeeperHubNetwork(deploymentConfigPath) {
+  const fromEnv = process.env.KEEPERHUB_NETWORK || process.env.AGENT_NETWORK;
+  if (fromEnv) return fromEnv;
+  const base = path.basename(deploymentConfigPath, ".json");
+  const m = base.match(/^([a-z0-9-]+)-deployment$/i);
+  if (m) {
+    // arbitrum-sepolia-deployment.json -> arbitrum-sepolia; map to KeeperHub id if we add aliases later
+    return m[1].toLowerCase();
+  }
+  return DEFAULT_KEEPERHUB_NETWORK;
 }
 
 function toBool(value) {
@@ -242,8 +260,13 @@ async function main() {
     throw new Error("deployment config must include oracleAdapter and priceSync");
   }
 
+  const keeperHubNetwork = resolveKeeperHubNetwork(deploymentConfigPath);
+
   console.log(`Deployment config: ${deploymentConfigPath}`);
   console.log(`RPC URL:           ${rpcUrl}`);
+  if (useKeeperHub) {
+    console.log(`KeeperHub network: ${keeperHubNetwork}`);
+  }
   console.log("");
 
   console.log("Enumerating on-chain CustomRelayer assets...");
@@ -318,7 +341,7 @@ async function main() {
 
     // Submit prices (use string representation for large numbers)
     const submitSuccess = await executeViaKeeperHub(
-      rpcUrl,
+      keeperHubNetwork,
       oracleAdapter,
       "submitPrices",
       [assetIds, rawPrices],
@@ -332,7 +355,7 @@ async function main() {
 
     // Sync prices to GMX
     const syncSuccess = await executeViaKeeperHub(
-      rpcUrl,
+      keeperHubNetwork,
       priceSync,
       "syncAll",
       [],

@@ -66,6 +66,7 @@ jobs:
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          KEEPERHUB_NETWORK: ${{ matrix.network }}
           PRIVATE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.KEEPER_PRIVATE_KEY }}
           KEEPERHUB_API_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.KEEPERHUB_API_KEY }}
           DRY_RUN: ${{ github.event_name == 'pull_request' && '1' || '' }}
