@@ -8,6 +8,8 @@ Define autonomous vault management agents as markdown files. Each agent gets its
 # Install MCP server deps (one-time)
 npm --prefix apps/mcps/vault-manager install
 npm --prefix apps/mcps/yfinance install
+npm --prefix apps/mcps/0g-storage install
+npm --prefix apps/mcps/keeperhub install
 
 # Run the sample agent
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
@@ -166,6 +168,8 @@ Your capabilities for doing X.
 |-------|------|-------------|
 | `vault-manager` | `agents/skills/vault-manager.md` | On-chain vault reads/writes, units, position workflows |
 | `yfinance` | `agents/skills/yfinance.md` | Yahoo Finance search and quote lookups |
+| `0g-storage` | `agents/skills/0g-storage.md` | 0G decentralized storage (KV state + Log history) |
+| `keeperhub` | `agents/skills/keeperhub.md` | KeeperHub reliable transaction execution |
 
 Reference skills in agent frontmatter:
 
@@ -234,6 +238,8 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups | `yfinance_search`, `yfinance_quote` |
+| `0g-storage-mcp` | Decentralized persistent memory | `get_storage_info`, `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read` |
+| `keeperhub-mcp` | Reliable transaction execution | `get_keeperhub_info`, `execute_transfer`, `execute_contract_call`, `execute_check_and_execute`, `get_execution_status`, `get_execution_logs`, `list_workflows`, `execute_workflow`, `create_workflow` |
 
 ### Server Registry Format
 
@@ -410,11 +416,43 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 
 No env vars required. Works out of the box.
 
+### 0G Storage MCP Server
+
+| Variable | Default | Description |
+|---|---|---|
+| `ZG_PRIVATE_KEY` | -- | Funded wallet for 0G storage fees |
+| `ZG_RPC_URL` | `https://evmrpc-testnet.0g.ai` | 0G Network RPC endpoint |
+| `ZG_INDEXER_RPC` | `https://indexer-storage-testnet-turbo.0g.ai` | 0G indexer endpoint |
+| `ZG_KV_CLIENT_URL` | `http://3.101.147.150:6789` | 0G KV store endpoint |
+| `ZG_STREAM_ID` | auto-generated | Optional fixed stream ID |
+
+Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai).
+
+### KeeperHub MCP Server
+
+| Variable | Default | Description |
+|---|---|---|
+| `KEEPERHUB_API_KEY` | -- | API key from [app.keeperhub.com](https://app.keeperhub.com) |
+| `KEEPERHUB_API_URL` | `https://app.keeperhub.com` | KeeperHub API endpoint |
+
+### 0G Compute (Decentralized LLM Inference)
+
+When configured, the agent runner uses 0G Compute Network for LLM inference instead of OpenAI.
+
+| Variable | Default | Description |
+|---|---|---|
+| `ZG_COMPUTE_PROVIDER` | -- | Provider address (e.g. `0xf07240Efa67755B5311bc75784a061eDB47165Dd`) |
+| `ZG_COMPUTE_MODEL` | `llama-3.3-70b-instruct` | Model name |
+| `ZG_COMPUTE_RPC_URL` | `https://evmrpc-testnet.0g.ai` | 0G Compute RPC |
+| `ZG_COMPUTE_PRIVATE_KEY` | -- | Wallet for compute payments |
+
+Browse providers at [compute-marketplace.0g.ai/inference](https://compute-marketplace.0g.ai/inference).
+
 ### GitHub Actions Secrets
 
 Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`
 
-Optional: `LLM_BASE_URL`, `LLM_MODEL`
+Optional: `LLM_BASE_URL`, `LLM_MODEL`, `KEEPERHUB_API_KEY`, `ZG_PRIVATE_KEY`, `ZG_COMPUTE_PRIVATE_KEY`
 
 ---
 
@@ -422,10 +460,13 @@ Optional: `LLM_BASE_URL`, `LLM_MODEL`
 
 ```
 agents/
-  sample-vault-manager.md # Agent definition (soul + heartbeat)
+  sample-vault-manager.md # Standard agent (OpenAI + file-based memory)
+  0g-vault-manager.md     # 0G-enabled agent (0G Compute + Storage + KeeperHub)
   skills/                 # Reusable skill files (tool/API references)
     vault-manager.md      # Vault MCP tool reference, units, workflows
     yfinance.md           # Yahoo Finance search + quote reference
+    0g-storage.md         # 0G Storage KV + Log reference
+    keeperhub.md          # KeeperHub execution reference
   mcp-servers.json        # MCP server registry (spawn commands)
   memory/                 # Per-agent persistent memory (committed to repo)
     sample-vault-manager/
@@ -440,4 +481,49 @@ apps/
   mcps/
     vault-manager/        # MCP server (on-chain vault reads + writes)
     yfinance/             # MCP server (Yahoo Finance search + quotes)
+    0g-storage/           # MCP server (0G decentralized KV + Log storage)
+    keeperhub/            # MCP server (KeeperHub transaction execution)
+
+lib/
+  keeperhub.mjs           # Shared KeeperHub client (used by keepers + vault-manager-mcp)
 ```
+
+---
+
+## 0G-Enabled Agents
+
+The `0g-vault-manager` agent demonstrates full integration with 0G Network infrastructure:
+
+- **0G Compute**: Decentralized LLM inference with TEE-verified responses
+- **0G Storage**: Persistent agent memory (KV store for state, Log layer for audit trail)
+- **KeeperHub**: Reliable transaction execution with retries, gas optimization, MEV protection
+
+### Running the 0G Agent
+
+```bash
+# With 0G Compute (decentralized inference)
+ZG_COMPUTE_PROVIDER=0xf07240Efa67755B5311bc75784a061eDB47165Dd \
+ZG_COMPUTE_PRIVATE_KEY=0x... \
+ZG_PRIVATE_KEY=0x... \
+KEEPERHUB_API_KEY=kh_... \
+PRIVATE_KEY=0x... \
+npm run agent:0g
+
+# With OpenAI (fallback) + 0G Storage + KeeperHub
+LLM_API_KEY=sk-... \
+ZG_PRIVATE_KEY=0x... \
+KEEPERHUB_API_KEY=kh_... \
+PRIVATE_KEY=0x... \
+npm run agent:0g
+
+# Dry-run mode
+npm run agent:0g:dry
+```
+
+### Decentralized Verification
+
+Actions taken by 0G-enabled agents are verifiable:
+
+- **Inference**: 0G Compute provides TEE-verified AI responses
+- **Memory**: 0G Storage root hashes prove data integrity via Merkle proofs
+- **Execution**: KeeperHub audit trail records all transactions with full provenance

@@ -58,8 +58,14 @@ Read a specific log entry by root hash, or list recent session entries.
 - Store complex objects as values (auto-serialized)
 
 ## Verifiable Storage
+
 All data stored on 0G is:
 - **Decentralized**: No single point of failure
-- **Verifiable**: Merkle proofs for integrity
+- **Verifiable**: Merkle proofs for data integrity
 - **Persistent**: Survives across agent restarts
 - **Auditable**: Log entries have unique root hashes
+
+When combined with 0G Compute (TEE-verified inference), your agent achieves full verifiability:
+- **State**: Every vault address and configuration is retrievable by hash
+- **History**: Every run summary has a root hash for audit trail
+- **Reasoning**: LLM responses include TEE attestation (via 0G Compute)

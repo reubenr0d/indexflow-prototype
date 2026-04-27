@@ -1,9 +1,9 @@
 ---
 title: "Your Vault Manager Is a Markdown File"
-description: "IndexFlow agents are defined as markdown -- system prompt, strategy rules, risk limits -- and they deploy and manage basket vaults autonomously on testnet using real asset prices. Human managers use the same contracts."
+description: "IndexFlow agents are defined as markdown -- system prompt, strategy rules, risk limits -- and they deploy and manage basket vaults autonomously on testnet using real asset prices. Now with 0G Network integration for decentralized AI inference and storage, plus KeeperHub for reliable transaction execution."
 date: "2026-04-16"
 author: "Reuben Rodrigues"
-tags: ["AI-agents", "vaults", "testnet", "autonomous"]
+tags: ["AI-agents", "vaults", "testnet", "autonomous", "0G", "KeeperHub"]
 published: true
 image: "/blog/autonomous-ai-agents-managing-vaults.svg"
 ---
@@ -110,13 +110,51 @@ We are building toward deploying vault agents on **Theseus** as an always-on run
 
 This is not live yet. When it is, the same markdown file that defines your agent today will run continuously on Theseus without changes to the strategy, rules, or tool surface.
 
+## Decentralized Infrastructure: 0G Network + KeeperHub
+
+The agent framework now integrates with decentralized infrastructure for production-grade autonomous operation.
+
+**0G Compute** provides decentralized LLM inference. Instead of routing requests to OpenAI, agents can use 0G's Compute Network for TEE-verified AI responses. The inference happens on decentralized nodes, and responses include cryptographic attestation that the model ran unmodified. This matters for agents managing real capital -- you want verifiable reasoning, not a black box.
+
+**0G Storage** provides persistent agent memory. The standard agent stores state in local files (`agents/memory/<name>/state.json`). The 0G-enabled agent stores state in 0G's decentralized KV store and appends run history to the Log layer. Every state update and run summary is Merkle-verified and retrievable by hash. Agent memory becomes auditable and tamper-evident.
+
+**KeeperHub** provides reliable transaction execution. Direct on-chain writes can fail for many reasons: gas spikes, network congestion, nonce conflicts, MEV extraction. KeeperHub wraps transactions with automatic retries, smart gas estimation, and private routing. Every transaction gets an audit trail. When an agent opens a position or closes a loser, the write goes through KeeperHub's execution layer instead of a raw `sendTransaction`.
+
+The `0g-vault-manager` agent definition shows how these integrate:
+
+```markdown
+---
+name: 0g-vault-manager
+skills:
+  - vault-manager
+  - yfinance
+  - 0g-storage
+  - keeperhub
+mcpServers:
+  - vault-manager-mcp
+  - yfinance-mcp
+  - 0g-storage-mcp
+  - keeperhub-mcp
+---
+```
+
+Same markdown format. Same strategy rules. Different infrastructure stack.
+
 ## Try It
 
 The protocol is live on Sepolia testnet with real asset prices.
 
+**Standard agent (OpenAI + file-based memory):**
 - **Run the sample agent:** `LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager`
 - **Dry-run first:** `AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager`
-- **Manage a vault manually:** [Launch the testnet app](https://indexflow.app/baskets)
-- **Read the framework docs:** [Multi-Agent Framework](/docs/agents-framework) covers agent creation, skills, memory, MCP servers, and the full tool reference
 
-Create a markdown file. Define your strategy. Let it run. Or manage the vault yourself. The contracts do not care who is on the other end.
+**0G-enabled agent (decentralized stack):**
+- **With 0G Compute:** `ZG_COMPUTE_PROVIDER=0x... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
+- **With OpenAI fallback:** `LLM_API_KEY=sk-... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
+- **Dry-run:** `npm run agent:0g:dry`
+
+**Manual operation:**
+- [Launch the testnet app](https://indexflow.app/baskets)
+- [Multi-Agent Framework docs](/docs/agents-framework) -- agent creation, skills, memory, MCP servers, full tool reference
+
+Create a markdown file. Define your strategy. Let it run -- on OpenAI or 0G Compute, with file memory or decentralized storage, with direct writes or KeeperHub execution. The contracts do not care who is on the other end or how the infrastructure is wired.

@@ -151,6 +151,41 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 - Core argument: you don't need the protocol to get a license -- you bring your own. Licensed managers (AIFM, MiFID, SEC RIA) can wrap IndexFlow inside a standard fund vehicle with institutional custody, using the protocol as execution infrastructure. USDC-in/shares-out with synthetic-only exposure simplifies custody. Precedent: crypto hedge funds already use Uniswap, Aave, GMX this way.
 - **Priority: HIGH** -- directly addresses institutional adoption without requiring IndexFlow to build a regulated tier
 
+**"How We Built an Autonomous Vault Agent with 0G Network: Decentralized Inference, Storage, and Execution"**
+`[L1 | P3 Technical | Blog | Cold]`
+
+- Source: `agents/0g-vault-manager.md`, `apps/mcps/0g-storage/`, `lib/keeperhub.mjs`, `docs/AGENTS_FRAMEWORK.md`
+- Hook type: Insider Knowledge
+- Technical breakdown of building a fully decentralized AI agent for DeFi:
+  - 0G Compute for TEE-verified LLM inference (replacing OpenAI)
+  - 0G Storage KV for persistent agent state across runs
+  - 0G Storage Log for Merkle-verified audit trail
+  - KeeperHub for reliable transaction execution
+- Code walkthrough: how a single markdown file defines the agent, how MCP servers connect to decentralized infrastructure
+- Why verifiable AI matters for autonomous financial agents
+- **Priority: HIGH** -- hackathon submission content
+
+**"KeeperHub for DeFi Agents: Why Reliable Transaction Execution Matters"**
+`[L1 | P3 Technical | Blog | Cold]`
+
+- Source: `lib/keeperhub.mjs`, `agents/skills/keeperhub.md`, `services/keeper/`
+- Hook type: Problem/Solution
+- Core argument: direct cast/sendTransaction calls fail more often than you think -- gas spikes, nonce conflicts, network congestion, MEV extraction
+- How KeeperHub solves this: automatic retries with exponential backoff, smart gas estimation (~30% cheaper), MEV protection via private routing, full audit trail
+- Real example: price sync keeper, state sync keeper, and vault agent all routed through KeeperHub
+- Worked metrics: transaction success rates, gas savings, retry patterns
+
+**"Decentralized AI Infrastructure for DeFi: 0G Network vs. Centralized Alternatives"**
+`[L1 | P3 Technical | Blog | Cold]`
+
+- Source: 0G Network docs, `apps/mcps/0g-storage/`, `scripts/agent-runner.mjs`
+- Hook type: Contrarian
+- Core argument: if your AI agent manages real capital, you need verifiable reasoning -- not just "trust the API provider"
+- 0G Compute: TEE attestation proves the model ran unmodified
+- 0G Storage: Merkle proofs for data integrity, decentralized availability
+- Comparison matrix: OpenAI/Anthropic API vs 0G Compute on verifiability, censorship resistance, data sovereignty
+- When centralized is fine vs when decentralized matters
+
 ### LinkedIn
 
 **"Why Institutional-Grade Basket Infrastructure Doesn't Exist On-Chain Yet"**

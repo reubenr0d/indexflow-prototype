@@ -522,7 +522,25 @@ Editing an agent markdown file does not, by itself, force a new vault. The runne
 
 ### 0G Network + KeeperHub Integration
 
-The agent framework integrates with **0G Network** for decentralized AI infrastructure and **KeeperHub** for reliable transaction execution.
+The agent framework integrates with **[0G Network](https://0g.ai)** for decentralized AI infrastructure and **[KeeperHub](https://keeperhub.com)** for reliable transaction execution.
+
+**TL;DR - Quick Usage:**
+
+```bash
+# 0G Storage: Decentralized agent memory
+ZG_PRIVATE_KEY=0x... npm run agent:0g          # Uses 0G KV store + Log layer
+
+# 0G Compute: Decentralized LLM inference (replaces OpenAI)
+ZG_COMPUTE_PROVIDER=0x... npm run agent:0g     # Uses Llama 3.3 70B via 0G
+
+# KeeperHub: Reliable transaction execution
+KEEPERHUB_API_KEY=kh_... npm run agent         # Routes writes through KeeperHub
+```
+
+**Why these integrations matter:**
+- **0G Compute**: TEE-verified AI responses for autonomous financial agents
+- **0G Storage**: Merkle-provable state and audit trail
+- **KeeperHub**: 99%+ transaction success with auto-retry, ~30% gas savings
 
 **Architecture:**
 
@@ -620,66 +638,6 @@ KEEPERHUB_API_KEY=kh_...                # From app.keeperhub.com
 ```
 
 Get 0G testnet tokens from [faucet.0g.ai](https://faucet.0g.ai). Get a KeeperHub API key from [app.keeperhub.com](https://app.keeperhub.com).
-
-## Hackathon Submission
-
-This project is submitted to the following hackathon tracks:
-
-### 0G: Best Autonomous Agents ($7,500)
-
-An autonomous DeFi vault manager agent with full 0G Network integration:
-
-- **0G Compute**: Decentralized AI inference using Llama 3.3 70B
-- **0G Storage KV**: Persistent agent state (vault address, config, thesis)
-- **0G Storage Log**: Immutable run history with Merkle-verified audit trail
-- **Example Agent**: `agents/0g-vault-manager.md` - manages basket vaults with perp hedging
-
-**Protocol features used:**
-- `@0gfoundation/0g-ts-sdk` for Storage KV and Log operations
-- `@0glabs/0g-serving-broker` for Compute Network inference
-- OpenAI-compatible API integration for seamless LLM switching
-
-### KeeperHub: Best Use ($4,500)
-
-Reliable blockchain transaction execution for AI agents:
-
-- **Integration**: KeeperHub MCP server wrapping their REST API
-- **Use Case**: All vault management transactions (open position, allocate, close) routed through KeeperHub
-- **Benefits**: Automatic retries, smart gas estimation, MEV protection, full audit trail
-
-**Protocol features used:**
-- Direct execution API (`execute_transfer`, `execute_contract_call`)
-- Conditional execution (`execute_check_and_execute`)
-- Workflow management for complex multi-step operations
-
-### Submission Materials
-
-| Requirement | Location |
-| --- | --- |
-| Project name | IndexFlow Vault Agent |
-| Contract addresses | See [docs/DEPLOYMENTS.md](docs/DEPLOYMENTS.md) |
-| Public GitHub repo | This repository |
-| README + setup | This file |
-| Demo video | [Link TBD] |
-| Architecture diagram | See "0G Network + KeeperHub Integration" above |
-| Example agent | `agents/0g-vault-manager.md` |
-
-### Quick Demo
-
-```bash
-# 1. Clone and install
-git clone <repo-url>
-npm install
-npm --prefix apps/mcps/0g-storage install
-npm --prefix apps/mcps/keeperhub install
-
-# 2. Configure environment
-cp .env.example .env
-# Edit .env with your keys (see 0G and KeeperHub sections)
-
-# 3. Run the 0G-enabled agent
-npm run agent:run -- 0g-vault-manager
-```
 
 ## Documentation
 
