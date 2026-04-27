@@ -60,42 +60,35 @@ networks:
     contracts:
       - name: BasketFactory
         address: 0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4
+        start_block: 10689396
       - name: VaultAccounting
         address: 0xc7aa05ccaea98dc26b8739a19b79875b1432ce43
+        start_block: 10689378
       - name: OracleAdapter
         address: 0x69329fec8c0ef120ee56379941d8d367b593d399
+        start_block: 10689376
       - name: StateRelay
         address: 0xb837e0d12b16e14c57d829337578ed4111479cd9
+        start_block: 10697053
       - name: BasketVault
 
   - id: 43113 # Avalanche Fuji
-    start_block: 0
+    start_block: 54206983
     rpc_config:
       url: https://avalanche-fuji-c-chain-rpc.publicnode.com
     contracts:
       - name: BasketFactory
         address: 0x743194baae87a8a518739a1eb71f04773b46d42e
+        start_block: 54329471
       - name: VaultAccounting
         address: 0x32e2a385aa9540d5119ceaa2ecf4fd97a1e002e0
+        start_block: 54206983
       - name: OracleAdapter
         address: 0x0e07ea10a1ff1412b9d93f7a38b6498edaacf419
+        start_block: 54206983
       - name: StateRelay
         address: 0x0a564071fb11a0b84314f0b78ac69c5742db22a2
-      - name: BasketVault
-
-  - id: 421614 # Arbitrum Sepolia
-    start_block: 0
-    rpc_config:
-      url: https://arbitrum-sepolia-rpc.publicnode.com
-    contracts:
-      - name: BasketFactory
-        address: 0x1111111111111111111111111111111111111111
-      - name: VaultAccounting
-        address: 0x2222222222222222222222222222222222222222
-      - name: OracleAdapter
-        address: 0x3333333333333333333333333333333333333333
-      - name: StateRelay
-        address: 0x4444444444444444444444444444444444444444
+        start_block: 54370695
       - name: BasketVault
 
 unordered_multichain_mode: true
