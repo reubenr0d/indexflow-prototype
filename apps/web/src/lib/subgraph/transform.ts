@@ -11,7 +11,7 @@ export function parseBigInt(value: string | null | undefined): bigint {
 
 export function toBasketOverviewRows(rows: Array<Record<string, string>>) {
   return rows.map((b) => ({
-    vault: b.id as Address,
+    vault: (b.vault ?? b.id) as Address,
     name: b.name ?? "",
     shareToken: b.shareToken as Address,
     assetCount: parseBigInt(b.assetCount),

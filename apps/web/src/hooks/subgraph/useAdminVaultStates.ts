@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { parseBigInt } from "@/lib/subgraph/transform";
 import { GET_ADMIN_VAULT_STATES } from "@/lib/subgraph/queries";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useAvailableSubgraph, DEFAULT_PAGE_SIZE, type RawVaultState } from "./useSubgraphShared";
 
 export type AdminVaultState = {
@@ -27,16 +28,18 @@ export type AdminVaultState = {
 
 export function useVaultStatesQuery(params?: { first?: number; skip?: number }) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
   const first = params?.first ?? DEFAULT_PAGE_SIZE;
   const skip = params?.skip ?? 0;
 
   return useQuery({
-    queryKey: ["subgraph", "vaultStates", first, skip],
+    queryKey: ["subgraph", "vaultStates", chainId, first, skip],
     queryFn: async () => {
       if (!client) return null;
       const result = await client.request<{ vaultStateCurrents: RawVaultState[] }>(GET_ADMIN_VAULT_STATES, {
         first,
         skip,
+        chainId,
       });
 
       return result.vaultStateCurrents.map((v: RawVaultState) => ({

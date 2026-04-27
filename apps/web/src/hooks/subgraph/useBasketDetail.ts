@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { parseBigInt } from "@/lib/subgraph/transform";
 import { GET_BASKET_DETAIL, GET_BASKET_ACTIVITIES } from "@/lib/subgraph/queries";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
   useAvailableSubgraph,
   type RawBasketDetail,
@@ -77,9 +78,10 @@ export type BasketActivityRow = {
 
 export function useBasketDetailQuery(vault: Address | undefined, activityFirst = 20, activitySkip = 0) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
 
   return useQuery({
-    queryKey: ["subgraph", "basketDetail", vault, activityFirst, activitySkip],
+    queryKey: ["subgraph", "basketDetail", chainId, vault, activityFirst, activitySkip],
     queryFn: async (): Promise<BasketDetail | null> => {
       if (!client || !vault) return null;
 
@@ -87,7 +89,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
         basket: RawBasketDetail | null;
         vaultStateCurrent: RawVaultStateCurrent | null;
       }>(GET_BASKET_DETAIL, {
-        id: vault.toLowerCase(),
+        id: `${chainId}-${vault.toLowerCase()}`,
         activityFirst,
         activitySkip,
       });
@@ -98,7 +100,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
 
       return {
         basket: {
-          id: result.basket.id as Address,
+          id: (result.basket.vault ?? vault) as Address,
           name: result.basket.name ?? "",
           vault: (result.basket.vault ?? result.basket.id) as Address,
           shareToken: result.basket.shareToken as Address,
@@ -130,7 +132,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
           activities: (result.basket.activities ?? []).map((a: RawBasketActivity): BasketActivityRow => ({
             id: a.id,
             activityType: a.activityType,
-            userId: a.user?.id as Address | undefined,
+            userId: (a.user?.id ? (a.user.id.split("-").pop() as Address) : undefined),
             assetId: a.assetId as `0x${string}` | undefined,
             isLong: a.isLong ?? undefined,
             amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,
@@ -145,7 +147,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
         },
         vaultStateCurrent: result.vaultStateCurrent
           ? {
-              id: result.vaultStateCurrent.id as Address,
+              id: (result.basket.vault ?? vault) as Address,
               registered: Boolean(result.vaultStateCurrent.registered),
               paused: Boolean(result.vaultStateCurrent.paused),
               depositedCapital: parseBigInt(result.vaultStateCurrent.depositedCapital),
@@ -166,13 +168,14 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
 
 export function useBasketActivitiesQuery(vault: Address | undefined, first = 20, skip = 0) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
 
   return useQuery({
-    queryKey: ["subgraph", "basketActivities", vault, first, skip],
+    queryKey: ["subgraph", "basketActivities", chainId, vault, first, skip],
     queryFn: async (): Promise<BasketActivityRow[] | null> => {
       if (!client || !vault) return null;
       const result = await client.request<{ basketActivities: RawBasketActivity[] }>(GET_BASKET_ACTIVITIES, {
-        id: vault.toLowerCase(),
+        id: `${chainId}-${vault.toLowerCase()}`,
         first,
         skip,
       });
@@ -180,7 +183,7 @@ export function useBasketActivitiesQuery(vault: Address | undefined, first = 20,
       return result.basketActivities.map((a: RawBasketActivity): BasketActivityRow => ({
         id: a.id,
         activityType: a.activityType,
-        userId: a.user?.id as Address | undefined,
+        userId: (a.user?.id ? (a.user.id.split("-").pop() as Address) : undefined),
         assetId: a.assetId as `0x${string}` | undefined,
         isLong: a.isLong ?? undefined,
         amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,

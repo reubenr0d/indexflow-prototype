@@ -52,6 +52,7 @@ export type BasketTrendSnapshotsResult = {
 
 type RawBasketWeekSnapshotGroup = {
   id: string;
+  vault?: string | null;
   snapshots: RawBasketSnapshot[];
 };
 
@@ -72,7 +73,7 @@ export function useBasketTrendSnapshots(vault: Address | undefined) {
         const result = await client.request<{
           daySnapshots: RawBasketSnapshot[];
           weekSnapshots: RawBasketSnapshot[];
-        }>(GET_BASKET_TREND_SNAPSHOTS, { id: vault.toLowerCase() });
+        }>(GET_BASKET_TREND_SNAPSHOTS, { id: `${chainId}-${vault.toLowerCase()}` });
 
         return toBasketTrendSnapshotsResult(
           result.daySnapshots ?? [],
@@ -99,21 +100,25 @@ export function useBasketsWeekSnapshots(vaults: Address[]) {
     () => vaults.map((vault) => vault.toLowerCase() as Address),
     [vaults]
   );
+  const normalizedIds = useMemo(
+    () => normalizedVaults.map((vault) => `${chainId}-${vault}`),
+    [chainId, normalizedVaults]
+  );
 
   return useQuery({
-    queryKey: ["subgraph", "basketsWeekSnapshots", chainId, normalizedVaults.join(",")],
+    queryKey: ["subgraph", "basketsWeekSnapshots", chainId, normalizedIds.join(",")],
     queryFn: async (): Promise<Map<Address, BasketTrendSeries>> => {
       if (normalizedVaults.length === 0 || !client) return new Map();
 
       try {
         const result = await client.request<{ baskets: RawBasketWeekSnapshotGroup[] }>(
           GET_BASKETS_WEEK_SNAPSHOTS,
-          { ids: normalizedVaults }
+          { ids: normalizedIds }
         );
 
         return new Map(
           (result.baskets ?? []).map((row) => [
-            row.id.toLowerCase() as Address,
+            ((row.vault ?? row.id).split("-").pop() ?? row.id).toLowerCase() as Address,
             toBasketTrendSeries(row.snapshots ?? [], "7d"),
           ])
         );

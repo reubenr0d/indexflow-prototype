@@ -1,9 +1,16 @@
 import { gql } from "graphql-request";
 
 export const GET_BASKETS_OVERVIEW = gql`
-  query GetBasketsOverview($first: Int!, $skip: Int!) {
-    baskets(first: $first, skip: $skip, orderBy: updatedAt, orderDirection: desc) {
+  query GetBasketsOverview($first: Int!, $skip: Int!, $chainId: Int!) {
+    baskets(
+      first: $first
+      skip: $skip
+      where: { chainId: $chainId }
+      orderBy: updatedAt
+      orderDirection: desc
+    ) {
       id
+      chainId
       name
       vault
       shareToken
@@ -155,6 +162,7 @@ export const GET_BASKETS_WEEK_SNAPSHOTS = gql`
   query GetBasketsWeekSnapshots($ids: [String!]!) {
     baskets(where: { id_in: $ids }) {
       id
+      vault
       snapshots(where: { period: "7d" }, first: 2, orderBy: bucketStart, orderDirection: desc) {
         id
         period
@@ -229,10 +237,14 @@ export const GET_BASKET_ACTIVITIES = gql`
 `;
 
 export const GET_USER_PORTFOLIO = gql`
-  query GetUserPortfolio($userId: String!, $first: Int!) {
+  query GetUserPortfolio($userAddress: Bytes!, $chainId: Int!, $first: Int!) {
     userBasketPositions(
       first: $first
-      where: { user_: { id: $userId }, shareBalance_gt: "0" }
+      where: {
+        chainId: $chainId
+        user_: { address: $userAddress, chainId: $chainId }
+        shareBalance_gt: "0"
+      }
       orderBy: updatedAt
       orderDirection: desc
     ) {
@@ -273,8 +285,14 @@ export const GET_TOKEN_HOLDER_ADDRESSES = gql`
 `;
 
 export const GET_ADMIN_VAULT_STATES = gql`
-  query GetAdminVaultStates($first: Int!, $skip: Int!) {
-    vaultStateCurrents(first: $first, skip: $skip, orderBy: updatedAt, orderDirection: desc) {
+  query GetAdminVaultStates($first: Int!, $skip: Int!, $chainId: Int!) {
+    vaultStateCurrents(
+      first: $first
+      skip: $skip
+      where: { chainId: $chainId }
+      orderBy: updatedAt
+      orderDirection: desc
+    ) {
       id
       registered
       paused
@@ -296,9 +314,9 @@ export const GET_ADMIN_VAULT_STATES = gql`
 `;
 
 export const GET_ORACLE_PRICE_UPDATES = gql`
-  query GetOraclePriceUpdates($assetId: Bytes!, $minTimestamp: BigInt!, $first: Int!) {
+  query GetOraclePriceUpdates($assetId: Bytes!, $chainId: Int!, $minTimestamp: BigInt!, $first: Int!) {
     oraclePriceUpdates(
-      where: { assetId: $assetId, priceTimestamp_gte: $minTimestamp }
+      where: { assetId: $assetId, chainId: $chainId, priceTimestamp_gte: $minTimestamp }
       first: $first
       orderBy: priceTimestamp
       orderDirection: desc

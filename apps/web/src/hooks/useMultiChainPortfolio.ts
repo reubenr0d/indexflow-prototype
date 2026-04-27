@@ -30,14 +30,14 @@ async function fetchPortfolioForTarget(
 ): Promise<MultiChainHolding[]> {
   const client = getSubgraphClientForTarget(target);
   if (!client) return [];
+  const cid = chainIdForDeploymentTarget(target);
   const result = await client.request<{ userBasketPositions: RawUserBasketPosition[] }>(
     GET_USER_PORTFOLIO,
-    { userId: userAddress.toLowerCase(), first: 100 }
+    { userAddress: userAddress.toLowerCase(), chainId: cid, first: 100 }
   );
   const { holdings } = toUserPortfolioRows(
     result.userBasketPositions as unknown as Array<Record<string, unknown>>
   ) as { holdings: Array<Record<string, unknown>>; totalValueUsdc: bigint };
-  const cid = chainIdForDeploymentTarget(target);
   return holdings.map((h: Record<string, unknown>) => ({
     id: h.id as string,
     vault: h.vault as Address,
