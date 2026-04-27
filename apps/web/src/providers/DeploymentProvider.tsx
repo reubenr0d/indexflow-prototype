@@ -12,7 +12,7 @@ import {
   type DeploymentTarget,
   type ViewMode,
 } from "@/lib/deployment";
-import { CONFIGURED_DEPLOYMENT_TARGETS } from "@/config/contracts";
+import { CONFIGURED_DEPLOYMENT_TARGETS, isDeploymentConfigured } from "@/config/contracts";
 
 type DeploymentContextValue = {
   target: DeploymentTarget;
@@ -29,13 +29,25 @@ type DeploymentContextValue = {
 const DeploymentContext = createContext<DeploymentContextValue | null>(null);
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
+/**
+ * Determines the default target for E2E test mode.
+ * If local-spoke is configured, use it (has bootstrap basket).
+ * Otherwise, fall back to DEFAULT_DEPLOYMENT_TARGET.
+ */
+function getE2EDefaultTarget(): DeploymentTarget {
+  if (isDeploymentConfigured("local-spoke")) return "local-spoke";
+  if (isDeploymentConfigured("local")) return "local";
+  return DEFAULT_DEPLOYMENT_TARGET;
+}
+
 /** SSR + first client paint must match; persist restore runs in useEffect. */
 function ssrSafeInitialTarget(): DeploymentTarget {
+  if (isE2ETestMode) return getE2EDefaultTarget();
   return DEFAULT_DEPLOYMENT_TARGET;
 }
 
 function readStoredTargetFromBrowser(): DeploymentTarget {
-  if (isE2ETestMode) return DEFAULT_DEPLOYMENT_TARGET;
+  if (isE2ETestMode) return getE2EDefaultTarget();
   const stored = parseDeploymentTarget(localStorage.getItem(DEPLOYMENT_TARGET_STORAGE_KEY));
   return stored ?? DEFAULT_DEPLOYMENT_TARGET;
 }

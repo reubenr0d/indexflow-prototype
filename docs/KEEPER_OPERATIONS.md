@@ -43,8 +43,45 @@ Create a `.env` file in `services/keeper/` or set these in your environment:
 | `FUJI_RPC_URL` | Per chain | Avalanche Fuji RPC endpoint |
 | `ARBITRUM_SEPOLIA_RPC_URL` | Per chain | Arbitrum Sepolia RPC endpoint |
 | `EPOCH_INTERVAL_MS` | No | Epoch interval in milliseconds (default: `60000`) |
+| `KEEPERHUB_API_KEY` | No | KeeperHub API key for reliable transaction execution |
 
 The keeper reads `config/chains.json` at startup and skips any chain that lacks an RPC URL or deployment config.
+
+### KeeperHub Integration
+
+When `KEEPERHUB_API_KEY` is set, the keeper routes all `StateRelay.updateState()` transactions through [KeeperHub](https://app.keeperhub.com) for reliable execution.
+
+**Benefits:**
+
+- **Automatic retries** with exponential backoff on transient failures
+- **Smart gas estimation** (~30% cheaper than baseline)
+- **MEV protection** via private transaction routing
+- **Full audit trail** for debugging and compliance
+
+**Setup:**
+
+1. Get an API key from [app.keeperhub.com](https://app.keeperhub.com/settings/api-keys)
+2. Set `KEEPERHUB_API_KEY` in your environment or `.env` file
+3. Authorize the KeeperHub wallet as a keeper on each `StateRelay`:
+   ```bash
+   # Get the KeeperHub wallet address from the dashboard
+   # Then on each chain, run:
+   cast send <StateRelay> "setKeeper(address)" <KeeperHub_Wallet> --rpc-url <rpc> --private-key <owner_key>
+   ```
+
+**Fallback behavior:**
+
+When `KEEPERHUB_API_KEY` is not set, the keeper uses direct `ethers.js` transactions signed with `PRIVATE_KEY`. This works but lacks the retry, gas optimization, and MEV protection features.
+
+**Logs:**
+
+With KeeperHub enabled, epoch logs show the execution path:
+
+```
+[keeper ...] [KeeperHub] Enabled for transaction execution
+[keeper ...] → [KeeperHub] Sending updateState to sepolia (3 vaults)
+[keeper ...] ✓ [KeeperHub] sepolia updateState confirmed: 0x...
+```
 
 ### Running
 
@@ -199,8 +236,29 @@ npm run test:watch # watch mode
 
 ---
 
+## Other Keepers Using KeeperHub
+
+The state sync keeper is one of three keepers that support KeeperHub execution:
+
+| Keeper | Script/Service | Transactions | KeeperHub Support |
+|--------|---------------|--------------|-------------------|
+| **State sync** | `services/keeper/` | `StateRelay.updateState()` | Yes |
+| **Price sync** | `scripts/update-yahoo-finance-prices.js` | `OracleAdapter.submitPrices()`, `PriceSync.syncAll()` | Yes |
+| **Vault agent** | `apps/mcps/vault-manager/` | `openPosition()`, `closePosition()`, etc. | Yes |
+
+All three keepers use the shared `lib/keeperhub.mjs` client library. When `KEEPERHUB_API_KEY` is set, transactions route through KeeperHub; otherwise they fall back to direct execution.
+
+For the price sync keeper, you must also authorize the KeeperHub wallet on the `OracleAdapter`:
+
+```bash
+cast send <OracleAdapter> "setKeeper(address)" <KeeperHub_Wallet> --rpc-url <rpc> --private-key <owner_key>
+```
+
+---
+
 ## Related docs
 
 - [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md) — `StateRelay.updateState()` contract call reference.
 - [SHARE_PRICE_AND_OPERATIONS.md](./SHARE_PRICE_AND_OPERATIONS.md) — How `globalPnLAdjustment` feeds into `_pricingNav()`.
 - [CROSS_CHAIN_COORDINATION.md](./CROSS_CHAIN_COORDINATION.md) — Hub-and-spoke architecture overview.
+- [AGENTS_FRAMEWORK.md](./AGENTS_FRAMEWORK.md) — Multi-agent framework with KeeperHub MCP server.

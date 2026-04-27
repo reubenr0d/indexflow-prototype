@@ -1,0 +1,209 @@
+# HyperIndex schema migrated from apps/subgraph/schema.graphql
+
+type Basket {
+  id: ID!
+  chainId: Int!
+  creator: Bytes!
+  vault: Bytes!
+  shareToken: Bytes!
+  name: String!
+  createdAt: BigInt!
+  createdBlock: BigInt!
+
+  assetCount: BigInt!
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  maxPerpAllocation: BigInt!
+
+  usdcBalanceUsdc: BigInt!
+  basketPrice: BigInt!
+  sharePrice: BigInt!
+  tvlBookUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  totalSupplyShares: BigInt!
+
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  totalDepositCount: BigInt!
+  totalRedeemCount: BigInt!
+  cumulativeTopUpUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+
+  assets: [BasketAsset!]! @derivedFrom(field: "basket")
+  exposures: [BasketExposure!]! @derivedFrom(field: "basket")
+  activities: [BasketActivity!]! @derivedFrom(field: "basket")
+  snapshots: [BasketSnapshot!]! @derivedFrom(field: "basket")
+}
+
+type BasketSnapshot {
+  id: ID!
+  chainId: Int!
+  basket: Basket!
+  period: String!
+  bucketStart: BigInt!
+  bucketEnd: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+
+  sharePrice: BigInt!
+  basketPrice: BigInt!
+  usdcBalanceUsdc: BigInt!
+  perpAllocatedUsdc: BigInt!
+  tvlBookUsdc: BigInt!
+  totalSupplyShares: BigInt!
+  assetCount: BigInt!
+
+  depositFeeBps: BigInt!
+  redeemFeeBps: BigInt!
+  minReserveBps: BigInt!
+  requiredReserveUsdc: BigInt!
+  availableForPerpUsdc: BigInt!
+  collectedFeesUsdc: BigInt!
+  cumulativeFeesCollectedUsdc: BigInt!
+
+  openInterest: BigInt!
+  collateralLocked: BigInt!
+  positionCount: BigInt!
+}
+
+type BasketAsset {
+  id: ID!
+  chainId: Int!
+  basket: Basket!
+  assetId: Bytes!
+  active: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type BasketExposure {
+  id: ID!
+  chainId: Int!
+  basket: Basket!
+  assetId: Bytes!
+  longSize: BigInt!
+  shortSize: BigInt!
+  netSize: BigInt!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type User {
+  id: ID!
+  chainId: Int!
+  address: Bytes!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  positions: [UserBasketPosition!]! @derivedFrom(field: "user")
+}
+
+type UserBasketPosition {
+  id: ID!
+  chainId: Int!
+  user: User!
+  basket: Basket!
+  shareBalance: BigInt!
+  netDepositedUsdc: BigInt!
+  netRedeemedUsdc: BigInt!
+  cumulativeDepositedUsdc: BigInt!
+  cumulativeRedeemedUsdc: BigInt!
+  lastActivityAt: BigInt!
+  updatedAt: BigInt!
+}
+
+type BasketActivity {
+  id: ID!
+  chainId: Int!
+  basket: Basket!
+  activityType: String!
+  user: User
+  assetId: Bytes
+  isLong: Boolean
+  amountUsdc: BigInt
+  shares: BigInt
+  size: BigInt
+  collateral: BigInt
+  pnl: BigInt
+  recipient: Bytes
+  timestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+}
+
+type VaultStateCurrent {
+  id: ID!
+  chainId: Int!
+  basket: Basket!
+  registered: Boolean!
+  paused: Boolean!
+  depositedCapital: BigInt!
+  realisedPnl: BigInt!
+  openInterest: BigInt!
+  positionCount: BigInt!
+  collateralLocked: BigInt!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type AssetMeta {
+  id: ID!
+  chainId: Int!
+  assetId: Bytes!
+  symbol: String
+  feedType: Int!
+  feedAddress: Bytes!
+  active: Boolean!
+  latestPrice: BigInt
+  latestPriceTimestamp: BigInt
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type OraclePriceUpdate {
+  id: ID!
+  chainId: Int!
+  assetId: Bytes!
+  price: BigInt!
+  priceTimestamp: BigInt!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type AssetTokenMapUpdate {
+  id: ID!
+  chainId: Int!
+  assetId: Bytes!
+  token: Bytes!
+  blockNumber: BigInt!
+  txHash: Bytes!
+  logIndex: BigInt!
+  createdAt: BigInt!
+}
+
+type ProtocolState {
+  id: ID!
+  chainId: Int!
+  paused: Boolean!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
+type ChainPoolState {
+  id: ID!
+  chainId: Int!
+  chainSelector: BigInt!
+  twapPoolAmount: BigInt!
+  availableLiquidity: BigInt!
+  reservedAmount: BigInt!
+  utilizationBps: BigInt!
+  snapshotTimestamp: BigInt!
+  snapshotCount: BigInt!
+  updatedAt: BigInt!
+}

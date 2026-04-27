@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { parseBigInt } from "@/lib/subgraph/transform";
 import { GET_ORACLE_PRICE_UPDATES } from "@/lib/subgraph/queries";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useAvailableSubgraph, type RawOraclePriceUpdate } from "./useSubgraphShared";
 
 export type OraclePriceUpdateRow = {
@@ -18,6 +19,7 @@ export type OraclePriceUpdateRow = {
 
 export function useOraclePriceUpdatesQuery(assetId: `0x${string}` | undefined, minTimestamp: bigint, first = 500) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
 
   return useQuery({
     queryKey: ["subgraph", "oraclePriceUpdates", assetId, minTimestamp.toString(), first],
@@ -27,6 +29,7 @@ export function useOraclePriceUpdatesQuery(assetId: `0x${string}` | undefined, m
         GET_ORACLE_PRICE_UPDATES,
         {
           assetId: assetId.toLowerCase(),
+          chainId,
           minTimestamp: minTimestamp.toString(),
           first,
         }

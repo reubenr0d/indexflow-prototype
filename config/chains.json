@@ -1,7 +1,7 @@
 {
   "local": {
     "chainId": 31337,
-    "ccipChainSelector": "0",
+    "ccipChainSelector": "1",
     "ccipRouter": "0x0000000000000000000000000000000000000000",
     "linkToken": "0x0000000000000000000000000000000000000000",
     "usdc": "0x0000000000000000000000000000000000000000",
@@ -9,6 +9,26 @@
     "rpcAlias": "local",
     "mockUsdc": true,
     "role": "hub"
+  },
+  "local-spoke": {
+    "chainId": 31338,
+    "ccipChainSelector": "2",
+    "ccipRouter": "0x0000000000000000000000000000000000000000",
+    "linkToken": "0x0000000000000000000000000000000000000000",
+    "usdc": "0x0000000000000000000000000000000000000000",
+    "gmxVault": "0x0000000000000000000000000000000000000000",
+    "rpcAlias": "local_spoke",
+    "mockUsdc": true,
+    "role": "spoke",
+    "bootstrap": {
+      "enabled": true,
+      "basketName": "Local Spoke Basket",
+      "assetSymbol": "USDC",
+      "reserveAmount": "100000000000",
+      "depositFeeBps": "0",
+      "redeemFeeBps": "0",
+      "minReserveBps": "1000"
+    }
   },
   "sepolia": {
     "chainId": 11155111,

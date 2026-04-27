@@ -17,9 +17,12 @@ import { type Page } from '@playwright/test';
 export const HUB_RPC = process.env.E2E_HUB_RPC_URL ?? 'http://127.0.0.1:8545';
 export const SPOKE_RPC = process.env.E2E_SPOKE_RPC_URL ?? 'http://127.0.0.1:8546';
 
+export const HUB_CHAIN_ID = parseInt(process.env.E2E_HUB_CHAIN_ID ?? '31337', 10);
+export const SPOKE_CHAIN_ID = parseInt(process.env.E2E_SPOKE_CHAIN_ID ?? '31338', 10);
+
 export const E2E_DEPLOYER = '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266';
 
-// Placeholder CCIP chain selectors — should match values passed to StateRelay constructor
+// CCIP chain selectors — should match values passed to StateRelay constructor
 export const HUB_CHAIN_SELECTOR = 1n;
 export const SPOKE_CHAIN_SELECTOR = 2n;
 
@@ -41,6 +44,7 @@ export function loadHubDeployment(): ChainDeployment {
 
 export function loadSpokeDeployment(): ChainDeployment {
   const d =
+    tryLoadDeployment('src/config/local-spoke-deployment.json') ??
     tryLoadDeployment('src/config/spoke-deployment.json') ??
     tryLoadDeployment('src/config/local-deployment-spoke.json');
   if (!d) throw new Error('Spoke deployment config not found');
@@ -270,4 +274,219 @@ export async function installChainShim(
  */
 export async function waitForTestId(page: Page, testId: string, timeoutMs = 15_000) {
   await page.getByTestId(testId).waitFor({ state: 'visible', timeout: timeoutMs });
+}
+
+/**
+ * Select a network via the UI network selector.
+ * @param target - The deployment target to select (e.g., 'local', 'local-spoke', 'sepolia')
+ */
+export async function selectNetwork(page: Page, target: string) {
+  const networkTrigger = page.getByTestId('network-selector-trigger');
+  const isVisible = await networkTrigger.isVisible({ timeout: 5000 }).catch(() => false);
+  
+  if (!isVisible) {
+    console.log('Network selector not visible');
+    return false;
+  }
+
+  await networkTrigger.click();
+  await page.waitForTimeout(500);
+
+  const networkOption = page.getByTestId(`network-option-${target}`);
+  const optionVisible = await networkOption.isVisible({ timeout: 3000 }).catch(() => false);
+  
+  if (!optionVisible) {
+    console.log(`Network option ${target} not visible`);
+    // Click away to close the dropdown
+    await page.keyboard.press('Escape');
+    return false;
+  }
+
+  await networkOption.click();
+  await page.waitForTimeout(1000);
+  return true;
+}
+
+/**
+ * Select "All Chains" mode in the network selector.
+ */
+export async function selectAllChains(page: Page) {
+  const networkTrigger = page.getByTestId('network-selector-trigger');
+  const isVisible = await networkTrigger.isVisible({ timeout: 5000 }).catch(() => false);
+  
+  if (!isVisible) {
+    console.log('Network selector not visible');
+    return false;
+  }
+
+  await networkTrigger.click();
+  await page.waitForTimeout(500);
+
+  const allOption = page.getByTestId('network-option-all');
+  const optionVisible = await allOption.isVisible({ timeout: 3000 }).catch(() => false);
+  
+  if (!optionVisible) {
+    console.log('All Chains option not visible');
+    await page.keyboard.press('Escape');
+    return false;
+  }
+
+  await allOption.click();
+  await page.waitForTimeout(1000);
+  return true;
+}
+
+// ─── Envio GraphQL helpers ───────────────────────────────────────────────────
+
+export const ENVIO_URL = process.env.E2E_ENVIO_URL ?? 'http://127.0.0.1:8080/v1/graphql';
+
+export interface EnvioBasket {
+  id: string;
+  chainId: number;
+  vault: string;
+  name: string;
+  tvlBookUsdc: string;
+  totalDepositCount: string;
+}
+
+export interface EnvioUserPosition {
+  id: string;
+  chainId: number;
+  shareBalance: string;
+  cumulativeDepositedUsdc: string;
+}
+
+/**
+ * Execute a GraphQL query against the local Envio endpoint.
+ */
+export async function envioQuery<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
+  const res = await fetch(ENVIO_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ query, variables }),
+  });
+  const json = (await res.json()) as { data?: T; errors?: { message: string }[] };
+  if (json.errors?.length) {
+    throw new Error(`Envio query error: ${json.errors[0].message}`);
+  }
+  return json.data as T;
+}
+
+/**
+ * Query baskets from Envio, optionally filtered by chain ID.
+ */
+export async function envioGetBaskets(chainId?: number): Promise<EnvioBasket[]> {
+  const where = chainId ? `where: { chainId: { _eq: ${chainId} } }` : '';
+  const query = `
+    query GetBaskets {
+      Basket(${where}) {
+        id
+        chainId
+        vault
+        name
+        tvlBookUsdc
+        totalDepositCount
+      }
+    }
+  `;
+  const data = await envioQuery<{ Basket: EnvioBasket[] }>(query);
+  return data.Basket ?? [];
+}
+
+/**
+ * Query user positions from Envio.
+ */
+export async function envioGetUserPositions(userAddress: string, chainId?: number): Promise<EnvioUserPosition[]> {
+  const chainFilter = chainId ? `, chainId: { _eq: ${chainId} }` : '';
+  const query = `
+    query GetUserPositions($address: String!) {
+      UserBasketPosition(where: { user: { address: { _eq: $address } }${chainFilter} }) {
+        id
+        chainId
+        shareBalance
+        cumulativeDepositedUsdc
+      }
+    }
+  `;
+  const data = await envioQuery<{ UserBasketPosition: EnvioUserPosition[] }>(query, { address: userAddress.toLowerCase() });
+  return data.UserBasketPosition ?? [];
+}
+
+/**
+ * Wait for Envio to index a deposit on a specific chain.
+ * Polls until the deposit count increases or timeout is reached.
+ */
+export async function waitForEnvioDeposit(
+  chainId: number,
+  vaultAddress: string,
+  expectedMinDeposits: number,
+  timeoutMs = 30_000,
+  pollIntervalMs = 1_000,
+): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs;
+  const normalizedVault = vaultAddress.toLowerCase();
+
+  while (Date.now() < deadline) {
+    try {
+      const baskets = await envioGetBaskets(chainId);
+      const basket = baskets.find(b => b.vault.toLowerCase() === normalizedVault);
+      if (basket && parseInt(basket.totalDepositCount, 10) >= expectedMinDeposits) {
+        return true;
+      }
+    } catch {
+      // Envio may not be ready yet
+    }
+    await new Promise(r => setTimeout(r, pollIntervalMs));
+  }
+  return false;
+}
+
+/**
+ * Wait for Envio GraphQL endpoint to be healthy.
+ * Checks by making a simple GraphQL query rather than the /health endpoint.
+ */
+export async function waitForEnvioReady(timeoutMs = 60_000, pollIntervalMs = 2_000): Promise<boolean> {
+  const deadline = Date.now() + timeoutMs;
+
+  while (Date.now() < deadline) {
+    try {
+      const res = await fetch(ENVIO_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ query: '{ __typename }' }),
+      });
+      if (res.ok) {
+        const json = await res.json() as { data?: unknown };
+        if (json.data) return true;
+      }
+    } catch {
+      // Not ready yet
+    }
+    await new Promise(r => setTimeout(r, pollIntervalMs));
+  }
+  return false;
+}
+
+/**
+ * Query chain pool states (routing weights) from Envio.
+ */
+export async function envioGetChainPoolStates(chainId: number): Promise<{
+  chainSelector: string;
+  twapPoolAmount: string;
+  availableLiquidity: string;
+}[]> {
+  const query = `
+    query GetChainPoolStates($chainId: Int!) {
+      ChainPoolState(where: { chainId: { _eq: $chainId } }) {
+        chainSelector
+        twapPoolAmount
+        availableLiquidity
+      }
+    }
+  `;
+  const data = await envioQuery<{ ChainPoolState: { chainSelector: string; twapPoolAmount: string; availableLiquidity: string }[] }>(
+    query,
+    { chainId },
+  );
+  return data.ChainPoolState ?? [];
 }

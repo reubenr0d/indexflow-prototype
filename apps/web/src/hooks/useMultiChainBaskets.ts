@@ -16,12 +16,12 @@ export type MultiChainBasket = BasketOverview & {
 async function fetchBasketsForTarget(target: DeploymentTarget): Promise<MultiChainBasket[]> {
   const client = getSubgraphClientForTarget(target);
   if (!client) return [];
+  const cid = chainIdForDeploymentTarget(target);
   const result = await client.request<{ baskets: Array<Record<string, string>> }>(
     GET_BASKETS_OVERVIEW,
-    { first: 500, skip: 0 }
+    { first: 500, skip: 0, chainId: cid }
   );
   const baskets = toBasketOverviewRows(result.baskets) as BasketOverview[];
-  const cid = chainIdForDeploymentTarget(target);
   return baskets.map((b) => ({ ...b, chainId: cid, deploymentTarget: target }));
 }
 

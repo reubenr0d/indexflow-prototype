@@ -32,6 +32,8 @@ import { formatUSDC } from "@/lib/format";
 
 type DrawerPhase = "preview" | "executing" | "complete" | "error";
 
+const DRAWER_SAFETY_TIMEOUT_MS = 160_000; // 2.67 minutes - backup safety timeout
+
 interface MultiChainDepositDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -51,8 +53,18 @@ export function MultiChainDepositDrawer({
   depositFeeBps,
   onSuccess,
 }: MultiChainDepositDrawerProps) {
+  const [isExecuting, setIsExecuting] = useState(false);
+  
+  const handleOpenChange = useCallback((nextOpen: boolean) => {
+    if (!nextOpen && isExecuting) {
+      console.log("[MultiChainDrawer] Prevented close during execution");
+      return;
+    }
+    onOpenChange(nextOpen);
+  }, [isExecuting, onOpenChange]);
+
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={handleOpenChange}>
       <DrawerContent data-testid="multi-chain-drawer-content">
         <MultiChainDepositDrawerContent
           amount={amount}
@@ -60,7 +72,8 @@ export function MultiChainDepositDrawer({
           sharePrice={sharePrice}
           depositFeeBps={depositFeeBps}
           onSuccess={onSuccess}
-          onClose={() => onOpenChange(false)}
+          onClose={() => handleOpenChange(false)}
+          onExecutingChange={setIsExecuting}
         />
       </DrawerContent>
     </Drawer>
@@ -74,6 +87,7 @@ interface DrawerContentProps {
   depositFeeBps: bigint;
   onSuccess?: () => void;
   onClose: () => void;
+  onExecutingChange?: (isExecuting: boolean) => void;
 }
 
 function MultiChainDepositDrawerContent({
@@ -83,6 +97,7 @@ function MultiChainDepositDrawerContent({
   depositFeeBps,
   onSuccess,
   onClose,
+  onExecutingChange,
 }: DrawerContentProps) {
   const { setMinimizedContent } = useDrawer();
   const { address } = useAccount();
@@ -157,19 +172,39 @@ function MultiChainDepositDrawerContent({
           setSponsorshipErrorMessage(errorMsg);
           setShowSponsorshipError(true);
         }
+        console.log("[MultiChainDrawer] Phase transition: executing -> error (hasErrors=true)");
         setPhase("error");
+        onExecutingChange?.(false);
       } else if (depositState.completedCount === depositState.totalCount) {
+        console.log("[MultiChainDrawer] Phase transition: executing -> complete");
         setPhase("complete");
         onSuccess?.();
+        onExecutingChange?.(false);
       }
     }
-  }, [depositState.isExecuting, depositState.completedCount, depositState.totalCount, depositState.hasErrors, depositState.chainStatuses, onSuccess]);
+  }, [depositState.isExecuting, depositState.completedCount, depositState.totalCount, depositState.hasErrors, depositState.chainStatuses, onSuccess, onExecutingChange]);
+
+  useEffect(() => {
+    if (phase === "executing") {
+      console.log("[MultiChainDrawer] Executing phase started - safety timeout armed");
+      const safetyTimeout = setTimeout(() => {
+        console.warn("[MultiChainDrawer] Safety timeout reached - forcing error phase");
+        setPhase("error");
+      }, DRAWER_SAFETY_TIMEOUT_MS);
+      return () => {
+        console.log("[MultiChainDrawer] Safety timeout cleared");
+        clearTimeout(safetyTimeout);
+      };
+    }
+  }, [phase]);
 
   const handleConfirm = useCallback(async () => {
     if (!senderAddress || splits.length === 0) return;
+    console.log("[MultiChainDrawer] Phase transition: preview -> executing");
     setPhase("executing");
+    onExecutingChange?.(true);
     await execute(splits, vaultMappings);
-  }, [senderAddress, splits, vaultMappings, execute]);
+  }, [senderAddress, splits, vaultMappings, execute, onExecutingChange]);
 
   const handleRetry = useCallback(() => {
     reset();

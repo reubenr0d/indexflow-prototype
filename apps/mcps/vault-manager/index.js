@@ -7,6 +7,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
 import { classifySymbolWithSearch, symbolPolicyMessage } from "../../shared/yahoo-symbol-policy.mjs";
+import { formatKeeperHubFailureResult } from "../../../lib/keeperhub.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -16,6 +17,76 @@ const DEPLOYMENT_CONFIG = process.env.DEPLOYMENT_CONFIG ?? "apps/web/src/config/
 const RPC_URL = process.env.RPC_URL ?? "sepolia";
 const PRIVATE_KEY = process.env.PRIVATE_KEY ?? "";
 const PROJECT_ROOT = process.env.PROJECT_ROOT ?? process.cwd();
+const KEEPERHUB_API_KEY = process.env.KEEPERHUB_API_KEY ?? "";
+
+// ---------------------------------------------------------------------------
+// KeeperHub integration for reliable transaction execution
+// ---------------------------------------------------------------------------
+
+let keeperHubClient = null;
+
+async function initKeeperHub() {
+  if (KEEPERHUB_API_KEY) {
+    try {
+      const libPath = resolve(PROJECT_ROOT, "lib/keeperhub.mjs");
+      const { KeeperHubClient } = await import(libPath);
+      keeperHubClient = new KeeperHubClient(KEEPERHUB_API_KEY);
+      console.error("[vault-manager-mcp] KeeperHub enabled for transaction execution");
+    } catch (err) {
+      console.error(`[vault-manager-mcp] KeeperHub init failed: ${err.message}`);
+    }
+  }
+}
+
+// Initialize KeeperHub on startup
+initKeeperHub().catch(() => {});
+
+// JSON ABI for KeeperHub /execute/contract-call (not human-readable "function ..." strings).
+// Subgraph ABIs are regenerated with forge; wireAsset matches apps/web/src/abi/AssetWiring.ts.
+const SUBGRAPH_ABI_ROOT = "apps/subgraph/abis";
+const WIRE_ASSET_ABI_PATH = "apps/mcps/vault-manager/abis/wireAsset.json";
+
+/** @type {Record<string, { file: string, name?: string, wholeFile?: boolean }>} */
+const WRITE_SIG_TO_ABI = {
+  "wireAsset(string,uint256)": { file: WIRE_ASSET_ABI_PATH, wholeFile: true },
+  "createBasket(string,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketFactory.json`, name: "createBasket" },
+  "setAssets(bytes32[])": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "setAssets" },
+  "allocateToPerp(uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "allocateToPerp" },
+  "withdrawFromPerp(uint256)": { file: `${SUBGRAPH_ABI_ROOT}/BasketVault.json`, name: "withdrawFromPerp" },
+  "openPosition(address,bytes32,bool,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/VaultAccounting.json`, name: "openPosition" },
+  "closePosition(address,bytes32,bool,uint256,uint256)": { file: `${SUBGRAPH_ABI_ROOT}/VaultAccounting.json`, name: "closePosition" },
+};
+
+/** @type {Record<string, unknown[]>} */
+let _keeperHubAbiFileCache = {};
+
+/**
+ * @param {string} sig - cast-style signature, e.g. "allocateToPerp(uint256)"
+ * @returns {unknown[]} - JSON ABI array with exactly one function entry
+ */
+function getKeeperHubAbiForWriteSig(sig) {
+  const spec = WRITE_SIG_TO_ABI[sig];
+  if (!spec) {
+    throw new Error(`Unknown write signature for KeeperHub: ${sig}`);
+  }
+  const abs = isAbsolute(spec.file) ? spec.file : resolve(PROJECT_ROOT, spec.file);
+  if (!_keeperHubAbiFileCache[abs]) {
+    if (!existsSync(abs)) {
+      throw new Error(`ABI file not found: ${abs}`);
+    }
+    _keeperHubAbiFileCache[abs] = JSON.parse(readFileSync(abs, "utf8"));
+  }
+  const parsed = _keeperHubAbiFileCache[abs];
+  if (spec.wholeFile) {
+    return parsed;
+  }
+  const name = spec.name;
+  const item = parsed.find((x) => x?.type === "function" && x.name === name);
+  if (!item) {
+    throw new Error(`Function ${name} not found in ${spec.file}`);
+  }
+  return [item];
+}
 
 function deploymentPath() {
   const p = DEPLOYMENT_CONFIG;
@@ -138,7 +209,7 @@ function castCall(contractAddr, sig, args = []) {
   return out.trim();
 }
 
-function castSend(contractAddr, sig, args = []) {
+function castSendDirect(contractAddr, sig, args = []) {
   if (!PRIVATE_KEY) {
     throw Object.assign(new Error("PRIVATE_KEY is required for write operations"), { code: "NO_PRIVATE_KEY" });
   }
@@ -148,6 +219,71 @@ function castSend(contractAddr, sig, args = []) {
     { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
   );
   return out.trim();
+}
+
+async function castSendViaKeeperHub(contractAddr, sig, args = [], justification = "") {
+  const sigMatch = sig.match(/^(\w+)\((.*)\)$/);
+  if (!sigMatch) {
+    throw new Error(`Invalid function signature: ${sig}`);
+  }
+
+  const functionName = sigMatch[1];
+  // KeeperHub expects standard JSON-ABI function objects (see services/keeper, update-yahoo-finance-prices).
+  const jsonAbi = getKeeperHubAbiForWriteSig(sig);
+
+  try {
+    console.error(`[KeeperHub] Executing ${functionName} on ${contractAddr.slice(0, 10)}...`);
+
+    const result = await keeperHubClient.executeAndWait(
+      {
+        network: RPC_URL,
+        contractAddress: contractAddr,
+        functionName,
+        functionArgs: args,
+        abi: jsonAbi,
+        justification: justification || `Agent: ${functionName}`,
+      },
+      {
+        onPoll: (status, attempt) => {
+          if (attempt > 0 && attempt % 10 === 0) {
+            console.error(`[KeeperHub] Still waiting... status=${status.status}`);
+          }
+        },
+      }
+    );
+
+    if (result.success) {
+      console.error(`[KeeperHub] ✓ ${functionName} confirmed: ${result.transactionHash}`);
+      // Return a JSON receipt compatible with cast output
+      return JSON.stringify({
+        transactionHash: result.transactionHash,
+        blockNumber: result.blockNumber ? `0x${result.blockNumber.toString(16)}` : null,
+        status: "0x1",
+        gasUsed: result.gasUsed || null,
+        keeperHub: true,
+      });
+    } else {
+      throw new Error(`KeeperHub execution failed: ${formatKeeperHubFailureResult(result)}`);
+    }
+  } catch (err) {
+    console.error(`[KeeperHub] Error: ${err.message}`);
+    throw err;
+  }
+}
+
+/**
+ * @param {string} contractAddr
+ * @param {string} sig
+ * @param {string[]} args - arguments for `cast send` (e.g. bracket string for calldata arrays)
+ * @param {string} justification
+ * @param {{ keeperFunctionArgs?: string[] }} [options] - if set, used for KeeperHub only when abi-encoding must differ from cast (e.g. setAssets bytes32[] must be a nested array, not a single bracket string)
+ */
+async function castSend(contractAddr, sig, args = [], justification = "", options = {}) {
+  if (keeperHubClient) {
+    const kArgs = options.keeperFunctionArgs != null ? options.keeperFunctionArgs : args;
+    return await castSendViaKeeperHub(contractAddr, sig, kArgs, justification);
+  }
+  return castSendDirect(contractAddr, sig, args);
 }
 
 function parseReceipt(rawJson) {
@@ -514,7 +650,7 @@ server.registerTool(
       await validateWriteSymbolPolicy(symbol);
       const d = deployment();
       const seedPriceRaw8 = BigInt(Math.round(seedPriceUsd * 1e8)).toString();
-      const rawReceipt = castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8]);
+      const rawReceipt = await castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8], justification);
       return writeResult(rawReceipt, [
         { tool: "get_oracle_assets", reason: "Verify the new asset appears and is active" },
         { tool: "set_vault_assets", reason: "Add the new asset to a vault's tracked assets" },
@@ -562,7 +698,7 @@ server.registerTool(
   async ({ name, depositFeeBps, redeemFeeBps, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
+      const rawReceipt = await castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)], justification);
       const tx = parseReceipt(rawReceipt);
       const vaultAddress = extractVaultAddressFromCreateVaultReceipt(rawReceipt);
       const result = {
@@ -604,7 +740,10 @@ server.registerTool(
   async ({ vault, assetIds, justification }) => {
     try {
       const idsArg = `[${assetIds.join(",")}]`;
-      const rawReceipt = castSend(vault, "setAssets(bytes32[])", [idsArg]);
+      // `cast` wants one bracket string; KeeperHub/ABI encoding wants one function arg = `bytes32[]` as a nested JS array
+      const rawReceipt = await castSend(vault, "setAssets(bytes32[])", [idsArg], justification, {
+        keeperFunctionArgs: [assetIds],
+      });
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify assets were set", params_hint: { vault } },
       ], justification);
@@ -631,7 +770,7 @@ server.registerTool(
   },
   async ({ vault, amount, justification }) => {
     try {
-      const rawReceipt = castSend(vault, "allocateToPerp(uint256)", [amount]);
+      const rawReceipt = await castSend(vault, "allocateToPerp(uint256)", [amount], justification);
       return writeResult(rawReceipt, [
         { tool: "open_position", reason: "Open a perp position with the allocated capital", params_hint: { vault } },
         { tool: "get_vault_state", reason: "Verify updated allocation", params_hint: { vault } },
@@ -659,7 +798,7 @@ server.registerTool(
   },
   async ({ vault, amount, justification }) => {
     try {
-      const rawReceipt = castSend(vault, "withdrawFromPerp(uint256)", [amount]);
+      const rawReceipt = await castSend(vault, "withdrawFromPerp(uint256)", [amount], justification);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify updated reserve and allocation", params_hint: { vault } },
       ], justification);
@@ -696,10 +835,11 @@ server.registerTool(
   async ({ vault, assetId, isLong, size, collateral, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(
+      const rawReceipt = await castSend(
         d.vaultAccounting,
         "openPosition(address,bytes32,bool,uint256,uint256)",
         [vault, assetId, String(isLong), size, collateral],
+        justification,
       );
       return writeResult(rawReceipt, [
         { tool: "get_position_tracking", reason: "Verify the position was opened", params_hint: { vault, assetId, isLong } },
@@ -733,10 +873,11 @@ server.registerTool(
   async ({ vault, assetId, isLong, sizeDelta, collateralDelta, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(
+      const rawReceipt = await castSend(
         d.vaultAccounting,
         "closePosition(address,bytes32,bool,uint256,uint256)",
         [vault, assetId, String(isLong), sizeDelta, collateralDelta],
+        justification,
       );
       return writeResult(rawReceipt, [
         { tool: "get_vault_pnl", reason: "Check updated realised PnL", params_hint: { vault } },

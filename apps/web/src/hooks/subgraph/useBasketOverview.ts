@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { toBasketOverviewRows } from "@/lib/subgraph/transform";
 import { GET_BASKETS_OVERVIEW } from "@/lib/subgraph/queries";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useAvailableSubgraph, DEFAULT_PAGE_SIZE } from "./useSubgraphShared";
 
 export type BasketOverview = {
@@ -25,16 +26,17 @@ export type BasketOverview = {
 
 export function useBasketsOverviewQuery(params?: { first?: number; skip?: number }) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
   const first = params?.first ?? DEFAULT_PAGE_SIZE;
   const skip = params?.skip ?? 0;
 
   return useQuery({
-    queryKey: ["subgraph", "basketsOverview", first, skip],
+    queryKey: ["subgraph", "basketsOverview", chainId, first, skip],
     queryFn: async () => {
       if (!client) return null;
       const result = await client.request<{ baskets: Array<Record<string, string>> }>(
         GET_BASKETS_OVERVIEW,
-        { first, skip }
+        { first, skip, chainId }
       );
 
       return toBasketOverviewRows(result.baskets) as BasketOverview[];

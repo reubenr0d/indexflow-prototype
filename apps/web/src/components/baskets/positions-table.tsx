@@ -180,11 +180,12 @@ export function PositionsTable({ vault, className }: { vault: Address; className
               <th className="px-4 py-2.5 text-right">PnL %</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-app-border">
+          <tbody className="divide-y divide-app-border" data-testid="positions-table-body">
             {positions.map((pos) => (
               <tr
                 key={`${pos.assetId}-${pos.isLong ? "long" : "short"}`}
                 className="hover:bg-app-surface-hover"
+                data-testid={`position-row-${pos.label.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`}
               >
                 <td className="px-4 py-2.5 font-medium text-app-text">{pos.label}</td>
                 <td className="px-4 py-2.5">
@@ -223,6 +224,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
                         ? "text-app-danger"
                         : "text-app-text",
                   )}
+                  data-testid="position-pnl"
                 >
                   {formatSignedUsd1e30(pos.unrealisedPnL)}
                 </td>
@@ -235,6 +237,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
                         ? "text-app-danger"
                         : "text-app-text",
                   )}
+                  data-testid="position-pnl-pct"
                 >
                   {pnlPct(pos.unrealisedPnL, pos.collateralUsdc)}
                 </td>

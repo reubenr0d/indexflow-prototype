@@ -40,8 +40,7 @@ export function useSharePriceHistory(vault: Address | undefined) {
             sharePrice: string;
             tvlBookUsdc: string;
           }>;
-        }>(GET_SHARE_PRICE_HISTORY, { id: vault.toLowerCase(), first: 90 });
-
+        }>(GET_SHARE_PRICE_HISTORY, { id: `${chainId}-${vault.toLowerCase()}`, first: 90 });
         if (result.basketSnapshots && result.basketSnapshots.length > 0) {
           const points: SharePricePoint[] = result.basketSnapshots.map((s) => ({
             timestamp: Number(parseBigInt(s.updatedAt)),

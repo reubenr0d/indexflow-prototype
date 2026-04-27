@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { toUserPortfolioRows } from "@/lib/subgraph/transform";
 import { GET_USER_PORTFOLIO } from "@/lib/subgraph/queries";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useAvailableSubgraph, DEFAULT_PAGE_SIZE, type RawUserBasketPosition } from "./useSubgraphShared";
 
 export type UserPortfolioHolding = {
@@ -21,14 +22,16 @@ export type UserPortfolioHolding = {
 
 export function useUserPortfolioQuery(userAddress: Address | undefined, first = DEFAULT_PAGE_SIZE) {
   const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
 
   return useQuery({
-    queryKey: ["subgraph", "userPortfolio", userAddress, first],
+    queryKey: ["subgraph", "userPortfolio", chainId, userAddress, first],
     queryFn: async () => {
       if (!client || !userAddress) return null;
 
       const result = await client.request<{ userBasketPositions: RawUserBasketPosition[] }>(GET_USER_PORTFOLIO, {
-        userId: userAddress.toLowerCase(),
+        userAddress: userAddress.toLowerCase(),
+        chainId,
         first,
       });
 

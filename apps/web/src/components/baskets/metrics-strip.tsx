@@ -9,6 +9,7 @@ export interface MetricCell {
   pnl?: boolean;
   sign?: number;
   icon?: LucideIcon;
+  testId?: string;
 }
 
 interface MetricsGridProps {
@@ -40,6 +41,7 @@ export function MetricsGrid({ metrics, className }: MetricsGridProps) {
           <div
             key={m.label}
             className="flex flex-col overflow-hidden bg-app-surface px-4 py-3"
+            data-testid={m.testId}
           >
             <div className="flex items-center gap-1.5">
               {Icon && (
@@ -54,6 +56,7 @@ export function MetricsGrid({ metrics, className }: MetricsGridProps) {
             <span
               className={cn("mt-1 truncate font-mono text-sm font-semibold leading-tight", colorClass)}
               title={m.value}
+              data-testid={m.testId ? `${m.testId}-value` : undefined}
             >
               {m.value}
             </span>

@@ -1,0 +1,29 @@
+{
+  "name": "@snx-prototype/envio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean": "tsc --clean",
+    "build": "tsc --build",
+    "watch": "tsc --watch",
+    "codegen": "envio codegen",
+    "dev": "envio dev",
+    "dev:local": "node scripts/gen-local-config.mjs && envio dev --config config.local.generated.yaml",
+    "start": "envio start",
+    "gen-local-config": "node scripts/gen-local-config.mjs"
+  },
+  "dependencies": {
+    "envio": "2.32.12",
+    "viem": "2.38.3"
+  },
+  "optionalDependencies": {
+    "generated": "./generated"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.8",
+    "typescript": "5.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

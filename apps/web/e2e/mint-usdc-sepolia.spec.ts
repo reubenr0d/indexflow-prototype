@@ -249,17 +249,19 @@ async function waitForPositiveMaxBalance(page: Parameters<typeof test>[0]['page'
 }
 
 async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
+  console.log('[E2E] runSplitDeposit: selecting all-chains mode');
   await selectNetworkOption(page, 'network-option-all');
 
   await expect(page.getByText(/multi-chain deposit enabled/i)).toBeVisible({ timeout: 15_000 });
 
   const amountInput = page.getByTestId('deposit-redeem-amount');
   await expect(amountInput).toBeVisible({ timeout: 15_000 });
-  await amountInput.fill('20');
+  await amountInput.fill('10000');
 
   const submit = page.getByTestId('deposit-redeem-submit');
   await expect(submit).toBeVisible({ timeout: 15_000 });
   await expect(submit).toBeEnabled({ timeout: 30_000 });
+  console.log('[E2E] runSplitDeposit: clicking submit');
   await submit.click();
 
   const phaseNames = ['loading', 'no-routing', 'preview', 'executing', 'complete', 'error'] as const;
@@ -281,11 +283,13 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
     .not.toBeNull();
 
   let initialPhase = await getCurrentPhase();
+  console.log(`[E2E] runSplitDeposit: initial drawer phase = ${initialPhase}`);
   if (initialPhase === 'loading') {
     await expect
       .poll(async () => await getCurrentPhase(), { timeout: 60_000 })
       .not.toBe('loading');
     initialPhase = await getCurrentPhase();
+    console.log(`[E2E] runSplitDeposit: post-loading phase = ${initialPhase}`);
   }
 
   if (!initialPhase) {
@@ -296,13 +300,13 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
     throw new Error('Multi-chain routing is unavailable (`no-routing` drawer phase).');
   }
 
-  const phaseExecuting = page.locator('[data-testid="multi-chain-drawer-phase"][data-phase="executing"]');
   const phaseError = page.locator('[data-testid="multi-chain-drawer-phase"][data-phase="error"]');
   const phaseComplete = page.locator('[data-testid="multi-chain-drawer-phase"][data-phase="complete"]');
 
   if (initialPhase === 'preview') {
     const confirm = page.getByTestId('multi-chain-confirm-deposit');
     await expect(confirm).toBeEnabled({ timeout: 15_000 });
+    console.log('[E2E] runSplitDeposit: clicking confirm');
     await confirm.click();
   }
 
@@ -311,22 +315,112 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
     throw new Error(`Split deposit entered error phase immediately. Snapshot:\n${body.slice(0, 1200)}`);
   }
 
-  const outcome = await Promise.race([
-    phaseComplete.waitFor({ state: 'attached', timeout: 180_000 }).then(() => 'complete' as const),
-    phaseError.waitFor({ state: 'attached', timeout: 180_000 }).then(() => 'error' as const),
-  ]);
+  const POLL_INTERVAL_MS = 500;
+  const deadline = Date.now() + 200_000; // 3.33 minutes - aligned with app timeouts
+  let lastLoggedPhase = initialPhase;
+  let terminalPhase: 'complete' | 'error' | null = null;
 
-  if (outcome === 'error') {
-    const body = (await page.textContent('body').catch(() => '')) ?? '';
-    throw new Error(`Split deposit ended in error state. Snapshot:\n${body.slice(0, 1200)}`);
+  console.log('[E2E] runSplitDeposit: entering execution polling loop');
+
+  // Also monitor for success toast which appears regardless of drawer state
+  const successToastLocator = page.getByText(/multi-chain deposit complete/i);
+  const depositCompleteLocator = page.getByText(/deposit complete/i);
+
+  while (Date.now() < deadline) {
+    // Check for success toast first (shown when deposits complete, even if drawer closes)
+    if (await successToastLocator.isVisible({ timeout: 100 }).catch(() => false)) {
+      console.log('[E2E] runSplitDeposit: SUCCESS - found "multi-chain deposit complete" message');
+      terminalPhase = 'complete';
+      break;
+    }
+
+    if (await depositCompleteLocator.isVisible({ timeout: 100 }).catch(() => false)) {
+      console.log('[E2E] runSplitDeposit: SUCCESS - found "deposit complete" message');
+      terminalPhase = 'complete';
+      break;
+    }
+
+    const currentPhase = await getCurrentPhase();
+    if (currentPhase !== lastLoggedPhase) {
+      console.log(`[E2E] runSplitDeposit: phase changed to ${currentPhase}`);
+      lastLoggedPhase = currentPhase;
+    }
+
+    if (await phaseComplete.count().then((c) => c > 0).catch(() => false)) {
+      console.log('[E2E] runSplitDeposit: reached complete phase');
+      terminalPhase = 'complete';
+      break;
+    }
+
+    if (await phaseError.count().then((c) => c > 0).catch(() => false)) {
+      console.log('[E2E] runSplitDeposit: reached error phase');
+      terminalPhase = 'error';
+      break;
+    }
+
+    // Privy transaction modal can appear during execution; keep approving pending actions.
+    const frames = page.frames();
+    const labels = [
+      /^Approve$/i,
+      /^Retry transaction$/i,
+      /^All Done$/i,
+      /^Confirm$/i,
+      /^Continue$/i,
+      /^Submit$/i,
+      /^Sign$/i,
+      /^Send$/i,
+    ];
+    for (const frame of frames) {
+      for (const label of labels) {
+        const btn = frame.getByRole('button', { name: label }).first();
+        if (await btn.isVisible({ timeout: 100 }).catch(() => false)) {
+          console.log(`[E2E] runSplitDeposit: clicking ${label} in frame`);
+          await btn.click({ timeout: 500 }).catch(() => {});
+        }
+      }
+    }
+
+    await page.waitForTimeout(POLL_INTERVAL_MS);
   }
 
-  const doneButton = page.getByRole('button', { name: 'Done' }).first();
-  if (await doneButton.isVisible().catch(() => false)) {
-    await doneButton.click().catch(() => {});
+  if (terminalPhase === 'complete') {
+    const doneButton = page.getByRole('button', { name: 'Done' }).first();
+    if (await doneButton.isVisible().catch(() => false)) {
+      await doneButton.click().catch(() => {});
+    }
+    await expect(page.getByText(/deposit complete/i)).toBeVisible({ timeout: 30_000 });
+    console.log('[E2E] runSplitDeposit: SUCCESS - deposit complete');
+    return;
   }
 
-  await expect(page.getByText(/multi-chain deposit complete/i)).toBeVisible({ timeout: 30_000 });
+  if (terminalPhase === 'error') {
+    const drawerContent = await page.locator('[data-testid="multi-chain-drawer-content"]').textContent().catch(() => '');
+    console.log(`[E2E] runSplitDeposit: ERROR phase reached. Drawer content:\n${drawerContent?.slice(0, 800)}`);
+    throw new Error(`Split deposit ended in error state. Drawer snapshot:\n${drawerContent?.slice(0, 1200)}`);
+  }
+
+  const finalPhase = await getCurrentPhase();
+  const approveVisible = await page.getByRole('button', { name: /^Approve$/i }).first().isVisible().catch(() => false);
+  console.log(`[E2E] runSplitDeposit: TIMEOUT - phase=${finalPhase} approveVisible=${approveVisible}`);
+
+  // If drawer closed but we can find success indicators, treat as success
+  // This handles the case where Privy's "All Done" closes the drawer before our phase updates
+  const successToast = page.getByText(/deposit complete/i);
+  const multiChainComplete = page.getByText(/multi-chain deposit complete/i);
+  
+  if (await successToast.isVisible({ timeout: 5000 }).catch(() => false)) {
+    console.log('[E2E] runSplitDeposit: SUCCESS - found deposit complete message');
+    return;
+  }
+  
+  if (await multiChainComplete.isVisible({ timeout: 2000 }).catch(() => false)) {
+    console.log('[E2E] runSplitDeposit: SUCCESS - found multi-chain deposit complete message');
+    return;
+  }
+
+  throw new Error(
+    `Split deposit timed out before reaching terminal phase. phase=${finalPhase ?? 'unknown'} approveVisible=${String(approveVisible)}`
+  );
 }
 
 test('mint on all available networks and execute split deposit', async ({ page }) => {
@@ -356,6 +450,9 @@ test('mint on all available networks and execute split deposit', async ({ page }
     await waitForPositiveMaxBalance(page, `mint on ${network.label}`);
   }
 
+  // Ensure routing-weight reads resolve from the hub context before entering all-chains mode.
+  await selectNetworkOption(page, 'network-option-sepolia');
   await waitForPositiveMaxBalance(page, 'all-network mint pass');
   await runSplitDeposit(page);
 });
+

@@ -65,6 +65,8 @@ jobs:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
           PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
+          KEEPERHUB_API_KEY: ${{ secrets.KEEPERHUB_API_KEY }}
+          PROJECT_ROOT: ${{ github.workspace }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}

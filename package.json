@@ -44,13 +44,18 @@
     "agent": "node scripts/vault-agent.mjs",
     "agent:dry": "AGENT_DRY_RUN=1 node scripts/vault-agent.mjs",
     "agent:run": "node scripts/agent-runner.mjs",
+    "agent:0g": "node scripts/agent-runner.mjs 0g-vault-manager",
+    "agent:0g:dry": "AGENT_DRY_RUN=1 node scripts/agent-runner.mjs 0g-vault-manager",
     "mcp:vault-manager": "node apps/mcps/vault-manager/index.js",
     "mcp:yfinance": "node apps/mcps/yfinance/index.js",
+    "mcp:0g-storage": "node apps/mcps/0g-storage/index.js",
+    "mcp:keeperhub": "node apps/mcps/keeperhub/index.js",
     "seed:fetch-prices": "node scripts/fetch-historical-prices.js BHP.AX XAU XAG GLEN.L",
     "seed:sepolia": "npm run seed:fetch-prices && CHAIN=sepolia forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url sepolia --broadcast -vvv && npm run keeper:once",
     "seed:local": "npm run seed:fetch-prices && CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url local --broadcast -vvv"
   },
   "dependencies": {
+    "@0glabs/0g-serving-broker": "^0.7.5",
     "@chainlink/contracts-ccip": "^1.6.4",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@openzeppelin/contracts": "^5.2.0",

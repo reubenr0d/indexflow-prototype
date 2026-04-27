@@ -1,0 +1,92 @@
+# yaml-language-server: $schema=./node_modules/envio/evm.schema.json
+name: snx-baskets-hyperindex
+description: SNX baskets multichain indexer on Envio HyperIndex
+
+contracts:
+  - name: BasketFactory
+    abi_file_path: ./abis/BasketFactory.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: BasketCreated
+
+  - name: BasketVault
+    abi_file_path: ./abis/BasketVault.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: Deposited
+      - event: Redeemed
+      - event: AllocatedToPerp
+      - event: WithdrawnFromPerp
+      - event: AssetsUpdated
+      - event: FeesCollected
+      - event: ReservePolicyUpdated
+      - event: ReserveToppedUp
+
+  - name: VaultAccounting
+    abi_file_path: ./abis/VaultAccounting.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: VaultRegistered
+      - event: VaultDeregistered
+      - event: AssetTokenMapped
+      - event: CapitalDeposited
+      - event: CapitalWithdrawn
+      - event: PositionOpened
+      - event: PositionClosed
+      - event: PnLRealized
+      - event: MaxOpenInterestSet
+      - event: MaxPositionSizeSet
+      - event: PauseToggled
+
+  - name: OracleAdapter
+    abi_file_path: ./abis/OracleAdapter.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: AssetConfigured
+      - event: AssetRemoved
+      - event: PriceUpdated
+
+  - name: StateRelay
+    abi_file_path: ./abis/StateRelay.json
+    handler: ./src/EventHandlers.ts
+    events:
+      - event: StateUpdated
+
+networks:
+  - id: 11155111 # Sepolia
+    start_block: 10689376
+    contracts:
+      - name: BasketFactory
+        address: 0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4
+        start_block: 10689396
+      - name: VaultAccounting
+        address: 0xc7aa05ccaea98dc26b8739a19b79875b1432ce43
+        start_block: 10689378
+      - name: OracleAdapter
+        address: 0x69329fec8c0ef120ee56379941d8d367b593d399
+        start_block: 10689376
+      - name: StateRelay
+        address: 0xb837e0d12b16e14c57d829337578ed4111479cd9
+        start_block: 10697053
+      - name: BasketVault
+
+  - id: 43113 # Avalanche Fuji
+    start_block: 54206983
+    contracts:
+      - name: BasketFactory
+        address: 0x743194baae87a8a518739a1eb71f04773b46d42e
+        start_block: 54329471
+      - name: VaultAccounting
+        address: 0x32e2a385aa9540d5119ceaa2ecf4fd97a1e002e0
+        start_block: 54206983
+      - name: OracleAdapter
+        address: 0x0e07ea10a1ff1412b9d93f7a38b6498edaacf419
+        start_block: 54206983
+      - name: StateRelay
+        address: 0x0a564071fb11a0b84314f0b78ac69c5742db22a2
+        start_block: 54370695
+      - name: BasketVault
+
+unordered_multichain_mode: true
+preload_handlers: false
+address_format: lowercase
