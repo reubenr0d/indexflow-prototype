@@ -41,7 +41,8 @@ interface ChainVaultMapping {
 }
 
 const MIN_SPLIT_AMOUNT_USDC = 10_000_000n; // 10 USDC (6 decimals)
-const CHAIN_TX_TIMEOUT_MS = 900_000; // 15 minutes
+const CHAIN_TX_TIMEOUT_MS = 120_000; // 2 minutes per chain tx
+const EXECUTION_TIMEOUT_MS = 150_000; // 2.5 minutes overall execution timeout
 
 function selectorToChainId(selector: bigint): number | null {
   for (const [, cfg] of Object.entries(CHAIN_REGISTRY)) {
@@ -142,6 +143,7 @@ export function useParallelChainDeposits() {
 
   const updateChainStatus = useCallback(
     (chainId: number, update: Partial<ChainDepositStatus>) => {
+      console.log(`[ParallelDeposits] Chain ${chainId} status update:`, update.status ?? "no status change");
       setState((prev) => {
         const newStatuses = prev.chainStatuses.map((s) =>
           s.chainId === chainId ? { ...s, ...update } : s
@@ -251,14 +253,15 @@ export function useParallelChainDeposits() {
           if (!useSponsored) {
             throw new Error("Non-Privy transactions not yet supported in parallel mode");
           }
-          const strategy = sponsorshipStrategyForChainId(chainId);
           const receipt = await sendWithGuard("deposit", () =>
             sendSponsoredTx({
               chainId,
               to: vaultAddress,
               data: depositData,
-              sponsor: strategy !== "native_sponsor",
-              showWalletUIs: strategy !== "native_sponsor",
+              // Always request sponsorship for embedded-wallet flows.
+              sponsor: true,
+              // Keep wallet UI visible so the user can complete confirmations when needed.
+              showWalletUIs: true,
             })
           );
           updateChainStatus(chainId, { depositTxHash: receipt.hash, status: "success" });
@@ -279,14 +282,13 @@ export function useParallelChainDeposits() {
           if (!useSponsored) {
             throw new Error("Non-Privy transactions not yet supported in parallel mode");
           }
-          const strategy = sponsorshipStrategyForChainId(chainId);
           const approveReceipt = await sendWithGuard("approval", () =>
             sendSponsoredTx({
               chainId,
               to: usdc,
               data: approveData,
-              sponsor: strategy !== "native_sponsor",
-              showWalletUIs: strategy !== "native_sponsor",
+              sponsor: true,
+              showWalletUIs: true,
             })
           );
           updateChainStatus(chainId, { approveTxHash: approveReceipt.hash });
@@ -339,6 +341,8 @@ export function useParallelChainDeposits() {
     ) => {
       if ((!useSponsored && !connectedAddress) || splits.length === 0) return;
 
+      console.log(`[ParallelDeposits] Starting execution for ${splits.length} chains`);
+
       abortControllerRef.current?.abort();
       const controller = new AbortController();
       abortControllerRef.current = controller;
@@ -362,24 +366,54 @@ export function useParallelChainDeposits() {
         hasErrors: false,
       });
 
-      for (const split of splits) {
-        const vaultAddress = vaultMap.get(split.chainId);
-        if (!vaultAddress) {
-          updateChainStatus(split.chainId, {
-            status: "error",
-            error: "No vault address configured for this chain",
-          });
-          continue;
-        }
+      let executionTimedOut = false;
+      const executionTimeoutId = setTimeout(() => {
+        console.warn("[ParallelDeposits] Overall execution timeout reached - aborting and marking incomplete chains as errored");
+        executionTimedOut = true;
+        controller.abort();
+        setState((prev) => ({
+          ...prev,
+          isExecuting: false,
+          hasErrors: true,
+          chainStatuses: prev.chainStatuses.map((s) =>
+            s.status !== "success" && s.status !== "error"
+              ? { ...s, status: "error" as const, error: "Execution timed out waiting for transaction confirmation" }
+              : s
+          ),
+        }));
+      }, EXECUTION_TIMEOUT_MS);
 
-        try {
-          await executeChainDeposit(split, vaultAddress, controller.signal);
-        } catch {
-          // Error already handled in executeChainDeposit
+      try {
+        for (const split of splits) {
+          if (executionTimedOut || controller.signal.aborted) {
+            console.log(`[ParallelDeposits] Skipping chain ${split.chainId} - execution aborted`);
+            break;
+          }
+
+          const vaultAddress = vaultMap.get(split.chainId);
+          if (!vaultAddress) {
+            updateChainStatus(split.chainId, {
+              status: "error",
+              error: "No vault address configured for this chain",
+            });
+            continue;
+          }
+
+          try {
+            console.log(`[ParallelDeposits] Executing deposit on chain ${split.chainId} (${split.chainName})`);
+            await executeChainDeposit(split, vaultAddress, controller.signal);
+            console.log(`[ParallelDeposits] Deposit completed on chain ${split.chainId}`);
+          } catch (err) {
+            console.error(`[ParallelDeposits] Deposit failed on chain ${split.chainId}:`, err instanceof Error ? err.message : err);
+          }
+        }
+      } finally {
+        clearTimeout(executionTimeoutId);
+        if (!executionTimedOut) {
+          console.log("[ParallelDeposits] Execution loop completed, setting isExecuting=false");
+          setState((prev) => ({ ...prev, isExecuting: false }));
         }
       }
-
-      setState((prev) => ({ ...prev, isExecuting: false }));
     },
     [connectedAddress, executeChainDeposit, updateChainStatus, useSponsored]
   );
@@ -396,6 +430,7 @@ export function useParallelChainDeposits() {
   }, []);
 
   const abort = useCallback(() => {
+    console.log("[ParallelDeposits] Manual abort triggered");
     abortControllerRef.current?.abort();
     setState((prev) => ({ ...prev, isExecuting: false }));
   }, []);

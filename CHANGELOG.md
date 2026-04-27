@@ -33,6 +33,20 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Added
 
+- [2026-04-27] 0G Network + KeeperHub integration for decentralized AI agent infrastructure:
+  - **0G Storage MCP server** (`apps/mcps/0g-storage/`): Provides decentralized persistent memory via 0G KV store (real-time state) and Log layer (run history). Tools: `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read`, `get_storage_info`.
+  - **0G Compute integration** in `agent-runner.mjs`: Supports 0G Compute Network as LLM backend with OpenAI-compatible API. Includes broker initialization, per-request auth headers, and TEE response verification. Fallback to OpenAI when `ZG_COMPUTE_PROVIDER` not set.
+  - **KeeperHub client library** (`lib/keeperhub.mjs`): Shared transaction execution layer for all keepers. Provides `executeContractCall`, `executeAndWait`, `executeAllAndWait` methods with automatic retry, gas optimization, and MEV protection.
+  - **KeeperHub integration in all keepers**:
+    - **Price sync** (`scripts/update-yahoo-finance-prices.js`): Uses KeeperHub for `submitPrices()` and `syncAll()` when `KEEPERHUB_API_KEY` is set.
+    - **State sync** (`services/keeper/`): Uses KeeperHub for `StateRelay.updateState()` on all chains when configured.
+    - **Vault agent** (`apps/mcps/vault-manager/`): Routes all write operations through KeeperHub when configured (falls back to direct cast calls).
+  - **KeeperHub MCP server** (`apps/mcps/keeperhub/`): Standalone MCP server for direct KeeperHub tool access. Tools: `execute_transfer`, `execute_contract_call`, `execute_check_and_execute`, `get_execution_status`, `get_execution_logs`, workflow management.
+  - **New agent definition** (`agents/0g-vault-manager.md`): Autonomous vault manager with full 0G + KeeperHub integration. Uses 0G Compute for inference, 0G Storage for persistent memory, and KeeperHub for transaction execution.
+  - **Skills documentation**: `agents/skills/0g-storage.md`, `agents/skills/keeperhub.md`.
+  - **Updated `.env.example`**: Added 0G Storage, 0G Compute, and KeeperHub environment variables.
+  - **README hackathon section**: Architecture diagram, setup instructions, and submission materials for 0G and KeeperHub hackathon tracks.
+  - **New npm scripts**: `agent:0g`, `agent:0g:dry`, `mcp:0g-storage`, `mcp:keeperhub` for running 0G-enabled agents and MCP servers.
 - [2026-04-20] Automated multi-chain deposit flow for Privy users: new `MultiChainDepositDrawer` component shows routing breakdown and executes approve+deposit transactions across all target chains in parallel. Includes minimizable UI with floating progress pill, per-chain status indicators, and gas sponsorship via Privy embedded wallets. New hooks: `useParallelChainDeposits` (parallel execution engine), wired `useRoutingWeights` to UI. New components: `RoutingBreakdown`, `ChainDepositRow`, minimizable `Drawer` primitive. Updated E2E tests for multi-chain deposit flow.
 - [2026-04-20] Post-deploy and post-seed keeper bootstrap: `npm run keeper:once` (`scripts/run-keeper-once.sh`) runs a single `StateRelay` epoch (`KEEPER_ONCE=1`); wired to `deploy:sepolia`, `deploy:fuji`, `seed:sepolia`, `scripts/deploy-chain.sh` (non-local), `scripts/deploy-all.sh` (non-local deploys), and `scripts/deploy-coordination.sh`. Set `SKIP_KEEPER_ONCE=1` to skip.
 - [2026-04-19] `scripts/resume-forge-broadcast.sh`: resumes `forge script --broadcast --resume` with `--slow`, long `--timeout` (default 30m), exponential sleep between attempts, optional auto-`source` of repo `.env`, Foundry bin appended to `PATH`, and optional `FORGE_RPC_OVERRIDE` when the default RPC drops receipt polling.

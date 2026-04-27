@@ -5,12 +5,33 @@
     "envPassthrough": [
       "DEPLOYMENT_CONFIG",
       "RPC_URL",
-      "PRIVATE_KEY"
+      "PRIVATE_KEY",
+      "KEEPERHUB_API_KEY"
     ]
   },
   "yfinance-mcp": {
     "command": "node",
     "args": ["apps/mcps/yfinance/index.js"],
     "envPassthrough": []
+  },
+  "0g-storage-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/0g-storage/index.js"],
+    "envPassthrough": [
+      "ZG_PRIVATE_KEY",
+      "ZG_RPC_URL",
+      "ZG_INDEXER_RPC",
+      "ZG_KV_CLIENT_URL",
+      "ZG_STREAM_ID",
+      "AGENT_NAME"
+    ]
+  },
+  "keeperhub-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/keeperhub/index.js"],
+    "envPassthrough": [
+      "KEEPERHUB_API_KEY",
+      "KEEPERHUB_API_URL"
+    ]
   }
 }

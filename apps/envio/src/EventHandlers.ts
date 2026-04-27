@@ -335,14 +335,18 @@ async function syncBasketSnapshots(context: any, basket: Basket, block: any) {
 }
 
 async function syncBasketAssets(context: any, chainId: number, vaultAddress: string, block: any) {
+  const id = basketId(chainId, vaultAddress);
+  const existingBasket = await context.Basket.get(id);
+  const previousCount = Number(existingBasket?.assetCount ?? ZERO);
   const basket = await refreshBasketFromChain(context, chainId, vaultAddress, block);
+  const nextCount = Number(basket.assetCount);
 
-  const previous = await context.BasketAsset.getWhere({
-    basket_id: basket.id,
-    active: true,
-  });
+  const maxCount = Math.max(previousCount, nextCount);
+  for (let i = 0; i < maxCount; i++) {
+    const rowId = `${basket.id}-${i}`;
+    const row = await context.BasketAsset.get(rowId);
+    if (!row) continue;
 
-  for (const row of previous) {
     context.BasketAsset.set({
       ...row,
       active: false,
@@ -351,7 +355,7 @@ async function syncBasketAssets(context: any, chainId: number, vaultAddress: str
     });
   }
 
-  const count = Number(basket.assetCount);
+  const count = nextCount;
   for (let i = 0; i < count; i++) {
     const assetId = await readBasketAssetAt(chainId, lc(vaultAddress) as Address, BigInt(i));
     if (!assetId) continue;

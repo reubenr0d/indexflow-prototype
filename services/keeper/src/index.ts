@@ -12,6 +12,24 @@ import {
 import { computeRoutingWeights, type ChainReserve } from "./computeRoutingWeights.js";
 import { computeGlobalNav, type ChainDeposits } from "./computeGlobalNav.js";
 
+// KeeperHub client for reliable transaction execution
+let keeperHubClient: any = null;
+
+async function initKeeperHub(): Promise<void> {
+  if (process.env.KEEPERHUB_API_KEY) {
+    try {
+      // @ts-expect-error - ESM import without type declarations
+      const { KeeperHubClient } = await import("../../../lib/keeperhub.mjs");
+      keeperHubClient = KeeperHubClient.fromEnv();
+      if (keeperHubClient) {
+        log("[KeeperHub] Enabled for transaction execution");
+      }
+    } catch (err: any) {
+      log(`[KeeperHub] Init failed, using direct execution: ${err.message}`);
+    }
+  }
+}
+
 // ── Config types ──────────────────────────────────────────────────
 
 interface ChainConfig {
@@ -176,7 +194,25 @@ async function readChain(ctx: ChainContext): Promise<ChainReadResult> {
 
 // ── Write phase ───────────────────────────────────────────────────
 
-async function writeStateUpdate(
+// ABI for KeeperHub execution (JSON format)
+const STATE_RELAY_ABI_FOR_KEEPERHUB = [
+  {
+    inputs: [
+      { name: "chains", type: "uint64[]" },
+      { name: "weights", type: "uint256[]" },
+      { name: "amounts", type: "uint256[]" },
+      { name: "vaults", type: "address[]" },
+      { name: "pnlAdjustments", type: "int256[]" },
+      { name: "ts", type: "uint48" },
+    ],
+    name: "updateState",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
+
+async function writeStateUpdateViaKeeperHub(
   ctx: ChainContext,
   chains: bigint[],
   weights: bigint[],
@@ -184,7 +220,62 @@ async function writeStateUpdate(
   vaults: string[],
   pnlAdjustments: bigint[],
   ts: number,
-) {
+): Promise<boolean> {
+  if (!ctx.deployment.stateRelay) {
+    log(`  ⚠ No stateRelay deployed on ${ctx.name}, skipping write`);
+    return false;
+  }
+
+  try {
+    log(`  → [KeeperHub] Sending updateState to ${ctx.name} (${vaults.length} vaults)`);
+
+    const result = await keeperHubClient.executeAndWait(
+      {
+        network: ctx.config.rpcAlias,
+        contractAddress: ctx.deployment.stateRelay,
+        functionName: "updateState",
+        functionArgs: [
+          chains.map(c => c.toString()),
+          weights.map(w => w.toString()),
+          amounts.map(a => a.toString()),
+          vaults,
+          pnlAdjustments.map(p => p.toString()),
+          ts.toString(),
+        ],
+        abi: STATE_RELAY_ABI_FOR_KEEPERHUB,
+        justification: `StateRelay update: ${vaults.length} vaults, ${chains.length} chains`,
+      },
+      {
+        onPoll: (status: any, attempt: number) => {
+          if (attempt > 0 && attempt % 10 === 0) {
+            log(`  [KeeperHub] ${ctx.name} still pending... status=${status.status}`);
+          }
+        },
+      }
+    );
+
+    if (result.success) {
+      log(`  ✓ [KeeperHub] ${ctx.name} updateState confirmed: ${result.transactionHash}`);
+      return true;
+    } else {
+      logError(`  ✗ [KeeperHub] ${ctx.name} updateState failed`, result.error);
+      return false;
+    }
+  } catch (err: any) {
+    logError(`  ✗ [KeeperHub] ${ctx.name} error`, err);
+    return false;
+  }
+}
+
+async function writeStateUpdateDirect(
+  ctx: ChainContext,
+  chains: bigint[],
+  weights: bigint[],
+  amounts: bigint[],
+  vaults: string[],
+  pnlAdjustments: bigint[],
+  ts: number,
+): Promise<void> {
   if (!ctx.deployment.stateRelay) {
     log(`  ⚠ No stateRelay deployed on ${ctx.name}, skipping write`);
     return;
@@ -200,6 +291,22 @@ async function writeStateUpdate(
   const tx = await relay.updateState(chains, weights, amounts, vaults, pnlAdjustments, ts);
   const receipt = await tx.wait();
   log(`  ✓ ${ctx.name} updateState confirmed in block ${receipt?.blockNumber}`);
+}
+
+async function writeStateUpdate(
+  ctx: ChainContext,
+  chains: bigint[],
+  weights: bigint[],
+  amounts: bigint[],
+  vaults: string[],
+  pnlAdjustments: bigint[],
+  ts: number,
+): Promise<void> {
+  if (keeperHubClient) {
+    await writeStateUpdateViaKeeperHub(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts);
+  } else {
+    await writeStateUpdateDirect(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts);
+  }
 }
 
 // ── Epoch ─────────────────────────────────────────────────────────
@@ -301,6 +408,9 @@ async function runEpoch(contexts: ChainContext[]) {
 async function main() {
   log("Keeper starting...");
   log(`Epoch interval: ${EPOCH_INTERVAL_MS}ms`);
+
+  // Initialize KeeperHub if configured
+  await initKeeperHub();
 
   const contexts = buildChainContexts();
   if (contexts.length === 0) {

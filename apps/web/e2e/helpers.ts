@@ -27,19 +27,89 @@ export function getE2EWalletAddress(): string {
 /**
  * Inject a script that auto-clicks the Privy "Approve" and "Retry transaction"
  * dialogs. Must be called BEFORE the first page.goto().
+ * 
+ * Enhanced to handle iframes where Privy may render transaction modals.
  */
 export async function autoApprovePrivyTransactions(page: Page) {
   await page.addInitScript(() => {
-    setInterval(() => {
-      const btns = document.querySelectorAll<HTMLButtonElement>('button');
+    const TX_BUTTON_LABELS = [
+      'approve',
+      'retry transaction',
+      'all done',
+      'confirm',
+      'continue',
+      'submit',
+      'sign',
+      'send',
+      'review',
+    ];
+    const TX_BUTTON_PARTIALS = ['approve transaction', 'confirm transaction'];
+
+    function clickTxButtonsInDocument(doc: Document, sourceLabel: string) {
+      const btns = doc.querySelectorAll<HTMLButtonElement>('button');
       for (const btn of btns) {
-        if (btn.offsetParent === null) continue;
-        const text = btn.textContent?.trim();
-        if (text === 'Approve' || text === 'Retry transaction' || text === 'All Done') {
-          btn.click();
+        try {
+          if (btn.offsetParent === null) continue;
+          if (btn.disabled) continue;
+
+          const text = btn.textContent?.trim() ?? '';
+          const lower = text.toLowerCase();
+
+          if (lower.includes('close')) continue;
+          if (text === '×') continue;
+
+          const isTxAction =
+            TX_BUTTON_LABELS.includes(lower) ||
+            TX_BUTTON_PARTIALS.some((partial) => lower.includes(partial));
+
+          if (isTxAction) {
+            console.log(`[E2E AutoApprove] Clicking "${text}" in ${sourceLabel}`);
+            btn.click();
+          }
+        } catch {
+          // Button may have been removed
         }
       }
-    }, 500);
+    }
+
+    function processIframes() {
+      const iframes = document.querySelectorAll('iframe');
+      for (const iframe of iframes) {
+        try {
+          const doc = iframe.contentDocument;
+          if (doc && doc.readyState !== 'loading') {
+            clickTxButtonsInDocument(doc, `iframe[src="${iframe.src?.slice(0, 50) ?? 'unknown'}"]`);
+          }
+        } catch {
+          // Cross-origin iframe, skip
+        }
+      }
+    }
+
+    setInterval(() => {
+      clickTxButtonsInDocument(document, 'main document');
+      processIframes();
+    }, 350);
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node instanceof HTMLIFrameElement) {
+            node.addEventListener('load', () => {
+              try {
+                const doc = node.contentDocument;
+                if (doc) {
+                  clickTxButtonsInDocument(doc, `new iframe[src="${node.src?.slice(0, 50) ?? 'unknown'}"]`);
+                }
+              } catch {
+                // Cross-origin
+              }
+            });
+          }
+        }
+      }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   });
 }
 

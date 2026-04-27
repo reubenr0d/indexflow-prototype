@@ -496,6 +496,57 @@ const MAX_TOOL_RESPONSE = parseInt(
 );
 
 // ---------------------------------------------------------------------------
+// 0G Compute Network config (decentralized AI inference)
+// ---------------------------------------------------------------------------
+
+const ZG_COMPUTE_PROVIDER = process.env.ZG_COMPUTE_PROVIDER || "";
+const ZG_COMPUTE_MODEL = process.env.ZG_COMPUTE_MODEL || "llama-3.3-70b-instruct";
+const ZG_COMPUTE_RPC_URL = process.env.ZG_COMPUTE_RPC_URL || "https://evmrpc-testnet.0g.ai";
+const ZG_COMPUTE_PRIVATE_KEY = process.env.ZG_COMPUTE_PRIVATE_KEY || process.env.ZG_PRIVATE_KEY || "";
+
+let _zgBroker = null;
+let _zgServiceMetadata = null;
+
+async function initZgComputeBroker() {
+  if (_zgBroker) return _zgBroker;
+  if (!ZG_COMPUTE_PROVIDER || !ZG_COMPUTE_PRIVATE_KEY) return null;
+
+  try {
+    const { createZGComputeNetworkBroker } = await import("@0glabs/0g-serving-broker");
+    const { ethers } = await import("ethers");
+
+    const provider = new ethers.JsonRpcProvider(ZG_COMPUTE_RPC_URL);
+    const wallet = new ethers.Wallet(ZG_COMPUTE_PRIVATE_KEY, provider);
+
+    console.log("  Initializing 0G Compute broker...");
+    _zgBroker = await createZGComputeNetworkBroker(wallet);
+
+    _zgServiceMetadata = await _zgBroker.inference.getServiceMetadata(ZG_COMPUTE_PROVIDER);
+    console.log(`  0G Compute ready: ${_zgServiceMetadata.model} @ ${_zgServiceMetadata.endpoint}`);
+
+    return _zgBroker;
+  } catch (err) {
+    console.warn(`  0G Compute init failed (falling back to OpenAI): ${err.message}`);
+    return null;
+  }
+}
+
+async function getZgComputeHeaders(content) {
+  if (!_zgBroker) return null;
+  try {
+    const headers = await _zgBroker.inference.getRequestHeaders(ZG_COMPUTE_PROVIDER, content);
+    return headers;
+  } catch (err) {
+    console.warn(`  0G Compute header generation failed: ${err.message}`);
+    return null;
+  }
+}
+
+function is0gComputeEnabled() {
+  return Boolean(ZG_COMPUTE_PROVIDER && ZG_COMPUTE_PRIVATE_KEY);
+}
+
+// ---------------------------------------------------------------------------
 // MCP Client — spawn one per server definition
 // ---------------------------------------------------------------------------
 
@@ -527,27 +578,67 @@ async function spawnMcpClient(serverDef) {
 
 // ---------------------------------------------------------------------------
 // LLM API with retry (exponential backoff on 429 / 5xx)
+// Supports both OpenAI and 0G Compute Network
 // ---------------------------------------------------------------------------
 
 const RETRY_ATTEMPTS = 3;
 const RETRY_BASE_MS = 2000;
 
 async function chatCompletion(messages, tools, temperature) {
-  const body = { model: LLM_MODEL, messages, tools, temperature };
+  // Try 0G Compute if configured
+  const zgBroker = await initZgComputeBroker();
+  const use0gCompute = zgBroker && _zgServiceMetadata;
+
+  // Determine endpoint and model
+  const endpoint = use0gCompute
+    ? `${_zgServiceMetadata.endpoint}/chat/completions`
+    : `${LLM_BASE_URL}/chat/completions`;
+  const model = use0gCompute ? _zgServiceMetadata.model : LLM_MODEL;
+
+  const body = { model, messages, tools, temperature };
 
   let lastError;
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
     try {
-      const res = await fetch(`${LLM_BASE_URL}/chat/completions`, {
+      // Build headers
+      const headers = { "Content-Type": "application/json" };
+
+      if (use0gCompute) {
+        // 0G Compute uses per-request auth headers
+        const lastUserMsg = messages.filter((m) => m.role === "user").pop();
+        const content = lastUserMsg?.content || "";
+        const zgHeaders = await getZgComputeHeaders(content);
+        if (zgHeaders) {
+          Object.assign(headers, zgHeaders);
+        }
+      } else {
+        // OpenAI uses Bearer token
+        headers.Authorization = `Bearer ${LLM_API_KEY}`;
+      }
+
+      const res = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${LLM_API_KEY}`,
-        },
+        headers,
         body: JSON.stringify(body),
       });
 
-      if (res.ok) return res.json();
+      if (res.ok) {
+        const result = await res.json();
+
+        // Optional: Verify 0G response integrity
+        if (use0gCompute && zgBroker) {
+          const chatID = res.headers.get("ZG-Res-Key") || result.id;
+          if (chatID) {
+            try {
+              await zgBroker.inference.processResponse(ZG_COMPUTE_PROVIDER, chatID);
+            } catch (verifyErr) {
+              console.warn(`  0G response verification skipped: ${verifyErr.message}`);
+            }
+          }
+        }
+
+        return result;
+      }
 
       const text = await res.text();
       lastError = new Error(`LLM API ${res.status}: ${text}`);
@@ -556,8 +647,9 @@ async function chatCompletion(messages, tools, temperature) {
       if (!retryable || attempt === RETRY_ATTEMPTS - 1) throw lastError;
 
       const waitMs = RETRY_BASE_MS * Math.pow(2, attempt);
+      const provider = use0gCompute ? "0G Compute" : "OpenAI";
       console.log(
-        `  LLM ${res.status}, retrying in ${waitMs}ms (attempt ${attempt + 1}/${RETRY_ATTEMPTS})...`
+        `  ${provider} ${res.status}, retrying in ${waitMs}ms (attempt ${attempt + 1}/${RETRY_ATTEMPTS})...`
       );
       await new Promise((r) => setTimeout(r, waitMs));
     } catch (err) {
@@ -991,9 +1083,23 @@ function publishAgentMetadata(config, currentState, runSummary) {
 // ---------------------------------------------------------------------------
 
 export async function runAgent(agentName) {
-  if (!LLM_API_KEY) {
-    console.error("LLM_API_KEY is required");
+  // Check LLM credentials - either OpenAI or 0G Compute is required
+  const has0gCompute = is0gComputeEnabled();
+  if (!LLM_API_KEY && !has0gCompute) {
+    console.error("LLM_API_KEY is required (or configure ZG_COMPUTE_PROVIDER + ZG_COMPUTE_PRIVATE_KEY for 0G Compute)");
     process.exit(1);
+  }
+
+  // Log which LLM backend will be used
+  if (has0gCompute) {
+    console.log(`\n[LLM Backend] 0G Compute Network`);
+    console.log(`  Provider: ${ZG_COMPUTE_PROVIDER}`);
+    console.log(`  Model: ${ZG_COMPUTE_MODEL}`);
+    console.log(`  RPC: ${ZG_COMPUTE_RPC_URL}`);
+  } else {
+    console.log(`\n[LLM Backend] OpenAI-compatible API`);
+    console.log(`  Endpoint: ${LLM_BASE_URL}`);
+    console.log(`  Model: ${LLM_MODEL}`);
   }
 
   const config = loadAgentConfig(agentName);

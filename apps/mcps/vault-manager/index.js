@@ -16,6 +16,29 @@ const DEPLOYMENT_CONFIG = process.env.DEPLOYMENT_CONFIG ?? "apps/web/src/config/
 const RPC_URL = process.env.RPC_URL ?? "sepolia";
 const PRIVATE_KEY = process.env.PRIVATE_KEY ?? "";
 const PROJECT_ROOT = process.env.PROJECT_ROOT ?? process.cwd();
+const KEEPERHUB_API_KEY = process.env.KEEPERHUB_API_KEY ?? "";
+
+// ---------------------------------------------------------------------------
+// KeeperHub integration for reliable transaction execution
+// ---------------------------------------------------------------------------
+
+let keeperHubClient = null;
+
+async function initKeeperHub() {
+  if (KEEPERHUB_API_KEY) {
+    try {
+      const libPath = resolve(PROJECT_ROOT, "lib/keeperhub.mjs");
+      const { KeeperHubClient } = await import(libPath);
+      keeperHubClient = new KeeperHubClient(KEEPERHUB_API_KEY);
+      console.error("[vault-manager-mcp] KeeperHub enabled for transaction execution");
+    } catch (err) {
+      console.error(`[vault-manager-mcp] KeeperHub init failed: ${err.message}`);
+    }
+  }
+}
+
+// Initialize KeeperHub on startup
+initKeeperHub().catch(() => {});
 
 function deploymentPath() {
   const p = DEPLOYMENT_CONFIG;
@@ -138,7 +161,7 @@ function castCall(contractAddr, sig, args = []) {
   return out.trim();
 }
 
-function castSend(contractAddr, sig, args = []) {
+function castSendDirect(contractAddr, sig, args = []) {
   if (!PRIVATE_KEY) {
     throw Object.assign(new Error("PRIVATE_KEY is required for write operations"), { code: "NO_PRIVATE_KEY" });
   }
@@ -148,6 +171,66 @@ function castSend(contractAddr, sig, args = []) {
     { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
   );
   return out.trim();
+}
+
+async function castSendViaKeeperHub(contractAddr, sig, args = [], justification = "") {
+  // Parse function signature to get name and types
+  const sigMatch = sig.match(/^(\w+)\((.*)\)$/);
+  if (!sigMatch) {
+    throw new Error(`Invalid function signature: ${sig}`);
+  }
+
+  const functionName = sigMatch[1];
+  const paramTypes = sigMatch[2] ? sigMatch[2].split(",").map(t => t.trim()) : [];
+
+  // Build ABI fragment
+  const abiFragment = `function ${sig}`;
+
+  try {
+    console.error(`[KeeperHub] Executing ${functionName} on ${contractAddr.slice(0, 10)}...`);
+
+    const result = await keeperHubClient.executeAndWait(
+      {
+        network: RPC_URL,
+        contractAddress: contractAddr,
+        functionName,
+        functionArgs: args,
+        abi: [abiFragment],
+        justification: justification || `Agent: ${functionName}`,
+      },
+      {
+        onPoll: (status, attempt) => {
+          if (attempt > 0 && attempt % 10 === 0) {
+            console.error(`[KeeperHub] Still waiting... status=${status.status}`);
+          }
+        },
+      }
+    );
+
+    if (result.success) {
+      console.error(`[KeeperHub] ✓ ${functionName} confirmed: ${result.transactionHash}`);
+      // Return a JSON receipt compatible with cast output
+      return JSON.stringify({
+        transactionHash: result.transactionHash,
+        blockNumber: result.blockNumber ? `0x${result.blockNumber.toString(16)}` : null,
+        status: "0x1",
+        gasUsed: result.gasUsed || null,
+        keeperHub: true,
+      });
+    } else {
+      throw new Error(`KeeperHub execution failed: ${result.error}`);
+    }
+  } catch (err) {
+    console.error(`[KeeperHub] Error: ${err.message}`);
+    throw err;
+  }
+}
+
+async function castSend(contractAddr, sig, args = [], justification = "") {
+  if (keeperHubClient) {
+    return await castSendViaKeeperHub(contractAddr, sig, args, justification);
+  }
+  return castSendDirect(contractAddr, sig, args);
 }
 
 function parseReceipt(rawJson) {
@@ -514,7 +597,7 @@ server.registerTool(
       await validateWriteSymbolPolicy(symbol);
       const d = deployment();
       const seedPriceRaw8 = BigInt(Math.round(seedPriceUsd * 1e8)).toString();
-      const rawReceipt = castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8]);
+      const rawReceipt = await castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8], justification);
       return writeResult(rawReceipt, [
         { tool: "get_oracle_assets", reason: "Verify the new asset appears and is active" },
         { tool: "set_vault_assets", reason: "Add the new asset to a vault's tracked assets" },
@@ -562,7 +645,7 @@ server.registerTool(
   async ({ name, depositFeeBps, redeemFeeBps, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
+      const rawReceipt = await castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)], justification);
       const tx = parseReceipt(rawReceipt);
       const vaultAddress = extractVaultAddressFromCreateVaultReceipt(rawReceipt);
       const result = {
@@ -604,7 +687,7 @@ server.registerTool(
   async ({ vault, assetIds, justification }) => {
     try {
       const idsArg = `[${assetIds.join(",")}]`;
-      const rawReceipt = castSend(vault, "setAssets(bytes32[])", [idsArg]);
+      const rawReceipt = await castSend(vault, "setAssets(bytes32[])", [idsArg], justification);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify assets were set", params_hint: { vault } },
       ], justification);
@@ -631,7 +714,7 @@ server.registerTool(
   },
   async ({ vault, amount, justification }) => {
     try {
-      const rawReceipt = castSend(vault, "allocateToPerp(uint256)", [amount]);
+      const rawReceipt = await castSend(vault, "allocateToPerp(uint256)", [amount], justification);
       return writeResult(rawReceipt, [
         { tool: "open_position", reason: "Open a perp position with the allocated capital", params_hint: { vault } },
         { tool: "get_vault_state", reason: "Verify updated allocation", params_hint: { vault } },
@@ -659,7 +742,7 @@ server.registerTool(
   },
   async ({ vault, amount, justification }) => {
     try {
-      const rawReceipt = castSend(vault, "withdrawFromPerp(uint256)", [amount]);
+      const rawReceipt = await castSend(vault, "withdrawFromPerp(uint256)", [amount], justification);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify updated reserve and allocation", params_hint: { vault } },
       ], justification);
@@ -696,10 +779,11 @@ server.registerTool(
   async ({ vault, assetId, isLong, size, collateral, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(
+      const rawReceipt = await castSend(
         d.vaultAccounting,
         "openPosition(address,bytes32,bool,uint256,uint256)",
         [vault, assetId, String(isLong), size, collateral],
+        justification,
       );
       return writeResult(rawReceipt, [
         { tool: "get_position_tracking", reason: "Verify the position was opened", params_hint: { vault, assetId, isLong } },
@@ -733,10 +817,11 @@ server.registerTool(
   async ({ vault, assetId, isLong, sizeDelta, collateralDelta, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(
+      const rawReceipt = await castSend(
         d.vaultAccounting,
         "closePosition(address,bytes32,bool,uint256,uint256)",
         [vault, assetId, String(isLong), sizeDelta, collateralDelta],
+        justification,
       );
       return writeResult(rawReceipt, [
         { tool: "get_vault_pnl", reason: "Check updated realised PnL", params_hint: { vault } },

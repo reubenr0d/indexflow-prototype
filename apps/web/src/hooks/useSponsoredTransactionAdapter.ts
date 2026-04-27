@@ -43,31 +43,47 @@ export function useSponsoredTransactionAdapter() {
   const sendSponsoredTx = useCallback(
     async ({ chainId, to, data, value, sponsor = true, showWalletUIs = true }: SendTxParams): Promise<SponsoredTxResult> => {
       const strategy: SponsorshipStrategy = sponsorshipStrategyForChainId(chainId);
+      console.log(`[SponsoredTxAdapter] sendSponsoredTx called: chainId=${chainId} strategy=${strategy} to=${to.slice(0, 10)}...`);
 
       if (strategy === "native_sponsor") {
-        const receipt = await sendTransaction(
-          {
-            chainId,
-            to,
-            data,
-            ...(value != null ? { value } : {}),
-          },
-          { sponsor, uiOptions: { showWalletUIs } }
-        );
-        return { hash: receipt.hash };
+        console.log(`[SponsoredTxAdapter] Using native sponsorship for chain ${chainId}`);
+        try {
+          const receipt = await sendTransaction(
+            {
+              chainId,
+              to,
+              data,
+              ...(value != null ? { value } : {}),
+            },
+            { sponsor, uiOptions: { showWalletUIs } }
+          );
+          console.log(`[SponsoredTxAdapter] Native tx succeeded: hash=${receipt.hash}`);
+          return { hash: receipt.hash };
+        } catch (err) {
+          console.error(`[SponsoredTxAdapter] Native tx failed:`, err instanceof Error ? err.message : err);
+          throw err;
+        }
       }
 
+      console.log(`[SponsoredTxAdapter] Using smart wallet (4337) for chain ${chainId}`);
       const smartClient = await getClientForChain({ id: chainId });
       if (!smartClient) {
+        console.error(`[SponsoredTxAdapter] Smart wallet client unavailable for chain ${chainId}`);
         throw new Error(`Smart wallet client unavailable for chain ${chainId}.`);
       }
 
-      const hash = await smartClient.sendTransaction({
-        to,
-        data,
-        ...(value != null ? { value } : {}),
-      });
-      return { hash };
+      try {
+        const hash = await smartClient.sendTransaction({
+          to,
+          data,
+          ...(value != null ? { value } : {}),
+        });
+        console.log(`[SponsoredTxAdapter] Smart wallet tx succeeded: hash=${hash}`);
+        return { hash };
+      } catch (err) {
+        console.error(`[SponsoredTxAdapter] Smart wallet tx failed:`, err instanceof Error ? err.message : err);
+        throw err;
+      }
     },
     [getClientForChain, sendTransaction]
   );

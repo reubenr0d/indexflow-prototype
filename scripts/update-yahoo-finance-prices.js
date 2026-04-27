@@ -8,6 +8,23 @@ const DEFAULT_DEPLOYMENT_CONFIG = "apps/web/src/config/sepolia-deployment.json";
 const DEFAULT_RPC_URL = "sepolia";
 const PRICE_DECIMALS = 8;
 
+// KeeperHub integration for reliable transaction execution
+let keeperHubClient = null;
+
+async function initKeeperHub() {
+  if (process.env.KEEPERHUB_API_KEY) {
+    try {
+      const { KeeperHubClient } = await import("../lib/keeperhub.mjs");
+      keeperHubClient = KeeperHubClient.fromEnv();
+      if (keeperHubClient) {
+        console.log("[KeeperHub] Enabled for transaction execution");
+      }
+    } catch (err) {
+      console.warn(`[KeeperHub] Init failed, using direct execution: ${err.message}`);
+    }
+  }
+}
+
 function resolvePath(input, fallback) {
   const candidate = input ?? fallback;
   return path.isAbsolute(candidate) ? candidate : path.join(process.cwd(), candidate);
@@ -138,16 +155,84 @@ function toRawPrice(usdPrice) {
   return BigInt(Math.round(usdPrice * 10 ** PRICE_DECIMALS));
 }
 
+// ABI fragments for KeeperHub execution (JSON format)
+const ORACLE_ADAPTER_ABI = [
+  {
+    "inputs": [
+      { "name": "assetIds", "type": "bytes32[]" },
+      { "name": "prices", "type": "uint256[]" }
+    ],
+    "name": "submitPrices",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
+
+const PRICE_SYNC_ABI = [
+  {
+    "inputs": [],
+    "name": "syncAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+];
+
+async function executeViaKeeperHub(network, contractAddress, functionName, functionArgs, abi, justification) {
+  if (!keeperHubClient) return false;
+
+  try {
+    console.log(`\n[KeeperHub] Executing ${functionName} on ${contractAddress.slice(0, 10)}...`);
+
+    const result = await keeperHubClient.executeAndWait(
+      {
+        network,
+        contractAddress,
+        functionName,
+        functionArgs,
+        abi,
+        justification,
+      },
+      {
+        onPoll: (status, attempt) => {
+          if (attempt > 0 && attempt % 5 === 0) {
+            console.log(`[KeeperHub] Still waiting... status=${status.status}`);
+          }
+        },
+      }
+    );
+
+    if (result.success) {
+      console.log(`[KeeperHub] ✓ ${functionName} confirmed: ${result.transactionHash}`);
+      if (result.explorerUrl) {
+        console.log(`[KeeperHub]   Explorer: ${result.explorerUrl}`);
+      }
+    } else {
+      console.error(`[KeeperHub] ✗ ${functionName} failed: ${result.error}`);
+    }
+
+    return result.success;
+  } catch (err) {
+    console.error(`[KeeperHub] Error: ${err.message}`);
+    return false;
+  }
+}
+
 async function main() {
   loadRootEnv();
+
+  // Initialize KeeperHub if configured
+  await initKeeperHub();
 
   const deploymentConfigPath = resolvePath(process.env.DEPLOYMENT_CONFIG, DEFAULT_DEPLOYMENT_CONFIG);
   const rpcUrl = process.env.RPC_URL ?? DEFAULT_RPC_URL;
   const dryRun = toBool(process.env.DRY_RUN);
   const privateKey = process.env.PRIVATE_KEY;
+  const useKeeperHub = keeperHubClient !== null;
 
-  if (!dryRun && !privateKey) {
-    throw new Error("PRIVATE_KEY is required unless DRY_RUN is enabled");
+  if (!dryRun && !privateKey && !useKeeperHub) {
+    throw new Error("PRIVATE_KEY is required unless DRY_RUN or KEEPERHUB_API_KEY is set");
   }
 
   const deployment = JSON.parse(fs.readFileSync(deploymentConfigPath, "utf8"));
@@ -227,26 +312,64 @@ async function main() {
     return;
   }
 
-  runCast(
-    [
-      "send", oracleAdapter,
-      "submitPrices(bytes32[],uint256[])",
-      assetIdArg, pricesArg,
-      "--private-key", privateKey,
-      "--rpc-url", rpcUrl,
-    ],
-    true
-  );
+  // Execute via KeeperHub if configured, otherwise use direct cast
+  if (useKeeperHub) {
+    console.log("\n[KeeperHub] Executing transactions via KeeperHub...");
 
-  runCast(
-    [
-      "send", priceSync,
-      "syncAll()",
-      "--private-key", privateKey,
-      "--rpc-url", rpcUrl,
-    ],
-    true
-  );
+    // Submit prices (use string representation for large numbers)
+    const submitSuccess = await executeViaKeeperHub(
+      rpcUrl,
+      oracleAdapter,
+      "submitPrices",
+      [assetIds, rawPrices],
+      ORACLE_ADAPTER_ABI,
+      `Price update: ${assetIds.length} assets`
+    );
+
+    if (!submitSuccess) {
+      throw new Error("submitPrices failed via KeeperHub");
+    }
+
+    // Sync prices to GMX
+    const syncSuccess = await executeViaKeeperHub(
+      rpcUrl,
+      priceSync,
+      "syncAll",
+      [],
+      PRICE_SYNC_ABI,
+      "Sync oracle prices to GMX"
+    );
+
+    if (!syncSuccess) {
+      throw new Error("syncAll failed via KeeperHub");
+    }
+
+    console.log("\n[KeeperHub] Price update complete.");
+  } else {
+    // Direct execution via cast
+    console.log("\nExecuting transactions via cast...");
+
+    runCast(
+      [
+        "send", oracleAdapter,
+        "submitPrices(bytes32[],uint256[])",
+        assetIdArg, pricesArg,
+        "--private-key", privateKey,
+        "--rpc-url", rpcUrl,
+      ],
+      true
+    );
+
+    runCast(
+      [
+        "send", priceSync,
+        "syncAll()",
+        "--private-key", privateKey,
+        "--rpc-url", rpcUrl,
+      ],
+      true
+    );
+  }
 }
 
 main().catch((error) => {

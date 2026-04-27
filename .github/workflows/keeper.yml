@@ -21,6 +21,7 @@ jobs:
       SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
       FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
       ARBITRUM_SEPOLIA_RPC_URL: ${{ secrets.ARBITRUM_SEPOLIA_RPC_URL }}
+      KEEPERHUB_API_KEY: ${{ secrets.KEEPERHUB_API_KEY }}
       KEEPER_ONCE: "1"
     steps:
       - uses: actions/checkout@v5
