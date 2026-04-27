@@ -28,8 +28,7 @@ jobs:
     if: >-
       github.event_name == 'schedule'
       || github.event_name == 'pull_request'
-      || github.event.inputs.network == 'all'
-      || github.event.inputs.network == matrix.network
+      || github.event_name == 'workflow_dispatch'
     strategy:
       fail-fast: false
       matrix:
@@ -41,24 +40,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         with:
           submodules: recursive
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         with:
           version: ${{ env.FOUNDRY_VERSION }}
 
       - name: Install Node.js
         uses: actions/setup-node@v5
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         with:
           node-version: "22"
           cache: "npm"
 
       - name: Install npm dependencies
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         run: npm ci
 
       - name: Fetch Yahoo Finance quotes and sync on-chain prices
+        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
