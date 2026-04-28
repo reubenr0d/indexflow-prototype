@@ -1,9 +1,0 @@
-{
-  "vaultAddress": "0xD3cE232747c58a62a8F48ec8aEdA9573f27a5fCF",
-  "vaultName": "Mining Basket",
-  "agentFileHash": "sha256:f9c8b34db2d644274f87460a4f399335f53fe3f1de00f98443633c664551fc62",
-  "deploymentFingerprint": "sha256:f30184c50f6e2a121d3cfe5ff5162ae1fbca54cb3005f54318f71ff87e34e047",
-  "deploymentConfigPath": null,
-  "deployedAt": "2026-04-14T10:20:43.944Z",
-  "lastRunAt": "2026-04-15T10:29:07.549Z"
-}

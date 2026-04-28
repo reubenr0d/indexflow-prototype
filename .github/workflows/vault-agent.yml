@@ -1,19 +1,14 @@
-name: Vault Agent
+name: Vault Agent (0G)
 
 on:
   schedule:
     - cron: "0 */6 * * *"
   workflow_dispatch:
     inputs:
-      agent_name:
-        description: "Agent to run (matches agents/<name>.md)"
-        required: false
-        default: "sample-vault-manager"
-        type: string
       dry_run:
         description: "Run in dry-run mode (observe only, no writes)"
         required: false
-        default: "false"
+        default: false
         type: boolean
       network:
         description: "Target network"
@@ -31,7 +26,7 @@ permissions:
 
 jobs:
   vault-agent:
-    name: Agent "${{ inputs.agent_name || 'sample-vault-manager' }}" (${{ matrix.network }})
+    name: Agent "0g-vault-manager" (${{ matrix.network }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -70,10 +65,23 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # 0G Storage + Compute. Each ZG_* key falls back to the previous via
+          # the runner / 0g-storage-mcp logic, so just `KEEPER_PRIVATE_KEY` is
+          # enough if you want a single wallet for everything. Set the dedicated
+          # secrets if you want to isolate keys.
+          ZG_PRIVATE_KEY: ${{ secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
+          ZG_COMPUTE_PRIVATE_KEY: ${{ secrets.ZG_COMPUTE_PRIVATE_KEY || secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
+          ZG_COMPUTE_PROVIDER: ${{ vars.ZG_COMPUTE_PROVIDER }}
+          ZG_COMPUTE_MODEL: ${{ vars.ZG_COMPUTE_MODEL }}
+          ZG_RPC_URL: ${{ vars.ZG_RPC_URL }}
+          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC }}
+          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL }}
+          ZG_DISABLE_KV: ${{ vars.ZG_DISABLE_KV || '1' }}
+          ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
-        run: node scripts/agent-runner.mjs ${{ inputs.agent_name || 'sample-vault-manager' }}
+        run: node scripts/agent-runner.mjs 0g-vault-manager
 
       - name: Upload agent outputs
         if: always()

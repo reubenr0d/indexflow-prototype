@@ -585,13 +585,9 @@ const RETRY_ATTEMPTS = 3;
 const RETRY_BASE_MS = 2000;
 
 async function chatCompletion(messages, tools, temperature) {
-  // Try 0G Compute if configured
   const zgBroker = await initZgComputeBroker();
   let use0gCompute = zgBroker && _zgServiceMetadata;
 
-  // Per-request: try 0G headers first; if header generation fails (e.g. ledger
-  // sub-account empty) and an OpenAI key is available, fall back for this run
-  // instead of sending an unsigned request the provider will 400.
   let zgHeaders = null;
   if (use0gCompute) {
     const lastUserMsg = messages.filter((m) => m.role === "user").pop();
@@ -613,18 +609,44 @@ async function chatCompletion(messages, tools, temperature) {
     }
   }
 
+  try {
+    return await callLlm({
+      messages,
+      tools,
+      temperature,
+      use0gCompute,
+      zgBroker,
+      zgHeaders,
+    });
+  } catch (err) {
+    if (use0gCompute && LLM_API_KEY && /\b(429|5\d\d)\b/.test(err.message || "")) {
+      console.warn(
+        `  0G Compute exhausted retries (${err.message.split("\n")[0]}); falling back to OpenAI for this request.`
+      );
+      return await callLlm({
+        messages,
+        tools,
+        temperature,
+        use0gCompute: false,
+        zgBroker: null,
+        zgHeaders: null,
+      });
+    }
+    throw err;
+  }
+}
+
+async function callLlm({ messages, tools, temperature, use0gCompute, zgBroker, zgHeaders }) {
   const endpoint = use0gCompute
     ? `${_zgServiceMetadata.endpoint}/chat/completions`
     : `${LLM_BASE_URL}/chat/completions`;
   const model = use0gCompute ? _zgServiceMetadata.model : LLM_MODEL;
-
   const body = { model, messages, tools, temperature };
 
   let lastError;
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
     try {
       const headers = { "Content-Type": "application/json" };
-
       if (use0gCompute) {
         Object.assign(headers, zgHeaders);
       } else {
@@ -639,8 +661,6 @@ async function chatCompletion(messages, tools, temperature) {
 
       if (res.ok) {
         const result = await res.json();
-
-        // Optional: Verify 0G response integrity
         if (use0gCompute && zgBroker) {
           const chatID = res.headers.get("ZG-Res-Key") || result.id;
           if (chatID) {
@@ -651,7 +671,6 @@ async function chatCompletion(messages, tools, temperature) {
             }
           }
         }
-
         return result;
       }
 

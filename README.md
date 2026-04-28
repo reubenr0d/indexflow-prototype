@@ -486,33 +486,34 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
 
 **Multi-Agent Framework**
 
-Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent.
+Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent. The shipped agent is [`agents/0g-vault-manager.md`](agents/0g-vault-manager.md), which uses the 0G + KeeperHub stack described below; it's also what the CI cron runs.
 For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryDirection`, `maxNewPositionsPerRun`).
 
 ```bash
 # Install MCP server deps (one-time)
 npm --prefix apps/mcps/vault-manager install
+npm --prefix apps/mcps/0g-storage install
+npm --prefix apps/mcps/keeperhub install
 
 # Uses repo-root .env / .env.local if present (see Configuration above)
 
-# Run the sample agent by name
-LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+# Run the 0G vault manager agent (shortcut)
+npm run agent:0g
 
-# Dry-run mode
-AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+# Dry-run mode (skips all on-chain writes)
+npm run agent:0g:dry
+
+# Run any agent by name
+npm run agent:run -- 0g-vault-manager
 
 # Write confirmations are ON by default (interactive TTY prompts before on-chain writes)
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- 0g-vault-manager
 
 # Non-interactive auto-execute override (off by default)
-AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
-
-# Backward-compatible shortcuts for sample-vault-manager
-LLM_API_KEY=sk-... npm run agent:dry
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
+AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- 0g-vault-manager
 ```
 
-A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs agents against the configured hub testnet / CI network with manual dispatch and an `agent_name` parameter. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
+A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs `0g-vault-manager` against Sepolia every 6 hours, with manual dispatch for ad-hoc runs and a `dry_run` toggle. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
 
 Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl`. Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 
@@ -527,14 +528,15 @@ The agent framework integrates with **[0G Network](https://0g.ai)** for decentra
 **TL;DR - Quick Usage:**
 
 ```bash
-# 0G Storage: Decentralized agent memory
-ZG_PRIVATE_KEY=0x... npm run agent:0g          # Uses 0G KV store + Log layer
+# 0G Storage: Decentralized agent memory (KV store + Log layer)
+ZG_PRIVATE_KEY=0x... npm run agent:0g
 
-# 0G Compute: Decentralized LLM inference (replaces OpenAI)
-ZG_COMPUTE_PROVIDER=0x... npm run agent:0g     # Uses Llama 3.3 70B via 0G
+# 0G Compute: Decentralized LLM inference (replaces OpenAI when configured)
+# Browse providers: https://compute-marketplace.0g.ai/inference
+ZG_COMPUTE_PROVIDER=0x... ZG_COMPUTE_PRIVATE_KEY=0x... npm run agent:0g
 
-# KeeperHub: Reliable transaction execution
-KEEPERHUB_API_KEY=kh_... npm run agent         # Routes writes through KeeperHub
+# KeeperHub: Reliable transaction execution (auto-retry, gas optimization)
+KEEPERHUB_API_KEY=kh_... npm run agent:0g
 ```
 
 **Why these integrations matter:**
@@ -570,37 +572,33 @@ KEEPERHUB_API_KEY=kh_... npm run agent         # Routes writes through KeeperHub
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Running agents:**
+**Running the 0G vault manager agent:**
+
+The agent uses `vault-manager-mcp`, `yfinance-mcp`, `0g-storage-mcp`, `keeperhub-mcp`. Browse current 0G compute providers at https://compute-marketplace.0g.ai/inference (or run `node scripts/probe-0g-compute.mjs` to list them live), and faucet `ZG_PRIVATE_KEY`'s wallet at https://faucet.0g.ai. One-time, fund the compute ledger so the per-request micropayments work: `node scripts/0g-fund-compute-ledger.mjs 3`.
 
 ```bash
 # Install MCP server dependencies (one-time)
 npm --prefix apps/mcps/0g-storage install
 npm --prefix apps/mcps/keeperhub install
 
-# --- Original agent (OpenAI + file-based memory) ---
-# Uses: vault-manager-mcp, yfinance-mcp
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
-LLM_API_KEY=sk-... npm run agent:dry  # dry-run mode
-
-# --- 0G-enabled agent (decentralized stack) ---
-# Uses: vault-manager-mcp, yfinance-mcp, 0g-storage-mcp, keeperhub-mcp
-
-# With 0G Compute (decentralized inference)
-ZG_COMPUTE_PROVIDER=0xf07240Efa67755B5311bc75784a061eDB47165Dd \
+# Full 0G stack (decentralized inference + storage + KeeperHub)
+ZG_COMPUTE_PROVIDER=0x... \
 ZG_COMPUTE_PRIVATE_KEY=0x... \
 ZG_PRIVATE_KEY=0x... \
 KEEPERHUB_API_KEY=kh_... \
 PRIVATE_KEY=0x... \
 npm run agent:0g
 
-# With OpenAI (fallback) + 0G Storage + KeeperHub
+# OpenAI fallback for inference (still uses 0G Storage + KeeperHub)
+# The runner falls back automatically if ZG_COMPUTE_* is unset, or if the
+# compute ledger is unfunded (warns, then routes the request to OpenAI).
 LLM_API_KEY=sk-... \
 ZG_PRIVATE_KEY=0x... \
 KEEPERHUB_API_KEY=kh_... \
 PRIVATE_KEY=0x... \
 npm run agent:0g
 
-# Dry-run mode
+# Dry-run mode (skips on-chain writes; cheap way to verify wiring)
 npm run agent:0g:dry
 ```
 

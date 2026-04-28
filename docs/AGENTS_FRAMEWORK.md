@@ -4,6 +4,8 @@ Define autonomous vault management agents as markdown files. Each agent gets its
 
 ## Quick Start
 
+The shipped agent is `0g-vault-manager`, which uses the 0G + KeeperHub stack (see [§ 0G-Enabled Agents](#0g-enabled-agents) below).
+
 ```bash
 # Install MCP server deps (one-time)
 npm --prefix apps/mcps/vault-manager install
@@ -11,21 +13,17 @@ npm --prefix apps/mcps/yfinance install
 npm --prefix apps/mcps/0g-storage install
 npm --prefix apps/mcps/keeperhub install
 
-# Run the sample agent
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+# Run the 0G vault manager agent
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:0g
 
 # Dry-run mode (observe only, no on-chain writes)
-AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager
+npm run agent:0g:dry
 
-# Write confirmation is enabled by default (interactive TTY prompts)
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
+# Run any agent by name
+npm run agent:run -- 0g-vault-manager
 
 # Non-interactive auto-execute override (disabled by default)
-AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager
-
-# Backward-compatible shortcuts for the sample agent
-LLM_API_KEY=sk-... npm run agent:dry
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent
+AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- 0g-vault-manager
 ```
 
 On first run, the agent automatically deploys its own vault. Subsequent runs manage that vault using saved memory. Editing the agent `.md` prompt/body does not create a replacement vault on its own.
@@ -197,7 +195,7 @@ Each agent manages exactly one vault. The runner handles deployment automaticall
 Each agent has persistent memory stored at `agents/memory/<agent-name>/`:
 
 ```
-agents/memory/sample-vault-manager/
+agents/memory/0g-vault-manager/
   state.json        # Current state (vault address, file hash, deployment fingerprint, timestamps)
   run-log.sepolia.jsonl  # Append-only history per network (one JSON line per run)
   run-log.local.jsonl    # Separate context stream for local runs
@@ -219,7 +217,7 @@ agents/memory/sample-vault-manager/
 
 **run-log.<network>.jsonl** is appended after live runs (including failures) with tool calls, actions, and the agent's summary. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs:
 ```json
-{"timestamp":"...","agent":"sample-vault-manager","network":"sepolia","vault":"0x...","turns":5,"toolCalls":[...],"writeActions":[...],"errors":[],"summary":"..."}
+{"timestamp":"...","agent":"0g-vault-manager","network":"sepolia","vault":"0x...","turns":5,"toolCalls":[...],"writeActions":[...],"errors":[],"summary":"..."}
 ```
 
 The runner resolves `<network>` from `AGENT_NETWORK` when set, otherwise it infers it from `DEPLOYMENT_CONFIG` (for example `sepolia-deployment.json` -> `sepolia`).
@@ -355,20 +353,19 @@ Tool responses include `_usdc`, `_usd`, and `_pct` companion fields with human-r
 # Any agent by name
 npm run agent:run -- <agent-name>
 
-# Sample vault manager shortcuts (backward compatible)
-npm run agent
-npm run agent:dry
+# 0G vault manager shortcuts
+npm run agent:0g       # full live run
+npm run agent:0g:dry   # dry-run (no on-chain writes)
 ```
 
 ### GitHub Actions
 
-The workflow at `.github/workflows/vault-agent.yml` supports manual dispatch with an `agent_name` parameter:
+The workflow at `.github/workflows/vault-agent.yml` runs `0g-vault-manager` against Sepolia.
 
-1. Go to Actions > "Vault Agent" > Run workflow
-2. Enter the agent name (default: `sample-vault-manager`)
-3. Optionally toggle dry-run mode
+1. Go to Actions > "Vault Agent (0G)" > Run workflow
+2. Optionally toggle dry-run mode
 
-The cron schedule runs `sample-vault-manager` every 6 hours by default. After each run, the workflow commits any memory changes (`agents/memory/`) back to the repo automatically.
+The cron schedule runs `0g-vault-manager` every 6 hours. After each run, the workflow commits any memory changes (`agents/memory/`) back to the repo automatically. Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 ### Write Confirmation Mode
 
@@ -452,7 +449,21 @@ Browse providers at [compute-marketplace.0g.ai/inference](https://compute-market
 
 Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`
 
-Optional: `LLM_BASE_URL`, `LLM_MODEL`, `KEEPERHUB_API_KEY`, `ZG_PRIVATE_KEY`, `ZG_COMPUTE_PRIVATE_KEY`
+Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`, `ZG_PRIVATE_KEY` (defaults to `KEEPER_PRIVATE_KEY`), `ZG_COMPUTE_PRIVATE_KEY` (defaults to `ZG_PRIVATE_KEY`).
+
+Repository **variables** (not secrets — they're public addresses/URLs):
+
+| Variable | Recommended value |
+|---|---|
+| `ZG_COMPUTE_PROVIDER` | current 0G compute provider address (verify with `node scripts/probe-0g-compute.mjs`); leaving it unset disables 0G compute and uses OpenAI |
+| `ZG_DISABLE_KV` | `1` (silences the dead public KV warning; `state_set` and `log_append` work without KV) |
+| `ZG_KV_CLIENT_URL` | only set if you self-host a 0G storage KV node |
+| `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
+
+**One-time manual prerequisites** (cannot be automated by CI):
+
+1. Faucet the wallet derived from `KEEPER_PRIVATE_KEY` at https://faucet.0g.ai (the 0G storage MCP signs the same way regardless of CI vs local).
+2. Once locally, run `node scripts/0g-fund-compute-ledger.mjs 3` to create + fund the on-chain compute ledger entry. CI runs reusing the same key inherit this — the ledger persists across runs and only needs topping up when low.
 
 ---
 
@@ -460,8 +471,7 @@ Optional: `LLM_BASE_URL`, `LLM_MODEL`, `KEEPERHUB_API_KEY`, `ZG_PRIVATE_KEY`, `Z
 
 ```
 agents/
-  sample-vault-manager.md # Standard agent (OpenAI + file-based memory)
-  0g-vault-manager.md     # 0G-enabled agent (0G Compute + Storage + KeeperHub)
+  0g-vault-manager.md     # 0G + KeeperHub vault manager (the shipped agent)
   skills/                 # Reusable skill files (tool/API references)
     vault-manager.md      # Vault MCP tool reference, units, workflows
     yfinance.md           # Yahoo Finance search + quote reference
@@ -469,13 +479,16 @@ agents/
     keeperhub.md          # KeeperHub execution reference
   mcp-servers.json        # MCP server registry (spawn commands)
   memory/                 # Per-agent persistent memory (committed to repo)
-    sample-vault-manager/
+    0g-vault-manager/
       state.json
       run-log.sepolia.jsonl
 
 scripts/
   agent-runner.mjs        # Generic runner (parses .md, loads skills, memory, vault lifecycle, LLM loop)
-  vault-agent.mjs         # Backward-compatible wrapper for sample-vault-manager
+  probe-0g.mjs            # 0G EVM RPC + wallet sanity probe
+  probe-0g-mcp.mjs        # 0G storage MCP roundtrip (state_set / log_append / log_read)
+  probe-0g-compute.mjs    # List currently active 0G compute providers
+  0g-fund-compute-ledger.mjs # One-shot compute-ledger funding helper
 
 apps/
   mcps/
@@ -500,24 +513,38 @@ The `0g-vault-manager` agent demonstrates full integration with 0G Network infra
 
 ### Running the 0G Agent
 
+Browse current compute providers at https://compute-marketplace.0g.ai/inference (or use `node scripts/probe-0g-compute.mjs`). The Llama-3.3-70B provider listed in earlier docs is no longer hosted; verify the address before setting.
+
 ```bash
 # With 0G Compute (decentralized inference)
-ZG_COMPUTE_PROVIDER=0xf07240Efa67755B5311bc75784a061eDB47165Dd \
+ZG_COMPUTE_PROVIDER=0x... \
 ZG_COMPUTE_PRIVATE_KEY=0x... \
 ZG_PRIVATE_KEY=0x... \
 KEEPERHUB_API_KEY=kh_... \
 PRIVATE_KEY=0x... \
 npm run agent:0g
 
-# With OpenAI (fallback) + 0G Storage + KeeperHub
+# With OpenAI (fallback) + 0G Storage + KeeperHub. The runner also routes
+# automatically to OpenAI if the compute ledger is unfunded.
 LLM_API_KEY=sk-... \
 ZG_PRIVATE_KEY=0x... \
 KEEPERHUB_API_KEY=kh_... \
 PRIVATE_KEY=0x... \
 npm run agent:0g
 
-# Dry-run mode
+# Dry-run mode (skips on-chain writes; cheap end-to-end wiring check)
 npm run agent:0g:dry
+```
+
+First-time setup:
+
+```bash
+# 1. Faucet the wallet derived from PRIVATE_KEY at https://faucet.0g.ai
+node scripts/probe-0g.mjs              # prints the address + on-chain balance
+# 2. Fund the compute ledger so per-request micropayments work
+node scripts/0g-fund-compute-ledger.mjs 3
+# 3. Verify storage end-to-end (state_set + log_append + log_read)
+node scripts/probe-0g-mcp.mjs --write
 ```
 
 ### Decentralized Verification

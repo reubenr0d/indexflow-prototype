@@ -41,8 +41,6 @@
     "local:logs": "docker compose -f docker-compose.local.yml logs -f",
     "local:dev": "npm --prefix apps/web run dev",
     "redeploy:local": "sh scripts/local/redeploy.sh",
-    "agent": "node scripts/vault-agent.mjs",
-    "agent:dry": "AGENT_DRY_RUN=1 node scripts/vault-agent.mjs",
     "agent:run": "node scripts/agent-runner.mjs",
     "agent:0g": "node scripts/agent-runner.mjs 0g-vault-manager",
     "agent:0g:dry": "AGENT_DRY_RUN=1 node scripts/agent-runner.mjs 0g-vault-manager",
