@@ -587,9 +587,32 @@ const RETRY_BASE_MS = 2000;
 async function chatCompletion(messages, tools, temperature) {
   // Try 0G Compute if configured
   const zgBroker = await initZgComputeBroker();
-  const use0gCompute = zgBroker && _zgServiceMetadata;
+  let use0gCompute = zgBroker && _zgServiceMetadata;
 
-  // Determine endpoint and model
+  // Per-request: try 0G headers first; if header generation fails (e.g. ledger
+  // sub-account empty) and an OpenAI key is available, fall back for this run
+  // instead of sending an unsigned request the provider will 400.
+  let zgHeaders = null;
+  if (use0gCompute) {
+    const lastUserMsg = messages.filter((m) => m.role === "user").pop();
+    const content = lastUserMsg?.content || "";
+    zgHeaders = await getZgComputeHeaders(content);
+    if (!zgHeaders) {
+      if (LLM_API_KEY) {
+        console.warn(
+          "  0G Compute auth unavailable — falling back to OpenAI for this request. " +
+            "Fund the compute ledger with `node scripts/0g-fund-compute-ledger.mjs <amount>` to enable 0G inference."
+        );
+        use0gCompute = false;
+      } else {
+        throw new Error(
+          "0G Compute auth header generation failed and no LLM_API_KEY fallback configured. " +
+            "Run `node scripts/0g-fund-compute-ledger.mjs 2` after the wallet is funded via faucet.0g.ai."
+        );
+      }
+    }
+  }
+
   const endpoint = use0gCompute
     ? `${_zgServiceMetadata.endpoint}/chat/completions`
     : `${LLM_BASE_URL}/chat/completions`;
@@ -600,19 +623,11 @@ async function chatCompletion(messages, tools, temperature) {
   let lastError;
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
     try {
-      // Build headers
       const headers = { "Content-Type": "application/json" };
 
       if (use0gCompute) {
-        // 0G Compute uses per-request auth headers
-        const lastUserMsg = messages.filter((m) => m.role === "user").pop();
-        const content = lastUserMsg?.content || "";
-        const zgHeaders = await getZgComputeHeaders(content);
-        if (zgHeaders) {
-          Object.assign(headers, zgHeaders);
-        }
+        Object.assign(headers, zgHeaders);
       } else {
-        // OpenAI uses Bearer token
         headers.Authorization = `Bearer ${LLM_API_KEY}`;
       }
 

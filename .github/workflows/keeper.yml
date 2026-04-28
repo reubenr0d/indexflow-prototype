@@ -20,8 +20,17 @@ jobs:
       PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
       SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
       FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
-      ARBITRUM_SEPOLIA_RPC_URL: ${{ secrets.ARBITRUM_SEPOLIA_RPC_URL }}
       KEEPERHUB_API_KEY: ${{ secrets.KEEPERHUB_API_KEY }}
+      # Chains to include each epoch. Add a chain here only after deploying its
+      # StateRelay and committing apps/web/src/config/<chain>-deployment.json.
+      KEEPER_CHAINS: "sepolia,fuji"
+      # Chains whose StateRelay.keeper() is the KeeperHub-managed wallet.
+      # Other chains in KEEPER_CHAINS fall back to direct ethers signing with
+      # PRIVATE_KEY. Sepolia is a named KeeperHub network (auto-funded). Fuji
+      # is reached via numeric chainId 43113 in lib/keeperhub.mjs and is NOT
+      # auto-funded by KeeperHub; the managed wallet 0xBAefbc6D...e409 must be
+      # topped up with AVAX manually (see docs/KEEPER_OPERATIONS.md).
+      KEEPERHUB_CHAINS: "sepolia,fuji"
       KEEPER_ONCE: "1"
     steps:
       - uses: actions/checkout@v5

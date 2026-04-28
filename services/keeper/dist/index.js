@@ -60,9 +60,22 @@ function getRpcUrl(chain) {
 function buildChainContexts() {
     const chains = loadChainsConfig();
     const contexts = [];
+    // Optional allowlist via KEEPER_CHAINS env var (comma-separated chain names
+    // matching keys in config/chains.json). Empty/unset = no filter.
+    const allowlist = (process.env.KEEPER_CHAINS ?? "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    if (allowlist.length > 0) {
+        log(`KEEPER_CHAINS allowlist: ${allowlist.join(", ")}`);
+    }
     for (const [name, config] of Object.entries(chains)) {
         if (name === "local")
             continue;
+        if (allowlist.length > 0 && !allowlist.includes(name)) {
+            log(`⚠ "${name}" not in KEEPER_CHAINS allowlist, skipping`);
+            continue;
+        }
         let deployment;
         try {
             deployment = loadDeployment(name);
@@ -195,8 +208,24 @@ async function writeStateUpdateDirect(ctx, chains, weights, amounts, vaults, pnl
     const receipt = await tx.wait();
     log(`  ✓ ${ctx.name} updateState confirmed in block ${receipt?.blockNumber}`);
 }
+// Optional per-chain KeeperHub allowlist. Empty/unset (default) means "use
+// KeeperHub on every chain when KEEPERHUB_API_KEY is set". When set (e.g.
+// "sepolia"), only the listed chains route through KeeperHub; the rest fall
+// back to direct ethers signing with PRIVATE_KEY. Useful when StateRelay
+// instances on different chains have different keeper() addresses.
+function shouldUseKeeperHubFor(chainName) {
+    if (!keeperHubClient)
+        return false;
+    const allowlist = (process.env.KEEPERHUB_CHAINS ?? "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+    if (allowlist.length === 0)
+        return true;
+    return allowlist.includes(chainName);
+}
 async function writeStateUpdate(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
-    if (keeperHubClient) {
+    if (shouldUseKeeperHubFor(ctx.name)) {
         await writeStateUpdateViaKeeperHub(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts);
     }
     else {
@@ -283,6 +312,18 @@ async function main() {
         throw new Error("No chain contexts available. Check config/chains.json and deployment files.");
     }
     log(`Active chains: ${contexts.map((c) => c.name).join(", ")}`);
+    if (keeperHubClient) {
+        const khChains = contexts
+            .filter((c) => shouldUseKeeperHubFor(c.name))
+            .map((c) => c.name);
+        const directChains = contexts
+            .filter((c) => !shouldUseKeeperHubFor(c.name))
+            .map((c) => c.name);
+        log(`KeeperHub chains: ${khChains.length > 0 ? khChains.join(", ") : "(none)"}`);
+        if (directChains.length > 0) {
+            log(`Direct-execution chains: ${directChains.join(", ")}`);
+        }
+    }
     // Run first epoch immediately
     await runEpoch(contexts);
     const runOnce = process.env.KEEPER_ONCE === "1" || process.env.KEEPER_ONCE === "true";

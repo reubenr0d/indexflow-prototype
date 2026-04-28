@@ -37,6 +37,36 @@ const ZG_INDEXER_RPC = process.env.ZG_INDEXER_RPC ?? "https://indexer-storage-te
 const ZG_KV_CLIENT_URL = process.env.ZG_KV_CLIENT_URL ?? "http://3.101.147.150:6789";
 const ZG_STREAM_ID = process.env.ZG_STREAM_ID ?? "";
 const AGENT_NAME = process.env.AGENT_NAME ?? "default";
+// KV reads talk to a 0G Storage KV node. The default public IP is sometimes
+// down. Cap each KV call so a dead endpoint cannot hang the agent loop.
+const ZG_KV_TIMEOUT_MS = parseInt(process.env.ZG_KV_TIMEOUT_MS ?? "5000", 10);
+const ZG_DISABLE_KV = ["1", "true", "yes"].includes(
+  (process.env.ZG_DISABLE_KV ?? "").toLowerCase().trim()
+);
+
+function withTimeout(promise, ms, label) {
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      const err = new Error(`${label} timed out after ${ms}ms`);
+      err.code = "ETIMEDOUT";
+      reject(err);
+    }, ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+}
+
+function isKvUnreachableError(err) {
+  const msg = String(err?.message || "");
+  return (
+    err?.code === "ETIMEDOUT" ||
+    msg.includes("timed out") ||
+    msg.includes("ECONNREFUSED") ||
+    msg.includes("ENETUNREACH") ||
+    msg.includes("EHOSTUNREACH") ||
+    msg.includes("fetch failed")
+  );
+}
 
 // Cache for log root hashes (in-memory index of uploaded logs)
 const logIndex = [];
@@ -54,7 +84,13 @@ let _flowContract = null;
 
 function getProvider() {
   if (!_provider) {
-    _provider = new ethers.JsonRpcProvider(ZG_RPC_URL);
+    // Explicit Network with staticNetwork disables ENS reverse-lookup (which
+    // ethers v6 attempts on signer.resolveName even for hex addresses, and
+    // throws "network does not support ENS" on chains without ENS like 0G).
+    const network = ethers.Network.from({ name: "0g-galileo", chainId: 16602 });
+    _provider = new ethers.JsonRpcProvider(ZG_RPC_URL, network, {
+      staticNetwork: network,
+    });
   }
   return _provider;
 }
@@ -84,9 +120,21 @@ function getKvClient() {
 }
 
 async function getFlowContractInstance() {
-  if (!_flowContract) {
-    _flowContract = await getFlowContract(ZG_RPC_URL, getSigner());
+  if (_flowContract) return _flowContract;
+  // The 0G SDK expects the *flow contract address* (not the RPC URL). It is
+  // discovered from a storage node's status payload. Picking it up via the
+  // indexer guarantees the address matches the network the indexer is on.
+  const indexer = getIndexer();
+  const [nodes, err] = await indexer.selectNodes(1);
+  if (err) throw new Error(`Indexer selectNodes failed: ${err.message || err}`);
+  const status = await nodes[0].getStatus();
+  const flowAddress = status?.networkIdentity?.flowAddress;
+  if (!flowAddress) {
+    throw new Error(
+      "Storage node did not return networkIdentity.flowAddress; cannot init flow contract"
+    );
   }
+  _flowContract = getFlowContract(flowAddress, getSigner());
   return _flowContract;
 }
 
@@ -209,31 +257,52 @@ server.registerTool(
     },
   },
   async ({ key }) => {
+    if (ZG_DISABLE_KV) {
+      return toolSuccess({
+        key,
+        value: null,
+        found: false,
+        kv_disabled: true,
+        note: "ZG_DISABLE_KV=1; KV reads are skipped. state_set still writes to chain via the indexer.",
+      });
+    }
     try {
       const streamId = await ensureStreamId();
       const kvClient = getKvClient();
       const keyBytes = keyToBytes(key);
-      
-      const value = await kvClient.getValue(streamId, ethers.encodeBase64(keyBytes));
-      
+
+      const value = await withTimeout(
+        kvClient.getValue(streamId, ethers.encodeBase64(keyBytes)),
+        ZG_KV_TIMEOUT_MS,
+        `KV getValue(${key})`
+      );
+
       if (!value) {
         return toolSuccess({ key, value: null, found: false });
       }
-      
+
       const valueStr = bytesToString(value);
-      
-      // Try to parse as JSON
+
       let parsed = valueStr;
       try {
         parsed = JSON.parse(valueStr);
-      } catch {
-        // Keep as string
-      }
-      
+      } catch {}
+
       return toolSuccess({ key, value: parsed, found: true, raw: valueStr });
     } catch (err) {
       if (err.message?.includes("not found") || err.message?.includes("null")) {
         return toolSuccess({ key, value: null, found: false });
+      }
+      if (isKvUnreachableError(err)) {
+        return toolSuccess({
+          key,
+          value: null,
+          found: false,
+          kv_unreachable: true,
+          kv_url: ZG_KV_CLIENT_URL,
+          message: err.message,
+          note: "KV node unreachable; treating key as missing. Set ZG_KV_CLIENT_URL to a working 0G KV node, or ZG_DISABLE_KV=1 to silence this.",
+        });
       }
       return toolError("KV_READ_ERROR", err.message,
         "Check that the stream ID exists and has data. Use get_storage_info to verify configuration.");
@@ -457,18 +526,36 @@ server.registerTool(
     },
   },
   async ({ keys }) => {
+    if (ZG_DISABLE_KV) {
+      const results = Object.fromEntries(keys.map((k) => [k, null]));
+      return toolSuccess({
+        values: results,
+        keys_found: 0,
+        keys_missing: keys.length,
+        kv_disabled: true,
+      });
+    }
     try {
       const streamId = await ensureStreamId();
       const kvClient = getKvClient();
-      
+
       const results = {};
       const errors = [];
-      
+      let kvUnreachable = false;
+
       for (const key of keys) {
+        if (kvUnreachable) {
+          results[key] = null;
+          continue;
+        }
         try {
           const keyBytes = keyToBytes(key);
-          const value = await kvClient.getValue(streamId, ethers.encodeBase64(keyBytes));
-          
+          const value = await withTimeout(
+            kvClient.getValue(streamId, ethers.encodeBase64(keyBytes)),
+            ZG_KV_TIMEOUT_MS,
+            `KV getValue(${key})`
+          );
+
           if (!value) {
             results[key] = null;
           } else {
@@ -480,15 +567,22 @@ server.registerTool(
             }
           }
         } catch (err) {
+          if (isKvUnreachableError(err)) {
+            kvUnreachable = true;
+            errors.push({ key, error: err.message, kv_unreachable: true });
+            results[key] = null;
+            continue;
+          }
           errors.push({ key, error: err.message });
           results[key] = null;
         }
       }
-      
+
       return toolSuccess({
         values: results,
-        keys_found: Object.values(results).filter(v => v !== null).length,
-        keys_missing: Object.values(results).filter(v => v === null).length,
+        keys_found: Object.values(results).filter((v) => v !== null).length,
+        keys_missing: Object.values(results).filter((v) => v === null).length,
+        kv_unreachable: kvUnreachable || undefined,
         errors: errors.length > 0 ? errors : undefined,
       });
     } catch (err) {

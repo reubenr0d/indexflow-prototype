@@ -44,12 +44,14 @@ Create a `.env` file in `services/keeper/` or set these in your environment:
 | `ARBITRUM_SEPOLIA_RPC_URL` | Per chain | Arbitrum Sepolia RPC endpoint |
 | `EPOCH_INTERVAL_MS` | No | Epoch interval in milliseconds (default: `60000`) |
 | `KEEPERHUB_API_KEY` | No | KeeperHub API key for reliable transaction execution |
+| `KEEPER_CHAINS` | No | Comma-separated allowlist of chain names from `config/chains.json` to include each epoch (e.g. `sepolia,fuji`). Empty/unset means "every chain that has a deployment file and RPC URL". Production CI is currently scoped to `sepolia,fuji`. |
+| `KEEPERHUB_CHAINS` | No | Comma-separated allowlist of chains that should route through KeeperHub. Other chains in `KEEPER_CHAINS` fall back to direct ethers signing with `PRIVATE_KEY`. Empty/unset means "all chains use KeeperHub when `KEEPERHUB_API_KEY` is set". Today: `sepolia,fuji`. |
 
-The keeper reads `config/chains.json` at startup and skips any chain that lacks an RPC URL or deployment config.
+The keeper reads `config/chains.json` at startup and skips any chain that lacks an RPC URL or deployment config. Chains not in `KEEPER_CHAINS` (when set) are also skipped.
 
 ### KeeperHub Integration
 
-When `KEEPERHUB_API_KEY` is set, the keeper routes all `StateRelay.updateState()` transactions through [KeeperHub](https://app.keeperhub.com) for reliable execution.
+When `KEEPERHUB_API_KEY` is set, the keeper routes `StateRelay.updateState()` transactions through [KeeperHub](https://app.keeperhub.com) for reliable execution. Routing is per-chain and gated by `KEEPERHUB_CHAINS` (default: every active chain).
 
 **Benefits:**
 
@@ -62,16 +64,44 @@ When `KEEPERHUB_API_KEY` is set, the keeper routes all `StateRelay.updateState()
 
 1. Get an API key from [app.keeperhub.com](https://app.keeperhub.com/settings/api-keys)
 2. Set `KEEPERHUB_API_KEY` in your environment or `.env` file
-3. Authorize the KeeperHub wallet as a keeper on each `StateRelay`:
+3. Authorize the KeeperHub wallet as a keeper on each `StateRelay` you want routed through KeeperHub:
    ```bash
    # Get the KeeperHub wallet address from the dashboard
    # Then on each chain, run:
    cast send <StateRelay> "setKeeper(address)" <KeeperHub_Wallet> --rpc-url <rpc> --private-key <owner_key>
    ```
+4. Add those chain names to `KEEPERHUB_CHAINS` (e.g. `sepolia`). Chains in `KEEPER_CHAINS` but not in `KEEPERHUB_CHAINS` continue to sign directly with `PRIVATE_KEY`.
+
+**Mixed routing:**
+
+Chains can have different `StateRelay.keeper()` addresses, so the keeper supports mixed routing per epoch. Today both deployed chains route through KeeperHub:
+
+| Chain | `keeper()` address | KeeperHub network id | Auto-funded? |
+|---|---|---|---|
+| Sepolia (`0xB837…9CD9`) | `0xBAefbc6D…e409` (KeeperHub) | `sepolia` (named) | Yes |
+| Fuji (`0x0A56…22A2`) | `0xBAefbc6D…e409` (KeeperHub) | `43113` (numeric chain id) | **No — top up manually** |
+
+Verify the configured `keeper()` on a relay before flipping the path:
+
+```bash
+cast call <StateRelay> "keeper()(address)" --rpc-url <rpc>
+```
+
+**Funding the KeeperHub wallet on non-named networks:**
+
+KeeperHub auto-funds the managed wallet only on networks it natively names. For chains reached via numeric chain id (e.g. Fuji `43113`), the wallet starts empty and you'll see `insufficient funds for gas * price + value: balance 0` on the first write. Top up directly:
+
+```bash
+PATH="/Users/reuben/.foundry/bin:$PATH" \
+cast send <KeeperHub_Wallet> --value 0.5ether \
+  --rpc-url fuji --private-key <funder_key>
+```
+
+Per-epoch state-sync on Fuji costs ~3.8e-5 AVAX at 25 gwei, so 0.5 AVAX ≈ 3 months of 5-minute cron. Monitor `cast balance <KeeperHub_Wallet> --rpc-url fuji` and refill before it depletes (a stuck Fuji keeper will let `lastUpdateTime` go stale and degrade spoke share prices to idle-USDC-only).
 
 **Fallback behavior:**
 
-When `KEEPERHUB_API_KEY` is not set, the keeper uses direct `ethers.js` transactions signed with `PRIVATE_KEY`. This works but lacks the retry, gas optimization, and MEV protection features.
+When `KEEPERHUB_API_KEY` is not set, the keeper uses direct `ethers.js` transactions signed with `PRIVATE_KEY` for every chain. This works but lacks the retry, gas optimization, and MEV protection features.
 
 **Logs:**
 
