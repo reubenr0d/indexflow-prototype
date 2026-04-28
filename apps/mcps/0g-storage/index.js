@@ -31,12 +31,22 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // Config from env
 // ---------------------------------------------------------------------------
 
-const ZG_PRIVATE_KEY = process.env.ZG_PRIVATE_KEY ?? "";
-const ZG_RPC_URL = process.env.ZG_RPC_URL ?? "https://evmrpc-testnet.0g.ai";
-const ZG_INDEXER_RPC = process.env.ZG_INDEXER_RPC ?? "https://indexer-storage-testnet-turbo.0g.ai";
-const ZG_KV_CLIENT_URL = process.env.ZG_KV_CLIENT_URL ?? "http://3.101.147.150:6789";
-const ZG_STREAM_ID = process.env.ZG_STREAM_ID ?? "";
-const AGENT_NAME = process.env.AGENT_NAME ?? "default";
+// Treat empty strings as unset. GitHub Actions evaluates `${{ vars.X }}` to
+// "" when the variable is not defined; we still want the documented defaults
+// to apply in that case.
+function envOr(name, fallback) {
+  const v = process.env[name];
+  if (v === undefined || v === null) return fallback;
+  const trimmed = String(v).trim();
+  return trimmed === "" ? fallback : trimmed;
+}
+
+const ZG_PRIVATE_KEY = envOr("ZG_PRIVATE_KEY", "");
+const ZG_RPC_URL = envOr("ZG_RPC_URL", "https://evmrpc-testnet.0g.ai");
+const ZG_INDEXER_RPC = envOr("ZG_INDEXER_RPC", "https://indexer-storage-testnet-turbo.0g.ai");
+const ZG_KV_CLIENT_URL = envOr("ZG_KV_CLIENT_URL", "http://3.101.147.150:6789");
+const ZG_STREAM_ID = envOr("ZG_STREAM_ID", "");
+const AGENT_NAME = envOr("AGENT_NAME", "default");
 // KV reads talk to a 0G Storage KV node. The default public IP is sometimes
 // down. Cap each KV call so a dead endpoint cannot hang the agent loop.
 const ZG_KV_TIMEOUT_MS = parseInt(process.env.ZG_KV_TIMEOUT_MS ?? "5000", 10);

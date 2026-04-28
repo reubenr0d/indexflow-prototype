@@ -71,11 +71,15 @@ jobs:
           # secrets if you want to isolate keys.
           ZG_PRIVATE_KEY: ${{ secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
           ZG_COMPUTE_PRIVATE_KEY: ${{ secrets.ZG_COMPUTE_PRIVATE_KEY || secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
+          # Note: GitHub Actions evaluates `vars.X` to an empty string when the
+          # variable is not set, which would override the runtime defaults.
+          # Use `||` to inject the documented defaults so CI works without any
+          # repo-level vars configured.
           ZG_COMPUTE_PROVIDER: ${{ vars.ZG_COMPUTE_PROVIDER }}
-          ZG_COMPUTE_MODEL: ${{ vars.ZG_COMPUTE_MODEL }}
-          ZG_RPC_URL: ${{ vars.ZG_RPC_URL }}
-          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC }}
-          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL }}
+          ZG_COMPUTE_MODEL: ${{ vars.ZG_COMPUTE_MODEL || 'qwen/qwen-2.5-7b-instruct' }}
+          ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
+          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
+          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://3.101.147.150:6789' }}
           ZG_DISABLE_KV: ${{ vars.ZG_DISABLE_KV || '1' }}
           ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
