@@ -8,7 +8,9 @@
     "apps/push-worker",
     "apps/subgraph",
     "apps/mcps/vault-manager",
-    "apps/mcps/yfinance"
+    "apps/mcps/yfinance",
+    "apps/mcps/0g-storage",
+    "apps/mcps/keeperhub"
   ],
   "scripts": {
     "build": "forge build",
