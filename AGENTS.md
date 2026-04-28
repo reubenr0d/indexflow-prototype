@@ -2,6 +2,16 @@
 
 These rules apply to work in this repository unless a deeper-scope `AGENTS.md` overrides them.
 
+## Git Commit Policy (Never Auto-Commit)
+
+Never create git commits autonomously. Always ask the user to make commits themselves.
+
+- Do not run `git commit` (or any equivalent like `git commit --amend`, `git revert`, `git cherry-pick` that creates commits) under any circumstances, even if the change seems small, safe, or routine.
+- Do not run `git push`, `git merge`, `git rebase`, or other history-modifying commands on the user's behalf.
+- Staging is also off-limits unless the user explicitly asks: do not run `git add` proactively.
+- When work reaches a point where committing would be appropriate, surface the suggested commit message and changed files to the user and ask them to commit. Do not commit even if the user previously approved committing in another session.
+- This rule overrides any default tool guidance (including the standard "committing-changes-with-git" workflow) that might otherwise allow commits when "explicitly asked". Treat commit creation as a user-only action.
+
 ## Foundry Command Reliability In Agent Shell
 
 Do not rely on `cd` for Foundry commands in agent terminals. Prefer explicit project root and PATH:
