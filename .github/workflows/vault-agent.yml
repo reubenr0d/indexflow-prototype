@@ -21,8 +21,11 @@ on:
 env:
   FOUNDRY_VERSION: v1.3.1
 
+# No write permission needed: agent memory now lives on 0G Storage (KV via
+# the agentio public node + Log layer via the indexer). The cron job is a
+# read-only consumer of the repo and a writer to 0G.
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   vault-agent:
@@ -37,23 +40,26 @@ jobs:
             rpc_url_secret: SEPOLIA_RPC_URL
 
     steps:
+      # No submodules: vault-manager MCP uses ~700 cast calls and zero forge
+      # invocations. Foundry is still installed for `cast` access (no RPC
+      # cache: agent never runs forge fork tests).
       - uses: actions/checkout@v5
-        with:
-          submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
         with:
-          version: ${{ env.FOUNDRY_VERSION }}
+          foundry: "true"
 
-      - name: Install Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Install dependencies
-        run: npm ci
+      - name: Probe 0G KV
+        env:
+          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://178.238.236.119:6789' }}
+          ZG_STREAM_ID: ${{ vars.ZG_STREAM_ID || '0x000000000000000000000000000000000000000000000000000000000000f2bd' }}
+          ZG_PRIVATE_KEY: ${{ secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
+          ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
+          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
+          ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
+          AGENT_NAME: 0g-vault-manager
+        run: node scripts/probe-0g-kv.mjs
 
       - name: Run Agent
         env:
@@ -74,49 +80,32 @@ jobs:
           # Note: GitHub Actions evaluates `vars.X` to an empty string when the
           # variable is not set, which would override the runtime defaults.
           # Use `||` to inject the documented defaults so CI works without any
-          # repo-level vars configured.
-          ZG_COMPUTE_PROVIDER: ${{ vars.ZG_COMPUTE_PROVIDER }}
-          ZG_COMPUTE_MODEL: ${{ vars.ZG_COMPUTE_MODEL || 'qwen/qwen-2.5-7b-instruct' }}
+          # repo-level vars configured. Accept the value from either Secrets
+          # or Variables so operators can pick whichever bucket matches their
+          # security policy (the provider address is public on-chain, but some
+          # teams keep all provider config in Secrets).
+          ZG_COMPUTE_PROVIDER: ${{ secrets.ZG_COMPUTE_PROVIDER || vars.ZG_COMPUTE_PROVIDER }}
+          ZG_COMPUTE_MODEL: ${{ secrets.ZG_COMPUTE_MODEL || vars.ZG_COMPUTE_MODEL || 'qwen/qwen-2.5-7b-instruct' }}
           ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
           ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
-          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://3.101.147.150:6789' }}
-          ZG_DISABLE_KV: ${{ vars.ZG_DISABLE_KV || '1' }}
+          # Default to the agentio public hackathon node + shared stream.
+          # Override via repo `vars` to point at a self-hosted zgs_kv if the
+          # agentio courtesy node disappears.
+          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://178.238.236.119:6789' }}
+          ZG_STREAM_ID: ${{ vars.ZG_STREAM_ID || '0x000000000000000000000000000000000000000000000000000000000000f2bd' }}
           ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
         run: node scripts/agent-runner.mjs 0g-vault-manager
 
-      - name: Upload agent outputs
+      - name: Upload agent debug cache
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: agent-output-${{ matrix.network }}
+          # Local memory is now a gitignored warm-restart cache only; the
+          # source of truth lives on 0G. Kept for post-mortem debugging.
+          name: agent-debug-cache-${{ matrix.network }}
           path: |
             agents/memory/
-            apps/web/public/agent-metadata/
           retention-days: 1
-
-  commit-results:
-    name: Commit all agent outputs
-    needs: vault-agent
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Download all agent outputs
-        uses: actions/download-artifact@v4
-        with:
-          pattern: agent-output-*
-          merge-multiple: true
-
-      - name: Commit agent memory and metadata
-        run: |
-          git config user.name "vault-agent[bot]"
-          git config user.email "vault-agent[bot]@users.noreply.github.com"
-          git add agents/memory/ apps/web/public/agent-metadata/
-          git diff --cached --quiet && exit 0
-          git commit -m "chore(agent): update agent memory and metadata"
-          git pull --rebase
-          git push

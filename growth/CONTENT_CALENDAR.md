@@ -154,14 +154,18 @@ Goal: make asset managers aware IndexFlow exists and associate it with structure
 **"How We Built an Autonomous Vault Agent with 0G Network: Decentralized Inference, Storage, and Execution"**
 `[L1 | P3 Technical | Blog | Cold]`
 
-- Source: `agents/0g-vault-manager.md`, `apps/mcps/0g-storage/`, `lib/keeperhub.mjs`, `docs/AGENTS_FRAMEWORK.md`
+- Source: `agents/0g-vault-manager.md`, `apps/mcps/0g-storage/`, `scripts/agent-memory-0g.mjs`, `scripts/probe-0g-kv.mjs`, `apps/web/src/app/api/agent-metadata/[vault]/route.ts`, `.github/workflows/vault-agent.yml`, `lib/keeperhub.mjs`, `docs/AGENTS_FRAMEWORK.md`
 - Hook type: Insider Knowledge
 - Technical breakdown of building a fully decentralized AI agent for DeFi:
   - 0G Compute for TEE-verified LLM inference (replacing OpenAI)
-  - 0G Storage KV for persistent agent state across runs
-  - 0G Storage Log for Merkle-verified audit trail
+  - 0G Storage KV for persistent agent state -- using the [agentio public hackathon node](https://trivo25.github.io/agentio/) (`http://178.238.236.119:6789`) on the shared stream `0x...f2bd` as a courtesy dependency, with a config-only failover to a self-hosted `zgs_kv` for production
+  - Key prefixing (`<wallet>:<agent>:<key>`) keeps multi-team writes safe on the shared stream, with `vault:<vault>:metadata` left unprefixed because vault addresses are globally unique
+  - 0G Storage Log for Merkle-verified audit trail, with `_meta.previousRoot` chaining and a `last_runlog_root` head pointer in KV so `runlog_recent` can walk history
+  - Runner-vs-model write split: the runner is the sole writer of vault lifecycle keys (`vault_address`, `deployment_fingerprint`, `last_run_at`, ...) so the agent's own `state_set` calls don't race
+  - The web app's new server-side route `/api/agent-metadata/[vault]` reads vault metadata directly from 0G KV via `KvClient`, so the live site shows on-chain-verifiable agent state without waiting for a CI commit
+  - `scripts/probe-0g-kv.mjs` runs as the workflow pre-flight, surfacing a "swap `ZG_KV_CLIENT_URL`" hint cleanly when the KV node is down
   - KeeperHub for reliable transaction execution
-- Code walkthrough: how a single markdown file defines the agent, how MCP servers connect to decentralized infrastructure
+- Code walkthrough: how a single markdown file defines the agent, how the runner spawns MCP servers and routes state I/O through them, how the Vercel deploy picks up the same shared stream via a one-time env config (no CI commit-back, no `contents: write`)
 - Why verifiable AI matters for autonomous financial agents
 - **Priority: HIGH** -- hackathon submission content
 

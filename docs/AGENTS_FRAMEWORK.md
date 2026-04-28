@@ -192,39 +192,52 @@ Each agent manages exactly one vault. The runner handles deployment automaticall
 
 ## Memory
 
-Each agent has persistent memory stored at `agents/memory/<agent-name>/`:
+Agent memory lives entirely on **0G Storage**. Nothing is committed back
+to the repo; the runner spawns the `0g-storage-mcp` first and routes all
+state I/O through it.
 
-```
-agents/memory/0g-vault-manager/
-  state.json        # Current state (vault address, file hash, deployment fingerprint, timestamps)
-  run-log.sepolia.jsonl  # Append-only history per network (one JSON line per run)
-  run-log.local.jsonl    # Separate context stream for local runs
-  archive/          # Auto-rotated stale state/log files from deployment changes
-```
+### Storage layout
 
-**state.json** tracks the vault address, file hash for change detection, deployment fingerprint metadata, and timestamps:
-```json
-{
-  "vaultAddress": "0xabc...",
-  "vaultName": "Mining Basket",
-  "agentFileHash": "sha256:abc123...",
-  "deploymentFingerprint": "sha256:def456...",
-  "deploymentConfigPath": "/abs/path/to/sepolia-deployment.json",
-  "deployedAt": "2026-04-11T10:00:00Z",
-  "lastRunAt": "2026-04-11T16:00:00Z"
-}
-```
+| Layer | What's stored | Where |
+|---|---|---|
+| 0G KV (per-agent state) | vault address, vault name, agent-file hash, deployment fingerprint, deployed/last-run timestamps, current thesis | shared stream `ZG_STREAM_ID`, key `<wallet>:<agent>:<key>` |
+| 0G KV (run-log head) | hash of the most recent run-log entry | same stream, key `<wallet>:<agent>:last_runlog_root` |
+| 0G KV (vault metadata) | "AI managed" payload consumed by the web app | same stream, **unprefixed** key `vault:<vault_lower>:metadata` |
+| 0G Log (run history) | one JSON file per run; `_meta.previousRoot` chains them | indexer-stored, walked via `runlog_recent` |
+| Local `agents/memory/<agent>/cache.json` | warm-restart hint: `{ refreshedAt, state }` keyed by deployment fingerprint | gitignored — purely an optimisation, the runner re-fetches from KV when missing or stale (>5 min) |
 
-**run-log.<network>.jsonl** is appended after live runs (including failures) with tool calls, actions, and the agent's summary. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs:
-```json
-{"timestamp":"...","agent":"0g-vault-manager","network":"sepolia","vault":"0x...","turns":5,"toolCalls":[...],"writeActions":[...],"errors":[],"summary":"..."}
-```
+Every per-agent KV write is automatically prefixed with
+`<your_wallet_lowercase>:<AGENT_NAME>:` by the MCP so multiple teams can
+share the agentio public stream without colliding. Vault metadata blobs
+are intentionally unprefixed because vault addresses are globally unique
+on-chain and the web app needs to read them without knowing which agent
+owns the vault.
 
-The runner resolves `<network>` from `AGENT_NETWORK` when set, otherwise it infers it from `DEPLOYMENT_CONFIG` (for example `sepolia-deployment.json` -> `sepolia`).
+### Run lifecycle
 
-On startup, the runner computes a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`. If the fingerprint changed since the last saved state (or legacy state has no fingerprint), it invalidates stale context by rotating `state.json` and only the active network log (`run-log.<network>.jsonl`) into `agents/memory/<agent>/archive/`, then treats the run as fresh vault lifecycle.
+1. Runner builds a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`.
+2. Runner spawns MCP servers (including `0g-storage-mcp`).
+3. Runner reads state via `state_get_all` (warm cache short-circuits this when fingerprint matches and is fresh) and recent run history via `runlog_recent({ limit: 5 })`.
+4. If the fingerprint changed since the last saved state, the runner treats the cached vault as stale and a fresh deployment proceeds. KV is last-writer-wins so old keys are simply overwritten by the next `state_set`. The `cache.json` file is refreshed; old run-log entries remain reachable by root hash for forensic audit.
+5. After the LLM loop, the runner writes the new state (`state_set` per field), publishes vault metadata (`vault_metadata_set`), and appends the run summary (`log_append`, which automatically links to the previous run's root and updates the `last_runlog_root` head).
+6. CI uploads `agents/memory/` as a `agent-debug-cache-<network>` artifact (1-day retention) for post-mortem only.
 
-Memory is committed to the repo. In CI, the workflow auto-commits memory changes after each run, making agent state durable, inspectable, and version-controlled.
+### Web app read path
+
+The Next.js app fetches each vault's metadata server-side at
+`/api/agent-metadata/[vault]` (Node runtime, 60s edge cache,
+stale-while-revalidate 300s). The route reads the unprefixed
+`vault:<vault_lower>:metadata` KV key directly via `KvClient` and shapes
+the response to the existing `AgentMetadata` type. No filesystem JSON
+files are checked in or deployed.
+
+### Health checks
+
+Run `node scripts/probe-0g-kv.mjs` locally (or as the workflow's
+"Probe 0G KV" pre-flight step) to round-trip a throwaway namespaced
+key against the configured endpoint. The probe prints write + read
+latencies and exits non-zero with a "swap `ZG_KV_CLIENT_URL`" hint when
+the KV node is unreachable.
 
 ---
 
@@ -236,7 +249,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups | `yfinance_search`, `yfinance_quote` |
-| `0g-storage-mcp` | Decentralized persistent memory | `get_storage_info`, `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read` |
+| `0g-storage-mcp` | Decentralized persistent memory | `get_storage_info`, `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read`, `runlog_recent`, `vault_metadata_set`, `vault_metadata_get` |
 | `keeperhub-mcp` | Reliable transaction execution | `get_keeperhub_info`, `execute_transfer`, `execute_contract_call`, `execute_check_and_execute`, `get_execution_status`, `get_execution_logs`, `list_workflows`, `execute_workflow`, `create_workflow` |
 
 ### Server Registry Format
@@ -365,7 +378,7 @@ The workflow at `.github/workflows/vault-agent.yml` runs `0g-vault-manager` agai
 1. Go to Actions > "Vault Agent (0G)" > Run workflow
 2. Optionally toggle dry-run mode
 
-The cron schedule runs `0g-vault-manager` every 6 hours. After each run, the workflow commits any memory changes (`agents/memory/`) back to the repo automatically. Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+The cron schedule runs `0g-vault-manager` every 6 hours. State, run logs, and the web app's vault metadata are all persisted on 0G Storage (no commit-back, no `contents: write` permission). Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 ### Write Confirmation Mode
 
@@ -399,7 +412,7 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 | `AGENT_CONFIRM_WRITES` | `1` | Write confirmation gate; set `0` to disable confirmation logic |
 | `AGENT_NON_INTERACTIVE_WRITE_EXECUTE` | -- | `1` to auto-execute writes in non-interactive runs when confirmation is enabled |
 | `AGENT_MAX_TOOL_RESPONSE` | `6000` | Max chars per tool response sent to LLM |
-| `AGENT_NETWORK` | inferred | Optional run-log namespace override; controls which `run-log.<network>.jsonl` file is read/written |
+| `AGENT_NETWORK` | inferred | Optional run-log namespace override; tags each `log_append` entry's `network` field for client-side filtering in `runlog_recent` |
 
 ### Vault Manager MCP Server
 
@@ -420,10 +433,14 @@ No env vars required. Works out of the box.
 | `ZG_PRIVATE_KEY` | -- | Funded wallet for 0G storage fees |
 | `ZG_RPC_URL` | `https://evmrpc-testnet.0g.ai` | 0G Network RPC endpoint |
 | `ZG_INDEXER_RPC` | `https://indexer-storage-testnet-turbo.0g.ai` | 0G indexer endpoint |
-| `ZG_KV_CLIENT_URL` | `http://3.101.147.150:6789` | 0G KV store endpoint |
-| `ZG_STREAM_ID` | auto-generated | Optional fixed stream ID |
+| `ZG_KV_CLIENT_URL` | `http://178.238.236.119:6789` (agentio public hackathon node) | 0G KV store endpoint |
+| `ZG_STREAM_ID` | `0x000000000000000000000000000000000000000000000000000000000000f2bd` (agentio shared stream) | KV stream the MCP reads/writes |
+| `ZG_KV_TIMEOUT_MS` | `5000` | Hard cap per KV read so an outage surfaces quickly |
+| `AGENT_NAME` | `default` (set by runner) | Used in the `<wallet>:<agent>:` key prefix |
 
-Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai).
+Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai). Swap
+`ZG_KV_CLIENT_URL` to a self-hosted `zgs_kv` node if the agentio
+courtesy node disappears — no code change required.
 
 ### KeeperHub MCP Server
 
@@ -456,14 +473,19 @@ Repository **variables** (not secrets — they're public addresses/URLs):
 | Variable | Recommended value |
 |---|---|
 | `ZG_COMPUTE_PROVIDER` | current 0G compute provider address (verify with `node scripts/probe-0g-compute.mjs`); leaving it unset disables 0G compute and uses OpenAI |
-| `ZG_DISABLE_KV` | `1` (silences the dead public KV warning; `state_set` and `log_append` work without KV) |
-| `ZG_KV_CLIENT_URL` | only set if you self-host a 0G storage KV node |
+| `ZG_KV_CLIENT_URL` | leave unset (defaults to the agentio public node `http://178.238.236.119:6789`); override only if you self-host a 0G KV node |
+| `ZG_STREAM_ID` | leave unset (defaults to the agentio shared stream `0x...f2bd`); override only if you self-host a stream |
 | `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
+
+The vault-agent workflow runs `scripts/probe-0g-kv.mjs` as a pre-flight
+step. If the configured KV node is unreachable, the run fails with a
+"swap `ZG_KV_CLIENT_URL`" hint instead of bricking the agent loop.
 
 **One-time manual prerequisites** (cannot be automated by CI):
 
 1. Faucet the wallet derived from `KEEPER_PRIVATE_KEY` at https://faucet.0g.ai (the 0G storage MCP signs the same way regardless of CI vs local).
 2. Once locally, run `node scripts/0g-fund-compute-ledger.mjs 3` to create + fund the on-chain compute ledger entry. CI runs reusing the same key inherit this — the ledger persists across runs and only needs topping up when low.
+3. **Vercel project envs (`apps/web`)**: add `ZG_KV_CLIENT_URL=http://178.238.236.119:6789` and `ZG_STREAM_ID=0x000000000000000000000000000000000000000000000000000000000000f2bd` to the Production environment (mirror to Preview/Development if you want preview deploys to read live agent metadata too). The `deploy-production.yml` workflow already runs `vercel pull` so the values are baked into the build automatically — no workflow change needed. The API route at `apps/web/src/app/api/agent-metadata/[vault]/route.ts` returns a 500 with a clear "set ZG_KV_CLIENT_URL and ZG_STREAM_ID on this Vercel project" hint if either env is missing in production.
 
 ---
 
@@ -478,15 +500,14 @@ agents/
     0g-storage.md         # 0G Storage KV + Log reference
     keeperhub.md          # KeeperHub execution reference
   mcp-servers.json        # MCP server registry (spawn commands)
-  memory/                 # Per-agent persistent memory (committed to repo)
-    0g-vault-manager/
-      state.json
-      run-log.sepolia.jsonl
+  memory/                 # Gitignored warm-restart cache (cache.json only); source of truth lives on 0G
 
 scripts/
   agent-runner.mjs        # Generic runner (parses .md, loads skills, memory, vault lifecycle, LLM loop)
+  agent-memory-0g.mjs     # 0G-storage-backed memory adapter used by the runner
   probe-0g.mjs            # 0G EVM RPC + wallet sanity probe
   probe-0g-mcp.mjs        # 0G storage MCP roundtrip (state_set / log_append / log_read)
+  probe-0g-kv.mjs         # 0G KV round-trip probe (used as the workflow pre-flight)
   probe-0g-compute.mjs    # List currently active 0G compute providers
   0g-fund-compute-ledger.mjs # One-shot compute-ledger funding helper
 

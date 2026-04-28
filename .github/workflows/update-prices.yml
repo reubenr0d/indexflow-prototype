@@ -39,27 +39,17 @@ jobs:
             rpc_url_secret: SEPOLIA_RPC_URL
 
     steps:
+      # No submodules: scripts/update-yahoo-finance-prices.js shells to `cast`
+      # only; no forge build. Foundry is installed for `cast` access (no RPC
+      # cache: no fork tests).
       - uses: actions/checkout@v5
         if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
-        with:
-          submodules: recursive
 
-      - name: Install Foundry
-        uses: foundry-rs/foundry-toolchain@v1
+      - name: Setup CI environment (cached)
         if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
+        uses: ./.github/actions/setup-snx
         with:
-          version: ${{ env.FOUNDRY_VERSION }}
-
-      - name: Install Node.js
-        uses: actions/setup-node@v5
-        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
-        with:
-          node-version: "22"
-          cache: "npm"
-
-      - name: Install npm dependencies
-        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
-        run: npm ci
+          foundry: "true"
 
       - name: Fetch Yahoo Finance quotes and sync on-chain prices
         if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))

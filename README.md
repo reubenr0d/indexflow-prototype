@@ -159,6 +159,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Cross-chain coordination layer content added to content calendar (blog, X threads, LinkedIn, Substack, YouTube)
 - [x] Technical breakdown blog draft: cross-chain coordination layer (`growth/drafts/2026-04-15-blog-cross-chain-coordination-layer.md`)
 - [x] X thread draft: cross-chain coordination layer (`growth/drafts/2026-04-15-thread-cross-chain-coordination.md`)
+- [x] Autonomous-AI-agents-managing-vaults blog refreshed for 0G-only memory + agentio shared KV stream + `/api/agent-metadata` server-side read path (`content/blog/autonomous-ai-agents-managing-vaults.md`)
 
 ### Lead Capture (Layer 2)
 

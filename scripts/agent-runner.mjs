@@ -53,6 +53,7 @@ import {
   shouldSkipWritesForNonInteractiveSession,
   isInteractiveTty,
 } from "./agent-runner-confirmation.mjs";
+import { create0gMemoryAdapter } from "./agent-memory-0g.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, "..");
@@ -409,6 +410,30 @@ function appendRunLog(agentName, networkKey, entry) {
   const dir = agentMemoryDir(agentName);
   mkdirSync(dir, { recursive: true });
   appendFileSync(runLogPath(agentName, networkKey), JSON.stringify(entry) + "\n");
+}
+
+// File-based memory adapter (fallback when 0g-storage-mcp is not enabled
+// for the agent). Writes everything under agents/memory/<agent>/, which is
+// gitignored — operators get fresh state per environment.
+function createFileMemoryAdapter({ agentName, networkKey }) {
+  return {
+    mode: "file",
+    async readState() {
+      return { state: readState(agentName), source: "file" };
+    },
+    async readRecentRunLog(limit = 5) {
+      return readRecentRunLog(agentName, networkKey, limit);
+    },
+    async writeState(newState) {
+      writeState(agentName, newState);
+    },
+    async appendRunLog(entry) {
+      appendRunLog(agentName, networkKey, entry);
+    },
+    async publishAgentMetadata({ config, state, runSummary }) {
+      publishAgentMetadata(config, state, runSummary);
+    },
+  };
 }
 
 function hashContent(content) {
@@ -1145,27 +1170,97 @@ export async function runAgent(agentName) {
     10
   );
 
+  console.log(`\n=== Agent: ${config.name} ===`);
+  if (config.description) console.log(`Description: ${config.description}`);
+  console.log(`Model: ${LLM_MODEL}`);
+  console.log(`Max turns: ${maxTurns}`);
+  console.log(`Dry run: ${DRY_RUN}`);
+  console.log(`Confirm writes: ${CONFIRM_WRITES}`);
+  console.log(
+    `Non-interactive write execute override: ${NON_INTERACTIVE_WRITE_EXECUTE}`
+  );
+  console.log(`Run network: ${runNetwork}`);
+  console.log(`Run log file: ${runLogFile}`);
+  console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
+  console.log(
+    `MCP servers: ${config.mcpServers.map((s) => s.name).join(", ") || "(none)"}`
+  );
+  console.log("");
+
+  const mcpClients = [];
+  let agentSummaryText = null;
+  let didCreateVault = false;
+  let capturedVaultAddress = null;
+  const policyRuntime = {
+    latestVaultState: null,
+    latestOracleAssets: null,
+    latestQuotes: null,
+    opensExecuted: 0,
+    allocationWritesExecuted: 0,
+    enforcementRounds: 0,
+  };
+
+  // Spawn MCP servers FIRST so the memory adapter can read state from 0G
+  // (or fall back to local files when no 0g-storage-mcp is wired up).
+  for (const serverDef of config.mcpServers) {
+    console.log(`Spawning MCP server: ${serverDef.name}...`);
+    const mc = await spawnMcpClient(serverDef);
+    mcpClients.push(mc);
+    console.log(`  Tools: ${mc.tools.map((t) => t.name).join(", ")}`);
+  }
+  console.log("");
+
+  const zgClient = mcpClients.find((mc) => mc.serverName === "0g-storage-mcp")?.client;
+  const memory = zgClient
+    ? create0gMemoryAdapter({ zgClient, agentName, networkKey: runNetwork, agentConfig: config })
+    : createFileMemoryAdapter({ agentName, networkKey: runNetwork });
+  console.log(`Memory: backend=${memory.mode}`);
+
   // --- Memory: load state and determine vault lifecycle ---
-  let state = readState(agentName);
-  let recentRuns = readRecentRunLog(agentName, runNetwork, 5);
+  let state = null;
+  let recentRuns = [];
+  try {
+    const readResult = await memory.readState({ expectedFingerprint: deploymentContext.fingerprint });
+    state = readResult.state;
+    if (state && readResult.source) {
+      console.log(`Memory: state source=${readResult.source}`);
+    }
+  } catch (err) {
+    console.error(`Memory: failed to read state via ${memory.mode} adapter: ${err.message}`);
+    if (memory.mode === "0g") {
+      throw err;
+    }
+  }
+  try {
+    recentRuns = await memory.readRecentRunLog(5);
+  } catch (err) {
+    console.error(`Memory: failed to read recent run log: ${err.message}`);
+    recentRuns = [];
+  }
+
   if (shouldInvalidateDeploymentMemory(state, deploymentContext.fingerprint)) {
-    const rotation = rotateAgentMemoryForDeploymentChange(
-      agentName,
-      runNetwork,
-      state?.deploymentFingerprint || null,
-      deploymentContext.fingerprint
-    );
     const previousFingerprintLabel = state?.deploymentFingerprint
       ? shortHash(state.deploymentFingerprint)
       : "legacy";
     console.log(
-      `Memory: deployment context changed (${previousFingerprintLabel} -> ${shortHash(deploymentContext.fingerprint)}) — invalidating state and ${runLogFile}.`
+      `Memory: deployment context changed (${previousFingerprintLabel} -> ${shortHash(deploymentContext.fingerprint)}) — invalidating cached vault.`
     );
-    if (rotation.stateArchivePath) {
-      console.log(`Memory: archived state -> ${rotation.stateArchivePath}`);
-    }
-    if (rotation.runLogArchivePath) {
-      console.log(`Memory: archived run log -> ${rotation.runLogArchivePath}`);
+    if (memory.mode === "file") {
+      // Only the file adapter has on-disk artefacts to archive; 0G state is
+      // overwritten in-place by the next state_set (KV is last-writer-wins
+      // and old run-log entries remain reachable by root hash for audit).
+      const rotation = rotateAgentMemoryForDeploymentChange(
+        agentName,
+        runNetwork,
+        state?.deploymentFingerprint || null,
+        deploymentContext.fingerprint
+      );
+      if (rotation.stateArchivePath) {
+        console.log(`Memory: archived state -> ${rotation.stateArchivePath}`);
+      }
+      if (rotation.runLogArchivePath) {
+        console.log(`Memory: archived run log -> ${rotation.runLogArchivePath}`);
+      }
     }
     state = null;
     recentRuns = [];
@@ -1186,10 +1281,15 @@ export async function runAgent(agentName) {
     if (agentFileChanged) {
       console.log("Memory: agent .md file changed — reusing existing vault.");
     }
+    // Seed the runtime tracker from persistent state so policy
+    // enforcement, get_all_vaults guards, and other code paths know
+    // the active vault from turn 1 (no need to wait for the model to
+    // re-discover it via state_get).
+    capturedVaultAddress = state.vaultAddress;
   }
   if (recentRuns.length > 0) {
     console.log(
-      `Memory: ${recentRuns.length} recent run(s) loaded from ${runLogFile}.`
+      `Memory: ${recentRuns.length} recent run(s) loaded.`
     );
   }
 
@@ -1226,45 +1326,7 @@ export async function runAgent(agentName) {
     finishedAt: null,
   };
 
-  console.log(`\n=== Agent: ${config.name} ===`);
-  if (config.description) console.log(`Description: ${config.description}`);
-  console.log(`Model: ${LLM_MODEL}`);
-  console.log(`Max turns: ${maxTurns}`);
-  console.log(`Dry run: ${DRY_RUN}`);
-  console.log(`Confirm writes: ${CONFIRM_WRITES}`);
-  console.log(
-    `Non-interactive write execute override: ${NON_INTERACTIVE_WRITE_EXECUTE}`
-  );
-  console.log(`Run network: ${runNetwork}`);
-  console.log(`Run log file: ${runLogFile}`);
-  console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
-  console.log(
-    `MCP servers: ${config.mcpServers.map((s) => s.name).join(", ") || "(none)"}`
-  );
-  console.log("");
-
-  const mcpClients = [];
-  let capturedVaultAddress = state?.vaultAddress || null;
-  let agentSummaryText = null;
-  let didCreateVault = false;
-  const policyRuntime = {
-    latestVaultState: null,
-    latestOracleAssets: null,
-    latestQuotes: null,
-    opensExecuted: 0,
-    allocationWritesExecuted: 0,
-    enforcementRounds: 0,
-  };
-
   try {
-    for (const serverDef of config.mcpServers) {
-      console.log(`Spawning MCP server: ${serverDef.name}...`);
-      const mc = await spawnMcpClient(serverDef);
-      mcpClients.push(mc);
-      console.log(`  Tools: ${mc.tools.map((t) => t.name).join(", ")}`);
-    }
-    console.log("");
-
     const toolNameCount = {};
     for (const mc of mcpClients) {
       for (const t of mc.tools) {
@@ -1659,6 +1721,7 @@ export async function runAgent(agentName) {
 
     const extractedThesis = extractThesis(agentSummaryText);
 
+    let persistedState = null;
     if (capturedVaultAddress) {
       const newState = {
         vaultAddress: capturedVaultAddress,
@@ -1679,12 +1742,23 @@ export async function runAgent(agentName) {
         newState.thesis = state.thesis;
         newState.lastThesisUpdate = state.lastThesisUpdate;
       }
-      writeState(agentName, newState);
-      console.log(`\nMemory: state saved (vault ${capturedVaultAddress})`);
+      try {
+        await memory.writeState(newState);
+        console.log(`\nMemory: state saved (vault ${capturedVaultAddress}) via ${memory.mode} adapter`);
+      } catch (err) {
+        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${err.message}`);
+        runSummary.errors.push({ tool: "_memory_write_state", error: err.message });
+      }
       if (extractedThesis) {
         console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
       }
-      publishAgentMetadata(config, newState, runSummary);
+      try {
+        await memory.publishAgentMetadata({ config, state: newState, runSummary });
+      } catch (err) {
+        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${err.message}`);
+        runSummary.errors.push({ tool: "_memory_publish_metadata", error: err.message });
+      }
+      persistedState = newState;
     } else if (state) {
       const updatedState = {
         ...state,
@@ -1697,11 +1771,22 @@ export async function runAgent(agentName) {
         updatedState.thesis = extractedThesis;
         updatedState.lastThesisUpdate = runSummary.finishedAt;
       }
-      writeState(agentName, updatedState);
+      try {
+        await memory.writeState(updatedState);
+      } catch (err) {
+        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${err.message}`);
+        runSummary.errors.push({ tool: "_memory_write_state", error: err.message });
+      }
       if (extractedThesis) {
         console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
       }
-      publishAgentMetadata(config, updatedState, runSummary);
+      try {
+        await memory.publishAgentMetadata({ config, state: updatedState, runSummary });
+      } catch (err) {
+        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${err.message}`);
+        runSummary.errors.push({ tool: "_memory_publish_metadata", error: err.message });
+      }
+      persistedState = updatedState;
     }
 
     const summarySnippet = agentSummaryText
@@ -1710,21 +1795,27 @@ export async function runAgent(agentName) {
     if (DRY_RUN) {
       console.log("Memory: dry run active — run log not updated.");
     } else {
-      appendRunLog(agentName, runNetwork, {
-        timestamp: runSummary.finishedAt,
-        agent: config.name,
-        network: runNetwork,
-        vault: capturedVaultAddress || null,
-        turns: runSummary.turns,
-        toolCalls: runSummary.toolCalls,
-        writeActions: runSummary.writeActions,
-        confirmationBatches: runSummary.confirmationBatches,
-        errors: runSummary.errors,
-        summary: summarySnippet,
-      });
-      console.log("Memory: run log appended.");
+      try {
+        await memory.appendRunLog({
+          timestamp: runSummary.finishedAt,
+          agent: config.name,
+          network: runNetwork,
+          vault: capturedVaultAddress || null,
+          turns: runSummary.turns,
+          toolCalls: runSummary.toolCalls,
+          writeActions: runSummary.writeActions,
+          confirmationBatches: runSummary.confirmationBatches,
+          errors: runSummary.errors,
+          summary: summarySnippet,
+        });
+        console.log(`Memory: run log appended via ${memory.mode} adapter.`);
+      } catch (err) {
+        console.error(`Memory: appendRunLog failed via ${memory.mode} adapter: ${err.message}`);
+        runSummary.errors.push({ tool: "_memory_append_runlog", error: err.message });
+      }
     }
 
+    void persistedState;
     console.log("\n=== Run Summary (JSON) ===");
     console.log(JSON.stringify(runSummary, null, 2));
   } catch (err) {
@@ -1737,18 +1828,22 @@ export async function runAgent(agentName) {
 
     // Persist failure log unless this is a dry run.
     if (!DRY_RUN) {
-      appendRunLog(agentName, runNetwork, {
-        timestamp: runSummary.finishedAt,
-        agent: config.name,
-        network: runNetwork,
-        vault: capturedVaultAddress || null,
-        turns: runSummary.turns,
-        toolCalls: runSummary.toolCalls,
-        writeActions: runSummary.writeActions,
-        confirmationBatches: runSummary.confirmationBatches,
-        errors: runSummary.errors,
-        summary: "FAILED: " + (err.message || String(err)),
-      });
+      try {
+        await memory.appendRunLog({
+          timestamp: runSummary.finishedAt,
+          agent: config.name,
+          network: runNetwork,
+          vault: capturedVaultAddress || null,
+          turns: runSummary.turns,
+          toolCalls: runSummary.toolCalls,
+          writeActions: runSummary.writeActions,
+          confirmationBatches: runSummary.confirmationBatches,
+          errors: runSummary.errors,
+          summary: "FAILED: " + (err.message || String(err)),
+        });
+      } catch (logErr) {
+        console.error(`Memory: failed to record failure log via ${memory.mode} adapter: ${logErr.message}`);
+      }
     } else {
       console.log("Memory: dry run active — failure not written to run log.");
     }

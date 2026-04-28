@@ -1,0 +1,158 @@
+name: Setup snx-prototype CI
+description: >
+  Single-source-of-truth CI prelude: cache-aware Node + Foundry + submodule
+  + node_modules + forge build + Playwright restore. Each piece is opt-in.
+  See .cursor/plans/ci_module_load_optimization_5fd70f10.plan.md for the
+  design rationale (why we cache node_modules directly, why foundry-toolchain
+  RPC cache is off by default, etc.).
+
+inputs:
+  submodules:
+    description: >
+      Init Forge submodules (lib/forge-std + lib/solady) with directory cache
+      keyed on the parent repo's gitlink pointer SHAs. Caches both the working
+      tree AND .git/modules/lib/* so git keeps recognising them as submodules.
+    default: "false"
+  foundry:
+    description: Install Foundry via foundry-rs/foundry-toolchain.
+    default: "false"
+  foundry-cache:
+    description: >
+      Enable the action's built-in cache of ~/.foundry/cache (RPC/fork data).
+      Default off because most jobs do not run forge fork tests; leaving it on
+      writes a useless ~/.foundry/cache slot every run and competes for the
+      10GB repo cache budget.
+    default: "false"
+  node-modules-cache:
+    description: >
+      Cache extracted node_modules across runs keyed by package-lock.json hash.
+      On cache hit npm ci is skipped entirely. Setup-node's `cache: npm` only
+      caches ~/.npm download tarballs and still re-extracts every run, which is
+      a 20-60s install for this workspace.
+    default: "true"
+  forge-build-cache:
+    description: >
+      Restore forge out/ + cache/ keyed by source hash. Pass any non-empty
+      string to enable; the value becomes a profile suffix in the cache key
+      (e.g. 'default' for forge build/test/e2e, 'coverage' for forge coverage
+      --ir-minimum which produces different artifacts).
+    default: ""
+  playwright:
+    description: >
+      Cache Playwright browsers under ~/.cache/ms-playwright keyed on the
+      resolved @playwright/test version (parsed from the root lockfile, not
+      apps/web/package-lock.json hash, to avoid over-invalidation on unrelated
+      web dep bumps). On cache hit installs system apt deps only; on miss runs
+      `playwright install --with-deps chromium`.
+    default: "false"
+
+runs:
+  using: composite
+  steps:
+    - name: Compute submodule cache key
+      if: inputs.submodules == 'true'
+      id: submodule-key
+      shell: bash
+      run: |
+        # ls-tree reads gitlink SHAs from the parent commit; works without
+        # the submodules being checked out yet.
+        key=$(git ls-tree HEAD lib/forge-std lib/solady | sha256sum | cut -c1-16)
+        echo "key=${key}" >> "$GITHUB_OUTPUT"
+
+    - name: Restore submodule cache
+      if: inputs.submodules == 'true'
+      id: cache-submodules
+      uses: actions/cache@v4
+      with:
+        path: |
+          lib/forge-std
+          lib/solady
+          .git/modules/lib/forge-std
+          .git/modules/lib/solady
+        key: submodules-${{ runner.os }}-${{ steps.submodule-key.outputs.key }}
+
+    - name: Init submodules (cache miss)
+      if: inputs.submodules == 'true' && steps.cache-submodules.outputs.cache-hit != 'true'
+      shell: bash
+      run: git submodule update --init --depth 1 --recursive
+
+    - name: Install Foundry
+      if: inputs.foundry == 'true'
+      uses: foundry-rs/foundry-toolchain@v1
+      with:
+        version: ${{ env.FOUNDRY_VERSION }}
+        cache: ${{ inputs.foundry-cache }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v5
+      with:
+        node-version: "22"
+        cache: "npm"
+
+    - name: Restore node_modules cache
+      if: inputs.node-modules-cache == 'true'
+      id: cache-node-modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          apps/web/node_modules
+          apps/push-worker/node_modules
+          apps/subgraph/node_modules
+          apps/mcps/vault-manager/node_modules
+          apps/mcps/yfinance/node_modules
+          apps/mcps/0g-storage/node_modules
+          apps/mcps/keeperhub/node_modules
+          services/keeper/node_modules
+        key: node-modules-${{ runner.os }}-node22-${{ hashFiles('package-lock.json') }}
+
+    - name: Install npm dependencies
+      if: inputs.node-modules-cache != 'true' || steps.cache-node-modules.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
+
+    - name: Restore forge build cache
+      if: inputs.forge-build-cache != ''
+      uses: actions/cache@v4
+      with:
+        path: |
+          out
+          cache
+        key: forge-build-${{ runner.os }}-${{ env.FOUNDRY_VERSION }}-${{ inputs.forge-build-cache }}-${{ hashFiles('foundry.toml', 'remappings.txt', 'src/**/*.sol', 'lib/**/*.sol', 'script/**/*.sol', 'test/**/*.sol') }}
+        restore-keys: |
+          forge-build-${{ runner.os }}-${{ env.FOUNDRY_VERSION }}-${{ inputs.forge-build-cache }}-
+
+    - name: Resolve Playwright version
+      if: inputs.playwright == 'true'
+      id: playwright-version
+      shell: bash
+      run: |
+        # Read from the root lockfile so the key is stable to apps/web dep
+        # changes that don't touch @playwright/test. npm workspaces hoist
+        # @playwright/test to the root lockfile under one of the workspace
+        # paths.
+        version=$(node -e "
+          const lock = require('./package-lock.json');
+          const entry = Object.entries(lock.packages).find(([k]) => k.endsWith('node_modules/@playwright/test'));
+          if (!entry) { console.error('Could not find @playwright/test in lockfile'); process.exit(1); }
+          process.stdout.write(entry[1].version);
+        ")
+        echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+    - name: Restore Playwright browser cache
+      if: inputs.playwright == 'true'
+      id: cache-playwright
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+    - name: Install Playwright browser + system deps (cache miss)
+      if: inputs.playwright == 'true' && steps.cache-playwright.outputs.cache-hit != 'true'
+      shell: bash
+      run: npx --prefix apps/web playwright install --with-deps chromium
+
+    - name: Install Playwright system deps only (cache hit)
+      if: inputs.playwright == 'true' && steps.cache-playwright.outputs.cache-hit == 'true'
+      shell: bash
+      run: npx --prefix apps/web playwright install-deps chromium

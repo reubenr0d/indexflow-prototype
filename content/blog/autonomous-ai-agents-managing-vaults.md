@@ -70,7 +70,7 @@ Each run follows a five-step loop:
 
 The agent connects to two **MCP servers** (Model Context Protocol). The vault-manager server exposes on-chain read and write operations: deploying vaults, wiring assets, managing positions, reading state. The yfinance server provides market data lookups. The agent treats these as tools it can call -- the same way a human operator would use a dashboard, except the agent reasons about when and why to call each tool.
 
-On the first run, the agent has no vault. The runner instructs it to call `create_vault`, which deploys a new basket vault on-chain. The deploying wallet becomes the vault owner. On subsequent runs, the runner loads the saved vault address from persistent memory and injects it into the system prompt. Memory is stored at `agents/memory/<agent-name>/` and committed to the repo, so agent state is durable, inspectable, and version-controlled.
+On the first run, the agent has no vault. The runner instructs it to call `create_vault`, which deploys a new basket vault on-chain. The deploying wallet becomes the vault owner. On subsequent runs, the runner loads the saved vault address from **0G Storage** -- specifically, from a shared 0G KV stream where every key is namespaced under `<wallet>:<agent>:` -- and injects it into the system prompt. Nothing is committed back to the repo: the local `agents/memory/` folder is now a gitignored warm-restart cache only, and the source of truth lives on 0G. We dig into the storage layout below.
 
 ## Real Prices, Even on Testnet
 
@@ -100,7 +100,7 @@ Autonomous does not mean uncontrolled. The framework is designed for autonomy wi
 
 **Single-vault isolation.** Each agent manages exactly one vault. It cannot read or write other vaults. The runner enforces this by injecting only the agent's own vault address into the prompt context.
 
-**Persistent memory.** Run history is stored as append-only JSONL logs per network. The operator can inspect every past run -- what the agent observed, what it decided, what it executed, and what it recommended for next time.
+**Persistent memory.** Run history is stored as an append-only chain on the 0G Log layer (one file per run, hash-linked via `_meta.previousRoot`). The operator can walk the chain backwards from the head pointer in 0G KV (`last_runlog_root`) using the `runlog_recent` MCP tool, or fetch any individual entry by its root hash -- what the agent observed, what it decided, what it executed, and what it recommended for next time. Failed runs are recorded too.
 
 ## Coming Next: Always-On Agents on Theseus
 
@@ -112,11 +112,9 @@ This is not live yet. When it is, the same markdown file that defines your agent
 
 ## Decentralized Infrastructure: 0G Network + KeeperHub
 
-The agent framework now integrates with decentralized infrastructure for production-grade autonomous operation.
+The agent framework runs on decentralized infrastructure for production-grade autonomous operation.
 
 **0G Compute** provides decentralized LLM inference. Instead of routing requests to OpenAI, agents can use 0G's Compute Network for TEE-verified AI responses. The inference happens on decentralized nodes, and responses include cryptographic attestation that the model ran unmodified. This matters for agents managing real capital -- you want verifiable reasoning, not a black box.
-
-**0G Storage** provides persistent agent memory. The standard agent stores state in local files (`agents/memory/<name>/state.json`). The 0G-enabled agent stores state in 0G's decentralized KV store and appends run history to the Log layer. Every state update and run summary is Merkle-verified and retrievable by hash. Agent memory becomes auditable and tamper-evident.
 
 **KeeperHub** provides reliable transaction execution. Direct on-chain writes can fail for many reasons: gas spikes, network congestion, nonce conflicts, MEV extraction. KeeperHub wraps transactions with automatic retries, smart gas estimation, and private routing. Every transaction gets an audit trail. When an agent opens a position or closes a loser, the write goes through KeeperHub's execution layer instead of a raw `sendTransaction`.
 
@@ -138,23 +136,36 @@ mcpServers:
 ---
 ```
 
-Same markdown format. Same strategy rules. Different infrastructure stack.
+Same markdown format. Same strategy rules. Decentralized infrastructure stack.
+
+## Memory and Audit Trail on 0G
+
+Agent memory used to be a stack of local JSON files committed back to the repo by CI on every run. That worked, but the loop was awkward: every six hours the cron pushed a new commit, the deployed Next.js bundle had to be rebuilt to pick up `apps/web/public/agent-metadata/<vault>.json`, and the "vault state" the public site showed was always one git push behind reality. Worse, the historical record only existed in one place -- this repo's git history.
+
+With 0G Storage as the substrate, the picture changes:
+
+- **Reads and writes happen against the [agentio public hackathon node](https://trivo25.github.io/agentio/)** (`http://178.238.236.119:6789`) on the shared 0G KV stream `0x000000000000000000000000000000000000000000000000000000000000f2bd`. Anyone can use it; no auth.
+- **Per-agent state keys are namespaced under `<wallet>:<agent_name>:`** by the `0g-storage-mcp` so multiple teams sharing the stream can't clobber each other's data. You write `state_set("vault_address", "0x...")` and the MCP stores it as `0xabc...:0g-vault-manager:vault_address`. Unprefixed key in, unprefixed key out.
+- **Vault metadata is the public read surface.** The web app fetches each vault's "AI managed" panel server-side from the new route `/api/agent-metadata/[vault]`, which calls 0G KV directly via `KvClient` and reads the unprefixed key `vault:<vault_lower>:metadata`. No more static JSON in the build. New vault state is visible on the live site within a minute (60-second edge cache, stale-while-revalidate 300).
+- **Run history is a hash-linked chain on the 0G Log layer.** Every `log_append` from the agent stores the new entry's `_meta.previousRoot` so any operator can walk backwards from the head pointer in KV (`last_runlog_root`) and verify the chain. The runner pulls the last few entries via the `runlog_recent` MCP tool at startup so the agent has continuity across runs.
+- **CI no longer commits anything back.** The vault-agent workflow runs read-only, with no `contents: write` permission. A pre-flight `scripts/probe-0g-kv.mjs` step round-trips a throwaway namespaced key against agentio so a temporary outage surfaces with a clear "swap `ZG_KV_CLIENT_URL`" hint instead of failing deep inside the agent loop.
+
+The agentio dependency is a courtesy from another hackathon team and we want to be honest about that. If their node disappears, the failover is config-only: point `ZG_KV_CLIENT_URL` at any other 0G `zgs_kv` node (self-hosted or otherwise) and the runner + web app keep working without a redeploy. The wallet prefix means our keys stay isolated wherever they end up.
 
 ## Try It
 
 The protocol is live on Sepolia testnet with real asset prices.
 
-**Standard agent (OpenAI + file-based memory):**
-- **Run the sample agent:** `LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- sample-vault-manager`
-- **Dry-run first:** `AGENT_DRY_RUN=1 LLM_API_KEY=sk-... npm run agent:run -- sample-vault-manager`
+**Run the agent:**
+- **Health check first:** `node scripts/probe-0g-kv.mjs` -- round-trips a throwaway namespaced key against the configured 0G KV node so you know reads + writes work before you spend turns on the LLM.
+- **Dry-run:** `npm run agent:0g:dry` -- full loop, no on-chain writes.
+- **Live with 0G Compute:** `ZG_COMPUTE_PROVIDER=0x... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
+- **Live with OpenAI:** `LLM_API_KEY=sk-... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
 
-**0G-enabled agent (decentralized stack):**
-- **With 0G Compute:** `ZG_COMPUTE_PROVIDER=0x... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
-- **With OpenAI fallback:** `LLM_API_KEY=sk-... ZG_PRIVATE_KEY=0x... KEEPERHUB_API_KEY=kh_... npm run agent:0g`
-- **Dry-run:** `npm run agent:0g:dry`
+The `ZG_PRIVATE_KEY` wallet pays for 0G storage fees -- faucet it at [faucet.0g.ai](https://faucet.0g.ai). Both `ZG_KV_CLIENT_URL` and `ZG_STREAM_ID` default to the agentio shared stream, so you don't need to set them unless you want to point at a self-hosted node.
 
 **Manual operation:**
-- [Launch the testnet app](https://indexflow.app/baskets)
-- [Multi-Agent Framework docs](/docs/agents-framework) -- agent creation, skills, memory, MCP servers, full tool reference
+- [Launch the testnet app](https://indexflow.app/baskets) -- the same vaults the agent manages are visible to anyone, with the AI-managed panel populated server-side from 0G KV.
+- [Multi-Agent Framework docs](/docs/agents-framework) -- agent creation, skills, the new memory layout, MCP tools (`runlog_recent`, `vault_metadata_set`, `vault_metadata_get`), full tool reference.
 
-Create a markdown file. Define your strategy. Let it run -- on OpenAI or 0G Compute, with file memory or decentralized storage, with direct writes or KeeperHub execution. The contracts do not care who is on the other end or how the infrastructure is wired.
+Create a markdown file. Define your strategy. Let it run -- on OpenAI or 0G Compute, with state on a shared 0G stream and audit history on the Log layer, with writes routed through KeeperHub. The contracts do not care who is on the other end or how the infrastructure is wired.
