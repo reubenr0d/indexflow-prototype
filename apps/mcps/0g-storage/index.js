@@ -183,12 +183,12 @@ async function getStorageWriteContext() {
 async function getFlowContractInstance() {
   if (_flowContract) return _flowContract;
   // The 0G SDK expects the *flow contract address* (not the RPC URL). It is
-  // discovered from a storage node's status payload. Picking it up via the
-  // indexer guarantees the address matches the network the indexer is on.
-  const indexer = getIndexer();
-  const [nodes, err] = await indexer.selectNodes(1);
-  if (err) throw new Error(`Indexer selectNodes failed: ${err.message || err}`);
-  const status = await nodes[0].getStatus();
+  // discovered from a storage node's status payload. We reuse
+  // getStorageWriteContext so the same indexer node selection (try
+  // ZG_STORAGE_EXPECTED_REPLICA full sharding sets, fall back to 1) is used
+  // for every storage operation in the MCP — discovery and writes alike.
+  const ctx = await getStorageWriteContext();
+  const status = await ctx.nodes[0].getStatus();
   const flowAddress = status?.networkIdentity?.flowAddress;
   if (!flowAddress) {
     throw new Error(

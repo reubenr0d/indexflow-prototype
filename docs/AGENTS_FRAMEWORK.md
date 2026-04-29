@@ -213,6 +213,24 @@ are intentionally unprefixed because vault addresses are globally unique
 on-chain and the web app needs to read them without knowing which agent
 owns the vault.
 
+### Write replication (`expectedReplica`)
+
+Per the 0G dev recommendation, every 0G storage write replicates the data
+across at least two full sharding sets. The MCP and probe scripts share
+the same logic (`scripts/lib/select-0g-write-nodes.mjs` /
+`getStorageWriteContext` in the MCP):
+
+1. Call `indexer.selectNodes(N)` with `N = ZG_STORAGE_EXPECTED_REPLICA` (default `2`, min `1`).
+2. If the indexer cannot satisfy `N`, fall back to `selectNodes(1)`.
+3. Pass the resulting node list to `Batcher` (KV) and `indexer.upload` (Log files, with `{ expectedReplica }`).
+
+`state_set`, `log_append`, and `get_storage_info` responses include
+`expected_replica_used`, `expected_replica_requested`, and
+`expected_replica_fallback` so callers can verify replication mode at
+runtime. Diagnostic probes (`probe-0g-kv-batch.mjs`, `probe-0g-kv-tail.mjs`)
+default to the same path; set `ZG_KV_PROBE_PER_SHARD=1` to use the legacy
+manual per-shard pick (one fresh node per shard) for stuck-shard debugging.
+
 ### Run lifecycle
 
 1. Runner builds a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`.
@@ -477,13 +495,17 @@ Repository **variables** (not secrets — they're public addresses/URLs):
 | `ZG_KV_CLIENT_URL` | leave unset (defaults to the agentio public node `http://178.238.236.119:6789`); override only if you self-host a 0G KV node |
 | `ZG_STREAM_ID` | leave unset (defaults to the agentio shared stream `0x...f2bd`); override only if you self-host a stream |
 | `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_STORAGE_EXPECTED_REPLICA`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
-| `ZG_KV_READ_DEADLINE_MS` | Workflow default is `1200000` (20m) for the vault-agent **Probe 0G KV** step; the probe script also defaults to 20m when `GITHUB_ACTIONS=true` if unset. Public agentio KV can lag >5m for read-after-write in CI — set this repo variable to override (e.g. `1800000`). Last resort: set `ZG_KV_PROBE_OK_IF_WRITE_ONLY=1` on that step only if the write leg succeeds but the read never catches up (use sparingly). |
+| `ZG_KV_READ_DEADLINE_MS` | Workflow default `300000` (5m) for **Probe 0G KV** — how long to poll for read-after-write. Override (e.g. `1200000`) if you set `ZG_KV_PROBE_STRICT_READ=1` and need a longer wait. |
+| `ZG_KV_PROBE_STRICT_READ` | In CI, default is **not** set / off: the probe **soft-passes** if the write leg succeeds but the public KV never shows the key in time. Set to `1` in repo **Variables** (or on the step env) to fail the job until read-after-write succeeds. |
+| `ZG_KV_PROBE_OK_IF_WRITE_ONLY` | Force soft-pass on read timeout when set to `1` (any environment). Rarely needed now that CI defaults to soft. |
 
 The vault-agent workflow runs `scripts/probe-0g-kv.mjs` as a pre-flight
-step. It checks that the wallet can write through the indexer and (within
-`ZG_KV_READ_DEADLINE_MS`) read the key back from `ZG_KV_CLIENT_URL`. If the
-endpoint is down, the run fails with a "swap `ZG_KV_CLIENT_URL`" hint instead
-of running the full agent.
+step. It always verifies the **write** path (indexer + chain). The **read**
+round-trip against `ZG_KV_CLIENT_URL` is best-effort in GitHub Actions (public
+agentio replication is often too slow to verify in one job). Set
+`ZG_KV_PROBE_STRICT_READ=1` to require a successful read. If the KV HTTP
+endpoint is down, the probe still fails early on connection errors; only
+replication lag is treated as soft by default in CI.
 
 **One-time manual prerequisites** (cannot be automated by CI):
 

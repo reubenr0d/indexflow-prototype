@@ -3,10 +3,7 @@
 /**
  * Tail-sync probe for the agentio public KV node.
  *
- * - Picks a storage node that's caught up to within 100 blocks of chain head
- *   (skipping the stuck shard-0/2 trusted nodes), instead of letting
- *   indexer.selectNodes(1) land on whichever lowest-latency node responds.
- * - Writes a fresh key, captures the txSeq.
+ * - Writes a fresh key via the canonical 0G storage write path.
  * - Polls the agentio KV node (http://178.238.236.119:6789) until either:
  *     (a) our key appears (success — proves tail sync works for new writes), or
  *     (b) kv_getLast moves past our txSeq without our key (proves new writes
@@ -14,15 +11,22 @@
  *
  *   ZG_KV_READ_DEADLINE_MS  default 600000 (10 min)
  *
- * **Write path:** Uses **manual** per-shard node selection (one `StorageNode`
- * per shard) so the test targets *fresh* nodes, not the indexer's
- * `selectNodes(N)` replica sets. The replication rule used by the MCP and
- * `probe-0g-kv.mjs` is in `scripts/lib/select-0g-write-nodes.mjs`.
+ * **Write path (default — production-like):** Uses
+ * `selectStorageWriteNodes(indexer, ZG_STORAGE_EXPECTED_REPLICA)` so the SDK
+ * replicates each write across N **full sharding sets** (default 2; falls
+ * back to 1 if the indexer cannot satisfy 2). Same path as the MCP and
+ * `scripts/probe-0g-kv.mjs`.
+ *
+ * **Legacy diagnostic mode:** Set `ZG_KV_PROBE_PER_SHARD=1` to instead pick
+ * one *fresh* storage node per shard from `getShardedNodes()`. Used in the
+ * past to skip the stuck shard-0/2 cluster while debugging tail-sync gaps;
+ * preserved here for future debugging only.
  */
 
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { selectStorageWriteNodes } from "./lib/select-0g-write-nodes.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -53,6 +57,13 @@ const ZG_STREAM_ID = envOr(
   "0x000000000000000000000000000000000000000000000000000000000000f2bd"
 );
 const READ_DEADLINE_MS = parseInt(envOr("ZG_KV_READ_DEADLINE_MS", "600000"), 10);
+const ZG_STORAGE_EXPECTED_REPLICA = Math.max(
+  1,
+  parseInt(envOr("ZG_STORAGE_EXPECTED_REPLICA", "2"), 10) || 1,
+);
+const PER_SHARD_MODE = ["1", "true", "yes"].includes(
+  String(envOr("ZG_KV_PROBE_PER_SHARD", "")).toLowerCase().trim(),
+);
 
 if (!ZG_PRIVATE_KEY) {
   console.error("ZG_PRIVATE_KEY required");
@@ -72,63 +83,80 @@ console.log("0G KV tail-sync probe");
 console.log("  KV node:", ZG_KV_CLIENT_URL);
 console.log("  Stream: ", ZG_STREAM_ID);
 console.log("  Wallet: ", wallet);
-
-// 1. Find a fresh storage node (close to chain head, NOT the stuck shard-0/2 cluster).
-const chainHeadHex = await provider.send("eth_blockNumber", []);
-const chainHead = parseInt(chainHeadHex, 16);
-console.log(`  Chain head: ${chainHead}`);
-
-const indexer = new Indexer(ZG_INDEXER_RPC);
-const sharded = await indexer.getShardedNodes();
-const candidates = [...(sharded.trusted || []), ...(sharded.discovered || [])];
-console.log(`  Indexer offers ${candidates.length} node(s)`);
-
-const probed = [];
-for (const c of candidates) {
-  try {
-    const n = new StorageNode(c.url);
-    const status = await Promise.race([
-      n.getStatus(),
-      new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 4000)),
-    ]);
-    const lag = chainHead - (status?.logSyncHeight ?? 0);
-    const shard = c.config?.shardId ?? null;
-    const numShard = c.config?.numShard ?? null;
-    probed.push({ url: c.url, status, lag, node: n, shard, numShard });
-    console.log(
-      `    ${c.url} shard=${shard}/${numShard} h=${status.logSyncHeight} txSeq=${status.nextTxSeq} lag=${lag}`
-    );
-  } catch (e) {
-    console.log(`    ${c.url} -> error: ${e.message}`);
-  }
-}
-
-// Pick the freshest node per shard so replication is satisfied across all
-// shards. The 0G storage layer needs at least one node in every shard
-// covering the data; without that, batcher.exec fails with "Not enough
-// replicas" before the chain tx even matters.
-// Allow modest lag while still preferring nodes near head (indexer can
-// report negative lag when logSyncHeight briefly leads chain head).
-const fresh = probed.filter((p) => p.lag < 500);
-const byShard = new Map();
-for (const f of fresh) {
-  const key = `${f.shard}/${f.numShard}`;
-  const existing = byShard.get(key);
-  if (!existing || f.status.nextTxSeq > existing.status.nextTxSeq) {
-    byShard.set(key, f);
-  }
-}
-const picked = [...byShard.values()];
-if (picked.length === 0) {
-  console.error("\nNo fresh storage node available across any shard.");
-  process.exit(1);
-}
 console.log(
-  `\nUsing ${picked.length} storage node(s): ${picked.map((p) => `${p.url} (shard ${p.shard}/${p.numShard})`).join(", ")}`
+  "  Mode:   ",
+  PER_SHARD_MODE
+    ? "ZG_KV_PROBE_PER_SHARD=1 (manual per-shard pick)"
+    : `selectNodes(${ZG_STORAGE_EXPECTED_REPLICA}) with fallback to 1`,
 );
 
+const indexer = new Indexer(ZG_INDEXER_RPC);
+
+let nodeClients;
+let trackingNode;
+let flowAddress;
+if (PER_SHARD_MODE) {
+  // 1. Find a fresh storage node per shard (skipping any stuck cluster).
+  const chainHeadHex = await provider.send("eth_blockNumber", []);
+  const chainHead = parseInt(chainHeadHex, 16);
+  console.log(`  Chain head: ${chainHead}`);
+
+  const sharded = await indexer.getShardedNodes();
+  const candidates = [...(sharded.trusted || []), ...(sharded.discovered || [])];
+  console.log(`  Indexer offers ${candidates.length} node(s)`);
+
+  const probed = [];
+  for (const c of candidates) {
+    try {
+      const n = new StorageNode(c.url);
+      const status = await Promise.race([
+        n.getStatus(),
+        new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 4000)),
+      ]);
+      const lag = chainHead - (status?.logSyncHeight ?? 0);
+      const shard = c.config?.shardId ?? null;
+      const numShard = c.config?.numShard ?? null;
+      probed.push({ url: c.url, status, lag, node: n, shard, numShard });
+      console.log(
+        `    ${c.url} shard=${shard}/${numShard} h=${status.logSyncHeight} txSeq=${status.nextTxSeq} lag=${lag}`
+      );
+    } catch (e) {
+      console.log(`    ${c.url} -> error: ${e.message}`);
+    }
+  }
+
+  const fresh = probed.filter((p) => p.lag < 500);
+  const byShard = new Map();
+  for (const f of fresh) {
+    const key = `${f.shard}/${f.numShard}`;
+    const existing = byShard.get(key);
+    if (!existing || f.status.nextTxSeq > existing.status.nextTxSeq) {
+      byShard.set(key, f);
+    }
+  }
+  const picked = [...byShard.values()];
+  if (picked.length === 0) {
+    console.error("\nNo fresh storage node available across any shard.");
+    process.exit(1);
+  }
+  console.log(
+    `\nUsing ${picked.length} storage node(s): ${picked.map((p) => `${p.url} (shard ${p.shard}/${p.numShard})`).join(", ")}`
+  );
+  nodeClients = picked.map((p) => p.node);
+  trackingNode = picked[0].node;
+  flowAddress = picked[0].status.networkIdentity.flowAddress;
+} else {
+  const ctx = await selectStorageWriteNodes(indexer, ZG_STORAGE_EXPECTED_REPLICA);
+  console.log(
+    `\nUsing ${ctx.nodes.length} storage node client(s) from selectNodes(${ctx.used})${ctx.usedFallback ? ` (fell back from ${ctx.requested})` : ""}`,
+  );
+  nodeClients = ctx.nodes;
+  trackingNode = ctx.nodes[0];
+  const status = await trackingNode.getStatus();
+  flowAddress = status?.networkIdentity?.flowAddress;
+}
+
 // 2. Write a fresh key via the picked nodes.
-const flowAddress = picked[0].status.networkIdentity.flowAddress;
 const flowContract = getFlowContract(flowAddress, signer);
 // PROBE_KEY_STYLE: "default" (our prefix) | "agentio" (mimics
 // agentio-live/agents/agent-live-*/state/latest path). Used to test
@@ -142,7 +170,7 @@ const probeValue = JSON.stringify({ ts: new Date().toISOString(), source: "tail-
 console.log(`Probe key style: ${PROBE_KEY_STYLE}`);
 console.log(`Probe key: ${probeKey}`);
 
-const batcher = new Batcher(1, picked.map((p) => p.node), flowContract, ZG_RPC_URL);
+const batcher = new Batcher(1, nodeClients, flowContract, ZG_RPC_URL);
 batcher.streamDataBuilder.set(
   ZG_STREAM_ID,
   Uint8Array.from(Buffer.from(probeKey, "utf-8")),
@@ -159,7 +187,7 @@ const writeMs = Date.now() - writeStart;
 console.log(`\n[OK] write ${writeMs}ms (tx ${tx.txHash}, root ${tx.rootHash})`);
 
 // Re-fetch storage node status to learn the assigned txSeq.
-const postStatus = await picked[0].node.getStatus();
+const postStatus = await trackingNode.getStatus();
 const ourTxSeq = postStatus.nextTxSeq - 1; // batcher.exec increments nextTxSeq by 1
 console.log(`  Storage node now: nextTxSeq=${postStatus.nextTxSeq}, our entry likely at ${ourTxSeq}`);
 

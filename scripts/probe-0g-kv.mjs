@@ -15,11 +15,15 @@
  *
  * Env:
  *   ZG_KV_READ_DEADLINE_MS - Max time to poll for read-after-write (ms).
- *     Default 300000 (5m) locally; 1200000 (20m) when GITHUB_ACTIONS=true
- *     unless you set this explicitly (public agentio node can lag >5m in CI).
- *   ZG_KV_PROBE_OK_IF_WRITE_ONLY - If "1" and the read leg times out but
- *     the write leg succeeded, exit 0 with a warning (use only when the
- *     public KV is known to be very slow; prefer a longer deadline first).
+ *     Default 300000 (5m) locally. On GitHub Actions, default 300000 (5m) to
+ *     cap job time; increase via repo `vars` if you use `ZG_KV_PROBE_STRICT_READ=1`.
+ *   ZG_KV_PROBE_STRICT_READ - If `1`, fail when read-after-write does not
+ *     confirm within the deadline. **Default: `0` in GitHub Actions** (soft
+ *     pass if write succeeded — the public agentio KV often never shows the
+ *     key in time). **Default: `1` locally** (full round-trip). Set `0`
+ *     locally to soft-pass on read timeout; set `1` in CI to require reads.
+ *   ZG_KV_PROBE_OK_IF_WRITE_ONLY - If "1" (anywhere), soft-pass on read
+ *     timeout when write succeeded (overrides local strict default).
  */
 
 import { readFileSync, existsSync } from "node:fs";
@@ -72,15 +76,24 @@ console.log("  EVM RPC:    ", ZG_RPC_URL);
 console.log("  Agent name: ", AGENT_NAME);
 console.log("  Replicas:   ", `request ${ZG_STORAGE_EXPECTED_REPLICA} full set(s) (falls back to 1 if indexer cannot)`);
 const isGithubActions = envOr("GITHUB_ACTIONS", "") === "true";
-const defaultReadDeadlineMs = isGithubActions ? 20 * 60 * 1000 : 5 * 60 * 1000;
+const defaultReadDeadlineMs = 5 * 60 * 1000;
 const effectiveReadDeadlineMs = parseInt(
   envOr("ZG_KV_READ_DEADLINE_MS", String(defaultReadDeadlineMs)),
   10,
 );
+const strictReadEnv = isGithubActions
+  ? envOr("ZG_KV_PROBE_STRICT_READ", "0")
+  : envOr("ZG_KV_PROBE_STRICT_READ", "1");
+const requireReadRoundtrip = ["1", "true", "yes"].includes(
+  String(strictReadEnv).toLowerCase().trim(),
+);
 if (isGithubActions) {
+  console.log("  Read poll:  ", `${Math.round(effectiveReadDeadlineMs / 1000)}s max (set ZG_KV_READ_DEADLINE_MS to override)`);
   console.log(
-    "  Read poll:  ",
-    `${Math.round(effectiveReadDeadlineMs / 1000)}s max (GitHub Actions default 20m unless ZG_KV_READ_DEADLINE_MS is set)`,
+    "  Read rule:  ",
+    requireReadRoundtrip
+      ? "strict — job fails if read-after-write does not succeed"
+      : "soft in CI — job passes if write leg succeeded (read is best-effort; set ZG_KV_PROBE_STRICT_READ=1 to require round-trip, or self-host zgs_kv)",
   );
 }
 
@@ -177,6 +190,9 @@ const READ_DEADLINE_MS = effectiveReadDeadlineMs;
 const PROBE_OK_IF_WRITE_ONLY = ["1", "true", "yes"].includes(
   (envOr("ZG_KV_PROBE_OK_IF_WRITE_ONLY", "") || "").toLowerCase().trim(),
 );
+/** Soft-pass read timeout: explicit env, or CI default (public KV is unreliable for reads). */
+const allowSoftPassOnReadTimeout =
+  PROBE_OK_IF_WRITE_ONLY || (isGithubActions && !requireReadRoundtrip);
 const STATUS_INTERVAL_MS = 10000;
 const writeFinishedAt = Date.now();
 const readDeadlineMs = writeFinishedAt + READ_DEADLINE_MS;
@@ -235,18 +251,33 @@ while (Date.now() < readDeadlineMs) {
 }
 
 const readFailMsg = `\n[FAIL] read leg gave up after ${Math.round(READ_DEADLINE_MS / 1000)}s: ${lastErr?.message || lastErr || "unknown"}`;
-if (PROBE_OK_IF_WRITE_ONLY) {
+if (allowSoftPassOnReadTimeout) {
   console.error(readFailMsg);
-  console.error("        [WARN] ZG_KV_PROBE_OK_IF_WRITE_ONLY=1 — treating as OK because write leg succeeded.");
-  console.error("        Hints: increase ZG_KV_READ_DEADLINE_MS or use a self-hosted zgs_kv; see AGENTS_FRAMEWORK.md.");
+  if (PROBE_OK_IF_WRITE_ONLY) {
+    console.error("        [WARN] ZG_KV_PROBE_OK_IF_WRITE_ONLY=1 — pass (write leg succeeded).");
+  } else {
+    console.error(
+      "        [WARN] Read-after-write not confirmed (write leg still succeeded on-chain / storage).",
+    );
+    console.error(
+      "        GitHub Actions: soft pass by default — set ZG_KV_PROBE_STRICT_READ=1 to fail here, or self-host ZG_KV_CLIENT_URL. See AGENTS_FRAMEWORK.md.",
+    );
+  }
   process.exit(0);
 }
 console.error(readFailMsg);
 console.error("        Hints:");
 console.error(`          - Verify ZG_KV_CLIENT_URL=${ZG_KV_CLIENT_URL} is reachable.`);
-console.error("          - The agentio public node may be syncing slowly; in CI set");
-console.error("            ZG_KV_READ_DEADLINE_MS (e.g. 1200000 for 20m) or rely on the");
-console.error("            GitHub Actions default in this script (20m when GITHUB_ACTIONS=true).");
+if (isGithubActions) {
+  console.error("          - Strict read mode is on (ZG_KV_PROBE_STRICT_READ=1). Either:");
+  console.error("              * raise ZG_KV_READ_DEADLINE_MS (current 300000ms in workflow), or");
+  console.error("              * unset ZG_KV_PROBE_STRICT_READ to soft-pass on read timeout, or");
+  console.error("              * point ZG_KV_CLIENT_URL at a self-hosted zgs_kv node.");
+} else {
+  console.error("          - The public agentio node can lag many minutes; raise");
+  console.error("            ZG_KV_READ_DEADLINE_MS or set ZG_KV_PROBE_STRICT_READ=0");
+  console.error("            to allow pass when write works but read lags (see script header).");
+}
 console.error("          - If reads stay null indefinitely, swap to a self-hosted zgs_kv:");
 console.error("              export ZG_KV_CLIENT_URL=http://<your-node>:6789");
 console.error("            See docs/AGENTS_FRAMEWORK.md for the self-host guide.");

@@ -5,17 +5,22 @@
  * back-to-back, capture their txSeqs, and append them to the watcher's
  * probe list (printed as JSON for easy copy/paste).
  *
- * **Write path (intentionally not `ZG_STORAGE_EXPECTED_REPLICA` / `selectNodes(N)`):**
- * This script **manually** picks one *fresh* storage node per shard from
- * `getShardedNodes()` to stress burst + txSeq behavior. Production-style
- * replication (try N full sharding sets, then 1) lives in
- * `apps/mcps/0g-storage/index.js`, `scripts/probe-0g-kv.mjs`, and
- * `scripts/lib/select-0g-write-nodes.mjs`.
+ * **Write path (default — production-like):** Uses
+ * `selectStorageWriteNodes(indexer, ZG_STORAGE_EXPECTED_REPLICA)` so the SDK
+ * replicates each write across N **full sharding sets** (default 2; falls
+ * back to 1 if the indexer cannot satisfy 2). Same path as the MCP at
+ * `apps/mcps/0g-storage/index.js` and `scripts/probe-0g-kv.mjs`.
+ *
+ * **Legacy diagnostic mode:** Set `ZG_KV_PROBE_PER_SHARD=1` to instead pick
+ * one *fresh* storage node per shard from `getShardedNodes()`. Used in the
+ * past to study stuck-shard / tail-skip behaviour; preserved for future
+ * debugging only.
  */
 
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { selectStorageWriteNodes } from "./lib/select-0g-write-nodes.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -35,6 +40,13 @@ const ZG_RPC_URL = process.env.ZG_RPC_URL || "https://evmrpc-testnet.0g.ai";
 const ZG_INDEXER_RPC = process.env.ZG_INDEXER_RPC || "https://indexer-storage-testnet-turbo.0g.ai";
 const ZG_STREAM_ID = process.env.ZG_STREAM_ID ||
   "0x000000000000000000000000000000000000000000000000000000000000f2bd";
+const ZG_STORAGE_EXPECTED_REPLICA = Math.max(
+  1,
+  parseInt(process.env.ZG_STORAGE_EXPECTED_REPLICA || "2", 10) || 1,
+);
+const PER_SHARD_MODE = ["1", "true", "yes"].includes(
+  String(process.env.ZG_KV_PROBE_PER_SHARD || "").toLowerCase().trim(),
+);
 
 const { ethers } = await import("ethers");
 const { Indexer, Batcher, getFlowContract, StorageNode } =
@@ -47,39 +59,58 @@ const wallet = (await signer.getAddress()).toLowerCase();
 
 const chainHead = parseInt(await provider.send("eth_blockNumber", []), 16);
 console.log(`chain head: ${chainHead}, wallet: ${wallet}`);
+console.log(
+  `mode: ${PER_SHARD_MODE ? "ZG_KV_PROBE_PER_SHARD=1 (manual per-shard pick)" : `selectNodes(${ZG_STORAGE_EXPECTED_REPLICA}) with fallback to 1`}`,
+);
 
 const indexer = new Indexer(ZG_INDEXER_RPC);
-const sharded = await indexer.getShardedNodes();
-const candidates = [...(sharded.trusted || []), ...(sharded.discovered || [])];
 
-const probed = [];
-for (const c of candidates) {
-  try {
-    const n = new StorageNode(c.url);
-    const status = await Promise.race([
-      n.getStatus(),
-      new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 4000)),
-    ]);
-    const lag = chainHead - (status?.logSyncHeight ?? 0);
-    if (lag < 200) {
-      probed.push({ url: c.url, status, lag, node: n, shard: c.config?.shardId, numShard: c.config?.numShard });
-    }
-  } catch {}
+let nodeClients;
+let trackingNode;
+let flowAddress;
+if (PER_SHARD_MODE) {
+  const sharded = await indexer.getShardedNodes();
+  const candidates = [...(sharded.trusted || []), ...(sharded.discovered || [])];
+  const probed = [];
+  for (const c of candidates) {
+    try {
+      const n = new StorageNode(c.url);
+      const status = await Promise.race([
+        n.getStatus(),
+        new Promise((_, r) => setTimeout(() => r(new Error("timeout")), 4000)),
+      ]);
+      const lag = chainHead - (status?.logSyncHeight ?? 0);
+      if (lag < 200) {
+        probed.push({ url: c.url, status, lag, node: n, shard: c.config?.shardId, numShard: c.config?.numShard });
+      }
+    } catch {}
+  }
+  const byShard = new Map();
+  for (const f of probed) {
+    const k = `${f.shard}/${f.numShard}`;
+    const existing = byShard.get(k);
+    if (!existing || f.status.nextTxSeq > existing.status.nextTxSeq) byShard.set(k, f);
+  }
+  const picked = [...byShard.values()];
+  if (picked.length === 0) {
+    console.error("No fresh storage nodes available across any shard");
+    process.exit(1);
+  }
+  console.log(`Using ${picked.length} fresh storage node(s): ${picked.map(p => `${p.url}(shard ${p.shard}/${p.numShard})`).join(", ")}`);
+  nodeClients = picked.map((p) => p.node);
+  trackingNode = picked[0].node;
+  flowAddress = picked[0].status.networkIdentity.flowAddress;
+} else {
+  const ctx = await selectStorageWriteNodes(indexer, ZG_STORAGE_EXPECTED_REPLICA);
+  console.log(
+    `Using ${ctx.nodes.length} storage node client(s) from selectNodes(${ctx.used})${ctx.usedFallback ? ` (fell back from ${ctx.requested})` : ""}`,
+  );
+  nodeClients = ctx.nodes;
+  trackingNode = ctx.nodes[0];
+  const status = await trackingNode.getStatus();
+  flowAddress = status?.networkIdentity?.flowAddress;
 }
-const byShard = new Map();
-for (const f of probed) {
-  const k = `${f.shard}/${f.numShard}`;
-  const existing = byShard.get(k);
-  if (!existing || f.status.nextTxSeq > existing.status.nextTxSeq) byShard.set(k, f);
-}
-const picked = [...byShard.values()];
-if (picked.length === 0) {
-  console.error("No fresh storage nodes available across any shard");
-  process.exit(1);
-}
-console.log(`Using ${picked.length} fresh storage node(s): ${picked.map(p => `${p.url}(shard ${p.shard}/${p.numShard})`).join(", ")}`);
 
-const flowAddress = picked[0].status.networkIdentity.flowAddress;
 const flowContract = getFlowContract(flowAddress, signer);
 
 const ts = Date.now();
@@ -104,7 +135,7 @@ const probes = [
 const results = [];
 for (const p of probes) {
   const value = JSON.stringify({ ts: new Date().toISOString(), id: p.id, style: p.style });
-  const batcher = new Batcher(1, picked.map(n => n.node), flowContract, ZG_RPC_URL);
+  const batcher = new Batcher(1, nodeClients, flowContract, ZG_RPC_URL);
   batcher.streamDataBuilder.set(
     ZG_STREAM_ID,
     Uint8Array.from(Buffer.from(p.key, "utf-8")),
@@ -117,7 +148,7 @@ for (const p of probes) {
     continue;
   }
   // Storage node nextTxSeq is incremented by 1 after each write.
-  const post = await picked[0].node.getStatus();
+  const post = await trackingNode.getStatus();
   const ourTxSeq = post.nextTxSeq - 1;
   const elapsed = Date.now() - start;
   console.log(`[${elapsed}ms] ${p.id} -> txSeq=${ourTxSeq} tx=${tx.txHash}`);
