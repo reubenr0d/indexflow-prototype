@@ -49,6 +49,10 @@ const ZG_INDEXER_RPC = envOr("ZG_INDEXER_RPC", "https://indexer-storage-testnet-
 const ZG_KV_CLIENT_URL = envOr("ZG_KV_CLIENT_URL", AGENTIO_KV_DEFAULT);
 const ZG_STREAM_ID = envOr("ZG_STREAM_ID", AGENTIO_STREAM_DEFAULT);
 const ZG_KV_TIMEOUT_MS = parseInt(envOr("ZG_KV_TIMEOUT_MS", "5000"), 10);
+const ZG_STORAGE_EXPECTED_REPLICA = Math.max(
+  1,
+  parseInt(envOr("ZG_STORAGE_EXPECTED_REPLICA", "2"), 10) || 1,
+);
 const AGENT_NAME = envOr("AGENT_NAME", "probe");
 
 console.log("0G KV Round-Trip Probe");
@@ -57,6 +61,7 @@ console.log("  Stream ID:  ", ZG_STREAM_ID);
 console.log("  Indexer RPC:", ZG_INDEXER_RPC);
 console.log("  EVM RPC:    ", ZG_RPC_URL);
 console.log("  Agent name: ", AGENT_NAME);
+console.log("  Replicas:   ", `request ${ZG_STORAGE_EXPECTED_REPLICA} full set(s) (falls back to 1 if indexer cannot)`);
 
 if (!ZG_PRIVATE_KEY) {
   console.error("\n[FAIL] ZG_PRIVATE_KEY (or PRIVATE_KEY) is required to write to KV.");
@@ -97,19 +102,40 @@ function withTimeout(p, ms, label) {
 const kv = new KvClient(ZG_KV_CLIENT_URL);
 const indexer = new Indexer(ZG_INDEXER_RPC);
 
+async function selectWriteNodes() {
+  const order =
+    ZG_STORAGE_EXPECTED_REPLICA === 1
+      ? [1]
+      : [ZG_STORAGE_EXPECTED_REPLICA, 1].filter((n, i, a) => a.indexOf(n) === i);
+  let lastErr = null;
+  for (const n of order) {
+    const [nodes, err] = await indexer.selectNodes(n);
+    if (!err && nodes?.length) {
+      return { nodes, used: n, requested: ZG_STORAGE_EXPECTED_REPLICA, usedFallback: n < ZG_STORAGE_EXPECTED_REPLICA };
+    }
+    lastErr = err;
+  }
+  throw new Error(`indexer.selectNodes failed: ${lastErr?.message || lastErr}`);
+}
+
 let writeLatencyMs = null;
 let readLatencyMs = null;
 
 try {
   // ── Write leg ─────────────────────────────────────────────────────────
   const writeStart = Date.now();
-  const [nodes, nodesErr] = await indexer.selectNodes(1);
-  if (nodesErr) throw new Error(`indexer.selectNodes failed: ${nodesErr.message || nodesErr}`);
+  const { nodes, used, usedFallback } = await selectWriteNodes();
+  if (usedFallback) {
+    console.log(`  (indexer selected ${used} full set(s); ${ZG_STORAGE_EXPECTED_REPLICA} was requested but not available)\n`);
+  } else {
+    console.log(`  (indexer selected ${used} full set(s) for this write)\n`);
+  }
   const status = await nodes[0].getStatus();
   const flowAddress = status?.networkIdentity?.flowAddress;
   if (!flowAddress) throw new Error("Storage node returned no flowAddress");
   const flowContract = getFlowContract(flowAddress, signer);
 
+  // Batcher(streamVersion, nodeClients, ...) — first arg is KV stream data version, not replica count.
   const batcher = new Batcher(1, nodes, flowContract, ZG_RPC_URL);
   batcher.streamDataBuilder.set(
     ZG_STREAM_ID,

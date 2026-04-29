@@ -221,6 +221,39 @@ function castSendDirect(contractAddr, sig, args = []) {
   return out.trim();
 }
 
+/**
+ * KeeperHub sometimes omits `transactionHash` on the status payload; the explorer
+ * link often still contains the tx id. Used to `cast receipt` the real logs so
+ * e.g. create_vault can recover `vaultAddress` from `BasketCreated` events.
+ * @param {Record<string, unknown>} result
+ * @returns {string | null}
+ */
+function pickTransactionHashFromKeeperResult(result) {
+  if (!result) return null;
+  const h = result.transactionHash;
+  if (typeof h === "string" && /^0x[a-fA-F0-9]{64}$/.test(h)) return h;
+  const link = result.transactionLink;
+  if (typeof link === "string") {
+    const m = link.match(/0x[a-fA-F0-9]{64}/);
+    if (m) return m[0];
+  }
+  return null;
+}
+
+function tryCastReceiptJson(txHash) {
+  if (!txHash) return null;
+  try {
+    return execFileSync(
+      "cast",
+      ["receipt", txHash, "--rpc-url", RPC_URL, "--json"],
+      { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+    ).trim();
+  } catch (err) {
+    console.error(`[KeeperHub] cast receipt ${txHash}: ${err.message}`);
+    return null;
+  }
+}
+
 async function castSendViaKeeperHub(contractAddr, sig, args = [], justification = "") {
   const sigMatch = sig.match(/^(\w+)\((.*)\)$/);
   if (!sigMatch) {
@@ -253,15 +286,37 @@ async function castSendViaKeeperHub(contractAddr, sig, args = [], justification 
     );
 
     if (result.success) {
-      console.error(`[KeeperHub] ✓ ${functionName} confirmed: ${result.transactionHash}`);
-      // Return a JSON receipt compatible with cast output
-      return JSON.stringify({
-        transactionHash: result.transactionHash,
-        blockNumber: result.blockNumber ? `0x${result.blockNumber.toString(16)}` : null,
+      const txHash =
+        pickTransactionHashFromKeeperResult(result) ||
+        (typeof result.transactionHash === "string" ? result.transactionHash : null);
+      if (txHash) {
+        const onChain = tryCastReceiptJson(txHash);
+        if (onChain) {
+          try {
+            JSON.parse(onChain);
+            console.error(
+              `[KeeperHub] ✓ ${functionName} confirmed: ${txHash} (receipt+logs from RPC)`,
+            );
+            return onChain;
+          } catch {
+            /* fall through to synthetic */
+          }
+        }
+      }
+      const payload = {
+        transactionHash: txHash || null,
+        blockNumber: result.blockNumber != null ? `0x${Number(result.blockNumber).toString(16)}` : null,
         status: "0x1",
-        gasUsed: result.gasUsed || null,
+        gasUsed: result.gasUsed != null ? result.gasUsed : null,
         keeperHub: true,
-      });
+      };
+      if (!txHash) {
+        delete payload.transactionHash;
+      }
+      console.error(
+        `[KeeperHub] ✓ ${functionName} confirmed: ${txHash || result.transactionLink || "see KeeperHub"}`,
+      );
+      return JSON.stringify(payload);
     } else {
       throw new Error(`KeeperHub execution failed: ${formatKeeperHubFailureResult(result)}`);
     }
@@ -289,10 +344,12 @@ async function castSend(contractAddr, sig, args = [], justification = "", option
 function parseReceipt(rawJson) {
   try {
     const r = JSON.parse(rawJson);
+    const st = r.status;
+    const ok = st === "0x1" || st === 1 || st === "0x01";
     return {
       transactionHash: r.transactionHash,
-      status: r.status === "0x1" ? "success" : "reverted",
-      blockNumber: r.blockNumber ? parseIntSafe(r.blockNumber) : null,
+      status: ok ? "success" : "reverted",
+      blockNumber: r.blockNumber != null && r.blockNumber !== "" ? parseIntSafe(r.blockNumber) : null,
       gasUsed: r.gasUsed ?? null,
     };
   } catch {

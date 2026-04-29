@@ -28,6 +28,10 @@
  *   ZG_STREAM_ID      - KV stream ID (default: agentio shared stream)
  *   AGENT_NAME        - Used in the wallet:agent: key prefix (default: "default")
  *   ZG_KV_TIMEOUT_MS  - Hard cap on KV read latency in ms (default: 5000)
+ *   ZG_STORAGE_EXPECTED_REPLICA - Indexer replication: number of *full* sharding
+ *     sets for KV batch writes and log file uploads (default: 2). The SDK
+ *     needs this many complete replica groups; if the network cannot provide
+ *     it, the MCP falls back to 1.
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -69,6 +73,11 @@ const AGENT_NAME = envOr("AGENT_NAME", "default");
 // Hard cap each KV read so a temporary outage surfaces as a clear error
 // rather than hanging the agent loop.
 const ZG_KV_TIMEOUT_MS = parseInt(envOr("ZG_KV_TIMEOUT_MS", "5000"), 10);
+/** How many full sharding sets the indexer should use for storage writes (min 1). */
+const ZG_STORAGE_EXPECTED_REPLICA = Math.max(
+  1,
+  parseInt(envOr("ZG_STORAGE_EXPECTED_REPLICA", "2"), 10) || 1,
+);
 
 function withTimeout(promise, ms, label) {
   let timer;
@@ -139,6 +148,36 @@ function getKvClient() {
     _kvClient = new KvClient(ZG_KV_CLIENT_URL);
   }
   return _kvClient;
+}
+
+/**
+ * Select storage nodes for writes: try `ZG_STORAGE_EXPECTED_REPLICA` full sets,
+ * then fall back to 1 if the indexer cannot satisfy the replication request.
+ * @returns {{ nodes: unknown[], expectedReplica: number, requested: number, usedFallback: boolean }}
+ */
+async function getStorageWriteContext() {
+  const indexer = getIndexer();
+  const requested = ZG_STORAGE_EXPECTED_REPLICA;
+  const order =
+    requested === 1
+      ? [1]
+      : [requested, 1].filter((n, i, a) => a.indexOf(n) === i);
+  let lastErr = null;
+  for (const n of order) {
+    const [nodes, err] = await indexer.selectNodes(n);
+    if (!err && nodes?.length) {
+      return {
+        nodes,
+        expectedReplica: n,
+        requested,
+        usedFallback: n < requested,
+      };
+    }
+    lastErr = err;
+  }
+  throw new Error(
+    `Could not select storage nodes for writes (last error: ${lastErr?.message || lastErr})`
+  );
 }
 
 async function getFlowContractInstance() {
@@ -259,13 +298,11 @@ async function kvGetRaw(rawKey) {
   return bytesToString(value);
 }
 
-async function kvSetRaw(rawKey, value) {
-  const indexer = getIndexer();
+async function kvSetRaw(rawKey, value, writeCtx) {
   const flowContract = await getFlowContractInstance();
-  const [nodes, nodesErr] = await indexer.selectNodes(1);
-  if (nodesErr) throw new Error(`Error selecting nodes: ${nodesErr}`);
+  const ctx = writeCtx ?? (await getStorageWriteContext());
 
-  const batcher = new Batcher(1, nodes, flowContract, ZG_RPC_URL);
+  const batcher = new Batcher(1, ctx.nodes, flowContract, ZG_RPC_URL);
   batcher.streamDataBuilder.set(ZG_STREAM_ID, keyToBytes(rawKey), valueToBytes(value));
 
   const [tx, batchErr] = await batcher.exec();
@@ -323,6 +360,7 @@ server.registerTool(
           stream_id: ZG_STREAM_ID,
           agent_name: AGENT_NAME,
           key_prefix: `${address}:${AGENT_NAME}:`,
+          expected_replica_requested: ZG_STORAGE_EXPECTED_REPLICA,
         },
       });
     } catch (err) {
@@ -520,9 +558,10 @@ server.registerTool(
 
 const LAST_RUNLOG_ROOT_KEY = "last_runlog_root";
 
-async function uploadLogEntry(logEntry) {
+async function uploadLogEntry(logEntry, writeCtx) {
   const indexer = getIndexer();
   const signer = getSigner();
+  const ctx = writeCtx ?? (await getStorageWriteContext());
   const tempDir = os.tmpdir();
   const tempPath = resolve(tempDir, `0g-log-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.json`);
   writeFileSync(tempPath, JSON.stringify(logEntry, null, 2));
@@ -536,7 +575,12 @@ async function uploadLogEntry(logEntry) {
     }
     const rootHash = tree.rootHash();
 
-    const [tx, uploadErr] = await indexer.upload(file, ZG_RPC_URL, signer);
+    const [tx, uploadErr] = await indexer.upload(
+      file,
+      ZG_RPC_URL,
+      signer,
+      { expectedReplica: ctx.expectedReplica },
+    );
     await file.close();
     if (uploadErr) throw new Error(`Upload failed: ${uploadErr.message || uploadErr}`);
 
@@ -601,13 +645,14 @@ server.registerTool(
         },
       };
 
-      const { rootHash, tx } = await uploadLogEntry(logEntry);
+      const writeCtx = await getStorageWriteContext();
+      const { rootHash, tx } = await uploadLogEntry(logEntry, writeCtx);
 
       // Update the head pointer so future runs can find this entry.
       let pointerTx = null;
       let pointerError = null;
       try {
-        pointerTx = await kvSetRaw(pointerKey, rootHash);
+        pointerTx = await kvSetRaw(pointerKey, rootHash, writeCtx);
       } catch (err) {
         pointerError = err.message;
       }
@@ -622,6 +667,9 @@ server.registerTool(
         pointer_error: pointerError,
         entry: logEntry,
         storage_type: "0G_LOG",
+        expected_replica_used: writeCtx.expectedReplica,
+        expected_replica_requested: writeCtx.requested,
+        expected_replica_fallback: writeCtx.usedFallback,
         retrieval_hint: "Use log_read with this root_hash, or runlog_recent to walk the chain.",
       });
     } catch (err) {

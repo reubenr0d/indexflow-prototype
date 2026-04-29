@@ -95,6 +95,10 @@ jobs:
           ZG_STREAM_ID: ${{ vars.ZG_STREAM_ID || '0x000000000000000000000000000000000000000000000000000000000000f2bd' }}
           ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
+          # GitHub Actions has no TTY; without this, the runner skips all write tools
+          # (create_vault, state_set, etc.) — see shouldSkipWritesForNonInteractiveSession
+          # in scripts/agent-runner-confirmation.mjs.
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
         run: node scripts/agent-runner.mjs 0g-vault-manager

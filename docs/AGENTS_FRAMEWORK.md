@@ -378,7 +378,7 @@ The workflow at `.github/workflows/vault-agent.yml` runs `0g-vault-manager` agai
 1. Go to Actions > "Vault Agent (0G)" > Run workflow
 2. Optionally toggle dry-run mode
 
-The cron schedule runs `0g-vault-manager` every 6 hours. State, run logs, and the web app's vault metadata are all persisted on 0G Storage (no commit-back, no `contents: write` permission). Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+The cron schedule runs `0g-vault-manager` every 6 hours. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). State, run logs, and the web app's vault metadata are all persisted on 0G Storage (no commit-back, no `contents: write` permission). Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 ### Write Confirmation Mode
 
@@ -436,6 +436,7 @@ No env vars required. Works out of the box.
 | `ZG_KV_CLIENT_URL` | `http://178.238.236.119:6789` (agentio public hackathon node) | 0G KV store endpoint |
 | `ZG_STREAM_ID` | `0x000000000000000000000000000000000000000000000000000000000000f2bd` (agentio shared stream) | KV stream the MCP reads/writes |
 | `ZG_KV_TIMEOUT_MS` | `5000` | Hard cap per KV read so an outage surfaces quickly |
+| `ZG_STORAGE_EXPECTED_REPLICA` | `2` | Number of *full* sharding sets the indexer should use for KV batch writes and log uploads (SDK `expectedReplica` / `selectNodes`); if the network cannot provide that many complete sets, the MCP and `probe-0g-kv.mjs` fall back to `1` |
 | `AGENT_NAME` | `default` (set by runner) | Used in the `<wallet>:<agent>:` key prefix |
 
 Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai). Swap
@@ -475,7 +476,7 @@ Repository **variables** (not secrets — they're public addresses/URLs):
 | `ZG_COMPUTE_PROVIDER` | current 0G compute provider address (verify with `node scripts/probe-0g-compute.mjs`); leaving it unset disables 0G compute and uses OpenAI |
 | `ZG_KV_CLIENT_URL` | leave unset (defaults to the agentio public node `http://178.238.236.119:6789`); override only if you self-host a 0G KV node |
 | `ZG_STREAM_ID` | leave unset (defaults to the agentio shared stream `0x...f2bd`); override only if you self-host a stream |
-| `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
+| `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_STORAGE_EXPECTED_REPLICA`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
 
 The vault-agent workflow runs `scripts/probe-0g-kv.mjs` as a pre-flight
 step. If the configured KV node is unreachable, the run fails with a
