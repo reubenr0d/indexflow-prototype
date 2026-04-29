@@ -58,6 +58,9 @@ jobs:
           ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
           ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
           ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
+          # Public agentio KV often needs >5m to show read-after-write in CI; script
+          # also defaults to 20m when GITHUB_ACTIONS=true. Override via repo var.
+          ZG_KV_READ_DEADLINE_MS: ${{ vars.ZG_KV_READ_DEADLINE_MS || '1200000' }}
           AGENT_NAME: 0g-vault-manager
         run: node scripts/probe-0g-kv.mjs
 

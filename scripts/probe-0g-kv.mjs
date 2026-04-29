@@ -12,6 +12,14 @@
  * Used as a pre-flight step in the vault-agent workflow so a dead KV
  * endpoint surfaces with a clear "swap ZG_KV_CLIENT_URL" hint instead of
  * deep-running the agent loop and failing on the first state read.
+ *
+ * Env:
+ *   ZG_KV_READ_DEADLINE_MS - Max time to poll for read-after-write (ms).
+ *     Default 300000 (5m) locally; 1200000 (20m) when GITHUB_ACTIONS=true
+ *     unless you set this explicitly (public agentio node can lag >5m in CI).
+ *   ZG_KV_PROBE_OK_IF_WRITE_ONLY - If "1" and the read leg times out but
+ *     the write leg succeeded, exit 0 with a warning (use only when the
+ *     public KV is known to be very slow; prefer a longer deadline first).
  */
 
 import { readFileSync, existsSync } from "node:fs";
@@ -62,6 +70,18 @@ console.log("  Indexer RPC:", ZG_INDEXER_RPC);
 console.log("  EVM RPC:    ", ZG_RPC_URL);
 console.log("  Agent name: ", AGENT_NAME);
 console.log("  Replicas:   ", `request ${ZG_STORAGE_EXPECTED_REPLICA} full set(s) (falls back to 1 if indexer cannot)`);
+const isGithubActions = envOr("GITHUB_ACTIONS", "") === "true";
+const defaultReadDeadlineMs = isGithubActions ? 20 * 60 * 1000 : 5 * 60 * 1000;
+const effectiveReadDeadlineMs = parseInt(
+  envOr("ZG_KV_READ_DEADLINE_MS", String(defaultReadDeadlineMs)),
+  10,
+);
+if (isGithubActions) {
+  console.log(
+    "  Read poll:  ",
+    `${Math.round(effectiveReadDeadlineMs / 1000)}s max (GitHub Actions default 20m unless ZG_KV_READ_DEADLINE_MS is set)`,
+  );
+}
 
 if (!ZG_PRIVATE_KEY) {
   console.error("\n[FAIL] ZG_PRIVATE_KEY (or PRIVATE_KEY) is required to write to KV.");
@@ -165,7 +185,10 @@ try {
 // missing keys *and* keys not yet replicated. Treat size===0 as
 // "still syncing", non-empty + matching payload as success, and
 // non-empty + mismatching payload as a real failure.
-const READ_DEADLINE_MS = parseInt(envOr("ZG_KV_READ_DEADLINE_MS", String(5 * 60 * 1000)), 10);
+const READ_DEADLINE_MS = effectiveReadDeadlineMs;
+const PROBE_OK_IF_WRITE_ONLY = ["1", "true", "yes"].includes(
+  (envOr("ZG_KV_PROBE_OK_IF_WRITE_ONLY", "") || "").toLowerCase().trim(),
+);
 const STATUS_INTERVAL_MS = 10000;
 const writeFinishedAt = Date.now();
 const readDeadlineMs = writeFinishedAt + READ_DEADLINE_MS;
@@ -223,11 +246,19 @@ while (Date.now() < readDeadlineMs) {
   await new Promise((r) => setTimeout(r, wait));
 }
 
-console.error(`\n[FAIL] read leg gave up after ${Math.round(READ_DEADLINE_MS / 1000)}s: ${lastErr?.message || lastErr || "unknown"}`);
+const readFailMsg = `\n[FAIL] read leg gave up after ${Math.round(READ_DEADLINE_MS / 1000)}s: ${lastErr?.message || lastErr || "unknown"}`;
+if (PROBE_OK_IF_WRITE_ONLY) {
+  console.error(readFailMsg);
+  console.error("        [WARN] ZG_KV_PROBE_OK_IF_WRITE_ONLY=1 — treating as OK because write leg succeeded.");
+  console.error("        Hints: increase ZG_KV_READ_DEADLINE_MS or use a self-hosted zgs_kv; see AGENTS_FRAMEWORK.md.");
+  process.exit(0);
+}
+console.error(readFailMsg);
 console.error("        Hints:");
 console.error(`          - Verify ZG_KV_CLIENT_URL=${ZG_KV_CLIENT_URL} is reachable.`);
-console.error("          - The agentio public node may be syncing slowly; raise");
-console.error("            ZG_KV_READ_DEADLINE_MS (default 300000ms) and rerun.");
+console.error("          - The agentio public node may be syncing slowly; in CI set");
+console.error("            ZG_KV_READ_DEADLINE_MS (e.g. 1200000 for 20m) or rely on the");
+console.error("            GitHub Actions default in this script (20m when GITHUB_ACTIONS=true).");
 console.error("          - If reads stay null indefinitely, swap to a self-hosted zgs_kv:");
 console.error("              export ZG_KV_CLIENT_URL=http://<your-node>:6789");
 console.error("            See docs/AGENTS_FRAMEWORK.md for the self-host guide.");

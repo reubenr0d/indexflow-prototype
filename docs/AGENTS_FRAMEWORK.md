@@ -477,10 +477,13 @@ Repository **variables** (not secrets — they're public addresses/URLs):
 | `ZG_KV_CLIENT_URL` | leave unset (defaults to the agentio public node `http://178.238.236.119:6789`); override only if you self-host a 0G KV node |
 | `ZG_STREAM_ID` | leave unset (defaults to the agentio shared stream `0x...f2bd`); override only if you self-host a stream |
 | `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_STORAGE_EXPECTED_REPLICA`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
+| `ZG_KV_READ_DEADLINE_MS` | Workflow default is `1200000` (20m) for the vault-agent **Probe 0G KV** step; the probe script also defaults to 20m when `GITHUB_ACTIONS=true` if unset. Public agentio KV can lag >5m for read-after-write in CI — set this repo variable to override (e.g. `1800000`). Last resort: set `ZG_KV_PROBE_OK_IF_WRITE_ONLY=1` on that step only if the write leg succeeds but the read never catches up (use sparingly). |
 
 The vault-agent workflow runs `scripts/probe-0g-kv.mjs` as a pre-flight
-step. If the configured KV node is unreachable, the run fails with a
-"swap `ZG_KV_CLIENT_URL`" hint instead of bricking the agent loop.
+step. It checks that the wallet can write through the indexer and (within
+`ZG_KV_READ_DEADLINE_MS`) read the key back from `ZG_KV_CLIENT_URL`. If the
+endpoint is down, the run fails with a "swap `ZG_KV_CLIENT_URL`" hint instead
+of running the full agent.
 
 **One-time manual prerequisites** (cannot be automated by CI):
 
