@@ -4,6 +4,8 @@
 // (`get_storage_info`, `state_get`) so it is safe even without 0G testnet funds.
 //
 // Use --write to additionally attempt a `state_set` (costs 0G testnet tokens).
+// Writes use the MCP’s `ZG_STORAGE_EXPECTED_REPLICA` + `getStorageWriteContext` path
+// (not a duplicate client-side `selectNodes` in this file).
 
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";

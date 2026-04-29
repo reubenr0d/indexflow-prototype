@@ -25,6 +25,7 @@
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { selectStorageWriteNodes } from "./lib/select-0g-write-nodes.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -122,29 +123,16 @@ function withTimeout(p, ms, label) {
 const kv = new KvClient(ZG_KV_CLIENT_URL);
 const indexer = new Indexer(ZG_INDEXER_RPC);
 
-async function selectWriteNodes() {
-  const order =
-    ZG_STORAGE_EXPECTED_REPLICA === 1
-      ? [1]
-      : [ZG_STORAGE_EXPECTED_REPLICA, 1].filter((n, i, a) => a.indexOf(n) === i);
-  let lastErr = null;
-  for (const n of order) {
-    const [nodes, err] = await indexer.selectNodes(n);
-    if (!err && nodes?.length) {
-      return { nodes, used: n, requested: ZG_STORAGE_EXPECTED_REPLICA, usedFallback: n < ZG_STORAGE_EXPECTED_REPLICA };
-    }
-    lastErr = err;
-  }
-  throw new Error(`indexer.selectNodes failed: ${lastErr?.message || lastErr}`);
-}
-
 let writeLatencyMs = null;
 let readLatencyMs = null;
 
 try {
   // ── Write leg ─────────────────────────────────────────────────────────
   const writeStart = Date.now();
-  const { nodes, used, usedFallback } = await selectWriteNodes();
+  const { nodes, used, usedFallback } = await selectStorageWriteNodes(
+    indexer,
+    ZG_STORAGE_EXPECTED_REPLICA,
+  );
   if (usedFallback) {
     console.log(`  (indexer selected ${used} full set(s); ${ZG_STORAGE_EXPECTED_REPLICA} was requested but not available)\n`);
   } else {

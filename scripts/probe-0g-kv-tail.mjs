@@ -13,6 +13,11 @@
  *         are being skipped, same failure mode as our 53088-53092 writes).
  *
  *   ZG_KV_READ_DEADLINE_MS  default 600000 (10 min)
+ *
+ * **Write path:** Uses **manual** per-shard node selection (one `StorageNode`
+ * per shard) so the test targets *fresh* nodes, not the indexer's
+ * `selectNodes(N)` replica sets. The replication rule used by the MCP and
+ * `probe-0g-kv.mjs` is in `scripts/lib/select-0g-write-nodes.mjs`.
  */
 
 import { readFileSync, existsSync } from "node:fs";

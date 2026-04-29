@@ -4,6 +4,13 @@
  * Burst-probe: write 3 fresh keys (default + agentio + agentio-with-special-char)
  * back-to-back, capture their txSeqs, and append them to the watcher's
  * probe list (printed as JSON for easy copy/paste).
+ *
+ * **Write path (intentionally not `ZG_STORAGE_EXPECTED_REPLICA` / `selectNodes(N)`):**
+ * This script **manually** picks one *fresh* storage node per shard from
+ * `getShardedNodes()` to stress burst + txSeq behavior. Production-style
+ * replication (try N full sharding sets, then 1) lives in
+ * `apps/mcps/0g-storage/index.js`, `scripts/probe-0g-kv.mjs`, and
+ * `scripts/lib/select-0g-write-nodes.mjs`.
  */
 
 import { readFileSync, existsSync } from "node:fs";
