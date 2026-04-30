@@ -59,13 +59,13 @@ export function TourTooltip() {
 
   useEffect(() => {
     if (!isActive || !step) {
-      setVisible(false);
+      queueMicrotask(() => setVisible(false));
       return;
     }
 
     const target = document.querySelector(`[data-tour="${step.target}"]`);
     if (!target) {
-      setVisible(false);
+      queueMicrotask(() => setVisible(false));
       return;
     }
 

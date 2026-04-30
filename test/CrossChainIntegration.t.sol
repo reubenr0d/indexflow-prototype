@@ -119,11 +119,7 @@ contract CrossChainIntegrationTest is Test {
         relay.updateState(chains, weights, a, v, p, ts);
     }
 
-    function _twoChainWeights(uint256 w1, uint256 w2)
-        internal
-        view
-        returns (uint64[] memory c, uint256[] memory w)
-    {
+    function _twoChainWeights(uint256 w1, uint256 w2) internal view returns (uint64[] memory c, uint256[] memory w) {
         c = new uint64[](2);
         w = new uint256[](2);
         c[0] = hubSelector;

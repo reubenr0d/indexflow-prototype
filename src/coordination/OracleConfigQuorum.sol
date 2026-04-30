@@ -107,10 +107,7 @@ contract OracleConfigQuorum is IOracleConfigQuorum, CCIPReceiver, Ownable {
         bytes32 cfgHash = _configHash(proposal);
         bytes memory encoded = abi.encode(proposal);
 
-        _votes[assetId][localChainSelector] = Vote({
-            configHash: cfgHash,
-            timestamp: uint48(block.timestamp)
-        });
+        _votes[assetId][localChainSelector] = Vote({configHash: cfgHash, timestamp: uint48(block.timestamp)});
         _proposalData[assetId][localChainSelector] = encoded;
 
         emit ConfigProposed(assetId, cfgHash, localChainSelector);
@@ -128,14 +125,16 @@ contract OracleConfigQuorum is IOracleConfigQuorum, CCIPReceiver, Ownable {
         uint8 decimals
     ) external onlyOwner {
         bytes32 assetId = keccak256(bytes(symbol));
-        _applyConfig(AssetConfigProposal({
-            assetId: assetId,
-            symbol: symbol,
-            feedType: feedType,
-            stalenessThreshold: stalenessThreshold,
-            deviationBps: deviationBps,
-            decimals: decimals
-        }));
+        _applyConfig(
+            AssetConfigProposal({
+                assetId: assetId,
+                symbol: symbol,
+                feedType: feedType,
+                stalenessThreshold: stalenessThreshold,
+                deviationBps: deviationBps,
+                decimals: decimals
+            })
+        );
         emit ForceApplied(assetId, symbol);
     }
 
@@ -152,10 +151,7 @@ contract OracleConfigQuorum is IOracleConfigQuorum, CCIPReceiver, Ownable {
         AssetConfigProposal memory proposal = abi.decode(message.data, (AssetConfigProposal));
         bytes32 cfgHash = _configHash(proposal);
 
-        _votes[proposal.assetId][sourceChain] = Vote({
-            configHash: cfgHash,
-            timestamp: uint48(block.timestamp)
-        });
+        _votes[proposal.assetId][sourceChain] = Vote({configHash: cfgHash, timestamp: uint48(block.timestamp)});
         _proposalData[proposal.assetId][sourceChain] = message.data;
 
         emit ConfigProposed(proposal.assetId, cfgHash, sourceChain);
@@ -196,7 +192,11 @@ contract OracleConfigQuorum is IOracleConfigQuorum, CCIPReceiver, Ownable {
         }
     }
 
-    function _findProposalWithHash(bytes32 assetId, bytes32 targetHash) internal view returns (AssetConfigProposal memory) {
+    function _findProposalWithHash(bytes32 assetId, bytes32 targetHash)
+        internal
+        view
+        returns (AssetConfigProposal memory)
+    {
         // Try local first
         bytes memory data = _proposalData[assetId][localChainSelector];
         if (data.length > 0) {

@@ -71,14 +71,14 @@ describe("usePoolReserveRegistryState", () => {
       failedTargets: [],
     });
 
-    let view: ReturnType<typeof usePoolReserveRegistryState> | null = null;
+    const viewRef: { current: ReturnType<typeof usePoolReserveRegistryState> | null } = { current: null };
     function Probe() {
-      view = usePoolReserveRegistryState();
+      viewRef.current = usePoolReserveRegistryState();
       return createElement("div");
     }
 
     renderToStaticMarkup(createElement(Probe));
-    expect(view).toEqual({
+    expect(viewRef.current).toEqual({
       chains: [],
       isLoading: false,
       isEmpty: true,
@@ -104,14 +104,14 @@ describe("usePoolReserveRegistryState", () => {
       failedTargets: ["fuji"],
     });
 
-    let view: ReturnType<typeof usePoolReserveRegistryState> | null = null;
+    const viewRef2: { current: ReturnType<typeof usePoolReserveRegistryState> | null } = { current: null };
     function Probe() {
-      view = usePoolReserveRegistryState();
+      viewRef2.current = usePoolReserveRegistryState();
       return createElement("div");
     }
 
     renderToStaticMarkup(createElement(Probe));
-    expect(view).toEqual({
+    expect(viewRef2.current).toEqual({
       chains: [chain],
       isLoading: false,
       isEmpty: false,

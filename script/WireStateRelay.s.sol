@@ -63,7 +63,7 @@ contract WireStateRelay is Script {
 
         for (uint256 i = 0; i < vaults.length; i++) {
             IBasketVaultWire vault = IBasketVaultWire(vaults[i]);
-            
+
             // Check if already wired
             if (vault.stateRelay() == stateRelay) {
                 console2.log("  Vault", vaults[i], "already wired");

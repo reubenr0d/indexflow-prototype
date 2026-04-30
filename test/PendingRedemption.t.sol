@@ -213,7 +213,7 @@ contract PendingRedemptionTest is Test {
         assertEq(vault.pendingRedemptionCount(), 1);
 
         // Process Bob's queued redemption
-        (address user,,uint256 usdcOwed,,) = vault.pendingRedemptions(0);
+        (address user,, uint256 usdcOwed,,) = vault.pendingRedemptions(0);
         assertEq(user, bob);
 
         usdc.mint(address(vault), usdcOwed);

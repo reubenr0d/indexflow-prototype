@@ -21,10 +21,11 @@ contract DeploySpokeHarness is DeploySpoke {
         return _loadBootstrapConfig(chainsJson, chainKey);
     }
 
-    function exposeMaybeBootstrapSpokeBasket(SpokeBootstrapContext memory ctx, BootstrapConfig memory cfg, bool mockUsdc)
-        external
-        returns (address)
-    {
+    function exposeMaybeBootstrapSpokeBasket(
+        SpokeBootstrapContext memory ctx,
+        BootstrapConfig memory cfg,
+        bool mockUsdc
+    ) external returns (address) {
         return _maybeBootstrapSpokeBasket(ctx, cfg, mockUsdc);
     }
 }

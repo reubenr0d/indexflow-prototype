@@ -60,14 +60,10 @@ contract OracleConfigQuorumTest is Test {
         oracleB = new OracleAdapter(address(this));
 
         // Quorum A: threshold 2, TTL 1 day
-        quorumA = new OracleConfigQuorum(
-            address(routerA), address(oracleA), CHAIN_A, 2, 86_400, address(0), owner
-        );
+        quorumA = new OracleConfigQuorum(address(routerA), address(oracleA), CHAIN_A, 2, 86_400, address(0), owner);
 
         // Quorum B: threshold 2, TTL 1 day
-        quorumB = new OracleConfigQuorum(
-            address(routerB), address(oracleB), CHAIN_B, 2, 86_400, address(0), owner
-        );
+        quorumB = new OracleConfigQuorum(address(routerB), address(oracleB), CHAIN_B, 2, 86_400, address(0), owner);
 
         // Wire as peers
         quorumA.addPeer(CHAIN_B, address(quorumB));

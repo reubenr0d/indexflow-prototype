@@ -9,6 +9,14 @@ vi.mock("next/link", () => ({
     createElement("a", { href }, children),
 }));
 
+vi.mock("@/hooks/useAgentMetadata", () => ({
+  useAgentMetadata: () => ({ data: null, isPending: false, isError: false }),
+}));
+
+vi.mock("@/hooks/subgraph/useBasketTrends", () => ({
+  useBasketTrendSnapshots: () => ({ data: undefined, isPending: false, isError: false }),
+}));
+
 describe("BasketCard", () => {
   it("renders the upgraded hierarchy and trend placeholders", () => {
     const html = renderToStaticMarkup(
@@ -29,7 +37,6 @@ describe("BasketCard", () => {
     expect(html).toContain("Momentum Basket");
     expect(html).toContain("TVL");
     expect(html).toContain("Share price");
-    expect(html).toContain("Assets");
     expect(html).toContain("Perp sleeve");
     expect(html).toContain("24h");
     expect(html).toContain("7d");

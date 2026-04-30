@@ -197,17 +197,14 @@ function ChainDetailRow({ chain, poolPct }: { chain: ChainState; poolPct: number
 
 export function ChainDistributionChart({ chains }: { chains: ChainState[] }) {
   const { outerData, innerData, poolPctMap } = useMemo(() => {
-    let totalPool = 0;
-    let totalWeight = 0;
-
     const raw = chains.map((c) => {
       const meta = getChainMeta(c.chainSelector);
       const pool = bigintToMillions(c.poolDepth);
       const weight = c.routingWeight;
-      totalPool += pool;
-      totalWeight += weight;
       return { meta, pool, weight, selector: c.chainSelector.toString() };
     });
+    const totalPool = raw.reduce((s, r) => s + r.pool, 0);
+    const totalWeight = raw.reduce((s, r) => s + r.weight, 0);
 
     const outer: RingDataPoint[] = raw.map((r) => ({
       name: r.meta.name,

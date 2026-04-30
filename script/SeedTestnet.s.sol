@@ -10,9 +10,7 @@ interface IMockUSDC {
 }
 
 interface IBasketFactory {
-    function createBasket(string calldata _name, uint256 depositFeeBps, uint256 redeemFeeBps)
-        external
-        returns (address);
+    function createBasket(string calldata _name, uint256 depositFeeBps, uint256 redeemFeeBps) external returns (address);
     function getAllBaskets() external view returns (address[] memory);
 }
 
@@ -28,8 +26,7 @@ interface IBasketVault {
 }
 
 interface IOracleAdapterSeed {
-    function seedHistoricalPrices(bytes32 assetId, uint256[] calldata prices_, uint256[] calldata timestamps_)
-        external;
+    function seedHistoricalPrices(bytes32 assetId, uint256[] calldata prices_, uint256[] calldata timestamps_) external;
     function getAssetCount() external view returns (uint256);
     function assetList(uint256 index) external view returns (bytes32);
     function assetSymbols(bytes32 assetId) external view returns (string memory);
@@ -253,8 +250,7 @@ contract SeedTestnet is Script {
         for (uint256 i = 0; i < _vaultDefs.length; i++) {
             VaultDef memory def = _vaultDefs[i];
 
-            address vault =
-                IBasketFactory(basketFactory).createBasket(def.name, def.depositFeeBps, def.redeemFeeBps);
+            address vault = IBasketFactory(basketFactory).createBasket(def.name, def.depositFeeBps, def.redeemFeeBps);
             vaults[i] = vault;
             console2.log("  Created vault:", def.name);
             console2.log("  Address:", vault);

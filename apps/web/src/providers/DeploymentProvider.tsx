@@ -75,9 +75,11 @@ export function DeploymentProvider({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    setTargetState(readStoredTargetFromBrowser());
-    setViewModeState(readStoredViewModeFromBrowser());
-    setHasRestoredPreferences(true);
+    queueMicrotask(() => {
+      setTargetState(readStoredTargetFromBrowser());
+      setViewModeState(readStoredViewModeFromBrowser());
+      setHasRestoredPreferences(true);
+    });
   }, []);
 
   useEffect(() => {

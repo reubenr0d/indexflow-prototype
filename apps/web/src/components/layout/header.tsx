@@ -268,16 +268,20 @@ export function Header() {
     if (isError) {
       const message = getMintSponsorshipErrorMessage(error);
       if (message) {
-        setSponsorshipErrorMessage(message);
-        setShowSponsorshipError(true);
+        queueMicrotask(() => {
+          setSponsorshipErrorMessage(message);
+          setShowSponsorshipError(true);
+        });
       }
       return;
     }
     if (receipt.isError) {
       const message = getMintSponsorshipErrorMessage(receipt.error);
       if (message) {
-        setSponsorshipErrorMessage(message);
-        setShowSponsorshipError(true);
+        queueMicrotask(() => {
+          setSponsorshipErrorMessage(message);
+          setShowSponsorshipError(true);
+        });
       }
     }
   }, [error, isError, receipt.error, receipt.isError]);

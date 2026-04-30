@@ -169,17 +169,23 @@ function MultiChainDepositDrawerContent({
         const errorMsg = failedChain?.error;
         
         if (errorMsg && isSponsorshipError({ message: errorMsg })) {
-          setSponsorshipErrorMessage(errorMsg);
-          setShowSponsorshipError(true);
+          queueMicrotask(() => {
+            setSponsorshipErrorMessage(errorMsg);
+            setShowSponsorshipError(true);
+          });
         }
         console.log("[MultiChainDrawer] Phase transition: executing -> error (hasErrors=true)");
-        setPhase("error");
-        onExecutingChange?.(false);
+        queueMicrotask(() => {
+          setPhase("error");
+          onExecutingChange?.(false);
+        });
       } else if (depositState.completedCount === depositState.totalCount) {
         console.log("[MultiChainDrawer] Phase transition: executing -> complete");
-        setPhase("complete");
-        onSuccess?.();
-        onExecutingChange?.(false);
+        queueMicrotask(() => {
+          setPhase("complete");
+          onSuccess?.();
+          onExecutingChange?.(false);
+        });
       }
     }
   }, [depositState.isExecuting, depositState.completedCount, depositState.totalCount, depositState.hasErrors, depositState.chainStatuses, onSuccess, onExecutingChange]);

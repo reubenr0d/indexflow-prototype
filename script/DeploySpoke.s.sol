@@ -8,9 +8,7 @@ import {RedemptionReceiver} from "../src/coordination/RedemptionReceiver.sol";
 import {MockUSDC} from "../src/vault/MockUSDC.sol";
 
 interface IBasketFactoryBootstrap {
-    function createBasket(string calldata _name, uint256 depositFeeBps, uint256 redeemFeeBps)
-        external
-        returns (address);
+    function createBasket(string calldata _name, uint256 depositFeeBps, uint256 redeemFeeBps) external returns (address);
 }
 
 interface IBasketVaultBootstrap {
@@ -73,8 +71,7 @@ contract DeploySpoke is Script {
         string memory chainKey = string.concat(".", chainName);
 
         bool mockUsdc = vm.parseJsonBool(chainsJson, string.concat(chainKey, ".mockUsdc"));
-        uint64 ccipChainSelector =
-            uint64(vm.parseJsonUint(chainsJson, string.concat(chainKey, ".ccipChainSelector")));
+        uint64 ccipChainSelector = uint64(vm.parseJsonUint(chainsJson, string.concat(chainKey, ".ccipChainSelector")));
         address ccipRouter = vm.parseJsonAddress(chainsJson, string.concat(chainKey, ".ccipRouter"));
 
         uint256 deployerPrivateKey;
@@ -139,8 +136,7 @@ contract DeploySpoke is Script {
 
         vm.stopBroadcast();
 
-        string memory outPath =
-            string.concat(vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json");
+        string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json");
         vm.writeFile(outPath, _buildJson(d));
         console2.log("=== Spoke Deployed ===");
         console2.log("Chain:", chainName);
@@ -189,9 +185,8 @@ contract DeploySpoke is Script {
             revert("DeploySpoke: bootstrap reserve requires mockUsdc or external funding");
         }
 
-        vault = IBasketFactoryBootstrap(ctx.basketFactory).createBasket(
-            cfg.basketName, cfg.depositFeeBps, cfg.redeemFeeBps
-        );
+        vault = IBasketFactoryBootstrap(ctx.basketFactory)
+            .createBasket(cfg.basketName, cfg.depositFeeBps, cfg.redeemFeeBps);
 
         IBasketVaultBootstrap basket = IBasketVaultBootstrap(vault);
         basket.setStateRelay(ctx.stateRelay);
@@ -204,8 +199,12 @@ contract DeploySpoke is Script {
 
         if (cfg.reserveAmount > 0) {
             IMockUSDCBootstrap(ctx.usdc).mint(ctx.deployer, cfg.reserveAmount);
+            // Approve and topUpReserve must be from `ctx.deployer` (basket uses transferFrom(msg.sender, ...)).
+            // Without a prank, a test harness is msg.sender; with forge broadcast, prank still targets the deployer.
+            vm.startPrank(ctx.deployer);
             IMockUSDCBootstrap(ctx.usdc).approve(vault, cfg.reserveAmount);
             basket.topUpReserve(cfg.reserveAmount);
+            vm.stopPrank();
         }
     }
 

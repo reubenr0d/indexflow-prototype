@@ -9,7 +9,7 @@ import {
 } from "@/lib/deployment";
 import { cn } from "@/lib/utils";
 import { Check, ChevronDown, Diamond, Globe, Layers, Mountain, type LucideIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { createElement, useEffect, useRef, useState } from "react";
 
 const NETWORK_ICONS: Record<string, LucideIcon> = {
   sepolia: Diamond,
@@ -50,7 +50,6 @@ export function NetworkSelector() {
     setOpen(false);
   }
 
-  const TriggerIcon = isAllChains ? Layers : getNetworkIcon(target);
   const triggerLabel = isAllChains
     ? `All Chains (${configuredTargets.length})`
     : deploymentLabel(target);
@@ -66,7 +65,9 @@ export function NetworkSelector() {
           "border-app-border bg-app-surface text-app-text hover:border-app-border-strong hover:bg-app-surface-hover"
         )}
       >
-        <TriggerIcon className="h-4 w-4 text-app-muted" />
+        {createElement(isAllChains ? Layers : getNetworkIcon(target), {
+          className: "h-4 w-4 text-app-muted",
+        })}
         <span>{triggerLabel}</span>
         {isSubgraphEnabled && (
           <span

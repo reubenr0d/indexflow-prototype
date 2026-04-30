@@ -2,6 +2,7 @@ import type { DocsDocument, DocsNavItem } from "@/lib/docs-types";
 import { DocsMarkdownContent } from "@/components/docs/docs-markdown-content";
 import { DocsToc } from "@/components/docs/docs-toc";
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 function docsHref(slug: string) {
   return `/docs/${slug}`;
@@ -14,9 +15,9 @@ function sourceHref(path: string): string {
 function Breadcrumbs({ doc }: { doc: DocsDocument }) {
   return (
     <nav className="flex items-center gap-1.5 text-xs text-app-muted" aria-label="Breadcrumb">
-      <a href="/docs" className="transition-colors hover:text-app-text">
+      <Link href="/docs" className="transition-colors hover:text-app-text">
         Docs
-      </a>
+      </Link>
       <span className="text-app-border-strong">/</span>
       <span className="text-app-muted/70">{doc.category}</span>
       <span className="text-app-border-strong">/</span>

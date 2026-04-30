@@ -24,10 +24,7 @@ contract BasketVaultGlobalNavTest is Test {
         oracle.submitPrice(BHP_ID, 50_00000000);
     }
 
-    function _setupVault(uint64 selector, bool withOracle)
-        internal
-        returns (BasketVault vault, StateRelay relay)
-    {
+    function _setupVault(uint64 selector, bool withOracle) internal returns (BasketVault vault, StateRelay relay) {
         address oracleAddr = withOracle ? address(oracle) : address(0);
         vault = new BasketVault("Test", address(usdc), oracleAddr, address(this));
 

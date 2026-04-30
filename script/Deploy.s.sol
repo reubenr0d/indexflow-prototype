@@ -108,16 +108,17 @@ contract Deploy is Script {
 
         vm.stopBroadcast();
 
-        string memory outPath = string.concat(
-            vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json"
-        );
+        string memory outPath = string.concat(vm.projectRoot(), "/apps/web/src/config/", chainName, "-deployment.json");
         vm.writeFile(outPath, _buildJson(d));
         console2.log("=== Stack Deployed ===");
         console2.log("Chain:", chainName);
         console2.log("Wrote", outPath);
     }
 
-    function _deployGmx(Deployed memory d, address deployer, string memory chainName) internal returns (address pfAddr) {
+    function _deployGmx(Deployed memory d, address deployer, string memory chainName)
+        internal
+        returns (address pfAddr)
+    {
         pfAddr = deployCode("SimplePriceFeed.sol:SimplePriceFeed");
         ISimplePriceFeed(pfAddr).setPrice(d.usdc, 1e30);
 

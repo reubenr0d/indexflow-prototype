@@ -84,6 +84,7 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     slug: "cross-chain-coordination",
     title: "Cross-Chain Coordination",
     category: "Infrastructure",
+    aliases: ["cross-chain"],
   },
   {
     fileName: "DEPLOYMENTS.md",
