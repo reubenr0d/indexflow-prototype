@@ -3,8 +3,14 @@
   "agentName": "vault-manager",
   "agentDescription": "Autonomous vault manager powered by OpenAI (vault-manager + yfinance MCPs)",
   "thesis": "The \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight upward momentum, which aligns with our long-only strategy.",
-  "lastRunAt": "2026-05-20T15:31:34.048Z",
+  "lastRunAt": "2026-05-20T20:24:09.226Z",
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating additional USDC to the perp module to align with the policy of maintaining a balanced allocation and preparing for potential new position openings.",
+      "timestamp": "2026-05-20T20:24:09.226Z",
+      "txHash": "0x1ed6dafd55ff3f7d581c88ff40aa8d2143f59a57f649bb9c0375ceb16d6e3c41"
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating additional funds to the perp module to take advantage of potential market opportunities given the current upward momentum in the S&P 500 futures market.",
