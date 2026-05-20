@@ -19,10 +19,8 @@ apps/web/test-results/
 apps/web/playwright-report/
 .vercel
 
-# Agent memory and published metadata now live on 0G Storage. The local
-# folders are warm-restart caches / debug artefacts only — see
-# docs/AGENTS_FRAMEWORK.md for details.
-agents/memory/
-apps/web/public/agent-metadata/
+# Agent memory and metadata are tracked in git. CI (vault-agent[bot]) commits
+# updates to agents/memory/ and apps/web/public/agent-metadata/ after each
+# scheduled run — see docs/AGENTS_FRAMEWORK.md for details.
 
 .DS_Store

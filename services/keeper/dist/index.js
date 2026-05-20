@@ -5,23 +5,6 @@ import { ethers } from "ethers";
 import { StateRelayABI, BasketFactoryABI, ERC20ABI, VaultAccountingABI, BasketVaultABI, } from "./abi.js";
 import { computeRoutingWeights } from "./computeRoutingWeights.js";
 import { computeGlobalNav } from "./computeGlobalNav.js";
-// KeeperHub client for reliable transaction execution
-let keeperHubClient = null;
-async function initKeeperHub() {
-    if (process.env.KEEPERHUB_API_KEY) {
-        try {
-            // @ts-expect-error - ESM import without type declarations
-            const { KeeperHubClient } = await import("../../../lib/keeperhub.mjs");
-            keeperHubClient = KeeperHubClient.fromEnv();
-            if (keeperHubClient) {
-                log("[KeeperHub] Enabled for transaction execution");
-            }
-        }
-        catch (err) {
-            log(`[KeeperHub] Init failed, using direct execution: ${err.message}`);
-        }
-    }
-}
 // ── Env ───────────────────────────────────────────────────────────
 const PRIVATE_KEY = requireEnv("PRIVATE_KEY");
 const EPOCH_INTERVAL_MS = parseInt(process.env.EPOCH_INTERVAL_MS ?? "60000", 10);
@@ -138,66 +121,7 @@ async function readChain(ctx) {
     return { ctx, vaults, idleUsdc, perpAllocated, hubPnL };
 }
 // ── Write phase ───────────────────────────────────────────────────
-// ABI for KeeperHub execution (JSON format)
-const STATE_RELAY_ABI_FOR_KEEPERHUB = [
-    {
-        inputs: [
-            { name: "chains", type: "uint64[]" },
-            { name: "weights", type: "uint256[]" },
-            { name: "amounts", type: "uint256[]" },
-            { name: "vaults", type: "address[]" },
-            { name: "pnlAdjustments", type: "int256[]" },
-            { name: "ts", type: "uint48" },
-        ],
-        name: "updateState",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-    },
-];
-async function writeStateUpdateViaKeeperHub(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
-    if (!ctx.deployment.stateRelay) {
-        log(`  ⚠ No stateRelay deployed on ${ctx.name}, skipping write`);
-        return false;
-    }
-    try {
-        log(`  → [KeeperHub] Sending updateState to ${ctx.name} (${vaults.length} vaults)`);
-        const result = await keeperHubClient.executeAndWait({
-            network: ctx.config.rpcAlias,
-            contractAddress: ctx.deployment.stateRelay,
-            functionName: "updateState",
-            functionArgs: [
-                chains.map(c => c.toString()),
-                weights.map(w => w.toString()),
-                amounts.map(a => a.toString()),
-                vaults,
-                pnlAdjustments.map(p => p.toString()),
-                ts.toString(),
-            ],
-            abi: STATE_RELAY_ABI_FOR_KEEPERHUB,
-            justification: `StateRelay update: ${vaults.length} vaults, ${chains.length} chains`,
-        }, {
-            onPoll: (status, attempt) => {
-                if (attempt > 0 && attempt % 10 === 0) {
-                    log(`  [KeeperHub] ${ctx.name} still pending... status=${status.status}`);
-                }
-            },
-        });
-        if (result.success) {
-            log(`  ✓ [KeeperHub] ${ctx.name} updateState confirmed: ${result.transactionHash}`);
-            return true;
-        }
-        else {
-            logError(`  ✗ [KeeperHub] ${ctx.name} updateState failed`, result.error);
-            return false;
-        }
-    }
-    catch (err) {
-        logError(`  ✗ [KeeperHub] ${ctx.name} error`, err);
-        return false;
-    }
-}
-async function writeStateUpdateDirect(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
+async function writeStateUpdate(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
     if (!ctx.deployment.stateRelay) {
         log(`  ⚠ No stateRelay deployed on ${ctx.name}, skipping write`);
         return;
@@ -207,30 +131,6 @@ async function writeStateUpdateDirect(ctx, chains, weights, amounts, vaults, pnl
     const tx = await relay.updateState(chains, weights, amounts, vaults, pnlAdjustments, ts);
     const receipt = await tx.wait();
     log(`  ✓ ${ctx.name} updateState confirmed in block ${receipt?.blockNumber}`);
-}
-// Optional per-chain KeeperHub allowlist. Empty/unset (default) means "use
-// KeeperHub on every chain when KEEPERHUB_API_KEY is set". When set (e.g.
-// "sepolia"), only the listed chains route through KeeperHub; the rest fall
-// back to direct ethers signing with PRIVATE_KEY. Useful when StateRelay
-// instances on different chains have different keeper() addresses.
-function shouldUseKeeperHubFor(chainName) {
-    if (!keeperHubClient)
-        return false;
-    const allowlist = (process.env.KEEPERHUB_CHAINS ?? "")
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean);
-    if (allowlist.length === 0)
-        return true;
-    return allowlist.includes(chainName);
-}
-async function writeStateUpdate(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts) {
-    if (shouldUseKeeperHubFor(ctx.name)) {
-        await writeStateUpdateViaKeeperHub(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts);
-    }
-    else {
-        await writeStateUpdateDirect(ctx, chains, weights, amounts, vaults, pnlAdjustments, ts);
-    }
 }
 // ── Epoch ─────────────────────────────────────────────────────────
 async function runEpoch(contexts) {
@@ -305,25 +205,11 @@ async function runEpoch(contexts) {
 async function main() {
     log("Keeper starting...");
     log(`Epoch interval: ${EPOCH_INTERVAL_MS}ms`);
-    // Initialize KeeperHub if configured
-    await initKeeperHub();
     const contexts = buildChainContexts();
     if (contexts.length === 0) {
         throw new Error("No chain contexts available. Check config/chains.json and deployment files.");
     }
     log(`Active chains: ${contexts.map((c) => c.name).join(", ")}`);
-    if (keeperHubClient) {
-        const khChains = contexts
-            .filter((c) => shouldUseKeeperHubFor(c.name))
-            .map((c) => c.name);
-        const directChains = contexts
-            .filter((c) => !shouldUseKeeperHubFor(c.name))
-            .map((c) => c.name);
-        log(`KeeperHub chains: ${khChains.length > 0 ? khChains.join(", ") : "(none)"}`);
-        if (directChains.length > 0) {
-            log(`Direct-execution chains: ${directChains.join(", ")}`);
-        }
-    }
     // Run first epoch immediately
     await runEpoch(contexts);
     const runOnce = process.env.KEEPER_ONCE === "1" || process.env.KEEPER_ONCE === "true";

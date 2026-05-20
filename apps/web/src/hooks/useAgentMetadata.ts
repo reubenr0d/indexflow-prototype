@@ -21,9 +21,7 @@ export function useAgentMetadata(vault: Address) {
   return useQuery<AgentMetadata | null>({
     queryKey: ["agent-metadata", vault],
     queryFn: async () => {
-      // Server-side route reads from 0G KV (agentio shared stream) via the
-      // KvClient so this stays a single, cached round-trip per vault.
-      const res = await fetch(`/api/agent-metadata/${vault.toLowerCase()}`);
+      const res = await fetch(`/agent-metadata/${vault.toLowerCase()}.json`);
       if (!res.ok) return null;
       const text = await res.text();
       if (!text || text === "null") return null;

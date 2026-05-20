@@ -6,46 +6,11 @@ const { execFileSync } = require("child_process");
 
 const DEFAULT_DEPLOYMENT_CONFIG = "apps/web/src/config/sepolia-deployment.json";
 const DEFAULT_RPC_URL = "sepolia";
-/** Used when inferring chain for KeeperHub (API wants "sepolia", not the RPC URL). */
-const DEFAULT_KEEPERHUB_NETWORK = "sepolia";
 const PRICE_DECIMALS = 8;
-
-// KeeperHub integration for reliable transaction execution
-let keeperHubClient = null;
-
-async function initKeeperHub() {
-  if (process.env.KEEPERHUB_API_KEY) {
-    try {
-      const { KeeperHubClient } = await import("../lib/keeperhub.mjs");
-      keeperHubClient = KeeperHubClient.fromEnv();
-      if (keeperHubClient) {
-        console.log("[KeeperHub] Enabled for transaction execution");
-      }
-    } catch (err) {
-      console.warn(`[KeeperHub] Init failed, using direct execution: ${err.message}`);
-    }
-  }
-}
 
 function resolvePath(input, fallback) {
   const candidate = input ?? fallback;
   return path.isAbsolute(candidate) ? candidate : path.join(process.cwd(), candidate);
-}
-
-/**
- * KeeperHub's execute API expects a short network id (e.g. "sepolia"), not `RPC_URL`
- * (an https URL is rejected as "Unsupported network" and is redacted in CI logs as "***").
- */
-function resolveKeeperHubNetwork(deploymentConfigPath) {
-  const fromEnv = process.env.KEEPERHUB_NETWORK || process.env.AGENT_NETWORK;
-  if (fromEnv) return fromEnv;
-  const base = path.basename(deploymentConfigPath, ".json");
-  const m = base.match(/^([a-z0-9-]+)-deployment$/i);
-  if (m) {
-    // arbitrum-sepolia-deployment.json -> arbitrum-sepolia; map to KeeperHub id if we add aliases later
-    return m[1].toLowerCase();
-  }
-  return DEFAULT_KEEPERHUB_NETWORK;
 }
 
 function toBool(value) {
@@ -173,99 +138,16 @@ function toRawPrice(usdPrice) {
   return BigInt(Math.round(usdPrice * 10 ** PRICE_DECIMALS));
 }
 
-// ABI fragments for KeeperHub execution (JSON format)
-const ORACLE_ADAPTER_ABI = [
-  {
-    "inputs": [
-      { "name": "assetIds", "type": "bytes32[]" },
-      { "name": "prices", "type": "uint256[]" }
-    ],
-    "name": "submitPrices",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-];
-
-const PRICE_SYNC_ABI = [
-  {
-    "inputs": [],
-    "name": "syncAll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-];
-
-async function executeViaKeeperHub(network, contractAddress, functionName, functionArgs, abi, justification) {
-  if (!keeperHubClient) return false;
-
-  try {
-    console.log(`\n[KeeperHub] Executing ${functionName} on ${contractAddress.slice(0, 10)}...`);
-
-    const result = await keeperHubClient.executeAndWait(
-      {
-        network,
-        contractAddress,
-        functionName,
-        functionArgs,
-        abi,
-        justification,
-      },
-      {
-        onPoll: (status, attempt) => {
-          if (attempt > 0 && attempt % 5 === 0) {
-            console.log(`[KeeperHub] Still waiting... status=${status.status}`);
-          }
-        },
-      }
-    );
-
-    if (result.success) {
-      console.log(`[KeeperHub] ✓ ${functionName} confirmed: ${result.transactionHash}`);
-      if (result.explorerUrl) {
-        console.log(`[KeeperHub]   Explorer: ${result.explorerUrl}`);
-      }
-    } else {
-      const { formatKeeperHubFailureResult: fmtFail } = await import("../lib/keeperhub.mjs");
-      const detail = result.error || fmtFail(result);
-      console.error(`[KeeperHub] ✗ ${functionName} failed: ${detail}`);
-      if (result.executionId) {
-        console.error(`[KeeperHub]   executionId=${result.executionId} status=${result.status}`);
-        try {
-          const logs = await keeperHubClient.getExecutionLogs(result.executionId);
-          console.error(
-            `[KeeperHub]   logs (retries=${logs.retryCount}, gasEstimates=${logs.gasEstimates.length}):`
-          );
-          const summary = logs.logs.length > 0 ? logs.logs : logs.raw;
-          console.error(JSON.stringify(summary, null, 2));
-        } catch (logErr) {
-          console.error(`[KeeperHub]   could not fetch execution logs: ${logErr.message}`);
-        }
-      }
-    }
-
-    return result.success;
-  } catch (err) {
-    console.error(`[KeeperHub] Error: ${err.message}`);
-    return false;
-  }
-}
-
 async function main() {
   loadRootEnv();
-
-  // Initialize KeeperHub if configured
-  await initKeeperHub();
 
   const deploymentConfigPath = resolvePath(process.env.DEPLOYMENT_CONFIG, DEFAULT_DEPLOYMENT_CONFIG);
   const rpcUrl = process.env.RPC_URL ?? DEFAULT_RPC_URL;
   const dryRun = toBool(process.env.DRY_RUN);
   const privateKey = process.env.PRIVATE_KEY;
-  const useKeeperHub = keeperHubClient !== null;
 
-  if (!dryRun && !privateKey && !useKeeperHub) {
-    throw new Error("PRIVATE_KEY is required unless DRY_RUN or KEEPERHUB_API_KEY is set");
+  if (!dryRun && !privateKey) {
+    throw new Error("PRIVATE_KEY is required unless DRY_RUN is set");
   }
 
   const deployment = JSON.parse(fs.readFileSync(deploymentConfigPath, "utf8"));
@@ -275,13 +157,8 @@ async function main() {
     throw new Error("deployment config must include oracleAdapter and priceSync");
   }
 
-  const keeperHubNetwork = resolveKeeperHubNetwork(deploymentConfigPath);
-
   console.log(`Deployment config: ${deploymentConfigPath}`);
   console.log(`RPC URL:           ${rpcUrl}`);
-  if (useKeeperHub) {
-    console.log(`KeeperHub network: ${keeperHubNetwork}`);
-  }
   console.log("");
 
   console.log("Enumerating on-chain CustomRelayer assets...");
@@ -350,64 +227,28 @@ async function main() {
     return;
   }
 
-  // Execute via KeeperHub if configured, otherwise use direct cast
-  if (useKeeperHub) {
-    console.log("\n[KeeperHub] Executing transactions via KeeperHub...");
+  console.log("\nExecuting transactions via cast...");
 
-    // Submit prices (use string representation for large numbers)
-    const submitSuccess = await executeViaKeeperHub(
-      keeperHubNetwork,
-      oracleAdapter,
-      "submitPrices",
-      [assetIds, rawPrices],
-      ORACLE_ADAPTER_ABI,
-      `Price update: ${assetIds.length} assets`
-    );
+  runCast(
+    [
+      "send", oracleAdapter,
+      "submitPrices(bytes32[],uint256[])",
+      assetIdArg, pricesArg,
+      "--private-key", privateKey,
+      "--rpc-url", rpcUrl,
+    ],
+    true
+  );
 
-    if (!submitSuccess) {
-      throw new Error("submitPrices failed via KeeperHub");
-    }
-
-    // Sync prices to GMX
-    const syncSuccess = await executeViaKeeperHub(
-      keeperHubNetwork,
-      priceSync,
-      "syncAll",
-      [],
-      PRICE_SYNC_ABI,
-      "Sync oracle prices to GMX"
-    );
-
-    if (!syncSuccess) {
-      throw new Error("syncAll failed via KeeperHub");
-    }
-
-    console.log("\n[KeeperHub] Price update complete.");
-  } else {
-    // Direct execution via cast
-    console.log("\nExecuting transactions via cast...");
-
-    runCast(
-      [
-        "send", oracleAdapter,
-        "submitPrices(bytes32[],uint256[])",
-        assetIdArg, pricesArg,
-        "--private-key", privateKey,
-        "--rpc-url", rpcUrl,
-      ],
-      true
-    );
-
-    runCast(
-      [
-        "send", priceSync,
-        "syncAll()",
-        "--private-key", privateKey,
-        "--rpc-url", rpcUrl,
-      ],
-      true
-    );
-  }
+  runCast(
+    [
+      "send", priceSync,
+      "syncAll()",
+      "--private-key", privateKey,
+      "--rpc-url", rpcUrl,
+    ],
+    true
+  );
 }
 
 main().catch((error) => {

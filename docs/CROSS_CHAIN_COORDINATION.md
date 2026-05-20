@@ -167,9 +167,7 @@ where `hubPnL = unrealised + realised` from `VaultAccounting`.
 
 ### Write Phase
 
-Post `StateRelay.updateState(chains, weights, vaults, pnlAdjustments, ts)` to every chain. The same weight table is sent to all instances; each caches its own local weight. Writes are fired in parallel across chains.
-
-When `KEEPERHUB_API_KEY` is set, transactions are routed through [KeeperHub](https://app.keeperhub.com) for reliable execution with automatic retries, gas optimization, and MEV protection. See [KEEPER_OPERATIONS.md](./KEEPER_OPERATIONS.md#keeperhub-integration) for setup details.
+Post `StateRelay.updateState(chains, weights, vaults, pnlAdjustments, ts)` to every chain. The same weight table is sent to all instances; each caches its own local weight. Writes are fired in parallel across chains, signed directly with `PRIVATE_KEY` via ethers.
 
 ### Redemption Monitoring (Planned)
 
@@ -184,7 +182,6 @@ The keeper monitors `RedemptionQueued` events across spoke chains. When detected
 | `SEPOLIA_RPC_URL` | Hub chain RPC |
 | `FUJI_RPC_URL` | Spoke chain RPC (Avalanche Fuji) |
 | `ARBITRUM_SEPOLIA_RPC_URL` | Spoke chain RPC (Arbitrum Sepolia) |
-| `KEEPERHUB_API_KEY` | KeeperHub API key for reliable transaction execution (optional) |
 
 RPCs are resolved from `config/chains.json` → `rpcAlias` → env var mapping in `services/keeper/src/index.ts`.
 

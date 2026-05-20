@@ -4,26 +4,24 @@ Define autonomous vault management agents as markdown files. Each agent gets its
 
 ## Quick Start
 
-The shipped agent is `0g-vault-manager`, which uses the 0G + KeeperHub stack (see [§ 0G-Enabled Agents](#0g-enabled-agents) below).
+The shipped agent is `vault-manager`. It uses OpenAI (or any OpenAI-compatible chat-completions endpoint) for inference and signs transactions directly with the keeper `PRIVATE_KEY` via `cast send`.
 
 ```bash
 # Install MCP server deps (one-time)
 npm --prefix apps/mcps/vault-manager install
 npm --prefix apps/mcps/yfinance install
-npm --prefix apps/mcps/0g-storage install
-npm --prefix apps/mcps/keeperhub install
 
-# Run the 0G vault manager agent
-LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:0g
+# Run the vault manager agent
+LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:vault
 
 # Dry-run mode (observe only, no on-chain writes)
-npm run agent:0g:dry
+npm run agent:vault:dry
 
 # Run any agent by name
-npm run agent:run -- 0g-vault-manager
+npm run agent:run -- vault-manager
 
 # Non-interactive auto-execute override (disabled by default)
-AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- 0g-vault-manager
+AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- vault-manager
 ```
 
 On first run, the agent automatically deploys its own vault. Subsequent runs manage that vault using saved memory. Editing the agent `.md` prompt/body does not create a replacement vault on its own.
@@ -166,8 +164,6 @@ Your capabilities for doing X.
 |-------|------|-------------|
 | `vault-manager` | `agents/skills/vault-manager.md` | On-chain vault reads/writes, units, position workflows |
 | `yfinance` | `agents/skills/yfinance.md` | Yahoo Finance search and quote lookups |
-| `0g-storage` | `agents/skills/0g-storage.md` | 0G decentralized storage (KV state + Log history) |
-| `keeperhub` | `agents/skills/keeperhub.md` | KeeperHub reliable transaction execution |
 
 Reference skills in agent frontmatter:
 
@@ -192,70 +188,27 @@ Each agent manages exactly one vault. The runner handles deployment automaticall
 
 ## Memory
 
-Agent memory lives entirely on **0G Storage**. Nothing is committed back
-to the repo; the runner spawns the `0g-storage-mcp` first and routes all
-state I/O through it.
+Agent memory is **file-backed under `agents/memory/<agent>/` and tracked in git**. The runner writes state and run-log entries directly to the working tree; CI (`.github/workflows/vault-agent.yml`) commits the deltas back to the default branch under the `vault-agent[bot]` identity via a `commit-results` job after every scheduled run. The next run's freshly-checked-out repo therefore already contains the prior state.
 
-### Storage layout
+### Layout
 
-| Layer | What's stored | Where |
-|---|---|---|
-| 0G KV (per-agent state) | vault address, vault name, agent-file hash, deployment fingerprint, deployed/last-run timestamps, current thesis | shared stream `ZG_STREAM_ID`, key `<wallet>:<agent>:<key>` |
-| 0G KV (run-log head) | hash of the most recent run-log entry | same stream, key `<wallet>:<agent>:last_runlog_root` |
-| 0G KV (vault metadata) | "AI managed" payload consumed by the web app | same stream, **unprefixed** key `vault:<vault_lower>:metadata` |
-| 0G Log (run history) | one JSON file per run; `_meta.previousRoot` chains them | indexer-stored, walked via `runlog_recent` |
-| Local `agents/memory/<agent>/cache.json` | warm-restart hint: `{ refreshedAt, state }` keyed by deployment fingerprint | gitignored — purely an optimisation, the runner re-fetches from KV when missing or stale (>5 min) |
+| Path | Contents |
+|---|---|
+| `agents/memory/<agent>/state.json` | Vault address, vault name, agent-file hash, deployment fingerprint, deployed/last-run timestamps, current thesis |
+| `agents/memory/<agent>/run-log.<network>.jsonl` | Append-only structured log of every run on a given network (one JSON line per run) |
+| `agents/memory/<agent>/archive/` | Rotated state from a previous deployment fingerprint, kept for audit |
+| `apps/web/public/agent-metadata/<vault>.json` | Per-vault "AI Operator" payload consumed by the web app via `useAgentMetadata` (`/agent-metadata/<vault>.json`) |
 
-Every per-agent KV write is automatically prefixed with
-`<your_wallet_lowercase>:<AGENT_NAME>:` by the MCP so multiple teams can
-share the agentio public stream without colliding. Vault metadata blobs
-are intentionally unprefixed because vault addresses are globally unique
-on-chain and the web app needs to read them without knowing which agent
-owns the vault.
-
-### Write replication (`expectedReplica`)
-
-Per the 0G dev recommendation, every 0G storage write replicates the data
-across at least two full sharding sets. The MCP and probe scripts share
-the same logic (`scripts/lib/select-0g-write-nodes.mjs` /
-`getStorageWriteContext` in the MCP):
-
-1. Call `indexer.selectNodes(N)` with `N = ZG_STORAGE_EXPECTED_REPLICA` (default `2`, min `1`).
-2. If the indexer cannot satisfy `N`, fall back to `selectNodes(1)`.
-3. Pass the resulting node list to `Batcher` (KV) and `indexer.upload` (Log files, with `{ expectedReplica }`).
-
-`state_set`, `log_append`, and `get_storage_info` responses include
-`expected_replica_used`, `expected_replica_requested`, and
-`expected_replica_fallback` so callers can verify replication mode at
-runtime. Diagnostic probes (`probe-0g-kv-batch.mjs`, `probe-0g-kv-tail.mjs`)
-default to the same path; set `ZG_KV_PROBE_PER_SHARD=1` to use the legacy
-manual per-shard pick (one fresh node per shard) for stuck-shard debugging.
+Per-network run logs prevent cross-network context bleed when an agent runs against multiple environments. Override the network tag with `AGENT_NETWORK`. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 
 ### Run lifecycle
 
 1. Runner builds a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`.
-2. Runner spawns MCP servers (including `0g-storage-mcp`).
-3. Runner reads state via `state_get_all` (warm cache short-circuits this when fingerprint matches and is fresh) and recent run history via `runlog_recent({ limit: 5 })`.
-4. If the fingerprint changed since the last saved state, the runner treats the cached vault as stale and a fresh deployment proceeds. KV is last-writer-wins so old keys are simply overwritten by the next `state_set`. The `cache.json` file is refreshed; old run-log entries remain reachable by root hash for forensic audit.
-5. After the LLM loop, the runner writes the new state (`state_set` per field), publishes vault metadata (`vault_metadata_set`), and appends the run summary (`log_append`, which automatically links to the previous run's root and updates the `last_runlog_root` head).
-6. CI uploads `agents/memory/` as a `agent-debug-cache-<network>` artifact (1-day retention) for post-mortem only.
-
-### Web app read path
-
-The Next.js app fetches each vault's metadata server-side at
-`/api/agent-metadata/[vault]` (Node runtime, 60s edge cache,
-stale-while-revalidate 300s). The route reads the unprefixed
-`vault:<vault_lower>:metadata` KV key directly via `KvClient` and shapes
-the response to the existing `AgentMetadata` type. No filesystem JSON
-files are checked in or deployed.
-
-### Health checks
-
-Run `node scripts/probe-0g-kv.mjs` locally (or as the workflow's
-"Probe 0G KV" pre-flight step) to round-trip a throwaway namespaced
-key against the configured endpoint. The probe prints write + read
-latencies and exits non-zero with a "swap `ZG_KV_CLIENT_URL`" hint when
-the KV node is unreachable.
+2. Runner spawns MCP servers.
+3. Runner reads `state.json` and the tail of `run-log.<network>.jsonl` (last 5 entries).
+4. If the fingerprint changed since the last saved state, the runner rotates the old `state.json` and `run-log.<network>.jsonl` into `archive/` and starts fresh.
+5. After the LLM loop, the runner writes the new state, publishes `apps/web/public/agent-metadata/<vault>.json`, and appends the run summary to the run-log.
+6. CI uploads both directories as `agent-output-<network>` artifacts, then the `commit-results` job pushes the deltas back to `main` with a `chore(agent): update agent memory and metadata` commit.
 
 ---
 
@@ -267,8 +220,6 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups | `yfinance_search`, `yfinance_quote` |
-| `0g-storage-mcp` | Decentralized persistent memory | `get_storage_info`, `state_get`, `state_set`, `state_get_all`, `log_append`, `log_read`, `runlog_recent`, `vault_metadata_set`, `vault_metadata_get` |
-| `keeperhub-mcp` | Reliable transaction execution | `get_keeperhub_info`, `execute_transfer`, `execute_contract_call`, `execute_check_and_execute`, `get_execution_status`, `get_execution_logs`, `list_workflows`, `execute_workflow`, `create_workflow` |
 
 ### Server Registry Format
 
@@ -384,19 +335,21 @@ Tool responses include `_usdc`, `_usd`, and `_pct` companion fields with human-r
 # Any agent by name
 npm run agent:run -- <agent-name>
 
-# 0G vault manager shortcuts
-npm run agent:0g       # full live run
-npm run agent:0g:dry   # dry-run (no on-chain writes)
+# Vault manager shortcuts
+npm run agent:vault       # full live run
+npm run agent:vault:dry   # dry-run (no on-chain writes)
 ```
 
 ### GitHub Actions
 
-The workflow at `.github/workflows/vault-agent.yml` runs `0g-vault-manager` against Sepolia.
+The workflow at `.github/workflows/vault-agent.yml` runs `vault-manager` against Sepolia.
 
-1. Go to Actions > "Vault Agent (0G)" > Run workflow
+1. Go to Actions > "Vault Agent" > Run workflow
 2. Optionally toggle dry-run mode
 
-The cron schedule runs `0g-vault-manager` every 6 hours. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). State, run logs, and the web app's vault metadata are all persisted on 0G Storage (no commit-back, no `contents: write` permission). Required secrets and variables are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+The cron schedule runs `vault-manager` every 6 hours. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+
+> **Note on branch protection.** The commit-results job requires the default branch to accept pushes from the `GITHUB_TOKEN` identity. If the branch is protected, either add `vault-agent[bot]` to the bypass list, route through a PAT, or disable the commit job and accept that state will not survive across runs.
 
 ### Write Confirmation Mode
 
@@ -422,7 +375,7 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 
 | Variable | Default | Description |
 |---|---|---|
-| `LLM_API_KEY` | (required) | LLM provider API key |
+| `LLM_API_KEY` | (required) | OpenAI (or compatible) API key |
 | `LLM_BASE_URL` | `https://api.openai.com/v1` | API endpoint |
 | `LLM_MODEL` | `gpt-4o` | Model name |
 | `AGENT_MAX_TURNS` | from agent config | Override max turns |
@@ -430,7 +383,7 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 | `AGENT_CONFIRM_WRITES` | `1` | Write confirmation gate; set `0` to disable confirmation logic |
 | `AGENT_NON_INTERACTIVE_WRITE_EXECUTE` | -- | `1` to auto-execute writes in non-interactive runs when confirmation is enabled |
 | `AGENT_MAX_TOOL_RESPONSE` | `6000` | Max chars per tool response sent to LLM |
-| `AGENT_NETWORK` | inferred | Optional run-log namespace override; tags each `log_append` entry's `network` field for client-side filtering in `runlog_recent` |
+| `AGENT_NETWORK` | inferred | Optional run-log namespace override |
 
 ### Vault Manager MCP Server
 
@@ -444,74 +397,13 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 
 No env vars required. Works out of the box.
 
-### 0G Storage MCP Server
-
-| Variable | Default | Description |
-|---|---|---|
-| `ZG_PRIVATE_KEY` | -- | Funded wallet for 0G storage fees |
-| `ZG_RPC_URL` | `https://evmrpc-testnet.0g.ai` | 0G Network RPC endpoint |
-| `ZG_INDEXER_RPC` | `https://indexer-storage-testnet-turbo.0g.ai` | 0G indexer endpoint |
-| `ZG_KV_CLIENT_URL` | `http://178.238.236.119:6789` (agentio public hackathon node) | 0G KV store endpoint |
-| `ZG_STREAM_ID` | `0x000000000000000000000000000000000000000000000000000000000000f2bd` (agentio shared stream) | KV stream the MCP reads/writes |
-| `ZG_KV_TIMEOUT_MS` | `5000` | Hard cap per KV read so an outage surfaces quickly |
-| `ZG_STORAGE_EXPECTED_REPLICA` | `2` | Number of *full* sharding sets the indexer should use for KV batch writes and log uploads (SDK `expectedReplica` / `selectNodes`); if the network cannot provide that many complete sets, the MCP and `probe-0g-kv.mjs` fall back to `1` |
-| `AGENT_NAME` | `default` (set by runner) | Used in the `<wallet>:<agent>:` key prefix |
-
-Get testnet tokens from [faucet.0g.ai](https://faucet.0g.ai). Swap
-`ZG_KV_CLIENT_URL` to a self-hosted `zgs_kv` node if the agentio
-courtesy node disappears — no code change required.
-
-### KeeperHub MCP Server
-
-| Variable | Default | Description |
-|---|---|---|
-| `KEEPERHUB_API_KEY` | -- | API key from [app.keeperhub.com](https://app.keeperhub.com) |
-| `KEEPERHUB_API_URL` | `https://app.keeperhub.com` | KeeperHub API endpoint |
-
-### 0G Compute (Decentralized LLM Inference)
-
-When configured, the agent runner uses 0G Compute Network for LLM inference instead of OpenAI.
-
-| Variable | Default | Description |
-|---|---|---|
-| `ZG_COMPUTE_PROVIDER` | -- | Provider address (e.g. `0xf07240Efa67755B5311bc75784a061eDB47165Dd`) |
-| `ZG_COMPUTE_MODEL` | `llama-3.3-70b-instruct` | Model name |
-| `ZG_COMPUTE_RPC_URL` | `https://evmrpc-testnet.0g.ai` | 0G Compute RPC |
-| `ZG_COMPUTE_PRIVATE_KEY` | -- | Wallet for compute payments |
-
-Browse providers at [compute-marketplace.0g.ai/inference](https://compute-marketplace.0g.ai/inference).
-
 ### GitHub Actions Secrets
 
-Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`
+Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`.
 
-Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`, `ZG_PRIVATE_KEY` (defaults to `KEEPER_PRIVATE_KEY`), `ZG_COMPUTE_PRIVATE_KEY` (defaults to `ZG_PRIVATE_KEY`).
+Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`.
 
-Repository **variables** (not secrets — they're public addresses/URLs):
-
-| Variable | Recommended value |
-|---|---|
-| `ZG_COMPUTE_PROVIDER` | current 0G compute provider address (verify with `node scripts/probe-0g-compute.mjs`); leaving it unset disables 0G compute and uses OpenAI |
-| `ZG_KV_CLIENT_URL` | leave unset (defaults to the agentio public node `http://178.238.236.119:6789`); override only if you self-host a 0G KV node |
-| `ZG_STREAM_ID` | leave unset (defaults to the agentio shared stream `0x...f2bd`); override only if you self-host a stream |
-| `ZG_RPC_URL`, `ZG_INDEXER_RPC`, `ZG_KV_TIMEOUT_MS`, `ZG_STORAGE_EXPECTED_REPLICA`, `ZG_COMPUTE_MODEL` | leave unset to use code defaults |
-| `ZG_KV_READ_DEADLINE_MS` | Workflow default `300000` (5m) for **Probe 0G KV** — how long to poll for read-after-write. Override (e.g. `1200000`) if you set `ZG_KV_PROBE_STRICT_READ=1` and need a longer wait. |
-| `ZG_KV_PROBE_STRICT_READ` | In CI, default is **not** set / off: the probe **soft-passes** if the write leg succeeds but the public KV never shows the key in time. Set to `1` in repo **Variables** (or on the step env) to fail the job until read-after-write succeeds. |
-| `ZG_KV_PROBE_OK_IF_WRITE_ONLY` | Force soft-pass on read timeout when set to `1` (any environment). Rarely needed now that CI defaults to soft. |
-
-The vault-agent workflow runs `scripts/probe-0g-kv.mjs` as a pre-flight
-step. It always verifies the **write** path (indexer + chain). The **read**
-round-trip against `ZG_KV_CLIENT_URL` is best-effort in GitHub Actions (public
-agentio replication is often too slow to verify in one job). Set
-`ZG_KV_PROBE_STRICT_READ=1` to require a successful read. If the KV HTTP
-endpoint is down, the probe still fails early on connection errors; only
-replication lag is treated as soft by default in CI.
-
-**One-time manual prerequisites** (cannot be automated by CI):
-
-1. Faucet the wallet derived from `KEEPER_PRIVATE_KEY` at https://faucet.0g.ai (the 0G storage MCP signs the same way regardless of CI vs local).
-2. Once locally, run `node scripts/0g-fund-compute-ledger.mjs 3` to create + fund the on-chain compute ledger entry. CI runs reusing the same key inherit this — the ledger persists across runs and only needs topping up when low.
-3. **Vercel project envs (`apps/web`)**: add `ZG_KV_CLIENT_URL=http://178.238.236.119:6789` and `ZG_STREAM_ID=0x000000000000000000000000000000000000000000000000000000000000f2bd` to the Production environment (mirror to Preview/Development if you want preview deploys to read live agent metadata too). The `deploy-production.yml` workflow already runs `vercel pull` so the values are baked into the build automatically — no workflow change needed. The API route at `apps/web/src/app/api/agent-metadata/[vault]/route.ts` returns a 500 with a clear "set ZG_KV_CLIENT_URL and ZG_STREAM_ID on this Vercel project" hint if either env is missing in production.
+No repository variables are required for the vault agent.
 
 ---
 
@@ -519,85 +411,20 @@ replication lag is treated as soft by default in CI.
 
 ```
 agents/
-  0g-vault-manager.md     # 0G + KeeperHub vault manager (the shipped agent)
+  vault-manager.md        # OpenAI-powered vault manager (the shipped agent)
   skills/                 # Reusable skill files (tool/API references)
     vault-manager.md      # Vault MCP tool reference, units, workflows
     yfinance.md           # Yahoo Finance search + quote reference
-    0g-storage.md         # 0G Storage KV + Log reference
-    keeperhub.md          # KeeperHub execution reference
   mcp-servers.json        # MCP server registry (spawn commands)
-  memory/                 # Gitignored warm-restart cache (cache.json only); source of truth lives on 0G
+  memory/                 # Tracked-in-git agent state and run logs (CI commits updates)
 
 scripts/
   agent-runner.mjs        # Generic runner (parses .md, loads skills, memory, vault lifecycle, LLM loop)
-  agent-memory-0g.mjs     # 0G-storage-backed memory adapter used by the runner
-  probe-0g.mjs            # 0G EVM RPC + wallet sanity probe
-  probe-0g-mcp.mjs        # 0G storage MCP roundtrip (state_set / log_append / log_read)
-  probe-0g-kv.mjs         # 0G KV round-trip probe (used as the workflow pre-flight)
-  probe-0g-compute.mjs    # List currently active 0G compute providers
-  0g-fund-compute-ledger.mjs # One-shot compute-ledger funding helper
 
 apps/
   mcps/
-    vault-manager/        # MCP server (on-chain vault reads + writes)
+    vault-manager/        # MCP server (on-chain vault reads + writes via cast)
     yfinance/             # MCP server (Yahoo Finance search + quotes)
-    0g-storage/           # MCP server (0G decentralized KV + Log storage)
-    keeperhub/            # MCP server (KeeperHub transaction execution)
-
-lib/
-  keeperhub.mjs           # Shared KeeperHub client (used by keepers + vault-manager-mcp)
+  web/
+    public/agent-metadata/  # Static <vault>.json files consumed by useAgentMetadata
 ```
-
----
-
-## 0G-Enabled Agents
-
-The `0g-vault-manager` agent demonstrates full integration with 0G Network infrastructure:
-
-- **0G Compute**: Decentralized LLM inference with TEE-verified responses
-- **0G Storage**: Persistent agent memory (KV store for state, Log layer for audit trail)
-- **KeeperHub**: Reliable transaction execution with retries, gas optimization, MEV protection
-
-### Running the 0G Agent
-
-Browse current compute providers at https://compute-marketplace.0g.ai/inference (or use `node scripts/probe-0g-compute.mjs`). The Llama-3.3-70B provider listed in earlier docs is no longer hosted; verify the address before setting.
-
-```bash
-# With 0G Compute (decentralized inference)
-ZG_COMPUTE_PROVIDER=0x... \
-ZG_COMPUTE_PRIVATE_KEY=0x... \
-ZG_PRIVATE_KEY=0x... \
-KEEPERHUB_API_KEY=kh_... \
-PRIVATE_KEY=0x... \
-npm run agent:0g
-
-# With OpenAI (fallback) + 0G Storage + KeeperHub. The runner also routes
-# automatically to OpenAI if the compute ledger is unfunded.
-LLM_API_KEY=sk-... \
-ZG_PRIVATE_KEY=0x... \
-KEEPERHUB_API_KEY=kh_... \
-PRIVATE_KEY=0x... \
-npm run agent:0g
-
-# Dry-run mode (skips on-chain writes; cheap end-to-end wiring check)
-npm run agent:0g:dry
-```
-
-First-time setup:
-
-```bash
-# 1. Faucet the wallet derived from PRIVATE_KEY at https://faucet.0g.ai
-node scripts/probe-0g.mjs              # prints the address + on-chain balance
-# 2. Fund the compute ledger so per-request micropayments work
-node scripts/0g-fund-compute-ledger.mjs 3
-# 3. Verify storage end-to-end (state_set + log_append + log_read)
-node scripts/probe-0g-mcp.mjs --write
-```
-
-### Decentralized Verification
-
-Actions taken by 0G-enabled agents are verifiable:
-
-- **Inference**: 0G Compute provides TEE-verified AI responses
-- **Memory**: 0G Storage root hashes prove data integrity via Merkle proofs
-- **Execution**: KeeperHub audit trail records all transactions with full provenance

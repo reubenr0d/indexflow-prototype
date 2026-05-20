@@ -1,4 +1,4 @@
-name: Vault Agent (0G)
+name: Vault Agent
 
 on:
   schedule:
@@ -21,15 +21,15 @@ on:
 env:
   FOUNDRY_VERSION: v1.3.1
 
-# No write permission needed: agent memory now lives on 0G Storage (KV via
-# the agentio public node + Log layer via the indexer). The cron job is a
-# read-only consumer of the repo and a writer to 0G.
+# The commit-results job pushes updated agent memory + metadata back to the
+# default branch under the vault-agent[bot] identity. This requires write
+# access on the contents scope.
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   vault-agent:
-    name: Agent "0g-vault-manager" (${{ matrix.network }})
+    name: Agent "vault-manager" (${{ matrix.network }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -50,69 +50,54 @@ jobs:
         with:
           foundry: "true"
 
-      - name: Probe 0G KV
-        env:
-          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://178.238.236.119:6789' }}
-          ZG_STREAM_ID: ${{ vars.ZG_STREAM_ID || '0x000000000000000000000000000000000000000000000000000000000000f2bd' }}
-          ZG_PRIVATE_KEY: ${{ secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
-          ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
-          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
-          ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
-          # How long to poll the KV for read-after-write. CI defaults to 5m; the probe
-          # soft-passes on read timeout unless ZG_KV_PROBE_STRICT_READ=1 (see script header).
-          ZG_KV_READ_DEADLINE_MS: ${{ vars.ZG_KV_READ_DEADLINE_MS || '300000' }}
-          AGENT_NAME: 0g-vault-manager
-        run: node scripts/probe-0g-kv.mjs
-
       - name: Run Agent
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
           PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
-          KEEPERHUB_API_KEY: ${{ secrets.KEEPERHUB_API_KEY }}
           PROJECT_ROOT: ${{ github.workspace }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
-          # 0G Storage + Compute. Each ZG_* key falls back to the previous via
-          # the runner / 0g-storage-mcp logic, so just `KEEPER_PRIVATE_KEY` is
-          # enough if you want a single wallet for everything. Set the dedicated
-          # secrets if you want to isolate keys.
-          ZG_PRIVATE_KEY: ${{ secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
-          ZG_COMPUTE_PRIVATE_KEY: ${{ secrets.ZG_COMPUTE_PRIVATE_KEY || secrets.ZG_PRIVATE_KEY || secrets.KEEPER_PRIVATE_KEY }}
-          # Note: GitHub Actions evaluates `vars.X` to an empty string when the
-          # variable is not set, which would override the runtime defaults.
-          # Use `||` to inject the documented defaults so CI works without any
-          # repo-level vars configured. Accept the value from either Secrets
-          # or Variables so operators can pick whichever bucket matches their
-          # security policy (the provider address is public on-chain, but some
-          # teams keep all provider config in Secrets).
-          ZG_COMPUTE_PROVIDER: ${{ secrets.ZG_COMPUTE_PROVIDER || vars.ZG_COMPUTE_PROVIDER }}
-          ZG_COMPUTE_MODEL: ${{ secrets.ZG_COMPUTE_MODEL || vars.ZG_COMPUTE_MODEL || 'qwen/qwen-2.5-7b-instruct' }}
-          ZG_RPC_URL: ${{ vars.ZG_RPC_URL || 'https://evmrpc-testnet.0g.ai' }}
-          ZG_INDEXER_RPC: ${{ vars.ZG_INDEXER_RPC || 'https://indexer-storage-testnet-turbo.0g.ai' }}
-          # Default to the agentio public hackathon node + shared stream.
-          # Override via repo `vars` to point at a self-hosted zgs_kv if the
-          # agentio courtesy node disappears.
-          ZG_KV_CLIENT_URL: ${{ vars.ZG_KV_CLIENT_URL || 'http://178.238.236.119:6789' }}
-          ZG_STREAM_ID: ${{ vars.ZG_STREAM_ID || '0x000000000000000000000000000000000000000000000000000000000000f2bd' }}
-          ZG_KV_TIMEOUT_MS: ${{ vars.ZG_KV_TIMEOUT_MS || '5000' }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           # GitHub Actions has no TTY; without this, the runner skips all write tools
-          # (create_vault, state_set, etc.) — see shouldSkipWritesForNonInteractiveSession
+          # (create_vault, etc.) — see shouldSkipWritesForNonInteractiveSession
           # in scripts/agent-runner-confirmation.mjs.
           AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
-        run: node scripts/agent-runner.mjs 0g-vault-manager
+        run: node scripts/agent-runner.mjs vault-manager
 
-      - name: Upload agent debug cache
+      - name: Upload agent outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          # Local memory is now a gitignored warm-restart cache only; the
-          # source of truth lives on 0G. Kept for post-mortem debugging.
-          name: agent-debug-cache-${{ matrix.network }}
+          name: agent-output-${{ matrix.network }}
           path: |
             agents/memory/
+            apps/web/public/agent-metadata/
           retention-days: 1
+
+  commit-results:
+    name: Commit all agent outputs
+    needs: vault-agent
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download all agent outputs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: agent-output-*
+          merge-multiple: true
+      - name: Commit agent memory and metadata
+        run: |
+          git config user.name "vault-agent[bot]"
+          git config user.email "vault-agent[bot]@users.noreply.github.com"
+          git add agents/memory/ apps/web/public/agent-metadata/
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(agent): update agent memory and metadata"
+          git pull --rebase
+          git push
