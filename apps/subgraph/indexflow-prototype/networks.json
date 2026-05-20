@@ -1,8 +1,0 @@
-{
-  "sepolia": {
-    "BasketFactory": {
-      "address": "0xBaBd358731e88d5A61AaB2fb0F142bEcCd8140AE",
-      "startBlock": 0
-    }
-  }
-}

@@ -12,7 +12,7 @@ This page lists the currently supported oracle assets and where each asset's pri
 `OracleAdapter.configureAsset(string symbol, ...)` stores the human-readable symbol on-chain in the `assetSymbols` mapping. The asset id is derived as `keccak256(bytes(symbol))`. This means:
 
 - The relayer reads symbols directly from the contract.
-- The subgraph indexes the `symbol` field from the `AssetConfigured` event.
+- The Envio indexer indexes the `symbol` field from the `AssetConfigured` event.
 - The web app reads `assetSymbols(id)` to display labels.
 - No local config or localStorage mapping is required.
 

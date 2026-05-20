@@ -26,4 +26,4 @@ Copy `.env.example` to `.env` and set:
 
 - Dynamic vault indexing is registered from `BasketFactory.BasketCreated` via `context.BasketVault.add(...)`.
 - Entity IDs are chain-scoped (`<chainId>-...`) to avoid cross-chain collisions.
-- Existing `apps/subgraph` is kept for fallback/reference during migration cutover.
+- Envio is the only indexer in the repo. The legacy `apps/subgraph` (The Graph) has been removed.

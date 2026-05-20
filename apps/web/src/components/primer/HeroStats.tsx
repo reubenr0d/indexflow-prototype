@@ -79,7 +79,7 @@ export default function HeroStats() {
       </div>
       {isError && (
         <p className="mt-3 text-xs text-red-400">
-          Unable to load stats from the subgraph — data may be stale.
+          Unable to load stats from the indexer — data may be stale.
         </p>
       )}
       <p className="mt-4 max-w-3xl text-xs leading-relaxed text-app-muted">

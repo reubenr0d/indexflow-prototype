@@ -81,7 +81,7 @@ Digest:
 - `VAPID_PUBLIC_KEY`
 - `VAPID_PRIVATE_KEY`
 - `VAPID_CONTACT_EMAIL`
-- `SUBGRAPH_URL`
+- `ENVIO_URL` (Envio HyperIndex GraphQL endpoint used by dispatch signal scans)
 - `DISPATCH_AUTH_TOKEN`
 - `OPEN_INTEREST_NEAR_CAP_BPS` (optional)
 - `ORACLE_STALE_THRESHOLD_SECONDS` (optional)

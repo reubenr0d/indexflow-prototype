@@ -28,7 +28,7 @@ Oracle feeds, deployments, and pool management.
 - [Oracle & Supported Assets](./ORACLE_SUPPORTED_ASSETS.md) — Supported assets on Sepolia, Yahoo relayer integration, and adding new assets.
 - [Global Pool Management](./GLOBAL_POOL_MANAGEMENT_FLOW.md) — GMX buffer amounts, direct pool deposits, and the admin pool interface.
 - [Cross-Chain Coordination](./CROSS_CHAIN_COORDINATION.md) — Hub-and-spoke architecture, StateRelay, on-chain deposit routing guard, keeper-posted routing weights, cross-chain redemption fills, and trust model.
-- [Deployments](./DEPLOYMENTS.md) — Sepolia and local contract addresses, subgraph deployment, and refresh commands.
+- [Deployments](./DEPLOYMENTS.md) — Sepolia and local contract addresses, Envio indexer deployment, and refresh commands.
 
 ## Operations
 

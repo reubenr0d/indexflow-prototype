@@ -3,7 +3,7 @@
 Local allowlist/ownership ledger for deployment operations.
 Agents must read this file before touching cloud resources.
 
-Last updated: 2026-04-27
+Last updated: 2026-05-20
 
 ## Policy
 
@@ -19,7 +19,8 @@ Last updated: 2026-04-27
 | GCP | `industrial-joy-440019-h3` | Cloud Scheduler Job | `PUSH_REALTIME_JOB_NAME` (from env/secrets) | production | user | `read`, `deploy`, `update-config` | Triggers realtime push dispatch cadence | 2026-04-10 |
 | GCP | `industrial-joy-440019-h3` | Cloud Scheduler Job | `PUSH_DIGEST_JOB_NAME` (from env/secrets) | production | user | `read`, `deploy`, `update-config` | Triggers digest push dispatch cadence | 2026-04-10 |
 | Vercel | org/project from CI secrets | Web Deployment | `apps/web` production deployment | production | user | `read`, `deploy` | Production Next.js web app deployment | 2026-04-10 |
-| The Graph Studio | Studio account `867` | Subgraph | `indexflow-prototype` (Sepolia, label `0.2.1`) | production | user | `read`, `deploy` | Indexed read model for web / push worker; deployed from `apps/subgraph` | 2026-04-17 |
+| The Graph Studio | Studio account `867` | Subgraph (deprecated) | `indexflow-prototype` (Sepolia, label `0.2.1`) | production | user | `read` only | Deprecated subgraph replaced by Envio HyperIndex (2026-05-20 cutover). User to archive in The Graph Studio when convenient; agent must not redeploy or modify. | 2026-04-17 |
+| Envio | Envio Cloud / self-hosted | HyperIndex deployment | `apps/envio` multichain (Sepolia + Fuji) | production | user | `read`, `deploy` | Single Hasura GraphQL endpoint serving every chain; replaces The Graph subgraph as the indexed read model for web and push worker | 2026-05-20 |
 | GCP | `watchful-gear-493003-t8` | Cloud Run Service | `indexflow-push-worker` | production | agent | `read`, `deploy`, `update-config` | Serverless Web Push API/dispatch worker for PWA notifications | 2026-04-11 |
 | GCP | `watchful-gear-493003-t8` | Cloud Scheduler Job | `indexflow-push-realtime` | production | agent | `read`, `deploy`, `update-config` | Realtime dispatch trigger (`*/5 * * * *`) | 2026-04-11 |
 | GCP | `watchful-gear-493003-t8` | Cloud Scheduler Job | `indexflow-push-digest` | production | agent | `read`, `deploy`, `update-config` | Digest dispatch trigger (`0 */6 * * *`) | 2026-04-11 |

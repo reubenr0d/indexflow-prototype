@@ -11,8 +11,8 @@ export function getSubgraphClient(url?: string | null): GraphQLClient | null {
 const clientCache = new Map<string, GraphQLClient>();
 
 /**
- * Returns a cached GraphQLClient for the given deployment target's subgraph URL,
- * or null if no subgraph is configured for that target.
+ * Returns a cached GraphQLClient for the given deployment target's indexer URL,
+ * or null if no indexer is configured (Envio serves every chain from one URL).
  */
 export function getSubgraphClientForTarget(target: DeploymentTarget): GraphQLClient | null {
   const url = getSubgraphUrlForTarget(target);

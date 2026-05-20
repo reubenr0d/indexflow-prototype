@@ -4,7 +4,7 @@ This repo includes a browser E2E suite for the web app with real onchain writes 
 
 ## Architecture
 
-- **No subgraph required.** When `NEXT_PUBLIC_E2E_TEST_MODE=1` is set, the app disables all subgraph queries and uses direct RPC reads (contract calls + event logs) for every data surface. This eliminates the Docker/graph-node dependency for e2e testing.
+- **No indexer required by default.** When `NEXT_PUBLIC_E2E_TEST_MODE=1` is set and `NEXT_PUBLIC_ENVIO_URL` is unset, the app falls back to direct RPC reads (contract calls + event logs) for every data surface. Cross-chain tests opt into Envio by setting `NEXT_PUBLIC_ENVIO_URL` (see "Cross-Chain E2E with Envio" below).
 - **Local Anvil** is the only backend. Tests interact with contracts deployed to `127.0.0.1:8545`.
 - **Privy embedded wallet** (primary): when `NEXT_PUBLIC_PRIVY_APP_ID` is set, the Playwright `globalSetup` logs in with a Privy test account, auto-creates an embedded wallet, funds it, and transfers contract ownership. All transactions are auto-signed by the embedded wallet — no MetaMask or browser extension needed.
 - **Mock connector** (fallback): when no Privy app ID is set, the legacy wagmi `mock` connector with the Anvil deployer account is used instead.
@@ -15,7 +15,7 @@ This repo includes a browser E2E suite for the web app with real onchain writes 
 - Real contract writes against local Anvil deployments.
 - Oracle price movement is the only synthetic market input (submitted onchain through the admin Assets page at `/admin/oracle`).
 - No frontend/API request stubs for basket/perp/pool transaction flows.
-- All data reads go through direct RPC fallbacks (no subgraph, no GraphQL).
+- Default flow reads through direct RPC fallbacks (no indexer); cross-chain specs opt into Envio when `NEXT_PUBLIC_ENVIO_URL` is set.
 
 ## Local Run (with Privy)
 
@@ -48,7 +48,7 @@ PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 n
 NEXT_PUBLIC_E2E_TEST_MODE=1 E2E_RPC_URL=http://127.0.0.1:8545 npm run test:e2e:ci
 ```
 
-No Docker, graph-node, or subgraph deployment is needed.
+No Docker or indexer is needed for the default flow.
 
 ## CI Run
 
@@ -58,7 +58,7 @@ No Docker, graph-node, or subgraph deployment is needed.
 - starts Anvil (bare process, no Docker),
 - runs `deploy:local` to deploy contracts,
 - runs `test:e2e:ci` with:
-  - `NEXT_PUBLIC_E2E_TEST_MODE=1` — forces anvil target and disables subgraph
+  - `NEXT_PUBLIC_E2E_TEST_MODE=1` — forces anvil target; with `NEXT_PUBLIC_ENVIO_URL` unset the app falls back to RPC reads
   - `E2E_RPC_URL=http://127.0.0.1:8545` — RPC endpoint for Playwright helpers
   - `NEXT_PUBLIC_PRIVY_APP_ID` / `PRIVY_TEST_EMAIL` / `PRIVY_TEST_OTP` (from GitHub secrets) — enables Privy embedded-wallet auth
 - uploads Playwright artifacts on failure.
@@ -79,7 +79,7 @@ When Privy credentials are available, `e2e/global-setup.ts` runs before all test
 
 ## Data Sources in E2E Mode
 
-When `NEXT_PUBLIC_E2E_TEST_MODE=1`, `getSubgraphUrlForTarget()` always returns `null`, so `isSubgraphEnabled` is `false` for every deployment target. All hooks that normally prefer subgraph data will use their RPC fallback paths:
+When `NEXT_PUBLIC_E2E_TEST_MODE=1` and `NEXT_PUBLIC_ENVIO_URL` is unset, `getSubgraphUrlForTarget()` returns `null` and `isSubgraphEnabled` is `false` for every deployment target. All hooks that normally prefer indexer data fall back to RPC:
 
 | Surface | RPC fallback |
 |---------|-------------|

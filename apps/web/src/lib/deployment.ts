@@ -98,21 +98,15 @@ export function getChainRole(target: string): ChainRole | undefined {
 }
 
 /**
- * Returns the subgraph URL for a given target.
- * - e2e test mode: uses Envio URL if set, otherwise null
- * - runtime: reads per-chain URLs from `src/config/subgraphs.json` or uses Envio URL
+ * Returns the indexer (Envio HyperIndex) GraphQL URL for a given target,
+ * or `null` if `NEXT_PUBLIC_ENVIO_URL` is unset. Envio serves every chain
+ * from one unified endpoint, so the target argument is accepted for legacy
+ * call sites but does not affect the resolved URL.
  */
 export function getSubgraphUrlForTarget(
   target: DeploymentTarget,
 ): string | null {
-  const envioUrl = getConfiguredSubgraphUrlForTarget(target);
-  // In E2E test mode, only use Envio (unified URL), not per-chain subgraphs
-  if (process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1") {
-    // NEXT_PUBLIC_ENVIO_URL enables Envio in E2E tests
-    if (process.env.NEXT_PUBLIC_ENVIO_URL?.trim()) return envioUrl;
-    return null;
-  }
-  return envioUrl;
+  return getConfiguredSubgraphUrlForTarget(target);
 }
 
 export function isValidViewMode(value: unknown): value is ViewMode {

@@ -1,6 +1,6 @@
 # Deployment Registry
 
-Canonical deployment references for Sepolia contracts, subgraph indexing, and push-notification infrastructure.
+Canonical deployment references for Sepolia contracts, Envio indexing, and push-notification infrastructure.
 
 Last updated: 2026-04-17
 
@@ -11,7 +11,7 @@ Last updated: 2026-04-17
 | Hub contracts | Ethereum Sepolia (`11155111`) | Full basket/perp protocol: BasketVault, VaultAccounting, GMX pool, OracleAdapter, StateRelay | `apps/web/src/config/sepolia-deployment.json` |
 | Spoke contracts | Avalanche Fuji (`43113`), and future spokes | Deposit-only: BasketVault, BasketFactory, StateRelay, RedemptionReceiver (no perp module) | `apps/web/src/config/fuji-deployment.json` |
 | Keeper service | Node.js (self-hosted or Cloud Run) | Epoch loop: routing weights + PnL adjustments posted to StateRelay on every chain | `services/keeper/` |
-| Subgraph | The Graph Studio (per-chain) | Indexed read model for web and push-trigger scans | `apps/web/src/config/subgraphs.json` (web) and `SUBGRAPH_URL` (push worker) |
+| Indexer | Envio HyperIndex (multichain, single Hasura endpoint) | Indexed read model for web and push-trigger scans across all chains | `NEXT_PUBLIC_ENVIO_URL` (web) and `ENVIO_URL` (push worker) |
 | Push worker | Google Cloud Run + Cloud Scheduler + Firestore | Web Push subscription, preferences, dispatch, and digest delivery | `.github/workflows/deploy-production.yml` + GCP secrets |
 
 Google Cloud resources in this repo are used only for serverless push notifications. They are not used for contract deployment, execution, or oracle keeper writes.
@@ -71,7 +71,7 @@ Config file: `apps/web/src/config/local-deployment.json`
 
 Runtime note: the web app maps `anvil` to local deployment addresses, persists the selected target in browser `localStorage`, and keeps it aligned with the wallet chain selector in the connect button.
 
-Subgraph note: web reads per-chain subgraph URLs from `apps/web/src/config/subgraphs.json`. If no URL is configured for a chain, the app falls back to RPC data paths for that chain. The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
+Indexer note: web reads a single Envio HyperIndex URL from `NEXT_PUBLIC_ENVIO_URL`. The endpoint serves every chain (multichain config in `apps/envio/config.yaml`), so the same URL is used regardless of the selected deployment target. When `NEXT_PUBLIC_ENVIO_URL` is unset, the app falls back to RPC data paths. The "All Chains" view in the network selector aggregates data from all chains the indexer covers, served by the same endpoint.
 
 - `basketFactory`: `0xD5ac451B0c50B9476107823Af206eD814a2e2580`
 - `vaultAccounting`: `0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9`
@@ -178,29 +178,37 @@ The initial Fuji deployment used `Deploy.s.sol` (full stack) before the hub-spok
 
 Configuration: TWAP window 30 min, min snapshot interval 5 min, max staleness 1 hour, broadcast threshold 5%, max escrow duration 2 hours, min intent 100 USDC, CCIP fee token LINK (`0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846`).
 
-## Subgraph deployment (Sepolia indexed)
+## Indexer deployment (Envio HyperIndex, multichain)
 
-Runtime: The Graph Studio
+Runtime: Envio HyperIndex (Envio Cloud or self-hosted Hasura).
 
-Purpose: indexed query layer used by:
+Purpose: single indexed query layer for every chain, used by:
 
-- web app read paths (`apps/web/src/config/subgraphs.json`)
-- push-worker trigger scans (`SUBGRAPH_URL`)
+- web app read paths (`NEXT_PUBLIC_ENVIO_URL`)
+- push-worker trigger scans (`ENVIO_URL`)
+
+Source: [`apps/envio`](../apps/envio) — `config.yaml` defines the multichain contracts and events; `schema.graphql` defines the entities; `src/EventHandlers.ts` contains the event handlers.
 
 Canonical workflow:
 
 ```bash
-# authenticate once
-npx graph auth <DEPLOY_KEY>
+# install + codegen
+npm install --prefix apps/envio
+npm run --prefix apps/envio codegen
 
-# deploy sepolia-indexed subgraph
-NETWORK=sepolia SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
+# local: run against the multichain config (Sepolia + Fuji)
+npm run --prefix apps/envio dev
+
+# local: run against the dual-Anvil generated config
+npm run --prefix apps/envio dev:local
+
+# deploy to Envio Cloud (or your hosted Envio): see apps/envio/README.md
 ```
 
 After deploy:
 
-- set web app per-chain subgraph URLs in `apps/web/src/config/subgraphs.json` to the Studio query URLs
-- set push worker `SUBGRAPH_URL` to the same or equivalent production query URL
+- set `NEXT_PUBLIC_ENVIO_URL` in Vercel (Production + Preview) to the Hasura endpoint URL.
+- set `ENVIO_URL` on the push-worker Cloud Run service (and on the GitHub Actions secret used by `.github/workflows/deploy-production.yml`).
 
 ## Google Cloud deployment (push notifications only)
 
@@ -311,9 +319,10 @@ LOCAL_CHAIN=fuji REMOTE_CHAIN=sepolia npm run deploy:wire-peers -- --rpc-url fuj
 
 ### Local (Docker Compose workflow)
 
-- First time: `npm run local:up` (starts Docker infra + deploys contracts + subgraph)
-- Start UI: `npm run local:dev` (Next.js dev server on host, hot reloads)
-- Redeploy after code changes: `npm run redeploy:local` (re-deploys contracts + subgraph; UI picks up new addresses via HMR)
+- First time: `npm run local:up` (starts Docker Anvil + deploys contracts)
+- Start indexer (separate terminal): `npm run --prefix apps/envio dev:local`
+- Start UI: `NEXT_PUBLIC_ENVIO_URL=http://127.0.0.1:8080/v1/graphql npm run local:dev` (Next.js dev server on host, hot reloads)
+- Redeploy after code changes: `npm run redeploy:local` (re-deploys contracts; UI picks up new addresses via HMR; restart the indexer if running)
 - Teardown/reset volumes: `npm run local:down`
 - Standalone contract-only deploy (bare Anvil, no Docker): `npm run deploy:local`
 

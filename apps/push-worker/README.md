@@ -25,7 +25,7 @@ npm run --prefix apps/push-worker dev
 - `VAPID_PUBLIC_KEY`
 - `VAPID_PRIVATE_KEY`
 - `VAPID_CONTACT_EMAIL`
-- `SUBGRAPH_URL`
+- `ENVIO_URL` — Envio HyperIndex GraphQL endpoint (Hasura) used by `/v1/push/dispatch` to scan basket activity for realtime + digest notifications.
 - `DISPATCH_AUTH_TOKEN`
 
 ## Deploy

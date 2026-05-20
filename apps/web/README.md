@@ -5,13 +5,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 The recommended way to develop locally is via the Docker Compose workflow from the **repo root**:
 
 ```bash
-# From repo root — start Docker infra + deploy contracts + subgraph
+# From repo root — start Docker Anvil + deploy contracts
 npm run local:up
 
-# Start the UI dev server (hot reloads on file changes)
-npm run local:dev
+# Start the Envio HyperIndex indexer (separate terminal)
+npm run --prefix apps/envio dev:local
 
-# After changing Solidity or subgraph code, redeploy:
+# Start the UI dev server with the indexer URL (hot reloads on file changes)
+NEXT_PUBLIC_ENVIO_URL=http://127.0.0.1:8080/v1/graphql npm run local:dev
+
+# After Solidity changes, redeploy contracts (restart the indexer after redeploys):
 npm run redeploy:local
 ```
 
@@ -21,7 +24,7 @@ See the root `README.md` **Local Development** section for full details.
 
 ## Standalone Dev Server
 
-To run the dev server without the Docker stack (RPC-only, no subgraph):
+To run the dev server without Docker (RPC-only reads; indexer-backed views fall back to RPC):
 
 ```bash
 npm run dev
@@ -29,23 +32,22 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result. The page auto-updates as you edit files.
 
-## Subgraph Configuration
+## Indexer Configuration
 
-Configure subgraph endpoints in `src/config/subgraphs.json` to enable hybrid GraphQL + RPC reads:
+The web app reads from a single Envio HyperIndex GraphQL (Hasura) endpoint serving every chain. Configure via `NEXT_PUBLIC_ENVIO_URL` (in `apps/web/.env.local`, the Vercel project env, or the shell when starting `npm run dev`):
 
 ```bash
-{
-  "sepolia": "https://api.studio.thegraph.com/query/<id>/<slug>/version/latest",
-  "fuji": "https://api.studio.thegraph.com/query/<id>/<slug>/version/latest"
-}
+NEXT_PUBLIC_ENVIO_URL=http://127.0.0.1:8080/v1/graphql
+# or
+NEXT_PUBLIC_ENVIO_URL=https://indexer.envio.dev/<deployment-id>/v1/graphql
 ```
 
 Read policy:
 
-- Per-chain URL set and healthy: indexed/list/history views use subgraph-first.
-- Per-chain URL unset or subgraph query failure/empty result: affected views fall back entirely to RPC reads.
+- `NEXT_PUBLIC_ENVIO_URL` set and indexer healthy: indexed list/history/portfolio views use the indexer first.
+- `NEXT_PUBLIC_ENVIO_URL` unset or indexer query failure/empty result: affected views fall back entirely to RPC reads.
 - Live-critical values (wallet balances and risk state) continue to read from RPC.
-- "All Chains" view queries all configured per-chain subgraphs in parallel and aggregates results.
+- "All Chains" view aggregates across every chain the indexer covers (served from the same endpoint).
 
 ## Push Notifications
 

@@ -235,8 +235,7 @@ The Next.js web app reads `apps/web/.env.local` (or shell). Required and optiona
 | Variable | Required | Description |
 | --- | --- | --- |
 | `NEXT_PUBLIC_PRIVY_APP_ID` | Yes | Privy app ID from [dashboard.privy.io](https://dashboard.privy.io) |
-| `NEXT_PUBLIC_SUBGRAPH_URL` | No | Fallback subgraph endpoint (auto-set by `local:dev`) |
-| `NEXT_PUBLIC_SUBGRAPH_URL_<NETWORK_KEY>` | No | Per-deployment-target subgraph URL; `<NETWORK_KEY>` is the uppercase deployment target key (see [`apps/web/.env.example`](apps/web/.env.example)) |
+| `NEXT_PUBLIC_ENVIO_URL` | Yes (for indexer-backed views) | Envio HyperIndex GraphQL (Hasura) endpoint serving all chains, e.g. `http://127.0.0.1:8080/v1/graphql` locally or the deployed Envio Cloud URL. When unset, indexer-backed views fall back to RPC reads. |
 | `NEXT_PUBLIC_PUSH_SERVICE_URL` | No | Cloud Run push-worker base URL used by `/settings` for preferences/subscription APIs |
 | `NEXT_PUBLIC_E2E_TEST_MODE` | No | Set to `1` for deterministic E2E mock wallet |
 
@@ -249,7 +248,7 @@ The push worker service (Cloud Run) requires:
 | `VAPID_PUBLIC_KEY` | Yes | Web Push VAPID public key (base64url) |
 | `VAPID_PRIVATE_KEY` | Yes | Web Push VAPID private key (base64url) |
 | `VAPID_CONTACT_EMAIL` | Yes | Contact identity passed to push services (for example `mailto:ops@indexflow.app`) |
-| `SUBGRAPH_URL` | Yes | Subgraph endpoint for dispatch signal scans |
+| `ENVIO_URL` | Yes | Envio HyperIndex GraphQL endpoint for dispatch signal scans (Hasura). |
 | `DISPATCH_AUTH_TOKEN` | Yes | Bearer token required by `POST /v1/push/dispatch` |
 | `OPEN_INTEREST_NEAR_CAP_BPS` | No | Threshold for open-interest alerting (default `9000`) |
 | `ORACLE_STALE_THRESHOLD_SECONDS` | No | Oracle staleness threshold in seconds (default `2700`) |
@@ -285,43 +284,46 @@ CHAIN=<hubKey> forge script script/Deploy.s.sol:Deploy --rpc-url <rpcAlias> --br
 
 ## Local Development (Docker Compose)
 
-Docker Compose runs the infrastructure (Anvil chain, Postgres, IPFS, graph-node). The **UI and deploys run on the host** for native hot reload and fast iteration.
+Docker Compose runs the local chain (Anvil). Contracts deploy from the host, the Envio HyperIndex indexer runs on the host, and the UI runs on the host -- everything outside of Docker for native hot reload.
 
 ### Prerequisites
 
 - Docker / Docker Compose
-- Node.js (for the web app and subgraph tooling)
+- Node.js
 - Foundry (`forge`, `cast`) on `PATH`
 
 ### Quick start
 
 ```bash
-# 1. Start infra + deploy contracts + deploy subgraph (one command)
+# 1. Start Anvil + deploy contracts (writes local-deployment.json)
 npm run local:up
 
-# 2. Start the UI dev server (separate terminal, hot reloads on file changes)
-npm run local:dev
+# 2. Start the Envio HyperIndex indexer (separate terminal)
+npm run --prefix apps/envio dev:local
+
+# 3. Start the UI dev server (separate terminal, hot reloads on file changes)
+NEXT_PUBLIC_ENVIO_URL=http://127.0.0.1:8080/v1/graphql npm run local:dev
 ```
 
 Open `http://localhost:3000`, log in via Privy (or connect MetaMask), and switch the deployment target to **Anvil**.
 
 ### Redeploying after code changes
 
-After changing Solidity contracts, subgraph mappings, or schema:
+After changing Solidity contracts:
 
 ```bash
 npm run redeploy:local
 ```
 
-This re-deploys contracts to the running Anvil, updates `local-deployment.json`, syncs the subgraph network config, rebuilds the manifest, and deploys the subgraph to graph-node. The Next.js dev server picks up the new contract addresses via HMR -- no restart needed.
+This re-deploys contracts to the running Anvil and updates `apps/web/src/config/local-deployment.json`. The Next.js dev server picks up new contract addresses via HMR -- no restart needed. If the Envio indexer is running, restart it so it picks up the new contract addresses from `apps/envio/config.local.generated.yaml`.
 
 ### Other commands
 
 ```bash
-# Stream Docker service logs
+# Stream Docker service logs (Anvil)
 npm run local:logs
 
-# Stop all services and wipe volumes (full reset)
+# Stop Anvil and wipe its volumes
 npm run local:down
 ```
 
@@ -330,16 +332,16 @@ npm run local:down
 | Service | URL |
 | --- | --- |
 | Anvil RPC | `http://127.0.0.1:8545` |
-| Graph query | `http://127.0.0.1:8000/subgraphs/name/indexflow-prototype` |
-| Graph admin | `http://127.0.0.1:8020` |
-| Graph status | `http://127.0.0.1:8030/graphql` |
+| Envio GraphQL (Hasura) | `http://127.0.0.1:8080/v1/graphql` |
+| Envio playground | `http://127.0.0.1:8080` |
 | Web UI | `http://127.0.0.1:3000` |
 
 ### How it fits together
 
-- `docker-compose.local.yml` runs only infra services (Anvil, Postgres, IPFS, graph-node).
-- `scripts/local/redeploy.sh` deploys contracts and the subgraph from the host, targeting Docker services over localhost ports.
-- The UI runs on the host via `npm run local:dev`, which sets `NEXT_PUBLIC_SUBGRAPH_URL` to the local graph-node so subgraph reads work on the Anvil target.
+- `docker-compose.local.yml` runs Anvil only.
+- `scripts/local/redeploy.sh` deploys contracts from the host to Docker Anvil over localhost.
+- `apps/envio` runs the indexer on the host (managing its own Postgres + Hasura) via `npm run --prefix apps/envio dev:local`.
+- The UI runs on the host via `npm run local:dev`; pass `NEXT_PUBLIC_ENVIO_URL` so the app reads from the local Hasura endpoint.
 - `apps/web/src/config/local-deployment.json` is written by the deploy script and imported by the Next.js app at build/dev time. File changes trigger HMR.
 
 ### Web app runtime contract wiring
@@ -354,41 +356,34 @@ npm run local:down
 - In E2E mode (`NEXT_PUBLIC_E2E_TEST_MODE=1`), deployment target is locked to `anvil` and the deterministic mock wallet connector remains enabled for CI-stable signing.
 - When a wallet is connected on the wrong network, the app auto-requests a switch to the selected deployment chain.
 
-## Subgraph Ops
+## Indexer Ops (Envio HyperIndex)
 
-`apps/subgraph` syncs network addresses from web deployment outputs before manifest generation.
-
-Mappings that reuse shared basket refresh/snapshot helpers (`BasketFactory`, `VaultAccounting`, and `BasketVaultTemplate`) must declare the helper ABIs: `BasketVault`, `BasketShareToken`, `ERC20`, and `VaultAccounting`.
+The Envio HyperIndex indexer lives at [`apps/envio`](apps/envio) and is the single indexer for every chain. It indexes `BasketFactory`, `BasketVault` (dynamically registered), `VaultAccounting`, `OracleAdapter`, and `StateRelay` across Sepolia, Fuji, and Anvil (locally) into one Hasura GraphQL endpoint.
 
 ```bash
-# optional manual sync
-npm --prefix apps/subgraph run sync:networks
+# install + codegen
+npm install --prefix apps/envio
+npm run --prefix apps/envio codegen
 
-# generate + build for local indexing
-NETWORK=anvil npm --prefix apps/subgraph run build
+# run against the multichain config (Sepolia + Fuji)
+npm run --prefix apps/envio dev
 
-# generate + build for a hosted / public testnet target (<deployment_target> matches subgraph network config)
-NETWORK=<deployment_target> npm --prefix apps/subgraph run build
+# run against the local dual-Anvil generated config
+npm run --prefix apps/envio dev:local
 ```
 
-### Deploying to Subgraph Studio
+### Deploying
 
-```bash
-# authenticate (one-time, deploy key from https://thegraph.com/studio/)
-npx graph auth <DEPLOY_KEY>
+Production indexing runs on Envio Cloud (or a self-hosted Envio). See [`apps/envio/README.md`](apps/envio/README.md) for the current deploy flow.
 
-# deploy
-NETWORK=<deployment_target> SUBGRAPH_SLUG=<your-slug> npm --prefix apps/subgraph run deploy
-```
+Set `NEXT_PUBLIC_ENVIO_URL` in Vercel (or `apps/web/.env.local`) to the Hasura endpoint -- the same URL is used for every deployment target because Envio is multichain.
 
-Set `NEXT_PUBLIC_SUBGRAPH_URL` in Vercel (or `.env.local`) to the Studio query URL, e.g.
-`https://api.studio.thegraph.com/query/<id>/<slug>/<version>`.
+Set `ENVIO_URL` on the push-worker (Cloud Run) to the same endpoint.
 
 Runtime note:
 
-- The web app enables subgraph reads for any deployment target when a subgraph URL is configured. Per-target `NEXT_PUBLIC_SUBGRAPH_URL_<NETWORK_KEY>` values (see [`apps/web/.env.example`](apps/web/.env.example)) take precedence; `NEXT_PUBLIC_SUBGRAPH_URL` is the fallback. `npm run local:dev` sets the fallback automatically for local development.
-- When no subgraph URL is available, affected views fall back to RPC data paths.
-- The "All Chains" view in the network selector aggregates data from all configured chain subgraphs in parallel.
+- The web app and push-worker both read from one Envio endpoint. When `NEXT_PUBLIC_ENVIO_URL` is unset, indexer-backed UI views fall back to RPC data paths; the push-worker `/v1/push/dispatch` endpoint returns `500` until `ENVIO_URL` is configured.
+- The "All Chains" view aggregates data from all chains the indexer covers, served by the same endpoint.
 
 ## Operations
 

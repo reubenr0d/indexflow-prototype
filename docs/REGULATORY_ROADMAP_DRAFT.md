@@ -346,7 +346,7 @@ Steps:
 - deploy contracts to mainnet via Foundation multi-sig
 - verify contracts on block explorer
 - transfer contract ownership to Foundation multi-sig + timelock
-- deploy subgraph to decentralized Graph Network
+- deploy Envio HyperIndex to a hosted/self-hosted production environment with redundant chain RPC providers
 - launch hosted frontend with all compliance measures active
 - publish audit report, bug bounty details, and risk disclosures
 - begin progressive decentralization (see governance sequence below)

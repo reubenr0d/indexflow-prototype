@@ -57,7 +57,7 @@ describe("/chains page", () => {
     });
 
     const html = renderToStaticMarkup(createElement(ChainsPage));
-    expect(html).toContain("Showing partial chain data. Failed subgraph targets: fuji.");
+    expect(html).toContain("Showing partial chain data. Failed indexer targets: fuji.");
     expect(html).toContain("data-testid=\"chain-chart\"");
     expect(html).toContain("chart:111");
     expect(html).toContain("Stale chains (&gt;5m)");

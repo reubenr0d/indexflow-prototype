@@ -89,11 +89,11 @@ flowchart LR
 | `RedemptionReceiver` | Implemented today | CCIP receiver on spoke chains for keeper-bridged USDC redemption fills | `CCIPReceiver`, `Ownable` | `src/coordination/RedemptionReceiver.sol` |
 | Keeper service | Implemented today | Off-chain epoch loop: reads all chains, computes routing weights and PnL adjustments, posts to StateRelay | Node.js service, `PRIVATE_KEY`-authed | `services/keeper/src/index.ts` |
 | Deploy scripts | Implemented today | Hub + spoke deployment, GMX fork bootstrapping, keeper wiring, BHP.AX seeding | Deployer-controlled scripts | `script/Deploy.s.sol`; `script/DeploySpoke.s.sol` |
-| Subgraph | Implemented today | Basket state, activity, snapshots, exposure, protocol state | Off-chain indexer | `apps/subgraph/schema.graphql` `L1-L182`; `apps/subgraph/src/mappings/helpers.ts` `L74-L222` |
+| Envio HyperIndex | Implemented today | Basket state, activity, snapshots, exposure, protocol state across all chains in one Hasura endpoint | Off-chain indexer | `apps/envio/schema.graphql`; `apps/envio/src/EventHandlers.ts` |
 
 ### Read-model surface
 
-The protocol already has a separate read plane. `PerpReader` exposes basket snapshots, pool utilization, oracle state, and GMX position reads. The subgraph persists basket-level fee, reserve, activity, and exposure state via `Basket`, `BasketSnapshot`, `BasketExposure`, `VaultStateCurrent`, `OraclePriceUpdate`, and related entities. Code refs: `src/perp/PerpReader.sol` `getBasketInfo()` `L103-L117`; `getPoolUtilization()` `L202-L212`; `apps/subgraph/schema.graphql` `L1-L182`; `apps/subgraph/src/mappings/helpers.ts` `refreshBasketFromChain()` `L74-L127`; `syncBasketSnapshot()` `L134-L188`.
+The protocol already has a separate read plane. `PerpReader` exposes basket snapshots, pool utilization, oracle state, and GMX position reads. The Envio HyperIndex indexer persists basket-level fee, reserve, activity, and exposure state via `Basket`, `BasketSnapshot`, `BasketExposure`, `VaultStateCurrent`, `OraclePriceUpdate`, and related entities into a single Hasura GraphQL endpoint. Code refs: `src/perp/PerpReader.sol` `getBasketInfo()` `L103-L117`; `getPoolUtilization()` `L202-L212`; `apps/envio/schema.graphql`; `apps/envio/src/EventHandlers.ts`.
 
 ## Vault and NAV accounting specification
 

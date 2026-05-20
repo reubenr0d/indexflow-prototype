@@ -1,12 +1,19 @@
 import { GraphQLClient, gql } from "graphql-request";
 
+/**
+ * Envio HyperIndex (Hasura) queries for push-worker signal scans.
+ * Aliases preserve the legacy response shape that `dispatch.js` consumes:
+ *   - `basketActivities`
+ *   - `vaultStateCurrents`
+ *   - `oraclePriceUpdates`
+ */
+
 const GET_RECENT_ACTIVITIES = gql`
-  query GetRecentActivities($minTimestamp: BigInt!, $first: Int!) {
-    basketActivities(
-      where: { timestamp_gt: $minTimestamp }
-      first: $first
-      orderBy: timestamp
-      orderDirection: asc
+  query GetRecentActivities($minTimestamp: numeric!, $first: Int!) {
+    basketActivities: BasketActivity(
+      where: { timestamp: { _gt: $minTimestamp } }
+      limit: $first
+      order_by: { timestamp: asc }
     ) {
       id
       activityType
@@ -22,7 +29,10 @@ const GET_RECENT_ACTIVITIES = gql`
         name
       }
     }
-    vaultStateCurrents(first: 200, orderBy: updatedAt, orderDirection: desc) {
+    vaultStateCurrents: VaultStateCurrent(
+      limit: 200
+      order_by: { updatedAt: desc }
+    ) {
       id
       paused
       depositedCapital
@@ -35,19 +45,21 @@ const GET_RECENT_ACTIVITIES = gql`
         minReserveBps
       }
     }
-    oraclePriceUpdates(first: 1, orderBy: priceTimestamp, orderDirection: desc) {
+    oraclePriceUpdates: OraclePriceUpdate(
+      limit: 1
+      order_by: { priceTimestamp: desc }
+    ) {
       priceTimestamp
     }
   }
 `;
 
 const GET_DIGEST_ACTIVITIES = gql`
-  query GetDigestActivities($minTimestamp: BigInt!, $first: Int!) {
-    basketActivities(
-      where: { timestamp_gt: $minTimestamp }
-      first: $first
-      orderBy: timestamp
-      orderDirection: asc
+  query GetDigestActivities($minTimestamp: numeric!, $first: Int!) {
+    basketActivities: BasketActivity(
+      where: { timestamp: { _gt: $minTimestamp } }
+      limit: $first
+      order_by: { timestamp: asc }
     ) {
       activityType
       timestamp
@@ -58,7 +70,7 @@ const GET_DIGEST_ACTIVITIES = gql`
   }
 `;
 
-export function createSubgraphClient(url) {
+export function createEnvioClient(url) {
   return new GraphQLClient(url, {
     headers: {
       "content-type": "application/json",

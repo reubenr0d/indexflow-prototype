@@ -72,7 +72,7 @@ npm start
 
 ### One-shot epoch (after deploy or seed)
 
-Forge deploy and seed scripts trigger a single keeper epoch at the end so `StateRelay` emits `StateUpdated` and subgraphs can populate `/chains` data without starting the long-lived process first.
+Forge deploy and seed scripts trigger a single keeper epoch at the end so `StateRelay` emits `StateUpdated` and the Envio indexer can populate `/chains` data without starting the long-lived process first.
 
 From the **repository root**:
 

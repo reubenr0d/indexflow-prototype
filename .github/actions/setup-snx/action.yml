@@ -98,7 +98,6 @@ runs:
           node_modules
           apps/web/node_modules
           apps/push-worker/node_modules
-          apps/subgraph/node_modules
           apps/mcps/vault-manager/node_modules
           apps/mcps/yfinance/node_modules
           apps/mcps/0g-storage/node_modules

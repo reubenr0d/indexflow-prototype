@@ -6,7 +6,6 @@
   "workspaces": [
     "apps/web",
     "apps/push-worker",
-    "apps/subgraph",
     "apps/mcps/vault-manager",
     "apps/mcps/yfinance"
   ],

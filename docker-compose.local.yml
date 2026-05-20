@@ -11,53 +11,5 @@ services:
       timeout: 2s
       retries: 40
 
-  postgres:
-    image: postgres:14
-    ports:
-      - "5432:5432"
-    command:
-      [
-        "postgres",
-        "-cshared_preload_libraries=pg_stat_statements",
-        "-cmax_connections=200",
-      ]
-    environment:
-      POSTGRES_USER: graph-node
-      POSTGRES_PASSWORD: let-me-in
-      POSTGRES_DB: graph-node
-      PGDATA: "/var/lib/postgresql/data"
-      POSTGRES_INITDB_ARGS: "-E UTF8 --locale=C"
-    volumes:
-      - graph_pg_data:/var/lib/postgresql/data
-
-  ipfs:
-    image: ipfs/kubo:v0.17.0
-    ports:
-      - "5001:5001"
-    volumes:
-      - graph_ipfs_data:/data/ipfs
-
-  graph-node:
-    image: graphprotocol/graph-node
-    ports:
-      - "8000:8000"
-      - "8001:8001"
-      - "8020:8020"
-      - "8030:8030"
-      - "8040:8040"
-    depends_on:
-      - ipfs
-      - postgres
-      - anvil
-    environment:
-      postgres_host: postgres
-      postgres_user: graph-node
-      postgres_pass: let-me-in
-      postgres_db: graph-node
-      ipfs: "ipfs:5001"
-      ethereum: "anvil:http://anvil:8545"
-      GRAPH_LOG: info
-
-volumes:
-  graph_pg_data:
-  graph_ipfs_data:
+# Envio HyperIndex (apps/envio) runs on the host via `npm run --prefix apps/envio dev:local`.
+# It manages its own Postgres + Hasura GraphQL endpoint (default http://127.0.0.1:8080).

@@ -53,7 +53,7 @@ export default function ChainsPage() {
         {failedTargets.length > 0 && (
           <p className="mt-3 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-700 dark:text-amber-300">
             <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            Showing partial chain data. Failed subgraph targets: {failedTargets.join(", ")}.
+            Showing partial chain data. Failed indexer targets: {failedTargets.join(", ")}.
           </p>
         )}
       </div>

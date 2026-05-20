@@ -5,12 +5,12 @@ import webpush from "web-push";
 import { z } from "zod";
 import { buildDigestSummary, deriveRealtimeSignals, EVENT_TO_PREF, hashEndpoint } from "./dispatch.js";
 import { isEventAllowed, normalizePreferences } from "./preferences.js";
-import { createSubgraphClient, fetchDigestActivities, fetchRecentSignals } from "./subgraph.js";
+import { createEnvioClient, fetchDigestActivities, fetchRecentSignals } from "./envio.js";
 
 const PUBLIC_VAPID_KEY = process.env.VAPID_PUBLIC_KEY ?? "";
 const PRIVATE_VAPID_KEY = process.env.VAPID_PRIVATE_KEY ?? "";
 const CONTACT_EMAIL = process.env.VAPID_CONTACT_EMAIL ?? "mailto:ops@indexflow.app";
-const SUBGRAPH_URL = process.env.SUBGRAPH_URL ?? "";
+const ENVIO_URL = process.env.ENVIO_URL ?? "";
 const DISPATCH_AUTH_TOKEN = process.env.DISPATCH_AUTH_TOKEN ?? "";
 const PORT = Number(process.env.PORT ?? 8080);
 
@@ -23,7 +23,7 @@ if (PUBLIC_VAPID_KEY && PRIVATE_VAPID_KEY) {
 }
 
 const firestore = new Firestore();
-const subgraphClient = SUBGRAPH_URL ? createSubgraphClient(SUBGRAPH_URL) : null;
+const envioClient = ENVIO_URL ? createEnvioClient(ENVIO_URL) : null;
 
 const app = express();
 app.use(express.json({ limit: "1mb" }));
@@ -279,8 +279,8 @@ app.post("/v1/push/test", async (req, res) => {
 });
 
 app.post("/v1/push/dispatch", requireDispatchAuth, async (req, res) => {
-  if (!subgraphClient) {
-    return res.status(500).json({ error: "SUBGRAPH_URL is not configured" });
+  if (!envioClient) {
+    return res.status(500).json({ error: "ENVIO_URL is not configured" });
   }
 
   const mode = String(req.query.mode ?? "all").toLowerCase();
@@ -299,7 +299,7 @@ app.post("/v1/push/dispatch", requireDispatchAuth, async (req, res) => {
 
   if (runRealtime) {
     const minTimestamp = Number(state?.realtimeCursor ?? 0);
-    const payload = await fetchRecentSignals(subgraphClient, minTimestamp, 500);
+    const payload = await fetchRecentSignals(envioClient, minTimestamp, 500);
     const signals = deriveRealtimeSignals(payload);
     results.realtimeSignals = signals.length;
 
@@ -347,7 +347,7 @@ app.post("/v1/push/dispatch", requireDispatchAuth, async (req, res) => {
 
   if (runDigest) {
     const minTimestamp = Number(state?.digestCursor ?? 0);
-    const payload = await fetchDigestActivities(subgraphClient, minTimestamp, 1000);
+    const payload = await fetchDigestActivities(envioClient, minTimestamp, 1000);
     const activities = Array.isArray(payload?.basketActivities) ? payload.basketActivities : [];
     const summaries = buildDigestSummary(activities);
 
