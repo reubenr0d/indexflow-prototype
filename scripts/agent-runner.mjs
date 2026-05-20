@@ -550,12 +550,82 @@ async function spawnMcpClient(serverDef) {
 }
 
 // ---------------------------------------------------------------------------
-// LLM API with retry (exponential backoff on 429 / 5xx)
+// LLM API with retry (server-hint-aware backoff on 429 / 5xx)
 // Uses an OpenAI-compatible chat-completions endpoint (defaults to api.openai.com).
 // ---------------------------------------------------------------------------
 
-const RETRY_ATTEMPTS = 3;
+const RETRY_ATTEMPTS = 5;
 const RETRY_BASE_MS = 2000;
+const RETRY_MAX_MS = 60_000;
+// Small pad on top of server-provided hints to avoid landing exactly on the
+// reset boundary (which sometimes still 429s).
+const RETRY_HINT_PAD_MS = 250;
+
+// RFC 7231 §7.1.3: Retry-After is either a non-negative integer number of
+// seconds, or an HTTP-date. Returns ms or null. Negative / past dates → null.
+function parseRetryAfterHeader(value, nowMs = Date.now()) {
+  if (value === null || value === undefined) return null;
+  const trimmed = String(value).trim();
+  if (!trimmed) return null;
+
+  if (/^\d+(\.\d+)?$/.test(trimmed)) {
+    const seconds = Number(trimmed);
+    if (!Number.isFinite(seconds) || seconds < 0) return null;
+    return Math.round(seconds * 1000);
+  }
+
+  const dateMs = Date.parse(trimmed);
+  if (Number.isNaN(dateMs)) return null;
+  const deltaMs = dateMs - nowMs;
+  return deltaMs > 0 ? deltaMs : 0;
+}
+
+// Parse the OpenAI error body hint, e.g. "Please try again in 1.913s" or
+// "try again in 250ms". Returns ms or null.
+function parseRetryHintFromBody(text) {
+  if (!text || typeof text !== "string") return null;
+  const msMatch = text.match(/try again in\s+(\d+(?:\.\d+)?)\s*ms\b/i);
+  if (msMatch) {
+    const ms = Number(msMatch[1]);
+    return Number.isFinite(ms) && ms >= 0 ? Math.round(ms) : null;
+  }
+  const sMatch = text.match(/try again in\s+(\d+(?:\.\d+)?)\s*s\b/i);
+  if (sMatch) {
+    const seconds = Number(sMatch[1]);
+    if (!Number.isFinite(seconds) || seconds < 0) return null;
+    return Math.round(seconds * 1000);
+  }
+  return null;
+}
+
+// Pick the wait time for a retry. Precedence:
+//   1. Retry-After header (only meaningful for 429 in practice).
+//   2. "try again in X" hint in the response body.
+//   3. Exponential backoff with full jitter: random in [base, base * 2^attempt].
+// Result is clamped to [0, maxMs]. Server hints are padded by RETRY_HINT_PAD_MS.
+function computeRetryWaitMs({
+  status,
+  retryAfterHeader = null,
+  errorBodyText = null,
+  attempt,
+  baseMs = RETRY_BASE_MS,
+  maxMs = RETRY_MAX_MS,
+  random = Math.random,
+  nowMs = Date.now(),
+}) {
+  const clamp = (ms) => Math.min(Math.max(0, Math.round(ms)), maxMs);
+
+  if (status === 429) {
+    const headerMs = parseRetryAfterHeader(retryAfterHeader, nowMs);
+    if (headerMs !== null) return clamp(headerMs + RETRY_HINT_PAD_MS);
+    const bodyMs = parseRetryHintFromBody(errorBodyText);
+    if (bodyMs !== null) return clamp(bodyMs + RETRY_HINT_PAD_MS);
+  }
+
+  const expCap = baseMs * Math.pow(2, Math.max(0, attempt));
+  const jittered = baseMs + random() * Math.max(0, expCap - baseMs);
+  return clamp(jittered);
+}
 
 async function chatCompletion(messages, tools, temperature) {
   const endpoint = `${LLM_BASE_URL}/chat/completions`;
@@ -583,17 +653,40 @@ async function chatCompletion(messages, tools, temperature) {
       const retryable = res.status === 429 || res.status >= 500;
       if (!retryable || attempt === RETRY_ATTEMPTS - 1) throw lastError;
 
-      const waitMs = RETRY_BASE_MS * Math.pow(2, attempt);
+      const retryAfterHeader =
+        typeof res.headers?.get === "function"
+          ? res.headers.get("retry-after")
+          : null;
+      const waitMs = computeRetryWaitMs({
+        status: res.status,
+        retryAfterHeader,
+        errorBodyText: text,
+        attempt,
+      });
+      const headerMs = parseRetryAfterHeader(retryAfterHeader);
+      const bodyMs = parseRetryHintFromBody(text);
+      const hint =
+        headerMs !== null
+          ? `header: ${headerMs}ms`
+          : bodyMs !== null
+            ? `body: ${bodyMs}ms`
+            : "no hint";
+      const label = res.status === 429 ? "OpenAI 429 (rate limit)" : `OpenAI ${res.status}`;
       console.log(
-        `  OpenAI ${res.status}, retrying in ${waitMs}ms (attempt ${attempt + 1}/${RETRY_ATTEMPTS})...`
+        `  ${label}, waiting ${waitMs}ms before retry ${attempt + 2}/${RETRY_ATTEMPTS} (${hint})...`
       );
       await new Promise((r) => setTimeout(r, waitMs));
     } catch (err) {
       if (err === lastError) throw err;
       lastError = err;
       if (attempt === RETRY_ATTEMPTS - 1) throw err;
-      const waitMs = RETRY_BASE_MS * Math.pow(2, attempt);
-      console.log(`  LLM error: ${err.message}, retrying in ${waitMs}ms...`);
+      const waitMs = computeRetryWaitMs({
+        status: 0,
+        attempt,
+      });
+      console.log(
+        `  LLM error: ${err.message}, waiting ${waitMs}ms before retry ${attempt + 2}/${RETRY_ATTEMPTS}...`
+      );
       await new Promise((r) => setTimeout(r, waitMs));
     }
   }
@@ -1744,4 +1837,11 @@ export const __agentRunnerInternals = {
   parseWriteConfirmationCommand,
   extractThesis,
   publishAgentMetadata,
+  parseRetryAfterHeader,
+  parseRetryHintFromBody,
+  computeRetryWaitMs,
+  RETRY_ATTEMPTS,
+  RETRY_BASE_MS,
+  RETRY_MAX_MS,
+  RETRY_HINT_PAD_MS,
 };
