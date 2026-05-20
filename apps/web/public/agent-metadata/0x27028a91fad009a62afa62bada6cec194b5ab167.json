@@ -1,0 +1,33 @@
+{
+  "isAiManaged": true,
+  "agentName": "vault-manager",
+  "agentDescription": "Autonomous vault manager powered by OpenAI (vault-manager + yfinance MCPs)",
+  "thesis": "The \"Vault Manager Basket\" is currently focused on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The initial setup involves configuring the vault to track these assets, with future steps including capital allocation and active position management based on market conditions.",
+  "lastRunAt": "2026-05-20T12:24:33.700Z",
+  "recentActions": [
+    {
+      "tool": "create_vault",
+      "justification": "Initial deployment of the vault to begin managing assets and positions.",
+      "timestamp": "2026-05-20T12:24:33.700Z",
+      "txHash": "0xfd00d42a588c13157c1d9b77f698e8b47a875f6ef9d55e4df05c3b9ee8215094"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Adding E-Mini S&P 500 futures to the vault for diversified exposure to the US equity market.",
+      "timestamp": "2026-05-20T12:24:33.700Z",
+      "txHash": "0xfc522e749c193be1249b4f1924d76a10484c134355e69989e30b633bf26400be"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Adding Micro E-Mini S&P 500 futures to the vault for diversified exposure to the US equity market.",
+      "timestamp": "2026-05-20T12:24:33.700Z",
+      "txHash": "0x276d80c216fb9308c6675fb496cd4f0ef2df1309ae099fb3b2f4a0c96a3ed754"
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Configuring the vault to track E-Mini and Micro E-Mini S&P 500 futures for diversified exposure to the US equity market.",
+      "timestamp": "2026-05-20T12:24:33.700Z",
+      "txHash": "0xc97ae848fa4d969a08a6d8e42e9951f3be701bc462d21f4282bef6de7403e27c"
+    }
+  ]
+}
