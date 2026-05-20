@@ -2,9 +2,15 @@
   "isAiManaged": true,
   "agentName": "vault-manager",
   "agentDescription": "Autonomous vault manager powered by OpenAI (vault-manager + yfinance MCPs)",
-  "thesis": "The \"Vault Manager Basket\" is currently focused on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The initial setup involves configuring the vault to track these assets, with future steps including capital allocation and active position management based on market conditions.",
-  "lastRunAt": "2026-05-20T12:24:33.700Z",
+  "thesis": "The \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight upward momentum, which aligns with our long-only strategy.",
+  "lastRunAt": "2026-05-20T15:01:57.081Z",
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating 30% of available idle USDC to the perp module to prepare for potential market opportunities that align with the vault's strategy.",
+      "timestamp": "2026-05-20T15:01:57.081Z",
+      "txHash": "0x4374f3f8e95ce6601dbe3c6aacae9369caec34cdbb929a78a668ae4145a077d0"
+    },
     {
       "tool": "create_vault",
       "justification": "Initial deployment of the vault to begin managing assets and positions.",
