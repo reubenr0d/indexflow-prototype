@@ -27,8 +27,10 @@ Each epoch (default 60 seconds), the keeper:
 
 ### Installation
 
+The keeper is part of the root npm workspace, so installing once at the repo
+root is enough:
+
 ```bash
-cd services/keeper
 npm install
 ```
 
