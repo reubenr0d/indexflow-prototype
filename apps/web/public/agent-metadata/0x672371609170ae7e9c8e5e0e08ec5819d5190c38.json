@@ -1,0 +1,104 @@
+{
+  "isAiManaged": true,
+  "agentName": "mining-manager",
+  "agentDescription": "Mining-focused vault driven by the Atlas ML engine",
+  "signalSource": "atlas-ml",
+  "entryMode": "ml_score",
+  "thesis": "The Atlas ML model has identified a diverse set of mining equities with strong potential for medium-term growth. The top picks include companies primarily involved in diversified metals and gold, with significant operations in jurisdictions like Canada and the UK. The model's high Spearman IC and hit rate suggest robust predictive power, particularly leveraging financial metrics such as EBITDA to market cap and cash to assets ratios. This basket is well-positioned to capitalize on the expected r",
+  "lastRunAt": "2026-05-21T06:10:31.589Z",
+  "latestRun": {
+    "runId": "2026-05-21T06:10:31.589Z",
+    "finishedAt": "2026-05-21T06:10:31.589Z",
+    "summary": "## Thesis\n\nThe Atlas ML model has identified a diverse set of mining equities with strong potential for medium-term growth. The top picks include companies primarily involved in diversified metals and gold, with significant operations in jurisdictions like Canada and the UK. The model's high Spearman IC and hit rate suggest robust predictive power, particularly leveraging financial metrics such as EBITDA to market cap and cash to assets ratios. This basket is well-positioned to capitalize on the"
+  },
+  "recentActions": [
+    {
+      "tool": "create_vault",
+      "justification": "Establishing a new vault to manage mining-equity basket driven by the Atlas ML engine.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0xc44ae9704e2121d0ebefabad7907108aae9e60b22ebda8877f0320cc17e101ed",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Amarc Resources Ltd. (AHR.V) with a high ML score of 100 and predicted return of 87.67%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x939f8c0b8341862d6ef080cf1742e12c8e44a3c92124480ff37931a89ea83f91",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Gold Strike Resources Corp. (GSR.V) with a high ML score of 99.9 and predicted return of 84.5%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x4f37333f5fd0bb553220e100467b7f14728a76f28df1a486679f8bf6dd4e21d8",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Power Metals Corp. (PWM.V) with a high ML score of 99.8 and predicted return of 84.28%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x9de39d2ba5e9b58cd58d90d1dfd27023345ca005bbbaf76c386d4beb06d5d181",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Royal Gold, Inc. (0KXS.L) with a high ML score of 99.7 and predicted return of 78.8%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0xbe87f02d25bc6b5668b3e77d3edae2a5153486729ad12c7e5170bd0b96118c96",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Critical Metals Corp. (CRML) with a high ML score of 99.5 and predicted return of 73.26%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Empire Metals Limited (EEE.L) with a high ML score of 99.4 and predicted return of 70.36%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x8993ec59f7203050bbebd588da2ca8e0264cd0f389578f40719b3e37d0c3e7cb",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Helius Minerals Limited (HHH.V) with a high ML score of 99.3 and predicted return of 62.63%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x83fd631c09151c4a9e09d3f42b6be117c5b58c07069a528bba18bbf0a9654315",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset G2 Goldfields Inc. (GTWO.TO) with a high ML score of 99.2 and predicted return of 61.65%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0xbcb187ddf1889491eb3f705cc75a19bed3ce96cf96b98a1521130030bbd77c50",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Prospector Metals Corp. (PPP.V) with a high ML score of 99 and predicted return of 59.65%.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x425d3e7a3426527e1abf1ab9ed02272c66a3da298b1fad8bd22e1ac9b1995d44",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Setting the vault's tracked assets to the top Atlas ML picks with scores above 90.",
+      "timestamp": "2026-05-21T06:10:31.589Z",
+      "txHash": "0x8e3a8c29c628b51276873a85b7783c9cfee4aacdd4b86c6e382f78319a70d37d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:10:31.589Z"
+    }
+  ]
+}

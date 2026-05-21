@@ -2,9 +2,24 @@
   "isAiManaged": true,
   "agentName": "vault-manager",
   "agentDescription": "Autonomous vault manager powered by OpenAI (vault-manager + yfinance MCPs)",
+  "signalSource": null,
+  "entryMode": "momentum_volume",
   "thesis": "The \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.",
-  "lastRunAt": "2026-05-21T04:06:04.334Z",
+  "lastRunAt": "2026-05-21T06:06:14.950Z",
+  "latestRun": {
+    "runId": "2026-05-21T06:06:14.950Z",
+    "finishedAt": "2026-05-21T06:06:14.950Z",
+    "summary": "## Thesis\nThe \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.\n\n## Vault State\n- **Vault Name**: Vault "
+  },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating additional USDC to the perp module to ensure sufficient capital is available for potential future positions, aligning with the policy to maintain optimal allocation levels.",
+      "timestamp": "2026-05-21T06:06:14.950Z",
+      "txHash": "0xe854d3d272e6a797e497faa7a97d3d742bbb1e0f26494a681c286c1cd5d99366",
+      "agentName": "vault-manager",
+      "runId": "2026-05-21T06:06:14.950Z"
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating additional USDC to the perp module to optimize capital deployment and prepare for potential market opportunities in line with the vault's strategy.",
