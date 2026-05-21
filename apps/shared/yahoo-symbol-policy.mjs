@@ -25,6 +25,51 @@ function looksNonEquity(symbol) {
   return /[=^/:-]/.test(normalized);
 }
 
+const US_EXCHANGES = new Set([
+  "NASDAQ", "NASDAQGS", "NASDAQGM", "NASDAQCM",
+  "NMS", "NGM", "NCM",
+  "NYSE", "NYQ",
+  "BATS", "BATS TRADING",
+  "ARCA", "AMEX", "ASE", "PCX",
+]);
+
+function isUsExchange(exchange) {
+  const key = String(exchange ?? "").trim().toUpperCase();
+  if (US_EXCHANGES.has(key)) return true;
+  return key.startsWith("NASDAQ") || key.startsWith("NYSE");
+}
+
+const CORP_STOPWORDS = new Set([
+  "inc", "incorporated", "corp", "corporation", "co", "company",
+  "ltd", "limited", "plc", "llc", "lp", "ag", "sa", "nv",
+  "group", "holdings", "holding", "international",
+  "ord", "npv", "shs", "fpo", "the", "and",
+]);
+
+function normalizeNameTokens(name) {
+  return String(name ?? "")
+    .toLowerCase()
+    .replace(/\[[^\]]*\]/g, " ")
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .split(/\s+/)
+    .filter((t) => t && !CORP_STOPWORDS.has(t));
+}
+
+// Conservative same-company detection. When either name is missing we default
+// to "same" so the policy stays strict for unenriched fixtures and search
+// payloads that lack longname/shortname fields.
+function looksSameCompany(nameA, nameB) {
+  const a = new Set(normalizeNameTokens(nameA));
+  const b = new Set(normalizeNameTokens(nameB));
+  if (a.size === 0 || b.size === 0) return true;
+  let shared = 0;
+  for (const t of a) if (b.has(t)) shared += 1;
+  if (shared === 0) return false;
+  const jaccard = shared / (a.size + b.size - shared);
+  return jaccard >= 0.34;
+}
+
 function dedupe(values) {
   return [...new Set(values.filter(Boolean))];
 }
@@ -115,6 +160,33 @@ export function classifySymbolWithSearch(requestedSymbol, searchRows) {
   }
 
   if (candidates.length > 0) {
+    // Yahoo has no `.US` suffix convention: a bare ticker IS the canonical
+    // form for US listings. When the exact row is on a US venue and every
+    // foreign sibling clearly belongs to a different company (e.g. CRML
+    // "Critical Metals Corp." on NASDAQ vs CRML.TA "Carmel Corp Ltd." on
+    // Tel Aviv), allow the bare ticker. Same-company ADR/home pairs (e.g.
+    // BHP "BHP Group Limited" on NYSE vs BHP.AX on ASX) still fall through
+    // to ambiguous and require an explicit suffix.
+    if (exact && isUsExchange(exact.exchange)) {
+      const siblings = equityFamily.filter(
+        (r) => r.symbol !== base && r.symbol.includes("."),
+      );
+      const anySameCompany = siblings.some((sib) =>
+        looksSameCompany(exact.name, sib.name),
+      );
+      if (!anySameCompany) {
+        return {
+          requestedSymbol: requested,
+          resolvedSymbol: exact.symbol,
+          exchange: exact.exchange,
+          isAmbiguous: false,
+          allowed: true,
+          candidates,
+          reason: "us_listing_with_unrelated_siblings",
+        };
+      }
+    }
+
     return {
       requestedSymbol: requested,
       resolvedSymbol: exact?.symbol ?? requested,

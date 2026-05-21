@@ -46,4 +46,29 @@ describe("classifySymbolWithSearch", () => {
     expect(gcf.allowed).toBe(true);
     expect(gcf.isAmbiguous).toBe(false);
   });
+
+  it("allows bare US tickers when foreign siblings are unrelated companies", () => {
+    const result = classifySymbolWithSearch("CRML", [
+      { symbol: "CRML", quoteType: "EQUITY", exchange: "NASDAQ", name: "Critical Metals Corp." },
+      { symbol: "CRML.TA", quoteType: "EQUITY", exchange: "Tel Aviv", name: "Carmel Corp Ltd." },
+    ]);
+
+    expect(result.allowed).toBe(true);
+    expect(result.isAmbiguous).toBe(false);
+    expect(result.reason).toBe("us_listing_with_unrelated_siblings");
+    expect(result.resolvedSymbol).toBe("CRML");
+    expect(result.exchange).toBe("NASDAQ");
+  });
+
+  it("still rejects bare US tickers when foreign siblings are the same company (ADR/home pair)", () => {
+    const result = classifySymbolWithSearch("BHP", [
+      { symbol: "BHP", quoteType: "EQUITY", exchange: "NYSE", name: "BHP Group Limited" },
+      { symbol: "BHP.AX", quoteType: "EQUITY", exchange: "ASX", name: "BHP Group Limited" },
+    ]);
+
+    expect(result.allowed).toBe(false);
+    expect(result.isAmbiguous).toBe(true);
+    expect(result.reason).toBe("ambiguous_unsuffixed_equity");
+    expect(result.candidates).toEqual(["BHP.AX"]);
+  });
 });
