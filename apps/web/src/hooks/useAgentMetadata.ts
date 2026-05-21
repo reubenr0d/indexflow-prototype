@@ -6,14 +6,27 @@ export type AgentAction = {
   justification: string;
   timestamp: string;
   txHash?: string | null;
+  agentName?: string;
+  runId?: string;
 };
+
+export type AgentRun = {
+  runId: string;
+  finishedAt: string;
+  summary: string;
+};
+
+export type AgentSignalSource = "atlas-ml" | null;
 
 export type AgentMetadata = {
   isAiManaged: boolean;
   agentName: string;
   agentDescription: string;
+  signalSource?: AgentSignalSource;
+  entryMode?: string | null;
   thesis: string | null;
   lastRunAt: string;
+  latestRun?: AgentRun;
   recentActions: AgentAction[];
 };
 

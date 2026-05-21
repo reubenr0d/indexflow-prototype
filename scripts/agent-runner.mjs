@@ -191,9 +191,12 @@ function parseAgentPolicy(frontmatter) {
     frontmatter.entryMode !== undefined ||
     frontmatter.entryMomentumPctMin !== undefined ||
     frontmatter.entryVolumeMin !== undefined ||
+    frontmatter.entryMlScoreMin !== undefined ||
     frontmatter.entryDirection !== undefined ||
     frontmatter.maxNewPositionsPerRun !== undefined ||
-    frontmatter.positionSizingMode !== undefined;
+    frontmatter.maxTrackedAssets !== undefined ||
+    frontmatter.positionSizingMode !== undefined ||
+    frontmatter.rebalanceMode !== undefined;
 
   if (!hasPolicyFields) {
     return {
@@ -202,9 +205,12 @@ function parseAgentPolicy(frontmatter) {
       entryMode: "none",
       entryMomentumPctMin: 0,
       entryVolumeMin: 0,
+      entryMlScoreMin: 0,
       entryDirection: "long_only",
       maxNewPositionsPerRun: 0,
+      maxTrackedAssets: 0,
       positionSizingMode: "model_decides",
+      rebalanceMode: "none",
     };
   }
 
@@ -212,15 +218,18 @@ function parseAgentPolicy(frontmatter) {
   const entryMode = String(frontmatter.entryMode ?? "none");
   const entryMomentumPctMin = Number(frontmatter.entryMomentumPctMin ?? 0);
   const entryVolumeMin = Number(frontmatter.entryVolumeMin ?? 0);
+  const entryMlScoreMin = Number(frontmatter.entryMlScoreMin ?? 0);
   const entryDirection = String(frontmatter.entryDirection ?? "long_only");
   const maxNewPositionsPerRun = Number(frontmatter.maxNewPositionsPerRun ?? 0);
+  const maxTrackedAssets = Number(frontmatter.maxTrackedAssets ?? 0);
   const positionSizingMode = String(frontmatter.positionSizingMode ?? "model_decides");
+  const rebalanceMode = String(frontmatter.rebalanceMode ?? "none");
 
   if (!Number.isFinite(autoAllocateTargetBps) || autoAllocateTargetBps < 0 || autoAllocateTargetBps > 10_000) {
     throw new Error("Invalid autoAllocateTargetBps; expected 0..10000");
   }
-  if (!["none", "momentum_volume"].includes(entryMode)) {
-    throw new Error("Invalid entryMode; expected 'none' or 'momentum_volume'");
+  if (!["none", "momentum_volume", "ml_score"].includes(entryMode)) {
+    throw new Error("Invalid entryMode; expected 'none', 'momentum_volume', or 'ml_score'");
   }
   if (!Number.isFinite(entryMomentumPctMin) || entryMomentumPctMin < 0) {
     throw new Error("Invalid entryMomentumPctMin; expected >= 0");
@@ -228,11 +237,20 @@ function parseAgentPolicy(frontmatter) {
   if (!Number.isFinite(entryVolumeMin) || entryVolumeMin < 0) {
     throw new Error("Invalid entryVolumeMin; expected >= 0");
   }
+  if (!Number.isFinite(entryMlScoreMin) || entryMlScoreMin < 0 || entryMlScoreMin > 100) {
+    throw new Error("Invalid entryMlScoreMin; expected 0..100");
+  }
   if (!["long_only"].includes(entryDirection)) {
     throw new Error("Invalid entryDirection; currently only 'long_only' is supported");
   }
   if (!Number.isFinite(maxNewPositionsPerRun) || maxNewPositionsPerRun < 0) {
     throw new Error("Invalid maxNewPositionsPerRun; expected >= 0");
+  }
+  if (!Number.isFinite(maxTrackedAssets) || maxTrackedAssets < 0) {
+    throw new Error("Invalid maxTrackedAssets; expected >= 0");
+  }
+  if (!["none", "track_top_n"].includes(rebalanceMode)) {
+    throw new Error("Invalid rebalanceMode; expected 'none' or 'track_top_n'");
   }
 
   return {
@@ -241,9 +259,12 @@ function parseAgentPolicy(frontmatter) {
     entryMode,
     entryMomentumPctMin,
     entryVolumeMin,
+    entryMlScoreMin,
     entryDirection,
     maxNewPositionsPerRun,
+    maxTrackedAssets,
     positionSizingMode,
+    rebalanceMode,
   };
 }
 
@@ -783,6 +804,59 @@ function getEligibleMomentumVolumeAssets({ policy, vaultState, oracleAssets, quo
   });
 }
 
+function getEligibleMlScoreAssets({ policy, vaultState, oracleAssets, mlPicks }) {
+  if (
+    !policy?.enabled ||
+    policy.entryMode !== "ml_score" ||
+    !vaultState ||
+    !Array.isArray(vaultState.assets) ||
+    !Array.isArray(oracleAssets?.assets) ||
+    !Array.isArray(mlPicks)
+  ) {
+    return [];
+  }
+
+  const trackedAssetIds = new Set(vaultState.assets.map((a) => String(a).toLowerCase()));
+  const oracleBySymbol = new Map();
+  for (const asset of oracleAssets.assets) {
+    const symbol = String(asset.symbol || "").toUpperCase();
+    if (!symbol) continue;
+    if (!trackedAssetIds.has(String(asset.assetId || "").toLowerCase())) continue;
+    oracleBySymbol.set(symbol, asset);
+  }
+
+  const minScore = Number(policy.entryMlScoreMin ?? 0);
+  const eligible = [];
+  for (const pick of mlPicks) {
+    if (!pick) continue;
+    const mlScore = Number(pick.mlScore ?? 0);
+    if (!Number.isFinite(mlScore) || mlScore < minScore) continue;
+    const yahooSymbol = String(pick.yahooSymbol || "").toUpperCase();
+    if (!yahooSymbol) continue;
+    const oracleAsset = oracleBySymbol.get(yahooSymbol);
+    if (!oracleAsset) continue;
+    eligible.push({
+      assetId: oracleAsset.assetId,
+      symbol: oracleAsset.symbol,
+      mlScore,
+      mlPredictedReturn: pick.mlPredictedReturn ?? null,
+      primaryCommodity: pick.primaryCommodity ?? null,
+    });
+  }
+
+  const seen = new Set();
+  const deduped = eligible.filter((item) => {
+    const key = String(item.assetId).toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  const cap = Math.max(0, Number(policy.maxTrackedAssets ?? 0));
+  if (cap > 0 && deduped.length > cap) return deduped.slice(0, cap);
+  return deduped;
+}
+
 function validatePolicyWriteBatch({
   classified,
   policy,
@@ -807,14 +881,17 @@ function validatePolicyWriteBatch({
     return `Policy violation: proposed open_position calls exceed maxNewPositionsPerRun=${maxOpens}.`;
   }
 
+  const filterLabel =
+    policy.entryMode === "ml_score" ? "Atlas ML score" : "momentum+volume";
+
   const eligibleIds = new Set((eligibleAssets || []).map((a) => String(a.assetId).toLowerCase()));
   if (eligibleIds.size === 0 && openCalls.length > 0) {
-    return "Policy violation: no assets currently meet momentum+volume criteria, so do not open new positions.";
+    return `Policy violation: no assets currently meet ${filterLabel} criteria, so do not open new positions.`;
   }
   for (const call of openCalls) {
     const assetId = String(call.args?.assetId || "").toLowerCase();
     if (!eligibleIds.has(assetId)) {
-      return "Policy violation: open_position assetId is not in the current eligible set from momentum+volume filtering.";
+      return `Policy violation: open_position assetId is not in the current eligible set from ${filterLabel} filtering.`;
     }
   }
 
@@ -907,7 +984,13 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
     prompt += "\n\n## Enforced Policy";
     prompt += `\n- Auto allocation target from available idle USDC: ${config.policy.autoAllocateTargetBps} bps`;
     prompt += `\n- Entry mode: ${config.policy.entryMode}`;
-    prompt += `\n- Entry trigger: dayChangePct >= ${config.policy.entryMomentumPctMin} and volume >= ${config.policy.entryVolumeMin}`;
+    if (config.policy.entryMode === "ml_score") {
+      prompt += `\n- Entry trigger: Atlas ML score >= ${config.policy.entryMlScoreMin}`;
+      prompt += `\n- Max tracked assets in the basket: ${config.policy.maxTrackedAssets}`;
+      prompt += `\n- Rebalance mode: ${config.policy.rebalanceMode}`;
+    } else if (config.policy.entryMode === "momentum_volume") {
+      prompt += `\n- Entry trigger: dayChangePct >= ${config.policy.entryMomentumPctMin} and volume >= ${config.policy.entryVolumeMin}`;
+    }
     prompt += `\n- Direction: ${config.policy.entryDirection}`;
     prompt += `\n- Max new positions per run: ${config.policy.maxNewPositionsPerRun}`;
     prompt += `\n- Position sizing: ${config.policy.positionSizingMode}`;
@@ -1066,12 +1149,16 @@ async function confirmWriteBatchInteractively({
 // Publish agent metadata for web app consumption
 // ---------------------------------------------------------------------------
 
+const AGENT_METADATA_ACTION_LIMIT_DEFAULT = 100;
+
 function publishAgentMetadata(config, currentState, runSummary) {
   if (!currentState?.vaultAddress) return;
   const metaDir = resolve(PROJECT_ROOT, "apps/web/public/agent-metadata");
   mkdirSync(metaDir, { recursive: true });
   const addr = currentState.vaultAddress.toLowerCase();
   const metaPath = resolve(metaDir, `${addr}.json`);
+
+  const runId = runSummary.finishedAt;
 
   const recentActions = (runSummary.writeActions || [])
     .filter((a) => !a.skipped && a.justification)
@@ -1080,6 +1167,8 @@ function publishAgentMetadata(config, currentState, runSummary) {
       justification: a.justification,
       timestamp: runSummary.finishedAt,
       txHash: a.txHash || null,
+      agentName: config.name,
+      runId,
     }));
 
   let existing = { recentActions: [] };
@@ -1089,17 +1178,43 @@ function publishAgentMetadata(config, currentState, runSummary) {
     } catch {}
   }
 
-  const allActions = [...recentActions, ...(existing.recentActions || [])].slice(
-    0,
-    20
-  );
+  // Dedupe by txHash (preferred) or timestamp+tool to avoid older justified
+  // rows being pushed out by repeated runs that re-emit the same actions.
+  const merged = [...recentActions, ...(existing.recentActions || [])];
+  const seen = new Set();
+  const deduped = [];
+  for (const a of merged) {
+    const key = a.txHash
+      ? `tx:${String(a.txHash).toLowerCase()}`
+      : `tt:${a.timestamp}|${a.tool}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(a);
+  }
+  const cap =
+    Number(process.env.AGENT_METADATA_ACTION_LIMIT) ||
+    AGENT_METADATA_ACTION_LIMIT_DEFAULT;
+  const allActions = deduped.slice(0, cap);
+
+  const latestRun = {
+    runId,
+    finishedAt: runSummary.finishedAt,
+    summary: runSummary.summary || "",
+  };
+
+  const usesAtlasMl = Array.isArray(config.mcpServers)
+    && config.mcpServers.some((s) => s?.name === "atlas-ml-mcp");
+  const signalSource = usesAtlasMl ? "atlas-ml" : null;
 
   const metadata = {
     isAiManaged: true,
     agentName: config.name,
     agentDescription: config.description,
+    signalSource,
+    entryMode: config.policy?.entryMode || null,
     thesis: currentState.thesis || null,
     lastRunAt: runSummary.finishedAt,
+    latestRun,
     recentActions: allActions,
   };
 
@@ -1155,6 +1270,7 @@ export async function runAgent(agentName) {
     latestVaultState: null,
     latestOracleAssets: null,
     latestQuotes: null,
+    latestMlPicks: null,
     opensExecuted: 0,
     allocationWritesExecuted: 0,
     enforcementRounds: 0,
@@ -1259,9 +1375,12 @@ export async function runAgent(agentName) {
       entryMode: config.policy?.entryMode || "none",
       entryMomentumPctMin: config.policy?.entryMomentumPctMin || 0,
       entryVolumeMin: config.policy?.entryVolumeMin || 0,
+      entryMlScoreMin: config.policy?.entryMlScoreMin || 0,
       entryDirection: config.policy?.entryDirection || "long_only",
       maxNewPositionsPerRun: config.policy?.maxNewPositionsPerRun || 0,
+      maxTrackedAssets: config.policy?.maxTrackedAssets || 0,
       positionSizingMode: config.policy?.positionSizingMode || "model_decides",
+      rebalanceMode: config.policy?.rebalanceMode || "none",
       eligibleAssetCount: 0,
       eligibleAssetIds: [],
       eligibleSymbols: [],
@@ -1270,6 +1389,8 @@ export async function runAgent(agentName) {
       allocationWritesExecuted: 0,
       entryTriggered: false,
       opensExecuted: 0,
+      autoExitsClosed: 0,
+      autoExitsAttempted: 0,
     },
     startedAt: new Date().toISOString(),
     finishedAt: null,
@@ -1392,6 +1513,21 @@ export async function runAgent(agentName) {
         if (originalName === "yfinance_quote" && Array.isArray(parsed)) {
           policyRuntime.latestQuotes = parsed;
         }
+        if (
+          originalName === "get_ml_top_picks" &&
+          parsed &&
+          Array.isArray(parsed.picks)
+        ) {
+          policyRuntime.latestMlPicks = parsed.picks;
+        }
+        if (
+          originalName === "get_ml_basket" &&
+          parsed &&
+          Array.isArray(parsed.companies) &&
+          !policyRuntime.latestMlPicks
+        ) {
+          policyRuntime.latestMlPicks = parsed.companies;
+        }
         if (originalName === "allocate_to_perp" && parsed?.success === true) {
           policyRuntime.allocationWritesExecuted += 1;
         }
@@ -1437,6 +1573,139 @@ export async function runAgent(agentName) {
       }
     }
 
+    // -----------------------------------------------------------------------
+    // Pre-LLM auto-rebalance pass
+    //
+    // Runs deterministically before the LLM loop when the active policy is
+    // `rebalanceMode: track_top_n` and there's already a vault. We fetch the
+    // latest Atlas ML top-N picks and close any open position whose underlying
+    // asset has dropped out of the eligible set. The LLM still owns PnL-based
+    // TP/SL (the system prompt instructs that), so this pass only handles the
+    // "track-top-N" half — keeping the math out of JS.
+    // -----------------------------------------------------------------------
+    async function runMcpTool(toolName, args, { isWrite = false } = {}) {
+      const entry = toolMap.get(toolName);
+      if (!entry) {
+        throw new Error(`Auto-rebalance: tool not available in this run: ${toolName}`);
+      }
+      if ((DRY_RUN || (CONFIRM_WRITES && !NON_INTERACTIVE_WRITE_EXECUTE && !isInteractiveTty())) && isWrite) {
+        console.log(`  [AUTO-REBALANCE] Skipped write tool ${toolName} (dry/non-interactive).`);
+        runSummary.writeActions.push({
+          tool: toolName,
+          args,
+          skipped: true,
+          justification: "auto-rebalance: dropped from ML top-N (skipped due to dry/non-interactive)",
+        });
+        return { content: [{ type: "text", text: JSON.stringify({ success: false, skipped: true }, null, 2) }] };
+      }
+      const result = await entry.client.callTool({ name: toolName, arguments: args });
+      const content = result.content
+        .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+        .join("\n");
+      if (isWrite) {
+        const parsed = parseJsonText(content);
+        runSummary.writeActions.push({
+          tool: toolName,
+          args,
+          skipped: false,
+          justification: "auto-rebalance: dropped from ML top-N",
+          txHash: parsed?.transactionHash ?? null,
+        });
+      }
+      return { content, parsed: parseJsonText(content) };
+    }
+
+    async function enforceAutoRebalance() {
+      const policy = config.policy;
+      if (
+        !policy?.enabled ||
+        policy.rebalanceMode !== "track_top_n" ||
+        policy.entryMode !== "ml_score" ||
+        !capturedVaultAddress
+      ) {
+        return;
+      }
+
+      try {
+        const vault = capturedVaultAddress;
+        console.log(`[AUTO-REBALANCE] Checking open positions for ${vault}...`);
+        const positionsRes = await runMcpTool("list_open_positions", { vault });
+        const positionsParsed = positionsRes.parsed;
+        const positions = Array.isArray(positionsParsed?.positions) ? positionsParsed.positions : [];
+        if (positions.length === 0) {
+          console.log("[AUTO-REBALANCE] No open positions; nothing to close.");
+          return;
+        }
+
+        const minScore = Number(policy.entryMlScoreMin ?? 0);
+        const cap = Math.max(0, Number(policy.maxTrackedAssets ?? 0)) || 10;
+        const picksRes = await runMcpTool("get_ml_top_picks", { limit: cap, minScore });
+        const picksParsed = picksRes.parsed;
+        const picks = Array.isArray(picksParsed?.picks) ? picksParsed.picks : [];
+
+        const eligibleSymbols = new Set(
+          picks
+            .map((p) => String(p.yahooSymbol || "").toUpperCase())
+            .filter(Boolean),
+        );
+
+        const closures = [];
+        for (const pos of positions) {
+          if (!pos?.exists) continue;
+          if (policy.entryDirection === "long_only" && !pos.isLong) {
+            closures.push({ pos, reason: "long_only policy: closing short leg" });
+            continue;
+          }
+          const symbol = String(pos.symbol || "").toUpperCase();
+          if (!symbol) continue;
+          if (!eligibleSymbols.has(symbol)) {
+            closures.push({ pos, reason: `dropped from ML top-${cap} (score < ${minScore})` });
+          }
+        }
+
+        runSummary.policyDiagnostics.autoExitsAttempted = closures.length;
+        if (closures.length === 0) {
+          console.log(
+            `[AUTO-REBALANCE] All ${positions.length} open positions remain in ML top-${cap}; nothing to close.`,
+          );
+          return;
+        }
+
+        for (const { pos, reason } of closures) {
+          console.log(
+            `[AUTO-REBALANCE] Closing ${pos.symbol || pos.assetId} (isLong=${pos.isLong}): ${reason}`,
+          );
+          try {
+            const closeRes = await runMcpTool(
+              "close_position",
+              {
+                vault: capturedVaultAddress,
+                assetId: pos.assetId,
+                isLong: pos.isLong,
+                sizeDelta: String(pos.size),
+                collateralDelta: String(pos.collateral),
+                justification: `auto-rebalance: ${reason}`,
+              },
+              { isWrite: true },
+            );
+            if (closeRes.parsed?.success === true) {
+              runSummary.policyDiagnostics.autoExitsClosed += 1;
+            }
+          } catch (err) {
+            console.error(`[AUTO-REBALANCE] close_position failed for ${pos.symbol}: ${err.message}`);
+            runSummary.errors.push({ tool: "close_position", error: err.message });
+          }
+        }
+      } catch (err) {
+        console.error(`[AUTO-REBALANCE] aborted: ${err.message}`);
+        runSummary.errors.push({ tool: "_auto_rebalance", error: err.message });
+      }
+    }
+
+    if (config.policy?.rebalanceMode === "track_top_n" && !needsNewVault) {
+      await enforceAutoRebalance();
+    }
+
     for (let turn = 0; turn < maxTurns; turn++) {
       runSummary.turns = turn + 1;
       console.log(`--- Turn ${turn + 1}/${maxTurns} ---`);
@@ -1453,12 +1722,20 @@ export async function runAgent(agentName) {
       );
       let skipWritesThisBatch = false;
       const policyEnabled = config.policy?.enabled;
-      const eligibleAssets = getEligibleMomentumVolumeAssets({
-        policy: config.policy,
-        vaultState: policyRuntime.latestVaultState,
-        oracleAssets: policyRuntime.latestOracleAssets,
-        quotes: policyRuntime.latestQuotes,
-      });
+      const eligibleAssets =
+        config.policy?.entryMode === "ml_score"
+          ? getEligibleMlScoreAssets({
+              policy: config.policy,
+              vaultState: policyRuntime.latestVaultState,
+              oracleAssets: policyRuntime.latestOracleAssets,
+              mlPicks: policyRuntime.latestMlPicks,
+            })
+          : getEligibleMomentumVolumeAssets({
+              policy: config.policy,
+              vaultState: policyRuntime.latestVaultState,
+              oracleAssets: policyRuntime.latestOracleAssets,
+              quotes: policyRuntime.latestQuotes,
+            });
       const allocationAmountRaw = computeAutoAllocationAmount(
         policyRuntime.latestVaultState,
         config.policy?.autoAllocateTargetBps || 0
@@ -1667,6 +1944,7 @@ export async function runAgent(agentName) {
 
     // --- Persist memory ---
     runSummary.finishedAt = new Date().toISOString();
+    runSummary.summary = agentSummaryText ? agentSummaryText.slice(0, 500) : "";
 
     const extractedThesis = extractThesis(agentSummaryText);
 
@@ -1738,9 +2016,7 @@ export async function runAgent(agentName) {
       persistedState = updatedState;
     }
 
-    const summarySnippet = agentSummaryText
-      ? agentSummaryText.slice(0, 500)
-      : "";
+    const summarySnippet = runSummary.summary || "";
     if (DRY_RUN) {
       console.log("Memory: dry run active — run log not updated.");
     } else {
@@ -1833,6 +2109,7 @@ export const __agentRunnerInternals = {
   parseAgentPolicy,
   computeAutoAllocationAmount,
   getEligibleMomentumVolumeAssets,
+  getEligibleMlScoreAssets,
   validatePolicyWriteBatch,
   parseWriteConfirmationCommand,
   extractThesis,

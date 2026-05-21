@@ -3,7 +3,9 @@
 import { use, useMemo, useState } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
+import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getTooltipCopy } from "@/lib/tooltip-copy";
 import { DepositRedeemPanel } from "@/components/baskets/deposit-redeem-panel";
 import dynamic from "next/dynamic";
 import { MetricsStrip } from "@/components/baskets/metrics-strip";
@@ -21,6 +23,7 @@ import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
 import {
   ActivityBadge,
   AiOperatorBadge,
+  AtlasMlBadge,
   type BasketHistoryRow,
   StatusChip,
   SectionHeader,
@@ -29,7 +32,7 @@ import {
   getBasketActivityMeta,
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
-import { useAgentMetadata } from "@/hooks/useAgentMetadata";
+import { type AgentAction, useAgentMetadata } from "@/hooks/useAgentMetadata";
 import { BasketTour } from "@/components/onboarding/basket-tour";
 import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
@@ -43,6 +46,7 @@ import {
   formatBps,
   formatAddress,
   formatPrice,
+  formatRelativeTime,
   formatSignedUsd1e30,
   formatUsd1e30,
   formatAssetId,
@@ -125,11 +129,11 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
   const latestActivityMeta = historyRows[0] ? getBasketActivityMeta(historyRows[0]) : undefined;
 
-  const justificationMap = useMemo(() => {
-    if (!agentMeta?.recentActions) return new Map<string, string>();
-    const map = new Map<string, string>();
+  const actionByTxHash = useMemo(() => {
+    if (!agentMeta?.recentActions) return new Map<string, AgentAction>();
+    const map = new Map<string, AgentAction>();
     for (const a of agentMeta.recentActions) {
-      if (a.txHash && a.justification) map.set(a.txHash.toLowerCase(), a.justification);
+      if (a.txHash && a.justification) map.set(a.txHash.toLowerCase(), a);
     }
     return map;
   }, [agentMeta]);
@@ -218,7 +222,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
               )}
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              {agentMeta?.isAiManaged && <AiOperatorBadge />}
+              {agentMeta?.isAiManaged && <AiOperatorBadge tooltipKey="aiOperator" />}
+              {agentMeta?.signalSource === "atlas-ml" && (
+                <AtlasMlBadge tooltipKey="atlasMl" />
+              )}
               <StatusChip
                 icon={reserveHealthy ? ShieldCheck : ShieldAlert}
                 label={reserveHealthy ? "Healthy" : "Below target"}
@@ -234,20 +241,13 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
         </div>
       </Card>
 
-      {/* ── Vault thesis (AI-managed vaults) ── */}
-      {agentMeta?.thesis && (
-        <Card className="mb-6 border-app-accent/20 bg-app-accent/5 p-4">
-          <div className="flex items-start gap-3">
-            <Lightbulb className="mt-0.5 h-5 w-5 shrink-0 text-app-accent" />
-            <div>
-              <h3 className="text-sm font-semibold text-app-text">Vault Thesis</h3>
-              <p className="mt-1 text-sm leading-relaxed text-app-muted">{agentMeta.thesis}</p>
-              <p className="mt-2 text-xs text-app-muted">
-                Last updated {new Date(agentMeta.lastRunAt).toLocaleDateString()}
-              </p>
-            </div>
-          </div>
-        </Card>
+      {/* ── AI Activity (AI-managed vaults) ── */}
+      {agentMeta?.isAiManaged && (
+        <AiActivitySection
+          vault={vault}
+          agentMeta={agentMeta}
+          className="mb-6"
+        />
       )}
 
       {/* ── Metrics grid ── */}
@@ -346,7 +346,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
                           <HistoryRowView
                             key={row.id}
                             row={row}
-                            justification={justificationMap.get(row.txHash.toLowerCase())}
+                            action={actionByTxHash.get(row.txHash.toLowerCase())}
                           />
                         ))}
                       </div>
@@ -370,12 +370,19 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   );
 }
 
-function HistoryRowView({ row, justification }: { row: BasketHistoryRow | BasketActivityRow; justification?: string }) {
+function HistoryRowView({
+  row,
+  action,
+}: {
+  row: BasketHistoryRow | BasketActivityRow;
+  action?: AgentAction;
+}) {
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
   const txHref = explorer ? `${explorer}/tx/${row.txHash}` : "#";
   const meta = getBasketActivityMeta(row);
+  const toolLabel = action ? humanizeToolName(action.tool) : null;
 
   return (
     <div className="flex items-start gap-3 px-4 py-4 text-sm">
@@ -387,11 +394,24 @@ function HistoryRowView({ row, justification }: { row: BasketHistoryRow | Basket
             .filter(Boolean)
             .join(" · ")}
         </p>
-        {justification && (
-          <p className="mt-1 flex items-center gap-1 text-xs italic text-app-muted">
-            <Bot className="h-3 w-3 shrink-0 text-app-accent" />
-            {justification}
-          </p>
+        {action && (
+          <div className="mt-2 rounded-md border border-app-accent/20 bg-app-accent/5 px-2.5 py-1.5">
+            <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
+              <Bot className="h-3 w-3 shrink-0" />
+              <span>AI{action.agentName ? `: ${action.agentName}` : ""}</span>
+              {toolLabel && (
+                <>
+                  <span className="text-app-muted">·</span>
+                  <span className="font-mono normal-case tracking-normal text-app-text">
+                    {toolLabel}
+                  </span>
+                </>
+              )}
+            </div>
+            <p className="mt-1 text-xs italic leading-relaxed text-app-muted">
+              {action.justification}
+            </p>
+          </div>
         )}
       </div>
       <div className="shrink-0 text-right">
@@ -415,4 +435,167 @@ function HistoryRowView({ row, justification }: { row: BasketHistoryRow | Basket
       </div>
     </div>
   );
+}
+
+function humanizeToolName(tool: string): string {
+  if (!tool) return "";
+  return tool
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function AiActivitySection({
+  vault,
+  agentMeta,
+  className,
+}: {
+  vault: Address;
+  agentMeta: NonNullable<ReturnType<typeof useAgentMetadata>["data"]>;
+  className?: string;
+}) {
+  const [summaryOpen, setSummaryOpen] = useState(false);
+  const [decisionsOpen, setDecisionsOpen] = useState(false);
+  const config = useConfig();
+  const { chainId } = useDeploymentTarget();
+  const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
+
+  const recentDecisions = (agentMeta.recentActions ?? []).slice(0, 5);
+  const lastRunIso = agentMeta.latestRun?.finishedAt || agentMeta.lastRunAt;
+  const lastRunSeconds = lastRunIso ? Math.floor(new Date(lastRunIso).getTime() / 1000) : null;
+  const lastRunRelative = lastRunSeconds ? formatRelativeTime(lastRunSeconds) : null;
+
+  return (
+    <Card
+      className={`border-app-accent/20 bg-app-accent/5 p-4 ${className ?? ""}`}
+      data-testid={`ai-activity-${vault}`}
+    >
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-app-accent/25 bg-app-accent/10 text-app-accent">
+            <Bot className="h-3.5 w-3.5" />
+          </span>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <h3 className="text-sm font-semibold text-app-text">AI Operator</h3>
+              <InfoTooltipLazy tooltipKey="aiOperator" ariaLabel="About AI Operator" />
+            </div>
+            {agentMeta.agentName && (
+              <p className="text-[11px] text-app-muted">
+                <span className="font-mono">{agentMeta.agentName}</span>
+                {agentMeta.agentDescription ? ` · ${agentMeta.agentDescription}` : ""}
+              </p>
+            )}
+          </div>
+        </div>
+        {lastRunRelative && (
+          <p className="text-[11px] text-app-muted">
+            Last run · <span className="text-app-text">{lastRunRelative}</span>
+          </p>
+        )}
+      </div>
+
+      {/* Thesis */}
+      {agentMeta.thesis && (
+        <div className="mt-4 rounded-md border border-app-border bg-app-surface p-3">
+          <div className="flex items-center gap-1.5">
+            <Lightbulb className="h-4 w-4 shrink-0 text-app-accent" />
+            <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-app-muted">
+              Vault Thesis
+            </h4>
+            <InfoTooltipLazy tooltipKey="vaultThesis" ariaLabel="About Vault Thesis" />
+          </div>
+          <p className="mt-2 text-sm leading-relaxed text-app-text">{agentMeta.thesis}</p>
+        </div>
+      )}
+
+      {/* Latest run summary (collapsible) */}
+      {agentMeta.latestRun?.summary && (
+        <div className="mt-3">
+          <button
+            type="button"
+            className="text-xs font-semibold text-app-accent hover:underline"
+            onClick={() => setSummaryOpen((v) => !v)}
+            aria-expanded={summaryOpen}
+          >
+            {summaryOpen ? "Hide latest run summary" : "Show latest run summary"}
+          </button>
+          {summaryOpen && (
+            <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap rounded-md border border-app-border bg-app-bg-subtle/60 p-3 font-sans text-xs leading-relaxed text-app-muted">
+              {agentMeta.latestRun.summary}
+            </pre>
+          )}
+        </div>
+      )}
+
+      {/* Recent decisions (collapsed by default) */}
+      {recentDecisions.length > 0 && (
+        <div className="mt-3">
+          <button
+            type="button"
+            className="flex items-center gap-1 text-xs font-semibold text-app-accent hover:underline"
+            onClick={() => setDecisionsOpen((v) => !v)}
+            aria-expanded={decisionsOpen}
+            aria-controls="ai-recent-decisions"
+          >
+            <span>
+              {decisionsOpen ? "Hide recent decisions" : "Show recent decisions"}
+            </span>
+            <span className="font-mono text-[10px] text-app-muted">
+              ({recentDecisions.length})
+            </span>
+          </button>
+          {decisionsOpen && (
+            <ul id="ai-recent-decisions" className="mt-2 space-y-2">
+              {recentDecisions.map((a, i) => {
+                const ts = a.timestamp ? Math.floor(new Date(a.timestamp).getTime() / 1000) : null;
+                const rel = ts ? formatRelativeTime(ts) : null;
+                const txHref = explorer && a.txHash ? `${explorer}/tx/${a.txHash}` : null;
+                return (
+                  <li
+                    key={`${a.txHash ?? "no-tx"}-${i}`}
+                    className="rounded-md border border-app-border bg-app-surface p-3"
+                  >
+                    <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
+                      <span className="font-mono normal-case tracking-normal text-app-text">
+                        {humanizeToolName(a.tool)}
+                      </span>
+                      {rel && (
+                        <>
+                          <span className="text-app-muted">·</span>
+                          <span className="normal-case tracking-normal text-app-muted">{rel}</span>
+                        </>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs leading-relaxed text-app-text">{a.justification}</p>
+                    {txHref && (
+                      <a
+                        className="mt-1 inline-block font-mono text-[11px] text-app-accent hover:underline"
+                        href={txHref}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {`${a.txHash!.slice(0, 6)}...${a.txHash!.slice(-4)}`}
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function InfoTooltipLazy({
+  tooltipKey,
+  ariaLabel,
+}: {
+  tooltipKey: Parameters<typeof getTooltipCopy>[0];
+  ariaLabel: string;
+}) {
+  const content = getTooltipCopy(tooltipKey);
+  return <InfoTooltip content={content} ariaLabel={ariaLabel} />;
 }

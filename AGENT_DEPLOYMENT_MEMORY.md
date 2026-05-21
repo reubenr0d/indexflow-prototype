@@ -3,7 +3,7 @@
 Local allowlist/ownership ledger for deployment operations.
 Agents must read this file before touching cloud resources.
 
-Last updated: 2026-05-20
+Last updated: 2026-05-21
 
 ## Policy
 
@@ -37,6 +37,7 @@ Last updated: 2026-05-20
 || Avalanche Fuji | Chain `43113` | Smart Contract | `RedemptionReceiver` (pending deploy) | fuji | agent | `read`, `deploy` | Receives CCIP USDC from hub to fill pending spoke redemptions (spoke instance) | 2026-04-17 |
 | Avalanche Fuji | Chain `43113` | Smart Contract config | `StateRelay.keeper()` on `0x0A564071Fb11A0b84314f0B78AC69C5742Db22A2` (set to KeeperHub wallet `0xBAefbc6D…e409`) | fuji | agent | `read`, `update-config` | Aligns Fuji StateRelay with Sepolia for unified KeeperHub-routed `updateState`. setKeeper tx `0xb25d4bd16b36b957849145ef329d40487c3b2624ce76f8520787e802e016ecff`. Owner remains operator PRIVATE_KEY wallet; `setKeeper` is reversible by owner. | 2026-04-27 |
 | Avalanche Fuji | Chain `43113` | Off-chain wallet | KeeperHub-managed wallet `0xBAefbc6D66C6ACc123374A0ABa10E946b932e409` | fuji | agent | `read`, funded once with 0.5 AVAX | Gas funding for KeeperHub `updateState` writes on Fuji (KeeperHub does not auto-fund non-named networks reached via numeric chain id). Funding tx `0xa8da1e14121cc86a718e282d59a672c330900b84c256f97a7f179dc52baa22e6`. Monitor balance and refill before depletion. | 2026-04-27 |
+| Minestarters | atlas-prototype (user-managed VM) | External HTTPS API | `https://atlas.minestarters.com/api/v1/...` (ml-rankings, ml-model-info, ml/basket, ml/thesis) | production | user | `read` only | Atlas mining-stock ML engine consumed by `mining-manager` agent via the `atlas-ml-mcp` server. Agent never modifies the Atlas deployment; only issues GET requests. | 2026-05-21 |
 ## Update Template
 
 Use this template for new entries:

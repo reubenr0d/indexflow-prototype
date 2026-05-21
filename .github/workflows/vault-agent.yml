@@ -29,13 +29,21 @@ permissions:
 
 jobs:
   vault-agent:
-    name: Agent "vault-manager" (${{ matrix.network }})
+    name: Agent "${{ matrix.agent }}" (${{ matrix.network }})
     runs-on: ubuntu-latest
     strategy:
+      # Don't run mining-manager in parallel with vault-manager: they share the
+      # same keeper key, so concurrent cast send calls race on the same nonce.
+      max-parallel: 1
       fail-fast: false
       matrix:
         include:
-          - network: sepolia
+          - agent: vault-manager
+            network: sepolia
+            deployment_config: apps/web/src/config/sepolia-deployment.json
+            rpc_url_secret: SEPOLIA_RPC_URL
+          - agent: mining-manager
+            network: sepolia
             deployment_config: apps/web/src/config/sepolia-deployment.json
             rpc_url_secret: SEPOLIA_RPC_URL
 
@@ -59,6 +67,8 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          ATLAS_API_URL: ${{ secrets.ATLAS_API_URL || 'https://atlas.minestarters.com' }}
+          ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           # GitHub Actions has no TTY; without this, the runner skips all write tools
           # (create_vault, etc.) — see shouldSkipWritesForNonInteractiveSession
@@ -66,13 +76,13 @@ jobs:
           AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
-        run: node scripts/agent-runner.mjs vault-manager
+        run: node scripts/agent-runner.mjs ${{ matrix.agent }}
 
       - name: Upload agent outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: agent-output-${{ matrix.network }}
+          name: agent-output-${{ matrix.agent }}-${{ matrix.network }}
           path: |
             agents/memory/
             apps/web/public/agent-metadata/

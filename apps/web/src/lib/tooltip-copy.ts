@@ -177,6 +177,8 @@ export const TOOLTIP_COPY = {
   // AI agent vault management
   aiOperator:
     "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations.",
+  atlasMl:
+    "Entry signals come from the Atlas mining-stock ML engine: a 180-day-horizon model ranking miners by drill activity, financials, and commodity factors. The vault auto-rebalances to track the latest Atlas top-N picks.",
   vaultThesis:
     "The AI operator's current investment thesis — a summary of the strategy rationale and target exposures.",
 } as const;

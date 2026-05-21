@@ -1,0 +1,15 @@
+{
+  "name": "atlas-ml-mcp",
+  "version": "1.0.0",
+  "description": "MCP server wrapping the Atlas mining-stock ML engine (atlas.minestarters.com)",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

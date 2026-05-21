@@ -453,6 +453,124 @@ server.registerTool(
   },
 );
 
+function parseTrackingTuple(raw) {
+  // cast call returns the tuple either as a single parenthesized line like
+  //   "(0xvault, 0xasset, true, 100000000, 1000000, 1000000, 2100e30, 0, true)"
+  // or as a multi-line ABI-decoded list. We normalise both into structured fields.
+  const text = String(raw ?? "").trim();
+  if (!text) return null;
+  let inner = text;
+  if (text.startsWith("(") && text.endsWith(")")) {
+    inner = text.slice(1, -1);
+  }
+  const parts = inner
+    .split(/\r?\n|,/)
+    .map((s) => s.replace(/\s*\[[^\]]+\]\s*$/, "").trim())
+    .filter(Boolean);
+  if (parts.length < 9) return null;
+  const [vaultAddr, assetId, isLongRaw, sizeRaw, collateralRaw, collateralUsdcRaw, averagePriceRaw, entryFundingRaw, existsRaw] = parts;
+  const toBigInt = (v) => {
+    try { return parseCastBigInt(v).toString(); } catch { return "0"; }
+  };
+  return {
+    vault: vaultAddr.toLowerCase(),
+    asset: assetId.toLowerCase(),
+    isLong: /^true$/i.test(isLongRaw),
+    size: toBigInt(sizeRaw),
+    collateral: toBigInt(collateralRaw),
+    collateralUsdc: toBigInt(collateralUsdcRaw),
+    averagePrice: toBigInt(averagePriceRaw),
+    entryFundingRate: toBigInt(entryFundingRaw),
+    exists: /^true$/i.test(existsRaw),
+  };
+}
+
+server.registerTool(
+  "list_open_positions",
+  {
+    title: "List Open Positions",
+    description:
+      "Return all currently-open perp positions for a vault, derived deterministically from the vault's tracked-asset list. " +
+      "For each tracked asset, this calls getPositionTracking(vault, asset, isLong=true) and getPositionTracking(vault, asset, isLong=false) and " +
+      "yields any leg where the on-chain `exists` flag is true. " +
+      "Returns {vault, count, positions: [{positionKey, assetId, symbol, isLong, size, collateral, collateralUsdc, averagePrice, currentOraclePrice, exists}]}. " +
+      "Use this instead of looping get_position_tracking from the LLM side when you need the full picture for rebalancing.",
+    inputSchema: {
+      vault: z.string().describe("BasketVault contract address (0x...)"),
+    },
+  },
+  async ({ vault }) => {
+    try {
+      const d = deployment();
+      const assetCount = parseIntSafe(castCall(vault, "getAssetCount()(uint256)"));
+      const trackedAssets = [];
+      for (let i = 0; i < assetCount; i++) {
+        trackedAssets.push(castCall(vault, "getAssetAt(uint256)(bytes32)", [String(i)]));
+      }
+
+      const positions = [];
+      for (const assetId of trackedAssets) {
+        let symbol = "";
+        try {
+          symbol = stripQuotes(castCall(d.oracleAdapter, "assetSymbols(bytes32)(string)", [assetId]));
+        } catch { /* asset may not be wired in oracle */ }
+
+        let currentOraclePrice = null;
+        try {
+          currentOraclePrice = castCall(d.oracleAdapter, "getPrice(bytes32)(uint256)", [assetId]);
+        } catch { /* price may not be set */ }
+
+        for (const isLong of [true, false]) {
+          let posKey;
+          let trackingRaw;
+          try {
+            posKey = castCall(
+              d.vaultAccounting,
+              "getPositionKey(address,bytes32,bool)(bytes32)",
+              [vault, assetId, String(isLong)],
+            );
+            trackingRaw = castCall(
+              d.vaultAccounting,
+              "getPositionTracking(bytes32)((address,bytes32,bool,uint256,uint256,uint256,uint256,uint256,bool))",
+              [posKey],
+            );
+          } catch {
+            continue;
+          }
+
+          const parsed = parseTrackingTuple(trackingRaw);
+          if (!parsed || !parsed.exists) continue;
+          positions.push({
+            positionKey: posKey,
+            assetId: assetId.toLowerCase(),
+            symbol,
+            isLong: parsed.isLong,
+            size: parsed.size,
+            collateral: parsed.collateral,
+            collateralUsdc: parsed.collateralUsdc,
+            collateralUsdc_usdc: formatUsdc(parsed.collateralUsdc),
+            averagePrice: parsed.averagePrice,
+            currentOraclePrice,
+            currentOraclePrice_usd:
+              currentOraclePrice != null ? formatOraclePrice8(currentOraclePrice) : null,
+            exists: true,
+          });
+        }
+      }
+
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({ vault: vault.toLowerCase(), count: positions.length, positions }, null, 2),
+        }],
+      };
+    } catch (err) {
+      return toolError("READ_FAILED", err.message,
+        "Verify the vault address is correct and the OracleAdapter / VaultAccounting deployment is reachable.");
+    }
+  },
+);
+
 server.registerTool(
   "get_position_tracking",
   {

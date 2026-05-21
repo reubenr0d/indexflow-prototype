@@ -201,6 +201,19 @@ Agent memory is **file-backed under `agents/memory/<agent>/` and tracked in git*
 
 Per-network run logs prevent cross-network context bleed when an agent runs against multiple environments. Override the network tag with `AGENT_NETWORK`. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 
+#### Web-facing metadata schema
+
+`publishAgentMetadata` in `scripts/agent-runner.mjs` writes:
+
+| Field | Type | Notes |
+|---|---|---|
+| `isAiManaged` | `true` | Drives the AI Operator badge / AI Activity section in the web app |
+| `agentName` / `agentDescription` | string | Surfaced in the AI Activity header |
+| `thesis` | string \| null | Parsed from the LLM's final `## Thesis` section; displayed as the Vault Thesis card |
+| `lastRunAt` | ISO timestamp | Display only |
+| `latestRun` | `{ runId, finishedAt, summary }` | `summary` is the 500-char truncated final agent message; rendered in the collapsible "Show latest run summary" panel |
+| `recentActions[]` | `{ tool, justification, timestamp, txHash, agentName, runId }` | LLM-authored justifications attached to MCP write-tool calls. Deduplicated by `txHash` and capped (default 100, override with `AGENT_METADATA_ACTION_LIMIT`). The web app renders the top 5 in "Recent Decisions" and joins the rest by `txHash` to the on-chain Vault History rows. |
+
 ### Run lifecycle
 
 1. Runner builds a deployment fingerprint from `(runNetwork, DEPLOYMENT_CONFIG contents, RPC_URL)`.
@@ -218,8 +231,9 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 
 | Server | Purpose | Tools |
 |---|---|---|
-| `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
+| `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `list_open_positions`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups | `yfinance_search`, `yfinance_quote` |
+| `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_model_info`, `get_ml_basket`, `get_ml_thesis` |
 
 ### Server Registry Format
 
@@ -234,6 +248,11 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
     "command": "node",
     "args": ["apps/mcps/yfinance/index.js"],
     "envPassthrough": []
+  },
+  "atlas-ml-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/atlas-ml/index.js"],
+    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_REQUEST_TIMEOUT_MS"]
   }
 }
 ```
@@ -257,6 +276,19 @@ To add a new MCP server: add the server code under `apps/mcps/`, then add an ent
 | `yfinance_search` | Find stocks, ETFs, indices by name/ticker | `query`, `limit` |
 | `yfinance_quote` | Get live prices with USD conversion, day change, volume, and symbol-resolution metadata (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates[]`) | `symbols[]` |
 
+### Mining ML Signals (atlas-ml-mcp)
+
+Wraps the Atlas mining-stock ML engine (default `https://atlas.minestarters.com`, override via `ATLAS_API_URL`). Every returned pick includes a derived `yahooSymbol` with the correct exchange suffix (e.g. `GSR` on TSXV becomes `GSR.V`) for direct use with `wire_asset` / `yfinance_quote`.
+
+| Tool | Purpose | Key params |
+|---|---|---|
+| `get_ml_top_picks` | Ranked top mining stocks (`{ml_score, ml_predicted_return, primary_commodity, vault_fit_tier, yahooSymbol, ...}`) | `limit`, `minScore` |
+| `get_ml_model_info` | Slim model metadata (horizon, Spearman IC, top features, score distribution, bundled top predictions) | -- |
+| `get_ml_basket` | Top-N basket enriched with cash/debt/EV/jurisdiction | `n`, `tag` |
+| `get_ml_thesis` | Claude-generated investment thesis on the current basket (use sparingly) | `n`, `tag` |
+
+The agent runner's `entryMode: ml_score` policy uses `get_ml_top_picks` as the eligibility signal. When `rebalanceMode: track_top_n` is set, a deterministic pre-LLM pass closes any open position whose underlying ticker has dropped out of the latest top-N.
+
 ### On-Chain Reads (vault-manager-mcp)
 
 | Tool | Purpose | Key params |
@@ -267,6 +299,7 @@ To add a new MCP server: add the server code under `apps/mcps/`, then add an ent
 | `get_vault_pnl` | Unrealised/realised PnL | `vault` |
 | `get_oracle_assets` | All oracle assets with prices | -- |
 | `get_position_tracking` | Single position details | `vault`, `assetId`, `isLong` |
+| `list_open_positions` | Structured list of all open positions for a vault (auto-rebalance friendly) | `vault` |
 
 ### On-Chain Writes (vault-manager-mcp)
 
