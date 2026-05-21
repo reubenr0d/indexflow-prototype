@@ -48,6 +48,7 @@ import {
   formatPrice,
   formatRelativeTime,
   formatSignedUsd1e30,
+  formatSignedUsdcAmount,
   formatUsd1e30,
   formatAssetId,
 } from "@/lib/format";
@@ -162,8 +163,8 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0", icon: Layers, testId: "metric-total-shares" },
     ...(hasPnLData
       ? [
-          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign, icon: Activity, testId: "metric-net-pnl" },
-          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign, icon: LineChart, testId: "metric-unrealised-pnl" },
+          { label: "Net PnL", value: formatSignedUsdcAmount(netPnL), pnl: true, sign: netPnlSign, icon: Activity, testId: "metric-net-pnl" },
+          { label: "Unrealised", value: formatSignedUsdcAmount(unrealisedPnL), pnl: true, sign: unrealisedSign, icon: LineChart, testId: "metric-unrealised-pnl" },
         ]
       : []),
     ...(state?.registered

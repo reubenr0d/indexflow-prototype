@@ -12,7 +12,7 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # The full agent matrix (vault-manager + mining-manager) runs by default;
+  # The full agent matrix (vault-manager + mining-manager + quality-matrix-manager) runs by default;
   # to dispatch a single agent, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
   repository_dispatch:
     types: [vault-agent-tick]
@@ -32,6 +32,7 @@ on:
           - all
           - vault-manager
           - mining-manager
+          - quality-matrix-manager
       vault_address:
         description: "Override vault address for this run (empty = use agent's stored vault). Commit step is skipped when set."
         required: false
@@ -81,16 +82,19 @@ jobs:
 
           vault_entry='{"agent":"vault-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
           mining_entry='{"agent":"mining-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
+          quality_entry='{"agent":"quality-matrix-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
 
           # repository_dispatch may pass a single agent via client_payload.agent;
           # an empty payload falls through to the existing -z check below and
           # runs the full matrix exactly like a scheduled tick.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
-            include="[${vault_entry},${mining_entry}]"
+            include="[${vault_entry},${mining_entry},${quality_entry}]"
           elif [ "${AGENT_INPUT}" = "vault-manager" ]; then
             include="[${vault_entry}]"
           elif [ "${AGENT_INPUT}" = "mining-manager" ]; then
             include="[${mining_entry}]"
+          elif [ "${AGENT_INPUT}" = "quality-matrix-manager" ]; then
+            include="[${quality_entry}]"
           else
             echo "Unknown agent input: ${AGENT_INPUT}" >&2
             exit 1
@@ -105,8 +109,9 @@ jobs:
     needs: setup-matrix
     runs-on: ubuntu-latest
     strategy:
-      # Don't run mining-manager in parallel with vault-manager: they share the
-      # same keeper key, so concurrent cast send calls race on the same nonce.
+      # Don't run vault-manager / mining-manager / quality-matrix-manager in
+      # parallel: they share the same keeper key, so concurrent cast send calls
+      # race on the same nonce.
       max-parallel: 1
       fail-fast: false
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}

@@ -1,0 +1,97 @@
+{
+  "version": "1.0.0",
+  "analystSource": "Deposit-type adjustments extracted verbatim from the 'Caveat / Deposit-Type Nuance' column of the analyst's quality matrix. These let the classifier pick the right tier slice for a given company (e.g. porphyry vs vein widths, Athabasca U vs ISR U).",
+  "depositTypes": {
+    "porphyry": {
+      "label": "Porphyry copper / Cu-Au porphyry",
+      "appliesToCommodities": ["copper", "gold"],
+      "widthAdjustment": {
+        "note": "Porphyries need 100m+ widths to be considered Exceptional on the width axis. A 5m intercept is narrow for a porphyry but normal for a vein.",
+        "minWidthForExceptionalM": 100
+      },
+      "gradeAdjustment": {
+        "note": "Porphyries deliver bulk-tonnage at moderate grade. Don't penalise sub-1% Cu in a porphyry the way you would in a vein system."
+      }
+    },
+    "orogenic_gold": {
+      "label": "Orogenic gold",
+      "appliesToCommodities": ["gold"],
+      "note": "Workbook median 2.94 g/t gold sits at the Strong/Moderate boundary; orogenic gold systems typically run 3-8 g/t at OP cut-off."
+    },
+    "vein": {
+      "label": "Narrow-vein high-grade",
+      "appliesToCommodities": ["gold", "silver", "copper"],
+      "widthAdjustment": {
+        "note": "Veins need <10m at high grade to be Exceptional. Wide intercepts in vein systems often signal dilution rather than continuity.",
+        "maxWidthForExceptionalM": 10
+      },
+      "gradeAdjustment": {
+        "note": "Vein systems must be evaluated on grade × width rather than width alone."
+      }
+    },
+    "open_pit": {
+      "label": "Open Pit mining",
+      "appliesToCommodities": ["gold", "copper", "silver", "lithium", "iron"],
+      "cutoffNote": "OP cut-off is typically lower than UG — Gold OP cut-off 0.3–1.5 g/t depending on AISC; UG cut-off 2–5 g/t."
+    },
+    "underground": {
+      "label": "Underground mining",
+      "appliesToCommodities": ["gold", "silver", "copper", "nickel", "uranium"],
+      "cutoffNote": "UG cut-off typically 2–5 g/t for gold depending on mining method and depth.",
+      "useGoldUgTiers": true
+    },
+    "athabasca_unconformity_u": {
+      "label": "Athabasca Basin unconformity-style uranium",
+      "appliesToCommodities": ["uranium"],
+      "gradeAdjustment": {
+        "note": "Athabasca grades 10%+ U₃O₈ are exceptional globally. The U grade tiers in the matrix are anchored on this style (Denison Wheeler River, 491m @ 20% U₃O₈)."
+      },
+      "useDefaultUraniumTiers": true
+    },
+    "isr_uranium": {
+      "label": "In-situ recovery (ISR) uranium",
+      "appliesToCommodities": ["uranium"],
+      "gradeAdjustment": {
+        "note": "ISR sandstone-hosted U typically 0.05–0.5%. The default uranium tiers in matrix.json are Athabasca-biased and would tier ISR projects as Red Flag. Apply this scaler before classifying.",
+        "scaleFactor": 100,
+        "scaleDirection": "down"
+      },
+      "useDefaultUraniumTiers": false
+    },
+    "sandstone_uranium": {
+      "label": "Sandstone-hosted uranium (non-ISR)",
+      "appliesToCommodities": ["uranium"],
+      "gradeAdjustment": {
+        "note": "Sandstone-hosted U projects sit at 0.05–0.5%. Like ISR, apply scaling before using default U tiers.",
+        "scaleFactor": 100,
+        "scaleDirection": "down"
+      }
+    },
+    "massive_sulphide_nickel": {
+      "label": "Massive sulphide nickel",
+      "appliesToCommodities": ["nickel"],
+      "note": "Tier breakpoints anchored on Talon Metals' Tamarack massive sulphide (7.82% Ni). Disseminated Ni projects (<0.5%) tier as Weak/Red Flag."
+    },
+    "dso_iron_ore": {
+      "label": "Direct shipping iron ore (DSO)",
+      "appliesToCommodities": ["iron"],
+      "gradeAdjustment": {
+        "note": "DSO typically 60%+ Fe — well above the workbook tiers (P95 ~52%). Calibrate before scoring DSO-focused juniors."
+      }
+    },
+    "polymetallic": {
+      "label": "Polymetallic (Pb/Zn/Ag-bearing)",
+      "appliesToCommodities": ["lead", "zinc", "silver"],
+      "note": "<6 g/t silver as a CREDIT METAL in polymetallic is acceptable — only a Red Flag for primary Ag."
+    }
+  },
+  "commodityToYahooHint": {
+    "gold": ["XAU", "GLD", "GC=F"],
+    "silver": ["XAG", "SLV", "SI=F"],
+    "copper": ["HG=F"],
+    "uranium": ["URA"],
+    "lithium": ["LIT"],
+    "nickel": ["JJN"],
+    "iron": ["GOLDX"]
+  }
+}

@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { formatNetExposure1e30, formatSignedUsd1e30, formatUsd1e30, parseTokenAmountInput } from "./format";
+import {
+  formatNetExposure1e30,
+  formatSignedUsd1e30,
+  formatSignedUsdcAmount,
+  formatUsd1e30,
+  formatUsdcAmount,
+  parseTokenAmountInput,
+} from "./format";
 
 describe("parseTokenAmountInput", () => {
   it("parses 6-decimal human input", () => {
@@ -51,5 +58,22 @@ describe("formatUsd1e30", () => {
       direction: "Flat",
       amount: "$0.00",
     });
+  });
+});
+
+describe("formatUsdcAmount / formatSignedUsdcAmount", () => {
+  it("formats full USD values from USDC 6-decimal amounts", () => {
+    expect(formatUsdcAmount(0n)).toBe("$0.00");
+    expect(formatUsdcAmount(1_000_000n)).toBe("$1.00");
+    expect(formatUsdcAmount(1_234_560_000n)).toBe("$1,234.56");
+    expect(formatUsdcAmount(1_234_567n * 1_000_000n)).toBe("$1,234,567.00");
+  });
+
+  it("formats signed USDC 6-decimal amounts with + / - prefix", () => {
+    expect(formatSignedUsdcAmount(0n)).toBe("$0.00");
+    expect(formatSignedUsdcAmount(2_000_000n)).toBe("+$2.00");
+    expect(formatSignedUsdcAmount(-2_000_000n)).toBe("-$2.00");
+    expect(formatSignedUsdcAmount(1_234_560_000n)).toBe("+$1,234.56");
+    expect(formatSignedUsdcAmount(-1_234_560_000n)).toBe("-$1,234.56");
   });
 });

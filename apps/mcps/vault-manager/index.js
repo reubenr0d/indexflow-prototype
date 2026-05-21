@@ -50,6 +50,26 @@ function formatUsdc(raw) {
   return n.toFixed(2);
 }
 
+function formatSignedUsdc(value) {
+  const big = typeof value === "bigint" ? value : parseCastBigInt(value);
+  const n = Number(big) / 1e6;
+  const abs = Math.abs(n).toFixed(2);
+  if (big > 0n) return `+${abs}`;
+  if (big < 0n) return `-${abs}`;
+  return abs;
+}
+
+// Parse a cast-formatted multi-value tuple such as `(int256,int256)` into an
+// array of signed BigInts. Cast emits each tuple member on its own line, with
+// an optional ` [hex]` annotation that `parseCastBigInt` already strips.
+function parseSignedTupleInt256(raw) {
+  const lines = String(raw ?? "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  return lines.map((line) => parseCastBigInt(line));
+}
+
 function formatSharePrice(raw) {
   const n = Number(parseCastBigInt(raw)) / 1e30;
   return n.toFixed(6);
@@ -323,8 +343,9 @@ server.registerTool(
     title: "Get Vault State",
     description:
       "Get detailed state of a single BasketVault including NAV, share price, asset list, fee config, reserve health, and perp allocation. " +
-      "Returns human-readable companion fields (_usdc, _pct, _usd) alongside raw values. " +
-      "Use get_all_vaults first to discover vault addresses. For PnL details, see also get_vault_pnl.",
+      "Returns human-readable companion fields (_usdc, _pct, _usd) alongside raw values; all USDC values (NAV, perpAllocated, idle, reserves, fees) are 6-decimal. " +
+      "The optional `pnl` sub-object embeds the raw `VaultAccounting.getVaultPnL` tuple and `getVaultState` struct (see `get_vault_pnl` for full unit notes); both PnL legs are USDC 6-dec. " +
+      "Use get_all_vaults first to discover vault addresses. For PnL details with formatted USD companions, see also get_vault_pnl.",
     inputSchema: {
       vault: z.string().describe("BasketVault contract address (0x...)"),
     },
@@ -379,8 +400,14 @@ server.registerTool(
   {
     title: "Get Vault PnL",
     description:
-      "Get unrealised and realised PnL for a vault from VaultAccounting, plus accounting state " +
-      "(deposited capital, realised PnL, open interest, locked collateral, position count, registered flag). " +
+      "Get unrealised and realised PnL for a vault from `VaultAccounting.getVaultPnL(vault)`. " +
+      "Both `unrealised` and `realised` are signed int256 values in USDC 6-decimal units " +
+      "(divide by 1e6 to get USD; positive = profit, negative = loss). " +
+      "The response includes `pnl_usdc: { unrealised_usdc, realised_usdc, net_usdc }` with already-converted human-readable signed USD strings. " +
+      "Also returns `vaultAccountingState` from `getVaultState(vault)` whose fields are: " +
+      "`depositedCapital` (USDC 6-dec), `realisedPnL` (signed USDC 6-dec, matches `realised`), " +
+      "`openInterest` (USDC 6-dec aggregate notional), `collateralLocked` (USDC 6-dec), " +
+      "`positionCount` (raw uint), and `registered` (bool). " +
       "Use get_vault_state first for the vault's general state. Use get_position_tracking for per-position details.",
     inputSchema: {
       vault: z.string().describe("BasketVault contract address (0x...)"),
@@ -391,10 +418,27 @@ server.registerTool(
       const d = deployment();
       const pnlRaw = castCall(d.vaultAccounting, "getVaultPnL(address)(int256,int256)", [vault]);
       const stateRaw = castCall(d.vaultAccounting, "getVaultState(address)((uint256,int256,uint256,uint256,uint256,bool))", [vault]);
+
+      let pnlUsdc = null;
+      try {
+        const [unrealised, realised] = parseSignedTupleInt256(pnlRaw);
+        pnlUsdc = {
+          unrealised_usdc: formatSignedUsdc(unrealised),
+          realised_usdc: formatSignedUsdc(realised),
+          net_usdc: formatSignedUsdc(unrealised + realised),
+        };
+      } catch {
+        // If parsing fails, leave pnl_usdc null and let the caller fall back to raw.
+      }
+
       return {
         content: [{
           type: "text",
-          text: JSON.stringify({ pnl: pnlRaw, vaultAccountingState: stateRaw }, null, 2),
+          text: JSON.stringify({
+            pnl: pnlRaw,
+            pnl_usdc: pnlUsdc,
+            vaultAccountingState: stateRaw,
+          }, null, 2),
         }],
       };
     } catch (err) {

@@ -39,6 +39,16 @@ export function formatSignedUsd1e30(value: bigint, fractionDigits = 2): string {
   return `${sign}${formatScaledUsd(value, PRICE_PRECISION, fractionDigits)}`;
 }
 
+export function formatUsdcAmount(value: bigint, fractionDigits = 2): string {
+  return formatScaledUsd(value, USDC_PRECISION, fractionDigits);
+}
+
+export function formatSignedUsdcAmount(value: bigint, fractionDigits = 2): string {
+  if (value === 0n) return formatUsdcAmount(0n, fractionDigits);
+  const sign = value > 0n ? "+" : "-";
+  return `${sign}${formatScaledUsd(value, USDC_PRECISION, fractionDigits)}`;
+}
+
 export type ExposureDirection = "Long" | "Short" | "Flat";
 
 export function formatNetExposure1e30(netSize: bigint, fractionDigits = 2): {

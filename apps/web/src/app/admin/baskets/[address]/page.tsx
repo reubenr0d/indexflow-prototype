@@ -29,7 +29,7 @@ import {
   formatBps,
   formatAddress,
   formatUsd1e30,
-  formatSignedUsd1e30,
+  formatSignedUsdcAmount,
 } from "@/lib/format";
 import { formatApy } from "@/lib/apy";
 import { showToast } from "@/components/ui/toast";
@@ -82,8 +82,8 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     ...(state?.registered
       ? [
           { label: "Open Interest", value: formatUsd1e30(state.openInterest), testId: "metric-open-interest" },
-          { label: "Net PnL", value: formatSignedUsd1e30(netPnL), pnl: true, sign: netPnlSign, testId: "metric-net-pnl" },
-          { label: "Unrealised", value: formatSignedUsd1e30(unrealisedPnL), pnl: true, sign: unrealisedSign, testId: "metric-unrealised-pnl" },
+          { label: "Net PnL", value: formatSignedUsdcAmount(netPnL), pnl: true, sign: netPnlSign, testId: "metric-net-pnl" },
+          { label: "Unrealised", value: formatSignedUsdcAmount(unrealisedPnL), pnl: true, sign: unrealisedSign, testId: "metric-unrealised-pnl" },
           { label: "Leverage", value: `${leverageRatio.toFixed(2)}x`, testId: "metric-leverage" },
           { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%`, testId: "metric-capital-util" },
           { label: "Positions", value: String(state.positionCount), testId: "metric-positions" },

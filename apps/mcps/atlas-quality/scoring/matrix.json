@@ -1,0 +1,1402 @@
+{
+  "version": "1.0.0",
+  "analystSource": "Quality matrix prepared by Minestarters mining analyst; transcribed verbatim into machine-readable form on 2026-05-21. Do not simplify breakpoints, drop anchors, or rewrite caveats — edit this file only when the analyst updates the source matrix.",
+  "compositeWeights": {
+    "drilling": 0.35,
+    "resources": 0.20,
+    "economicStudies": 0.15,
+    "metallurgy": 0.10,
+    "permitting": 0.05,
+    "offtake": 0.05,
+    "capitalRaises": 0.05,
+    "construction": 0.05
+  },
+  "provenanceDiscount": 0.7,
+  "provenanceDiscountNote": "Categories whose every classified signal is PUBLISHED_REFERENCE_ONLY are multiplied by this factor when contributing to the composite. The analyst flagged Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction as not-yet-empirically-calibrated. Remove this discount once those categories are calibrated against real datasets (NI 43-101, DFS, permit timelines, etc.).",
+  "tierScores": {
+    "exceptional": 100,
+    "strong": 80,
+    "moderate": 60,
+    "weak": 35,
+    "redFlag": 10,
+    "unknown": null
+  },
+  "tierBadges": {
+    "exceptional": "star",
+    "strong": "check",
+    "moderate": "yellow",
+    "weak": "warning",
+    "redFlag": "red"
+  },
+  "drilling": {
+    "name": "Drilling Results",
+    "signals": [
+      {
+        "id": "drilling_au_grade_op",
+        "name": "Gold Grade (g/t Au) — Open Pit",
+        "category": "drilling",
+        "commodity": "gold",
+        "depositTypes": ["open_pit"],
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "g/t",
+        "tiers": {
+          "exceptional": { "min": 45, "label": "≥45 g/t" },
+          "strong": { "min": 10, "max": 45, "label": "10–45 g/t" },
+          "moderate": { "min": 3, "max": 10, "label": "3–10 g/t" },
+          "weak": { "min": 1, "max": 3, "label": "1–3 g/t" },
+          "redFlag": { "max": 1, "label": "<1 g/t" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 9,764 gold workbook rows. Tiers = P95/P75/P50/P25 of the actual data distribution.",
+        "caveatDepositTypeNuance": "Workbook median is 2.94 g/t — sitting at the Strong/Moderate boundary. P95 is 43.5 g/t. Deposit-type adjustments still apply (porphyry vs orogenic vs vein).",
+        "sourceLinks": [
+          { "label": "World Gold Council — Gold grades for open-pit mining benchmarks" },
+          { "label": "Workbook empirical distribution (see Empirical Calibration sheet)" }
+        ],
+        "workbookAnchors": [
+          "Pan American Silver — 1,600m @ 4.0 g/t Au (PAAS 6-K, 2023-08-16)",
+          "New Gold — 214m @ 22.0 g/t Au (NGD EX-99.1, 2024-05-30)",
+          "Eldorado Gold — 383m @ 12.0 g/t Au (EGO EX-99.1, 2024-03-28)",
+          "Top by rows: Orla Mining (4,662), Kestrel Gold (1,402), West Red Lake Gold (86 — Madsen, VLT-004 priority)."
+        ]
+      },
+      {
+        "id": "drilling_au_grade_ug",
+        "name": "Gold Grade (g/t Au) — Underground",
+        "category": "drilling",
+        "commodity": "gold",
+        "depositTypes": ["underground"],
+        "provenance": "EMPIRICAL",
+        "kind": "numeric_with_width",
+        "unit": "g/t",
+        "tiers": {
+          "exceptional": { "min": 30, "label": "≥30 g/t (bonanza)" },
+          "strong": { "min": 8, "max": 30, "minWidthM": 5, "label": "8–30 g/t over ≥5m" },
+          "moderate": { "min": 5, "max": 8, "minWidthM": 3, "label": "5–8 g/t over ≥3m" },
+          "weak": { "min": 2, "max": 5, "label": "2–5 g/t" },
+          "redFlag": { "max": 2, "label": "<2 g/t" }
+        },
+        "whatDrivesTheBadge": "UG cut-off typically 2–5 g/t depending on mining method and depth.",
+        "caveatDepositTypeNuance": "Workbook does not separately tag UG vs OP — both styles sit in the same gold dataset. UG-style high-grade narrow intercepts are dominant in the high-grade flagged rows (60% of the 9,764).",
+        "sourceLinks": [
+          { "label": "World Gold Council — Underground mine cut-off references" },
+          { "label": "Industry standard UG gold cut-off practice" }
+        ],
+        "workbookAnchors": [
+          "UG-style high-grade examples:",
+          "American Eagle Gold — 115.4m @ 3.49 g/t (Northern Miner, 2026-04)",
+          "Anfield Energy — 4.2m @ 32.87 g/t, GT=139.7 (JMN, 2026)",
+          "Banyan Gold — AurMac high-grade silver-gold veins"
+        ]
+      },
+      {
+        "id": "drilling_cu_grade",
+        "name": "Copper Grade (% Cu)",
+        "category": "drilling",
+        "commodity": "copper",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 5, "label": "≥5%" },
+          "strong": { "min": 1.4, "max": 5, "label": "1.4–5%" },
+          "moderate": { "min": 0.65, "max": 1.4, "label": "0.65–1.4%" },
+          "weak": { "min": 0.33, "max": 0.65, "label": "0.33–0.65%" },
+          "redFlag": { "max": 0.33, "label": "<0.33%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 419 copper workbook rows. Tiers match real workbook percentiles.",
+        "caveatDepositTypeNuance": "Workbook median is 0.65% Cu — porphyry sweet spot. Apply width adjustment: porphyries need 100m+ widths; veins need <10m at high grade. Both can be Exceptional.",
+        "sourceLinks": [
+          { "label": "Mining.com — Copper grade benchmarks" },
+          { "label": "Workbook empirical distribution" }
+        ],
+        "workbookAnchors": [
+          "NGEx Minerals — 335.1m @ 2.25% Cu, GT=754 (Lunahuasi, Argentina; 'inc 19.5m @ 18.96% CuEq')",
+          "Marimaca Copper — 360m @ 11.98% Cu (Pampa Medina, JMN)",
+          "Hercules Metals — 420m @ 1.38% Cu (Leviathan, Idaho)",
+          "Top by rows: NexMetals (87), Marimaca (44), NGEx (31), Hercules (11)."
+        ]
+      },
+      {
+        "id": "drilling_li_grade_hardrock",
+        "name": "Lithium Grade (% Li₂O) — Hard Rock",
+        "category": "drilling",
+        "commodity": "lithium",
+        "depositTypes": ["hard_rock_spodumene"],
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "% Li₂O",
+        "tiers": {
+          "exceptional": { "min": 6.8, "label": "≥6.8%" },
+          "strong": { "min": 3.5, "max": 6.8, "label": "3.5–6.8%" },
+          "moderate": { "min": 1.5, "max": 3.5, "label": "1.5–3.5%" },
+          "weak": { "min": 0.95, "max": 1.5, "label": "0.95–1.5%" },
+          "redFlag": { "max": 0.95, "label": "<0.95%" }
+        },
+        "whatDrivesTheBadge": "Workbook percentiles shown but data quality is suspect. The 64 'lithium' rows include caesium and other elements misclassified as Li.",
+        "caveatDepositTypeNuance": "⚠ KNOWN DATA QUALITY ISSUE: PMET Resources '28m @ 8.05%' is actually a CAESIUM intercept (document title: 'Widest Caesium Drill Intercept'). Pure spodumene tops at ~8% Li₂O — values above this are contamination. Run unit cleanup before using these tiers.",
+        "sourceLinks": [
+          { "label": "European Lithium — Hard rock lithium benchmarks" },
+          { "label": "⚠ Workbook tiers require unit cleanup" }
+        ],
+        "workbookAnchors": [
+          "VERIFIED Li₂O anchors:",
+          "Q2 Metals — 272.5m @ 1.61% Li₂O (Quebec lithium, GT=439)",
+          "Q2 Metals — 107.4m @ 1.87% Li₂O (same project)",
+          "Critical Elements Lithium — 27.8m @ 1.51% Li₂O",
+          "⚠ PMET '8.05%' row is CAESIUM, not lithium."
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "li_caesium_contamination",
+            "appliesIfRawGradeAbove": 8.0,
+            "message": "Pure spodumene tops at ~8% Li₂O. Values above this are almost certainly caesium or other element contamination (cf. PMET '28m @ 8.05%' which is the documented 'Widest Caesium Drill Intercept'). Exclude from lithium scoring until the unit is verified."
+          }
+        ]
+      },
+      {
+        "id": "drilling_ag_grade",
+        "name": "Silver Grade (g/t Ag)",
+        "category": "drilling",
+        "commodity": "silver",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric_with_width",
+        "unit": "g/t",
+        "tiers": {
+          "exceptional": { "min": 325, "minWidthM": 10, "label": "≥325 g/t over ≥10m" },
+          "strong": { "min": 75, "max": 325, "minWidthM": 5, "label": "75–325 g/t over ≥5m" },
+          "moderate": { "min": 29, "max": 75, "label": "29–75 g/t" },
+          "weak": { "min": 6, "max": 29, "label": "6–29 g/t" },
+          "redFlag": { "max": 6, "label": "<6 g/t primary Ag (acceptable as credit metal)" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 499 silver rows. Original ≥500 g/t Exceptional threshold sat ABOVE workbook P95 (324 g/t) and triggered zero rows.",
+        "caveatDepositTypeNuance": "Recalibrated Exceptional 500→325 g/t, Strong width 10m→5m. Red Flag qualified by deposit type: <6 g/t is Red Flag for primary Ag but normal as credit metal in polymetallic.",
+        "sourceLinks": [
+          { "label": "Stockhead — Silver grade benchmarks" },
+          { "label": "Workbook empirical distribution" }
+        ],
+        "workbookAnchors": [
+          "PAAS — 332.4m @ 144 g/t Ag, GT=47,866 (SEC EX-99.1, 2023-12-06)",
+          "PAAS — 89.8m @ 461 g/t, GT=41,421 (same filing)",
+          "Brixton Metals — 18.2m @ 3,638 g/t Ag (record narrow)",
+          "Top by rows: PAAS (154), i-80 Gold (89), Capitan Silver (69)."
+        ]
+      },
+      {
+        "id": "drilling_hole_orientation",
+        "name": "Drill Hole Orientation",
+        "category": "drilling",
+        "provenance": "EMPIRICAL",
+        "notInWorkbookSchema": true,
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Perpendicular to vein/structure + true width reported" },
+          "strong": { "label": "Near-perpendicular (within 20°)" },
+          "moderate": { "label": "Oblique angle, true width estimated" },
+          "weak": { "label": "Sub-parallel to structure" },
+          "redFlag": { "label": "Vertical 'director's holes' down narrow veins" }
+        },
+        "whatDrivesTheBadge": "Catches the 'director's hole' trick: drilling along a thin gold sheet inflates apparent width. Perpendicular holes give true thickness.",
+        "caveatDepositTypeNuance": "⚠ NOT IN WORKBOOK SCHEMA. Azimuth, dip, and true width fields are not extracted by the pipeline. Available fields: hole_id, intercept_length_m, from_depth_m, to_depth_m only. Requires pipeline expansion or curator-led extraction from original filings.",
+        "sourceLinks": [
+          { "label": "Next Investors — How to read assays (reporting true width)" },
+          { "label": "Charles Stephenson reference: 'director's holes'" }
+        ],
+        "workbookAnchors": [
+          "External anchors (not workbook):",
+          "NorthWest Copper — 280° az, -65° dip, 32m downhole = 25m true width (Kwanika K-25-266)",
+          "ATEX Resources — Phase VI discloses orientation in technical reports"
+        ]
+      },
+      {
+        "id": "drilling_program_type",
+        "name": "Drill Program Type (Exploration vs Resource)",
+        "category": "drilling",
+        "provenance": "EMPIRICAL",
+        "kind": "sub_rubric",
+        "subRubricRef": "drillProgramSubRubric",
+        "tiers": {
+          "exceptional": { "label": "Clear resource intent: 'infill', 'resource conversion', 'definition drilling', 'reserve definition'" },
+          "strong": { "label": "Inside resource shell, supports resource estimation, resource update" },
+          "moderate": { "label": "Extension drilling, deposit extension along strike/at depth — mixed feed" },
+          "weak": { "label": "Step-out drilling, target testing, new zone — predominantly exploration" },
+          "redFlag": { "label": "First-pass drilling, scout drilling, greenfield, new target — pure exploration" }
+        },
+        "whatDrivesTheBadge": "Per Reuben: 'each drill has to be classified as an exploration drill or a resource drill.' Binary (or ternary: Exploration / Resource / Mixed) classification applied to every drill release. SCORED VIA THE 58-SIGNAL RUBRIC IN THE 'Exploration vs Resource Scoring' SUB-SHEET — see link in column J.",
+        "caveatDepositTypeNuance": "Per Reuben: 'each drill has to be classified as an exploration drill or a resource drill.' Binary (or ternary: Exploration / Resource / Mixed) classification applied to every drill release. SCORED VIA THE 9 CATEGORY SUB-ROWS BELOW (10-18) and the full 58-signal rubric in the 'Exploration vs Resource Scoring' sub-sheet. Sum all matching signals per release; higher total wins.",
+        "sourceLinks": [
+          { "label": "🔗 LINKED RUBRIC: Exploration vs Resource Scoring sub-sheet (58 weighted signals across 9 categories: Program intent, Resource linkage, Geological context, Project stage, Drill spacing, Location context, Release language, Campaign composition, Data quality)" }
+        ],
+        "workbookAnchors": [
+          "WORKBOOK CURRENTLY SCORES via 'drill_exploration_vs_resource' metric (331 rows) using hole-count proxy:",
+          "Anfield Energy — 'Sparse drill count (7 holes)... exploration-phase' → 80",
+          "American Eagle — 'Sparse (5 holes)... exploration' → 80",
+          "Hercules Metals — 'Outlines Initial 2026 Drill Plan' → 80",
+          "UPGRADE PATH: replace hole-count with the 58-signal rubric."
+        ]
+      },
+      {
+        "id": "drilling_pb_grade",
+        "name": "Lead Grade (% Pb)",
+        "category": "drilling",
+        "commodity": "lead",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 33, "label": "≥33%" },
+          "strong": { "min": 16, "max": 33, "label": "16–33%" },
+          "moderate": { "min": 7, "max": 16, "label": "7–16%" },
+          "weak": { "min": 1.5, "max": 7, "label": "1.5–7%" },
+          "redFlag": { "max": 1.5, "label": "<1.5%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 126 lead rows — all from i-80 Gold polymetallic operations.",
+        "caveatDepositTypeNuance": "⚠ Single-company dataset (126 rows all from i-80 Gold at Ruby Hill / Granite Creek). Tiers reflect i-80's projects, not the broader Pb mining universe. Cross-check before applying to other Pb juniors.",
+        "sourceLinks": [
+          { "label": "Workbook empirical distribution (single-company)" },
+          { "label": "No external Pb benchmark reference in current matrix" }
+        ],
+        "workbookAnchors": [
+          "i-80 Gold — 28.3m @ 28.9% Pb, GT=818 (EX-99.1, 2023-01-25)",
+          "i-80 Gold — 27.4m @ 25.9% Pb, GT=710",
+          "i-80 Gold — 18.3m @ 33.0% Pb, GT=604",
+          "Sole company: i-80 Gold (IAUX). Need additional Pb-focused juniors."
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "pb_single_company_dataset",
+            "message": "All 126 Pb workbook rows are from i-80 Gold (Ruby Hill / Granite Creek). Tiers reflect a single project pair, not the broader Pb universe."
+          }
+        ]
+      },
+      {
+        "id": "drilling_zn_grade",
+        "name": "Zinc Grade (% Zn)",
+        "category": "drilling",
+        "commodity": "zinc",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 22.3, "label": "≥22.3%" },
+          "strong": { "min": 13.4, "max": 22.3, "label": "13.4–22.3%" },
+          "moderate": { "min": 6.3, "max": 13.4, "label": "6.3–13.4%" },
+          "weak": { "min": 1.2, "max": 6.3, "label": "1.2–6.3%" },
+          "redFlag": { "max": 1.2, "label": "<1.2%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 34 zinc rows. Mostly i-80 Gold polymetallic plus a few Orla rows.",
+        "caveatDepositTypeNuance": "Sample size is small (34 rows). Tiers are statistically valid but should be revisited as more Zn data enters. Same single-company caveat as Pb.",
+        "sourceLinks": [
+          { "label": "Workbook empirical distribution" },
+          { "label": "Small sample caveat" }
+        ],
+        "workbookAnchors": [
+          "i-80 Gold — 39.8m @ 12.3% Zn, GT=490 (2023-01-25)",
+          "i-80 Gold — 39.6m @ 12.3% Zn (2024-01-17)",
+          "Top by rows: i-80 Gold (25), Orla Mining (8 byproduct)."
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "zn_small_sample",
+            "message": "Only 34 Zn rows in the workbook, mostly i-80 Gold polymetallic. Treat tiers as provisional."
+          }
+        ]
+      },
+      {
+        "id": "drilling_u_grade",
+        "name": "Uranium Grade (% U₃O₈)",
+        "category": "drilling",
+        "commodity": "uranium",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "% U₃O₈",
+        "tiers": {
+          "exceptional": { "min": 13.9, "label": "≥13.9% (Top 5% — bonanza unconformity)" },
+          "strong": { "min": 6.0, "max": 13.9, "label": "6.0–13.9%" },
+          "moderate": { "min": 1.4, "max": 6.0, "label": "1.4–6.0%" },
+          "weak": { "min": 0.25, "max": 1.4, "label": "0.25–1.4%" },
+          "redFlag": { "max": 0.25, "label": "<0.25%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 39 uranium rows — dominated by Denison Mines' Athabasca Basin ultra-high-grade hits.",
+        "caveatDepositTypeNuance": "⚠ Athabasca grades (10%+ U₃O₈) are exceptional globally. Most world U projects sit at 0.05–0.5% and would tier as Red Flag here. Apply deposit-type adjustments rigorously — ISR and sandstone projects need different thresholds.",
+        "sourceLinks": [
+          { "label": "Workbook empirical (Athabasca-biased)" },
+          { "label": "WNA global grade benchmarks" }
+        ],
+        "workbookAnchors": [
+          "Denison Mines — 491m @ 20% U₃O₈, GT=9,820 (Wheeler River, 2023-03-27)",
+          "Denison — 545.8m @ 6.5%, GT=3,548",
+          "Denison — 478m @ 5.5%, GT=2,629",
+          "Top: Denison (34), Electrum (4), UEC (4)."
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "u_athabasca_bias",
+            "message": "Tiers anchored on Athabasca unconformity grades (10%+ U₃O₈). Apply ISR / sandstone deposit-type adjustments before scoring projects outside the Athabasca Basin."
+          }
+        ]
+      },
+      {
+        "id": "drilling_ni_grade",
+        "name": "Nickel Grade (% Ni)",
+        "category": "drilling",
+        "commodity": "nickel",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 5.0, "label": "≥5.0% (massive sulphide)" },
+          "strong": { "min": 2.5, "max": 5.0, "label": "2.5–5.0%" },
+          "moderate": { "min": 0.5, "max": 2.5, "label": "0.5–2.5%" },
+          "weak": { "min": 0.28, "max": 0.5, "label": "0.28–0.5%" },
+          "redFlag": { "max": 0.28, "label": "<0.28%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 14 nickel rows — SMALL SAMPLE, preliminary tiers.",
+        "caveatDepositTypeNuance": "⚠ Only 14 usable rows. Exceptional tier anchored on Talon Metals' 7.82% massive sulphide at Tamarack. Treat as preliminary until more data.",
+        "sourceLinks": [
+          { "label": "Workbook (preliminary)" },
+          { "label": "Talon Metals Tamarack anchor" }
+        ],
+        "workbookAnchors": [
+          "Talon Metals — 15.2m @ 7.82% Ni, GT=119 (Tamarack, Minnesota)",
+          "Nickel Springs — 20m @ 3.5% Ni, GT=70",
+          "Talon Metals — 19m @ 2.38% Ni, GT=45"
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "ni_small_sample",
+            "message": "Only 14 nickel rows. Tiers are preliminary; expand pipeline ingestion before relying on them."
+          }
+        ]
+      },
+      {
+        "id": "drilling_fe_grade",
+        "name": "Iron Grade (% Fe)",
+        "category": "drilling",
+        "commodity": "iron",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 51.9, "label": "≥51.9%" },
+          "strong": { "min": 50.1, "max": 51.9, "label": "50.1–51.9%" },
+          "moderate": { "min": 46, "max": 50.1, "label": "46–50.1%" },
+          "weak": { "min": 33.9, "max": 46, "label": "33.9–46%" },
+          "redFlag": { "max": 33.9, "label": "<33.9%" }
+        },
+        "whatDrivesTheBadge": "Empirically calibrated from 8 iron rows — VERY SMALL SAMPLE. Effectively single-project (Saga Metals).",
+        "caveatDepositTypeNuance": "⚠ 8 rows total, 6 from Saga Metals and 2 from Rio Tinto. Tiers are arithmetically valid but represent a tiny slice of global iron mining. DSO (direct shipping ore) typically 60%+ Fe — these tiers run lower.",
+        "sourceLinks": [
+          { "label": "Workbook (preliminary)" },
+          { "label": "Saga Metals single-project anchor" }
+        ],
+        "workbookAnchors": [
+          "Saga Metals — 90m @ 51.86% Fe, GT=4,668 (R-0018 to R-0020)",
+          "Saga Metals — 70.3m @ 42.64% Fe, GT=2,998",
+          "Saga Metals — 50.6m @ 52.05% Fe, GT=2,634"
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "fe_tiny_sample_single_project",
+            "message": "Only 8 Fe rows (6 from Saga Metals, 2 from Rio Tinto). Tiers reflect a single project. DSO typically 60%+ Fe — calibrate against the broader Fe universe before using these tiers in production."
+          }
+        ]
+      },
+      {
+        "id": "drilling_other_commodities",
+        "name": "Other Commodities (Tungsten / Cobalt / Antimony)",
+        "category": "drilling",
+        "commodity": "other",
+        "provenance": "EMPIRICAL",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Insufficient data" },
+          "strong": { "label": "Insufficient data" },
+          "moderate": { "label": "Insufficient data" },
+          "weak": { "label": "Insufficient data" },
+          "redFlag": { "label": "Insufficient data" }
+        },
+        "whatDrivesTheBadge": "These commodities have <5 workbook rows each and cannot be empirically tiered.",
+        "caveatDepositTypeNuance": "Workbook coverage: Tungsten 3 rows (American Tungsten only), Cobalt 2 rows (Denison byproduct), Antimony 1 row. Expand pipeline to ingest W/Co/Sb-focused explorers (Almonty Industries, Fortune Minerals, Perpetua Resources).",
+        "sourceLinks": [
+          { "label": "External industry benchmarks required until pipeline produces sufficient data" }
+        ],
+        "workbookAnchors": [
+          "No anchors available — sample too small. Targeted ingestion of 50+ rows per commodity needed."
+        ],
+        "dataQualityWarnings": [
+          {
+            "code": "wcosb_insufficient_data",
+            "message": "<5 workbook rows for W / Co / Sb. Cannot tier empirically. Return Unknown until ingestion expanded."
+          }
+        ]
+      },
+      {
+        "id": "drilling_interval_width",
+        "name": "Interval Width (m)",
+        "category": "drilling",
+        "provenance": "EMPIRICAL",
+        "kind": "numeric",
+        "unit": "m",
+        "tiers": {
+          "exceptional": { "min": 100, "label": "≥100m continuous intercept" },
+          "strong": { "min": 30, "max": 100, "label": "30–100m (Strong continuity)" },
+          "moderate": { "min": 10, "max": 30, "label": "10–30m (Moderate)" },
+          "weak": { "min": 2, "max": 10, "label": "2–10m (Narrow — typical vein systems)" },
+          "redFlag": { "max": 2, "label": "<2m (sub-economic OR isolated hit)" }
+        },
+        "whatDrivesTheBadge": "Width drives tonnage potential and mining method. Wide intercepts → open-pit; narrow → selective UG. Per Reuben's request: width as its own scoring axis.",
+        "caveatDepositTypeNuance": "Deposit-type dependent — 5m is narrow for a porphyry, normal for a vein. Cross-check with Deposit-Type Adjustments. Width alone insufficient — pair with grade.",
+        "sourceLinks": [
+          { "label": "Workbook empirical distribution by commodity" },
+          { "label": "See Empirical Calibration sheet for percentiles" }
+        ],
+        "workbookAnchors": [
+          "EMPIRICAL PERCENTILES:",
+          "Gold (9,764 rows): P50=5m, P75=15.5m, P90=35m, P95=54.5m",
+          "Copper (419): P50=16m, P75=53m, P90=156m, P95=294m",
+          "Silver (499): P50=9m, P75=45m, P90=114m",
+          "Top widths: PAAS 1,600m, Copper Giant 693m, American Eagle 618m, NGEx 335m."
+        ]
+      },
+      {
+        "id": "drilling_gt_product",
+        "name": "Grade × Width (GT Product)",
+        "category": "drilling",
+        "provenance": "EMPIRICAL",
+        "kind": "per_commodity_numeric",
+        "unit": "GT",
+        "perCommodityTiers": {
+          "gold": {
+            "exceptional": { "min": 425, "label": "Au ≥425 (Top 5%)" },
+            "strong": { "min": 215, "max": 425, "label": "Au 215–425" },
+            "moderate": { "min": 65, "max": 215, "label": "Au 65–215" },
+            "weak": { "min": 18, "max": 65, "label": "Au 18–65" },
+            "redFlag": { "max": 18, "label": "Au <18" }
+          },
+          "copper": {
+            "exceptional": { "min": 140, "label": "Cu ≥140 (Top 5%)" },
+            "strong": { "min": 100, "max": 140, "label": "Cu 100–140" },
+            "moderate": { "min": 40, "max": 100, "label": "Cu 40–100" },
+            "weak": { "min": 14, "max": 40, "label": "Cu 14–40" },
+            "redFlag": { "max": 14, "label": "Cu <14" }
+          },
+          "silver": {
+            "exceptional": { "min": 10500, "label": "Ag ≥10,500 (Top 5%)" },
+            "strong": { "min": 5250, "max": 10500, "label": "Ag 5,250–10,500" },
+            "moderate": { "min": 1650, "max": 5250, "label": "Ag 1,650–5,250" },
+            "weak": { "min": 200, "max": 1650, "label": "Ag 200–1,650" },
+            "redFlag": { "max": 200, "label": "Ag <200" }
+          },
+          "lead": {
+            "exceptional": { "min": 600, "label": "Pb ≥600 (Top 5%)" },
+            "strong": { "min": 155, "max": 600, "label": "Pb 155–600" },
+            "moderate": { "min": 40, "max": 155, "label": "Pb 40–155" },
+            "weak": { "min": 15, "max": 40, "label": "Pb 15–40" },
+            "redFlag": { "max": 15, "label": "Pb <15" }
+          },
+          "zinc": {
+            "exceptional": { "min": 485, "label": "Zn ≥485 (Top 5%)" },
+            "strong": { "min": 130, "max": 485, "label": "Zn 130–485" },
+            "moderate": { "min": 35, "max": 130, "label": "Zn 35–130" },
+            "weak": { "min": 25, "max": 35, "label": "Zn 25–35" },
+            "redFlag": { "max": 25, "label": "Zn <25" }
+          },
+          "uranium": {
+            "exceptional": { "min": 2700, "label": "U ≥2,700 (Top 5%)" },
+            "strong": { "min": 160, "max": 2700, "label": "U 160–2,700" },
+            "moderate": { "min": 25, "max": 160, "label": "U 25–160" },
+            "weak": { "min": 5, "max": 25, "label": "U 5–25" },
+            "redFlag": { "max": 5, "label": "U <5" }
+          }
+        },
+        "whatDrivesTheBadge": "Per Reuben: 'quality matrix like quality to grade into width.' GT product is a single normalized metric capturing both high-grade-narrow and low-grade-bulk on the same scale. Tiers are PURE empirical breakpoints — top 5/25/50/75% of each commodity's workbook distribution.",
+        "caveatDepositTypeNuance": "GT alone can't distinguish 1m @ 100 g/t from 100m @ 1 g/t — both are GT=100. Use GT alongside separate grade and width signals. Apply deposit-type adjustments.",
+        "sourceLinks": [
+          { "label": "Workbook empirical distribution — all commodities" },
+          { "label": "Per-commodity percentile breakpoints" }
+        ],
+        "workbookAnchors": [
+          "TOP-GT ANCHORS:",
+          "Au: PAAS 1,600m @ 4.0 g/t → GT=6,400",
+          "Cu: NGEX 335m @ 2.25% → GT=754",
+          "Ag: PAAS 332m @ 144 g/t → GT=47,866",
+          "Pb: i-80 28.3m @ 28.9% → GT=818",
+          "Zn: i-80 39.8m @ 12.3% → GT=490",
+          "U: Denison 491m @ 20% → GT=9,820",
+          "Fe: Saga 90m @ 51.86% → GT=4,668",
+          "Ni: Talon 15.2m @ 7.82% → GT=119"
+        ]
+      }
+    ]
+  },
+  "resources": {
+    "name": "Resource Estimates",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Thresholds sourced from CIM Definition Standards (NI 43-101), industry convention on M&I splits, and 'world class' benchmarks. NOT empirically calibrated against a dataset of actual resource statements. To validate: build a database of NI 43-101 technical reports with tonnage/grade/classification splits across a representative set of projects and compute real percentile breakpoints.",
+    "signals": [
+      {
+        "id": "resources_confidence_mix",
+        "name": "Resource Confidence (Category Mix)",
+        "category": "resources",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "% M&I",
+        "tiers": {
+          "exceptional": { "min": 75, "label": "≥75% Measured + Indicated (M&I)" },
+          "strong": { "min": 50, "max": 75, "label": "50–75% M&I" },
+          "moderate": { "min": 25, "max": 50, "label": "25–50% M&I" },
+          "weak": { "min": 0, "max": 25, "label": "<25% M&I (mostly Inferred)" },
+          "redFlag": { "label": "No formal resource / Historical estimate only" }
+        },
+        "whatDrivesTheBadge": "M&I can underpin PFS/DFS and convert to reserves. Inferred cannot be included in PFS/DFS economics.",
+        "caveatDepositTypeNuance": "Per NI 43-101: Inferred resources are too speculative for mine planning. JORC is slightly more permissive. A maiden resource that is mostly Inferred still has value as a first step.",
+        "sourceLinks": [
+          { "label": "CIM Definition Standards (NI 43-101 resource categories)", "url": "https://mrmr.cim.org/media/1128/cim-definition-standards_2014.pdf" },
+          { "label": "Wikipedia — NI 43-101 overview (M&I vs Inferred)", "url": "https://en.wikipedia.org/wiki/National_Instrument_43-101" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "resources_tonnage_change",
+        "name": "Tonnage Change vs Prior MRE",
+        "category": "resources",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 30, "label": "≥+30% tonnage increase" },
+          "strong": { "label": "+15% to +30% tonnage increase" },
+          "moderate": { "label": "+5% to +15% tonnage increase" },
+          "weak": { "min": 0, "max": 5, "label": "0% to +5% (marginal)" },
+          "redFlag": { "max": 0, "label": "Decrease from prior estimate" }
+        },
+        "whatDrivesTheBadge": "Tonnage growth shows the deposit is getting bigger. >15% is \"significant\" per market convention.",
+        "caveatDepositTypeNuance": "Tonnage can grow by lowering cut-off grade (adds tonnes but dilutes grade). Always check if grade held or improved alongside tonnage growth.",
+        "sourceLinks": [
+          { "label": "Proactive Investors — Mining 101: Resources, Reserves, JORC & NI 43-101", "url": "https://www.proactiveinvestors.co.uk/companies/news/1032074/mining-101-inferred-and-indicated-resources-reserves-jorc-ni-43-101-1032074.html" },
+          { "label": "Brunswick Exploration — Maiden MRE example (52.2 Mt @ 1.08% Li₂O)", "url": "https://www.juniorminingnetwork.com/junior-miner-news/press-releases/1216-tsx-venture/brw/198360-brunswick-exploration-files-maiden-mineral-resource-estimate-ni-43-101-technical-report-for-mirage-project.html" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "resources_grade_change",
+        "name": "Grade Change vs Prior MRE",
+        "category": "resources",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 5, "label": "≥+5% grade uplift (very rare)" },
+          "strong": { "label": "+2% to +5% grade uplift" },
+          "moderate": { "min": -2, "max": 2, "label": "Grade maintained (±2%)" },
+          "weak": { "min": -5, "max": -2, "label": "Grade declined 2–5%" },
+          "redFlag": { "max": -5, "label": "Grade declined >5%" }
+        },
+        "whatDrivesTheBadge": "Grade uplift is rare and highly valued by the market. It means the deposit is richer than previously thought.",
+        "caveatDepositTypeNuance": "Grade changes can be driven by: new high-grade zones included, different cut-off applied, or improved geological model. Always compare like-for-like cut-off grades.",
+        "sourceLinks": [
+          { "label": "Apollo Silver — Updated MRE example (61% tonnage increase, 14% Ag oz increase)", "url": "https://apollosilver.com/apollo-files-ni-43-101-technical-report-for-the-calico-silver-project-updated-mineral-resource-estimate/" },
+          { "label": "CIM Definition Standards — Resource classification", "url": "https://mrmr.cim.org/media/1128/cim-definition-standards_2014.pdf" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "resources_contained_metal",
+        "name": "Contained Metal Scale",
+        "category": "resources",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "per_commodity_numeric",
+        "perCommodityTiers": {
+          "gold": {
+            "exceptional": { "min": 5000000, "label": "Au ≥5 Moz" },
+            "strong": { "min": 2000000, "max": 5000000, "label": "Au 2–5 Moz" },
+            "moderate": { "min": 1000000, "max": 2000000, "label": "Au 1–2 Moz" },
+            "weak": { "min": 500000, "max": 1000000, "label": "Au 0.5–1 Moz" },
+            "redFlag": { "max": 500000, "label": "Au <0.5 Moz" }
+          },
+          "copper": {
+            "exceptional": { "min": 5000000, "label": "Cu ≥5 Mt" },
+            "strong": { "min": 2000000, "max": 5000000, "label": "Cu 2–5 Mt" },
+            "moderate": { "min": 500000, "max": 2000000, "label": "Cu 0.5–2 Mt" },
+            "weak": { "min": 200000, "max": 500000, "label": "Cu 0.2–0.5 Mt" },
+            "redFlag": { "max": 200000, "label": "Cu <0.2 Mt" }
+          },
+          "silver": {
+            "exceptional": { "min": 300000000, "label": "Ag ≥300 Moz" },
+            "strong": { "min": 100000000, "max": 300000000, "label": "Ag 100–300 Moz" },
+            "moderate": { "min": 50000000, "max": 100000000, "label": "Ag 50–100 Moz" }
+          },
+          "lithium_lce": {
+            "exceptional": { "min": 1000000, "label": "Li ≥1 Mt LCE" }
+          }
+        },
+        "whatDrivesTheBadge": "Absolute contained metal determines whether the deposit justifies the capex to build a mine.",
+        "caveatDepositTypeNuance": "'World class' thresholds vary: Singer defines world-class gold at ≥3.2 Moz, copper at ≥2 Mt, silver at ≥77 Moz. Smaller deposits can still be economic if high-grade and well-located.",
+        "sourceLinks": [
+          { "label": "INN — World-class gold deposit: ≥3.2 Moz (Singer definition)", "url": "https://investingnews.com/daily/resource-investing/precious-metals-investing/gold-investing/what-makes-a-world-class-gold-deposit/" },
+          { "label": "INN — World-class silver deposit: ≥77 Moz (Singer definition)", "url": "https://investingnews.com/daily/resource-investing/precious-metals-investing/silver-investing/what-makes-a-world-class-silver-deposit/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "resources_cutoff_consistency",
+        "name": "Cut-off / Reporting Consistency",
+        "category": "resources",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Like-for-like update with transparent cut-off and assumptions" },
+          "strong": { "label": "Cut-off disclosed and broadly comparable" },
+          "moderate": { "label": "Cut-off changed but impact explained" },
+          "weak": { "label": "Cut-off changed with limited explanation" },
+          "redFlag": { "label": "Opaque reporting / not comparable to prior MRE" }
+        },
+        "whatDrivesTheBadge": "Resource growth or grade change is hard to trust if cut-off, density or metal price assumptions shift materially.",
+        "caveatDepositTypeNuance": "Always compare the old and new cut-off grade, density assumptions and metal prices before interpreting resource growth.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "metallurgy": {
+    "name": "Metallurgical Results",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Recovery thresholds from 911 Metallurgist, AusIMM test scale guidance, and Canada Nickel recovery improvement examples. NOT empirically calibrated against a dataset of actual metallurgical test results. To validate: build a database of PEA/PFS/DFS reports with recovery rates, test scales, and ore complexity assessments across multiple commodity types.",
+    "signals": [
+      {
+        "id": "met_primary_recovery",
+        "name": "Primary Recovery Rate",
+        "category": "metallurgy",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "per_commodity_numeric",
+        "unit": "%",
+        "perCommodityTiers": {
+          "gold": {
+            "exceptional": { "min": 95, "label": "Au ≥95%" },
+            "strong": { "min": 90, "max": 95, "label": "Au 90–95%" },
+            "moderate": { "min": 85, "max": 90, "label": "Au 85–90%" },
+            "weak": { "min": 80, "max": 85, "label": "Au 80–85%" },
+            "redFlag": { "max": 80, "label": "Au <80%" }
+          },
+          "copper": {
+            "exceptional": { "min": 90, "label": "Cu ≥90%" },
+            "strong": { "min": 85, "max": 90, "label": "Cu 85–90%" },
+            "moderate": { "min": 80, "max": 85, "label": "Cu 80–85%" },
+            "weak": { "min": 75, "max": 80, "label": "Cu 75–80%" },
+            "redFlag": { "max": 75, "label": "Cu <75%" }
+          },
+          "lithium": {
+            "exceptional": { "min": 80, "label": "Li ≥80%" },
+            "strong": { "min": 75, "max": 80, "label": "Li 75–80%" },
+            "moderate": { "min": 70, "max": 75, "label": "Li 70–75%" },
+            "weak": { "min": 65, "max": 70, "label": "Li 65–70%" },
+            "redFlag": { "max": 65, "label": "Li <65%" }
+          },
+          "silver": {
+            "exceptional": { "min": 90, "label": "Ag ≥90%" }
+          }
+        },
+        "whatDrivesTheBadge": "Recovery directly impacts revenue. Each 1pp of recovery ≈ 1% of project NPV for most deposits.",
+        "caveatDepositTypeNuance": "Sel's point: recovery is highly project-specific. A tertiary crusher took one project from ~45% to >75%. Process route optimization can dramatically shift results.",
+        "sourceLinks": [
+          { "label": "911 Metallurgist — Recovery formulas and accounting", "url": "https://www.911metallurgist.com/blog/metallurgical-accounting-formulas/" },
+          { "label": "Umbrex — Grade quality and metallurgical recovery analysis", "url": "https://umbrex.com/resources/industry-analyses/how-to-analyze-a-metals-mining-company/grade-quality-and-metallurgical-recovery-analysis/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "met_recovery_improvement",
+        "name": "Recovery Improvement vs Prior Test",
+        "category": "metallurgy",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "percentage points",
+        "tiers": {
+          "exceptional": { "min": 15, "label": "≥+15pp improvement" },
+          "strong": { "label": "+10pp to +15pp improvement" },
+          "moderate": { "label": "+5pp to +10pp improvement" },
+          "weak": { "label": "+0pp to +5pp improvement" },
+          "redFlag": { "max": 0, "label": "No improvement or decline" }
+        },
+        "whatDrivesTheBadge": "Improvement signals the processing team has found a better route. >10pp is a \"met breakthrough.\"",
+        "caveatDepositTypeNuance": "Improvement source matters: pilot-scale > bench-scale. Also check if improvement came from changing ore type (oxide vs sulphide) or actual process optimization.",
+        "sourceLinks": [
+          { "label": "Canada Nickel — Recovery improvement example (46%→52%)", "url": "https://www.mining.com/canada-nickel-reports-high-grade-concentrate-from-crawford-testing/" },
+          { "label": "Process Mineralogy Today — Theoretical grade-recovery curve", "url": "https://www.linkedin.com/pulse/what-theoretical-grade-recovery-curve-will-goodall" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "met_test_scale",
+        "name": "Test Scale & Reliability",
+        "category": "metallurgy",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Pilot plant (continuous, ≥100t) or Demo plant" },
+          "strong": { "label": "Locked-cycle test (bench-scale, multiple cycles)" },
+          "moderate": { "label": "Batch flotation or column leach test" },
+          "weak": { "label": "Bottle roll or simple leach test" },
+          "redFlag": { "label": "No testwork / Assay-only estimate" }
+        },
+        "whatDrivesTheBadge": "Higher scale = higher confidence that results will replicate at full plant.",
+        "caveatDepositTypeNuance": "Locked-cycle tests are the minimum for PFS economics. Pilot plant results are preferred for DFS. Batch tests are indicative only.",
+        "sourceLinks": [
+          { "label": "AusIMM — Metallurgical testing methods (bench→pilot→demo)", "url": "https://www.ausimm.com/globalassets/insights-and-resources/minerals-processing-toolbox/met_test_methods.pdf" },
+          { "label": "911 Metallurgist — Common processing calculations", "url": "https://www.911metallurgist.com/blog/milling-calculations-formulas/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "met_ore_complexity",
+        "name": "Ore Complexity / Penalty Risk",
+        "category": "metallurgy",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Free-milling, clean concentrate, no penalties" },
+          "strong": { "label": "Minor penalties (low As/Sb/F, manageable)" },
+          "moderate": { "label": "Moderate complexity (refractory, blending needed)" },
+          "weak": { "label": "High penalty elements (As >0.5%, Sb >0.1%)" },
+          "redFlag": { "label": "Refractory + high penalty + no viable process route" }
+        },
+        "whatDrivesTheBadge": "Deleterious elements (As, Sb, F, Mn, Bi) attract smelter penalties or require special processing.",
+        "caveatDepositTypeNuance": "Refractory gold has evolved (HPGR, tertiary crushing, bio-oxidation) per Sel's feedback. \"Refractory\" is no longer a death sentence but still adds $30–50/t to processing cost.",
+        "sourceLinks": [
+          { "label": "ScienceDirect — Concentrate grade vs recovery trade-off", "url": "https://www.sciencedirect.com/topics/engineering/concentrate-grade" },
+          { "label": "Mining.com — Canada Nickel concentrate grades & penalties", "url": "https://www.mining.com/canada-nickel-reports-high-grade-concentrate-from-crawford-testing/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "met_variability_coverage",
+        "name": "Variability Coverage by Ore Domain",
+        "category": "metallurgy",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Multiple domains tested; variability understood and design basis robust" },
+          "strong": { "label": "Most major ore domains tested" },
+          "moderate": { "label": "Key domains tested but gaps remain" },
+          "weak": { "label": "Single composite or limited samples only" },
+          "redFlag": { "label": "No domain variability work" }
+        },
+        "whatDrivesTheBadge": "Metallurgy often fails at scale because one composite sample was treated as representative of the full orebody.",
+        "caveatDepositTypeNuance": "Domains should reflect oxide / transition / fresh, high-Mg zones, clay-rich zones or penalty-element domains where relevant.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "economicStudies": {
+    "name": "Economic Studies",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. IRR / NPV / Payback / AISC thresholds from Junior Mining Network, Cassels study accuracy ranges, Deep Value Signals junior mining rules, and Rupert Resources PFS AISC benchmarks. NOT empirically calibrated against a dataset of actual feasibility study outputs. To validate: build a database of PEA/PFS/DFS filings with their reported economics and compute real breakpoints.",
+    "signals": [
+      {
+        "id": "econ_study_confidence",
+        "name": "Study Confidence Level",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "DFS/BFS (±10–15% accuracy)" },
+          "strong": { "label": "PFS (±20–25%)" },
+          "moderate": { "label": "PEA (±30–40%)" },
+          "weak": { "label": "Scoping study (±40–50%)" },
+          "redFlag": { "label": "No study / Back-of-envelope only" }
+        },
+        "whatDrivesTheBadge": "DFS = bankable, can underwrite project finance. PFS = directional. PEA = conceptual, includes Inferred resources.",
+        "caveatDepositTypeNuance": "PEA economics that include Inferred resources are speculative per NI 43-101. The cautionary language is mandatory. A PEA should never be treated as a PFS.",
+        "sourceLinks": [
+          { "label": "Cassels — NI 43-101: PEA vs PFS vs FS economic analysis", "url": "https://cassels.com/insights/national-instrument-43-101-what-issues-need-to-know-about-the-economic-analysis-of-a-mineral-project/" },
+          { "label": "Next Investors — Feasibility studies explained (PEA ±35%, PFS ±25%, DFS ±15%)", "url": "https://nextinvestors.com/learn-to-invest/mining/feasibility-studies-explained-evaluating-project-viability/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "econ_irr_post_tax",
+        "name": "IRR (Post-Tax)",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "%",
+        "tiers": {
+          "exceptional": { "min": 50, "label": "≥50% (exceptional)" },
+          "strong": { "min": 25, "max": 50, "label": "25–50% (compelling)" },
+          "moderate": { "min": 15, "max": 25, "label": "15–25% (viable)" },
+          "weak": { "min": 10, "max": 15, "label": "10–15% (marginal)" },
+          "redFlag": { "max": 10, "label": "<10% (sub-economic at risk-adjusted rates)" }
+        },
+        "whatDrivesTheBadge": "IRR must exceed the hurdle rate for the jurisdiction. Stable jurisdictions: 15%. High-risk: 25–30%.",
+        "caveatDepositTypeNuance": "IRR is highly sensitive to commodity price assumption. Always check the base case price vs current spot. A \"50% IRR\" at $3,000/oz gold is less impressive than 25% at $1,800/oz.",
+        "sourceLinks": [
+          { "label": "Junior Mining Network — PEA/PFS/DFS results with IRR examples", "url": "https://www.juniorminingnetwork.com/mining-topics/topic/feasibility-study.html" },
+          { "label": "Deep Value Signals — Junior Mining 101 (NPV, IRR, AISC explained)", "url": "https://deepvaluesignals.substack.com/p/junior-mining-101-a-quick-primer" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "econ_npv_market_cap_ratio",
+        "name": "NPV vs Market Cap Ratio",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "x",
+        "tiers": {
+          "exceptional": { "min": 3.0, "label": "≥3.0× (deep value)" },
+          "strong": { "min": 1.5, "max": 3.0, "label": "1.5–3.0× (undervalued)" },
+          "moderate": { "min": 1.0, "max": 1.5, "label": "1.0–1.5× (fairly valued)" },
+          "weak": { "min": 0.5, "max": 1.0, "label": "0.5–1.0× (fully priced)" },
+          "redFlag": { "max": 0.5, "label": "<0.5× (overvalued vs study)" }
+        },
+        "whatDrivesTheBadge": "Shows how much of the project's value the market has priced in. >1× means upside remains.",
+        "caveatDepositTypeNuance": "Compare at base case price, not spot. Also check if NPV includes Inferred resources (PEA) vs M&I only (PFS/DFS).",
+        "sourceLinks": [
+          { "label": "Deep Value Signals — Junior Mining 101 (EV/NPV discounts)", "url": "https://deepvaluesignals.substack.com/p/junior-mining-101-a-quick-primer" },
+          { "label": "Rupert Resources PFS — NPV example ($1.7B, IRR 38%)", "url": "https://rupertresources.com/preliminary-economic-assessment/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "econ_payback_period",
+        "name": "Payback Period",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "years",
+        "tiers": {
+          "exceptional": { "max": 2, "label": "<2 years" },
+          "strong": { "min": 2, "max": 3, "label": "2–3 years" },
+          "moderate": { "min": 3, "max": 5, "label": "3–5 years" },
+          "weak": { "min": 5, "max": 7, "label": "5–7 years" },
+          "redFlag": { "min": 7, "label": ">7 years" }
+        },
+        "tierDirection": "lower_is_better",
+        "whatDrivesTheBadge": "Shorter payback = faster capital return = lower financing risk.",
+        "caveatDepositTypeNuance": "Payback is a simple (non-discounted) metric. Should be used alongside NPV/IRR, not in isolation.",
+        "sourceLinks": [
+          { "label": "Next Investors — Feasibility studies: payback explained", "url": "https://nextinvestors.com/learn-to-invest/mining/feasibility-studies-explained-evaluating-project-viability/" },
+          { "label": "First Mining — Springpole PFS: 1.8yr payback example", "url": "https://www.stocktitan.net/news/FFMGF/first-mining-files-pre-feasibility-study-technical-report-for-the-cbo10cn2zz5v.html" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "econ_price_assumption_conservatism",
+        "name": "Price Assumption Conservatism",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Base case below or near long-term consensus / spot-adjusted conservative" },
+          "strong": { "label": "Reasonable assumptions within market consensus" },
+          "moderate": { "label": "Somewhat optimistic but defendable" },
+          "weak": { "label": "Aggressive pricing required to make study work" },
+          "redFlag": { "label": "Study only works on stretched price deck" }
+        },
+        "whatDrivesTheBadge": "A strong study should still look investable under conservative pricing assumptions.",
+        "caveatDepositTypeNuance": "Always compare study assumptions to current spot, consensus and long-term decks. High IRR at unrealistic prices is a red flag.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      },
+      {
+        "id": "econ_aisc_cost_curve",
+        "name": "AISC Position on Global Cost Curve",
+        "category": "economicStudies",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Bottom decile" },
+          "strong": { "label": "Bottom quartile" },
+          "moderate": { "label": "2nd quartile" },
+          "weak": { "label": "3rd quartile" },
+          "redFlag": { "label": "Top quartile (highest cost)" }
+        },
+        "whatDrivesTheBadge": "Lower cost = survives commodity price downturns. Bottom quartile producers rarely shut down.",
+        "caveatDepositTypeNuance": "AISC definition varies between companies. Always check what's included (sustaining capex, royalties, G&A). Some exclude corporate G&A.",
+        "sourceLinks": [
+          { "label": "Rupert Resources PFS — AISC $759/oz (lowest quartile example)", "url": "https://rupertresources.com/preliminary-economic-assessment/" },
+          { "label": "Atlantic Lithium Ewoyaa DFS — AISC $610/t SC6", "url": "https://www.atlanticlithium.com.au/projects-ghana" }
+        ],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "permitting": {
+    "name": "Permitting",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Permit progress and social licence tiers from Client Earth (Ghana EIA/mining licence framework) and Gordon Foundation IBA Community Tool. NOT empirically calibrated against a dataset of actual permit timelines. To validate: build a database of mining project permit histories across the 8 Minestarters jurisdictions with timelines and outcomes.",
+    "signals": [
+      {
+        "id": "permit_progress",
+        "name": "Permit Progress",
+        "category": "permitting",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "All key permits granted (EIA + Mining Licence)" },
+          "strong": { "label": "EIA approved, Mining Licence in progress" },
+          "moderate": { "label": "EIA submitted, under review" },
+          "weak": { "label": "Early-stage consultation, no submissions" },
+          "redFlag": { "label": "Permit refused or under legal challenge" }
+        },
+        "whatDrivesTheBadge": "Permits are binary risk events. EIA + Mining Licence together unlock the construction decision.",
+        "caveatDepositTypeNuance": "Timelines are jurisdiction-specific. Ghana EPA: 6–12 months. Canada CEAA: 2–5 years. Australia: varies by state. Don't compare across jurisdictions.",
+        "sourceLinks": [
+          { "label": "Client Earth — Ghana mining licence/EPA permit process", "url": "https://www.clientearth.org/media/gzuf1ykj/ghana-mining-briefing-1.pdf" },
+          { "label": "Atlantic Lithium — Ewoyaa permit milestones (Mining Lease → EPA → Mine Operating Permit)", "url": "https://www.investegate.co.uk/announcement/rns/atlantic-lithium-limited-npv-di---all/parliamentary-ratification-of-ewoyaa-mining-lease/9483510" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "permit_community_social_licence",
+        "name": "Community & Social Licence",
+        "category": "permitting",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "Broad community support + benefit agreement signed" },
+          "strong": { "label": "Community engagement advanced, no opposition" },
+          "moderate": { "label": "Consultation ongoing, some concerns" },
+          "weak": { "label": "Active community opposition" },
+          "redFlag": { "label": "Legal injunction or blockade in place" }
+        },
+        "whatDrivesTheBadge": "Social licence can halt a permitted project. IBA (Impact Benefit Agreement) with indigenous groups is critical in Canada/Australia.",
+        "caveatDepositTypeNuance": "Social risk is often underpriced by the market until it causes a delay. A granted permit with community opposition is less valuable than it appears.",
+        "sourceLinks": [
+          { "label": "Gordon Foundation — IBA Community Toolkit", "url": "https://gordonfoundation.ca/initiatives/iba-toolkit/" },
+          { "label": "Cassels — IBAs in mining: role of government", "url": "https://cassels.com/insights/finding-a-role-for-government-in-indigenous-benefit-agreement-negotiations-for-mining-projects/" }
+        ],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "offtake": {
+    "name": "Offtake / Partnerships",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Offtake strength and partner quality tiers from MiningWorld offtake analysis and PPX Mining / Glencore strategic investment example. NOT empirically calibrated against a dataset of actual offtake agreements. To validate: build a database of executed offtake agreements with binding status, pricing mechanism, volume coverage, and counterparty tier classification.",
+    "signals": [
+      {
+        "id": "offtake_strength",
+        "name": "Offtake Strength",
+        "category": "offtake",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Binding LOM offtake with Tier-1 + prepayment" },
+          "strong": { "label": "Binding offtake covering ≥50% of output" },
+          "moderate": { "label": "MOU with Tier-1 covering ≥30%" },
+          "weak": { "label": "MOU with Tier-2/3 or <30% covered" },
+          "redFlag": { "label": "No offtake or market unclear" }
+        },
+        "whatDrivesTheBadge": "Binding agreements underwrite project finance. MOUs are non-binding but signal demand.",
+        "caveatDepositTypeNuance": "Binding vs MOU is the critical distinction. An MOU with a Tier-1 is less valuable than a binding deal with a Tier-2.",
+        "sourceLinks": [
+          { "label": "MiningWorld — Offtake agreements and why they unlock financing", "url": "https://miningworld.com/offtake-agreements-and-why-they-unlock-financing/" },
+          { "label": "Mining Doc — What are offtake agreements in mining", "url": "https://www.miningdoc.tech/question/what-are-offtake-agreements-in-mining/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "offtake_binding_nature",
+        "name": "Binding Nature / Commercial Depth",
+        "category": "offtake",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Binding deal + pricing / take-or-pay / financing linkage" },
+          "strong": { "label": "Binding offtake with clear commercial terms" },
+          "moderate": { "label": "Advanced MOU / term sheet with credible counterparty" },
+          "weak": { "label": "Headline MOU with limited detail" },
+          "redFlag": { "label": "Non-binding announcement with no commercial substance" }
+        },
+        "whatDrivesTheBadge": "Markets often overreact to MOUs; true value comes from enforceability and financing relevance.",
+        "caveatDepositTypeNuance": "Look for prepayments, equity, minimum offtake volumes, pricing formula, impurities and termination clauses.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      },
+      {
+        "id": "offtake_strategic_partner_quality",
+        "name": "Strategic Partner Quality",
+        "category": "offtake",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "tiers": {
+          "exceptional": { "label": "Top-5 global player + equity stake at premium" },
+          "strong": { "label": "Top-5 global player (offtake only)" },
+          "moderate": { "label": "Regional major or mid-tier partner" },
+          "weak": { "label": "Small/unknown counterparty" },
+          "redFlag": { "label": "No strategic partner" }
+        },
+        "whatDrivesTheBadge": "A Tier-1 partner (Glencore, Trafigura, Toyota Tsusho, etc.) validates the project to other investors and lenders.",
+        "caveatDepositTypeNuance": "Equity component at a premium is the strongest signal (partner believes in upside). Prepayment is second-best (partner commits capital).",
+        "sourceLinks": [
+          { "label": "PPX Mining / Glencore — Strategic investment + offtake example", "url": "https://finance.yahoo.com/news/ppx-mining-closes-strategic-investment-153000451.html" },
+          { "label": "NMG/Panasonic — Binding offtake with Tier-1 example (13,000 tpa)", "url": "https://www.sec.gov/Archives/edgar/data/0001649752/000110465925110682/tm2530895d1_ex99-4.htm" }
+        ],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "capitalRaises": {
+    "name": "Capital Raises",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Financing signal and dilution thresholds from Deep Value Signals junior mining rules. NOT empirically calibrated against a dataset of actual capital raises. To validate: build a database of junior mining raises with discount vs market, dilution percentage, and subsequent share price performance.",
+    "signals": [
+      {
+        "id": "cap_financing_signal",
+        "name": "Financing Signal",
+        "category": "capitalRaises",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "Strategic investment at premium + offtake" },
+          "strong": { "label": "Bought deal at ≤5% discount" },
+          "moderate": { "label": "Bought deal at 5–10% discount" },
+          "weak": { "label": "Best-efforts placement at >10% discount" },
+          "redFlag": { "label": "Failed raise or repeated dilution" }
+        },
+        "whatDrivesTheBadge": "How capital is raised signals market demand for the stock. Premium = strong demand. Deep discount = weak.",
+        "caveatDepositTypeNuance": "Dilution context matters: a 10% dilution that fully funds to production is better than a 3% raise that only covers 6 months of G&A.",
+        "sourceLinks": [
+          { "label": "Deep Value Signals — Junior Mining 101 (dilution, financing)", "url": "https://deepvaluesignals.substack.com/p/junior-mining-101-a-quick-primer" },
+          { "label": "Arizona Sonoran Copper PFS — NPV/IRR/Capex metrics", "url": "https://www.juniorminingnetwork.com/junior-miner-news/press-releases/3059-tsx/ascu/191740-arizona-sonoran-cactus-project-pfs-technical-report-reporting-post-tax-npv8-of-us-2-30-billion-and-irr-of-22-8-is-now-filed.html" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "cap_runway",
+        "name": "Runway to Next Value Milestone",
+        "category": "capitalRaises",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "Fully funded to next major value event + contingency" },
+          "strong": { "label": "Funded to major milestone" },
+          "moderate": { "label": "Funded to interim work program only" },
+          "weak": { "label": "<9 months cash runway" },
+          "redFlag": { "label": "<6 months runway / urgent raise needed" }
+        },
+        "whatDrivesTheBadge": "Funding quality matters less if the raise does not actually get the project to a material rerating event.",
+        "caveatDepositTypeNuance": "A small, low-dilution raise can still be weak if it only funds G&A. Investors care about funded pathway to drill, resource, PEA, permit or construction decision.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      },
+      {
+        "id": "cap_dilution_impact",
+        "name": "Dilution Impact",
+        "category": "capitalRaises",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "%",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "max": 5, "label": "<5% dilution + fully funds to milestone" },
+          "strong": { "min": 5, "max": 10, "label": "5–10% dilution + funds to milestone" },
+          "moderate": { "min": 10, "max": 20, "label": "10–20% dilution" },
+          "weak": { "min": 20, "max": 30, "label": "20–30% dilution" },
+          "redFlag": { "min": 30, "label": ">30% dilution or serial raises" }
+        },
+        "tierDirection": "lower_is_better",
+        "whatDrivesTheBadge": "Dilution erodes existing shareholder value. \"Fully funded to next milestone\" is the key test.",
+        "caveatDepositTypeNuance": "Calculate on a fully-diluted basis (include warrants, options, convertibles). Published shares outstanding often understates true dilution.",
+        "sourceLinks": [
+          { "label": "Deep Value Signals — Junior Mining 101 (dilution mechanics)", "url": "https://deepvaluesignals.substack.com/p/junior-mining-101-a-quick-primer" },
+          { "label": "Crux Investor — Analyst's Notes: drill results interpretation", "url": "https://www.cruxinvestor.com/posts/analysts-notes-week-4" }
+        ],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "construction": {
+    "name": "Construction / Production",
+    "provenanceDefault": "PUBLISHED_REFERENCE_ONLY",
+    "provenanceNote": "PUBLISHED REFERENCE ONLY. Ramp-up performance, grade reconciliation, schedule, and capex overrun thresholds from Snowden Optiro technical due diligence and AMC Consultants DD guidance. NOT empirically calibrated against a dataset of actual mining project construction outcomes. To validate: build a database of recent mine builds with their DFS predictions vs actual performance.",
+    "signals": [
+      {
+        "id": "construction_rampup_performance",
+        "name": "Ramp-Up Performance",
+        "category": "construction",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "≥90% of nameplate by Month 6" },
+          "strong": { "label": "80–90% by Month 6" },
+          "moderate": { "label": "70–80% by Month 9" },
+          "weak": { "label": "60–70% by Month 12" },
+          "redFlag": { "label": "<60% after 12 months (troubled ramp)" }
+        },
+        "whatDrivesTheBadge": "Ramp-up speed shows execution capability. Faster = earlier cash flow.",
+        "caveatDepositTypeNuance": "Ramp-up is where most juniors stumble. The \"valley of death\" between first ore and commercial production is the highest-risk period.",
+        "sourceLinks": [
+          { "label": "Snowden Optiro — Technical due diligence for mining acquisitions", "url": "https://snowdenoptiro.com/buyer-beware-the-need-for-technical-due-diligence-when-evaluating-mining-asset-acquisition/" },
+          { "label": "AMC Consultants — Technical due diligence for mining", "url": "https://www.amcconsultants.com/experience/technical-due-diligence-mining-industry" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "construction_grade_reconciliation",
+        "name": "Grade Reconciliation",
+        "category": "construction",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "% delta vs mine plan",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "Actual head grade within ±5% of mine plan" },
+          "strong": { "label": "Within ±10%" },
+          "moderate": { "label": "Within ±15%" },
+          "weak": { "label": "Within ±20%" },
+          "redFlag": { "label": ">20% below plan (grade shortfall)" }
+        },
+        "whatDrivesTheBadge": "Head grade vs plan shows if the resource estimate was accurate and if mining is following the plan.",
+        "caveatDepositTypeNuance": "Negative grade reconciliation (actual < plan) is the most common problem for new producers. It can cascade into lower production and higher unit costs.",
+        "sourceLinks": [
+          { "label": "AMC Consultants — Technical DD (reconciliation audits)", "url": "https://www.amcconsultants.com/experience/technical-due-diligence-mining-industry" },
+          { "label": "Latin Mines — Drill result analysis & grade filtering", "url": "https://latinmines.com/drill-result-filtering/" }
+        ],
+        "workbookAnchors": []
+      },
+      {
+        "id": "construction_schedule_vs_plan",
+        "name": "Schedule vs Plan",
+        "category": "construction",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "qualitative",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "label": "First production on or ahead of plan" },
+          "strong": { "label": "Delay <3 months" },
+          "moderate": { "label": "Delay 3–6 months" },
+          "weak": { "label": "Delay 6–12 months" },
+          "redFlag": { "label": ">12 month delay / guidance withdrawn" }
+        },
+        "whatDrivesTheBadge": "Schedule slips often precede cost overruns and equity dilution.",
+        "caveatDepositTypeNuance": "Differentiate first ore, first concentrate, first production and commercial production. The market often rewards first ore, but lenders focus on commercial production.",
+        "sourceLinks": [],
+        "workbookAnchors": []
+      },
+      {
+        "id": "construction_capex_vs_budget",
+        "name": "Capex vs Budget",
+        "category": "construction",
+        "provenance": "PUBLISHED_REFERENCE_ONLY",
+        "kind": "numeric",
+        "unit": "% of budget",
+        "criticalRedFlag": true,
+        "tiers": {
+          "exceptional": { "max": 100, "label": "≤100% of DFS budget (on/under budget)" },
+          "strong": { "min": 100, "max": 110, "label": "100–110% (minor overrun)" },
+          "moderate": { "min": 110, "max": 120, "label": "110–120% (moderate overrun)" },
+          "weak": { "min": 120, "max": 140, "label": "120–140% (significant overrun)" },
+          "redFlag": { "min": 140, "label": ">140% (blowout)" }
+        },
+        "tierDirection": "lower_is_better",
+        "whatDrivesTheBadge": "Capex overruns dilute IRR and may require additional financing (= more dilution).",
+        "caveatDepositTypeNuance": "Overruns are common in mining. Industry average is ~20% over DFS estimate. On-budget delivery is actually exceptional.",
+        "sourceLinks": [
+          { "label": "AMC Consultants — Are proposed costs reasonable & adequate?", "url": "https://www.amcconsultants.com/experience/technical-due-diligence-mining-industry" },
+          { "label": "Spanish Mountain PEA — NPV & capex comparison (PFS vs PEA)", "url": "https://www.mining.com/spanish-mountain-pea-lifts-both-npv-and-capex/" }
+        ],
+        "workbookAnchors": []
+      }
+    ]
+  },
+  "drillProgramSubRubric": {
+    "name": "Drill Exploration-vs-Resource Sub-Rubric (58 weighted signals across 9 categories)",
+    "analystSource": "Linked sub-sheet from the 'Drill Program Type' row of the main matrix. Sum all matching signals per release; higher total (exploration vs resource) wins. Per Reuben: 'each drill has to be classified as an exploration drill or a resource drill.'",
+    "decisionRule": "For each release, sum +N exploration weights against +N resource weights across every matching signal in every category. The higher total classifies the release. If both totals are 0, fall through to the Data Quality fallback category.",
+    "categories": [
+      {
+        "id": "program_intent",
+        "name": "Program Intent (language-based)",
+        "signalCount": 20,
+        "strongestSingleCategoryNote": "20 signals in this category — strongest single category in the rubric. Direct language match scores +5 resource or +5 exploration.",
+        "caveat": "Same release may contain multiple phrases — sum scores across matches, higher total classifies.",
+        "phrases": [
+          { "match": "infill drilling", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "resource conversion", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "definition drilling", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "reserve definition", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "density drilling", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "continuity drilling", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "extension drilling", "resourceWeight": 1, "explorationWeight": 2, "tierHint": "moderate_mixed" },
+          { "match": "step-out drilling", "resourceWeight": 0, "explorationWeight": 2, "tierHint": "moderate_mixed" },
+          { "match": "scout drilling", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "target testing", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "discovery drilling", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "new zone", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "first-pass drilling", "resourceWeight": 0, "explorationWeight": 5, "tierHint": "redflag_exploration" },
+          { "match": "greenfield drilling", "resourceWeight": 0, "explorationWeight": 5, "tierHint": "redflag_exploration" },
+          { "match": "new target", "resourceWeight": 0, "explorationWeight": 5, "tierHint": "redflag_exploration" },
+          { "match": "initial drill plan", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "exploration-phase", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "exploration drilling", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "weak_exploration" },
+          { "match": "resource drilling", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "infill", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" }
+        ],
+        "workbookExamples": [
+          "Anfield Energy — 'exploration-phase drilling' → scored 80",
+          "Hercules Metals — 'Outlines Initial 2026 Drill Plan at Leviathan' → scored 80",
+          "West Red Lake Gold — Rowan Mine 'resource conversion drilling' language at Madsen"
+        ]
+      },
+      {
+        "id": "resource_linkage",
+        "name": "Resource Linkage",
+        "signalCount": 7,
+        "strongestSingleCategoryNote": "7 signals in this category. All bias toward Resource classification — no exploration weights.",
+        "caveat": "If the release explicitly mentions an MRE (current or upcoming), this category carries decisive weight.",
+        "phrases": [
+          { "match": "maiden resource", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "upcoming MRE", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "upgrade inferred to indicated", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "support mine planning", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "pit design", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "stope design", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "resource update", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "indicated resource", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "moderate_resource_context_dependent" },
+          { "match": "inferred resource", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "moderate_resource_weakest" }
+        ],
+        "workbookExamples": [
+          "Orla Mining — sequential Camino Rojo MRE updates",
+          "West Red Lake Gold — Madsen + Rowan MRE history (priority vault VLT-004)",
+          "Pan American Silver — producer-grade resource statements"
+        ]
+      },
+      {
+        "id": "geological_context",
+        "name": "Geological Context",
+        "signalCount": 6,
+        "caveat": "Distinguishes drilling that tests geological hypotheses (exploration) from drilling that fills in known geology (resource).",
+        "phrases": [
+          { "match": "known orebody continuity", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "deposit extension along strike", "resourceWeight": 1, "explorationWeight": 2, "tierHint": "strong_mixed" },
+          { "match": "deposit extension at depth", "resourceWeight": 1, "explorationWeight": 2, "tierHint": "strong_mixed" },
+          { "match": "extends vein zones", "resourceWeight": 1, "explorationWeight": 2, "tierHint": "moderate_mixed" },
+          { "match": "prospect-scale drilling", "resourceWeight": 0, "explorationWeight": 3, "tierHint": "weak_exploration" },
+          { "match": "testing geophysical anomaly", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" },
+          { "match": "testing geochemical anomaly", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" }
+        ],
+        "workbookExamples": [
+          "West Red Lake Gold — 'extends Vein Zones' language at Rowan",
+          "Hercules Metals — Leviathan extension at depth",
+          "Banyan Gold — AurMac anomaly testing"
+        ]
+      },
+      {
+        "id": "project_stage",
+        "name": "Project Stage",
+        "signalCount": 6,
+        "caveat": "Project stage alone is not decisive — always combine with program intent and resource linkage signals.",
+        "phrases": [
+          { "match": "feasibility stage", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "pre-feasibility stage", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "development stage", "resourceWeight": 3, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "existing resource already published", "resourceWeight": 2, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "maiden resource stage", "resourceWeight": 4, "explorationWeight": 1, "tierHint": "moderate_blended_resource" },
+          { "match": "advanced exploration", "resourceWeight": 2, "explorationWeight": 2, "tierHint": "weak_mixed" },
+          { "match": "early-stage project", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" },
+          { "match": "pre-resource project", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" }
+        ],
+        "workbookExamples": [
+          "West Red Lake Gold — Production Restart stage → resource-leaning",
+          "Greatland Gold — Production stage → resource",
+          "Eloro Resources — PEA stage → mixed with resource lean"
+        ]
+      },
+      {
+        "id": "drill_spacing",
+        "name": "Drill Spacing (where disclosed)",
+        "signalCount": 5,
+        "notInWorkbookSchema": true,
+        "notInWorkbookSchemaNote": "⚠ NOT DERIVABLE FROM WORKBOOK. The drill validation pipeline does not extract inter-hole spacing. Spacing data must come from NI 43-101 technical reports or curated extraction from press releases.",
+        "caveat": "Deposit-type dependent: porphyries tolerate wider spacing than narrow vein systems. Cross-check with Deposit-Type Adjustments sheet.",
+        "phrases": [
+          { "match": "spacing <25m", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource", "spacingRangeM": { "max": 25 } },
+          { "match": "spacing 25-50m", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource", "spacingRangeM": { "min": 25, "max": 50 } },
+          { "match": "spacing 50-100m", "resourceWeight": 2, "explorationWeight": 1, "tierHint": "moderate_mixed", "spacingRangeM": { "min": 50, "max": 100 } },
+          { "match": "spacing 100-150m", "resourceWeight": 0, "explorationWeight": 3, "tierHint": "weak_exploration", "spacingRangeM": { "min": 100, "max": 150 } },
+          { "match": "spacing >150m", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration", "spacingRangeM": { "min": 150 } }
+        ],
+        "workbookExamples": []
+      },
+      {
+        "id": "location_context",
+        "name": "Location Context",
+        "signalCount": 3,
+        "notInWorkbookSchema": true,
+        "notInWorkbookSchemaNote": "⚠ NOT DERIVABLE FROM WORKBOOK. No coordinates or geospatial fields. However, document_title often contains proxy phrases like 'extends Vein Zones', 'step-out NE of HER-24-12', 'new high-grade silver veins' that can be NLP-extracted.",
+        "caveat": "Spatial relationship to known mineralization — hardest category to score automatically.",
+        "phrases": [
+          { "match": "within existing pit shell", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "within model area", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "near existing resource shell", "resourceWeight": 2, "explorationWeight": 1, "tierHint": "moderate_mixed" },
+          { "match": "far from known resource envelope", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" },
+          { "match": "new target area", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" }
+        ],
+        "workbookExamples": [
+          "West Red Lake Gold — 'extends Vein Zones' [Rowan]",
+          "Hercules Metals — '220m step-out NE of HER-24-12' [Leviathan]",
+          "Banyan Gold — 'new high-grade silver veins' [AurMac]"
+        ]
+      },
+      {
+        "id": "release_language",
+        "name": "Release Language (direct quotes)",
+        "signalCount": 6,
+        "caveat": "Watch for promotional language inflation ('district-scale potential') — weight less than specific resource phrases.",
+        "phrases": [
+          { "match": "supports resource estimation", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "supports conversion", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "supports classification", "resourceWeight": 5, "explorationWeight": 0, "tierHint": "exceptional_resource" },
+          { "match": "improves confidence in continuity", "resourceWeight": 4, "explorationWeight": 0, "tierHint": "strong_resource" },
+          { "match": "expands mineralized footprint", "resourceWeight": 1, "explorationWeight": 2, "tierHint": "moderate_mixed" },
+          { "match": "demonstrates district-scale potential", "resourceWeight": 0, "explorationWeight": 3, "tierHint": "weak_promotional_exploration" },
+          { "match": "testing for new mineralized zones", "resourceWeight": 0, "explorationWeight": 4, "tierHint": "redflag_exploration" }
+        ],
+        "workbookExamples": [
+          "Brixton Metals — 'Reports Record Silver Intercepts' → exploration language",
+          "Marimaca Copper — 'Additional High-Grade Silver Assays' → resource-supporting",
+          "Nine Mile Metals — 'Certified Assays' → resource confidence language"
+        ]
+      },
+      {
+        "id": "campaign_composition",
+        "name": "Campaign Composition",
+        "signalCount": 3,
+        "caveat": "When campaign composition triggers, classify section by section within the release rather than assigning one label to the whole thing.",
+        "phrases": [
+          { "match": "resource conversion + extension", "resourceWeight": 3, "explorationWeight": 2, "tierHint": "exceptional_slight_resource_bias" },
+          { "match": "infill + step-out", "resourceWeight": 2, "explorationWeight": 2, "tierHint": "moderate_pure_mixed" },
+          { "match": "regional + core deposit drilling", "resourceWeight": 2, "explorationWeight": 3, "tierHint": "redflag_slight_exploration_bias" }
+        ],
+        "workbookExamples": [
+          "Orla Mining — Camino Rojo programs blend infill + step-out",
+          "Hercules Metals — Leviathan combines step-out with extension",
+          "New Gold — Rainy River underground + surface rig combined"
+        ]
+      },
+      {
+        "id": "data_quality_fallback",
+        "name": "Data Quality (fallback)",
+        "signalCount": 1,
+        "caveat": "If all 8 other categories score 0/0, classify as Mixed/Unclear. Do not force a classification on insufficient text.",
+        "fallback": true,
+        "phrases": [
+          { "match": "_no_signals_matched", "resourceWeight": 0, "explorationWeight": 0, "tierHint": "moderate_unclear_default" }
+        ],
+        "workbookExamples": [
+          "Many stockhead and jmn aggregator snippets lack enough text for confident classification",
+          "Short press release summaries often omit program intent entirely"
+        ]
+      }
+    ]
+  }
+}

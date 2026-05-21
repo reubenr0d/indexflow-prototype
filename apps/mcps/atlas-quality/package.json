@@ -1,0 +1,16 @@
+{
+  "name": "atlas-quality-mcp",
+  "version": "1.0.0",
+  "description": "MCP server that scores Atlas-tracked mining companies against the analyst's 8-category Quality Matrix (drilling / resources / met / econ studies / permitting / offtake / capital raises / construction). Reads raw Atlas data, classifies tiers in JS, never modifies Atlas.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test scoring/matrix.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

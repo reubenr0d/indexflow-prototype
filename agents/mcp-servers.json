@@ -21,5 +21,14 @@
       "ATLAS_API_KEY",
       "ATLAS_REQUEST_TIMEOUT_MS"
     ]
+  },
+  "atlas-quality-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/atlas-quality/index.js"],
+    "envPassthrough": [
+      "ATLAS_API_URL",
+      "ATLAS_API_KEY",
+      "ATLAS_REQUEST_TIMEOUT_MS"
+    ]
   }
 }

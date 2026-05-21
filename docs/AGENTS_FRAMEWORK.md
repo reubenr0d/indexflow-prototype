@@ -102,13 +102,17 @@ your vault positions based on market conditions.
 | `maxTurns` | no | `20` | Max agent loop iterations |
 | `temperature` | no | `0.2` | LLM temperature |
 | `autoAllocateTargetBps` | no | `0` | Auto-allocate this share (bps) of `availableForPerp` before summary |
-| `entryMode` | no | `none` | Entry policy mode (`none` or `momentum_volume`) |
-| `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating |
-| `entryVolumeMin` | no | `0` | Minimum Yahoo quote volume threshold for entry gating |
-| `entryDirection` | no | `long_only` | Allowed entry direction. One of `long_only`, `short_only`, `long_short`. In `long_short` mode the runner gates long opens against the entry-mode eligibility set (Atlas top-N or momentum+volume), but short opens are LLM-judged from news context and are not gated by that set. |
+| `entryMode` | no | `none` | Entry policy mode. One of `none`, `momentum_volume`, `ml_score`, or `quality_score` |
+| `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating (used by `entryMode: momentum_volume`) |
+| `entryVolumeMin` | no | `0` | Minimum Yahoo quote volume threshold for entry gating (used by `entryMode: momentum_volume`) |
+| `entryMlScoreMin` | no | `0` | Minimum Atlas ML score (0-100) required for a long entry (used by `entryMode: ml_score`) |
+| `entryQualityScoreMin` | no | `0` | Minimum Quality Matrix composite score (0-100) required for a long entry (used by `entryMode: quality_score`) |
+| `entryDirection` | no | `long_only` | Allowed entry direction. One of `long_only`, `short_only`, `long_short`. In `long_short` mode the runner gates long opens against the entry-mode eligibility set (Atlas top-N / Quality top-N / momentum+volume), but short opens are LLM-judged from news context and are not gated by that set. |
 | `maxNewPositionsPerRun` | no | `0` | Hard cap on combined long+short new `open_position` writes per run |
 | `maxNewShortsPerRun` | no | `0` | Hard cap on new short `open_position` writes per run (subset of `maxNewPositionsPerRun`). Must be `0` when `entryDirection: long_only`, must be `<= maxNewPositionsPerRun` otherwise. |
-| `positionSizingMode` | no | `model_decides` | Position sizing policy (`model_decides`) |
+| `maxTrackedAssets` | no | `0` | Cap on the per-vault tracked-asset set when `rebalanceMode: track_top_n` is active |
+| `rebalanceMode` | no | `none` | Auto-rebalance policy. `track_top_n` runs a deterministic pre-LLM pass before the agent loop that closes any long leg whose ticker dropped out of the latest top-N (works with `entryMode: ml_score` or `entryMode: quality_score`); shorts are never auto-closed in `long_short` mode. |
+| `positionSizingMode` | no | `model_decides` | Position sizing policy (`model_decides`, `equal_weight`) |
 
 ### Prompt Structure
 
@@ -165,6 +169,7 @@ Your capabilities for doing X.
 |-------|------|-------------|
 | `vault-manager` | `agents/skills/vault-manager.md` | On-chain vault reads/writes, units, position workflows |
 | `yfinance` | `agents/skills/yfinance.md` | Yahoo Finance search and quote lookups |
+| `atlas-quality` | `agents/skills/atlas-quality.md` | Quality Matrix scoring (8 categories × 52 signals + 58-signal drill sub-rubric) over Atlas-tracked mining companies |
 
 Reference skills in agent frontmatter:
 
@@ -235,6 +240,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `list_open_positions`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups + news | `yfinance_search`, `yfinance_quote`, `yfinance_news` |
 | `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_model_info`, `get_ml_basket`, `get_ml_thesis` |
+| `atlas-quality-mcp` | Analyst-authored 8-category Quality Matrix scorer (drilling / resources / met / econ / permitting / offtake / capital raises / construction). Reads existing read-only Atlas endpoints and classifies tiers locally; never modifies Atlas. | `get_quality_top_picks`, `get_quality_company_card`, `get_quality_matrix_definition`, `get_quality_short_candidates`, `classify_drill_release_text` |
 
 ### Server Registry Format
 
@@ -253,6 +259,11 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
   "atlas-ml-mcp": {
     "command": "node",
     "args": ["apps/mcps/atlas-ml/index.js"],
+    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_REQUEST_TIMEOUT_MS"]
+  },
+  "atlas-quality-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/atlas-quality/index.js"],
     "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_REQUEST_TIMEOUT_MS"]
   }
 }
@@ -290,6 +301,20 @@ Wraps the Atlas mining-stock ML engine (default `https://atlas.minestarters.com`
 | `get_ml_thesis` | Claude-generated investment thesis on the current basket (use sparingly) | `n`, `tag` |
 
 The agent runner's `entryMode: ml_score` policy uses `get_ml_top_picks` as the long-side eligibility signal. When `rebalanceMode: track_top_n` is set, a deterministic pre-LLM pass closes any **long** position whose underlying ticker has dropped out of the latest top-N. In `long_short` mode the pass only ever touches long legs — short legs are entirely owned by the LLM's TP/SL decisions, so the model can run a news-driven short overlay alongside the Atlas long basket.
+
+### Mining Quality Matrix Signals (atlas-quality-mcp)
+
+Wraps the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction) scored locally in JS from existing read-only Atlas endpoints. The full matrix lives verbatim in `apps/mcps/atlas-quality/scoring/matrix.json` (52 main signals + a 58-signal drill exploration-vs-resource sub-rubric, with per-signal tier breakpoints, `whatDrivesTheBadge`, `caveatDepositTypeNuance`, `sourceLinks[]`, `workbookAnchors[]`, `provenance` flag `EMPIRICAL` vs `PUBLISHED_REFERENCE_ONLY`, and `dataQualityWarnings[]`). Composite weights default to Drilling 35% / Resources 20% / Econ 15% / Met 10% / Permitting 5% / Offtake 5% / Capital Raises 5% / Construction 5%, with a configurable `provenanceDiscount` (default 0.7) applied to categories whose every signal is `PUBLISHED_REFERENCE_ONLY`. Three signals (Drill Hole Orientation, Drill Spacing, Location Context) are flagged `notInWorkbookSchema` and always return `Unknown` with a recovery hint; the composite scorer re-normalises across non-Unknown categories so junior explorers aren't penalised for missing producer-only data.
+
+| Tool | Purpose | Key params |
+|---|---|---|
+| `get_quality_top_picks` | Composite-ranked top picks with per-category subscores, `yahooSymbol`, and provenance flags | `limit`, `minCompositeScore`, `commodity`, `exchange`, `watchlistOnly` |
+| `get_quality_company_card` | Full per-signal tier card (every signal, tier, raw value, provenance, anchor, source link). Use as `justification` payload | `ticker`, `exchange` |
+| `get_quality_matrix_definition` | Returns `matrix.json` verbatim (or a single section). Call once per run to ground in tier definitions | `section` |
+| `get_quality_short_candidates` | Names outside the top-N with `criticalRedFlag` matrix signals (permit refused, dilution >30%, schedule blowout, capex >140%, grade-recon shortfall, failed raise). Agent must still confirm with a citable bearish headline before opening a short | `limit`, `excludeTickers[]` |
+| `classify_drill_release_text` | Debug helper — pass a drill release headline + summary, returns the 58-signal sub-rubric breakdown and final exploration-vs-resource classification | `text` |
+
+The agent runner's `entryMode: quality_score` policy uses `get_quality_top_picks` as the long-side eligibility signal. `entryQualityScoreMin` sets the minimum composite. With `rebalanceMode: track_top_n` the deterministic pre-LLM pass closes any long whose ticker dropped out of the latest Quality top-N (same long-only semantics as the `ml_score` mode). The Atlas backend itself is unchanged — all scoring happens in JS over existing read-only endpoints.
 
 ### On-Chain Reads (vault-manager-mcp)
 
@@ -377,14 +402,14 @@ npm run agent:vault:dry   # dry-run (no on-chain writes)
 
 ### GitHub Actions
 
-The workflow at `.github/workflows/vault-agent.yml` runs `vault-manager` against Sepolia.
+The workflow at `.github/workflows/vault-agent.yml` runs the full agent matrix (`vault-manager`, `mining-manager`, `quality-matrix-manager`) against Sepolia.
 
 1. Go to Actions > "Vault Agent" > Run workflow
-2. Optionally toggle dry-run mode
+2. Optionally toggle dry-run mode, choose a single agent (`vault-manager` | `mining-manager` | `quality-matrix-manager` | `all`), or pin a one-off vault address override
 
-The cron schedule runs `vault-manager` and `mining-manager` **hourly at minute :18** (`18 * * * *`), serialized via a shared `keeper-key-serialized` concurrency group that also covers `keeper.yml` and `update-prices.yml` so the three workflows can never race on the same `KEEPER_PRIVATE_KEY` nonce. The off-hour minute is intentional: `update-prices.yml` runs `*/5 * * * *` and `keeper.yml` runs `2-59/5 * * * *`, so firing vault-agent at `:18` keeps it from starting on the same minute as either 5-min cron, which would force one of the queued runs to be cancelled by the next tick.
+The cron schedule runs the agent matrix **hourly at minute :18** (`18 * * * *`), serialized via a shared `keeper-key-serialized` concurrency group that also covers `keeper.yml` and `update-prices.yml` so the three workflows can never race on the same `KEEPER_PRIVATE_KEY` nonce. The off-hour minute is intentional: `update-prices.yml` runs `*/5 * * * *` and `keeper.yml` runs `2-59/5 * * * *`, so firing vault-agent at `:18` keeps it from starting on the same minute as either 5-min cron, which would force one of the queued runs to be cancelled by the next tick. `max-parallel: 1` inside the strategy matrix means the three agents run sequentially within a tick on the same keeper wallet.
 
-The workflow also accepts a `repository_dispatch` event of type `vault-agent-tick`, which is the **primary** cadence driver — GitHub's `schedule` trigger is unreliable for this repo (historically delivers only ~one tick per ~100 min instead of every hour), so an external scheduler hits `POST /repos/<owner>/<repo>/dispatches` on its own clock. Optional `client_payload.agent` ("vault-manager" | "mining-manager" | "all") restricts the matrix; absent payload runs the full matrix like a scheduled tick. See [KEEPER_OPERATIONS.md § External cron dispatch](./KEEPER_OPERATIONS.md#external-cron-dispatch) for the PAT setup and exact HTTP request shape. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+The workflow also accepts a `repository_dispatch` event of type `vault-agent-tick`, which is the **primary** cadence driver — GitHub's `schedule` trigger is unreliable for this repo (historically delivers only ~one tick per ~100 min instead of every hour), so an external scheduler hits `POST /repos/<owner>/<repo>/dispatches` on its own clock. Optional `client_payload.agent` ("vault-manager" | "mining-manager" | "quality-matrix-manager" | "all") restricts the matrix; absent payload runs the full matrix like a scheduled tick. See [KEEPER_OPERATIONS.md § External cron dispatch](./KEEPER_OPERATIONS.md#external-cron-dispatch) for the PAT setup and exact HTTP request shape. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 > **Note on branch protection.** The commit-results job requires the default branch to accept pushes from the `GITHUB_TOKEN` identity. If the branch is protected, either add `vault-agent[bot]` to the bypass list, route through a PAT, or disable the commit job and accept that state will not survive across runs.
 

@@ -482,8 +482,13 @@ The admin assets page (`/admin/oracle`) includes a Yahoo Finance search that let
 
 **Multi-Agent Framework**
 
-Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent. The shipped agent is [`agents/vault-manager.md`](agents/vault-manager.md), which uses OpenAI for inference and signs transactions directly with `PRIVATE_KEY`. It's also what the CI cron runs.
-For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryDirection`, `maxNewPositionsPerRun`).
+Agents are defined as markdown files in `agents/` -- each file is a system prompt + YAML config specifying which MCP servers to use. No JavaScript required to create a new agent. Three agents ship today and run side-by-side in the same CI matrix against separate vaults:
+
+- [`agents/vault-manager.md`](agents/vault-manager.md) — general-purpose Yahoo-Finance-driven vault.
+- [`agents/mining-manager.md`](agents/mining-manager.md) — mining long/short vault driven by the Atlas ML engine (vault `Minestarters ML Picks`).
+- [`agents/quality-matrix-manager.md`](agents/quality-matrix-manager.md) — parallel mining long/short vault driven by the analyst's 8-category Quality Matrix (vault `Minestarters Quality Matrix`).
+
+All three use OpenAI (or any OpenAI-compatible chat-completions endpoint) for inference and sign transactions directly with `PRIVATE_KEY`. For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryMlScoreMin`, `entryQualityScoreMin`, `entryDirection`, `maxNewPositionsPerRun`, `rebalanceMode`).
 
 ```bash
 # Install MCP server deps (one-time)
@@ -500,6 +505,8 @@ npm run agent:vault:dry
 
 # Run any agent by name
 npm run agent:run -- vault-manager
+npm run agent:run -- mining-manager
+npm run agent:run -- quality-matrix-manager
 
 # Write confirmations are ON by default (interactive TTY prompts before on-chain writes)
 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- vault-manager
@@ -508,7 +515,7 @@ LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- vault-manager
 AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm run agent:run -- vault-manager
 ```
 
-A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs `vault-manager` against Sepolia every 6 hours, with manual dispatch for ad-hoc runs and a `dry_run` toggle. A follow-up `commit-results` job in the same workflow pushes the updated `agents/memory/` + `apps/web/public/agent-metadata/` files back to the default branch under the `vault-agent[bot]` identity, so the next scheduled run starts from the prior state. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
+A GitHub Actions cron (`.github/workflows/vault-agent.yml`) runs the full matrix (`vault-manager` + `mining-manager` + `quality-matrix-manager`) against Sepolia hourly at minute `:18`, with manual dispatch for ad-hoc runs and a `dry_run` toggle. A follow-up `commit-results` job in the same workflow pushes the updated `agents/memory/` + `apps/web/public/agent-metadata/` files back to the default branch under the `vault-agent[bot]` identity, so the next scheduled run starts from the prior state. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide: creating agents, MCP tool reference, vault lifecycle, and memory.
 
 Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl`. Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 

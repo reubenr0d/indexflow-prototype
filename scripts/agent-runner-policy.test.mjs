@@ -7,6 +7,7 @@ const {
   computeAutoAllocationAmount,
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
+  getEligibleQualityScoreAssets,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
@@ -513,6 +514,168 @@ test("computeAutoRebalanceClosures in long_only mode still closes any short leg"
   assert.equal(closures.length, 1);
   assert.equal(closures[0].pos.assetId, "0xSHORT_LEG");
   assert.match(closures[0].reason, /closing short leg/);
+});
+
+// ---------------------------------------------------------------------------
+// quality_score (Quality Matrix) entry mode
+// ---------------------------------------------------------------------------
+
+test("parseAgentPolicy accepts entryMode: quality_score with entryQualityScoreMin", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  assert.equal(policy.entryMode, "quality_score");
+  assert.equal(policy.entryQualityScoreMin, 75);
+  assert.equal(policy.rebalanceMode, "track_top_n");
+});
+
+test("parseAgentPolicy rejects entryQualityScoreMin > 100", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "quality_score",
+        entryQualityScoreMin: 150,
+        entryDirection: "long_only",
+        maxNewPositionsPerRun: 3,
+      }),
+    /Invalid entryQualityScoreMin/,
+  );
+});
+
+test("getEligibleQualityScoreAssets matches tracked oracle assets by Yahoo symbol", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  const vaultState = { assets: ["0xa", "0xb", "0xc"] };
+  const oracleAssets = {
+    assets: [
+      { assetId: "0xa", symbol: "GSR.V" },
+      { assetId: "0xb", symbol: "PWM.V" },
+      { assetId: "0xc", symbol: "OOO.V" },
+      { assetId: "0xd", symbol: "EEE.L" },
+    ],
+  };
+  const qualityPicks = [
+    { yahooSymbol: "GSR.V", compositeScore: 92, tier: "exceptional", primaryCommodity: "gold" },
+    { yahooSymbol: "PWM.V", compositeScore: 78, tier: "strong", primaryCommodity: "copper" },
+    { yahooSymbol: "OOO.V", compositeScore: 60, tier: "moderate", primaryCommodity: "silver" },
+    { yahooSymbol: "EEE.L", compositeScore: 88, tier: "strong", primaryCommodity: "uranium" },
+  ];
+
+  const eligible = getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, qualityPicks });
+  // OOO.V drops out (composite < 75); EEE.L not tracked by vault.
+  assert.equal(eligible.length, 2);
+  const ids = eligible.map((e) => e.assetId).sort();
+  assert.deepEqual(ids, ["0xa", "0xb"]);
+  const gsr = eligible.find((e) => e.symbol === "GSR.V");
+  assert.equal(gsr.compositeScore, 92);
+  assert.equal(gsr.tier, "exceptional");
+});
+
+test("getEligibleQualityScoreAssets caps results at maxTrackedAssets", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 0,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 5,
+    maxTrackedAssets: 2,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  const vaultState = { assets: ["0xa", "0xb", "0xc"] };
+  const oracleAssets = {
+    assets: [
+      { assetId: "0xa", symbol: "AAA.V" },
+      { assetId: "0xb", symbol: "BBB.V" },
+      { assetId: "0xc", symbol: "CCC.V" },
+    ],
+  };
+  const qualityPicks = [
+    { yahooSymbol: "AAA.V", compositeScore: 99 },
+    { yahooSymbol: "BBB.V", compositeScore: 95 },
+    { yahooSymbol: "CCC.V", compositeScore: 91 },
+  ];
+  const eligible = getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, qualityPicks });
+  assert.equal(eligible.length, 2);
+  assert.equal(eligible[0].symbol, "AAA.V");
+  assert.equal(eligible[1].symbol, "BBB.V");
+});
+
+test("validatePolicyWriteBatch in quality_score mode uses 'Quality Matrix composite score' wording", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const violation = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: true, assetId: "0xZ" } },
+      ],
+    },
+  });
+  assert.match(violation, /Quality Matrix composite score/);
+});
+
+test("computeAutoRebalanceClosures in quality_score mode references the Quality top-N in reason text", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  const positions = [
+    { exists: true, isLong: true, symbol: "GSR.V", assetId: "0xLONG_KEEP" },
+    { exists: true, isLong: true, symbol: "DROPPED.V", assetId: "0xLONG_DROP" },
+  ];
+  const eligibleSymbols = ["GSR.V"];
+
+  const closures = computeAutoRebalanceClosures({
+    policy,
+    positions,
+    eligibleSymbols,
+    minScore: 75,
+    cap: 12,
+    signalLabel: "Quality top",
+  });
+
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xLONG_DROP");
+  assert.match(closures[0].reason, /Quality top-12/);
 });
 
 test("computeAutoRebalanceClosures in short_only mode closes any long leg", () => {
