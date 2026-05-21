@@ -10,6 +10,20 @@ on:
         required: false
         default: false
         type: boolean
+      agent:
+        description: "Which agent to run"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - vault-manager
+          - mining-manager
+      vault_address:
+        description: "Override vault address for this run (empty = use agent's stored vault). Commit step is skipped when set."
+        required: false
+        default: ""
+        type: string
       network:
         description: "Target network"
         required: false
@@ -28,24 +42,48 @@ permissions:
   contents: write
 
 jobs:
+  setup-matrix:
+    name: Resolve agent matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - name: Build matrix from trigger + inputs
+        id: build
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          AGENT_INPUT: ${{ github.event.inputs.agent }}
+        run: |
+          set -euo pipefail
+
+          vault_entry='{"agent":"vault-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
+          mining_entry='{"agent":"mining-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
+
+          if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
+            include="[${vault_entry},${mining_entry}]"
+          elif [ "${AGENT_INPUT}" = "vault-manager" ]; then
+            include="[${vault_entry}]"
+          elif [ "${AGENT_INPUT}" = "mining-manager" ]; then
+            include="[${mining_entry}]"
+          else
+            echo "Unknown agent input: ${AGENT_INPUT}" >&2
+            exit 1
+          fi
+
+          matrix="{\"include\":${include}}"
+          echo "matrix=${matrix}" >> "$GITHUB_OUTPUT"
+          echo "Resolved matrix: ${matrix}"
+
   vault-agent:
     name: Agent "${{ matrix.agent }}" (${{ matrix.network }})
+    needs: setup-matrix
     runs-on: ubuntu-latest
     strategy:
       # Don't run mining-manager in parallel with vault-manager: they share the
       # same keeper key, so concurrent cast send calls race on the same nonce.
       max-parallel: 1
       fail-fast: false
-      matrix:
-        include:
-          - agent: vault-manager
-            network: sepolia
-            deployment_config: apps/web/src/config/sepolia-deployment.json
-            rpc_url_secret: SEPOLIA_RPC_URL
-          - agent: mining-manager
-            network: sepolia
-            deployment_config: apps/web/src/config/sepolia-deployment.json
-            rpc_url_secret: SEPOLIA_RPC_URL
+      matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
 
     steps:
       # No submodules: vault-manager MCP uses ~700 cast calls and zero forge
@@ -76,6 +114,7 @@ jobs:
           AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
           AGENT_MAX_TURNS: "20"
           AGENT_NETWORK: ${{ matrix.network }}
+          AGENT_VAULT_OVERRIDE: ${{ github.event.inputs.vault_address }}
         run: node scripts/agent-runner.mjs ${{ matrix.agent }}
 
       - name: Upload agent outputs
@@ -91,7 +130,9 @@ jobs:
   commit-results:
     name: Commit all agent outputs
     needs: vault-agent
-    if: always()
+    # Skip the commit step for ad-hoc override runs so a one-off vault target
+    # never overwrites the agent's canonical state.json on main.
+    if: always() && (github.event_name == 'schedule' || github.event.inputs.vault_address == '')
     runs-on: ubuntu-latest
     permissions:
       contents: write

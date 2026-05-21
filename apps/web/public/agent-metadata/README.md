@@ -6,8 +6,9 @@ its current thesis, the latest run, and the most recent justified
 on-chain actions. The Next.js app fetches it from
 `/agent-metadata/<vault>.json` via the `useAgentMetadata` hook and
 renders the "AI Operator" badge, the **AI Activity** section
-(thesis + collapsible run summary + recent decisions), and per-row
-justifications in Vault History on the basket detail page.
+(thesis + collapsible run summary + collapsible "Show all decisions"
+panel listing every justified action), and per-row justifications in
+Vault History on the basket detail page.
 
 Schema (all consumer-side fields are optional except `isAiManaged`):
 

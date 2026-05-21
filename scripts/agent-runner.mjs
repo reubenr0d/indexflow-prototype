@@ -28,6 +28,9 @@
  *   AGENT_NON_INTERACTIVE_WRITE_EXECUTE - Set to "1" to auto-execute writes in non-interactive sessions
  *   AGENT_MAX_TOOL_RESPONSE   - Max chars from tool response sent to LLM (default 6000)
  *   AGENT_NETWORK             - Optional network key for run log files
+ *   AGENT_VAULT_OVERRIDE      - Optional 0x address; when set, the agent targets
+ *                                this vault for the run (skipping create_vault)
+ *                                and no state/metadata/run-log writes are made
  *
  * Local env files: if present, `.env` and `.env.local` at the repo root are loaded
  * before reading configuration (existing shell env wins).
@@ -458,6 +461,22 @@ function createFileMemoryAdapter({ agentName, networkKey }) {
 
 function hashContent(content) {
   return "sha256:" + createHash("sha256").update(content, "utf8").digest("hex");
+}
+
+// AGENT_VAULT_OVERRIDE lets a single CI/manual run target an arbitrary vault
+// address instead of the agent's canonical stored vault. Returns the normalized
+// 0x address or null if the env var is unset / invalid.
+function parseVaultOverride(rawValue) {
+  if (rawValue === undefined || rawValue === null) return null;
+  const trimmed = String(rawValue).trim();
+  if (!trimmed) return null;
+  if (!/^0x[0-9a-fA-F]{40}$/.test(trimmed)) {
+    console.warn(
+      `Memory: AGENT_VAULT_OVERRIDE="${trimmed}" is not a valid 0x address; ignoring override.`
+    );
+    return null;
+  }
+  return trimmed;
 }
 
 // ---------------------------------------------------------------------------
@@ -907,11 +926,11 @@ function extractThesis(summaryText) {
   const sectionMatch = summaryText.match(
     /(?:^|\n)#+?\s*(?:Vault\s+)?Thesis[:\s]*\n?([\s\S]*?)(?:\n#|\n\n\n|$)/i
   );
-  if (sectionMatch) return sectionMatch[1].trim().slice(0, 500) || null;
+  if (sectionMatch) return sectionMatch[1].trim() || null;
   const inlineMatch = summaryText.match(
     /(?:^|\n)\*?\*?(?:Vault\s+)?Thesis\*?\*?:\s*(.+)/i
   );
-  if (inlineMatch) return inlineMatch[1].trim().slice(0, 500) || null;
+  if (inlineMatch) return inlineMatch[1].trim() || null;
   return null;
 }
 
@@ -1330,10 +1349,29 @@ export async function runAgent(agentName) {
     state = null;
     recentRuns = [];
   }
-  const { needsNewVault, agentFileChanged } = resolveVaultLifecycle(
+  let { needsNewVault, agentFileChanged } = resolveVaultLifecycle(
     state,
     config.fileHash
   );
+
+  const vaultOverride = parseVaultOverride(process.env.AGENT_VAULT_OVERRIDE);
+  const vaultOverrideActive = Boolean(vaultOverride);
+  if (vaultOverrideActive) {
+    console.log(
+      `Memory: AGENT_VAULT_OVERRIDE set — targeting ${vaultOverride} for this run only (state/metadata/run-log writes will be skipped).`
+    );
+    // Reset memory context so the system prompt, policy enforcement, and
+    // get_all_vaults guard all operate on the override vault rather than the
+    // canonical stored vault for this agent.
+    state = {
+      vaultAddress: vaultOverride,
+      vaultName: config.vaultName || config.name,
+    };
+    capturedVaultAddress = vaultOverride;
+    needsNewVault = false;
+    agentFileChanged = false;
+    recentRuns = [];
+  }
 
   if (needsNewVault) {
     if (!state) {
@@ -1949,7 +1987,11 @@ export async function runAgent(agentName) {
     const extractedThesis = extractThesis(agentSummaryText);
 
     let persistedState = null;
-    if (capturedVaultAddress) {
+    if (vaultOverrideActive) {
+      console.log(
+        "Memory: vault override active — skipping state/metadata/run-log writes."
+      );
+    } else if (capturedVaultAddress) {
       const newState = {
         vaultAddress: capturedVaultAddress,
         vaultName: config.vaultName || config.name,
@@ -2017,7 +2059,9 @@ export async function runAgent(agentName) {
     }
 
     const summarySnippet = runSummary.summary || "";
-    if (DRY_RUN) {
+    if (vaultOverrideActive) {
+      // Already logged above; skip run-log append for one-off override runs.
+    } else if (DRY_RUN) {
       console.log("Memory: dry run active — run log not updated.");
     } else {
       try {
@@ -2051,8 +2095,10 @@ export async function runAgent(agentName) {
     });
     console.error("Agent failed:", err.message || err);
 
-    // Persist failure log unless this is a dry run.
-    if (!DRY_RUN) {
+    // Persist failure log unless this is a dry run or a vault-override run.
+    if (vaultOverrideActive) {
+      console.log("Memory: vault override active — failure not written to run log.");
+    } else if (!DRY_RUN) {
       try {
         await memory.appendRunLog({
           timestamp: runSummary.finishedAt,
@@ -2104,6 +2150,7 @@ export const __agentRunnerInternals = {
   shortHash,
   shouldInvalidateDeploymentMemory,
   resolveVaultLifecycle,
+  parseVaultOverride,
   rotateFileToArchive,
   rotateAgentMemoryForDeploymentChange,
   parseAgentPolicy,

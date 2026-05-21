@@ -459,7 +459,7 @@ function AiActivitySection({
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
 
-  const recentDecisions = (agentMeta.recentActions ?? []).slice(0, 5);
+  const allDecisions = agentMeta.recentActions ?? [];
   const lastRunIso = agentMeta.latestRun?.finishedAt || agentMeta.lastRunAt;
   const lastRunSeconds = lastRunIso ? Math.floor(new Date(lastRunIso).getTime() / 1000) : null;
   const lastRunRelative = lastRunSeconds ? formatRelativeTime(lastRunSeconds) : null;
@@ -528,26 +528,29 @@ function AiActivitySection({
         </div>
       )}
 
-      {/* Recent decisions (collapsed by default) */}
-      {recentDecisions.length > 0 && (
+      {/* All decisions (collapsed by default) */}
+      {allDecisions.length > 0 && (
         <div className="mt-3">
           <button
             type="button"
             className="flex items-center gap-1 text-xs font-semibold text-app-accent hover:underline"
             onClick={() => setDecisionsOpen((v) => !v)}
             aria-expanded={decisionsOpen}
-            aria-controls="ai-recent-decisions"
+            aria-controls="ai-all-decisions"
           >
             <span>
-              {decisionsOpen ? "Hide recent decisions" : "Show recent decisions"}
+              {decisionsOpen ? "Hide all decisions" : "Show all decisions"}
             </span>
             <span className="font-mono text-[10px] text-app-muted">
-              ({recentDecisions.length})
+              ({allDecisions.length})
             </span>
           </button>
           {decisionsOpen && (
-            <ul id="ai-recent-decisions" className="mt-2 space-y-2">
-              {recentDecisions.map((a, i) => {
+            <ul
+              id="ai-all-decisions"
+              className="mt-2 max-h-96 space-y-2 overflow-y-auto pr-1"
+            >
+              {allDecisions.map((a, i) => {
                 const ts = a.timestamp ? Math.floor(new Date(a.timestamp).getTime() / 1000) : null;
                 const rel = ts ? formatRelativeTime(ts) : null;
                 const txHref = explorer && a.txHash ? `${explorer}/tx/${a.txHash}` : null;
