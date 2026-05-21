@@ -4,14 +4,70 @@
   "agentDescription": "Mining-focused vault driven by the Atlas ML engine",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model has identified a diverse set of mining equities with strong potential for medium-term growth. The top picks include companies primarily involved in diversified metals and gold, with significant operations in jurisdictions like Canada and the UK. The model's high Spearman IC and hit rate suggest robust predictive power, particularly leveraging financial metrics such as EBITDA to market cap and cash to assets ratios. This basket is well-positioned to capitalize on the expected r",
-  "lastRunAt": "2026-05-21T06:10:31.589Z",
+  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.",
+  "lastRunAt": "2026-05-21T06:46:14.674Z",
   "latestRun": {
-    "runId": "2026-05-21T06:10:31.589Z",
-    "finishedAt": "2026-05-21T06:10:31.589Z",
-    "summary": "## Thesis\n\nThe Atlas ML model has identified a diverse set of mining equities with strong potential for medium-term growth. The top picks include companies primarily involved in diversified metals and gold, with significant operations in jurisdictions like Canada and the UK. The model's high Spearman IC and hit rate suggest robust predictive power, particularly leveraging financial metrics such as EBITDA to market cap and cash to assets ratios. This basket is well-positioned to capitalize on the"
+    "runId": "2026-05-21T06:46:14.674Z",
+    "finishedAt": "2026-05-21T06:46:14.674Z",
+    "summary": "## Thesis\nThe Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.\n\n## Vault Summary\n- **Vault Address**: 0x672371609170ae7e9c8e5e0e08ec5819d5190c38\n- **NAV**: $995.00\n- **Pe"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Critical Metals Corp. as it is a new top pick with a high ML score of 99.5 and predicted return of 73.26%.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating additional capital to perp to support new long positions in top ML picks.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": "0x8b112285eb93a0900595e0293fd2ca6ec0252f73f7c4292cf9bb74193c17c03b",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) due to its top ML score and predicted return.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": "0xb737de223a935b6d08503f81dc1b473b0490d60411220da70e7af6ca768e70ff",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score and predicted return.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": "0xe6945f59a63d87b116f4a4ca27f8516e49ba96d02029571dea6500f19781245a",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Power Metals Corp. (PWM.V) due to its strong ML score and predicted return.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": "0x3e64b512567b121ef8e3525475bb00d1854e6e68ff49fb1d82880637191b83be",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Royal Gold Inc. (0KXS.L) due to its high ML score and predicted return.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": "0x8fafd0ece757131bdf04aa711e9aabecdb802497b53ef5e4b195415efc4f7b46",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Empire Metals Limited (EEE.L) due to its strong ML score and predicted return.",
+      "timestamp": "2026-05-21T06:46:14.674Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T06:46:14.674Z"
+    },
     {
       "tool": "create_vault",
       "justification": "Establishing a new vault to manage mining-equity basket driven by the Atlas ML engine.",

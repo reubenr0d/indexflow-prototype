@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:0fae2ec41a82ef3c77073b095413c3680bf49b06447bda9653c0553ec420f991",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T06:06:57.016Z",
-  "lastRunAt": "2026-05-21T06:10:31.589Z",
-  "thesis": "The Atlas ML model has identified a diverse set of mining equities with strong potential for medium-term growth. The top picks include companies primarily involved in diversified metals and gold, with significant operations in jurisdictions like Canada and the UK. The model's high Spearman IC and hit rate suggest robust predictive power, particularly leveraging financial metrics such as EBITDA to market cap and cash to assets ratios. This basket is well-positioned to capitalize on the expected r",
-  "lastThesisUpdate": "2026-05-21T06:10:31.589Z"
+  "lastRunAt": "2026-05-21T06:46:14.674Z",
+  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.",
+  "lastThesisUpdate": "2026-05-21T06:46:14.674Z"
 }
