@@ -156,25 +156,26 @@ function toolError(code, message, recoveryHint) {
 
 // Cast subprocess helpers.
 //
-// SECURITY: never put the keeper private key on the cast argv. Node's
-// `execFileSync` embeds the full argv in `Error.message` when the child exits
-// non-zero, and that error string can flow into MCP responses, agent run logs,
-// and outbound LLM API calls (none of which are masked by GitHub Actions). We
-// pass the key via `ETH_PRIVATE_KEY` env instead — `cast --help` documents this
-// as the default source for `--private-key`. The `redactSecrets` wrap on the
-// catch path is defense-in-depth in case any future flag echoes the value or a
-// caller invokes us with a key we never recorded in env.
-function buildCastEnv() {
-  if (!PRIVATE_KEY) return process.env;
-  return { ...process.env, ETH_PRIVATE_KEY: PRIVATE_KEY };
-}
-
-function runCast(args, { sensitive = false } = {}) {
+// SECURITY: Foundry's `cast` (verified against v1.3.1) does NOT read
+// `ETH_PRIVATE_KEY` from the environment for `--private-key`; only the
+// `--keystore` / `--account` / `--password` options have env support
+// (`ETH_KEYSTORE` / `ETH_KEYSTORE_ACCOUNT` / `ETH_PASSWORD`). For the raw
+// private key we therefore have to pass `--private-key <hex>` on argv. When
+// the child exits non-zero, Node's `execFileSync` embeds the full argv —
+// including the key — into `Error.message`. The `runCast` wrapper below pipes
+// every such error through `redactSecrets`, which (a) replaces any literal
+// occurrence of `PRIVATE_KEY` / `ETH_PRIVATE_KEY` / `KEEPER_PRIVATE_KEY` from
+// the runner env and (b) scrubs the generic `--private-key 0x[64hex]` flag
+// pattern. Combined with the agent runner's redaction of every text path
+// that leaves the runner (MCP responses, OpenAI messages, run-log committed
+// back to git, agent-metadata file), the secret never reaches any external
+// surface. GitHub Actions also masks the literal secret value in runner logs
+// independently of the redactor.
+function runCast(args) {
   try {
     const out = execFileSync("cast", args, {
       encoding: "utf8",
       stdio: ["ignore", "pipe", "pipe"],
-      env: sensitive ? buildCastEnv() : process.env,
     });
     return out.trim();
   } catch (err) {
@@ -193,10 +194,12 @@ function castSend(contractAddr, sig, args = []) {
   if (!PRIVATE_KEY) {
     throw Object.assign(new Error("PRIVATE_KEY is required for write operations"), { code: "NO_PRIVATE_KEY" });
   }
-  return runCast(
-    ["send", contractAddr, sig, ...args, "--rpc-url", RPC_URL, "--json"],
-    { sensitive: true },
-  );
+  return runCast([
+    "send", contractAddr, sig, ...args,
+    "--private-key", PRIVATE_KEY,
+    "--rpc-url", RPC_URL,
+    "--json",
+  ]);
 }
 
 function parseReceipt(rawJson) {

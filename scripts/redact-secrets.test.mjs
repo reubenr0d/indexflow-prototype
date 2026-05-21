@@ -36,6 +36,36 @@ test("redacts the historical cast error string with --private-key flag", () => {
   assert.ok(out.includes(VAULT_ADDR), "vault address must be preserved");
 });
 
+test("redacts a multi-line cast revert string with --private-key in the middle", () => {
+  // Mirrors how Foundry surfaces a revert: a multi-line message ending in the
+  // failed `cast send ...` argv. We verified in CI (Foundry v1.3.1) that
+  // --private-key has no `env` clap attr, so the only way to pass the raw key
+  // is on argv; the redactor is the production safety net.
+  const input = [
+    "Error: server returned an error response: error code 3: execution reverted",
+    "",
+    `Command failed: cast send ${VAULT_ADDR} submitPrices(bytes32[],uint256[]) ` +
+    `[0xa6a463452d580deb...] [4213603056,76074405316] ` +
+    `--private-key ${SAMPLE_KEY} --rpc-url https://example.com`,
+  ].join("\n");
+  const out = withEnv({ PRIVATE_KEY: SAMPLE_KEY }, () => redactSecrets(input));
+  assert.ok(!out.includes(SAMPLE_KEY));
+  assert.match(out, /execution reverted/);
+  assert.match(out, /--private-key \[REDACTED_KEY\]/);
+});
+
+test("redacts even when the raw key is NOT in env (flag-form fallback)", () => {
+  // Simulates a code path that invokes us with a key never loaded into the
+  // runner's env (e.g. an MCP server reading from a different secret name).
+  // The flag-form regex must still scrub it.
+  const input =
+    `Command failed: cast send 0xabc def --private-key ${OTHER_HEX_64} --rpc-url x`;
+  const out = withEnv({ PRIVATE_KEY: undefined, ETH_PRIVATE_KEY: undefined, KEEPER_PRIVATE_KEY: undefined },
+    () => redactSecrets(input));
+  assert.ok(!out.includes(OTHER_HEX_64));
+  assert.match(out, /--private-key \[REDACTED_KEY\]/);
+});
+
 test("redacts standalone occurrence of process.env.PRIVATE_KEY", () => {
   const input = `Sender used key: ${SAMPLE_KEY} (oops)`;
   const out = withEnv({ PRIVATE_KEY: SAMPLE_KEY }, () => redactSecrets(input));

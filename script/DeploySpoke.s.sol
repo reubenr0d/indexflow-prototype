@@ -198,13 +198,13 @@ contract DeploySpoke is Script {
         basket.setAssets(assetIds);
 
         if (cfg.reserveAmount > 0) {
+            // Active vm.startBroadcast(deployerPrivateKey) at run()-time already pins msg.sender to ctx.deployer
+            // for any subsequent external call (basket.topUpReserve uses transferFrom(msg.sender, ...)).
+            // Forge >=1.5 rejects vm.startPrank while a broadcast is active ("cannot prank for a broadcasted transaction"),
+            // so we rely on the broadcast alone here. A test harness should call this script with a fresh broadcast.
             IMockUSDCBootstrap(ctx.usdc).mint(ctx.deployer, cfg.reserveAmount);
-            // Approve and topUpReserve must be from `ctx.deployer` (basket uses transferFrom(msg.sender, ...)).
-            // Without a prank, a test harness is msg.sender; with forge broadcast, prank still targets the deployer.
-            vm.startPrank(ctx.deployer);
             IMockUSDCBootstrap(ctx.usdc).approve(vault, cfg.reserveAmount);
             basket.topUpReserve(cfg.reserveAmount);
-            vm.stopPrank();
         }
     }
 

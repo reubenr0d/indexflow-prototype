@@ -54,37 +54,31 @@ contracts:
 
 networks:
   - id: 11155111 # Sepolia
-    start_block: 10689376
+    start_block: 10891752
     contracts:
       - name: BasketFactory
-        address: 0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4
-        start_block: 10689396
+        address: 0xa9a83c9383da6ea831504f79c68e3230b604145e
+        start_block: 10891752
       - name: VaultAccounting
-        address: 0xb70ce09018bd05d79adfb1b78d9f42156804b269
-        start_block: 10890734
+        address: 0xc4a01a3eada32f8ebe1cc05407cd7ef9c2dc86d8
+        start_block: 10891752
       - name: OracleAdapter
-        address: 0x69329fec8c0ef120ee56379941d8d367b593d399
-        start_block: 10689376
+        address: 0x7edb8cf201d1bfd9e028c94c955fcc161978e7ea
+        start_block: 10891752
       - name: StateRelay
-        address: 0xb837e0d12b16e14c57d829337578ed4111479cd9
-        start_block: 10697053
+        address: 0xa2dcf0b25fce90b5f5d89add2af1ecc101bbcc7d
+        start_block: 10891752
       - name: BasketVault
 
-  - id: 43113 # Avalanche Fuji
-    start_block: 54206983
+  - id: 43113 # Avalanche Fuji (spoke — only BasketFactory + StateRelay emit events)
+    start_block: 55607589
     contracts:
       - name: BasketFactory
-        address: 0x743194baae87a8a518739a1eb71f04773b46d42e
-        start_block: 54329471
-      - name: VaultAccounting
-        address: 0x32e2a385aa9540d5119ceaa2ecf4fd97a1e002e0
-        start_block: 54206983
-      - name: OracleAdapter
-        address: 0x0e07ea10a1ff1412b9d93f7a38b6498edaacf419
-        start_block: 54206983
+        address: 0xb797210b3a6315726bc829599b8b2435fea53c29
+        start_block: 55607589
       - name: StateRelay
-        address: 0x0a564071fb11a0b84314f0b78ac69c5742db22a2
-        start_block: 54370695
+        address: 0xf6fa7d879ef8aeed74b62121c7f8558eece3a515
+        start_block: 55607589
       - name: BasketVault
 
 unordered_multichain_mode: true

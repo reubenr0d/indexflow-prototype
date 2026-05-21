@@ -1,9 +1,0 @@
-{
-  "vaultAddress": "0x672371609170aE7E9C8e5e0E08Ec5819D5190c38",
-  "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:f3ed7103b2af5af38aa1235bdbbaad89b60f77fbcdd23a6b20a9c1bf5305ac0a",
-  "deploymentFingerprint": "sha256:f335f3775c90e14555d6784e7408eb1aa84a4cab089d51df380db3a7fc85adf3",
-  "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
-  "deployedAt": "2026-05-21T10:06:37.212Z",
-  "lastRunAt": "2026-05-21T10:17:01.312Z"
-}
