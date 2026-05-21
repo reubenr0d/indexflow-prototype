@@ -200,8 +200,8 @@ contract VaultAccountingTest is Test {
         gmxVault.setPrice(xauToken, 2200e30);
 
         (int256 unrealised,) = accounting.getVaultPnL(vault1);
-        // 10_000e30 * (2200-2000)/2000 = 10_000e30 * 0.1 = 1000e30
-        assertEq(unrealised, 1000e30);
+        // 10_000 * (2200-2000)/2000 = 10_000 * 0.1 = 1_000 USDC (6-dec)
+        assertEq(unrealised, 1_000e6);
     }
 
     function test_getVaultPnL_twoLegs_sameVault() public {
@@ -226,8 +226,8 @@ contract VaultAccountingTest is Test {
         gmxVault.setPrice(ethToken, 2200e30);
 
         (int256 unrealised,) = accounting.getVaultPnL(vault1);
-        // Each leg: 5_000e30 * 0.1 = 500e30, total = 1000e30
-        assertEq(unrealised, 1000e30);
+        // Each leg: 5_000 * 0.1 = 500 USDC, total = 1_000 USDC (6-dec)
+        assertEq(unrealised, 1_000e6);
     }
 
     function test_getVaultPnL_lossSign() public {
@@ -245,8 +245,8 @@ contract VaultAccountingTest is Test {
         gmxVault.setPrice(xauToken, 1900e30);
 
         (int256 unrealised,) = accounting.getVaultPnL(vault1);
-        // 10_000e30 * (2000-1900)/2000 = 10_000e30 * 0.05 = 500e30 loss
-        assertEq(unrealised, -500e30);
+        // 10_000 * (2000-1900)/2000 = 10_000 * 0.05 = 500 USDC loss (6-dec)
+        assertEq(unrealised, -int256(500e6));
     }
 
     function test_getVaultPnL_afterFullClose() public {
@@ -264,7 +264,7 @@ contract VaultAccountingTest is Test {
         gmxVault.setPrice(xauToken, 2200e30);
 
         (int256 unrealised,) = accounting.getVaultPnL(vault1);
-        assertEq(unrealised, 1000e30);
+        assertEq(unrealised, 1_000e6);
 
         vm.prank(vault1);
         accounting.closePosition(vault1, xau, true, 10_000e30, 0);
@@ -411,14 +411,14 @@ contract VaultAccountingTest is Test {
         // Price rises 10% to $2200
         gmxVault.setPrice(xauToken, 2200e30);
 
-        // Each vault should see PnL proportional to their own size
+        // Each vault should see PnL proportional to their own size (USDC 6-dec)
         // Vault1: 100k * (2200-2000)/2000 = 100k * 0.1 = 10k profit
         // Vault2: 50k * (2200-2000)/2000 = 50k * 0.1 = 5k profit
         (int256 unrealised1,) = accounting.getVaultPnL(vault1);
         (int256 unrealised2,) = accounting.getVaultPnL(vault2);
 
-        assertEq(unrealised1, 10_000e30, "Vault1 should have 10k unrealised profit");
-        assertEq(unrealised2, 5_000e30, "Vault2 should have 5k unrealised profit");
+        assertEq(unrealised1, 10_000e6, "Vault1 should have 10k unrealised profit");
+        assertEq(unrealised2, 5_000e6, "Vault2 should have 5k unrealised profit");
     }
 
     function test_multiVault_repeatedIncrease_blendedAveragePrice() public {
@@ -445,11 +445,11 @@ contract VaultAccountingTest is Test {
         assertEq(pos.collateralUsdc, 10_000e6, "Collateral should be accumulated");
         assertEq(pos.averagePrice, 2100e30, "Average price should be blended");
 
-        // Now at $2200, PnL should be: 100k * (2200-2100)/2100 = ~4761.9
+        // Now at $2200, PnL should be: 100k * (2200-2100)/2100 = ~4761.904761 USDC
         (int256 unrealised,) = accounting.getVaultPnL(vault1);
-        // 100_000e30 * 100e30 / 2100e30 = ~4761.9e30 = ~4.762e33
-        // Expected: 100000 * 100 / 2100 = 4761.904... USD = 4761904761904761904761904761904761 wei (1e30 precision)
-        assertApproxEqRel(unrealised, 4761904761904761904761904761904761, 1e16, "PnL based on blended avg");
+        // 100_000e30 * 100e30 / 2100e30 / 1e24 = floor(100000 * 100 / 2100) USDC 6-dec
+        // Expected: 4761.904761 USDC = 4_761_904_761 micro-USDC
+        assertApproxEqRel(unrealised, int256(uint256(4_761_904_761)), 1e16, "PnL based on blended avg");
     }
 
     function test_multiVault_partialClose_correctProportionalMath() public {

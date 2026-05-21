@@ -228,6 +228,79 @@ Make sure the keeper wallet is authorised as a `keeper()` on each contract it wr
 
 ---
 
+## External cron dispatch
+
+GitHub Actions' built-in `schedule` trigger is best-effort and routinely drops scheduled events. For this repo it has historically delivered scheduled ticks only every ~100 minutes on average even when the cron expression asks for every 5 minutes (verified via the GitHub Actions REST API over the trailing ~100 scheduled runs). To guarantee cadence, all three CI keepers (`update-prices.yml`, `keeper.yml`, `vault-agent.yml`) accept a `repository_dispatch` event in addition to `schedule`, and the canonical way to trigger them is an external scheduler hitting GitHub's REST API.
+
+The `schedule:` blocks on each workflow are kept as a free fallback — they still fire occasionally, just not reliably.
+
+### Step 1 — Create a GitHub Personal Access Token
+
+A fine-grained PAT scoped to this repo with **Actions: Read and Write** is enough.
+
+1. https://github.com/settings/personal-access-tokens/new (fine-grained)
+2. Resource owner: your user (or the org owning the repo)
+3. Repository access → "Only select repositories" → pick `indexflow-prototype`
+4. Permissions → Repository permissions → **Actions: Read and write**
+5. Generate, copy the `github_pat_...` value. Treat as a secret.
+
+A classic PAT with the `repo` scope also works but grants far more than needed; prefer the fine-grained token.
+
+### Step 2 — Register cron jobs in the external scheduler
+
+Any HTTP scheduler works (cron-job.org, Render cron, fly.io scheduled machines, GCP Cloud Scheduler, EventBridge). Configure one job per workflow:
+
+| Workflow | Cadence | `event_type` |
+|----------|---------|--------------|
+| `update-prices.yml` | every 5 min (`*/5 * * * *`) | `update-prices` |
+| `keeper.yml` | every 5 min, offset (`2-59/5 * * * *`) | `keeper-tick` |
+| `vault-agent.yml` | hourly at :18 (`18 * * * *`) | `vault-agent-tick` |
+
+Each job is a single HTTPS request:
+
+- **Method:** `POST`
+- **URL:** `https://api.github.com/repos/<owner>/<repo>/dispatches` (for example `https://api.github.com/repos/reubenr0d/indexflow-prototype/dispatches`)
+- **Headers:**
+  - `Authorization: Bearer <PAT>`
+  - `Accept: application/vnd.github+json`
+  - `X-GitHub-Api-Version: 2022-11-28`
+  - `Content-Type: application/json`
+- **Body:** `{"event_type":"<event_type from the table above>"}`
+
+GitHub returns `204 No Content` on success. Any other status (most commonly `401` for an expired PAT or `404` if the repo/owner is wrong) means no run was created.
+
+### Optional payloads
+
+Only `vault-agent-tick` accepts a payload. To dispatch a single agent instead of the full matrix:
+
+```json
+{"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}
+```
+
+`update-prices` and `keeper-tick` ignore `client_payload` — they always run their full default surface (all networks, all chains).
+
+### Verifying the wiring
+
+Right after registering the external schedules:
+
+```bash
+# Most recent schedule + dispatch runs for each workflow
+gh run list --workflow=update-prices.yml --limit 20 \
+  --json createdAt,event,conclusion --jq '.[] | "\(.createdAt)\t\(.event)\t\(.conclusion)"'
+gh run list --workflow=keeper.yml --limit 20 \
+  --json createdAt,event,conclusion --jq '.[] | "\(.createdAt)\t\(.event)\t\(.conclusion)"'
+gh run list --workflow=vault-agent.yml --limit 20 \
+  --json createdAt,event,conclusion --jq '.[] | "\(.createdAt)\t\(.event)\t\(.conclusion)"'
+```
+
+After one full cadence cycle you should see `event=repository_dispatch` rows arriving on schedule, with `conclusion=success`. The occasional `event=schedule` row will still show up (when GitHub does deliver), and that's expected.
+
+### Why not move price sync off GitHub Actions entirely?
+
+A long-running service (Render/Fly/Railway/Cloud Run) running `scripts/update-yahoo-finance-prices.js` on its own internal timer would be even more reliable and is the standard production setup. The `repository_dispatch` path is intentionally lighter weight — it keeps all secrets, logs, retry behaviour, and concurrency control inside GitHub Actions, so the only thing the external service needs is a PAT and a cron expression. If price-sync latency requirements get tighter than the ~5-minute floor of any external HTTP-based scheduler, switch to a daemon instead.
+
+---
+
 ## Related docs
 
 - [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md) — `StateRelay.updateState()` contract call reference.

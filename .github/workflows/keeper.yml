@@ -7,6 +7,11 @@ on:
   # ~2.5 min of clear runway before the next tick arrives.
   schedule:
     - cron: "2-59/5 * * * *"
+  # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
+  # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
+  # /repos/<owner>/<repo>/dispatches with body {"event_type":"keeper-tick"}.
+  repository_dispatch:
+    types: [keeper-tick]
   workflow_dispatch:
 
 # Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY

@@ -19,6 +19,8 @@ import {IOracleAdapter} from "./interfaces/IOracleAdapter.sol";
 contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     using SafeERC20 for IERC20;
     uint256 private constant FUNDING_RATE_PRECISION = 1_000_000;
+    /// @dev GMX prices/size use 1e30 USD precision; USDC uses 1e6. Divide PnL by this to convert.
+    uint256 private constant PRICE_TO_USDC_SCALE = 1e24;
 
     /// @notice Collateral ERC20 (USDC) pulled from callers and forwarded to the GMX vault.
     IERC20 public immutable usdc;
@@ -418,13 +420,14 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         return _vaultStates[vault];
     }
 
-    /// @notice Aggregate mark-to-market unrealised PnL for all open legs of `vault` (GMX USD precision, ~1e30).
+    /// @notice Aggregate mark-to-market unrealised PnL for all open legs of `vault`, in USDC 6-decimal units.
     /// @param vault Basket vault address.
-    /// @return unrealised Sum of vault-specific price deltas across open legs.
-    /// @return realised Cumulative realised PnL stored on the vault state.
+    /// @return unrealised Sum of vault-specific price deltas across open legs (USDC 6-dec, matches `realised`).
+    /// @return realised Cumulative realised PnL stored on the vault state (USDC 6-dec).
     /// @dev Uses vault-specific entry prices for accurate PnL when multiple vaults share the same GMX position.
     /// Includes accrued funding estimate from cumulative funding rates.
-    /// Skips legs with unmapped `assetTokens`.
+    /// Skips legs with unmapped `assetTokens`. GMX-native 1e30 deltas are scaled down by `PRICE_TO_USDC_SCALE`
+    /// (1e24) so the returned values are directly addable to USDC balances in `BasketVault._pricingNav`.
     function getVaultPnL(address vault) external view override returns (int256 unrealised, int256 realised) {
         realised = _vaultStates[vault].realisedPnL;
 
@@ -444,11 +447,11 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             int256 delta = _calculateDelta(p.size, p.averagePrice, currentPrice, p.isLong);
             unrealised += delta;
 
-            // Funding fee estimate
+            // Funding fee estimate (size in 1e30 GMX-USD; scale down to USDC 6-dec to match `unrealised`).
             uint256 cumulativeFundingRate = _safeCumulativeFundingRate(collateralToken);
             if (cumulativeFundingRate > p.entryFundingRate && p.size > 0) {
                 uint256 fundingRateDelta = cumulativeFundingRate - p.entryFundingRate;
-                uint256 fundingFee = (p.size * fundingRateDelta) / FUNDING_RATE_PRECISION;
+                uint256 fundingFee = (p.size * fundingRateDelta) / FUNDING_RATE_PRECISION / PRICE_TO_USDC_SCALE;
                 unrealised -= int256(fundingFee);
             }
         }
@@ -602,7 +605,7 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
     /// @param avgPrice Average entry price in GMX USD units (~1e30).
     /// @param currentPrice Current market price in GMX USD units (~1e30).
     /// @param isLong True for long position.
-    /// @return Signed PnL delta: positive for profit, negative for loss.
+    /// @return Signed PnL delta in USDC 6-decimal units (`size * priceDiff / avgPrice / PRICE_TO_USDC_SCALE`).
     function _calculateDelta(uint256 size, uint256 avgPrice, uint256 currentPrice, bool isLong)
         internal
         pure
@@ -619,7 +622,8 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
             priceDiff = isLong ? avgPrice - currentPrice : currentPrice - avgPrice;
         }
 
-        uint256 delta = (size * priceDiff) / avgPrice;
+        // Scale 1e30 GMX-USD delta down to USDC 6-dec so callers can add to USDC balances.
+        uint256 delta = (size * priceDiff) / avgPrice / PRICE_TO_USDC_SCALE;
         return hasProfit ? int256(delta) : -int256(delta);
     }
 }

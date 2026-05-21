@@ -3,6 +3,13 @@ name: Update Prices
 on:
   schedule:
     - cron: "*/5 * * * *"
+  # External scheduler (cron-job.org / Cloud Scheduler / etc.) fires this via
+  # POST /repos/<owner>/<repo>/dispatches with body {"event_type":"update-prices"}.
+  # GitHub's `schedule` trigger drops ~95% of intended ticks for this repo (see
+  # docs/KEEPER_OPERATIONS.md "External cron dispatch"), so repository_dispatch
+  # is the primary cadence; `schedule` above is best-effort fallback.
+  repository_dispatch:
+    types: [update-prices]
   pull_request:
   workflow_dispatch:
     inputs:
@@ -34,6 +41,7 @@ jobs:
     # are allowed to run unconditionally to keep this list short.
     if: >-
       github.event_name == 'schedule'
+      || github.event_name == 'repository_dispatch'
       || github.event_name == 'pull_request'
       || github.event_name == 'workflow_dispatch'
     strategy:

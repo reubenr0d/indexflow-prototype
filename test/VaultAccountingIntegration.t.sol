@@ -206,10 +206,11 @@ contract VaultAccountingIntegrationTest is Test {
         (bool hasProfit, uint256 delta) =
             gmxVault.getPositionDelta(address(vaultAccounting), address(usdc), address(gold), true);
         assertTrue(hasProfit, "Long should profit on price increase");
-        assertApproxEqAbs(delta, 1000e30, 1e25, "Profit delta ~$1000");
+        assertApproxEqAbs(delta, 1000e30, 1e25, "Profit delta ~$1000 (GMX 1e30)");
 
+        // VaultAccounting now returns PnL in USDC 6-dec (GMX 1e30 scaled by 1e24).
         (int256 aggUnrealised,) = vaultAccounting.getVaultPnL(basketVault);
-        assertApproxEqAbs(uint256(aggUnrealised), 1000e30, 1e25, "Aggregate unrealised matches GMX delta");
+        assertApproxEqAbs(uint256(aggUnrealised), 1_000e6, 1e3, "Aggregate unrealised matches GMX delta in USDC 6-dec");
 
         // Close the position
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
@@ -243,7 +244,10 @@ contract VaultAccountingIntegrationTest is Test {
         (bool hasProfit, uint256 delta) =
             gmxVault.getPositionDelta(address(vaultAccounting), address(usdc), address(gold), true);
         assertFalse(hasProfit, "Long should lose on price drop");
-        assertApproxEqAbs(delta, 1000e30, 1e25, "Loss delta ~$1000");
+        assertApproxEqAbs(delta, 1000e30, 1e25, "Loss delta ~$1000 (GMX 1e30)");
+
+        (int256 aggUnrealised,) = vaultAccounting.getVaultPnL(basketVault);
+        assertApproxEqAbs(uint256(-aggUnrealised), 1_000e6, 1e3, "Aggregate unrealised loss in USDC 6-dec");
 
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
         vaultAccounting.closePosition(basketVault, GOLD_ID, true, SIZE_DELTA, 0);
@@ -281,7 +285,10 @@ contract VaultAccountingIntegrationTest is Test {
         (bool hasProfit, uint256 delta) =
             gmxVault.getPositionDelta(address(vaultAccounting), address(usdc), address(gold), false);
         assertTrue(hasProfit, "Short should profit on price drop");
-        assertApproxEqAbs(delta, 1000e30, 1e25, "Profit delta ~$1000");
+        assertApproxEqAbs(delta, 1000e30, 1e25, "Profit delta ~$1000 (GMX 1e30)");
+
+        (int256 aggUnrealised,) = vaultAccounting.getVaultPnL(basketVault);
+        assertApproxEqAbs(uint256(aggUnrealised), 1_000e6, 1e3, "Aggregate unrealised profit in USDC 6-dec");
 
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));
         vaultAccounting.closePosition(basketVault, GOLD_ID, false, SIZE_DELTA, 0);

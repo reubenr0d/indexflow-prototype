@@ -1,6 +1,6 @@
 {
   "basketFactory": "0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4",
-  "vaultAccounting": "0xc7aa05ccaea98dc26b8739a19b79875b1432ce43",
+  "vaultAccounting": "0xb70ce09018bD05D79AdFB1B78d9F42156804b269",
   "oracleAdapter": "0x69329fec8c0ef120ee56379941d8d367b593d399",
   "perpReader": "0xc985321ee8d912de9b770fb567d35b7ac0b42c5f",
   "pricingEngine": "0x7137a6d4305c73b554fa4c9aad365b9f5dfd6fca",

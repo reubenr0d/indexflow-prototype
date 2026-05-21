@@ -9,6 +9,13 @@ on:
   # two 5-min crons.
   schedule:
     - cron: "18 * * * *"
+  # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
+  # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
+  # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
+  # The full agent matrix (vault-manager + mining-manager) runs by default;
+  # to dispatch a single agent, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
+  repository_dispatch:
+    types: [vault-agent-tick]
   workflow_dispatch:
     inputs:
       dry_run:
@@ -66,13 +73,18 @@ jobs:
         id: build
         env:
           EVENT_NAME: ${{ github.event_name }}
-          AGENT_INPUT: ${{ github.event.inputs.agent }}
+          # workflow_dispatch passes via inputs; repository_dispatch via
+          # client_payload. Whichever fires populates this; the other is empty.
+          AGENT_INPUT: ${{ github.event.inputs.agent || github.event.client_payload.agent }}
         run: |
           set -euo pipefail
 
           vault_entry='{"agent":"vault-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
           mining_entry='{"agent":"mining-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
 
+          # repository_dispatch may pass a single agent via client_payload.agent;
+          # an empty payload falls through to the existing -z check below and
+          # runs the full matrix exactly like a scheduled tick.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
             include="[${vault_entry},${mining_entry}]"
           elif [ "${AGENT_INPUT}" = "vault-manager" ]; then
@@ -145,8 +157,14 @@ jobs:
     name: Commit all agent outputs
     needs: vault-agent
     # Skip the commit step for ad-hoc override runs so a one-off vault target
-    # never overwrites the agent's canonical state.json on main.
-    if: always() && (github.event_name == 'schedule' || github.event.inputs.vault_address == '')
+    # never overwrites the agent's canonical state.json on main. Scheduled
+    # and external-scheduler (repository_dispatch) ticks always commit.
+    if: >-
+      always() && (
+        github.event_name == 'schedule'
+        || github.event_name == 'repository_dispatch'
+        || github.event.inputs.vault_address == ''
+      )
     runs-on: ubuntu-latest
     permissions:
       contents: write

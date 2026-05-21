@@ -7,6 +7,42 @@ import "../src/vault/BasketShareToken.sol";
 import "../src/vault/MockUSDC.sol";
 import "../src/perp/OracleAdapter.sol";
 import "../src/perp/interfaces/IOracleAdapter.sol";
+import {IPerp} from "../src/perp/interfaces/IPerp.sol";
+
+/// @dev Minimal IPerp mock used to stub `getVaultPnL` returns for `BasketVault._pricingNav` tests.
+/// Values are interpreted in USDC 6-dec (the post-fix contract semantics).
+contract MockPerpForBasket is IPerp {
+    int256 public mockUnrealised;
+    int256 public mockRealised;
+    VaultState internal _state;
+
+    function setPnL(int256 unrealised_, int256 realised_) external {
+        mockUnrealised = unrealised_;
+        mockRealised = realised_;
+    }
+
+    function setVaultState(VaultState memory s) external {
+        _state = s;
+    }
+
+    function getVaultPnL(address) external view returns (int256 unrealised, int256 realised) {
+        return (mockUnrealised, mockRealised);
+    }
+
+    function getVaultState(address) external view returns (VaultState memory) {
+        return _state;
+    }
+
+    function depositCapital(address, uint256) external {}
+    function withdrawCapital(address, uint256) external {}
+    function openPosition(address, bytes32, bool, uint256, uint256) external {}
+    function closePosition(address, bytes32, bool, uint256, uint256) external {}
+    function registerVault(address) external {}
+
+    function isVaultRegistered(address) external pure returns (bool) {
+        return true;
+    }
+}
 
 contract BasketVaultTest is Test {
     BasketVault public vault;
@@ -239,5 +275,41 @@ contract BasketVaultTest is Test {
         assertTrue(returned < amount);
         // But not less than 99% (fees are 0.5% each way = ~1%)
         assertTrue(returned > (amount * 98) / 100);
+    }
+
+    /// @notice Regression for the "Shares too small" revert caused by VaultAccounting returning
+    /// `unrealised` in GMX 1e30 units while `_pricingNav` treated it as USDC 6-dec. After the fix,
+    /// `getVaultPnL.unrealised` is USDC 6-dec, so an open profitable leg should not block deposits.
+    function test_deposit_withOpenProfitableLeg_doesNotRevert() public {
+        // Disable fees so the share math is exact.
+        vault.setFees(0, 0);
+
+        // Seed the vault with a small initial deposit so totalSupply matches the prod scenario
+        // (idle USDC + perpAllocated = baseline NAV).
+        vm.startPrank(alice);
+        usdc.approve(address(vault), 1_000e6);
+        vault.deposit(1_000e6);
+        vm.stopPrank();
+
+        // Wire the mock perp accounting that reports a sizeable positive unrealised PnL in USDC 6-dec.
+        MockPerpForBasket mockPerp = new MockPerpForBasket();
+        vault.setVaultAccounting(address(mockPerp));
+        // $5 of unrealised profit and $1 of realised — both 6-dec.
+        mockPerp.setPnL(int256(uint256(5e6)), int256(uint256(1e6)));
+
+        uint256 totalSupplyBefore = vault.shareToken().totalSupply();
+        uint256 navBefore = vault.getPricingNav();
+        assertEq(navBefore, 1_000e6 + 5e6 + 1e6, "NAV is base + unrealised + realised in USDC 6-dec");
+
+        // Bob deposits the same 9,000 USDC that triggered the production revert.
+        vm.startPrank(bob);
+        usdc.approve(address(vault), 9_000e6);
+        uint256 shares = vault.deposit(9_000e6);
+        vm.stopPrank();
+
+        // sharesMinted = netAmount * totalSupply / navBefore (no fee).
+        uint256 expected = (9_000e6 * totalSupplyBefore) / navBefore;
+        assertEq(shares, expected, "shares match netAmount * totalSupply / NAV");
+        assertGt(shares, 0, "deposit must mint a non-zero share amount");
     }
 }

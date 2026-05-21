@@ -149,16 +149,17 @@ contract PerpReader {
 
     /// @notice Passthrough to `vaultAccounting.getVaultPnL`.
     /// @param vault Basket vault address.
-    /// @return unrealised Aggregate mark-to-market from open legs.
-    /// @return realised Cumulative realised PnL.
+    /// @return unrealised Aggregate mark-to-market from open legs, in USDC 6-decimal units.
+    /// @return realised Cumulative realised PnL, in USDC 6-decimal units.
     function getVaultPnL(address vault) external view returns (int256 unrealised, int256 realised) {
         return vaultAccounting.getVaultPnL(vault);
     }
 
-    /// @notice Mark-to-market basket value: USDC on hand + perp allocation + realised + unrealised PnL (GMX price delta).
+    /// @notice Mark-to-market basket value: USDC on hand + perp allocation + realised + unrealised PnL.
     /// @param basketVault Basket vault address.
-    /// @return Total value floored at zero (USD/USDC units on hand + attributed PnL).
-    /// @dev Unrealised uses GMX `getPositionDelta` aggregate via `VaultAccounting`; excludes funding accrual.
+    /// @return Total value floored at zero, in USDC 6-decimal units.
+    /// @dev `unrealised` and `realised` from `VaultAccounting.getVaultPnL` are USDC 6-dec and directly
+    /// summable with `usdcBalance` and `perpAlloc`; includes the funding-fee estimate but no other accruals.
     function getTotalVaultValue(address basketVault) external view returns (uint256) {
         BasketVault bv = BasketVault(basketVault);
         uint256 usdcBalance = IERC20(address(bv.usdc())).balanceOf(basketVault);

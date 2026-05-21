@@ -60,8 +60,8 @@ networks:
         address: 0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4
         start_block: 10689396
       - name: VaultAccounting
-        address: 0xc7aa05ccaea98dc26b8739a19b79875b1432ce43
-        start_block: 10689378
+        address: 0xb70ce09018bd05d79adfb1b78d9f42156804b269
+        start_block: 10890734
       - name: OracleAdapter
         address: 0x69329fec8c0ef120ee56379941d8d367b593d399
         start_block: 10689376

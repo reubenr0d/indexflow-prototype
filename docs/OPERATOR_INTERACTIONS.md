@@ -201,6 +201,38 @@ reverts:
 
 These functions are controlled by the VaultAccounting contract owner (the protocol operator) and the position caller path. They manage vault registration, risk limits, asset mappings, and the actual position lifecycle.
 
+### Migrating a basket to a new VaultAccounting (rare)
+
+`VaultAccounting` is not upgradeable, so if the deployed instance ships a bug — for example the pre-`getVaultPnL` unit-scaling fix that inflated `BasketVault.getPricingNav` by ~1e24× whenever a perp leg had non-zero unrealised PnL — every affected basket must be rewired onto a freshly deployed instance. The basket address, share token, and share holders are preserved; only the `vaultAccounting` pointer changes.
+
+Runbook (executed by the basket + VA + factory owner; `script/MigrateVaultAccounting.s.sol` automates steps 1–6):
+
+1. **Close every open leg on OLD_VA** for the basket via `VaultAccounting.closePosition(basket, asset, isLong, size, 0)`. This realises PnL into USDC inside OLD_VA. The script iterates `ASSET_IDS` and probes both long/short via `getPositionTracking`.
+2. **Withdraw all available capital** back to the basket via `OLD_VA.withdrawCapital(basket, available)` (basket-owner triggered indirectly through `BasketVault.withdrawFromPerp`, or any caller — funds always land at `basket`). `available = depositedCapital + realisedPnL - collateralLocked`, floored at zero.
+3. **Deploy NEW_VA** with the same `(usdc, gmxVault, oracleAdapter, owner)` constructor args. Skipped by the script if `NEW_VA` env is already set.
+4. **Map every asset** the basket uses via `NEW_VA.mapAssetToken(assetId, indexToken)`.
+5. **Register the basket** via `NEW_VA.registerVault(basket)`.
+6. **Rewire the basket** via `BasketVault.setVaultAccounting(NEW_VA)` (basket owner).
+7. **(Optional) Point the factory at NEW_VA** via `BasketFactory.setVaultAccounting(NEW_VA)` so newly-created baskets wire the patched VA automatically.
+
+Post-migration off-chain updates (manual):
+
+- Update `apps/web/src/config/<chain>-deployment.json` `vaultAccounting` to `NEW_VA`.
+- Update the corresponding `name: VaultAccounting` `address` and `start_block` entry in `apps/envio/config.yaml` for that chain, then restart / redeploy the indexer (`npm run --prefix apps/envio dev:local` for local; `npx envio-cloud …` for hosted).
+- Append a `Smart Contract config` entry to `AGENT_DEPLOYMENT_MEMORY.md` recording the new VA address, owner, and allowed actions.
+
+Example invocation:
+
+```bash
+PATH="/Users/reuben/.foundry/bin:$PATH" \
+BASKET=0x6723... OLD_VA=0xC7aA... USDC=0xf0e4... GMX_VAULT=0x6797... ORACLE_ADAPTER=0x6932... \
+FACTORY=0x9c80... \
+ASSET_IDS=0xaaa...,0xbbb... INDEX_TOKENS=0xccc...,0xddd... \
+forge script script/MigrateVaultAccounting.s.sol:MigrateVaultAccounting \
+  --root /Users/reuben/Desktop/minestarters/code/snx-prototype \
+  --rpc-url $SEPOLIA_RPC_URL --broadcast -vvv
+```
+
 ### `openPosition`
 
 Opens or increases a leveraged perpetual position on a mapped asset. The position is held in VaultAccounting's GMX account, not in the caller's wallet, so PnL is automatically attributed to the basket vault's NAV.

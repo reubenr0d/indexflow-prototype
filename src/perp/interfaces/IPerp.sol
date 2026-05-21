@@ -90,8 +90,10 @@ interface IPerp {
 
     /// @notice Aggregate unrealised (mark-to-market) and realised PnL for `vault`.
     /// @param vault Basket vault address.
-    /// @return unrealised Sum of GMX `getPositionDelta` across open legs (excludes funding accrual).
-    /// @return realised Cumulative realised PnL on the vault state.
+    /// @return unrealised Sum of vault-specific PnL across open legs, in USDC 6-decimal units
+    /// (GMX 1e30 deltas scaled down by 1e24); includes a funding-fee estimate.
+    /// @return realised Cumulative realised PnL on the vault state, in USDC 6-decimal units.
+    /// @dev Both values share the same unit so they can be summed and added to USDC balances directly.
     function getVaultPnL(address vault) external view returns (int256 unrealised, int256 realised);
 
     /// @notice Register a basket vault so it may deposit capital and trade.
