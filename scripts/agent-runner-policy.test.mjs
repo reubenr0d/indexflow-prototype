@@ -8,6 +8,7 @@ const {
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   validatePolicyWriteBatch,
+  computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
 } = __agentRunnerInternals;
 
@@ -250,4 +251,293 @@ test("parseWriteConfirmationCommand defaults empty input to approve", () => {
     input: "reject",
     command: "reject",
   });
+});
+
+// ---------------------------------------------------------------------------
+// long_short / short_only direction support
+// ---------------------------------------------------------------------------
+
+test("parseAgentPolicy accepts entryDirection: long_short with maxNewShortsPerRun", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  assert.equal(policy.entryDirection, "long_short");
+  assert.equal(policy.maxNewShortsPerRun, 1);
+});
+
+test("parseAgentPolicy accepts entryDirection: short_only", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "none",
+    entryDirection: "short_only",
+    maxNewPositionsPerRun: 2,
+    maxNewShortsPerRun: 2,
+  });
+  assert.equal(policy.entryDirection, "short_only");
+});
+
+test("parseAgentPolicy rejects unknown entryDirection", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryDirection: "double_long",
+        maxNewPositionsPerRun: 3,
+      }),
+    /Invalid entryDirection/,
+  );
+});
+
+test("parseAgentPolicy rejects maxNewShortsPerRun > maxNewPositionsPerRun", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryDirection: "long_short",
+        maxNewPositionsPerRun: 2,
+        maxNewShortsPerRun: 3,
+      }),
+    /maxNewShortsPerRun.*<= maxNewPositionsPerRun/,
+  );
+});
+
+test("parseAgentPolicy rejects maxNewShortsPerRun > 0 in long_only mode", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryDirection: "long_only",
+        maxNewPositionsPerRun: 3,
+        maxNewShortsPerRun: 1,
+      }),
+    /must be 0 when entryDirection is 'long_only'/,
+  );
+});
+
+test("validatePolicyWriteBatch allows a mixed long+short batch in long_short mode", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const result = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [
+      { assetId: "0xLONG1", symbol: "GSR.V" },
+      { assetId: "0xLONG2", symbol: "PWM.V" },
+    ],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: true, assetId: "0xLONG1" } },
+        { originalName: "open_position", args: { isLong: false, assetId: "0xSHORT1" } },
+      ],
+    },
+  });
+  assert.equal(result, null);
+});
+
+test("validatePolicyWriteBatch in long_short mode rejects a long open outside the eligible set", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const result = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [{ assetId: "0xLONG1", symbol: "GSR.V" }],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: true, assetId: "0xUNKNOWN" } },
+      ],
+    },
+  });
+  assert.match(result, /long open_position assetId is not in the current eligible set/);
+});
+
+test("validatePolicyWriteBatch in long_short mode enforces the short cap", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const result = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 1,
+    eligibleAssets: [{ assetId: "0xLONG1", symbol: "GSR.V" }],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: false, assetId: "0xSHORT2" } },
+      ],
+    },
+  });
+  assert.match(result, /maxNewShortsPerRun=1/);
+});
+
+test("validatePolicyWriteBatch in short_only mode rejects long opens and skips long-eligibility check", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "none",
+    entryDirection: "short_only",
+    maxNewPositionsPerRun: 2,
+    maxNewShortsPerRun: 2,
+  });
+
+  const longViolation = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: true, assetId: "0xL" } },
+      ],
+    },
+  });
+  assert.match(longViolation, /only short positions/);
+
+  const okShortBatch = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [],
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: false, assetId: "0xS1" } },
+      ],
+    },
+  });
+  assert.equal(okShortBatch, null);
+});
+
+test("computeAutoRebalanceClosures in long_short mode does not close shorts outside the ML top-N", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const positions = [
+    { exists: true, isLong: true, symbol: "GSR.V", assetId: "0xLONG_KEEP" },
+    { exists: true, isLong: true, symbol: "DROPPED.V", assetId: "0xLONG_DROP" },
+    { exists: true, isLong: false, symbol: "BADCO.V", assetId: "0xSHORT" },
+  ];
+  const eligibleSymbols = ["GSR.V", "PWM.V"];
+
+  const closures = computeAutoRebalanceClosures({
+    policy,
+    positions,
+    eligibleSymbols,
+    minScore: 85,
+    cap: 12,
+  });
+
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xLONG_DROP");
+  assert.match(closures[0].reason, /dropped from ML top-12/);
+});
+
+test("computeAutoRebalanceClosures in long_only mode still closes any short leg", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const positions = [
+    { exists: true, isLong: false, symbol: "GSR.V", assetId: "0xSHORT_LEG" },
+    { exists: true, isLong: true, symbol: "GSR.V", assetId: "0xLONG_KEEP" },
+  ];
+  const eligibleSymbols = ["GSR.V"];
+
+  const closures = computeAutoRebalanceClosures({
+    policy,
+    positions,
+    eligibleSymbols,
+    minScore: 85,
+    cap: 12,
+  });
+
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xSHORT_LEG");
+  assert.match(closures[0].reason, /closing short leg/);
+});
+
+test("computeAutoRebalanceClosures in short_only mode closes any long leg", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "none",
+    entryDirection: "short_only",
+    maxNewPositionsPerRun: 2,
+    maxNewShortsPerRun: 2,
+  });
+
+  const positions = [
+    { exists: true, isLong: true, symbol: "GSR.V", assetId: "0xLONG_LEG" },
+    { exists: true, isLong: false, symbol: "BADCO.V", assetId: "0xSHORT_KEEP" },
+  ];
+
+  const closures = computeAutoRebalanceClosures({
+    policy,
+    positions,
+    eligibleSymbols: [],
+    minScore: 0,
+    cap: 12,
+  });
+
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xLONG_LEG");
+  assert.match(closures[0].reason, /closing long leg/);
 });

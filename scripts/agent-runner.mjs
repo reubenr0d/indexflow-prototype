@@ -197,6 +197,7 @@ function parseAgentPolicy(frontmatter) {
     frontmatter.entryMlScoreMin !== undefined ||
     frontmatter.entryDirection !== undefined ||
     frontmatter.maxNewPositionsPerRun !== undefined ||
+    frontmatter.maxNewShortsPerRun !== undefined ||
     frontmatter.maxTrackedAssets !== undefined ||
     frontmatter.positionSizingMode !== undefined ||
     frontmatter.rebalanceMode !== undefined;
@@ -211,6 +212,7 @@ function parseAgentPolicy(frontmatter) {
       entryMlScoreMin: 0,
       entryDirection: "long_only",
       maxNewPositionsPerRun: 0,
+      maxNewShortsPerRun: 0,
       maxTrackedAssets: 0,
       positionSizingMode: "model_decides",
       rebalanceMode: "none",
@@ -224,6 +226,7 @@ function parseAgentPolicy(frontmatter) {
   const entryMlScoreMin = Number(frontmatter.entryMlScoreMin ?? 0);
   const entryDirection = String(frontmatter.entryDirection ?? "long_only");
   const maxNewPositionsPerRun = Number(frontmatter.maxNewPositionsPerRun ?? 0);
+  const maxNewShortsPerRun = Number(frontmatter.maxNewShortsPerRun ?? 0);
   const maxTrackedAssets = Number(frontmatter.maxTrackedAssets ?? 0);
   const positionSizingMode = String(frontmatter.positionSizingMode ?? "model_decides");
   const rebalanceMode = String(frontmatter.rebalanceMode ?? "none");
@@ -243,11 +246,26 @@ function parseAgentPolicy(frontmatter) {
   if (!Number.isFinite(entryMlScoreMin) || entryMlScoreMin < 0 || entryMlScoreMin > 100) {
     throw new Error("Invalid entryMlScoreMin; expected 0..100");
   }
-  if (!["long_only"].includes(entryDirection)) {
-    throw new Error("Invalid entryDirection; currently only 'long_only' is supported");
+  if (!["long_only", "short_only", "long_short"].includes(entryDirection)) {
+    throw new Error(
+      "Invalid entryDirection; expected 'long_only', 'short_only', or 'long_short'",
+    );
   }
   if (!Number.isFinite(maxNewPositionsPerRun) || maxNewPositionsPerRun < 0) {
     throw new Error("Invalid maxNewPositionsPerRun; expected >= 0");
+  }
+  if (!Number.isFinite(maxNewShortsPerRun) || maxNewShortsPerRun < 0) {
+    throw new Error("Invalid maxNewShortsPerRun; expected >= 0");
+  }
+  if (maxNewShortsPerRun > maxNewPositionsPerRun) {
+    throw new Error(
+      "Invalid maxNewShortsPerRun; must be <= maxNewPositionsPerRun (the combined cap)",
+    );
+  }
+  if (entryDirection === "long_only" && maxNewShortsPerRun > 0) {
+    throw new Error(
+      "Invalid maxNewShortsPerRun; must be 0 when entryDirection is 'long_only'",
+    );
   }
   if (!Number.isFinite(maxTrackedAssets) || maxTrackedAssets < 0) {
     throw new Error("Invalid maxTrackedAssets; expected >= 0");
@@ -265,6 +283,7 @@ function parseAgentPolicy(frontmatter) {
     entryMlScoreMin,
     entryDirection,
     maxNewPositionsPerRun,
+    maxNewShortsPerRun,
     maxTrackedAssets,
     positionSizingMode,
     rebalanceMode,
@@ -876,10 +895,58 @@ function getEligibleMlScoreAssets({ policy, vaultState, oracleAssets, mlPicks })
   return deduped;
 }
 
+// Pure decision helper for the deterministic pre-LLM auto-rebalance pass.
+// Given the list of open positions and the current Atlas ML top-N (as a set
+// of eligible Yahoo symbols), returns the closures the runner should
+// execute. Behaviour by direction:
+//
+//   - long_only: any short leg is closed (cleanup), and any long leg whose
+//     symbol dropped out of the top-N is closed.
+//   - long_short: only long legs are checked against the top-N. Short legs
+//     are entirely owned by the LLM's TP/SL decisions and are never auto-
+//     closed here.
+//   - short_only: shorts are not gated by the long-side top-N, and any long
+//     leg is closed (cleanup).
+function computeAutoRebalanceClosures({ policy, positions, eligibleSymbols, minScore, cap }) {
+  const direction = policy?.entryDirection || "long_only";
+  const eligible = new Set(
+    Array.from(eligibleSymbols || []).map((s) => String(s || "").toUpperCase()),
+  );
+  const closures = [];
+  for (const pos of positions || []) {
+    if (!pos?.exists) continue;
+
+    if (direction === "long_only" && pos.isLong === false) {
+      closures.push({ pos, reason: "long_only policy: closing short leg" });
+      continue;
+    }
+    if (direction === "short_only" && pos.isLong === true) {
+      closures.push({ pos, reason: "short_only policy: closing long leg" });
+      continue;
+    }
+
+    // Atlas ML top-N is a long-side signal. Only apply the
+    // "dropped from ML top-N" auto-exit to long legs. Shorts are
+    // entirely owned by the LLM's TP/SL decisions.
+    if (pos.isLong !== true) continue;
+
+    const symbol = String(pos.symbol || "").toUpperCase();
+    if (!symbol) continue;
+    if (!eligible.has(symbol)) {
+      closures.push({
+        pos,
+        reason: `dropped from ML top-${cap} (score < ${minScore})`,
+      });
+    }
+  }
+  return closures;
+}
+
 function validatePolicyWriteBatch({
   classified,
   policy,
   opensExecutedSoFar,
+  shortOpensExecutedSoFar = 0,
   eligibleAssets,
 }) {
   if (!policy?.enabled || !classified?.hasWriteCalls) return null;
@@ -887,30 +954,55 @@ function validatePolicyWriteBatch({
   const openCalls = classified.writeCalls.filter((c) => c.originalName === "open_position");
   if (openCalls.length === 0) return null;
 
+  // Direction gating: enforce per-direction rules. The Atlas-ML eligibility
+  // check below applies only to long opens, since Atlas ranks longs and
+  // shorts are LLM-judged from news context.
   if (policy.entryDirection === "long_only") {
     for (const call of openCalls) {
       if (call.args?.isLong !== true) {
-        return "Policy violation: only long positions are allowed. Revise open_position calls with isLong=true.";
+        return "Policy violation: only long positions are allowed (entryDirection=long_only). Revise open_position calls with isLong=true.";
+      }
+    }
+  } else if (policy.entryDirection === "short_only") {
+    for (const call of openCalls) {
+      if (call.args?.isLong !== false) {
+        return "Policy violation: only short positions are allowed (entryDirection=short_only). Revise open_position calls with isLong=false.";
       }
     }
   }
 
+  const longOpenCalls = openCalls.filter((c) => c.args?.isLong === true);
+  const shortOpenCalls = openCalls.filter((c) => c.args?.isLong === false);
+
   const maxOpens = Math.max(0, Number(policy.maxNewPositionsPerRun || 0));
   if (opensExecutedSoFar + openCalls.length > maxOpens) {
-    return `Policy violation: proposed open_position calls exceed maxNewPositionsPerRun=${maxOpens}.`;
+    return `Policy violation: proposed open_position calls exceed maxNewPositionsPerRun=${maxOpens} (combined long+short cap).`;
   }
+
+  const maxShorts = Math.max(0, Number(policy.maxNewShortsPerRun || 0));
+  if (
+    policy.entryDirection !== "long_only" &&
+    shortOpensExecutedSoFar + shortOpenCalls.length > maxShorts
+  ) {
+    return `Policy violation: proposed short open_position calls exceed maxNewShortsPerRun=${maxShorts}.`;
+  }
+
+  // The Atlas-ML / momentum eligibility filter applies only to long opens.
+  // Shorts are gated by direction + count caps + the agent's own news
+  // judgment, not by the long-side eligibility set.
+  if (longOpenCalls.length === 0) return null;
 
   const filterLabel =
     policy.entryMode === "ml_score" ? "Atlas ML score" : "momentum+volume";
 
   const eligibleIds = new Set((eligibleAssets || []).map((a) => String(a.assetId).toLowerCase()));
-  if (eligibleIds.size === 0 && openCalls.length > 0) {
-    return `Policy violation: no assets currently meet ${filterLabel} criteria, so do not open new positions.`;
+  if (eligibleIds.size === 0) {
+    return `Policy violation: no assets currently meet ${filterLabel} criteria, so do not open new long positions.`;
   }
-  for (const call of openCalls) {
+  for (const call of longOpenCalls) {
     const assetId = String(call.args?.assetId || "").toLowerCase();
     if (!eligibleIds.has(assetId)) {
-      return `Policy violation: open_position assetId is not in the current eligible set from ${filterLabel} filtering.`;
+      return `Policy violation: long open_position assetId is not in the current eligible set from ${filterLabel} filtering.`;
     }
   }
 
@@ -1011,7 +1103,10 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
       prompt += `\n- Entry trigger: dayChangePct >= ${config.policy.entryMomentumPctMin} and volume >= ${config.policy.entryVolumeMin}`;
     }
     prompt += `\n- Direction: ${config.policy.entryDirection}`;
-    prompt += `\n- Max new positions per run: ${config.policy.maxNewPositionsPerRun}`;
+    prompt += `\n- Max new positions per run (combined): ${config.policy.maxNewPositionsPerRun}`;
+    if (config.policy.entryDirection === "long_short") {
+      prompt += `\n- Max new SHORTS per run (subset of combined cap): ${config.policy.maxNewShortsPerRun}`;
+    }
     prompt += `\n- Position sizing: ${config.policy.positionSizingMode}`;
   }
 
@@ -1291,6 +1386,7 @@ export async function runAgent(agentName) {
     latestQuotes: null,
     latestMlPicks: null,
     opensExecuted: 0,
+    shortOpensExecuted: 0,
     allocationWritesExecuted: 0,
     enforcementRounds: 0,
   };
@@ -1416,6 +1512,7 @@ export async function runAgent(agentName) {
       entryMlScoreMin: config.policy?.entryMlScoreMin || 0,
       entryDirection: config.policy?.entryDirection || "long_only",
       maxNewPositionsPerRun: config.policy?.maxNewPositionsPerRun || 0,
+      maxNewShortsPerRun: config.policy?.maxNewShortsPerRun || 0,
       maxTrackedAssets: config.policy?.maxTrackedAssets || 0,
       positionSizingMode: config.policy?.positionSizingMode || "model_decides",
       rebalanceMode: config.policy?.rebalanceMode || "none",
@@ -1427,6 +1524,7 @@ export async function runAgent(agentName) {
       allocationWritesExecuted: 0,
       entryTriggered: false,
       opensExecuted: 0,
+      shortOpensExecuted: 0,
       autoExitsClosed: 0,
       autoExitsAttempted: 0,
     },
@@ -1571,6 +1669,9 @@ export async function runAgent(agentName) {
         }
         if (originalName === "open_position" && parsed?.success === true) {
           policyRuntime.opensExecuted += 1;
+          if (call.args?.isLong === false) {
+            policyRuntime.shortOpensExecuted += 1;
+          }
         }
 
         // --- Vault address capture ---
@@ -1687,19 +1788,13 @@ export async function runAgent(agentName) {
             .filter(Boolean),
         );
 
-        const closures = [];
-        for (const pos of positions) {
-          if (!pos?.exists) continue;
-          if (policy.entryDirection === "long_only" && !pos.isLong) {
-            closures.push({ pos, reason: "long_only policy: closing short leg" });
-            continue;
-          }
-          const symbol = String(pos.symbol || "").toUpperCase();
-          if (!symbol) continue;
-          if (!eligibleSymbols.has(symbol)) {
-            closures.push({ pos, reason: `dropped from ML top-${cap} (score < ${minScore})` });
-          }
-        }
+        const closures = computeAutoRebalanceClosures({
+          policy,
+          positions,
+          eligibleSymbols,
+          minScore,
+          cap,
+        });
 
         runSummary.policyDiagnostics.autoExitsAttempted = closures.length;
         if (closures.length === 0) {
@@ -1784,6 +1879,7 @@ export async function runAgent(agentName) {
       runSummary.policyDiagnostics.allocationRequiredRaw = allocationAmountRaw.toString();
       runSummary.policyDiagnostics.allocationWritesExecuted = policyRuntime.allocationWritesExecuted;
       runSummary.policyDiagnostics.opensExecuted = policyRuntime.opensExecuted;
+      runSummary.policyDiagnostics.shortOpensExecuted = policyRuntime.shortOpensExecuted;
       runSummary.policyDiagnostics.allocationTriggered =
         policyRuntime.allocationWritesExecuted > 0 || allocationAmountRaw > 0n;
       runSummary.policyDiagnostics.entryTriggered =
@@ -1794,6 +1890,7 @@ export async function runAgent(agentName) {
           classified,
           policy: config.policy,
           opensExecutedSoFar: policyRuntime.opensExecuted,
+          shortOpensExecutedSoFar: policyRuntime.shortOpensExecuted,
           eligibleAssets,
         });
         if (violation) {
@@ -2158,6 +2255,7 @@ export const __agentRunnerInternals = {
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   validatePolicyWriteBatch,
+  computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
   extractThesis,
   publishAgentMetadata,

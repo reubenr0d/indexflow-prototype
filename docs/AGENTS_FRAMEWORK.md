@@ -105,8 +105,9 @@ your vault positions based on market conditions.
 | `entryMode` | no | `none` | Entry policy mode (`none` or `momentum_volume`) |
 | `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating |
 | `entryVolumeMin` | no | `0` | Minimum Yahoo quote volume threshold for entry gating |
-| `entryDirection` | no | `long_only` | Allowed entry direction (currently `long_only`) |
-| `maxNewPositionsPerRun` | no | `0` | Hard cap on new `open_position` writes per run |
+| `entryDirection` | no | `long_only` | Allowed entry direction. One of `long_only`, `short_only`, `long_short`. In `long_short` mode the runner gates long opens against the entry-mode eligibility set (Atlas top-N or momentum+volume), but short opens are LLM-judged from news context and are not gated by that set. |
+| `maxNewPositionsPerRun` | no | `0` | Hard cap on combined long+short new `open_position` writes per run |
+| `maxNewShortsPerRun` | no | `0` | Hard cap on new short `open_position` writes per run (subset of `maxNewPositionsPerRun`). Must be `0` when `entryDirection: long_only`, must be `<= maxNewPositionsPerRun` otherwise. |
 | `positionSizingMode` | no | `model_decides` | Position sizing policy (`model_decides`) |
 
 ### Prompt Structure
@@ -288,7 +289,7 @@ Wraps the Atlas mining-stock ML engine (default `https://atlas.minestarters.com`
 | `get_ml_basket` | Top-N basket enriched with cash/debt/EV/jurisdiction | `n`, `tag` |
 | `get_ml_thesis` | Claude-generated investment thesis on the current basket (use sparingly) | `n`, `tag` |
 
-The agent runner's `entryMode: ml_score` policy uses `get_ml_top_picks` as the eligibility signal. When `rebalanceMode: track_top_n` is set, a deterministic pre-LLM pass closes any open position whose underlying ticker has dropped out of the latest top-N.
+The agent runner's `entryMode: ml_score` policy uses `get_ml_top_picks` as the long-side eligibility signal. When `rebalanceMode: track_top_n` is set, a deterministic pre-LLM pass closes any **long** position whose underlying ticker has dropped out of the latest top-N. In `long_short` mode the pass only ever touches long legs — short legs are entirely owned by the LLM's TP/SL decisions, so the model can run a news-driven short overlay alongside the Atlas long basket.
 
 ### On-Chain Reads (vault-manager-mcp)
 

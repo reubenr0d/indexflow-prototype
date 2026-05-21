@@ -60,6 +60,15 @@ For equities, prefer exchange-suffixed Yahoo symbols (`BHP.AX`, `RIO.AX`, `BHP.L
 5. Execute via `close_position`, `open_position`, `allocate_to_perp`, `withdraw_from_perp`
 6. `get_vault_state({ vault: "<vault>" })` — verify final state
 
+### Long vs short legs
+
+Every perp position is keyed by `(vault, assetId, isLong)`, so a long and a short on the **same** asset are independent positions:
+
+- `get_position_tracking` returns one position per `isLong` value. To get the full picture for an asset you call it twice (`isLong: true` and `isLong: false`); `list_open_positions` already does this for every tracked asset.
+- `open_position({ ..., isLong: false })` opens a short. Increasing an existing short uses the same call with the same `isLong: false`.
+- `close_position` requires the same `isLong` as the leg being closed; you cannot net a long against a short with one call.
+- Whether the agent is *allowed* to open shorts is a policy concern, controlled by the `entryDirection` (`long_only` / `short_only` / `long_short`) and `maxNewShortsPerRun` frontmatter fields enforced by the runner — see `docs/AGENTS_FRAMEWORK.md`. The MCP tools themselves accept either direction.
+
 ### Vault deployment
 
 1. `create_vault({ name: "<name>", depositFeeBps: <fee>, redeemFeeBps: <fee> })`
