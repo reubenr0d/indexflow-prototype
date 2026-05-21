@@ -53,6 +53,8 @@ The keeper reads `config/chains.json` at startup and skips any chain that lacks 
 
 `StateRelay.updateState()` transactions on every chain are signed directly with `PRIVATE_KEY` via ethers. There is no external relayer. Make sure the keeper wallet is configured as the keeper on each `StateRelay`:
 
+> **Security note:** the vault-manager MCP (`apps/mcps/vault-manager/index.js`) and `scripts/update-yahoo-finance-prices.js` invoke `cast send` with the keeper key passed via the `ETH_PRIVATE_KEY` environment variable rather than `--private-key <hex>` on the argv, so the secret never lands in `Error.message` if a transaction reverts. A shared redactor at `scripts/lib/redact-secrets.mjs` is also applied to every text path that leaves the agent runner (MCP responses, OpenAI messages, run-log entries committed back to git, and the agent metadata file) as defence-in-depth.
+
 ```bash
 cast call <StateRelay> "keeper()(address)" --rpc-url <rpc>
 # if it doesn't match the keeper wallet:

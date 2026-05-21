@@ -18,7 +18,7 @@ writeTools:
 vaultName: Vault Manager Basket
 depositFeeBps: 50
 redeemFeeBps: 50
-maxTurns: 25
+maxTurns: 40
 temperature: 0.2
 autoAllocateTargetBps: 3000
 entryMode: momentum_volume

@@ -143,7 +143,7 @@ jobs:
           # (create_vault, etc.) — see shouldSkipWritesForNonInteractiveSession
           # in scripts/agent-runner-confirmation.mjs.
           AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
-          AGENT_MAX_TURNS: "20"
+          AGENT_MAX_TURNS: "40"
           AGENT_NETWORK: ${{ matrix.network }}
           AGENT_VAULT_OVERRIDE: ${{ github.event.inputs.vault_address }}
         run: node scripts/agent-runner.mjs ${{ matrix.agent }}

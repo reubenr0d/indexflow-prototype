@@ -18,11 +18,39 @@ function toBool(value) {
   return value === "1" || value.toLowerCase() === "true" || value.toLowerCase() === "yes";
 }
 
-function runCast(args, inherit = false) {
-  const options = inherit
-    ? { stdio: "inherit" }
-    : { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] };
-  return execFileSync("cast", args, options);
+// Redactor is loaded lazily so this CommonJS script can pull from the ESM
+// helper. Set in main() before any potentially-failing cast invocation.
+let _redactSecrets = (s) => s;
+
+// SECURITY: never put the keeper private key on the cast argv. When `cast`
+// reverts, Node's `execFileSync` embeds the full argv in `Error.message`. We
+// pass the key via the `ETH_PRIVATE_KEY` env (which `cast --help` documents as
+// the default source for `--private-key`) and redact any leaked output as
+// defense-in-depth.
+function runCast(args, { sensitive = false, echo = false } = {}) {
+  const env = sensitive && process.env.PRIVATE_KEY
+    ? { ...process.env, ETH_PRIVATE_KEY: process.env.PRIVATE_KEY }
+    : process.env;
+  try {
+    const out = execFileSync("cast", args, {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+      env,
+    });
+    if (echo && out) {
+      process.stdout.write(_redactSecrets(out));
+    }
+    return out;
+  } catch (err) {
+    const safeMessage = _redactSecrets(err.message || String(err));
+    const safeStdout = err.stdout ? _redactSecrets(String(err.stdout)) : "";
+    const safeStderr = err.stderr ? _redactSecrets(String(err.stderr)) : "";
+    if (safeStdout) process.stdout.write(safeStdout);
+    if (safeStderr) process.stderr.write(safeStderr);
+    const wrapped = new Error(safeMessage);
+    if (err.code) wrapped.code = err.code;
+    throw wrapped;
+  }
 }
 
 function loadRootEnv() {
@@ -141,6 +169,9 @@ function toRawPrice(usdPrice) {
 async function main() {
   loadRootEnv();
 
+  const redactMod = await import("./lib/redact-secrets.mjs");
+  _redactSecrets = redactMod.redactSecrets;
+
   const deploymentConfigPath = resolvePath(process.env.DEPLOYMENT_CONFIG, DEFAULT_DEPLOYMENT_CONFIG);
   const rpcUrl = process.env.RPC_URL ?? DEFAULT_RPC_URL;
   const dryRun = toBool(process.env.DRY_RUN);
@@ -234,24 +265,23 @@ async function main() {
       "send", oracleAdapter,
       "submitPrices(bytes32[],uint256[])",
       assetIdArg, pricesArg,
-      "--private-key", privateKey,
       "--rpc-url", rpcUrl,
     ],
-    true
+    { sensitive: true, echo: true },
   );
 
   runCast(
     [
       "send", priceSync,
       "syncAll()",
-      "--private-key", privateKey,
       "--rpc-url", rpcUrl,
     ],
-    true
+    { sensitive: true, echo: true },
   );
 }
 
 main().catch((error) => {
-  console.error(error.message || error);
+  const msg = error?.message || String(error);
+  console.error(_redactSecrets(msg));
   process.exit(1);
 });

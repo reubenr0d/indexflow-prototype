@@ -23,7 +23,11 @@ import {BasketFactory} from "../src/vault/BasketFactory.sol";
 ///  5. Registers the basket on the new VA.
 ///  6. Calls `BASKET.setVaultAccounting(NEW_VA)`.
 ///  7. (Optional) Also updates `BasketFactory.setVaultAccounting(NEW_VA)` so newly-created baskets
-///     pick up the patched VA automatically.
+///     pick up the patched VA automatically, AND grants the factory the `wirer` role on NEW_VA
+///     so `BasketFactory.createBasket` can call `IPerp(NEW_VA).registerVault(newBasket)` (which
+///     is `onlyOwnerOrWirer` on `VaultAccounting`). Without this grant every `create_vault` would
+///     revert and silently strand agents on their previous vault (or worse, on someone else's
+///     vault if the agent has no prior history).
 ///
 /// Required env:
 ///   PRIVATE_KEY    - deployer/signer key; must currently own OLD_VA, BASKET, and (optionally) FACTORY.
@@ -122,6 +126,15 @@ contract MigrateVaultAccounting is Script {
             address factory = vm.envAddress("FACTORY");
             BasketFactory(factory).setVaultAccounting(newVa);
             console2.log("BasketFactory.setVaultAccounting(NEW_VA) done");
+
+            // BasketFactory.createBasket calls NEW_VA.registerVault(newBasket) which is
+            // onlyOwnerOrWirer. The original Deploy.s.sol granted this role; without
+            // mirroring it here every future create_vault would revert with "Not authorized"
+            // until manually restored.
+            if (!VaultAccounting(newVa).wirers(factory)) {
+                VaultAccounting(newVa).setWirer(factory, true);
+                console2.log("VaultAccounting.setWirer(factory, true) on NEW_VA");
+            }
         }
 
         vm.stopBroadcast();

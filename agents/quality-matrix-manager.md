@@ -20,7 +20,7 @@ writeTools:
 vaultName: Minestarters Quality Matrix
 depositFeeBps: 50
 redeemFeeBps: 50
-maxTurns: 20
+maxTurns: 35
 temperature: 0.25
 autoAllocateTargetBps: 5000
 entryMode: quality_score

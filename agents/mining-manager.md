@@ -16,7 +16,7 @@ writeTools:
 vaultName: Minestarters ML Picks
 depositFeeBps: 50
 redeemFeeBps: 50
-maxTurns: 18
+maxTurns: 35
 temperature: 0.3
 autoAllocateTargetBps: 5000
 entryMode: ml_score

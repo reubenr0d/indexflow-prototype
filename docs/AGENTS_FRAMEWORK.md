@@ -59,7 +59,7 @@ writeTools:
 vaultName: Gold Trading Vault
 depositFeeBps: 50
 redeemFeeBps: 50
-maxTurns: 15
+maxTurns: 35
 temperature: 0.3
 autoAllocateTargetBps: 3000
 entryMode: momentum_volume
@@ -99,7 +99,7 @@ your vault positions based on market conditions.
 | `vaultName` | no | agent name | Name for the auto-deployed vault |
 | `depositFeeBps` | no | `50` | Vault deposit fee in basis points |
 | `redeemFeeBps` | no | `50` | Vault redeem fee in basis points |
-| `maxTurns` | no | `20` | Max agent loop iterations |
+| `maxTurns` | no | `40` | Max agent loop iterations |
 | `temperature` | no | `0.2` | LLM temperature |
 | `autoAllocateTargetBps` | no | `0` | Auto-allocate this share (bps) of `availableForPerp` before summary |
 | `entryMode` | no | `none` | Entry policy mode. One of `none`, `momentum_volume`, `ml_score`, or `quality_score` |

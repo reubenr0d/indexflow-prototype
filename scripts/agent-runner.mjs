@@ -56,6 +56,7 @@ import {
   shouldSkipWritesForNonInteractiveSession,
   isInteractiveTty,
 } from "./agent-runner-confirmation.mjs";
+import { redactSecrets, redactSecretsDeep } from "./lib/redact-secrets.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, "..");
@@ -693,7 +694,10 @@ function computeRetryWaitMs({
   return clamp(jittered);
 }
 
-async function chatCompletion(messages, tools, temperature) {
+// Optional `stats` accumulator: if provided, retry count + total wait time are
+// added to it so the caller can surface the wall-clock cost of 429/5xx retries
+// separately from the agent turn counter (retries never consume turns).
+async function chatCompletion(messages, tools, temperature, stats = null) {
   const endpoint = `${LLM_BASE_URL}/chat/completions`;
   const body = { model: LLM_MODEL, messages, tools, temperature };
 
@@ -741,6 +745,10 @@ async function chatCompletion(messages, tools, temperature) {
       console.log(
         `  ${label}, waiting ${waitMs}ms before retry ${attempt + 2}/${RETRY_ATTEMPTS} (${hint})...`
       );
+      if (stats) {
+        stats.retryCount = (stats.retryCount || 0) + 1;
+        stats.retryWaitMs = (stats.retryWaitMs || 0) + waitMs;
+      }
       await new Promise((r) => setTimeout(r, waitMs));
     } catch (err) {
       if (err === lastError) throw err;
@@ -753,6 +761,10 @@ async function chatCompletion(messages, tools, temperature) {
       console.log(
         `  LLM error: ${err.message}, waiting ${waitMs}ms before retry ${attempt + 2}/${RETRY_ATTEMPTS}...`
       );
+      if (stats) {
+        stats.retryCount = (stats.retryCount || 0) + 1;
+        stats.retryWaitMs = (stats.retryWaitMs || 0) + waitMs;
+      }
       await new Promise((r) => setTimeout(r, waitMs));
     }
   }
@@ -1195,6 +1207,36 @@ function extractVaultAddressFromCreateVaultResponse(content) {
   return null;
 }
 
+// Pure helper for executeToolCall: inspects an MCP tool response and, if it
+// signals failure via the MCP `isError: true` convention, records it on the
+// shared run summary + policy runtime. Returns true iff the response was an
+// error, so the caller can branch (e.g. skip vault-address capture from a
+// follow-up get_all_vaults). Exported via __agentRunnerInternals for tests.
+function recordMcpErrorIfPresent({
+  result,
+  content,
+  runSummary,
+  policyRuntime,
+  toolName,
+  originalName,
+}) {
+  if (result?.isError !== true) return false;
+  const failurePreview = String(content ?? "").slice(0, 500);
+  runSummary.errors.push({ tool: toolName, error: failurePreview });
+  if (originalName === "create_vault" && policyRuntime) {
+    policyRuntime.createVaultFailedThisRun = true;
+  }
+  return true;
+}
+
+// Look up an address in the get_all_vaults response. When `vaultName` is
+// provided we require an exact (case-insensitive) name match — there is NO
+// fallback to "newest vault" because that fallback caused cross-agent vault
+// contamination on 2026-05-21: a failed create_vault for "Minestarters Quality
+// Matrix" silently inherited the sibling mining-manager's vault address (the
+// most recently created basket in the factory list) and persisted it to the
+// agent's state.json. Only when the caller has no expected name (legacy
+// untargeted lookup) does the function fall back to the newest entry.
 function extractNewestVaultAddress(content, vaultName) {
   try {
     const data = JSON.parse(content);
@@ -1203,7 +1245,7 @@ function extractNewestVaultAddress(content, vaultName) {
         const match = data.vaults.find(
           (v) => v.name && v.name.toLowerCase() === vaultName.toLowerCase()
         );
-        if (match) return match.address;
+        return match ? match.address : null;
       }
       return data.vaults[data.vaults.length - 1].address;
     }
@@ -1406,7 +1448,11 @@ function publishAgentMetadata(config, currentState, runSummary) {
     recentActions: allActions,
   };
 
-  writeFileSync(metaPath, JSON.stringify(metadata, null, 2) + "\n");
+  // SECURITY: this file is committed back to the default branch via the
+  // `commit-results` job in vault-agent.yml, so we deep-redact any secret
+  // material that may have slipped into the LLM-authored thesis/summary or
+  // a write-action justification before persisting.
+  writeFileSync(metaPath, JSON.stringify(redactSecretsDeep(metadata), null, 2) + "\n");
   console.log(`Metadata: published to ${metaPath}`);
 }
 
@@ -1464,6 +1510,11 @@ export async function runAgent(agentName) {
     shortOpensExecuted: 0,
     allocationWritesExecuted: 0,
     enforcementRounds: 0,
+    // Set to true when create_vault returns an MCP error response (isError:true).
+    // Suppresses the get_all_vaults-based address fallback so a failed deployment
+    // cannot silently "steal" another agent's vault address. See the 2026-05-21
+    // VA-migration regression for the cross-agent contamination this prevents.
+    createVaultFailedThisRun: false,
   };
 
   for (const serverDef of config.mcpServers) {
@@ -1694,19 +1745,48 @@ export async function runAgent(agentName) {
           name: originalName,
           arguments: args,
         });
-        const content = result.content
-          .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
-          .join("\n");
+        // SECURITY: redact secrets (e.g. keeper private key from a leaked
+        // `cast send` error) before this content flows into stdout, the
+        // OpenAI messages array, or downstream parsers.
+        const content = redactSecrets(
+          result.content
+            .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+            .join("\n"),
+        );
 
         const preview =
           content.slice(0, 200) + (content.length > 200 ? "..." : "");
         console.log(`  Result: ${preview}`);
+
+        // MCP servers signal tool-call failures via `result.isError === true`
+        // (see vault-manager toolError / writeError helpers). Without this
+        // branch the runner would (a) record a writeAction for a reverted tx
+        // as if it had succeeded, and (b) — for create_vault specifically —
+        // fall through to the get_all_vaults fallback below and capture a
+        // sibling agent's vault address.
+        const isMcpError = recordMcpErrorIfPresent({
+          result,
+          content,
+          runSummary,
+          policyRuntime,
+          toolName,
+          originalName,
+        });
+        if (isMcpError) {
+          console.error(`  [MCP ERROR] ${toolName} returned isError:true — ${content.slice(0, 500)}`);
+          if (originalName === "create_vault") {
+            console.error(
+              `  [MCP ERROR] create_vault failed; suppressing get_all_vaults-based address capture for this run.`,
+            );
+          }
+        }
 
         if (isWrite) {
           runSummary.writeActions.push({
             tool: toolName,
             args,
             skipped: false,
+            failed: isMcpError || undefined,
             justification: args.justification || null,
           });
         }
@@ -1769,12 +1849,21 @@ export async function runAgent(agentName) {
         if (
           originalName === "get_all_vaults" &&
           didCreateVault &&
-          !capturedVaultAddress
+          !capturedVaultAddress &&
+          !policyRuntime.createVaultFailedThisRun
         ) {
+          // Only capture when we can match the agent's expected vault name
+          // exactly. The previous "newest entry" fallback is gone — see
+          // extractNewestVaultAddress doc-comment for the contamination
+          // incident that motivated this.
           const addr = extractNewestVaultAddress(content, config.vaultName);
           if (addr) {
             capturedVaultAddress = addr;
             console.log(`  >> Captured new vault address: ${addr}`);
+          } else {
+            console.warn(
+              `  >> get_all_vaults did not contain a vault named "${config.vaultName ?? "(unknown)"}"; leaving vault address unset.`,
+            );
           }
         }
 
@@ -1784,9 +1873,10 @@ export async function runAgent(agentName) {
           content: truncateForLLM(content),
         });
       } catch (err) {
-        const errMsg = `Tool error: ${err.message}`;
+        const safeErrMessage = redactSecrets(err.message || String(err));
+        const errMsg = `Tool error: ${safeErrMessage}`;
         console.error(`  ${errMsg}`);
-        runSummary.errors.push({ tool: toolName, error: err.message });
+        runSummary.errors.push({ tool: toolName, error: safeErrMessage });
         messages.push({
           role: "tool",
           tool_call_id: toolCall.id,
@@ -1821,9 +1911,11 @@ export async function runAgent(agentName) {
         return { content: [{ type: "text", text: JSON.stringify({ success: false, skipped: true }, null, 2) }] };
       }
       const result = await entry.client.callTool({ name: toolName, arguments: args });
-      const content = result.content
-        .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
-        .join("\n");
+      const content = redactSecrets(
+        result.content
+          .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+          .join("\n"),
+      );
       if (isWrite) {
         const parsed = parseJsonText(content);
         runSummary.writeActions.push({
@@ -1917,13 +2009,15 @@ export async function runAgent(agentName) {
               runSummary.policyDiagnostics.autoExitsClosed += 1;
             }
           } catch (err) {
-            console.error(`[AUTO-REBALANCE] close_position failed for ${pos.symbol}: ${err.message}`);
-            runSummary.errors.push({ tool: "close_position", error: err.message });
+            const safeErr = redactSecrets(err.message || String(err));
+            console.error(`[AUTO-REBALANCE] close_position failed for ${pos.symbol}: ${safeErr}`);
+            runSummary.errors.push({ tool: "close_position", error: safeErr });
           }
         }
       } catch (err) {
-        console.error(`[AUTO-REBALANCE] aborted: ${err.message}`);
-        runSummary.errors.push({ tool: "_auto_rebalance", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`[AUTO-REBALANCE] aborted: ${safeErr}`);
+        runSummary.errors.push({ tool: "_auto_rebalance", error: safeErr });
       }
     }
 
@@ -1935,11 +2029,25 @@ export async function runAgent(agentName) {
       runSummary.turns = turn + 1;
       console.log(`--- Turn ${turn + 1}/${maxTurns} ---`);
 
+      const llmStats = { retryCount: 0, retryWaitMs: 0 };
+      const llmStartedAt = Date.now();
       const response = await chatCompletion(
         messages,
         openaiTools,
-        config.temperature
+        config.temperature,
+        llmStats
       );
+      const llmElapsedMs = Date.now() - llmStartedAt;
+      const llmElapsedFmt = (llmElapsedMs / 1000).toFixed(1);
+      if (llmStats.retryCount > 0) {
+        const waitFmt = (llmStats.retryWaitMs / 1000).toFixed(1);
+        const retryWord = llmStats.retryCount === 1 ? "retry" : "retries";
+        console.log(
+          `  LLM call: ${llmElapsedFmt}s (${llmStats.retryCount} ${retryWord}, ${waitFmt}s waiting — retries do not consume turn budget)`
+        );
+      } else {
+        console.log(`  LLM call: ${llmElapsedFmt}s`);
+      }
       let choice = response.choices[0];
       let classified = classifyToolCalls(
         choice.message.tool_calls || [],
@@ -2093,9 +2201,9 @@ export async function runAgent(agentName) {
               continue;
             }
             if (choice.message.content) {
-              agentSummaryText = choice.message.content;
+              agentSummaryText = redactSecrets(choice.message.content);
               console.log("\n=== Agent Summary ===");
-              console.log(choice.message.content);
+              console.log(agentSummaryText);
             }
             break;
           }
@@ -2163,9 +2271,9 @@ export async function runAgent(agentName) {
         }
 
         if (choice.message.content) {
-          agentSummaryText = choice.message.content;
+          agentSummaryText = redactSecrets(choice.message.content);
           console.log("\n=== Agent Summary ===");
-          console.log(choice.message.content);
+          console.log(agentSummaryText);
         }
         break;
       }
@@ -2211,8 +2319,9 @@ export async function runAgent(agentName) {
         await memory.writeState(newState);
         console.log(`\nMemory: state saved (vault ${capturedVaultAddress}) via ${memory.mode} adapter`);
       } catch (err) {
-        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${err.message}`);
-        runSummary.errors.push({ tool: "_memory_write_state", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_write_state", error: safeErr });
       }
       if (extractedThesis) {
         console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
@@ -2220,8 +2329,9 @@ export async function runAgent(agentName) {
       try {
         await memory.publishAgentMetadata({ config, state: newState, runSummary });
       } catch (err) {
-        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${err.message}`);
-        runSummary.errors.push({ tool: "_memory_publish_metadata", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_publish_metadata", error: safeErr });
       }
       persistedState = newState;
     } else if (state) {
@@ -2239,8 +2349,9 @@ export async function runAgent(agentName) {
       try {
         await memory.writeState(updatedState);
       } catch (err) {
-        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${err.message}`);
-        runSummary.errors.push({ tool: "_memory_write_state", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_write_state", error: safeErr });
       }
       if (extractedThesis) {
         console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
@@ -2248,8 +2359,9 @@ export async function runAgent(agentName) {
       try {
         await memory.publishAgentMetadata({ config, state: updatedState, runSummary });
       } catch (err) {
-        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${err.message}`);
-        runSummary.errors.push({ tool: "_memory_publish_metadata", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: publishAgentMetadata failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_publish_metadata", error: safeErr });
       }
       persistedState = updatedState;
     }
@@ -2261,7 +2373,9 @@ export async function runAgent(agentName) {
       console.log("Memory: dry run active — run log not updated.");
     } else {
       try {
-        await memory.appendRunLog({
+        // SECURITY: deep-redact the run-log payload because it gets committed
+        // back to the default branch by the `commit-results` job.
+        await memory.appendRunLog(redactSecretsDeep({
           timestamp: runSummary.finishedAt,
           agent: config.name,
           network: runNetwork,
@@ -2272,31 +2386,34 @@ export async function runAgent(agentName) {
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
           summary: summarySnippet,
-        });
+        }));
         console.log(`Memory: run log appended via ${memory.mode} adapter.`);
       } catch (err) {
-        console.error(`Memory: appendRunLog failed via ${memory.mode} adapter: ${err.message}`);
-        runSummary.errors.push({ tool: "_memory_append_runlog", error: err.message });
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: appendRunLog failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_append_runlog", error: safeErr });
       }
     }
 
     void persistedState;
     console.log("\n=== Run Summary (JSON) ===");
-    console.log(JSON.stringify(runSummary, null, 2));
+    console.log(JSON.stringify(redactSecretsDeep(runSummary), null, 2));
   } catch (err) {
     runSummary.finishedAt = new Date().toISOString();
+    const safeAgentErr = redactSecrets(err.message || String(err));
     runSummary.errors.push({
       tool: "_agent",
-      error: err.message || String(err),
+      error: safeAgentErr,
     });
-    console.error("Agent failed:", err.message || err);
+    console.error("Agent failed:", safeAgentErr);
 
     // Persist failure log unless this is a dry run or a vault-override run.
     if (vaultOverrideActive) {
       console.log("Memory: vault override active — failure not written to run log.");
     } else if (!DRY_RUN) {
       try {
-        await memory.appendRunLog({
+        // SECURITY: deep-redact the failure log payload (committed back to git).
+        await memory.appendRunLog(redactSecretsDeep({
           timestamp: runSummary.finishedAt,
           agent: config.name,
           network: runNetwork,
@@ -2306,17 +2423,18 @@ export async function runAgent(agentName) {
           writeActions: runSummary.writeActions,
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
-          summary: "FAILED: " + (err.message || String(err)),
-        });
+          summary: "FAILED: " + safeAgentErr,
+        }));
       } catch (logErr) {
-        console.error(`Memory: failed to record failure log via ${memory.mode} adapter: ${logErr.message}`);
+        const safeLogErr = redactSecrets(logErr.message || String(logErr));
+        console.error(`Memory: failed to record failure log via ${memory.mode} adapter: ${safeLogErr}`);
       }
     } else {
       console.log("Memory: dry run active — failure not written to run log.");
     }
 
     console.log("\n=== Run Summary (JSON) ===");
-    console.log(JSON.stringify(runSummary, null, 2));
+    console.log(JSON.stringify(redactSecretsDeep(runSummary), null, 2));
     throw err;
   } finally {
     for (const mc of mcpClients) {
@@ -2358,6 +2476,9 @@ export const __agentRunnerInternals = {
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
   extractThesis,
+  extractNewestVaultAddress,
+  extractVaultAddressFromCreateVaultResponse,
+  recordMcpErrorIfPresent,
   publishAgentMetadata,
   parseRetryAfterHeader,
   parseRetryHintFromBody,

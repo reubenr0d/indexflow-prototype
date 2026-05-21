@@ -7,6 +7,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
 import { classifySymbolWithSearch, symbolPolicyMessage } from "../../shared/yahoo-symbol-policy.mjs";
+import { redactSecrets } from "../../../scripts/lib/redact-secrets.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -137,7 +138,11 @@ async function validateWriteSymbolPolicy(symbol) {
 // ---------------------------------------------------------------------------
 
 function toolError(code, message, recoveryHint) {
-  const payload = { success: false, error_code: code, message };
+  const payload = {
+    success: false,
+    error_code: code,
+    message: redactSecrets(message),
+  };
   if (recoveryHint) payload.recovery_hint = recoveryHint;
   return {
     content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
@@ -149,25 +154,49 @@ function toolError(code, message, recoveryHint) {
 // Cast helpers
 // ---------------------------------------------------------------------------
 
+// Cast subprocess helpers.
+//
+// SECURITY: never put the keeper private key on the cast argv. Node's
+// `execFileSync` embeds the full argv in `Error.message` when the child exits
+// non-zero, and that error string can flow into MCP responses, agent run logs,
+// and outbound LLM API calls (none of which are masked by GitHub Actions). We
+// pass the key via `ETH_PRIVATE_KEY` env instead — `cast --help` documents this
+// as the default source for `--private-key`. The `redactSecrets` wrap on the
+// catch path is defense-in-depth in case any future flag echoes the value or a
+// caller invokes us with a key we never recorded in env.
+function buildCastEnv() {
+  if (!PRIVATE_KEY) return process.env;
+  return { ...process.env, ETH_PRIVATE_KEY: PRIVATE_KEY };
+}
+
+function runCast(args, { sensitive = false } = {}) {
+  try {
+    const out = execFileSync("cast", args, {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "pipe"],
+      env: sensitive ? buildCastEnv() : process.env,
+    });
+    return out.trim();
+  } catch (err) {
+    const safeMessage = redactSecrets(err.message || String(err));
+    const wrapped = new Error(safeMessage);
+    if (err.code) wrapped.code = err.code;
+    throw wrapped;
+  }
+}
+
 function castCall(contractAddr, sig, args = []) {
-  const out = execFileSync(
-    "cast",
-    ["call", contractAddr, sig, ...args, "--rpc-url", RPC_URL],
-    { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
-  );
-  return out.trim();
+  return runCast(["call", contractAddr, sig, ...args, "--rpc-url", RPC_URL]);
 }
 
 function castSend(contractAddr, sig, args = []) {
   if (!PRIVATE_KEY) {
     throw Object.assign(new Error("PRIVATE_KEY is required for write operations"), { code: "NO_PRIVATE_KEY" });
   }
-  const out = execFileSync(
-    "cast",
-    ["send", contractAddr, sig, ...args, "--private-key", PRIVATE_KEY, "--rpc-url", RPC_URL, "--json"],
-    { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] },
+  return runCast(
+    ["send", contractAddr, sig, ...args, "--rpc-url", RPC_URL, "--json"],
+    { sensitive: true },
   );
-  return out.trim();
 }
 
 function parseReceipt(rawJson) {
