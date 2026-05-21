@@ -1253,6 +1253,60 @@ function extractNewestVaultAddress(content, vaultName) {
   return null;
 }
 
+// Pure helper for the startup vault-identity guardrail. Compares the
+// `name()` returned by the on-chain `BasketVault` (via `get_vault_state`)
+// against the agent's configured `vaultName`. Returns one of:
+//
+//   { ok: true }                      — names match (case + whitespace insensitive)
+//   { ok: true, skipped: true }       — no `expectedName` configured (legacy agent)
+//   { ok: false, reason, error }      — mismatch or unverifiable on-chain name
+//
+// This is the second line of defence after the 2026-05-21 cross-agent
+// contamination fix in commit 00cfb07: even if a future bug, manual edit,
+// or bad CI artifact restores a wrong `vaultAddress` in `state.json`, the
+// runner refuses to start instead of silently trashing a sibling agent's
+// vault. The first line of defence prevents the bad address from being
+// captured in the first place; this one prevents acting on it after the
+// fact. Exported via __agentRunnerInternals for tests.
+function verifyVaultNameMatch({ onChainName, expectedName, vaultAddress, agentName }) {
+  if (!expectedName) {
+    return { ok: true, skipped: true };
+  }
+
+  const normalized = (value) =>
+    typeof value === "string" ? value.trim().toLowerCase() : "";
+  const actual = normalized(onChainName);
+  const expected = normalized(expectedName);
+
+  if (!actual) {
+    const reason = "missing-onchain-name";
+    return {
+      ok: false,
+      reason,
+      error:
+        `[VAULT IDENTITY] Refusing to run: could not read an on-chain name() for vault ${vaultAddress ?? "(unknown address)"} ` +
+        `(get_vault_state returned no usable \`name\` field). This agent (${agentName ?? "(unknown)"}) is configured for ` +
+        `vault name "${expectedName}". Inspect the vault deployment and agent memory before retrying.`,
+    };
+  }
+
+  if (actual !== expected) {
+    const reason = "name-mismatch";
+    return {
+      ok: false,
+      reason,
+      error:
+        `[VAULT IDENTITY] Refusing to run: state.json points at ${vaultAddress ?? "(unknown address)"} whose on-chain ` +
+        `name is "${onChainName}", but this agent (${agentName ?? "(unknown)"}) is configured for vault name ` +
+        `"${expectedName}". This usually means agent memory was corrupted by a failed create_vault followed by a ` +
+        `fallback to the wrong factory entry. Clear agents/memory/${agentName ?? "<agent>"}/state.json to let the ` +
+        `agent deploy a fresh vault on the next run.`,
+    };
+  }
+
+  return { ok: true };
+}
+
 function renderToolCallLine(call) {
   return `- ${call.toolName}(${JSON.stringify(call.args)})`;
 }
@@ -2021,6 +2075,78 @@ export async function runAgent(agentName) {
       }
     }
 
+    // -----------------------------------------------------------------------
+    // Startup vault-identity guardrail
+    //
+    // Belt-and-braces companion to the create_vault contamination fix in
+    // commit 00cfb07. Even with the get_all_vaults fallback closed, a stale
+    // state.json, manual edit, or bad CI restore could still pin an agent to
+    // a sibling's vault. Before the LLM (or the deterministic auto-rebalance
+    // pass) is allowed to issue ANY write against `capturedVaultAddress`, we
+    // call get_vault_state and compare the on-chain `name()` to
+    // `config.vaultName`. On mismatch we throw — the existing top-level
+    // catch in runAgent persists the failure to run-log so CI gets a
+    // structured artifact and the operator can clear the state file.
+    // -----------------------------------------------------------------------
+    async function verifyVaultIdentity() {
+      if (needsNewVault || !capturedVaultAddress) {
+        return; // No vault yet; deployment is the LLM's job this run.
+      }
+      if (!config.vaultName) {
+        console.log(
+          "[VAULT IDENTITY] Skipped: agent has no `vaultName` configured (legacy agent).",
+        );
+        return;
+      }
+
+      let onChainName = null;
+      try {
+        const res = await runMcpTool("get_vault_state", { vault: capturedVaultAddress });
+        onChainName = typeof res.parsed?.name === "string" ? res.parsed.name : null;
+      } catch (err) {
+        const safeErr = redactSecrets(err.message || String(err));
+        const wrapped = new Error(
+          `[VAULT IDENTITY] get_vault_state failed for ${capturedVaultAddress} — refusing to run against an unverifiable vault: ${safeErr}`,
+        );
+        runSummary.errors.push({ tool: "_vault_identity", error: wrapped.message });
+        throw wrapped;
+      }
+
+      const verdict = verifyVaultNameMatch({
+        onChainName,
+        expectedName: config.vaultName,
+        vaultAddress: capturedVaultAddress,
+        agentName: config.name,
+      });
+
+      if (verdict.ok) {
+        if (verdict.skipped) return;
+        console.log(
+          `[VAULT IDENTITY] OK: ${capturedVaultAddress} on-chain name = "${onChainName}"`,
+        );
+        return;
+      }
+
+      if (vaultOverrideActive) {
+        // Override is operator-driven; honour it but warn loudly so the
+        // operator notices when they've targeted a vault of the wrong type.
+        console.warn(verdict.error);
+        console.warn(
+          "[VAULT IDENTITY] AGENT_VAULT_OVERRIDE is active — proceeding despite name mismatch (operator-driven).",
+        );
+        runSummary.errors.push({
+          tool: "_vault_identity",
+          error: `${verdict.reason}: override-bypassed`,
+        });
+        return;
+      }
+
+      runSummary.errors.push({ tool: "_vault_identity", error: verdict.error });
+      throw new Error(verdict.error);
+    }
+
+    await verifyVaultIdentity();
+
     if (config.policy?.rebalanceMode === "track_top_n" && !needsNewVault) {
       await enforceAutoRebalance();
     }
@@ -2479,6 +2605,7 @@ export const __agentRunnerInternals = {
   extractNewestVaultAddress,
   extractVaultAddressFromCreateVaultResponse,
   recordMcpErrorIfPresent,
+  verifyVaultNameMatch,
   publishAgentMetadata,
   parseRetryAfterHeader,
   parseRetryHintFromBody,

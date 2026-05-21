@@ -1,13 +1,13 @@
 {
-  "basketFactory": "0x9c80b76abd7d1470ba9e8aaa49d128b0a99dfec4",
-  "vaultAccounting": "0xb70ce09018bD05D79AdFB1B78d9F42156804b269",
-  "oracleAdapter": "0x69329fec8c0ef120ee56379941d8d367b593d399",
-  "perpReader": "0xc985321ee8d912de9b770fb567d35b7ac0b42c5f",
-  "pricingEngine": "0x7137a6d4305c73b554fa4c9aad365b9f5dfd6fca",
-  "fundingRateManager": "0x096b880b658252cae1dd5f7d04450fc77239070d",
-  "priceSync": "0xa6a516cb98b95b9e44225ac8c6343206b9115d06",
-  "usdc": "0xf0e4854a9662a852032d059ee4f4e7c4d2448585",
-  "gmxVault": "0x6797e17ba672a1d7086e78c3f35cb0d1853e94f9",
-  "assetWiring": "0xf6a626737f69e8b6aca8549c7ab2f9cedd91317b",
-  "stateRelay": "0xB837E0d12b16e14C57d829337578ed4111479CD9"
+  "basketFactory": "0x865a73984dD2eC2c51b4a7AFEB5579942f04aa73",
+  "vaultAccounting": "0x50F4256367169c04eB502A005ffC636911d219dA",
+  "oracleAdapter": "0x7Cab35e58088d161C0e832279C56Fbd1b0679D67",
+  "perpReader": "0x3815584E3bf0fd8239E906852DE7772A8101aB06",
+  "pricingEngine": "0xC60b2d10d41126622e558D96D1e81812d3B8c25D",
+  "fundingRateManager": "0x3393C69fc86C7128d9450258e0A2eF6c2DB1D696",
+  "priceSync": "0xd3673370c1d7704543686E2082034E6A91456DD1",
+  "usdc": "0xF2bDf7B82fb34eCBf8359f713C5502cA016CD72b",
+  "gmxVault": "0xB8b9b93e0248831186f60c7aAB03726533e88044",
+  "assetWiring": "0x1563159D575BC25Efac9cA9cab1ED436035490D7",
+  "stateRelay": "0xC4A01a3EaDA32f8EbE1cc05407Cd7ef9c2dc86d8"
 }

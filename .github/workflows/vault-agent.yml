@@ -12,8 +12,10 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # The full agent matrix (vault-manager + mining-manager + quality-matrix-manager) runs by default;
+  # The default agent matrix (mining-manager + quality-matrix-manager) runs by default;
   # to dispatch a single agent, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
+  # The `vault-manager` agent is retired from CI (run locally via
+  # `node scripts/agent-runner.mjs vault-manager` when needed).
   repository_dispatch:
     types: [vault-agent-tick]
   workflow_dispatch:
@@ -30,7 +32,6 @@ on:
         type: choice
         options:
           - all
-          - vault-manager
           - mining-manager
           - quality-matrix-manager
       vault_address:
@@ -57,8 +58,8 @@ permissions:
 
 # Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
 # (update-prices.yml, keeper.yml) so they can't race on the same nonce. The
-# matrix max-parallel: 1 below still serialises vault-manager vs mining-manager
-# within a single run.
+# matrix max-parallel: 1 below still serialises mining-manager vs
+# quality-matrix-manager within a single run.
 concurrency:
   group: keeper-key-serialized
   cancel-in-progress: false
@@ -80,17 +81,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          vault_entry='{"agent":"vault-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
           mining_entry='{"agent":"mining-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
           quality_entry='{"agent":"quality-matrix-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
 
-          # repository_dispatch may pass a single agent via client_payload.agent;
-          # an empty payload falls through to the existing -z check below and
-          # runs the full matrix exactly like a scheduled tick.
+          # repository_dispatch may pass a single agent via client_payload.agent
+          # (e.g. "mining-manager"); an empty payload falls through to the
+          # existing -z check below and runs the default matrix exactly like a
+          # scheduled tick. The `vault-manager` agent is retired from CI; passing
+          # it here will fall through to the "Unknown agent input" branch.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
-            include="[${vault_entry},${mining_entry},${quality_entry}]"
-          elif [ "${AGENT_INPUT}" = "vault-manager" ]; then
-            include="[${vault_entry}]"
+            include="[${mining_entry},${quality_entry}]"
           elif [ "${AGENT_INPUT}" = "mining-manager" ]; then
             include="[${mining_entry}]"
           elif [ "${AGENT_INPUT}" = "quality-matrix-manager" ]; then
@@ -109,17 +109,17 @@ jobs:
     needs: setup-matrix
     runs-on: ubuntu-latest
     strategy:
-      # Don't run vault-manager / mining-manager / quality-matrix-manager in
-      # parallel: they share the same keeper key, so concurrent cast send calls
-      # race on the same nonce.
+      # Don't run mining-manager / quality-matrix-manager in parallel: they
+      # share the same keeper key, so concurrent cast send calls race on the
+      # same nonce.
       max-parallel: 1
       fail-fast: false
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
 
     steps:
-      # No submodules: vault-manager MCP uses ~700 cast calls and zero forge
-      # invocations. Foundry is still installed for `cast` access (no RPC
-      # cache: agent never runs forge fork tests).
+      # No submodules: the vault-manager-mcp server uses ~700 cast calls and
+      # zero forge invocations. Foundry is still installed for `cast` access
+      # (no RPC cache: agent never runs forge fork tests).
       - uses: actions/checkout@v5
 
       - name: Setup CI environment (cached)
