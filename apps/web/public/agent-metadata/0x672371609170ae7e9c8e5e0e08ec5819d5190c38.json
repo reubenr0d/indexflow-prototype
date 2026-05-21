@@ -1,17 +1,41 @@
 {
   "isAiManaged": true,
   "agentName": "mining-manager",
-  "agentDescription": "Mining-focused vault driven by the Atlas ML engine",
+  "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.",
-  "lastRunAt": "2026-05-21T06:46:14.674Z",
+  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK. On the short side, a position was considered against XAU due to bearish sentiment in the gold market, as indicated by recent news of a potential 6% price drop.",
+  "lastRunAt": "2026-05-21T07:43:51.900Z",
   "latestRun": {
-    "runId": "2026-05-21T06:46:14.674Z",
-    "finishedAt": "2026-05-21T06:46:14.674Z",
-    "summary": "## Thesis\nThe Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.\n\n## Vault Summary\n- **Vault Address**: 0x672371609170ae7e9c8e5e0e08ec5819d5190c38\n- **NAV**: $995.00\n- **Pe"
+    "runId": "2026-05-21T07:43:51.900Z",
+    "finishedAt": "2026-05-21T07:43:51.900Z",
+    "summary": "### Summary of Actions\n\n1. **Vault State Check**: The Minestarters ML Picks vault is fully allocated with a NAV of $995.00 USDC. The vault currently tracks 14 assets, with no available capital for new allocations.\n\n2. **Atlas ML Top Picks**: The latest top picks include:\n   - **Amarc Resources Ltd. (AHR.V)** - ML Score: 100\n   - **Gold Strike Resources Corp. (GSR.V)** - ML Score: 99.9\n   - **Power Metals Corp. (PWM.V)** - ML Score: 99.8\n   - **ROYAL GOLD INC (0KXS.L)** - ML Score: 99.7\n   - **Cr"
   },
   "recentActions": [
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on AHR.V based on high ML score and predicted return.",
+      "timestamp": "2026-05-21T07:43:51.900Z",
+      "txHash": "0xa9a4b9edab220e7ca1624f834da5cb39071d01f98f0f530c909e45227a1f4ede",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T07:43:51.900Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on GSR.V due to strong ML score and gold focus.",
+      "timestamp": "2026-05-21T07:43:51.900Z",
+      "txHash": "0x5d0faf709d26948f3d5a432825ca6a2d8a12ef507d89b28378f128555743e26f",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T07:43:51.900Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on PWM.V supported by high ML score and diversified metals focus.",
+      "timestamp": "2026-05-21T07:43:51.900Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T07:43:51.900Z"
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Critical Metals Corp. as it is a new top pick with a high ML score of 99.5 and predicted return of 73.26%.",

@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x672371609170ae7e9c8e5e0e08ec5819d5190c38",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:a2afbd5dce85c6d7c63df6ab7bd02ca1bbadbe644d1ac2f7c57704768999af25",
+  "agentFileHash": "sha256:f3ed7103b2af5af38aa1235bdbbaad89b60f77fbcdd23a6b20a9c1bf5305ac0a",
   "deploymentFingerprint": "sha256:0fae2ec41a82ef3c77073b095413c3680bf49b06447bda9653c0553ec420f991",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T06:06:57.016Z",
-  "lastRunAt": "2026-05-21T06:46:14.674Z",
-  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK.",
-  "lastThesisUpdate": "2026-05-21T06:46:14.674Z"
+  "lastRunAt": "2026-05-21T07:43:51.900Z",
+  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK. On the short side, a position was considered against XAU due to bearish sentiment in the gold market, as indicated by recent news of a potential 6% price drop.",
+  "lastThesisUpdate": "2026-05-21T07:43:51.900Z"
 }
