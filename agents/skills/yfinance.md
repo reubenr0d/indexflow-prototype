@@ -21,6 +21,15 @@ Get live price quotes with USD conversion, day change, and volume.
 
 Returns per-symbol: current price, currency, USD-converted price, day change (absolute and percent), volume, market cap, plus symbol-resolution fields (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates`).
 
+### yfinance_news(symbols, limitPerSymbol?)
+
+Recent news headlines for one or more tickers. Backed by Yahoo Finance's search endpoint (no API key required).
+
+- `symbols`: Array of ticker strings (max 10).
+- `limitPerSymbol`: Headlines per symbol (default 3, max 10).
+
+Returns `[{ symbol, headlines: [{ title, publisher, link, publishedAt (ISO), type, relatedTickers }], error? }]`. Symbols whose lookup fails return an empty `headlines` array plus an `error` field — the rest of the call still succeeds. Use this to ground trade justifications and thesis text in real news rather than guessing.
+
 ## Example Calls
 
 ```
@@ -33,6 +42,9 @@ yfinance_quote({ symbols: ["BHP.AX", "RIO.AX", "NEM"] })
 // Look up a commodity future
 yfinance_search({ query: "gold futures" })
 yfinance_quote({ symbols: ["GC=F"] })
+
+// Pull headlines to justify a trade
+yfinance_news({ symbols: ["GSR.V", "NEM", "BHP.AX"], limitPerSymbol: 3 })
 ```
 
 ## Tips

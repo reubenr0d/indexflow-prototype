@@ -2,7 +2,7 @@ name: Update Prices
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/5 * * * *"
   pull_request:
   workflow_dispatch:
     inputs:
@@ -18,13 +18,16 @@ on:
 env:
   FOUNDRY_VERSION: v1.3.1
 
+# Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
+# (keeper.yml, vault-agent.yml) so they can't race on the same nonce.
+concurrency:
+  group: keeper-key-serialized
+  cancel-in-progress: false
+
 jobs:
   update-prices:
     name: Update Prices (${{ matrix.network }})
     runs-on: ubuntu-latest
-    concurrency:
-      group: update-prices-${{ github.workflow }}-${{ matrix.network }}
-      cancel-in-progress: false
     if: >-
       github.event_name == 'schedule'
       || github.event_name == 'pull_request'

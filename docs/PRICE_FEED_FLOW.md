@@ -279,14 +279,14 @@ Failure policy in updater:
 
 ## 8. CI / automated price refresh
 
-A GitHub Actions workflow (`.github/workflows/update-prices.yml`) runs `scripts/update-yahoo-finance-prices.js` on a **15-minute cron schedule** and on **manual dispatch** (Actions tab → "Update Prices" → "Run workflow").
+A GitHub Actions workflow (`.github/workflows/update-prices.yml`) runs `scripts/update-yahoo-finance-prices.js` on a **5-minute cron schedule** and on **manual dispatch** (Actions tab → "Update Prices" → "Run workflow").
 
 ### Concurrency policy
 
-- Runs are serialized per network using job-level Actions concurrency:
-  - `group: update-prices-${{ github.workflow }}-${{ matrix.network }}`
+- Runs are serialized globally against every other workflow that signs with `KEEPER_PRIVATE_KEY` (currently `keeper.yml` and `vault-agent.yml`) using a workflow-level concurrency group shared across all three:
+  - `group: keeper-key-serialized`
   - `cancel-in-progress: false`
-- If two Sepolia runs overlap (for example, schedule + manual), the second run queues and starts only after the first completes.
+- This prevents nonce races on the shared keeper wallet at the new 5-minute cadence. When several workflows queue against the same group, GitHub squashes older still-pending runs so the backlog stays bounded.
 
 ### Flow
 

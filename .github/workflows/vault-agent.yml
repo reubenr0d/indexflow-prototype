@@ -2,7 +2,7 @@ name: Vault Agent
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -40,6 +40,14 @@ env:
 # access on the contents scope.
 permissions:
   contents: write
+
+# Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
+# (update-prices.yml, keeper.yml) so they can't race on the same nonce. The
+# matrix max-parallel: 1 below still serialises vault-manager vs mining-manager
+# within a single run.
+concurrency:
+  group: keeper-key-serialized
+  cancel-in-progress: false
 
 jobs:
   setup-matrix:

@@ -232,7 +232,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 | Server | Purpose | Tools |
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `list_open_positions`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
-| `yfinance-mcp` | Market data lookups | `yfinance_search`, `yfinance_quote` |
+| `yfinance-mcp` | Market data lookups + news | `yfinance_search`, `yfinance_quote`, `yfinance_news` |
 | `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_model_info`, `get_ml_basket`, `get_ml_thesis` |
 
 ### Server Registry Format
@@ -275,6 +275,7 @@ To add a new MCP server: add the server code under `apps/mcps/`, then add an ent
 |---|---|---|
 | `yfinance_search` | Find stocks, ETFs, indices by name/ticker | `query`, `limit` |
 | `yfinance_quote` | Get live prices with USD conversion, day change, volume, and symbol-resolution metadata (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates[]`) | `symbols[]` |
+| `yfinance_news` | Recent news headlines per ticker (`{title, publisher, link, publishedAt, type, relatedTickers}`) backed by Yahoo Finance search; per-symbol errors are returned inline so a single bad symbol doesn't kill the call | `symbols[]` (max 10), `limitPerSymbol` (default 3, max 10) |
 
 ### Mining ML Signals (atlas-ml-mcp)
 
@@ -380,7 +381,7 @@ The workflow at `.github/workflows/vault-agent.yml` runs `vault-manager` against
 1. Go to Actions > "Vault Agent" > Run workflow
 2. Optionally toggle dry-run mode
 
-The cron schedule runs `vault-manager` every 6 hours. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+The cron schedule runs `vault-manager` and `mining-manager` **hourly** (`0 * * * *`), serialized via a shared `keeper-key-serialized` concurrency group that also covers `keeper.yml` and `update-prices.yml` so the three workflows can never race on the same `KEEPER_PRIVATE_KEY` nonce. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 > **Note on branch protection.** The commit-results job requires the default branch to accept pushes from the `GITHUB_TOKEN` identity. If the branch is protected, either add `vault-agent[bot]` to the bypass list, route through a PAT, or disable the commit job and accept that state will not survive across runs.
 
