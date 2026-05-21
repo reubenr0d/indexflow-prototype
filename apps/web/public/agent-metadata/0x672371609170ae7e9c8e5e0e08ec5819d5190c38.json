@@ -4,14 +4,70 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to highlight mining equities with strong medium-term growth potential, focusing on diversified metals and gold. The model's robust predictive power is supported by key financial metrics such as EBITDA to market cap and cash to assets ratios. The current basket is well-positioned to leverage opportunities in stable jurisdictions like Canada and the UK. On the short side, a position was considered against XAU due to bearish sentiment in the gold market, as indicated by recent news of a potential 6% price drop.",
-  "lastRunAt": "2026-05-21T07:43:51.900Z",
+  "thesis": null,
+  "lastRunAt": "2026-05-21T10:17:01.312Z",
   "latestRun": {
-    "runId": "2026-05-21T07:43:51.900Z",
-    "finishedAt": "2026-05-21T07:43:51.900Z",
-    "summary": "### Summary of Actions\n\n1. **Vault State Check**: The Minestarters ML Picks vault is fully allocated with a NAV of $995.00 USDC. The vault currently tracks 14 assets, with no available capital for new allocations.\n\n2. **Atlas ML Top Picks**: The latest top picks include:\n   - **Amarc Resources Ltd. (AHR.V)** - ML Score: 100\n   - **Gold Strike Resources Corp. (GSR.V)** - ML Score: 99.9\n   - **Power Metals Corp. (PWM.V)** - ML Score: 99.8\n   - **ROYAL GOLD INC (0KXS.L)** - ML Score: 99.7\n   - **Cr"
+    "runId": "2026-05-21T10:17:01.312Z",
+    "finishedAt": "2026-05-21T10:17:01.312Z",
+    "summary": ""
   },
   "recentActions": [
+    {
+      "tool": "create_vault",
+      "justification": "Creating a new vault to manage mining-equity positions driven by the Atlas ML engine and news-driven short overlay.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new asset Critical Metals Corp. (CRML) as it is a top pick in the Atlas ML model with a high score.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to align with the current top-N picks from the Atlas ML model.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": "0x972fbf207143616081dd0f8adfe8347f2cea32b829a8b38db41ccd8447f7a1a8",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating 50% of idle USDC to perp capital for opening long positions on top ML picks.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on AHR.V based on top ML pick with high score.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": "0xdb36e70331df6bbc0e4467c861dd89c1f4c4d1ae42da3c74dae3f19aedbdad66",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on GSR.V based on top ML pick with high score.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": "0x98b86ed7811332b8b18680794c9bbb9fe36a5f5db23b34bb076497ebf35098b0",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on PWM.V based on top ML pick with high score.",
+      "timestamp": "2026-05-21T10:17:01.312Z",
+      "txHash": "0xebd0e7c6792d4d9cd20b7324d52d7dc330fbb3488736a1b95c5590ad55c8f2ae",
+      "agentName": "mining-manager",
+      "runId": "2026-05-21T10:17:01.312Z"
+    },
     {
       "tool": "open_position",
       "justification": "Opening long position on AHR.V based on high ML score and predicted return.",
