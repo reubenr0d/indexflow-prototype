@@ -1,0 +1,84 @@
+name: Cron Tick Pusher
+
+on:
+  workflow_dispatch:
+  # Backup restart in case `gh workflow run` self-dispatch ever fails.
+  # GitHub's schedule trigger is unreliable for this repo, but at the 3-hour
+  # cadence it's reliable enough as a recovery path. Two staggered entries
+  # so we have multiple chances per 3-hour window.
+  schedule:
+    - cron: "0 */3 * * *"
+    - cron: "47 */6 * * *"
+
+permissions:
+  contents: read
+  actions: write # required to fire repository_dispatch and self workflow_dispatch
+
+# Separate concurrency group from `keeper-key-serialized` so the pusher
+# doesn't block its own children. cancel-in-progress: false prevents two
+# pushers from racing if both the schedule and self-dispatch fire at once.
+concurrency:
+  group: cron-tick-pusher
+  cancel-in-progress: false
+
+jobs:
+  pusher:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355 # 5h55m, leaving 5 min for self-dispatch
+    steps:
+      - name: Push ticks for ~5h50m, then self-dispatch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          set -uo pipefail
+          loop_start=$(date +%s)
+          loop_budget_sec=$((350 * 60))    # 5h50m of useful work
+          cycle_sec=300                    # 5-min cycle
+          tick=0
+
+          while [ $(($(date +%s) - loop_start)) -lt $loop_budget_sec ]; do
+            tick=$((tick + 1))
+            cycle_started=$(date +%s)
+            echo "::group::Tick #$tick @ $(date -u +%FT%TZ)"
+
+            gh api -X POST "repos/$REPO/dispatches" \
+              -f event_type=update-prices \
+              && echo "dispatched update-prices" \
+              || echo "::warning::update-prices dispatch failed at tick $tick"
+
+            # Stagger by 30s so the two 5-min keepers don't queue at the
+            # exact same instant in the keeper-key-serialized group.
+            sleep 30
+
+            gh api -X POST "repos/$REPO/dispatches" \
+              -f event_type=keeper-tick \
+              && echo "dispatched keeper-tick" \
+              || echo "::warning::keeper-tick dispatch failed at tick $tick"
+
+            # Vault-agent every 12 ticks = every 60 min. Will compete with the
+            # in-flight 5-min keepers in the shared concurrency group during
+            # its 10-20 min runtime; that's the same tradeoff vault-agent had
+            # before (it used to fire at minute :18 on the cron). 1-3 of the
+            # next price/keeper ticks may queue-bump each other while vault-
+            # agent runs, same as today.
+            if [ $((tick % 12)) -eq 0 ]; then
+              gh api -X POST "repos/$REPO/dispatches" \
+                -f event_type=vault-agent-tick \
+                && echo "dispatched vault-agent-tick" \
+                || echo "::warning::vault-agent-tick dispatch failed at tick $tick"
+            fi
+
+            echo "::endgroup::"
+
+            cycle_elapsed=$(($(date +%s) - cycle_started))
+            remaining=$((cycle_sec - cycle_elapsed))
+            if [ $remaining -gt 0 ]; then
+              sleep $remaining
+            fi
+          done
+
+          echo "Loop budget exhausted after $tick ticks; dispatching next iteration"
+          gh workflow run cron-tick-pusher.yml --ref "$BRANCH" \
+            || echo "::error::self-dispatch failed; relying on schedule backup"

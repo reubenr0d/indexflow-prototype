@@ -230,9 +230,34 @@ Make sure the keeper wallet is authorised as a `keeper()` on each contract it wr
 
 ## External cron dispatch
 
-GitHub Actions' built-in `schedule` trigger is best-effort and routinely drops scheduled events. For this repo it has historically delivered scheduled ticks only every ~100 minutes on average even when the cron expression asks for every 5 minutes (verified via the GitHub Actions REST API over the trailing ~100 scheduled runs). To guarantee cadence, all three CI keepers (`update-prices.yml`, `keeper.yml`, `vault-agent.yml`) accept a `repository_dispatch` event in addition to `schedule`, and the canonical way to trigger them is an external scheduler hitting GitHub's REST API.
+GitHub Actions' built-in `schedule` trigger is best-effort and routinely drops scheduled events. For this repo it has historically delivered scheduled ticks only every ~100 minutes on average even when the cron expression asks for every 5 minutes (verified via the GitHub Actions REST API over the trailing ~100 scheduled runs). To guarantee cadence, all three CI keepers (`update-prices.yml`, `keeper.yml`, `vault-agent.yml`) accept a `repository_dispatch` event in addition to `schedule`, and there are two supported ways to drive it: an in-CI tick pusher (no PAT required, see below) or an external scheduler hitting GitHub's REST API.
 
 The `schedule:` blocks on each workflow are kept as a free fallback — they still fire occasionally, just not reliably.
+
+### In-CI tick pusher (no PAT, recommended for this repo)
+
+[.github/workflows/cron-tick-pusher.yml](../.github/workflows/cron-tick-pusher.yml) is a fourth workflow whose only job is timing. It runs a single long-lived shell loop on a GitHub-hosted runner that:
+
+1. Fires `repository_dispatch` of type `update-prices` at the start of each 5-min cycle.
+2. Sleeps 30s (so the next dispatch doesn't queue at the same instant in the shared concurrency group), then fires `repository_dispatch` of type `keeper-tick`.
+3. Every 12th tick (~60 min), additionally fires `repository_dispatch` of type `vault-agent-tick`.
+4. Sleeps the remaining time so each cycle is exactly 5 min, regardless of how long the dispatches took.
+5. After ~5h50m it calls `gh workflow run cron-tick-pusher.yml` to spawn the next iteration of itself, then exits.
+
+This works without a PAT because GitHub's documented exception to the "events triggered by `GITHUB_TOKEN` don't recurse" rule explicitly names `workflow_dispatch` and `repository_dispatch` as the two events that DO create new workflow runs from `GITHUB_TOKEN`. The auto-issued token is enough; the workflow grants itself `actions: write` permission and uses `gh` CLI with `GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`.
+
+Recovery paths if the self-dispatch ever fails:
+
+- The pusher carries two backup `schedule:` entries (`0 */3 * * *` and `47 */6 * * *`). At the 3-hour cadence the bare-`schedule` trigger is reliable enough to restart the loop within 0-3 hours worst-case.
+- Manually starting the pusher is one click: Actions → "Cron Tick Pusher" → "Run workflow".
+
+Concurrency: the pusher uses its own `cron-tick-pusher` concurrency group (not `keeper-key-serialized`) so it never blocks its own children. The three keeper workflows still serialize against each other in `keeper-key-serialized` exactly as before.
+
+To verify the pusher is doing its job, see [Verifying the wiring](#verifying-the-wiring) below.
+
+### External scheduler (PAT-based, alternative)
+
+If you prefer to drive the cadence from outside GitHub (e.g. you don't want any always-on runner consumption on a private repo), an external HTTPS scheduler can hit GitHub's REST API directly. This is the original setup before the in-CI pusher existed.
 
 ### Step 1 — Create a GitHub Personal Access Token
 
@@ -281,10 +306,15 @@ Only `vault-agent-tick` accepts a payload. To dispatch a single agent instead of
 
 ### Verifying the wiring
 
-Right after registering the external schedules:
+Whether you're running the in-CI pusher or the external scheduler, the verification is the same. Right after kickoff:
 
 ```bash
-# Most recent schedule + dispatch runs for each workflow
+# In-CI pusher only: confirm a pusher run is in-progress (will show as one
+# ~6h run that re-spawns itself indefinitely).
+gh run list --workflow=cron-tick-pusher.yml --limit 5 \
+  --json createdAt,status,event --jq '.[]'
+
+# Either path: most recent schedule + dispatch runs for each keeper.
 gh run list --workflow=update-prices.yml --limit 20 \
   --json createdAt,event,conclusion --jq '.[] | "\(.createdAt)\t\(.event)\t\(.conclusion)"'
 gh run list --workflow=keeper.yml --limit 20 \
@@ -293,7 +323,7 @@ gh run list --workflow=vault-agent.yml --limit 20 \
   --json createdAt,event,conclusion --jq '.[] | "\(.createdAt)\t\(.event)\t\(.conclusion)"'
 ```
 
-After one full cadence cycle you should see `event=repository_dispatch` rows arriving on schedule, with `conclusion=success`. The occasional `event=schedule` row will still show up (when GitHub does deliver), and that's expected.
+After one full cadence cycle you should see `event=repository_dispatch` rows arriving every ~5 min for update-prices and keeper, every ~60 min for vault-agent, with `conclusion=success`. The occasional `event=schedule` row will still show up (when GitHub does deliver), and that's expected.
 
 ### Why not move price sync off GitHub Actions entirely?
 
