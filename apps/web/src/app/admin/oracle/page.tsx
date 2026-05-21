@@ -32,11 +32,8 @@ import { ExternalLink, Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { YahooFinanceSearch, type YFSearchSelection } from "@/components/yahoo-finance-search";
 import { fetchYahooFinanceQuote, type YFQuote } from "@/hooks/useYahooFinanceSearch";
+import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
 import { keccak256, stringToHex } from "viem";
-
-function yahooFinanceQuoteUrl(symbol: string): string {
-  return `https://finance.yahoo.com/quote/${encodeURIComponent(symbol)}/`;
-}
 
 const PRICE_SYNC_ABI = [
   {

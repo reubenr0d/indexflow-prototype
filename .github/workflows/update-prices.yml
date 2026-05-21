@@ -28,6 +28,10 @@ jobs:
   update-prices:
     name: Update Prices (${{ matrix.network }})
     runs-on: ubuntu-latest
+    # `matrix` context isn't available in job-level `if:`, so we can't filter
+    # the matrix entry here. The work-step `if:` below skips the actual price
+    # sync for non-matching workflow_dispatch inputs; the cheap setup steps
+    # are allowed to run unconditionally to keep this list short.
     if: >-
       github.event_name == 'schedule'
       || github.event_name == 'pull_request'
@@ -46,16 +50,17 @@ jobs:
       # only; no forge build. Foundry is installed for `cast` access (no RPC
       # cache: no fork tests).
       - uses: actions/checkout@v5
-        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
 
       - name: Setup CI environment (cached)
-        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
         uses: ./.github/actions/setup-snx
         with:
           foundry: "true"
 
       - name: Fetch Yahoo Finance quotes and sync on-chain prices
-        if: github.event_name == 'pull_request' || github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.network == 'all' || github.event.inputs.network == matrix.network))
+        if: >-
+          github.event_name != 'workflow_dispatch'
+          || github.event.inputs.network == 'all'
+          || github.event.inputs.network == matrix.network
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}

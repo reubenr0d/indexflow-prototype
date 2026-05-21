@@ -1,8 +1,14 @@
 name: Vault Agent
 
 on:
+  # Run at minute :18 instead of :00 so the hourly vault-agent (which can
+  # occupy the shared keeper-key-serialized concurrency group for 10-20 min)
+  # doesn't fire alongside the update-prices (*/5) and keeper (2-59/5) ticks.
+  # Update-prices fires at :15 and keeper at :17; :18 lands in the gap right
+  # after both, so vault-agent never starts simultaneously with either of the
+  # two 5-min crons.
   schedule:
-    - cron: "0 * * * *"
+    - cron: "18 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:

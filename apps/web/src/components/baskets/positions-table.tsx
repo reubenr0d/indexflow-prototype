@@ -13,6 +13,8 @@ import { type Address, encodePacked, keccak256 } from "viem";
 import { formatUSDC, formatPrice, formatAssetId, formatSignedUsd1e30 } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION, REFETCH_INTERVAL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
+import { ExternalLink } from "lucide-react";
 
 export type PositionWithPnL = {
   assetId: `0x${string}`;
@@ -22,9 +24,32 @@ export type PositionWithPnL = {
   collateralUsdc: bigint;
   averagePrice: bigint;
   label: string;
+  yfinanceSymbol?: string;
   currentPrice: bigint;
   unrealisedPnL: bigint;
 };
+
+function AssetLabel({ label, yfinanceSymbol, className }: { label: string; yfinanceSymbol?: string; className?: string }) {
+  if (!yfinanceSymbol) {
+    return <span className={cn("font-medium text-app-text", className)}>{label}</span>;
+  }
+  return (
+    <a
+      href={yahooFinanceQuoteUrl(yfinanceSymbol)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "inline-flex items-center gap-1 font-medium text-app-text hover:text-app-accent",
+        className,
+      )}
+      aria-label={`View ${label} on Yahoo Finance`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {label}
+      <ExternalLink className="h-3 w-3 opacity-60" aria-hidden />
+    </a>
+  );
+}
 
 function leverageDisplay(size: bigint, collateralUsdc: bigint): string {
   if (collateralUsdc === 0n) return "--";
@@ -85,6 +110,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
       collateralUsdc: bigint;
       averagePrice: bigint;
       label: string;
+      yfinanceSymbol?: string;
     }> = [];
 
     posKeys.forEach((entry, i) => {
@@ -101,6 +127,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
       const averagePrice = Array.isArray(tracking) ? tracking[6] : (tracking.averagePrice ?? 0n);
       if (size === 0n) return;
       const meta = allAssets.find((a) => (a.idHex as string).toLowerCase() === entry.assetId.toLowerCase());
+      const yfinanceSymbol = meta?.name && !meta.name.startsWith("0x") ? meta.name : undefined;
       positions.push({
         assetId: entry.assetId,
         isLong: entry.isLong,
@@ -109,6 +136,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
         collateralUsdc,
         averagePrice,
         label: meta?.label ?? formatAssetId(entry.assetId),
+        yfinanceSymbol,
       });
     });
     return positions;
@@ -187,7 +215,9 @@ export function PositionsTable({ vault, className }: { vault: Address; className
                 className="hover:bg-app-surface-hover"
                 data-testid={`position-row-${pos.label.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase()}`}
               >
-                <td className="px-4 py-2.5 font-medium text-app-text">{pos.label}</td>
+                <td className="px-4 py-2.5 font-medium text-app-text">
+                  <AssetLabel label={pos.label} yfinanceSymbol={pos.yfinanceSymbol} />
+                </td>
                 <td className="px-4 py-2.5">
                   <span
                     className={cn(
@@ -256,7 +286,7 @@ export function PositionsTable({ vault, className }: { vault: Address; className
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-app-text">{pos.label}</span>
+                <AssetLabel label={pos.label} yfinanceSymbol={pos.yfinanceSymbol} />
                 <span
                   className={cn(
                     "rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase",
