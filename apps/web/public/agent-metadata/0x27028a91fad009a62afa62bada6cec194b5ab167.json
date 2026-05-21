@@ -5,13 +5,21 @@
   "signalSource": null,
   "entryMode": "momentum_volume",
   "thesis": "The \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.",
-  "lastRunAt": "2026-05-21T06:06:14.950Z",
+  "lastRunAt": "2026-05-21T06:19:19.680Z",
   "latestRun": {
-    "runId": "2026-05-21T06:06:14.950Z",
-    "finishedAt": "2026-05-21T06:06:14.950Z",
-    "summary": "## Thesis\nThe \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.\n\n## Vault State\n- **Vault Name**: Vault "
+    "runId": "2026-05-21T06:19:19.680Z",
+    "finishedAt": "2026-05-21T06:19:19.680Z",
+    "summary": "## Thesis\n\nThe \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.\n\n## Vault Address and Current State\n- *"
   },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating additional USDC to the perp module to ensure sufficient capital is available for potential future opportunities in the S&P 500 futures market.",
+      "timestamp": "2026-05-21T06:19:19.680Z",
+      "txHash": "0x776df2d77e6e4f87f98dd64f9772d799b7f91e4ccee6c0657d751a5f309c2c10",
+      "agentName": "vault-manager",
+      "runId": "2026-05-21T06:19:19.680Z"
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating additional USDC to the perp module to ensure sufficient capital is available for potential future positions, aligning with the policy to maintain optimal allocation levels.",

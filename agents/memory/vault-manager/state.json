@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:0fae2ec41a82ef3c77073b095413c3680bf49b06447bda9653c0553ec420f991",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-20T12:23:24.372Z",
-  "lastRunAt": "2026-05-21T06:06:14.950Z",
+  "lastRunAt": "2026-05-21T06:19:19.680Z",
   "thesis": "The \"Vault Manager Basket\" continues to focus on tracking and managing futures related to the S&P 500 index, specifically the E-Mini and Micro E-Mini S&P 500 futures. This strategy aims to provide diversified exposure to the US equity market, leveraging the liquidity and volatility of these futures to optimize returns. The current market conditions show a slight downward momentum, which suggests a cautious approach in maintaining long positions.",
-  "lastThesisUpdate": "2026-05-21T06:06:14.950Z"
+  "lastThesisUpdate": "2026-05-21T06:19:19.680Z"
 }
