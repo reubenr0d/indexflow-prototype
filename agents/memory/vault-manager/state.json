@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:f335f3775c90e14555d6784e7408eb1aa84a4cab089d51df380db3a7fc85adf3",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T09:26:18.098Z",
-  "lastRunAt": "2026-05-21T09:27:45.609Z",
-  "thesis": "The Vault Manager Basket is strategically positioned to capitalize on market momentum and volume, focusing on long positions in high-volume futures such as the E-Mini S&P 500 and Micro E-Mini S&P 500. The strategy aims to optimize returns by dynamically allocating capital to perp positions, ensuring a balanced approach that leverages market trends while maintaining sufficient collateral.",
-  "lastThesisUpdate": "2026-05-21T09:27:45.609Z"
+  "lastRunAt": "2026-05-21T11:38:43.100Z",
+  "thesis": "The Vault Manager Basket continues to focus on leveraging market momentum and volume, particularly through long positions in high-volume futures like the E-Mini S&P 500 and Micro E-Mini S&P 500. By maintaining a strategic allocation of capital to perp positions, the vault aims to optimize returns while ensuring sufficient collateral is available to capitalize on favorable market conditions.",
+  "lastThesisUpdate": "2026-05-21T11:38:43.100Z"
 }
