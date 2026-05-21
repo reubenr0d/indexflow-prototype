@@ -1,0 +1,9 @@
+{
+  "vaultAddress": "0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3",
+  "vaultName": "Minestarters Quality Matrix",
+  "agentFileHash": "sha256:41e01d3d2ed9eb69deb15f2f63b009e3ab1dff22b5f8d6d0ad6820caf2a4b351",
+  "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
+  "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
+  "deployedAt": "2026-05-21T13:21:34.028Z",
+  "lastRunAt": "2026-05-21T13:26:49.516Z"
+}
