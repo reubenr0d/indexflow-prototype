@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:141af1dc49a6750b8bb2e80873300468f522a12a8d3af69f85d4aaf0e581385a",
+  "agentFileHash": "sha256:c9e594f749adf8111881587a9207cc96c2d926a8aa18bfd93525840adec30c9e",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:15:21.593Z",
-  "lastRunAt": "2026-05-21T16:02:37.227Z",
-  "thesis": "The Atlas ML model currently favors a diverse set of mining stocks with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like cash-to-market cap and EBITDA-to-market cap suggests a preference for financially robust companies. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastThesisUpdate": "2026-05-21T13:20:46.864Z"
+  "lastRunAt": "2026-05-22T18:52:32.818Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
+  "lastThesisUpdate": "2026-05-22T18:52:32.818Z"
 }

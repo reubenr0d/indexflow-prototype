@@ -4,14 +4,54 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model currently favors a diverse set of mining stocks with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like cash-to-market cap and EBITDA-to-market cap suggests a preference for financially robust companies. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastRunAt": "2026-05-21T16:02:37.227Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
+  "lastRunAt": "2026-05-22T18:52:32.818Z",
   "latestRun": {
-    "runId": "2026-05-21T16:02:37.227Z",
-    "finishedAt": "2026-05-21T16:02:37.227Z",
-    "summary": "Despite attempts to open long positions on Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V) with minimal sizing and collateral, the transactions continue to fail due to insufficient capital for collateral. The vault's current state shows no available capital, which prevents any position openings.\n\nTo address this issue, the following actions are recommended:\n\n1. **Deposit Additional Funds**: Increase the vault's capital to enable position openings"
+    "runId": "2026-05-22T18:52:32.818Z",
+    "finishedAt": "2026-05-22T18:52:32.818Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete be"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new top pick by the Atlas ML model with a high ML score of 99.5.",
+      "timestamp": "2026-05-22T18:52:32.818Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T18:52:32.818Z"
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the latest top-N picks from the Atlas ML model.",
+      "timestamp": "2026-05-22T18:52:32.818Z",
+      "txHash": "0x616c1c9299fe49bd3d389965279e984408550bd2d49efe539b31732b9e671880",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T18:52:32.818Z"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating 50% of available USDC to perp trading as per auto-allocation policy.",
+      "timestamp": "2026-05-22T18:52:32.818Z",
+      "txHash": "0x58f1f3e6d746b9aaeedffd8c2a120302208d11b8eec21e0f344e5ea8d211933d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T18:52:32.818Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Royal Gold Inc. (0KXS.L) based on its high ML score and predicted return.",
+      "timestamp": "2026-05-22T18:52:32.818Z",
+      "txHash": "0x379ff9658c48208218ebe72944771dcaff302241a72edee7715f1c403ff69aba",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T18:52:32.818Z"
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Empire Metals Limited (EEE.L) due to its strong ML score and predicted return.",
+      "timestamp": "2026-05-22T18:52:32.818Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T18:52:32.818Z"
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Critical Metals Corp. (CRML) as a new entrant with a high ML score and predicted return.",
