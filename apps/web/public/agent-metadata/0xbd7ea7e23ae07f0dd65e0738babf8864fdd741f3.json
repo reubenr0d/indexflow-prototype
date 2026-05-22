@@ -78,3 +78,24 @@
     }
   ]
 }
+entName": "quality-matrix-manager",
+      "runId": "2026-05-21T13:26:49.516Z"
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Setting tracked assets to match the top picks from the Quality Matrix with composite scores of 75 or higher.",
+      "timestamp": "2026-05-21T13:26:49.516Z",
+      "txHash": "0x5df9f447daa86ea5215875bb1e2b375cd5367833fd6fc8fa26fd8edc58c72ef3",
+      "agentName": "quality-matrix-manager",
+      "runId": "2026-05-21T13:26:49.516Z"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating capital to the perp module to enable opening of long positions on top picks.",
+      "timestamp": "2026-05-21T13:26:49.516Z",
+      "txHash": null,
+      "agentName": "quality-matrix-manager",
+      "runId": "2026-05-21T13:26:49.516Z"
+    }
+  ]
+}
