@@ -1,7 +1,9 @@
 "use client";
 
-import { type DeploymentTarget } from "@/lib/deployment";
-import { useMultiChainSubgraphQuery } from "@/hooks/useMultiChainSubgraphQuery";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getSubgraphClient } from "@/lib/subgraph/client";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { GET_CHAIN_POOL_STATES } from "@/lib/subgraph/queries";
 
 export type ChainState = {
@@ -31,7 +33,7 @@ export type PoolReserveRegistryView = {
   chains: ChainState[];
   isLoading: boolean;
   isEmpty: boolean;
-  failedTargets: DeploymentTarget[];
+  isError: boolean;
 };
 
 export function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[] {
@@ -64,35 +66,39 @@ export function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[]
   });
 }
 
-export type RawChainPoolStateResult = {
-  chainPoolStates: RawChainPoolState[];
-};
-
-export function aggregateChainPoolStates(results: Map<DeploymentTarget, RawChainPoolStateResult>): ChainState[] {
-  const allRows: RawChainPoolState[] = [];
-  for (const result of results.values()) {
-    allRows.push(...result.chainPoolStates);
-  }
-  if (allRows.length === 0) return [];
-  return transformChainPoolStates(allRows);
-}
-
+/**
+ * Envio HyperIndex serves every chain from one unified GraphQL endpoint, so
+ * `ChainPoolState` already contains rows for all indexed chains keyed by
+ * `chainSelector`. Fetch once and transform — the old per-target fan-out
+ * produced N duplicate rows per chain and never resolved partial-failure
+ * state correctly.
+ */
 export function usePoolReserveRegistryState(): PoolReserveRegistryView {
-  const { data, isLoading, failedTargets } = useMultiChainSubgraphQuery<
-    RawChainPoolStateResult,
-    ChainState[]
-  >({
-    queryKeyPrefix: ["chainPoolStates"],
-    document: GET_CHAIN_POOL_STATES,
-    aggregate: aggregateChainPoolStates,
+  const { isSubgraphEnabled, subgraphUrl } = useDeploymentTarget();
+  const client = useMemo(
+    () => (isSubgraphEnabled ? getSubgraphClient(subgraphUrl) : null),
+    [isSubgraphEnabled, subgraphUrl],
+  );
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["subgraph", "chainPoolStates"],
+    queryFn: async (): Promise<ChainState[]> => {
+      if (!client) return [];
+      const result = await client.request<{ chainPoolStates: RawChainPoolState[] }>(
+        GET_CHAIN_POOL_STATES,
+      );
+      return transformChainPoolStates(result.chainPoolStates ?? []);
+    },
+    enabled: Boolean(client),
     staleTime: 15_000,
-    runInSingleMode: true,
+    retry: 1,
   });
 
+  const chains = data ?? [];
   return {
-    chains: data ?? [],
+    chains,
     isLoading,
-    isEmpty: !isLoading && (data?.length ?? 0) === 0,
-    failedTargets,
+    isEmpty: !isLoading && chains.length === 0,
+    isError,
   };
 }

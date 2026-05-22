@@ -78,6 +78,7 @@ export function DepositRedeemPanel({
   const [isMultiChainDrawerOpen, setIsMultiChainDrawerOpen] = useState(false);
   const [showSponsorshipError, setShowSponsorshipError] = useState(false);
   const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
+  const [approvalInFlightAmount, setApprovalInFlightAmount] = useState<bigint>(0n);
   const { address } = useAccount();
   const { client: smartWalletClient } = useSmartWallets();
   const { chainId, viewMode } = useDeploymentTarget();
@@ -88,7 +89,11 @@ export function DepositRedeemPanel({
   const isMultiChainEnabled = isPrivyConfigured && viewMode === "all";
 
   const { data: usdcBalance } = useUSDCBalance(usdc, activeAddress);
-  const { data: allowance } = useUSDCAllowance(usdc, activeAddress, vault);
+  const { data: allowance, refetch: refetchAllowance } = useUSDCAllowance(
+    usdc,
+    activeAddress,
+    vault
+  );
 
   const {
     approve,
@@ -114,7 +119,7 @@ export function DepositRedeemPanel({
 
   const parsedAmount = amount ? parseUSDCInput(amount) : 0n;
 
-  const { error: simDepositError } = useSimulateDeposit(
+  const { error: simDepositError, refetch: refetchSimDeposit } = useSimulateDeposit(
     vault,
     mode === "deposit" ? parsedAmount : 0n,
     mode === "deposit" ? activeAddress : undefined
@@ -142,7 +147,20 @@ export function DepositRedeemPanel({
       ? (parsedAmount * sharePrice * (10000n - redeemFeeBps)) / (10000n * PRICE_PRECISION)
       : 0n;
 
-  const isProcessing = isApproving || isDepositing || isRedeeming;
+  const isApprovalConfirming =
+    isApproving || approveReceipt.isLoading || approvalInFlightAmount > 0n;
+  const isDepositConfirming = isDepositing || depositReceipt.isLoading;
+  const isRedeemConfirming = isRedeeming || redeemReceipt.isLoading;
+  const isProcessing = isApprovalConfirming || isDepositConfirming || isRedeemConfirming;
+
+  const processingAction: "approve" | "deposit" | "redeem" | null = isApprovalConfirming
+    ? "approve"
+    : isDepositConfirming
+      ? "deposit"
+      : isRedeemConfirming
+        ? "redeem"
+        : null;
+
   const blockedBySimulation =
     parsedAmount > 0n &&
     !needsApproval &&
@@ -155,13 +173,29 @@ export function DepositRedeemPanel({
     mode,
     needsApproval,
     isProcessing,
+    processingAction,
   });
 
   useEffect(() => {
     if (approveReceipt.isSuccess) {
       showToast("success", "USDC approved");
+      refetchAllowance();
+      refetchSimDeposit();
     }
-  }, [approveReceipt.isSuccess]);
+  }, [approveReceipt.isSuccess, refetchAllowance, refetchSimDeposit]);
+
+  useEffect(() => {
+    if (approvalInFlightAmount === 0n) return;
+    if ((allowance ?? 0n) >= approvalInFlightAmount) {
+      setApprovalInFlightAmount(0n);
+    }
+  }, [allowance, approvalInFlightAmount]);
+
+  useEffect(() => {
+    if (isApproveError || approveReceipt.isError) {
+      setApprovalInFlightAmount(0n);
+    }
+  }, [isApproveError, approveReceipt.isError]);
 
   useContractErrorToast({
     writeError: approveError,
@@ -225,10 +259,12 @@ export function DepositRedeemPanel({
 
   const handleAmountChange = (value: string) => {
     setAmount(value);
+    setApprovalInFlightAmount(0n);
   };
 
   const handleSubmit = () => {
     if (!activeAddress || parsedAmount === 0n) return;
+    if (isProcessing) return;
 
     if (blockedBySimulation) {
       showToast("error", simulationErrorMessage ?? "Transaction is likely to fail.");
@@ -241,6 +277,7 @@ export function DepositRedeemPanel({
     }
 
     if (mode === "deposit" && needsApproval) {
+      setApprovalInFlightAmount(parsedAmount);
       approve(usdc, vault, parsedAmount);
       showToast("pending", "Approving USDC...");
       return;

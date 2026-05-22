@@ -186,6 +186,12 @@ jobs:
           git config user.email "vault-agent[bot]@users.noreply.github.com"
           git add agents/memory/ apps/web/public/agent-metadata/
           git diff --cached --quiet && exit 0
-          git commit -m "chore(agent): update agent memory and metadata"
+          MSG_FILE="$(mktemp)"
+          if node scripts/build-agent-commit-message.mjs > "$MSG_FILE"; then
+            git commit -F "$MSG_FILE"
+          else
+            echo "::warning::build-agent-commit-message.mjs failed; falling back to static message"
+            git commit -m "chore(agent): update agent memory and metadata"
+          fi
           git pull --rebase
           git push

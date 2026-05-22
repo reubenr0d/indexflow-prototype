@@ -30,13 +30,34 @@ type ChainConfig = {
   rpcUrl: string;
 };
 
-const CHAIN_CONFIG: Record<number, ChainConfig> = {
-  11155111: { chain: sepolia, rpcUrl: "https://sepolia.rpc.hypersync.xyz" },
-  43113: { chain: avalancheFuji, rpcUrl: "https://fuji.rpc.hypersync.xyz" },
-  421614: { chain: arbitrumSepolia, rpcUrl: "https://arbitrum-sepolia.rpc.hypersync.xyz" },
-  31337: { chain: localHub, rpcUrl: "http://127.0.0.1:8545" },
-  31338: { chain: localSpoke, rpcUrl: "http://127.0.0.1:8546" },
+/**
+ * Public RPC endpoints that accept anonymous `eth_call` and are good enough
+ * for the low-volume reads we issue from event handlers. Override per chain
+ * via `<NAME>_RPC_URL` env vars (e.g. SEPOLIA_RPC_URL). If you point one of
+ * those overrides at `*.rpc.hypersync.xyz`, also set `ENVIO_API_TOKEN` so we
+ * attach a Bearer auth header — those endpoints reject unauthenticated calls.
+ */
+const DEFAULT_RPC_URLS: Record<number, string> = {
+  11155111: "https://ethereum-sepolia-rpc.publicnode.com",
+  43113: "https://avalanche-fuji-c-chain-rpc.publicnode.com",
+  421614: "https://arbitrum-sepolia-rpc.publicnode.com",
+  31337: "http://127.0.0.1:8545",
+  31338: "http://127.0.0.1:8546",
 };
+
+const CHAIN_CONFIG: Record<number, ChainConfig> = {
+  11155111: { chain: sepolia, rpcUrl: resolveRpcUrl(11155111, "SEPOLIA_RPC_URL") },
+  43113: { chain: avalancheFuji, rpcUrl: resolveRpcUrl(43113, "FUJI_RPC_URL") },
+  421614: { chain: arbitrumSepolia, rpcUrl: resolveRpcUrl(421614, "ARBITRUM_SEPOLIA_RPC_URL") },
+  31337: { chain: localHub, rpcUrl: resolveRpcUrl(31337, "HUB_RPC_URL") },
+  31338: { chain: localSpoke, rpcUrl: resolveRpcUrl(31338, "SPOKE_RPC_URL") },
+};
+
+function resolveRpcUrl(chainId: number, envVar: string): string {
+  const override = process.env[envVar]?.trim();
+  if (override) return override;
+  return DEFAULT_RPC_URLS[chainId] ?? "";
+}
 
 const clientCache = new Map<number, ReturnType<typeof createPublicClient>>();
 
@@ -45,14 +66,42 @@ function getClient(chainId: number) {
   if (existing) return existing;
 
   const cfg = CHAIN_CONFIG[chainId];
-  if (!cfg) return null;
+  if (!cfg || !cfg.rpcUrl) return null;
+
+  const isHypersync = /\.rpc\.hypersync\.xyz/i.test(cfg.rpcUrl);
+  const apiToken = process.env.ENVIO_API_TOKEN?.trim();
+  const transport = http(
+    cfg.rpcUrl,
+    isHypersync && apiToken
+      ? { fetchOptions: { headers: { Authorization: `Bearer ${apiToken}` } } }
+      : undefined,
+  );
 
   const client = createPublicClient({
     chain: cfg.chain,
-    transport: http(cfg.rpcUrl),
+    transport,
   });
   clientCache.set(chainId, client);
   return client;
+}
+
+/**
+ * Single-shot warning: log the first failure for each (chainId, op) pair so
+ * configuration / RPC issues surface immediately instead of silently leaving
+ * entity fields at their zero defaults. Subsequent failures stay quiet to
+ * avoid drowning the indexer log.
+ */
+const warned = new Set<string>();
+function warnOnce(chainId: number, op: string, error: unknown): void {
+  const key = `${chainId}:${op}`;
+  if (warned.has(key)) return;
+  warned.add(key);
+  const message = error instanceof Error ? error.message : String(error);
+  // eslint-disable-next-line no-console
+  console.warn(
+    `[envio:contractCalls] read failed for chain=${chainId} op=${op}: ${message}. ` +
+      `Set <NAME>_RPC_URL (or ENVIO_API_TOKEN for hypersync URLs) so handlers can populate live state.`,
+  );
 }
 
 export type BasketChainState = {
@@ -100,7 +149,9 @@ export async function readBasketChainState(
       functionName: "name",
     });
     result.name = String(name);
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.name", error);
+  }
 
   try {
     const shareToken = (await client.readContract({
@@ -117,8 +168,12 @@ export async function readBasketChainState(
         functionName: "totalSupply",
       })) as bigint;
       result.totalSupplyShares = totalSupply;
-    } catch {}
-  } catch {}
+    } catch (error) {
+      warnOnce(chainId, "BasketShareToken.totalSupply", error);
+    }
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.shareToken", error);
+  }
 
   try {
     result.perpAllocatedUsdc = (await client.readContract({
@@ -126,7 +181,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "perpAllocated",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.perpAllocated", error);
+  }
 
   try {
     const sharePrice = (await client.readContract({
@@ -136,7 +193,9 @@ export async function readBasketChainState(
     })) as bigint;
     result.sharePrice = sharePrice;
     result.basketPrice = sharePrice;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.getSharePrice", error);
+  }
 
   try {
     result.assetCount = (await client.readContract({
@@ -144,7 +203,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "getAssetCount",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.getAssetCount", error);
+  }
 
   try {
     result.depositFeeBps = (await client.readContract({
@@ -152,7 +213,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "depositFeeBps",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.depositFeeBps", error);
+  }
 
   try {
     result.redeemFeeBps = (await client.readContract({
@@ -160,7 +223,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "redeemFeeBps",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.redeemFeeBps", error);
+  }
 
   try {
     result.minReserveBps = (await client.readContract({
@@ -168,7 +233,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "minReserveBps",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.minReserveBps", error);
+  }
 
   try {
     result.maxPerpAllocation = (await client.readContract({
@@ -176,7 +243,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "maxPerpAllocation",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.maxPerpAllocation", error);
+  }
 
   try {
     const usdc = (await client.readContract({
@@ -192,7 +261,9 @@ export async function readBasketChainState(
     })) as bigint;
     result.usdcBalanceUsdc = usdcBalance;
     result.tvlBookUsdc = usdcBalance + (result.perpAllocatedUsdc ?? 0n);
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.usdc/balanceOf", error);
+  }
 
   try {
     result.requiredReserveUsdc = (await client.readContract({
@@ -200,7 +271,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "getRequiredReserveUsdc",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.getRequiredReserveUsdc", error);
+  }
 
   try {
     result.availableForPerpUsdc = (await client.readContract({
@@ -208,7 +281,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "getAvailableForPerpUsdc",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.getAvailableForPerpUsdc", error);
+  }
 
   try {
     result.collectedFeesUsdc = (await client.readContract({
@@ -216,7 +291,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "collectedFees",
     })) as bigint;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.collectedFees", error);
+  }
 
   try {
     result.vaultAccounting = (await client.readContract({
@@ -224,7 +301,9 @@ export async function readBasketChainState(
       abi: basketVaultAbi,
       functionName: "vaultAccounting",
     })) as Address;
-  } catch {}
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.vaultAccounting", error);
+  }
 
   return result;
 }
@@ -244,7 +323,8 @@ export async function readBasketAssetAt(
       functionName: "getAssetAt",
       args: [index],
     })) as `0x${string}`;
-  } catch {
+  } catch (error) {
+    warnOnce(chainId, "BasketVault.getAssetAt", error);
     return null;
   }
 }
@@ -282,7 +362,8 @@ export async function readVaultAccountingState(
       collateralLocked: value.collateralLocked,
       registered: value.registered,
     };
-  } catch {
+  } catch (error) {
+    warnOnce(chainId, "VaultAccounting.getVaultState", error);
     return {};
   }
 }
@@ -314,7 +395,8 @@ export async function readPositionExposureSize(
 
     const value = tracking as { exists: boolean; size: bigint };
     return value.exists ? value.size : 0n;
-  } catch {
+  } catch (error) {
+    warnOnce(chainId, "VaultAccounting.getPositionTracking", error);
     return null;
   }
 }
@@ -339,7 +421,8 @@ export async function readRoutingWeights(
       weights: value[1] ?? [],
       amounts: value[2] ?? [],
     };
-  } catch {
+  } catch (error) {
+    warnOnce(chainId, "StateRelay.getRoutingWeights", error);
     return null;
   }
 }

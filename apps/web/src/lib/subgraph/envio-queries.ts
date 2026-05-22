@@ -38,7 +38,7 @@ export const ENVIO_GET_BASKETS_OVERVIEW = gql`
 `;
 
 export const ENVIO_GET_BASKET_DETAIL = gql`
-  query GetBasketDetail($id: ID!) {
+  query GetBasketDetail($id: ID!, $activityFirst: Int!, $activitySkip: Int!) {
     basket: Basket_by_pk(id: $id) {
       id
       name
@@ -69,7 +69,7 @@ export const ENVIO_GET_BASKET_DETAIL = gql`
         active
         updatedAt
       }
-      activities(limit: 100, order_by: { timestamp: desc }) {
+      activities(limit: $activityFirst, offset: $activitySkip, order_by: { timestamp: desc }) {
         id
         activityType
         user {

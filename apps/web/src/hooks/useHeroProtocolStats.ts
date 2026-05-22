@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { computeApy } from "@/lib/apy";
 import { USDC_PRECISION } from "@/lib/constants";
-import { type DeploymentTarget } from "@/lib/deployment";
+import { chainIdForDeploymentTarget, type DeploymentTarget } from "@/lib/deployment";
 import { GET_BASKETS_OVERVIEW, GET_TOKEN_HOLDER_ADDRESSES } from "@/lib/subgraph/queries";
 import { getSubgraphClientForTarget } from "@/lib/subgraph/client";
 import { toBasketOverviewRows } from "@/lib/subgraph/transform";
@@ -131,7 +131,7 @@ async function fetchChainBaskets(target: DeploymentTarget): Promise<ChainBaskets
   if (!client) return null;
   const result = await client.request<{ baskets: Array<Record<string, string>> }>(
     GET_BASKETS_OVERVIEW,
-    { first: 500, skip: 0 }
+    { first: 500, skip: 0, chainId: chainIdForDeploymentTarget(target) }
   );
   const baskets = toBasketOverviewRows(result.baskets) as BasketOverview[];
   return { baskets, target };

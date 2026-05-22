@@ -7,6 +7,11 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, existsSync } from "node:fs";
 import { resolve, isAbsolute } from "node:path";
 import { classifySymbolWithSearch, symbolPolicyMessage } from "../../shared/yahoo-symbol-policy.mjs";
+import {
+  fetchLivePriceUsd,
+  validateSeedPriceUsd,
+  SEED_PRICE_MAX_DEVIATION_BPS,
+} from "../../shared/yahoo-usd-quote.mjs";
 import { redactSecrets } from "../../../scripts/lib/redact-secrets.mjs";
 
 // ---------------------------------------------------------------------------
@@ -697,17 +702,42 @@ server.registerTool(
       "Wire a new tradeable asset on-chain in a single transaction via AssetWiring. " +
       "Deploys a MockIndexToken, configures the OracleAdapter, seeds the GMX price feed, and maps the asset across VaultAccounting/FundingRateManager/PriceSync. " +
       "Ambiguous unsuffixed equities are rejected — use exchange-suffixed Yahoo symbols (e.g. BHP.AX). " +
-      "Always call yfinance_quote first to get the current USD price for seedPriceUsd. " +
+      "STRICT ORDER: you MUST call `yfinance_quote` on this exact symbol in the same turn and pass its `priceUsd` field as `seedPriceUsd`. " +
+      "The tool independently fetches the live Yahoo USD quote and REJECTS any seed that differs by more than 20% (error_code SEED_PRICE_DEVIATION). " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       symbol: z.string().describe("Yahoo Finance ticker (e.g. 'BHP.AX', 'AAPL', 'GLEN.L')"),
-      seedPriceUsd: z.number().positive().describe("Current price in USD from yfinance_quote (e.g. 45.20)"),
+      seedPriceUsd: z.number().positive().describe("Current price in USD from yfinance_quote's priceUsd field (e.g. 45.20). Must be within 20% of live Yahoo USD or the call is rejected."),
       justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
   async ({ symbol, seedPriceUsd, justification }) => {
     try {
       await validateWriteSymbolPolicy(symbol);
+
+      let live;
+      try {
+        live = await fetchLivePriceUsd(symbol);
+      } catch (err) {
+        return toolError(
+          "SEED_PRICE_UNAVAILABLE",
+          `Could not fetch live Yahoo USD quote for ${symbol}: ${err.message}`,
+          "Yahoo Finance may be temporarily unavailable, or the symbol does not resolve. " +
+            "Skip this pick on this run; the asset will be eligible again next run once the keeper publishes a price. " +
+            "Do NOT retry inside this turn with the same seedPriceUsd."
+        );
+      }
+
+      const check = validateSeedPriceUsd(seedPriceUsd, live.priceUsd, SEED_PRICE_MAX_DEVIATION_BPS);
+      if (!check.ok) {
+        return toolError(
+          "SEED_PRICE_DEVIATION",
+          `seedPriceUsd ${seedPriceUsd} differs from live Yahoo priceUsd ${live.priceUsd} (${live.currency} ${live.price}) by ${(check.devBps / 100).toFixed(2)}% (max ${(SEED_PRICE_MAX_DEVIATION_BPS / 100).toFixed(0)}%).`,
+          "You must call yfinance_quote on this exact symbol in the SAME turn and pass its `priceUsd` field as `seedPriceUsd`. " +
+            "Do NOT guess, do NOT carry forward stale prices, and do NOT reuse a value from atlas-ml / atlas-quality (those expose marketCapUsd, not per-share USD)."
+        );
+      }
+
       const d = deployment();
       const seedPriceRaw8 = BigInt(Math.round(seedPriceUsd * 1e8)).toString();
       const rawReceipt = castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8]);

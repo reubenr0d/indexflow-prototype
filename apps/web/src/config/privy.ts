@@ -10,6 +10,10 @@ export const privyConfig: PrivyClientConfig = {
     ethereum: {
       createOnLogin: "all-users",
     },
+    // Run embedded-wallet transactions headlessly. Our own in-app
+    // TransactionDock + inline panel stepper take over the confirmation UX.
+    // See https://docs.privy.io/recipes/react/manage-wallet-UIs
+    showWalletUIs: false,
   },
   externalWallets: {
     disableAllExternalWallets: true,

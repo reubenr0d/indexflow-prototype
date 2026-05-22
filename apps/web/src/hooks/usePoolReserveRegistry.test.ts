@@ -1,75 +1,73 @@
 import { describe, expect, it, vi, type Mock } from "vitest";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import type { DeploymentTarget } from "@/lib/deployment";
+import { useQuery } from "@tanstack/react-query";
 import {
-  aggregateChainPoolStates,
+  transformChainPoolStates,
   usePoolReserveRegistryState,
   type ChainState,
-  type RawChainPoolStateResult,
+  type RawChainPoolState,
 } from "./usePoolReserveRegistry";
-import { useMultiChainSubgraphQuery } from "./useMultiChainSubgraphQuery";
 
-vi.mock("./useMultiChainSubgraphQuery", () => ({
-  useMultiChainSubgraphQuery: vi.fn(),
+vi.mock("@tanstack/react-query", () => ({
+  useQuery: vi.fn(),
 }));
 
-describe("usePoolReserveRegistryState", () => {
-  it("aggregates chain pool states from multiple targets", () => {
-    const rows = new Map<DeploymentTarget, RawChainPoolStateResult>([
-      [
-        "sepolia",
-        {
-          chainPoolStates: [
-            {
-              id: "a",
-              chainSelector: "16015286601757825753",
-              twapPoolAmount: "1000000",
-              availableLiquidity: "650000",
-              reservedAmount: "350000",
-              utilizationBps: "3500",
-              snapshotTimestamp: "1700000000",
-              snapshotCount: "1",
-              updatedAt: "1700000000",
-            },
-          ],
-        },
-      ],
-      [
-        "fuji",
-        {
-          chainPoolStates: [
-            {
-              id: "b",
-              chainSelector: "14767482510784806043",
-              twapPoolAmount: "3000000",
-              availableLiquidity: "2700000",
-              reservedAmount: "300000",
-              utilizationBps: "1000",
-              snapshotTimestamp: "1700000005",
-              snapshotCount: "1",
-              updatedAt: "1700000005",
-            },
-          ],
-        },
-      ],
-    ]);
+vi.mock("@/providers/DeploymentProvider", () => ({
+  useDeploymentTarget: () => ({
+    isSubgraphEnabled: true,
+    subgraphUrl: "https://example.com/graphql",
+  }),
+}));
 
-    const out = aggregateChainPoolStates(rows);
+vi.mock("@/lib/subgraph/client", () => ({
+  getSubgraphClient: () => ({ request: vi.fn() }),
+}));
+
+describe("transformChainPoolStates", () => {
+  it("computes routing weights from twap pool amounts", () => {
+    const raw: RawChainPoolState[] = [
+      {
+        id: "a",
+        chainSelector: "16015286601757825753",
+        twapPoolAmount: "1000000",
+        availableLiquidity: "650000",
+        reservedAmount: "350000",
+        utilizationBps: "3500",
+        snapshotTimestamp: "1700000000",
+        snapshotCount: "1",
+        updatedAt: "1700000000",
+      },
+      {
+        id: "b",
+        chainSelector: "14767482510784806043",
+        twapPoolAmount: "3000000",
+        availableLiquidity: "2700000",
+        reservedAmount: "300000",
+        utilizationBps: "1000",
+        snapshotTimestamp: "1700000005",
+        snapshotCount: "1",
+        updatedAt: "1700000005",
+      },
+    ];
+
+    const out = transformChainPoolStates(raw);
     expect(out).toHaveLength(2);
     expect(out.map((r) => r.chainSelector.toString()).sort()).toEqual([
       "14767482510784806043",
       "16015286601757825753",
     ]);
+    // 1M / 4M = 2500 bps, 3M / 4M = 7500 bps
+    const bySelector = new Map(out.map((r) => [r.chainSelector.toString(), r.routingWeight]));
+    expect(bySelector.get("16015286601757825753")).toBe(2500);
+    expect(bySelector.get("14767482510784806043")).toBe(7500);
   });
+});
 
+describe("usePoolReserveRegistryState", () => {
   it("returns explicit empty-state metadata when no rows exist", () => {
-    const mocked = useMultiChainSubgraphQuery as Mock;
-    mocked.mockReturnValue({
-      data: [],
-      isLoading: false,
-      failedTargets: [],
-    });
+    const mocked = useQuery as unknown as Mock;
+    mocked.mockReturnValue({ data: [], isLoading: false, isError: false });
 
     const viewRef: { current: ReturnType<typeof usePoolReserveRegistryState> | null } = { current: null };
     function Probe() {
@@ -82,12 +80,12 @@ describe("usePoolReserveRegistryState", () => {
       chains: [],
       isLoading: false,
       isEmpty: true,
-      failedTargets: [],
+      isError: false,
     });
   });
 
-  it("returns partial data with failed targets metadata", () => {
-    const mocked = useMultiChainSubgraphQuery as Mock;
+  it("surfaces an error flag when the indexer query fails", () => {
+    const mocked = useQuery as unknown as Mock;
     const chain: ChainState = {
       chainSelector: 1n,
       poolDepth: 10n,
@@ -98,11 +96,7 @@ describe("usePoolReserveRegistryState", () => {
       staleness: 1,
       timestamp: 1700000000,
     };
-    mocked.mockReturnValue({
-      data: [chain],
-      isLoading: false,
-      failedTargets: ["fuji"],
-    });
+    mocked.mockReturnValue({ data: [chain], isLoading: false, isError: true });
 
     const viewRef2: { current: ReturnType<typeof usePoolReserveRegistryState> | null } = { current: null };
     function Probe() {
@@ -115,7 +109,7 @@ describe("usePoolReserveRegistryState", () => {
       chains: [chain],
       isLoading: false,
       isEmpty: false,
-      failedTargets: ["fuji"],
+      isError: true,
     });
   });
 });

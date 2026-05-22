@@ -16,7 +16,7 @@ function formatFreshness(seconds: number): string {
 }
 
 export default function ChainsPage() {
-  const { chains, isLoading: registryLoading, isEmpty, failedTargets } = usePoolReserveRegistryState();
+  const { chains, isLoading: registryLoading, isEmpty, isError } = usePoolReserveRegistryState();
 
   const metrics = useMemo(() => {
     if (chains.length === 0) {
@@ -50,10 +50,10 @@ export default function ChainsPage() {
           Monitor keeper-posted routing state across deployed chains. Deposit acceptance and pricing consistency
           depend on fresh StateRelay updates.
         </p>
-        {failedTargets.length > 0 && (
+        {isError && (
           <p className="mt-3 flex items-start gap-2 rounded-md border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs leading-relaxed text-amber-700 dark:text-amber-300">
             <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-            Showing partial chain data. Failed indexer targets: {failedTargets.join(", ")}.
+            Could not reach the indexer. Showing the last cached chain data, if any.
           </p>
         )}
       </div>

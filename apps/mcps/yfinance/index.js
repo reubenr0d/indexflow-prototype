@@ -4,6 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { classifySymbolWithSearch } from "../../shared/yahoo-symbol-policy.mjs";
+import { fetchLivePriceUsd } from "../../shared/yahoo-usd-quote.mjs";
 
 // ---------------------------------------------------------------------------
 // Yahoo Finance client (lazy-loaded)
@@ -17,16 +18,6 @@ async function yf() {
     _yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
   }
   return _yf;
-}
-
-async function getUsdRate(currency) {
-  if (currency === "USD") return 1;
-  const client = await yf();
-  const pair = `${currency}USD=X`;
-  const q = await client.quote(pair);
-  const rate = q.regularMarketPrice;
-  if (!rate || rate <= 0) throw new Error(`Could not fetch FX rate for ${pair}`);
-  return rate;
 }
 
 async function getSearchRows(symbol) {
@@ -114,34 +105,26 @@ server.registerTool(
   },
   async ({ symbols }) => {
     try {
-      const client = await yf();
       const quotes = await Promise.all(
         symbols.map(async (symbol) => {
           const searchRows = await getSearchRows(symbol);
           const classification = classifySymbolWithSearch(symbol, searchRows);
           try {
-            const q = await client.quote(symbol);
-            const price = q.regularMarketPrice ?? null;
-            const currency = q.currency ?? "USD";
-            let priceUsd = null;
-            if (price != null) {
-              const fxRate = await getUsdRate(currency);
-              priceUsd = +(price * fxRate).toFixed(4);
-            }
+            const live = await fetchLivePriceUsd(symbol);
             return {
               requestedSymbol: symbol,
-              resolvedSymbol: q.symbol ?? null,
-              symbol: q.symbol,
-              name: q.longName ?? q.shortName ?? "",
-              price,
-              priceUsd,
-              currency,
-              exchange: q.fullExchangeName ?? "",
-              marketState: q.marketState ?? "CLOSED",
-              dayChange: q.regularMarketChange ?? null,
-              dayChangePct: q.regularMarketChangePercent ?? null,
-              volume: q.regularMarketVolume ?? null,
-              marketCap: q.marketCap ?? null,
+              resolvedSymbol: live.resolvedSymbol,
+              symbol: live.resolvedSymbol ?? symbol,
+              name: live.name,
+              price: live.price,
+              priceUsd: live.priceUsd,
+              currency: live.currency,
+              exchange: live.exchange,
+              marketState: live.marketState,
+              dayChange: live.dayChange,
+              dayChangePct: live.dayChangePct,
+              volume: live.volume,
+              marketCap: live.marketCap,
               isAmbiguous: classification.isAmbiguous,
               candidates: classification.candidates,
             };

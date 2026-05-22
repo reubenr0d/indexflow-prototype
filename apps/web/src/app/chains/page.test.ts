@@ -28,7 +28,7 @@ describe("/chains page", () => {
       chains: [],
       isLoading: false,
       isEmpty: true,
-      failedTargets: [],
+      isError: false,
     });
 
     const html = renderToStaticMarkup(createElement(ChainsPage));
@@ -37,7 +37,7 @@ describe("/chains page", () => {
     expect(html).not.toContain("Showing placeholder registry data");
   });
 
-  it("shows partial warning and still renders chart with available chains", () => {
+  it("surfaces an indexer error banner and still renders chart with available chains", () => {
     (usePoolReserveRegistryState as Mock).mockReturnValue({
       chains: [
         {
@@ -53,11 +53,11 @@ describe("/chains page", () => {
       ],
       isLoading: false,
       isEmpty: false,
-      failedTargets: ["fuji"],
+      isError: true,
     });
 
     const html = renderToStaticMarkup(createElement(ChainsPage));
-    expect(html).toContain("Showing partial chain data. Failed indexer targets: fuji.");
+    expect(html).toContain("Could not reach the indexer.");
     expect(html).toContain("data-testid=\"chain-chart\"");
     expect(html).toContain("chart:111");
     expect(html).toContain("Stale chains (&gt;5m)");

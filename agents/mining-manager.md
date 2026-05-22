@@ -64,10 +64,11 @@ The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%
 
 5. **Scan News (long AND short signal)**: Call `yfinance_news` twice — once on ~5 top-pick yahooSymbols (long context), and once on up to 5 currently-wired oracle assets that are *outside* the Atlas top-N (short candidates). For each result, classify each headline as **bullish** (earnings beat, mine permit granted, resource upgrade, M&A bid, commodity rally, analyst upgrade), **bearish** (guidance cut, mine halt or closure, fraud/regulatory action, resource downgrade, miss, analyst downgrade, commodity collapse), or **neutral**. Reuse the strongest headline as the `justification` text on the relevant `open_position` / `close_position` call later in the run. **A short candidate must have at least one concrete bearish headline you can quote in `justification` — no headline, no short.**
 
-6. **Onboard New Assets**: For each new pick whose symbol isn't already in `get_oracle_assets`:
-   - Call `yfinance_quote` on its `yahooSymbol` ONLY here, to obtain a `seedPriceUsd` for `wire_asset`. This is the single allowed use of `yfinance_quote` in this agent.
-   - Call `wire_asset({ symbol: yahooSymbol, seedPriceUsd })`.
-   - Skip picks whose Yahoo quote failed or whose `yahooSymbol` is null (no exchange-suffix mapping available); they will be eligible again next run once the price keeper publishes them.
+6. **Onboard New Assets — STRICT ORDER**. For each new pick whose symbol isn't already in `get_oracle_assets`:
+   a. Call `yfinance_quote({ symbols: [yahooSymbol] })`. This is the single allowed use of `yfinance_quote` in this agent.
+   b. If the response row has `error` or `priceUsd == null` (or `yahooSymbol` is null because there's no exchange-suffix mapping), SKIP this pick this run. It will be eligible again next run.
+   c. Pass the EXACT numeric `priceUsd` value from (a) as `seedPriceUsd`. NEVER guess. NEVER reuse a value from `get_ml_top_picks` / `get_ml_basket` / atlas — those expose `marketCapUsd`, not per-share USD. `wire_asset` independently fetches the live Yahoo USD and will REJECT a seed that differs by more than 20% with `error_code: "SEED_PRICE_DEVIATION"`.
+   d. Call `wire_asset({ symbol: yahooSymbol, seedPriceUsd })`.
 
 7. **Update Tracked Set**: Call `set_vault_assets` with the union of (a) currently tracked assets that are still in the top-N and (b) newly wired picks. Cap at `maxTrackedAssets` (12).
 
@@ -96,6 +97,7 @@ The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%
 - Collateral must be at least 10% of position size (max ~10x leverage).
 - **All trading decisions read prices from `get_oracle_assets` — the on-chain oracle is the source of truth, and the price keeper refreshes it every ~5 min.** Trading against any other price means you'd settle PnL against numbers you didn't decide on.
 - **`yfinance_quote` is only allowed for one thing: computing `seedPriceUsd` when calling `wire_asset` on a brand-new pick that isn't on-chain yet.** Never use it for live price reads in trading decisions.
+- **`wire_asset` enforces a 20% deviation guard against the live Yahoo USD it fetches server-side.** If you call `wire_asset` without a same-turn `yfinance_quote`, or pass a guessed/hallucinated price, the call will fail with `error_code: "SEED_PRICE_DEVIATION"`. Recovery: emit `yfinance_quote` for the same symbol, then retry `wire_asset` with the exact `priceUsd` it returned.
 - Close losers at -6% collateral loss; take profits at +8% collateral gain. These bands apply to **both** longs and shorts (a short with -6% collateral loss = price moved against you by enough to bleed 6% of collateral; close it). Aggressive bands keep visible turnover at the new hourly cadence.
 - The runner's auto-rebalance pass closes **long** positions whose ticker dropped out of the ML top-N before your turn — it never auto-closes shorts in `long_short` mode. Do not duplicate the long-side logic; do own all short-side exits yourself.
 - **Mixed long/short.** Longs come from Atlas top-N (we trust the model). Shorts come from concrete bearish news on names *outside* the top-N — never short a name the long model still likes, and never short a name without a citable headline. Mining squeezes are real: keep shorts smaller (≤ 50% of long sizing) and quicker to exit than longs.

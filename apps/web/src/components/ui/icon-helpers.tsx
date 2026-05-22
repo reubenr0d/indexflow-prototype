@@ -30,11 +30,13 @@ export function getPanelPrimaryActionMeta({
   mode,
   needsApproval,
   isProcessing,
+  processingAction,
 }: {
   hasAddress: boolean;
   mode: PanelMode;
   needsApproval: boolean;
   isProcessing: boolean;
+  processingAction?: PanelAction | null;
 }): PanelPrimaryActionMeta {
   if (!hasAddress) {
     return {
@@ -45,9 +47,19 @@ export function getPanelPrimaryActionMeta({
   }
 
   if (isProcessing) {
+    const spinner = <Loader2 className="h-4 w-4 animate-spin" />;
+    if (processingAction === "approve") {
+      return { label: "Approving USDC...", icon: spinner, tone: "accent" };
+    }
+    if (processingAction === "deposit") {
+      return { label: "Depositing...", icon: spinner, tone: "accent" };
+    }
+    if (processingAction === "redeem") {
+      return { label: "Redeeming...", icon: spinner, tone: "warning" };
+    }
     return {
       label: "Processing...",
-      icon: <Loader2 className="h-4 w-4 animate-spin" />,
+      icon: spinner,
       tone: "accent",
     };
   }
