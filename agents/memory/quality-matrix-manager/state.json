@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-22T21:45:16.591Z",
-  "thesis": "## Thesis\nThis run highlights strong entries in silver and gold mining, with GR Silver Mining Ltd. and A2 Gold Corp. both showing strong composite scores driven by exceptional and strong drilling results. Copper also remains a strong focus with Giant Mining Corp. showing exceptional copper grades. No short positions were opened as no critical Red-Flag signals were paired with bearish news.",
-  "lastThesisUpdate": "2026-05-22T20:14:24.114Z"
+  "lastRunAt": "2026-05-22T22:03:35.680Z",
+  "thesis": "This run highlights strong entries in silver, gold, and copper mining. GR Silver Mining Ltd. shows strong composite scores driven by strong drilling results. A2 Gold Corp. and Giant Mining Corp. also demonstrate exceptional grades in their respective commodities. However, due to insufficient capital for collateral, not all intended long positions were successfully opened.",
+  "lastThesisUpdate": "2026-05-22T22:03:35.680Z"
 }
