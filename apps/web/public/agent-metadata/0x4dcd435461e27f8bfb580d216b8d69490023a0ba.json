@@ -5,13 +5,92 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Critical Metals Corp. (CRML) and Freeport-McMoRan Inc. (0R2O.L), these transactions failed due to technical issues, which will need to be addressed in future runs. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastRunAt": "2026-05-22T20:11:53.211Z",
+  "lastRunAt": "2026-05-22T21:36:24.687Z",
   "latestRun": {
-    "runId": "2026-05-22T20:11:53.211Z",
-    "finishedAt": "2026-05-22T20:11:53.211Z",
+    "runId": "2026-05-22T21:36:24.687Z",
+    "finishedAt": "2026-05-22T21:36:24.687Z",
     "summary": "## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Critical Metals "
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Critical Metals Corp. (CRML) as it is a top pick by the Atlas ML model with a high score of 99.5.",
+      "timestamp": "2026-05-22T21:36:24.687Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T21:36:24.687Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "CRML",
+        "seedPriceUsd": 10.98
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the latest top picks from the Atlas ML model.",
+      "timestamp": "2026-05-22T21:36:24.687Z",
+      "txHash": "0xe4b8e9c5afc6cdc69d091b6a783300295a2fec19b7128899cafd22444e3ce512",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T21:36:24.687Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+          "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0x589f520e7575c048358b1bb88e24b586aac2e17b288cb832ba8172859aa46315",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
+          "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
+          "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de"
+        ],
+        "count": 10
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating 50% of available USDC to perp trading to enable new long positions on top picks.",
+      "timestamp": "2026-05-22T21:36:24.687Z",
+      "txHash": "0xa6798c64a6dfb9c8c5df804c32afb9bb6f2d382aa880f709f86595deb503d4e9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T21:36:24.687Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "265043750"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to its top ML score and predicted return.",
+      "timestamp": "2026-05-22T21:36:24.687Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T21:36:24.687Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "10000000000000000000000000000000000",
+        "collateral": "1000000000"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) with reduced size and collateral to fit available capital.",
+      "timestamp": "2026-05-22T21:36:24.687Z",
+      "txHash": "0xd0795398aac32de5bae342d4cffaa7ac10822d7450a6d171b40ebceb95374faf",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T21:36:24.687Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "2500000000000000000000000000000000",
+        "collateral": "250000000"
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Critical Metals Corp. (CRML) as it is a new entrant in the top Atlas ML picks with a high ML score of 99.5.",
