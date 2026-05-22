@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3",
   "vaultName": "Minestarters Quality Matrix",
-  "agentFileHash": "sha256:27e0dfb5039f3e992b817d18af9fc14b03ac008e094a36d4a4057393301bf981",
+  "agentFileHash": "sha256:038427468beeec1f6175e33ca68b3280e4941aa7a6cc6e1b57b42648877691a2",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-22T22:11:08.645Z",
-  "thesis": "This run highlights strong entries in silver, gold, and copper mining. GR Silver Mining Ltd. shows strong composite scores driven by strong drilling results. A2 Gold Corp. demonstrates exceptional grades in gold. The focus remains on leveraging the strong drilling results and exceptional grades to drive returns. No shorts were opened due to the absence of Red-Flag signals and confirming bearish news.",
-  "lastThesisUpdate": "2026-05-22T22:11:08.645Z"
+  "lastRunAt": "2026-05-22T23:53:07.647Z",
+  "thesis": "This run highlights strong entries in silver, gold, and copper mining. GR Silver Mining Ltd. and A2 Gold Corp. both demonstrate strong composite scores driven by exceptional drilling results. Giant Mining Corp. also shows strong potential with exceptional copper grades. Great Pacific Gold Corp. maintains a strong position with solid drilling results. No shorts were opened due to the absence of Red-Flag signals and confirming bearish news.",
+  "lastThesisUpdate": "2026-05-22T23:53:07.647Z"
 }

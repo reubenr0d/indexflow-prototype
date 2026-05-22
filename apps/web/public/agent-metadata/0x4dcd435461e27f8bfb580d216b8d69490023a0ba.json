@@ -4,709 +4,131 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Critical Metals Corp. (CRML) and Freeport-McMoRan Inc. (0R2O.L), these transactions failed due to technical issues, which will need to be addressed in future runs. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastRunAt": "2026-05-22T22:08:20.880Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Freeport-McMoRan Inc. (0R2O.L), these transactions failed due to technical issues, which will need to be addressed in future runs. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
+  "lastRunAt": "2026-05-22T23:49:37.952Z",
   "latestRun": {
-    "runId": "2026-05-22T22:08:20.880Z",
-    "finishedAt": "2026-05-22T22:08:20.880Z",
-    "summary": "The vault already has open long positions on the eligible assets AHR.V, GSR.V, and PWM.V. Therefore, no additional long positions need to be opened at this time.\n\nHere is the current state of the vault:\n\n## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promis"
+    "runId": "2026-05-22T23:49:37.952Z",
+    "finishedAt": "2026-05-22T23:49:37.952Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Freeport-McMoRan"
   },
   "recentActions": [
     {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. as it is a new entrant in the top picks with a high ML score.",
-      "timestamp": "2026-05-22T22:08:20.880Z",
-      "txHash": null,
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #4 0KXS.L (pnl 0.00%) to free room for #5 CRML",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0xd15c45bbe6514d2f8cde28122d0e8e2c7ed1d7cb37002a80d0eea924900052d9",
       "agentName": "mining-manager",
-      "runId": "2026-05-22T22:08:20.880Z",
+      "runId": "2026-05-22T23:49:37.952Z",
       "params": {
-        "kind": "wire_asset",
-        "symbol": "CRML",
-        "seedPriceUsd": 10.98
+        "kind": "close_position",
+        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+        "isLong": true,
+        "sizeDelta": "10000000000000000000000000000000000",
+        "collateralDelta": "1000000000"
       }
     },
     {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest top picks from the Atlas ML model.",
-      "timestamp": "2026-05-22T22:08:20.880Z",
-      "txHash": "0x27a07b7aad65f46e3b792347d9c9cf17140e31ac9817f22282cf9e59343828c3",
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #6 EEE.L",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0x36acb006c7bf4b08d8a2c95a2c611a5c09f2837025425af3762733b4b61d12d4",
       "agentName": "mining-manager",
-      "runId": "2026-05-22T22:08:20.880Z",
+      "runId": "2026-05-22T23:49:37.952Z",
       "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-          "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0x589f520e7575c048358b1bb88e24b586aac2e17b288cb832ba8172859aa46315",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
-          "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
-          "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de"
-        ],
-        "count": 10
+        "kind": "close_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "sizeDelta": "4500000000000000000000000000000000",
+        "collateralDelta": "450000000"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #7 HHH.V",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0xd5a82fdb06f3a4923b2200d840e44d06a02a317928951c199c92a23b29f789f9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T23:49:37.952Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "5000000000000000000000000000000000",
+        "collateralDelta": "500000000"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #8 GTWO.TO",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0xdc3246aa57a357b6af5e750e4f1720ec43052b9e62ba545623dc5a0b1e83501d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T23:49:37.952Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "9000000000000000000000000000000000",
+        "collateralDelta": "765000000"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Freeport-McMoRan Inc. (0R2O.L) as it is a top pick by the Atlas ML model with a high ML score and predicted return.",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-22T23:49:37.952Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "0R2O.L",
+        "seedPriceUsd": 28.714
       }
     },
     {
       "tool": "open_position",
       "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-22T22:08:20.880Z",
-      "txHash": null,
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0x83fe093e65bda6c72e28ce07a0b4c7dc989f6e171b10bb8fb53439fde1b20c5a",
       "agentName": "mining-manager",
-      "runId": "2026-05-22T22:08:20.880Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "size": "7500000000000000000000000000000000",
-        "collateral": "750000000"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "timestamp": "2026-05-22T22:00:09.475Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T22:00:09.475Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "CRML",
-        "seedPriceUsd": 10.98
-      }
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the current Atlas ML top picks.",
-      "timestamp": "2026-05-22T22:00:09.475Z",
-      "txHash": "0xb7b8cd864387e7ecd61e3088017c7a48a379c458de955c3e4963dcfa7876d347",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T22:00:09.475Z",
-      "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-          "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0x589f520e7575c048358b1bb88e24b586aac2e17b288cb832ba8172859aa46315",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
-          "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
-          "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de"
-        ],
-        "count": 10
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp trading to match the auto-target allocation.",
-      "timestamp": "2026-05-22T22:00:09.475Z",
-      "txHash": "0x6194a2d19251e201d40abc597c30adc7fa45f122a16579d1e52838e4e0c2eae3",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T22:00:09.475Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "132521875"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) due to its high ML score and predicted return.",
-      "timestamp": "2026-05-22T22:00:09.475Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T22:00:09.475Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "size": "4000000000000000000000000000000000",
-        "collateral": "400000000"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Power Metals Corp. (PWM.V) due to its high ML score and predicted return.",
-      "timestamp": "2026-05-22T22:00:09.475Z",
-      "txHash": "0x8935e9ff0df5dd04740027e49a3c35de8bcb777a970a0ba16ec56bdba22ec737",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T22:00:09.475Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-        "isLong": true,
-        "size": "2000000000000000000000000000000000",
-        "collateral": "200000000"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a top pick by the Atlas ML model with a high score of 99.5.",
-      "timestamp": "2026-05-22T21:36:24.687Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T21:36:24.687Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "CRML",
-        "seedPriceUsd": 10.98
-      }
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest top picks from the Atlas ML model.",
-      "timestamp": "2026-05-22T21:36:24.687Z",
-      "txHash": "0xe4b8e9c5afc6cdc69d091b6a783300295a2fec19b7128899cafd22444e3ce512",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T21:36:24.687Z",
-      "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-          "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0x589f520e7575c048358b1bb88e24b586aac2e17b288cb832ba8172859aa46315",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
-          "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
-          "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de"
-        ],
-        "count": 10
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating 50% of available USDC to perp trading to enable new long positions on top picks.",
-      "timestamp": "2026-05-22T21:36:24.687Z",
-      "txHash": "0xa6798c64a6dfb9c8c5df804c32afb9bb6f2d382aa880f709f86595deb503d4e9",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T21:36:24.687Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "265043750"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to its top ML score and predicted return.",
-      "timestamp": "2026-05-22T21:36:24.687Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T21:36:24.687Z",
+      "runId": "2026-05-22T23:49:37.952Z",
       "params": {
         "kind": "open_position",
         "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
         "isLong": true,
         "size": "10000000000000000000000000000000000",
-        "collateral": "1000000000"
+        "collateral": "900000000"
       }
     },
     {
       "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) with reduced size and collateral to fit available capital.",
-      "timestamp": "2026-05-22T21:36:24.687Z",
-      "txHash": "0xd0795398aac32de5bae342d4cffaa7ac10822d7450a6d171b40ebceb95374faf",
+      "justification": "Opening a long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score and predicted return.",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0xc329455b574f45c448e97a761e46e40d1f0a8fcd0d49341ea510263603bb196e",
       "agentName": "mining-manager",
-      "runId": "2026-05-22T21:36:24.687Z",
+      "runId": "2026-05-22T23:49:37.952Z",
       "params": {
         "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
         "isLong": true,
-        "size": "2500000000000000000000000000000000",
-        "collateral": "250000000"
+        "size": "10000000000000000000000000000000000",
+        "collateral": "900000000"
       }
     },
     {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new entrant in the top Atlas ML picks with a high ML score of 99.5.",
-      "timestamp": "2026-05-22T20:11:53.211Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T20:11:53.211Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest top Atlas ML picks.",
-      "timestamp": "2026-05-22T20:11:53.211Z",
-      "txHash": "0x023f5949123ef1740467fa40c2288b02380b790890e35a63762d86db5f303a49",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T20:11:53.211Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp trading to match the auto allocation target.",
-      "timestamp": "2026-05-22T20:11:53.211Z",
-      "txHash": "0x5bf0004ea50de855ff7005f30a20775a9a8a77f3a860afdf30357484a1932e49",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T20:11:53.211Z"
-    },
-    {
       "tool": "open_position",
-      "justification": "Opening a long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score of 99.9 and strong predicted return.",
-      "timestamp": "2026-05-22T20:11:53.211Z",
-      "txHash": "0xdd4516ec10d95216f248b43790d285991d77b69ae84b1c6282c9a6c08d5a7228",
+      "justification": "Opening a long position on Power Metals Corp. (PWM.V) based on its high ML score and predicted return.",
+      "timestamp": "2026-05-22T23:49:37.952Z",
+      "txHash": "0x5fb207df8e3caf7cf77177194f47b4b2651d2dfd26b001e8fde32c2aac2049d7",
       "agentName": "mining-manager",
-      "runId": "2026-05-22T20:11:53.211Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Power Metals Corp. (PWM.V) due to its high ML score of 99.8 and strong predicted return.",
-      "timestamp": "2026-05-22T20:11:53.211Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T20:11:53.211Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new top pick with a high ML score of 99.5 and predicted return of 73.26%.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to align with the latest top picks from the Atlas ML model.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": "0x05270f541598e6903bb1dfa52313b88b6fe9d9b7ed926ea63f6e262d0eaaf71a",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating 50% of available idle USDC to perp trading as per auto-allocation policy.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": "0xed4b56216b6f83048e71688fcde0b1ba3ccda116106d2924c493c7e859be004d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to its top ML score and predicted return.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": "0x93ae006e2ffac5d4c94ea0c8c82eddedd3aedee1c75e6e7219917aaabf363ee7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score and promising return.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new top pick by the Atlas ML model with a high ML score of 99.5.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest top-N picks from the Atlas ML model.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x616c1c9299fe49bd3d389965279e984408550bd2d49efe539b31732b9e671880",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating 50% of available USDC to perp trading as per auto-allocation policy.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x58f1f3e6d746b9aaeedffd8c2a120302208d11b8eec21e0f344e5ea8d211933d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Royal Gold Inc. (0KXS.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x379ff9658c48208218ebe72944771dcaff302241a72edee7715f1c403ff69aba",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Empire Metals Limited (EEE.L) due to its strong ML score and predicted return.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as a new entrant with a high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": "0xc2f362c18e080f206191b2686b13d60f6d956e1f4af8c186c029c7d2b2737d69",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Freeport-McMoRan Inc. (0R2O.L) as a new entrant with a high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest Atlas ML top picks, including newly wired Critical Metals Corp. (CRML).",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": "0x7021b3645515544ec4c858b6f6915748052f85349a822db30a05cdecd983de7e",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating capital to match the auto-target for new long positions on top-N Atlas picks.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) based on high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "create_vault",
-      "justification": "Creating a new vault to manage mining-equity positions driven by the Atlas ML engine.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x776eefbd02fcfb1c6d516496fdc754a40afa4130ffa0c96ae5f804d7ea564b50",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xe6bd7ae3b558051b01870e8baaf77be10c0e5b0878bb371baed8865d19714aaa",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Gold Strike Resources Corp. (GSR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xda3e4a4c96f27fd7c7dbcc9e866f87a9632bd252f813819cd785696a0a33551a",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Power Metals Corp. (PWM.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x992022825cde4ab7117c31ad29ec172a4e30eb4f01b04a445dd8dd8013dd1f57",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Royal Gold, Inc. (0KXS.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xfabcf73bbec2d3d8fb61f7eb7baeec3a98e672e015a6189a714319bfc5b230fa",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Critical Metals Corp. (CRML) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Empire Metals Limited (EEE.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xa38e877087a4830efb9e8d48ffb633b13b66f6031ac2b3dc0fe532616179c2f4",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Helius Minerals Limited (HHH.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xffba90d470103830a14d534fd45a9f9a68ec29179701a904700310e371dcc98d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset G2 Goldfields Inc. (GTWO.TO) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xabf2b05c554ca3331908a926ab2ac732676bb96da9897248ac38742f278c54e0",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Prospector Metals Corp. (PPP.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x2aa70dc42972c12bfd1053521d269d174e08be7464aabb4a06b92437974f26e7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset TNR Gold Corp. (TNR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x7c47373202206e1657bd3a30ba38d07f843dd316a36fedc87dff71d8148b75e9",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Vista Gold Corp. (VGZ.TO) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xcc111db990060347f5e0e62a460a1818b957e2328f18683fef580cab6bdf1bbe",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Setting the vault's tracked assets to align with the current top ML picks.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xf31ec2ded37f4b6df0df381f156269ae9a22e33657fb870f2d20d607561bc424",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp trading as per the auto-allocation target.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    }
-  ]
-}
-688fcde0b1ba3ccda116106d2924c493c7e859be004d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to its top ML score and predicted return.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": "0x93ae006e2ffac5d4c94ea0c8c82eddedd3aedee1c75e6e7219917aaabf363ee7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score and promising return.",
-      "timestamp": "2026-05-22T19:23:10.262Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T19:23:10.262Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new top pick by the Atlas ML model with a high ML score of 99.5.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest top-N picks from the Atlas ML model.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x616c1c9299fe49bd3d389965279e984408550bd2d49efe539b31732b9e671880",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating 50% of available USDC to perp trading as per auto-allocation policy.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x58f1f3e6d746b9aaeedffd8c2a120302208d11b8eec21e0f344e5ea8d211933d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Royal Gold Inc. (0KXS.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": "0x379ff9658c48208218ebe72944771dcaff302241a72edee7715f1c403ff69aba",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Empire Metals Limited (EEE.L) due to its strong ML score and predicted return.",
-      "timestamp": "2026-05-22T18:52:32.818Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T18:52:32.818Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as a new entrant with a high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": "0xc2f362c18e080f206191b2686b13d60f6d956e1f4af8c186c029c7d2b2737d69",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Freeport-McMoRan Inc. (0R2O.L) as a new entrant with a high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest Atlas ML top picks, including newly wired Critical Metals Corp. (CRML).",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": "0x7021b3645515544ec4c858b6f6915748052f85349a822db30a05cdecd983de7e",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating capital to match the auto-target for new long positions on top-N Atlas picks.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) based on high ML score and predicted return.",
-      "timestamp": "2026-05-21T16:02:37.227Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T16:02:37.227Z"
-    },
-    {
-      "tool": "create_vault",
-      "justification": "Creating a new vault to manage mining-equity positions driven by the Atlas ML engine.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x776eefbd02fcfb1c6d516496fdc754a40afa4130ffa0c96ae5f804d7ea564b50",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xe6bd7ae3b558051b01870e8baaf77be10c0e5b0878bb371baed8865d19714aaa",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Gold Strike Resources Corp. (GSR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xda3e4a4c96f27fd7c7dbcc9e866f87a9632bd252f813819cd785696a0a33551a",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Power Metals Corp. (PWM.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x992022825cde4ab7117c31ad29ec172a4e30eb4f01b04a445dd8dd8013dd1f57",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Royal Gold, Inc. (0KXS.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xfabcf73bbec2d3d8fb61f7eb7baeec3a98e672e015a6189a714319bfc5b230fa",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Critical Metals Corp. (CRML) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Empire Metals Limited (EEE.L) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xa38e877087a4830efb9e8d48ffb633b13b66f6031ac2b3dc0fe532616179c2f4",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Helius Minerals Limited (HHH.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xffba90d470103830a14d534fd45a9f9a68ec29179701a904700310e371dcc98d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset G2 Goldfields Inc. (GTWO.TO) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xabf2b05c554ca3331908a926ab2ac732676bb96da9897248ac38742f278c54e0",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Prospector Metals Corp. (PPP.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x2aa70dc42972c12bfd1053521d269d174e08be7464aabb4a06b92437974f26e7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset TNR Gold Corp. (TNR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0x7c47373202206e1657bd3a30ba38d07f843dd316a36fedc87dff71d8148b75e9",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new asset Vista Gold Corp. (VGZ.TO) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xcc111db990060347f5e0e62a460a1818b957e2328f18683fef580cab6bdf1bbe",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Setting the vault's tracked assets to align with the current top ML picks.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": "0xf31ec2ded37f4b6df0df381f156269ae9a22e33657fb870f2d20d607561bc424",
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp trading as per the auto-allocation target.",
-      "timestamp": "2026-05-21T13:20:46.864Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-21T13:20:46.864Z"
+      "runId": "2026-05-22T23:49:37.952Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "size": "10000000000000000000000000000000000",
+        "collateral": "900000000"
+      }
     }
   ]
 }
