@@ -202,7 +202,8 @@ function parseAgentPolicy(frontmatter) {
     frontmatter.maxNewShortsPerRun !== undefined ||
     frontmatter.maxTrackedAssets !== undefined ||
     frontmatter.positionSizingMode !== undefined ||
-    frontmatter.rebalanceMode !== undefined;
+    frontmatter.rebalanceMode !== undefined ||
+    frontmatter.autoExitMode !== undefined;
 
   if (!hasPolicyFields) {
     return {
@@ -219,6 +220,7 @@ function parseAgentPolicy(frontmatter) {
       maxTrackedAssets: 0,
       positionSizingMode: "model_decides",
       rebalanceMode: "none",
+      autoExitMode: "none",
     };
   }
 
@@ -234,6 +236,7 @@ function parseAgentPolicy(frontmatter) {
   const maxTrackedAssets = Number(frontmatter.maxTrackedAssets ?? 0);
   const positionSizingMode = String(frontmatter.positionSizingMode ?? "model_decides");
   const rebalanceMode = String(frontmatter.rebalanceMode ?? "none");
+  const autoExitMode = String(frontmatter.autoExitMode ?? "none");
 
   if (!Number.isFinite(autoAllocateTargetBps) || autoAllocateTargetBps < 0 || autoAllocateTargetBps > 10_000) {
     throw new Error("Invalid autoAllocateTargetBps; expected 0..10000");
@@ -280,6 +283,38 @@ function parseAgentPolicy(frontmatter) {
   if (!["none", "track_top_n"].includes(rebalanceMode)) {
     throw new Error("Invalid rebalanceMode; expected 'none' or 'track_top_n'");
   }
+  // autoExitMode is an additive flag set: comma- or plus-separated tokens
+  // out of {rank_swap, pnl_band}. `none` (or unset) disables both. The
+  // runner enforces the corresponding closures deterministically in the
+  // pre-LLM auto-rebalance pass before the LLM gets the turn, so agents
+  // that opt in don't have to re-litigate close-vs-keep on every run.
+  const VALID_AUTO_EXIT_TOKENS = new Set(["none", "rank_swap", "pnl_band"]);
+  const autoExitTokens = autoExitMode
+    .split(/[+,]/)
+    .map((t) => t.trim())
+    .filter(Boolean);
+  if (autoExitTokens.length === 0) {
+    throw new Error("Invalid autoExitMode; expected 'none', 'rank_swap', 'pnl_band', or a '+'-joined combination");
+  }
+  for (const token of autoExitTokens) {
+    if (!VALID_AUTO_EXIT_TOKENS.has(token)) {
+      throw new Error(`Invalid autoExitMode token "${token}"; expected one of 'none', 'rank_swap', 'pnl_band'`);
+    }
+  }
+  if (autoExitTokens.includes("none") && autoExitTokens.length > 1) {
+    throw new Error("Invalid autoExitMode; 'none' cannot be combined with other tokens");
+  }
+  if (autoExitTokens.includes("rank_swap") && rebalanceMode !== "track_top_n") {
+    throw new Error(
+      "Invalid autoExitMode; 'rank_swap' requires rebalanceMode='track_top_n' (it rotates by top-N rank)",
+    );
+  }
+
+  // Normalise to the canonical token form so downstream code can use
+  // `policy.autoExitMode.includes("rank_swap")` without re-parsing.
+  const normalisedAutoExit = autoExitTokens.includes("none")
+    ? "none"
+    : Array.from(new Set(autoExitTokens)).sort().join("+");
 
   return {
     enabled: true,
@@ -295,6 +330,7 @@ function parseAgentPolicy(frontmatter) {
     maxTrackedAssets,
     positionSizingMode,
     rebalanceMode,
+    autoExitMode: normalisedAutoExit,
   };
 }
 
@@ -1137,6 +1173,152 @@ function computeAutoRebalanceClosures({ policy, positions, eligibleSymbols, minS
   return closures;
 }
 
+// Pure decision helper for the new rank-swap auto-exit pass. Run AFTER
+// `computeAutoRebalanceClosures` so dropouts are already handled. When the
+// agent has open long legs that are still in the top-N but lower-ranked than
+// fresh picks the vault hasn't entered yet AND there isn't enough free
+// collateral to add the new picks, close the lowest-ranked-then-worst-PnL
+// existing long legs to make room.
+//
+// Inputs:
+//   - policy:              parsed agent policy (entryDirection, autoExitMode, etc.)
+//   - positions:           output of `list_open_positions` (must include
+//                            `symbol`, `isLong`, `unrealisedPnlPctOfCollateral`)
+//   - rankedPicks:         `getActionablePicks` output (score-descending order,
+//                            already capped at `maxTrackedAssets`)
+//   - availableCollateralUsdc: BigInt or numeric-string of raw USDC free for new opens
+//   - minSlotCollateralUsdc:   BigInt or numeric-string of the per-slot collateral
+//                                the runner intends to deploy
+//
+// Output: array of `{ pos, reason }` closures, ordered worst-first.
+//
+// Direction handling matches `computeAutoRebalanceClosures`: in `long_short`
+// (and `long_only`) we only rotate longs. In `short_only` we never rotate
+// since the top-N is a long signal.
+function computeRankSwapClosures({
+  policy,
+  positions,
+  rankedPicks,
+  availableCollateralUsdc,
+  minSlotCollateralUsdc,
+}) {
+  if (!policy?.enabled) return [];
+  const autoExitMode = String(policy.autoExitMode || "none");
+  if (!autoExitMode.includes("rank_swap")) return [];
+
+  const direction = policy.entryDirection || "long_only";
+  if (direction === "short_only") return [];
+
+  const picks = Array.isArray(rankedPicks) ? rankedPicks : [];
+  if (picks.length === 0) return [];
+
+  const positionsList = Array.isArray(positions) ? positions : [];
+
+  // Tag each open long with its top-N rank (1-indexed). Untracked legs
+  // (still in the vault but no longer in the top-N) get `Infinity` and
+  // will sort last — though those are typically handled by
+  // `computeAutoRebalanceClosures` already.
+  const pickRank = new Map();
+  picks.forEach((p, idx) => {
+    const sym = String(p.yahooSymbol || "").toUpperCase();
+    if (sym && !pickRank.has(sym)) pickRank.set(sym, idx + 1);
+  });
+
+  const heldLongs = [];
+  const heldLongSymbols = new Set();
+  for (const pos of positionsList) {
+    if (!pos?.exists) continue;
+    if (pos.isLong !== true) continue;
+    const symbol = String(pos.symbol || "").toUpperCase();
+    if (!symbol) continue;
+    heldLongs.push({
+      pos,
+      symbol,
+      rank: pickRank.get(symbol) ?? Number.POSITIVE_INFINITY,
+      pnlPct: Number.isFinite(pos.unrealisedPnlPctOfCollateral)
+        ? Number(pos.unrealisedPnlPctOfCollateral)
+        : 0,
+    });
+    heldLongSymbols.add(symbol);
+  }
+
+  const picksWanted = picks
+    .map((p, idx) => ({
+      yahooSymbol: String(p.yahooSymbol || "").toUpperCase(),
+      rank: idx + 1,
+    }))
+    .filter((p) => p.yahooSymbol && !heldLongSymbols.has(p.yahooSymbol));
+  if (picksWanted.length === 0) return [];
+
+  let availableBn;
+  let minSlotBn;
+  try {
+    availableBn = BigInt(String(availableCollateralUsdc ?? "0"));
+    minSlotBn = BigInt(String(minSlotCollateralUsdc ?? "0"));
+  } catch {
+    return [];
+  }
+  // When the runner doesn't know the per-slot collateral target there's no
+  // safe way to decide how many slots to free. Skip rather than guess.
+  if (minSlotBn <= 0n) return [];
+
+  const fitsNow = Number(availableBn / minSlotBn);
+  const slotsToFree = Math.max(0, picksWanted.length - fitsNow);
+  if (slotsToFree === 0) return [];
+
+  const candidates = [...heldLongs].sort((a, b) => {
+    if (a.rank !== b.rank) return b.rank - a.rank; // higher (worse) rank first
+    return a.pnlPct - b.pnlPct; // tiebreaker: worst PnL first
+  });
+
+  const closures = [];
+  for (let i = 0; i < slotsToFree && i < candidates.length; i++) {
+    const { pos, symbol, rank, pnlPct } = candidates[i];
+    const newcomer = picksWanted[i];
+    const rankLabel = Number.isFinite(rank) ? `#${rank}` : "off-top-N";
+    const pnlLabel = `${(pnlPct * 100).toFixed(2)}%`;
+    const reason = newcomer
+      ? `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel}) to free room for #${newcomer.rank} ${newcomer.yahooSymbol}`
+      : `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel})`;
+    closures.push({ pos, reason });
+  }
+  return closures;
+}
+
+// Pure decision helper for the `pnl_band` auto-exit pass. Closes any leg
+// whose `pnlBandOutcome` (computed by the MCP `list_open_positions` helper)
+// reports a take-profit or stop-loss trigger. Direction-aware: in
+// `long_short` mode shorts are LLM-owned, so the band exit only applies to
+// longs by default; agents that want deterministic short-side TP/SL can opt
+// in via `entryDirection: short_only` (or stay in `long_only`).
+function computePnlBandClosures({ policy, positions }) {
+  if (!policy?.enabled) return [];
+  const autoExitMode = String(policy.autoExitMode || "none");
+  if (!autoExitMode.includes("pnl_band")) return [];
+
+  const direction = policy.entryDirection || "long_only";
+  const closures = [];
+  for (const pos of positions || []) {
+    if (!pos?.exists) continue;
+    if (direction === "long_short" && pos.isLong !== true) continue;
+    if (direction === "long_only" && pos.isLong !== true) continue;
+    if (direction === "short_only" && pos.isLong !== false) continue;
+
+    const outcome = String(pos.pnlBandOutcome || "");
+    if (outcome === "above_take_profit" || outcome === "below_stop_loss") {
+      const pnlPct =
+        Number.isFinite(pos.unrealisedPnlPctOfCollateral)
+          ? `${(Number(pos.unrealisedPnlPctOfCollateral) * 100).toFixed(2)}%`
+          : "unknown";
+      closures.push({
+        pos,
+        reason: `pnl band ${outcome}: ${pos.symbol || pos.assetId} pnl ${pnlPct}`,
+      });
+    }
+  }
+  return closures;
+}
+
 function validatePolicyWriteBatch({
   classified,
   policy,
@@ -1937,6 +2119,7 @@ export async function runAgent(agentName) {
       maxTrackedAssets: config.policy?.maxTrackedAssets || 0,
       positionSizingMode: config.policy?.positionSizingMode || "model_decides",
       rebalanceMode: config.policy?.rebalanceMode || "none",
+      autoExitMode: config.policy?.autoExitMode || "none",
       eligibleAssetCount: 0,
       eligibleAssetIds: [],
       eligibleSymbols: [],
@@ -2284,18 +2467,19 @@ export async function runAgent(agentName) {
     // TP/SL (the system prompt instructs that), so this pass only handles the
     // "track-top-N" half — keeping the math out of JS.
     // -----------------------------------------------------------------------
-    async function runMcpTool(toolName, args, { isWrite = false } = {}) {
+    async function runMcpTool(toolName, args, { isWrite = false, justification } = {}) {
       const entry = toolMap.get(toolName);
       if (!entry) {
         throw new Error(`Auto-rebalance: tool not available in this run: ${toolName}`);
       }
+      const writeJustification = justification ?? "auto-rebalance";
       if ((DRY_RUN || (CONFIRM_WRITES && !NON_INTERACTIVE_WRITE_EXECUTE && !isInteractiveTty())) && isWrite) {
         console.log(`  [AUTO-REBALANCE] Skipped write tool ${toolName} (dry/non-interactive).`);
         runSummary.writeActions.push({
           tool: toolName,
           args,
           skipped: true,
-          justification: "auto-rebalance: dropped from ML top-N (skipped due to dry/non-interactive)",
+          justification: `${writeJustification} (skipped due to dry/non-interactive)`,
         });
         return { content: [{ type: "text", text: JSON.stringify({ success: false, skipped: true }, null, 2) }] };
       }
@@ -2311,11 +2495,43 @@ export async function runAgent(agentName) {
           tool: toolName,
           args,
           skipped: false,
-          justification: "auto-rebalance: dropped from ML top-N",
+          justification: writeJustification,
           txHash: parsed?.transactionHash ?? null,
         });
       }
       return { content, parsed: parseJsonText(content) };
+    }
+
+    // Issue a single deterministic close as part of the auto-rebalance pass.
+    // Centralised so the dropout / rank-swap / pnl-band branches share the
+    // same logging + counter book-keeping.
+    async function autoRebalanceClose({ pos, reason, label = "AUTO-REBALANCE" }) {
+      console.log(
+        `[${label}] Closing ${pos.symbol || pos.assetId} (isLong=${pos.isLong}): ${reason}`,
+      );
+      try {
+        const closeRes = await runMcpTool(
+          "close_position",
+          {
+            vault: capturedVaultAddress,
+            assetId: pos.assetId,
+            isLong: pos.isLong,
+            sizeDelta: String(pos.size),
+            collateralDelta: String(pos.collateral),
+            justification: `${label.toLowerCase()}: ${reason}`,
+          },
+          { isWrite: true, justification: `${label.toLowerCase()}: ${reason}` },
+        );
+        if (closeRes.parsed?.success === true) {
+          runSummary.policyDiagnostics.autoExitsClosed += 1;
+          return true;
+        }
+      } catch (err) {
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`[${label}] close_position failed for ${pos.symbol || pos.assetId}: ${safeErr}`);
+        runSummary.errors.push({ tool: "close_position", error: safeErr });
+      }
+      return false;
     }
 
     async function enforceAutoRebalance() {
@@ -2333,12 +2549,8 @@ export async function runAgent(agentName) {
         const vault = capturedVaultAddress;
         console.log(`[AUTO-REBALANCE] Checking open positions for ${vault}...`);
         const positionsRes = await runMcpTool("list_open_positions", { vault });
-        const positionsParsed = positionsRes.parsed;
-        const positions = Array.isArray(positionsParsed?.positions) ? positionsParsed.positions : [];
-        if (positions.length === 0) {
-          console.log("[AUTO-REBALANCE] No open positions; nothing to close.");
-          return;
-        }
+        let positionsParsed = positionsRes.parsed;
+        let positions = Array.isArray(positionsParsed?.positions) ? positionsParsed.positions : [];
 
         const isQuality = policy.entryMode === "quality_score";
         const minScore = Number(
@@ -2359,7 +2571,10 @@ export async function runAgent(agentName) {
             .filter(Boolean),
         );
 
-        const closures = computeAutoRebalanceClosures({
+        // Pass 1: dropouts from the top-N (existing behaviour). Wrap legacy
+        // closures with `signalLabel` so the auto-exit log keeps reading the
+        // same way.
+        const dropoutClosures = computeAutoRebalanceClosures({
           policy,
           positions,
           eligibleSymbols,
@@ -2368,40 +2583,90 @@ export async function runAgent(agentName) {
           signalLabel: isQuality ? "Quality top" : "ML top",
         });
 
-        runSummary.policyDiagnostics.autoExitsAttempted = closures.length;
-        if (closures.length === 0) {
+        // Pass 2: PnL-band TP/SL (opt-in via autoExitMode includes pnl_band).
+        const pnlBandClosures = computePnlBandClosures({ policy, positions });
+
+        // Run dropout + pnl-band closures first so the rank-swap pass below
+        // sees the up-to-date roster and `availableCollateral`.
+        let combined = [...dropoutClosures];
+        for (const c of pnlBandClosures) {
+          if (!combined.some((existing) => existing.pos.positionKey === c.pos.positionKey)) {
+            combined.push(c);
+          }
+        }
+
+        runSummary.policyDiagnostics.autoExitsAttempted = combined.length;
+
+        let executedAny = false;
+        if (combined.length === 0 && positions.length > 0) {
           const label = isQuality ? `Quality top-${cap}` : `ML top-${cap}`;
           console.log(
-            `[AUTO-REBALANCE] All ${positions.length} open positions remain in ${label}; nothing to close.`,
+            `[AUTO-REBALANCE] All ${positions.length} open positions remain in ${label} and within PnL band; checking rank-swap.`,
           );
+        }
+        for (const closure of combined) {
+          const ok = await autoRebalanceClose({ pos: closure.pos, reason: closure.reason });
+          if (ok) executedAny = true;
+        }
+
+        // Pass 3: rank-swap rotation (opt-in via autoExitMode includes
+        // rank_swap). Re-read the roster + perp capital after any prior
+        // closures so we don't over-rotate.
+        const autoExitMode = String(policy.autoExitMode || "none");
+        if (!autoExitMode.includes("rank_swap")) {
           return;
         }
 
-        for (const { pos, reason } of closures) {
-          console.log(
-            `[AUTO-REBALANCE] Closing ${pos.symbol || pos.assetId} (isLong=${pos.isLong}): ${reason}`,
-          );
-          try {
-            const closeRes = await runMcpTool(
-              "close_position",
-              {
-                vault: capturedVaultAddress,
-                assetId: pos.assetId,
-                isLong: pos.isLong,
-                sizeDelta: String(pos.size),
-                collateralDelta: String(pos.collateral),
-                justification: `auto-rebalance: ${reason}`,
-              },
-              { isWrite: true },
+        let snapshotRes;
+        try {
+          snapshotRes = await runMcpTool("get_perp_capital_snapshot", { vault });
+        } catch (err) {
+          const safeErr = redactSecrets(err.message || String(err));
+          console.error(`[AUTO-REBALANCE] rank-swap skipped (snapshot read failed): ${safeErr}`);
+          runSummary.errors.push({ tool: "_auto_rebalance_snapshot", error: safeErr });
+          return;
+        }
+        const snapshotParsed = snapshotRes?.parsed;
+        const refreshedPositions = Array.isArray(snapshotParsed?.openPositions)
+          ? snapshotParsed.openPositions
+          : positions;
+        const availableCollateralUsdc =
+          snapshotParsed?.accounting?.availableCollateral ?? "0";
+        const depositedCapitalUsdc =
+          snapshotParsed?.accounting?.depositedCapital ?? "0";
+
+        // Estimate per-slot collateral as the equal-weight share of the
+        // perp capital across the full tracked basket. Conservative: this
+        // is the slot the agent *should* deploy under `positionSizingMode:
+        // equal_weight`, so dividing total capital by `maxTrackedAssets`
+        // matches the steady-state allocation the runner is targeting.
+        let minSlotCollateralUsdc = "0";
+        try {
+          const totalBn = BigInt(String(depositedCapitalUsdc || "0"));
+          const slots = Math.max(1, Number(policy.maxTrackedAssets || 0) || 1);
+          minSlotCollateralUsdc = (totalBn / BigInt(slots)).toString();
+        } catch {
+          minSlotCollateralUsdc = "0";
+        }
+
+        const rankSwapClosures = computeRankSwapClosures({
+          policy,
+          positions: refreshedPositions,
+          rankedPicks: picks,
+          availableCollateralUsdc,
+          minSlotCollateralUsdc,
+        });
+        if (rankSwapClosures.length === 0) {
+          if (!executedAny) {
+            console.log(
+              `[AUTO-REBALANCE] Rank-swap: no rotation needed (available ${availableCollateralUsdc} >= slot ${minSlotCollateralUsdc} for ${rankSwapClosures.length} wanted picks).`,
             );
-            if (closeRes.parsed?.success === true) {
-              runSummary.policyDiagnostics.autoExitsClosed += 1;
-            }
-          } catch (err) {
-            const safeErr = redactSecrets(err.message || String(err));
-            console.error(`[AUTO-REBALANCE] close_position failed for ${pos.symbol}: ${safeErr}`);
-            runSummary.errors.push({ tool: "close_position", error: safeErr });
           }
+          return;
+        }
+        runSummary.policyDiagnostics.autoExitsAttempted += rankSwapClosures.length;
+        for (const closure of rankSwapClosures) {
+          await autoRebalanceClose({ pos: closure.pos, reason: closure.reason });
         }
       } catch (err) {
         const safeErr = redactSecrets(err.message || String(err));
@@ -3062,6 +3327,8 @@ export const __agentRunnerInternals = {
   getActionablePicks,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
+  computeRankSwapClosures,
+  computePnlBandClosures,
   parseWriteConfirmationCommand,
   pushRejectedToolResponses,
   extractThesis,

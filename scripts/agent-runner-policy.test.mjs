@@ -12,6 +12,8 @@ const {
   getActionablePicks,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
+  computeRankSwapClosures,
+  computePnlBandClosures,
   parseWriteConfirmationCommand,
   pushRejectedToolResponses,
 } = __agentRunnerInternals;
@@ -1154,4 +1156,369 @@ test("compact-mode eligibility helpers still respect tracked-asset intersection"
   // wired-on-oracle with the vault's tracked set, even under compact mode.
   assert.equal(eligible.length, 1);
   assert.equal(eligible[0].symbol, "AHR.V");
+});
+
+// ---------------------------------------------------------------------------
+// autoExitMode policy parsing
+// ---------------------------------------------------------------------------
+
+test("parseAgentPolicy defaults autoExitMode to 'none' when only legacy fields are set", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  assert.equal(policy.autoExitMode, "none");
+});
+
+test("parseAgentPolicy accepts autoExitMode='rank_swap' under track_top_n", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "rank_swap",
+  });
+  assert.equal(policy.autoExitMode, "rank_swap");
+});
+
+test("parseAgentPolicy accepts autoExitMode='pnl_band'", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  assert.equal(policy.autoExitMode, "pnl_band");
+});
+
+test("parseAgentPolicy normalises combined autoExitMode tokens to sorted '+'-join", () => {
+  for (const raw of ["rank_swap+pnl_band", "pnl_band+rank_swap", "rank_swap,pnl_band"]) {
+    const policy = parseAgentPolicy({
+      autoAllocateTargetBps: 5000,
+      entryMode: "ml_score",
+      entryMlScoreMin: 85,
+      entryDirection: "long_short",
+      maxNewPositionsPerRun: 3,
+      maxNewShortsPerRun: 1,
+      maxTrackedAssets: 12,
+      positionSizingMode: "equal_weight",
+      rebalanceMode: "track_top_n",
+      autoExitMode: raw,
+    });
+    assert.equal(policy.autoExitMode, "pnl_band+rank_swap", `for raw=${raw}`);
+  }
+});
+
+test("parseAgentPolicy rejects unknown autoExitMode tokens", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryMlScoreMin: 85,
+        entryDirection: "long_only",
+        maxNewPositionsPerRun: 3,
+        maxTrackedAssets: 12,
+        positionSizingMode: "equal_weight",
+        rebalanceMode: "track_top_n",
+        autoExitMode: "yolo",
+      }),
+    /Invalid autoExitMode token/,
+  );
+});
+
+test("parseAgentPolicy rejects 'none' combined with other tokens", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryMlScoreMin: 85,
+        entryDirection: "long_only",
+        maxNewPositionsPerRun: 3,
+        maxTrackedAssets: 12,
+        positionSizingMode: "equal_weight",
+        rebalanceMode: "track_top_n",
+        autoExitMode: "none+rank_swap",
+      }),
+    /'none' cannot be combined/,
+  );
+});
+
+test("parseAgentPolicy rejects rank_swap without rebalanceMode='track_top_n'", () => {
+  assert.throws(
+    () =>
+      parseAgentPolicy({
+        autoAllocateTargetBps: 5000,
+        entryMode: "ml_score",
+        entryMlScoreMin: 85,
+        entryDirection: "long_only",
+        maxNewPositionsPerRun: 3,
+        maxTrackedAssets: 12,
+        positionSizingMode: "equal_weight",
+        rebalanceMode: "none",
+        autoExitMode: "rank_swap",
+      }),
+    /'rank_swap' requires rebalanceMode='track_top_n'/,
+  );
+});
+
+// ---------------------------------------------------------------------------
+// computeRankSwapClosures
+// ---------------------------------------------------------------------------
+
+function rankSwapPolicy(overrides = {}) {
+  return parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "rank_swap",
+    ...overrides,
+  });
+}
+
+test("computeRankSwapClosures returns [] when autoExitMode does not include rank_swap", () => {
+  const closures = computeRankSwapClosures({
+    policy: parseAgentPolicy({
+      autoAllocateTargetBps: 5000,
+      entryMode: "ml_score",
+      entryMlScoreMin: 85,
+      entryDirection: "long_short",
+      maxNewPositionsPerRun: 3,
+      maxNewShortsPerRun: 1,
+      maxTrackedAssets: 12,
+      positionSizingMode: "equal_weight",
+      rebalanceMode: "track_top_n",
+    }),
+    positions: [
+      { exists: true, isLong: true, symbol: "LOW.V", assetId: "0xLOW", size: "1", collateral: "1" },
+    ],
+    rankedPicks: [{ yahooSymbol: "AHR.V", mlScore: 99 }],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computeRankSwapClosures returns [] when all wanted picks already fit available collateral", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      { exists: true, isLong: true, symbol: "HELD.V", assetId: "0xHELD" },
+    ],
+    rankedPicks: [
+      { yahooSymbol: "AHR.V", mlScore: 100 },
+      { yahooSymbol: "GSR.V", mlScore: 95 },
+      { yahooSymbol: "HELD.V", mlScore: 90 },
+    ],
+    availableCollateralUsdc: "1000",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computeRankSwapClosures closes lowest-ranked held long to make room for top-ranked newcomer", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "TOPHELD.V",
+        assetId: "0xTOP",
+        unrealisedPnlPctOfCollateral: 0.05,
+      },
+      {
+        exists: true,
+        isLong: true,
+        symbol: "LOWHELD.V",
+        assetId: "0xLOW",
+        unrealisedPnlPctOfCollateral: 0.0,
+      },
+    ],
+    rankedPicks: [
+      { yahooSymbol: "AHR.V", mlScore: 100 },
+      { yahooSymbol: "TOPHELD.V", mlScore: 95 },
+      { yahooSymbol: "LOWHELD.V", mlScore: 90 },
+    ],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xLOW");
+  assert.match(closures[0].reason, /rank rotation/);
+  assert.match(closures[0].reason, /AHR\.V/);
+});
+
+test("computeRankSwapClosures uses PnL tiebreaker when two held legs share the worst rank", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "OFFA.V",
+        assetId: "0xOFFA",
+        unrealisedPnlPctOfCollateral: 0.04,
+      },
+      {
+        exists: true,
+        isLong: true,
+        symbol: "OFFB.V",
+        assetId: "0xOFFB",
+        unrealisedPnlPctOfCollateral: -0.03,
+      },
+    ],
+    rankedPicks: [
+      { yahooSymbol: "AHR.V", mlScore: 100 },
+      { yahooSymbol: "GSR.V", mlScore: 95 },
+    ],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  // Both held legs are off-top-N (rank Infinity); PnL tiebreaker picks the
+  // worse one (-3% < +4%).
+  assert.ok(closures.length >= 1);
+  assert.equal(closures[0].pos.assetId, "0xOFFB");
+});
+
+test("computeRankSwapClosures never closes shorts even in long_short", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      {
+        exists: true,
+        isLong: false,
+        symbol: "BADCO.V",
+        assetId: "0xSHORT",
+        unrealisedPnlPctOfCollateral: -0.5,
+      },
+    ],
+    rankedPicks: [{ yahooSymbol: "AHR.V", mlScore: 100 }],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computeRankSwapClosures is a no-op in short_only direction", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "short_only",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "rank_swap",
+  });
+  const closures = computeRankSwapClosures({
+    policy,
+    positions: [
+      { exists: true, isLong: true, symbol: "HELD.V", assetId: "0xHELD", unrealisedPnlPctOfCollateral: 0 },
+    ],
+    rankedPicks: [{ yahooSymbol: "AHR.V", mlScore: 100 }],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computeRankSwapClosures bails out when minSlotCollateralUsdc is 0 (no sizing target)", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      { exists: true, isLong: true, symbol: "HELD.V", assetId: "0xHELD", unrealisedPnlPctOfCollateral: 0 },
+    ],
+    rankedPicks: [{ yahooSymbol: "AHR.V", mlScore: 100 }],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "0",
+  });
+  assert.equal(closures.length, 0);
+});
+
+// ---------------------------------------------------------------------------
+// computePnlBandClosures
+// ---------------------------------------------------------------------------
+
+test("computePnlBandClosures returns [] when autoExitMode does not include pnl_band", () => {
+  const closures = computePnlBandClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      { exists: true, isLong: true, symbol: "BAD.V", assetId: "0xBAD", pnlBandOutcome: "below_stop_loss", unrealisedPnlPctOfCollateral: -0.1 },
+    ],
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computePnlBandClosures closes long legs above_take_profit and below_stop_loss", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  const closures = computePnlBandClosures({
+    policy,
+    positions: [
+      { exists: true, isLong: true, symbol: "OK.V", assetId: "0xOK", pnlBandOutcome: "within", unrealisedPnlPctOfCollateral: 0.01 },
+      { exists: true, isLong: true, symbol: "BAD.V", assetId: "0xBAD", pnlBandOutcome: "below_stop_loss", unrealisedPnlPctOfCollateral: -0.07 },
+      { exists: true, isLong: true, symbol: "WIN.V", assetId: "0xWIN", pnlBandOutcome: "above_take_profit", unrealisedPnlPctOfCollateral: 0.09 },
+    ],
+  });
+  const assetIds = closures.map((c) => c.pos.assetId).sort();
+  assert.deepEqual(assetIds, ["0xBAD", "0xWIN"]);
+});
+
+test("computePnlBandClosures skips shorts in long_short (LLM owns short exits)", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  const closures = computePnlBandClosures({
+    policy,
+    positions: [
+      { exists: true, isLong: false, symbol: "SHORT.V", assetId: "0xSHORT", pnlBandOutcome: "below_stop_loss", unrealisedPnlPctOfCollateral: -0.5 },
+    ],
+  });
+  assert.equal(closures.length, 0);
 });

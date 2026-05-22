@@ -21,6 +21,7 @@ import {
 import { classifyAssetIds } from "./set-vault-assets-validation.mjs";
 import { validateAddress, validateBytes32, validateArgs } from "./address-validation.mjs";
 import { decodeCastRevert } from "./revert-decoder.mjs";
+import { computePositionPnl, PNL_BAND_DEFAULTS } from "./position-pnl.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -30,6 +31,20 @@ const DEPLOYMENT_CONFIG = process.env.DEPLOYMENT_CONFIG ?? "apps/web/src/config/
 const RPC_URL = process.env.RPC_URL ?? "sepolia";
 const PRIVATE_KEY = process.env.PRIVATE_KEY ?? "";
 const PROJECT_ROOT = process.env.PROJECT_ROOT ?? process.cwd();
+
+// PnL band thresholds used to flag each position's `pnlBandOutcome`.
+// Operators can override per-deployment; defaults match the mining-manager
+// agent's `[-6%, +8%]` band so the deterministic auto-exit pass in the
+// runner agrees with the agent prompt by default.
+function parseBandEnv(name, fallback) {
+  const raw = process.env[name];
+  if (raw == null || raw === "") return fallback;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n <= 0 || n >= 1) return fallback;
+  return n;
+}
+const PNL_BAND_TP_PCT = parseBandEnv("MCP_PNL_BAND_TP_PCT", PNL_BAND_DEFAULTS.takeProfitPct);
+const PNL_BAND_SL_PCT = parseBandEnv("MCP_PNL_BAND_SL_PCT", PNL_BAND_DEFAULTS.stopLossPct);
 
 // Spoke discovery + twin-deploy helpers live in `./multichain-create.mjs` so
 // they can be unit-tested without spawning the MCP. `discoverSpokeContexts`
@@ -671,6 +686,92 @@ function parseTrackingTuple(raw) {
   };
 }
 
+// Shared roster builder used by `list_open_positions`, the `open_position`
+// INSUFFICIENT_COLLATERAL pre-flight, and `get_perp_capital_snapshot`. Reads
+// every tracked asset and yields any leg whose on-chain `exists` flag is
+// true, with per-leg unrealised PnL fields attached via `computePositionPnl`.
+//
+// The roster shape is load-bearing: the agent runner's deterministic
+// rank-swap auto-exit and the agent prompt step-9 logic both read these
+// fields. If you add/remove a field here, update:
+//   - agents/mining-manager.md step 9
+//   - scripts/agent-runner.mjs `computeRankSwapClosures`
+//   - apps/mcps/vault-manager/list-positions-pnl.test.mjs
+function buildOpenPositionsRoster(vault, d) {
+  const assetCount = parseIntSafe(castCall(vault, "getAssetCount()(uint256)"));
+  const trackedAssets = [];
+  for (let i = 0; i < assetCount; i++) {
+    trackedAssets.push(castCall(vault, "getAssetAt(uint256)(bytes32)", [String(i)]));
+  }
+
+  const positions = [];
+  for (const assetId of trackedAssets) {
+    let symbol = "";
+    try {
+      symbol = stripQuotes(castCall(d.oracleAdapter, "assetSymbols(bytes32)(string)", [assetId]));
+    } catch { /* asset may not be wired in oracle */ }
+
+    let currentOraclePrice = null;
+    try {
+      currentOraclePrice = castCall(d.oracleAdapter, "getPrice(bytes32)(uint256)", [assetId]);
+    } catch { /* price may not be set */ }
+
+    for (const isLong of [true, false]) {
+      let posKey;
+      let trackingRaw;
+      try {
+        posKey = castCall(
+          d.vaultAccounting,
+          "getPositionKey(address,bytes32,bool)(bytes32)",
+          [vault, assetId, String(isLong)],
+        );
+        trackingRaw = castCall(
+          d.vaultAccounting,
+          "getPositionTracking(bytes32)((address,bytes32,bool,uint256,uint256,uint256,uint256,uint256,bool))",
+          [posKey],
+        );
+      } catch {
+        continue;
+      }
+
+      const parsed = parseTrackingTuple(trackingRaw);
+      if (!parsed || !parsed.exists) continue;
+
+      const pnl = computePositionPnl({
+        isLong: parsed.isLong,
+        size: parsed.size,
+        averagePrice: parsed.averagePrice,
+        currentOraclePrice,
+        collateralUsdc: parsed.collateralUsdc,
+        takeProfitPct: PNL_BAND_TP_PCT,
+        stopLossPct: PNL_BAND_SL_PCT,
+      });
+
+      positions.push({
+        positionKey: posKey,
+        assetId: assetId.toLowerCase(),
+        symbol,
+        isLong: parsed.isLong,
+        size: parsed.size,
+        collateral: parsed.collateral,
+        collateralUsdc: parsed.collateralUsdc,
+        collateralUsdc_usdc: formatUsdc(parsed.collateralUsdc),
+        averagePrice: parsed.averagePrice,
+        currentOraclePrice,
+        currentOraclePrice_usd:
+          currentOraclePrice != null ? formatOraclePrice8(currentOraclePrice) : null,
+        unrealisedPnlUsdc: pnl.unrealisedPnlUsdc,
+        unrealisedPnlUsdc_usdc: pnl.unrealisedPnlUsdc_usdc,
+        unrealisedPnlPctOfCollateral: pnl.unrealisedPnlPctOfCollateral,
+        pnlBandOutcome: pnl.pnlBandOutcome,
+        exists: true,
+      });
+    }
+  }
+
+  return positions;
+}
+
 server.registerTool(
   "list_open_positions",
   {
@@ -679,8 +780,11 @@ server.registerTool(
       "Return all currently-open perp positions for a vault, derived deterministically from the vault's tracked-asset list. " +
       "For each tracked asset, this calls getPositionTracking(vault, asset, isLong=true) and getPositionTracking(vault, asset, isLong=false) and " +
       "yields any leg where the on-chain `exists` flag is true. " +
-      "Returns {vault, count, positions: [{positionKey, assetId, symbol, isLong, size, collateral, collateralUsdc, averagePrice, currentOraclePrice, exists}]}. " +
-      "Use this instead of looping get_position_tracking from the LLM side when you need the full picture for rebalancing.",
+      "Each position now also includes computed unrealised PnL: `unrealisedPnlUsdc` (signed USDC 6-dec string), " +
+      "`unrealisedPnlPctOfCollateral` (Number, e.g. -0.018 = -1.8%), and `pnlBandOutcome` " +
+      `(\"within\" | \"above_take_profit\" | \"below_stop_loss\" | \"unknown\"; thresholds: +${(PNL_BAND_TP_PCT * 100).toFixed(2)}% TP / -${(PNL_BAND_SL_PCT * 100).toFixed(2)}% SL of collateral). ` +
+      "Use this instead of looping get_position_tracking from the LLM side when you need the full picture for rebalancing. " +
+      "Also see `get_perp_capital_snapshot` for the roster bundled with vault accounting state.",
     inputSchema: {
       vault: z.string().describe("BasketVault contract address (0x...)"),
     },
@@ -690,68 +794,91 @@ server.registerTool(
     if (argErr) return argErr;
     try {
       const d = deployment();
-      const assetCount = parseIntSafe(castCall(vault, "getAssetCount()(uint256)"));
-      const trackedAssets = [];
-      for (let i = 0; i < assetCount; i++) {
-        trackedAssets.push(castCall(vault, "getAssetAt(uint256)(bytes32)", [String(i)]));
-      }
-
-      const positions = [];
-      for (const assetId of trackedAssets) {
-        let symbol = "";
-        try {
-          symbol = stripQuotes(castCall(d.oracleAdapter, "assetSymbols(bytes32)(string)", [assetId]));
-        } catch { /* asset may not be wired in oracle */ }
-
-        let currentOraclePrice = null;
-        try {
-          currentOraclePrice = castCall(d.oracleAdapter, "getPrice(bytes32)(uint256)", [assetId]);
-        } catch { /* price may not be set */ }
-
-        for (const isLong of [true, false]) {
-          let posKey;
-          let trackingRaw;
-          try {
-            posKey = castCall(
-              d.vaultAccounting,
-              "getPositionKey(address,bytes32,bool)(bytes32)",
-              [vault, assetId, String(isLong)],
-            );
-            trackingRaw = castCall(
-              d.vaultAccounting,
-              "getPositionTracking(bytes32)((address,bytes32,bool,uint256,uint256,uint256,uint256,uint256,bool))",
-              [posKey],
-            );
-          } catch {
-            continue;
-          }
-
-          const parsed = parseTrackingTuple(trackingRaw);
-          if (!parsed || !parsed.exists) continue;
-          positions.push({
-            positionKey: posKey,
-            assetId: assetId.toLowerCase(),
-            symbol,
-            isLong: parsed.isLong,
-            size: parsed.size,
-            collateral: parsed.collateral,
-            collateralUsdc: parsed.collateralUsdc,
-            collateralUsdc_usdc: formatUsdc(parsed.collateralUsdc),
-            averagePrice: parsed.averagePrice,
-            currentOraclePrice,
-            currentOraclePrice_usd:
-              currentOraclePrice != null ? formatOraclePrice8(currentOraclePrice) : null,
-            exists: true,
-          });
-        }
-      }
-
+      const positions = buildOpenPositionsRoster(vault, d);
       return {
         content: [{
           type: "text",
           text: JSON.stringify({ vault: vault.toLowerCase(), count: positions.length, positions }, null, 2),
         }],
       };
+    } catch (err) {
+      return toolError("READ_FAILED", err.message,
+        "Verify the vault address is correct and the OracleAdapter / VaultAccounting deployment is reachable.");
+    }
+  },
+);
+
+server.registerTool(
+  "get_perp_capital_snapshot",
+  {
+    title: "Get Perp Capital Snapshot",
+    description:
+      "Single read that returns everything you need to size a new open_position safely: " +
+      "vault idle / perp allocation, `availableCollateral` (the same value the on-chain `openPosition` check enforces), " +
+      "`lockedCollateral`, and the full open-position roster with per-leg unrealised PnL fields " +
+      "(`unrealisedPnlUsdc`, `unrealisedPnlPctOfCollateral`, `pnlBandOutcome`). " +
+      "Call this BEFORE every open_position so you don't burn turns on doomed calls. " +
+      "When `availableCollateral` is less than the collateral you want to deploy, either close a leg with the worst " +
+      "`unrealisedPnlPctOfCollateral` from the roster or call `allocate_to_perp` first.",
+    inputSchema: {
+      vault: z.string().describe("BasketVault contract address (0x...)"),
+    },
+  },
+  async ({ vault }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
+    try {
+      const d = deployment();
+      const summary = readVaultSummary(vault, d);
+      const accountingState = readVaultAccountingState(d, vault);
+      let openPositions = [];
+      let rosterError = null;
+      try {
+        openPositions = buildOpenPositionsRoster(vault, d);
+      } catch (rosterErr) {
+        rosterError = redactSecrets(rosterErr.message || String(rosterErr));
+      }
+
+      const payload = {
+        vault: vault.toLowerCase(),
+        idleUsdc: summary.availableForPerp,
+        idleUsdc_usdc: summary.availableForPerp_usdc,
+        perpAllocated: summary.perpAllocated,
+        perpAllocated_usdc: summary.perpAllocated_usdc,
+        accounting: accountingState
+          ? {
+              registered: accountingState.registered,
+              depositedCapital: accountingState.depositedCapital.toString(),
+              depositedCapital_usdc: formatUsdc(accountingState.depositedCapital.toString()),
+              collateralLocked: accountingState.collateralLocked.toString(),
+              collateralLocked_usdc: formatUsdc(accountingState.collateralLocked.toString()),
+              availableCollateral: accountingState.available.toString(),
+              availableCollateral_usdc: formatUsdc(accountingState.available.toString()),
+              realisedPnL: accountingState.realisedPnL.toString(),
+              openInterest: accountingState.openInterest.toString(),
+              positionCount: accountingState.positionCount.toString(),
+            }
+          : null,
+        pnlBand: {
+          takeProfitPct: PNL_BAND_TP_PCT,
+          stopLossPct: PNL_BAND_SL_PCT,
+        },
+        openPositions,
+        nextSteps: [
+          {
+            tool: "open_position",
+            reason:
+              "Size collateral <= accounting.availableCollateral. If too small, close a leg with worst unrealisedPnlPctOfCollateral first.",
+          },
+          {
+            tool: "close_position",
+            reason:
+              "Pick a leg from openPositions whose pnlBandOutcome is above_take_profit / below_stop_loss, or the leg with the worst unrealisedPnlPctOfCollateral when freeing capital for a higher-ranked entry.",
+          },
+        ],
+      };
+      if (rosterError) payload.rosterError = rosterError;
+      return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
     } catch (err) {
       return toolError("READ_FAILED", err.message,
         "Verify the vault address is correct and the OracleAdapter / VaultAccounting deployment is reachable.");
@@ -1270,6 +1397,7 @@ server.registerTool(
       "Collateral is in raw USDC (6 decimals: '1000000' = 1 USDC). " +
       "Effective leverage = size / (collateral * 1e24). Keep collateral >= 10% of size for safety. " +
       "Requires capital allocated via allocate_to_perp first. Caller must be vault owner. " +
+      "BEFORE calling, run `get_perp_capital_snapshot` (or read the same fields from `get_vault_pnl`) so the requested `collateral` fits the vault's `availableCollateral`; the MCP will otherwise short-circuit with `INSUFFICIENT_COLLATERAL` and embed the open-position roster so you can pick a leg to close. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
@@ -1320,25 +1448,52 @@ server.registerTool(
     const accountingState = readVaultAccountingState(d, vault);
     if (accountingState && accountingState.registered) {
       if (collateralBn > accountingState.available) {
+        // Build the open-position roster so the LLM can pick a leg to close
+        // in the SAME retry. Best-effort: a roster read failure (e.g. RPC
+        // blip) must not swallow the structured INSUFFICIENT_COLLATERAL
+        // payload, so we fall back to an empty array and embed the error.
+        let openPositions = [];
+        let rosterError = null;
+        try {
+          openPositions = buildOpenPositionsRoster(vault, d).map((p) => ({
+            assetId: p.assetId,
+            symbol: p.symbol,
+            isLong: p.isLong,
+            size: p.size,
+            collateral: p.collateral,
+            collateralUsdc: p.collateralUsdc,
+            collateralUsdc_usdc: p.collateralUsdc_usdc,
+            unrealisedPnlUsdc: p.unrealisedPnlUsdc,
+            unrealisedPnlUsdc_usdc: p.unrealisedPnlUsdc_usdc,
+            unrealisedPnlPctOfCollateral: p.unrealisedPnlPctOfCollateral,
+            pnlBandOutcome: p.pnlBandOutcome,
+          }));
+        } catch (rosterErr) {
+          rosterError = redactSecrets(rosterErr.message || String(rosterErr));
+        }
+
+        const payload = {
+          success: false,
+          error_code: "INSUFFICIENT_COLLATERAL",
+          message:
+            `Vault ${vault} has only ${accountingState.available.toString()} raw USDC free for new collateral, but the call requested ${collateralBn.toString()}. ` +
+            `depositedCapital=${accountingState.depositedCapital.toString()}, collateralLocked=${accountingState.collateralLocked.toString()}, realisedPnL=${accountingState.realisedPnL.toString()}.`,
+          vault,
+          requestedCollateral: collateralBn.toString(),
+          availableCollateral: accountingState.available.toString(),
+          depositedCapital: accountingState.depositedCapital.toString(),
+          collateralLocked: accountingState.collateralLocked.toString(),
+          realisedPnL: accountingState.realisedPnL.toString(),
+          positionCount: accountingState.positionCount.toString(),
+          openPositions,
+          recovery_hint:
+            "Pick the leg in `openPositions` with the worst `unrealisedPnlPctOfCollateral` (or any leg whose `pnlBandOutcome` is `\"above_take_profit\"` / `\"below_stop_loss\"`) and call `close_position` on it with `sizeDelta=size` and `collateralDelta=collateral` to free locked capital, then retry `open_position`. Alternatively, size the new position down so `collateral <= availableCollateral`, or call `allocate_to_perp` from the vault's idle USDC. The runner's auto-rebalance pass may already have attempted rank-based rotation; remaining locked capital must be freed by you.",
+        };
+        if (rosterError) payload.rosterError = rosterError;
         return {
           content: [{
             type: "text",
-            text: JSON.stringify({
-              success: false,
-              error_code: "INSUFFICIENT_COLLATERAL",
-              message:
-                `Vault ${vault} has only ${accountingState.available.toString()} raw USDC free for new collateral, but the call requested ${collateralBn.toString()}. ` +
-                `depositedCapital=${accountingState.depositedCapital.toString()}, collateralLocked=${accountingState.collateralLocked.toString()}, realisedPnL=${accountingState.realisedPnL.toString()}.`,
-              vault,
-              requestedCollateral: collateralBn.toString(),
-              availableCollateral: accountingState.available.toString(),
-              depositedCapital: accountingState.depositedCapital.toString(),
-              collateralLocked: accountingState.collateralLocked.toString(),
-              realisedPnL: accountingState.realisedPnL.toString(),
-              positionCount: accountingState.positionCount.toString(),
-              recovery_hint:
-                "Vault does not have enough free USDC for this open. Either size the new position down (reduce collateral so it fits availableCollateral), call close_position on a worst-PnL leg first to free locked capital, or call allocate_to_perp from the vault's idle USDC. Use list_open_positions + get_vault_pnl to pick a leg to close.",
-            }, null, 2),
+            text: JSON.stringify(payload, null, 2),
           }],
           isError: true,
         };
