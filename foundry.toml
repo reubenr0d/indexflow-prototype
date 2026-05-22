@@ -33,6 +33,14 @@ arbitrum_sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
 fuji = "${FUJI_RPC_URL}"
 
 [etherscan]
+# Anvil (chain id 31337) has no public Etherscan URL. Without an explicit entry,
+# Foundry's Etherscan trace identifier — created whenever ETHERSCAN_API_KEY is in
+# scope, regardless of which chain is actually being broadcast to — falls through
+# to "No known Etherscan API URL for chain `anvil-hardhat`" and aborts the script
+# before any tx is broadcast (foundry-rs/foundry#11351 / #11444). The placeholder
+# URL below is never contacted because none of our `*:local` flows pass --verify;
+# it exists only so the chain-31337 lookup returns Some(_) instead of erroring.
+local = { key = "anvil-noop", chain = 31337, url = "http://127.0.0.1:8545/verify" }
 sepolia = { key = "${ETHERSCAN_API_KEY}", chain = "sepolia" }
 arbitrum = { key = "${ARBISCAN_API_KEY}", chain = "arbitrum" }
 fuji = { key = "${SNOWTRACE_API_KEY}", chain = "avalanche-fuji" }

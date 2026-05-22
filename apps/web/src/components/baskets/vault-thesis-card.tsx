@@ -207,11 +207,39 @@ type TopPick = {
   key: string;
   label: string;
   isLong: boolean;
+  yfinanceSymbol: string | null;
 };
+
+export type AssetMetaMap = Map<string, { name: string }>;
+
+// Picks the human ticker (e.g. `AHR.V`) for a top-pick chip. Agent
+// metadata stores `assetId` as a keccak-style bytes32 in production, so
+// `formatAssetId` falls back to a truncated hex (`0x7557d8b4...a4ddd1f6`).
+// When an oracle meta map is available, prefer the on-chain symbol — that
+// matches what positions-table.tsx already renders for open positions.
+function resolveTickerForAsset(
+  assetId: string,
+  assetMetaMap?: AssetMetaMap,
+): { label: string; yfinanceSymbol: string | null } {
+  const decoded = formatAssetId(assetId);
+  const decodedIsTicker = decoded && !decoded.startsWith("0x");
+
+  const onChain = assetMetaMap?.get(assetId.toLowerCase())?.name;
+  if (onChain && !onChain.startsWith("0x")) {
+    return { label: onChain, yfinanceSymbol: onChain };
+  }
+
+  if (decodedIsTicker) {
+    return { label: decoded, yfinanceSymbol: decoded };
+  }
+
+  return { label: decoded, yfinanceSymbol: null };
+}
 
 function deriveTopPicks(
   recentActions: AgentAction[],
   latestRunId?: string | null,
+  assetMetaMap?: AssetMetaMap,
 ): TopPick[] {
   if (!recentActions?.length) return [];
   const targetRun =
@@ -225,10 +253,15 @@ function deriveTopPicks(
     const key = `${action.params.assetId}-${action.params.isLong ? "L" : "S"}`;
     if (seen.has(key)) continue;
     seen.add(key);
+    const { label, yfinanceSymbol } = resolveTickerForAsset(
+      action.params.assetId,
+      assetMetaMap,
+    );
     picks.push({
       key,
-      label: formatAssetId(action.params.assetId),
+      label,
       isLong: action.params.isLong,
+      yfinanceSymbol,
     });
   }
   return picks;
@@ -270,11 +303,6 @@ function HeaderChip({
 function PickChip({ pick }: { pick: TopPick }) {
   const toneClass = getToneChipClass(pick.isLong ? "success" : "danger");
   const Icon = pick.isLong ? TrendingUp : TrendingDown;
-  // `formatAssetId` falls back to a hex truncation (`0x...`) when the asset
-  // id isn't printable ASCII — matches the same heuristic positions-table.tsx
-  // uses to gate the Yahoo Finance link.
-  const yfinanceSymbol =
-    pick.label && !pick.label.startsWith("0x") ? pick.label : null;
   const baseClass = cn(
     "inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[11px] font-semibold",
     toneClass,
@@ -288,15 +316,15 @@ function PickChip({ pick }: { pick: TopPick }) {
       <span className="font-mono">{pick.label}</span>
     </>
   );
-  if (!yfinanceSymbol) {
+  if (!pick.yfinanceSymbol) {
     return <span className={baseClass}>{inner}</span>;
   }
   return (
     <a
-      href={yahooFinanceQuoteUrl(yfinanceSymbol)}
+      href={yahooFinanceQuoteUrl(pick.yfinanceSymbol)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`View ${yfinanceSymbol} on Yahoo Finance`}
+      aria-label={`View ${pick.yfinanceSymbol} on Yahoo Finance`}
       className={cn(baseClass, "transition-colors hover:underline")}
     >
       {inner}
@@ -313,6 +341,10 @@ interface VaultThesisCardProps {
   agentDescription?: string;
   latestRun?: AgentRun;
   recentActions?: AgentAction[];
+  // Optional bytes32-asset-id → on-chain ticker map. Lets top-picks chips
+  // render the human ticker (and outlink to Yahoo Finance) when agent
+  // metadata stores assetId as a keccak-style hash rather than ASCII bytes.
+  assetMetaMap?: AssetMetaMap;
   tooltipKey?: TooltipKey;
   className?: string;
 }
@@ -325,6 +357,7 @@ export function VaultThesisCard({
   agentDescription,
   latestRun,
   recentActions,
+  assetMetaMap,
   tooltipKey = "vaultThesis",
   className,
 }: VaultThesisCardProps) {
@@ -351,8 +384,8 @@ export function VaultThesisCard({
     : null;
 
   const topPicks = useMemo(
-    () => deriveTopPicks(recentActions ?? [], latestRun?.runId),
-    [recentActions, latestRun?.runId],
+    () => deriveTopPicks(recentActions ?? [], latestRun?.runId, assetMetaMap),
+    [recentActions, latestRun?.runId, assetMetaMap],
   );
 
   const shouldClamp = hasThesis && shouldClampThesis(trimmedThesis);

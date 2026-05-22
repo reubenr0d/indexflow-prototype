@@ -179,6 +179,90 @@ describe("VaultThesisCard", () => {
     expect(html).toContain('aria-label="View GSR.V on Yahoo Finance"');
   });
 
+  it("resolves hashed bytes32 asset ids to on-chain tickers via assetMetaMap and outlinks to Yahoo Finance", () => {
+    // Real production agent metadata stores asset ids as keccak-style bytes32
+    // (e.g. `0x7557d8b4…a4ddd1f6`) rather than ASCII-encoded tickers, so the
+    // chip falls back to a hex stub unless we resolve via the oracle meta map.
+    const hashedAssetId =
+      "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6";
+    const hashedActions: AgentAction[] = [
+      {
+        tool: "open_position",
+        justification: "Top ML pick",
+        timestamp: LATEST_RUN.finishedAt,
+        txHash: "0xaaa",
+        runId: LATEST_RUN.runId,
+        params: {
+          kind: "open_position",
+          assetId: hashedAssetId,
+          isLong: true,
+          size: "1000000000000000000000000000000000",
+          collateral: "1000000000",
+        },
+      },
+    ];
+    const assetMetaMap = new Map<string, { name: string }>([
+      [hashedAssetId, { name: "AHR.V" }],
+    ]);
+
+    const html = renderToStaticMarkup(
+      createElement(VaultThesisCard, {
+        thesis: SHORT_THESIS,
+        signalSource: "atlas-ml",
+        entryMode: "ml_score",
+        lastRunAt: LATEST_RUN.finishedAt,
+        latestRun: LATEST_RUN,
+        recentActions: hashedActions,
+        assetMetaMap,
+      }),
+    );
+
+    expect(html).toContain("Top picks");
+    expect(html).toContain("AHR.V");
+    // The bytes32 hex stub must not leak into the chip label once the map
+    // resolves the id to its on-chain ticker.
+    expect(html).not.toContain("0x7557d8b4");
+    expect(html).toContain('href="https://finance.yahoo.com/quote/AHR.V/"');
+    expect(html).toContain('aria-label="View AHR.V on Yahoo Finance"');
+  });
+
+  it("renders a non-link chip when neither the asset id nor the meta map yields a ticker", () => {
+    const hashedAssetId =
+      "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6";
+    const hashedActions: AgentAction[] = [
+      {
+        tool: "open_position",
+        justification: "Top ML pick",
+        timestamp: LATEST_RUN.finishedAt,
+        txHash: "0xaaa",
+        runId: LATEST_RUN.runId,
+        params: {
+          kind: "open_position",
+          assetId: hashedAssetId,
+          isLong: true,
+          size: "1000000000000000000000000000000000",
+          collateral: "1000000000",
+        },
+      },
+    ];
+
+    const html = renderToStaticMarkup(
+      createElement(VaultThesisCard, {
+        thesis: SHORT_THESIS,
+        signalSource: "atlas-ml",
+        entryMode: "ml_score",
+        lastRunAt: LATEST_RUN.finishedAt,
+        latestRun: LATEST_RUN,
+        recentActions: hashedActions,
+      }),
+    );
+
+    expect(html).toContain("Top picks");
+    // Without a ticker we still render a chip (so the user can see the
+    // long/short side) but it must not pretend to be a Yahoo Finance link.
+    expect(html).not.toContain("finance.yahoo.com/quote/0x");
+  });
+
   it("renders the latest-run summary fallback when thesis is null", () => {
     const html = renderToStaticMarkup(
       createElement(VaultThesisCard, {

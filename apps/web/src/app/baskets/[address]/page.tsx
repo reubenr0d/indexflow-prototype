@@ -34,6 +34,7 @@ import {
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
 import { type AgentAction, useAgentMetadata } from "@/hooks/useAgentMetadata";
+import { useOracleAssetMetaMap } from "@/hooks/useOracle";
 import {
   getActionMeta,
   getToneChipClass,
@@ -519,6 +520,7 @@ function AiActivitySection({
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
+  const { data: oracleAssetMetaMap } = useOracleAssetMetaMap();
 
   const lastRunIso = agentMeta.latestRun?.finishedAt || agentMeta.lastRunAt;
   const lastRunSeconds = lastRunIso ? Math.floor(new Date(lastRunIso).getTime() / 1000) : null;
@@ -592,6 +594,7 @@ function AiActivitySection({
         agentDescription={agentMeta.agentDescription}
         latestRun={agentMeta.latestRun}
         recentActions={agentMeta.recentActions ?? []}
+        assetMetaMap={oracleAssetMetaMap}
       />
 
 

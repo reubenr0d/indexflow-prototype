@@ -5,18 +5,6 @@ REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 RPC_URL="${RPC_URL:-http://127.0.0.1:8545}"
 PRIVATE_KEY="${PRIVATE_KEY:-0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80}"
 
-# Placeholder explorer API keys so foundry's [etherscan] block in foundry.toml
-# resolves to non-empty values when broadcasting against the local Anvil chain
-# (chain id 31337 / "anvil-hardhat"). Without these, Foundry 1.5.x errors with
-# "No known Etherscan API URL for chain `anvil-hardhat`" because the trace
-# identifier walks every [etherscan] entry on -vvv broadcasts. Mirrors the
-# `ETHERSCAN_API_KEY=ci-not-required` / `ARBISCAN_API_KEY=ci-not-required`
-# workaround already used in .github/workflows/test.yml. Only applied when the
-# caller hasn't already exported a real value.
-export ETHERSCAN_API_KEY="${ETHERSCAN_API_KEY:-local-not-required}"
-export ARBISCAN_API_KEY="${ARBISCAN_API_KEY:-local-not-required}"
-export SNOWTRACE_API_KEY="${SNOWTRACE_API_KEY:-local-not-required}"
-
 # ------------------------------------------------------------------
 # 1. Wait for Anvil
 # ------------------------------------------------------------------
