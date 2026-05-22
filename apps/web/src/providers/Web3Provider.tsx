@@ -10,6 +10,7 @@ import { privyAppId } from "@/config/privy";
 import { DeploymentProvider } from "@/providers/DeploymentProvider";
 import { useAutoSwitchChain } from "@/hooks/useAutoSwitchChain";
 import { queryClient } from "@/providers/query-client";
+import { TransactionStatusProvider } from "@/providers/TransactionStatusProvider";
 import dynamic from "next/dynamic";
 
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
@@ -53,7 +54,7 @@ function FallbackWeb3ProviderInner({ children }: { children: React.ReactNode }) 
       <QueryClientProvider client={queryClient}>
         {isE2ETestMode && <AutoConnectE2EWallet />}
         <AutoSwitchFallbackChain />
-        {children}
+        <TransactionStatusProvider>{children}</TransactionStatusProvider>
       </QueryClientProvider>
     </WagmiProviderNative>
   );

@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import { useEffect, useMemo, useState } from "react";
+import { useAccount, useConfig } from "wagmi";
 import { useSmartWallets } from "@privy-io/react-auth/smart-wallets";
 import {
   useApproveUSDC,
@@ -27,7 +27,15 @@ import {
   getPanelPrimaryActionMeta,
   type PanelMode,
 } from "@/components/ui/icon-helpers";
-import { ArrowDownToLine, ArrowUpToLine, Layers } from "lucide-react";
+import {
+  ArrowDownToLine,
+  ArrowUpToLine,
+  CheckCircle2,
+  ExternalLink,
+  Layers,
+  Loader2,
+  XCircle,
+} from "lucide-react";
 import { type Address } from "viem";
 import { MultiChainDepositDrawer } from "./multi-chain-deposit-drawer";
 import { SponsorshipErrorDialog, isSponsorshipError } from "./sponsorship-error-dialog";
@@ -80,11 +88,17 @@ export function DepositRedeemPanel({
   const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
   const [approvalInFlightAmount, setApprovalInFlightAmount] = useState<bigint>(0n);
   const { address } = useAccount();
+  const wagmiConfig = useConfig();
   const { client: smartWalletClient } = useSmartWallets();
   const { chainId, viewMode } = useDeploymentTarget();
   const { usdc } = getContracts(chainId);
   const activeAddress =
     chainId === 43113 ? (smartWalletClient?.account?.address as Address | undefined) : address;
+  const explorerBase = useMemo(
+    () => wagmiConfig.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url,
+    [chainId, wagmiConfig.chains]
+  );
+  const explorerUrl = (hash?: `0x${string}`) => (hash && explorerBase ? `${explorerBase}/tx/${hash}` : undefined);
 
   const isMultiChainEnabled = isPrivyConfigured && viewMode === "all";
 
@@ -97,6 +111,7 @@ export function DepositRedeemPanel({
 
   const {
     approve,
+    hash: approveHash,
     receipt: approveReceipt,
     isPending: isApproving,
     error: approveError,
@@ -104,6 +119,7 @@ export function DepositRedeemPanel({
   } = useApproveUSDC();
   const {
     deposit,
+    hash: depositHash,
     receipt: depositReceipt,
     isPending: isDepositing,
     error: depositError,
@@ -111,6 +127,7 @@ export function DepositRedeemPanel({
   } = useDeposit();
   const {
     redeem,
+    hash: redeemHash,
     receipt: redeemReceipt,
     isPending: isRedeeming,
     error: redeemError,
@@ -178,7 +195,6 @@ export function DepositRedeemPanel({
 
   useEffect(() => {
     if (approveReceipt.isSuccess) {
-      showToast("success", "USDC approved");
       refetchAllowance();
       refetchSimDeposit();
     }
@@ -239,14 +255,12 @@ export function DepositRedeemPanel({
 
   useEffect(() => {
     if (depositReceipt.isSuccess) {
-      showToast("success", "Deposit successful");
       setAmount("");
     }
   }, [depositReceipt.isSuccess]);
 
   useEffect(() => {
     if (redeemReceipt.isSuccess) {
-      showToast("success", "Redemption successful");
       setAmount("");
     }
   }, [redeemReceipt.isSuccess]);
@@ -278,25 +292,94 @@ export function DepositRedeemPanel({
 
     if (mode === "deposit" && needsApproval) {
       setApprovalInFlightAmount(parsedAmount);
-      approve(usdc, vault, parsedAmount);
-      showToast("pending", "Approving USDC...");
+      approve(usdc, vault, parsedAmount, {
+        kind: "approve",
+        chainId,
+        label: `Approve ${formatUSDC(parsedAmount)} USDC`,
+      });
       return;
     }
 
     if (mode === "deposit") {
-      deposit(vault, parsedAmount);
-      showToast("pending", "Depositing...");
+      deposit(vault, parsedAmount, {
+        kind: "deposit",
+        chainId,
+        label: `Deposit ${formatUSDC(parsedAmount)} USDC`,
+      });
       return;
     }
 
-    redeem(vault, parsedAmount);
-    showToast("pending", "Redeeming...");
+    redeem(vault, parsedAmount, {
+      kind: "redeem",
+      chainId,
+      label: `Redeem ${formatShares(parsedAmount)} shares`,
+    });
   };
 
   const handleMultiChainDepositSuccess = () => {
     setAmount("");
-    showToast("success", "Multi-chain deposit complete");
   };
+
+  // Derived inline stepper phase. The Privy popup is gone (showWalletUIs=false), so
+  // this card tells the user what is happening while the dock holds long-term state.
+  type StepperPhase = "idle" | "signing" | "submitted" | "confirmed" | "failed";
+  const activeHash: `0x${string}` | undefined =
+    processingAction === "approve"
+      ? approveHash
+      : processingAction === "deposit"
+        ? depositHash
+        : processingAction === "redeem"
+          ? redeemHash
+          : undefined;
+
+  const [showConfirmedFlash, setShowConfirmedFlash] = useState<{
+    action: "approve" | "deposit" | "redeem";
+    hash?: `0x${string}`;
+  } | null>(null);
+  useEffect(() => {
+    if (depositReceipt.isSuccess) {
+      setShowConfirmedFlash({ action: "deposit", hash: depositHash });
+      const t = setTimeout(() => setShowConfirmedFlash(null), 2_500);
+      return () => clearTimeout(t);
+    }
+  }, [depositReceipt.isSuccess, depositHash]);
+  useEffect(() => {
+    if (redeemReceipt.isSuccess) {
+      setShowConfirmedFlash({ action: "redeem", hash: redeemHash });
+      const t = setTimeout(() => setShowConfirmedFlash(null), 2_500);
+      return () => clearTimeout(t);
+    }
+  }, [redeemReceipt.isSuccess, redeemHash]);
+  useEffect(() => {
+    if (approveReceipt.isSuccess) {
+      setShowConfirmedFlash({ action: "approve", hash: approveHash });
+      const t = setTimeout(() => setShowConfirmedFlash(null), 2_000);
+      return () => clearTimeout(t);
+    }
+  }, [approveReceipt.isSuccess, approveHash]);
+
+  const failedAction: "approve" | "deposit" | "redeem" | null =
+    isApproveError || approveReceipt.isError
+      ? "approve"
+      : isDepositError || depositReceipt.isError
+        ? "deposit"
+        : isRedeemError || redeemReceipt.isError
+          ? "redeem"
+          : null;
+
+  let stepperPhase: StepperPhase = "idle";
+  let stepperAction: "approve" | "deposit" | "redeem" | null = processingAction;
+  let stepperHash: `0x${string}` | undefined = activeHash;
+  if (isProcessing) {
+    stepperPhase = activeHash ? "submitted" : "signing";
+  } else if (showConfirmedFlash) {
+    stepperPhase = "confirmed";
+    stepperAction = showConfirmedFlash.action;
+    stepperHash = showConfirmedFlash.hash;
+  } else if (failedAction) {
+    stepperPhase = "failed";
+    stepperAction = failedAction;
+  }
 
   return (
     <Card className="p-5">
@@ -394,11 +477,11 @@ export function DepositRedeemPanel({
             {actionMeta.label}
           </span>
         </Button>
-      ) : (
+      ) : stepperPhase === "idle" ? (
         <Button
           size="lg"
           className="w-full"
-          disabled={parsedAmount === 0n || isProcessing || blockedBySimulation}
+          disabled={parsedAmount === 0n || blockedBySimulation}
           onClick={handleSubmit}
           data-testid="deposit-redeem-submit"
         >
@@ -416,6 +499,14 @@ export function DepositRedeemPanel({
             )}
           </span>
         </Button>
+      ) : (
+        <InlineTxStepper
+          phase={stepperPhase}
+          action={stepperAction}
+          hash={stepperHash}
+          explorerUrl={explorerUrl(stepperHash)}
+          onRetry={() => handleSubmit()}
+        />
       )}
 
       <MultiChainDepositDrawer
@@ -438,5 +529,130 @@ export function DepositRedeemPanel({
         }}
       />
     </Card>
+  );
+}
+
+interface InlineTxStepperProps {
+  phase: "signing" | "submitted" | "confirmed" | "failed";
+  action: "approve" | "deposit" | "redeem" | null;
+  hash?: `0x${string}`;
+  explorerUrl?: string;
+  onRetry: () => void;
+}
+
+function actionVerb(action: InlineTxStepperProps["action"]): string {
+  if (action === "approve") return "Approval";
+  if (action === "deposit") return "Deposit";
+  if (action === "redeem") return "Redemption";
+  return "Transaction";
+}
+
+/**
+ * Uniswap-style three-state stepper that replaces the submit button while a
+ * transaction is in flight. Because Privy's confirmation popup is hidden
+ * (`embeddedWallets.showWalletUIs: false`), this row is the user's only
+ * inline signal that something is happening. The global TransactionDock keeps
+ * the longer-term progress as the user navigates around.
+ */
+function InlineTxStepper({ phase, action, hash, explorerUrl, onRetry }: InlineTxStepperProps) {
+  const verb = actionVerb(action);
+
+  if (phase === "signing") {
+    return (
+      <div
+        data-testid="deposit-redeem-stepper"
+        data-phase="signing"
+        className="flex items-center gap-3 rounded-md border border-app-accent/30 bg-app-accent/5 px-4 py-3"
+      >
+        <Loader2 className="h-4 w-4 animate-spin text-app-accent" />
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-semibold text-app-text">{verb} pending</p>
+          <p className="text-xs text-app-muted">
+            Signed silently by your embedded wallet. No popup needed.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (phase === "submitted") {
+    return (
+      <div
+        data-testid="deposit-redeem-stepper"
+        data-phase="submitted"
+        className="flex items-center gap-3 rounded-md border border-app-accent/30 bg-app-accent/5 px-4 py-3"
+      >
+        <Loader2 className="h-4 w-4 animate-spin text-app-accent" />
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-semibold text-app-text">{verb} submitted</p>
+          <p className="truncate text-xs text-app-muted">
+            Waiting for confirmation
+            {hash ? ` · ${hash.slice(0, 10)}...` : ""}
+          </p>
+        </div>
+        {explorerUrl && (
+          <a
+            href={explorerUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 rounded-md border border-app-border bg-app-surface px-2 py-1 text-xs font-medium text-app-text hover:bg-app-bg-subtle"
+          >
+            View <ExternalLink className="h-3 w-3" />
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  if (phase === "confirmed") {
+    return (
+      <div
+        data-testid="deposit-redeem-stepper"
+        data-phase="confirmed"
+        className="flex items-center gap-3 rounded-md border border-app-success/30 bg-app-success/5 px-4 py-3"
+      >
+        <CheckCircle2 className="h-4 w-4 text-app-success" />
+        <div className="min-w-0 flex-1">
+          <p className="text-sm font-semibold text-app-text">{verb} confirmed</p>
+          <p className="truncate text-xs text-app-muted">
+            On-chain success{hash ? ` · ${hash.slice(0, 10)}...` : ""}
+          </p>
+        </div>
+        {explorerUrl && (
+          <a
+            href={explorerUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 rounded-md border border-app-border bg-app-surface px-2 py-1 text-xs font-medium text-app-text hover:bg-app-bg-subtle"
+          >
+            View <ExternalLink className="h-3 w-3" />
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      data-testid="deposit-redeem-stepper"
+      data-phase="failed"
+      className="flex items-center gap-3 rounded-md border border-app-danger/30 bg-app-danger/5 px-4 py-3"
+    >
+      <XCircle className="h-4 w-4 text-app-danger" />
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-app-text">{verb} failed</p>
+        <p className="text-xs text-app-muted">
+          The transaction didn&apos;t go through. You can try again.
+        </p>
+      </div>
+      <Button
+        size="sm"
+        variant="secondary"
+        onClick={onRetry}
+        data-testid="deposit-redeem-stepper-retry"
+      >
+        Try again
+      </Button>
+    </div>
   );
 }

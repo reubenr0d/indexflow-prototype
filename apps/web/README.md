@@ -49,6 +49,15 @@ Read policy:
 - Live-critical values (wallet balances and risk state) continue to read from RPC.
 - "All Chains" view aggregates across every chain the indexer covers (served from the same endpoint).
 
+## Transaction UX
+
+The app runs Privy embedded-wallet transactions **headlessly** — no Privy confirmation popup. The signing happens silently and progress shows up in two places:
+
+- **Inline stepper** inside the deposit/redeem card, which morphs through `Signing → Submitted → Confirmed` (and a `Try again` row on failure), with an explorer link on submitted/confirmed.
+- **Floating transaction dock** at the bottom-right of every page (`apps/web/src/components/transactions/transaction-dock.tsx`), driven by `TransactionStatusProvider`. Up to three mini cards stack in collapsed mode; click any to expand into a scrollable list. Confirmed rows auto-clear after a few seconds; failed rows persist until dismissed.
+
+The headless behaviour is controlled by `embeddedWallets.showWalletUIs: false` in [`src/config/privy.ts`](src/config/privy.ts). External (e.g. MetaMask) wallets still see their own wallet popup — those flows are gated separately in `useSponsoredWriteContract`. See the Privy [whitelabel](https://docs.privy.io/wallets/using-wallets/whitelabel) and [manage-wallet-UIs](https://docs.privy.io/recipes/react/manage-wallet-UIs) docs for the API.
+
 ## Push Notifications
 
 Set the push service URL to enable cloud-synced notification preferences and device subscriptions on `/settings`:

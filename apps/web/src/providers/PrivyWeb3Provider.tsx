@@ -13,6 +13,7 @@ import { sepolia, arbitrumSepolia, arbitrum, avalancheFuji } from "@/config/wagm
 import { privyAppId, privyConfig } from "@/config/privy";
 import { useAutoSwitchChain } from "@/hooks/useAutoSwitchChain";
 import { queryClient } from "@/providers/query-client";
+import { TransactionStatusProvider } from "@/providers/TransactionStatusProvider";
 
 const privyWagmiConfig = createPrivyConfig({
   chains: [sepolia, arbitrumSepolia, arbitrum, avalancheFuji],
@@ -65,7 +66,7 @@ export default function PrivyWeb3ProviderInner({ children }: { children: React.R
           >
             <AutoSelectPrivyWallet />
             <AutoSwitchWalletToDeploymentChain />
-            {children}
+            <TransactionStatusProvider>{children}</TransactionStatusProvider>
           </WagmiProvider>
         </QueryClientProvider>
       </SmartWalletsProvider>

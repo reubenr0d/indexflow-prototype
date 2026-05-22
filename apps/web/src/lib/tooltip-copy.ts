@@ -109,6 +109,10 @@ export const TOOLTIP_COPY = {
   txPending: "The current transaction is waiting to be confirmed by the network.",
   txConfirmed: "The current transaction confirmed successfully.",
   txFailed: "The current transaction failed and can be retried after checking the error.",
+  headlessSigning:
+    "Embedded wallet signs silently in the background — no popup. Progress shows here in the card and in the floating transaction dock at the bottom right.",
+  transactionDock:
+    "Floating list of recent transactions. Open it any time to follow active signs, submitted txs, and on-chain confirmations across pages.",
 
   // Multi-chain deposit flow
   multiChainDeposit:

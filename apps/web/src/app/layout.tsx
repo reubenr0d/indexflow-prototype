@@ -19,6 +19,13 @@ const ToastContainer = dynamic(
   () => import("@/components/ui/toast").then((m) => ({ default: m.ToastContainer })),
 );
 
+const TransactionDock = dynamic(
+  () =>
+    import("@/components/transactions/transaction-dock").then((m) => ({
+      default: m.TransactionDock,
+    })),
+);
+
 const sans = Plus_Jakarta_Sans({
   variable: "--font-sans-app",
   subsets: ["latin"],
@@ -90,6 +97,7 @@ export default async function RootLayout({
             <ToastContainer />
             {children}
             <Footer />
+            <TransactionDock />
           </TourProvider>
         </Web3Provider>
         <Analytics />

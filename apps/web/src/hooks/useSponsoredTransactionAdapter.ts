@@ -12,7 +12,6 @@ type SendTxParams = {
   data: `0x${string}`;
   value?: bigint;
   sponsor?: boolean;
-  showWalletUIs?: boolean;
 };
 
 type SponsoredTxResult = {
@@ -41,13 +40,15 @@ export function useSponsoredTransactionAdapter() {
   );
 
   const sendSponsoredTx = useCallback(
-    async ({ chainId, to, data, value, sponsor = true, showWalletUIs = true }: SendTxParams): Promise<SponsoredTxResult> => {
+    async ({ chainId, to, data, value, sponsor = true }: SendTxParams): Promise<SponsoredTxResult> => {
       const strategy: SponsorshipStrategy = sponsorshipStrategyForChainId(chainId);
       console.log(`[SponsoredTxAdapter] sendSponsoredTx called: chainId=${chainId} strategy=${strategy} to=${to.slice(0, 10)}...`);
 
       if (strategy === "native_sponsor") {
         console.log(`[SponsoredTxAdapter] Using native sponsorship for chain ${chainId}`);
         try {
+          // Wallet UIs are hidden globally via privyConfig.embeddedWallets.showWalletUIs=false.
+          // Progress is surfaced by the app's TransactionDock + inline panel stepper.
           const receipt = await sendTransaction(
             {
               chainId,
@@ -55,7 +56,7 @@ export function useSponsoredTransactionAdapter() {
               data,
               ...(value != null ? { value } : {}),
             },
-            { sponsor, uiOptions: { showWalletUIs } }
+            { sponsor }
           );
           console.log(`[SponsoredTxAdapter] Native tx succeeded: hash=${receipt.hash}`);
           return { hash: receipt.hash };

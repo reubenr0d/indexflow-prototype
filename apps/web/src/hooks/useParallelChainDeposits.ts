@@ -260,8 +260,6 @@ export function useParallelChainDeposits() {
               data: depositData,
               // Always request sponsorship for embedded-wallet flows.
               sponsor: true,
-              // Keep wallet UI visible so the user can complete confirmations when needed.
-              showWalletUIs: true,
             })
           );
           updateChainStatus(chainId, { depositTxHash: receipt.hash, status: "success" });
@@ -288,7 +286,6 @@ export function useParallelChainDeposits() {
               to: usdc,
               data: approveData,
               sponsor: true,
-              showWalletUIs: true,
             })
           );
           updateChainStatus(chainId, { approveTxHash: approveReceipt.hash });

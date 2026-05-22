@@ -1,11 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { useReadContract, useReadContracts, useSimulateContract, useWaitForTransactionReceipt } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { BasketVaultABI } from "@/abi/BasketVault";
 import { ERC20ABI } from "@/abi/erc20";
 import { REFETCH_INTERVAL } from "@/lib/constants";
 import { type Address } from "viem";
+import { useTrackedTx, type TxKind } from "@/providers/TransactionStatusProvider";
+
+export interface TxMeta {
+  label: string;
+  chainId?: number;
+  kind?: TxKind;
+}
 
 export function useSharePrice(vault: Address) {
   return useReadContract({
@@ -82,10 +90,22 @@ export function useSimulateRedeem(vault: Address, shares: bigint, account: Addre
 }
 
 export function useDeposit() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "deposit",
+    label: meta?.label ?? "Deposit",
+    chainId: meta?.chainId,
+  });
 
-  const deposit = (vault: Address, amount: bigint) => {
+  const deposit = (vault: Address, amount: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -94,14 +114,26 @@ export function useDeposit() {
     });
   };
 
-  return { deposit, hash, receipt, ...rest };
+  return { deposit, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useRedeem() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "redeem",
+    label: meta?.label ?? "Redeem",
+    chainId: meta?.chainId,
+  });
 
-  const redeem = (vault: Address, shares: bigint) => {
+  const redeem = (vault: Address, shares: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -110,14 +142,26 @@ export function useRedeem() {
     });
   };
 
-  return { redeem, hash, receipt, ...rest };
+  return { redeem, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useApproveUSDC() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "approve",
+    label: meta?.label ?? "Approve USDC",
+    chainId: meta?.chainId,
+  });
 
-  const approve = (token: Address, spender: Address, amount: bigint) => {
+  const approve = (token: Address, spender: Address, amount: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: token,
       abi: ERC20ABI,
@@ -126,7 +170,7 @@ export function useApproveUSDC() {
     });
   };
 
-  return { approve, hash, receipt, ...rest };
+  return { approve, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useUSDCBalance(token: Address, account: Address | undefined) {
@@ -159,10 +203,22 @@ export function useMaxPerpAllocation(vault: Address) {
 }
 
 export function useSetMaxPerpAllocation() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "admin",
+    label: meta?.label ?? "Set max perp allocation",
+    chainId: meta?.chainId,
+  });
 
-  const setMaxPerpAllocation = (vault: Address, cap: bigint) => {
+  const setMaxPerpAllocation = (vault: Address, cap: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -171,14 +227,26 @@ export function useSetMaxPerpAllocation() {
     });
   };
 
-  return { setMaxPerpAllocation, hash, receipt, ...rest };
+  return { setMaxPerpAllocation, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useSetAssets() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "admin",
+    label: meta?.label ?? "Update basket assets",
+    chainId: meta?.chainId,
+  });
 
-  const setAssets = (vault: Address, assetIds: `0x${string}`[]) => {
+  const setAssets = (vault: Address, assetIds: `0x${string}`[], txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -187,7 +255,7 @@ export function useSetAssets() {
     });
   };
 
-  return { setAssets, hash, receipt, ...rest };
+  return { setAssets, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useMinReserveBps(vault: Address) {
@@ -238,10 +306,22 @@ export function useCollectedFees(vault: Address) {
 }
 
 export function useSetMinReserveBps() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "admin",
+    label: meta?.label ?? "Set min reserve",
+    chainId: meta?.chainId,
+  });
 
-  const setMinReserveBps = (vault: Address, bps: bigint) => {
+  const setMinReserveBps = (vault: Address, bps: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -250,14 +330,26 @@ export function useSetMinReserveBps() {
     });
   };
 
-  return { setMinReserveBps, hash, receipt, ...rest };
+  return { setMinReserveBps, hash, isPending, error, isError, receipt, ...rest };
 }
 
 export function useTopUpReserve() {
-  const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
+  const { writeContract, data: hash, isPending, error, isError, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const [meta, setMeta] = useState<TxMeta | null>(null);
+  useTrackedTx({
+    hash,
+    isPending,
+    isError,
+    error,
+    receipt,
+    kind: meta?.kind ?? "admin",
+    label: meta?.label ?? "Top up reserve",
+    chainId: meta?.chainId,
+  });
 
-  const topUpReserve = (vault: Address, amount: bigint) => {
+  const topUpReserve = (vault: Address, amount: bigint, txMeta?: TxMeta) => {
+    if (txMeta) setMeta(txMeta);
     writeContract({
       address: vault,
       abi: BasketVaultABI,
@@ -266,5 +358,5 @@ export function useTopUpReserve() {
     });
   };
 
-  return { topUpReserve, hash, receipt, ...rest };
+  return { topUpReserve, hash, isPending, error, isError, receipt, ...rest };
 }

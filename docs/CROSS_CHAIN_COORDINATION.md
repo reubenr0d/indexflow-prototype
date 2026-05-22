@@ -205,9 +205,20 @@ Perps use hub-local USDC exclusively. Spoke USDC is held idle and earns its shar
 The frontend reads `StateRelay.getRoutingWeights()` across all chains and presents the weight distribution to the user. For multi-chain deposit orchestration:
 
 1. Fetch the current weight table from any chain's `StateRelay` (all are identical after a keeper epoch).
-2. Split the deposit amount proportionally across chains according to their weights.
-3. The user approves and signs one transaction per target chain.
-4. Each chain's `BasketVault.deposit()` independently enforces the `minDepositWeightBps` guard.
+2. **Resolve the per-chain twin vault address by name.** A "basket" is conceptually one product, but each chain has its own independent `BasketVault` deployment — a Sepolia vault address never exists on Fuji and vice-versa. The frontend iterates `BasketFactory.getAllBaskets()` on every configured chain and matches by `BasketVault.name()` (case-insensitive, whitespace-trimmed). See `apps/web/src/hooks/useVaultAddressByName.ts`.
+3. **Filter the routing weights to chains that have a deployed twin.** If the basket only exists on Sepolia, the Fuji weight is dropped and 100% routes to Sepolia (with a clear "this basket is not deployed on Fuji" notice in the UI). If twins exist on every chain in the weight table, the split goes ahead unchanged.
+4. The user approves and signs one transaction per target chain. Each chain's `BasketVault.deposit()` independently enforces the `minDepositWeightBps` guard.
+
+### Per-chain twin basket requirement
+
+To deposit into a basket from "All Chains" view, the basket must be deployed on every chain you want it to receive routing weight from. The recommended deployment pattern is:
+
+1. Deploy on the hub via `BasketFactory.createBasket(name, depositFeeBps, redeemFeeBps)` — wires the oracle adapter automatically.
+2. Deploy on each spoke via the same factory call. The spoke deployment will not have an oracle adapter wired (spokes don't run the oracle stack), so call `setAssets(bytes32[])` with at least one stub asset id (e.g. `keccak256("USDC")`, same pattern as `DeploySpoke.s.sol::_maybeBootstrapSpokeBasket`) to unblock `deposit()` (which requires `assets.length > 0`).
+3. On every chain, call `setStateRelay(stateRelay)` so the deposit weight guard is active.
+4. Optionally seed the spoke vault with mock USDC via `topUpReserve(amount)` so it has idle liquidity before any user deposits arrive.
+
+If twins are missing, the multi-chain deposit drawer falls back to single-chain mode and surfaces the missing chains in a warning banner. The user can still deposit successfully — the deposit just doesn't split.
 
 ### Automated Multi-Chain Deposit Flow (Privy Users)
 
