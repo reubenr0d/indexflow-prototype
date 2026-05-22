@@ -144,7 +144,10 @@ function toBasketTrendSnapshotsResult(
   };
 }
 
-function toBasketTrendSeries(rows: RawBasketSnapshot[], period: BasketSnapshotPeriod): BasketTrendSeries {
+function toBasketTrendSeries(
+  rows: RawBasketSnapshot[],
+  period: BasketSnapshotPeriod
+): BasketTrendSeries {
   const snapshots = rows.map((row) => toBasketTrendSnapshot(row, period));
   const current = snapshots[0] ?? null;
   const previous = snapshots[1] ?? null;

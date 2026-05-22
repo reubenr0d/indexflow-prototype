@@ -161,8 +161,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: agent-output-${{ matrix.agent }}-${{ matrix.network }}
+          # Scope each matrix job's artifact to ONLY its own agent subtree so
+          # the two artifacts have non-overlapping file paths. Previously this
+          # uploaded `agents/memory/` (the entire tree) from each job, which
+          # meant both artifacts contained the same files. When the
+          # commit-results job then ran `download-artifact@v4` with
+          # `merge-multiple: true`, tar extraction overlaid the SHORTER NEW
+          # file onto the LONGER OLD file without truncating, producing
+          # Frankenstein JSON (e.g. commit 7e25566 corrupted
+          # quality-matrix-manager/state.json so the next run crashed on
+          # JSON.parse and CI silently stopped producing commits for ~30h).
+          # `apps/web/public/agent-metadata/` stays at directory level
+          # because each agent writes a per-vault `<vault>.json` and vault
+          # addresses are unique per agent (the two artifacts therefore never
+          # collide on a metadata file).
           path: |
-            agents/memory/
+            agents/memory/${{ matrix.agent }}/
             apps/web/public/agent-metadata/
           retention-days: 1
 
@@ -183,6 +197,18 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v5
+      # Belt-and-braces against the artifact-merge corruption documented
+      # on the upload step above: scrub ONLY the agent-managed files that
+      # the artifact download will write into BEFORE extraction, so a
+      # regression to "upload the whole tree" can't leave stale pre-existing
+      # bytes that merge with the new artifact into Frankenstein JSON.
+      # Preserves `agents/memory/README.md` and
+      # `apps/web/public/agent-metadata/README.md` which are checked-in
+      # docs and never produced by the agent runner.
+      - name: Clean agent-managed files before artifact extraction
+        run: |
+          rm -rf agents/memory/*/
+          find apps/web/public/agent-metadata -maxdepth 1 -type f -name '0x*.json' -delete
       - name: Download all agent outputs
         uses: actions/download-artifact@v4
         with:

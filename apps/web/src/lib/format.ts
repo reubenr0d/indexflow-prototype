@@ -13,6 +13,17 @@ export function formatPrice(price: bigint): string {
   return formatUSDC(usdValue);
 }
 
+export function computePnLPctBps(sharePrice: bigint): bigint {
+  return ((sharePrice - PRICE_PRECISION) * 10_000n) / PRICE_PRECISION;
+}
+
+export function formatPnLPct(sharePrice: bigint): string {
+  const bps = computePnLPctBps(sharePrice);
+  const sign = bps > 0n ? "+" : bps < 0n ? "-" : "";
+  const abs = bps < 0n ? -bps : bps;
+  return `${sign}${(Number(abs) / 100).toFixed(2)}%`;
+}
+
 export function formatPriceFull(price: bigint): string {
   const scaled = price * 100n / (PRICE_PRECISION / USDC_PRECISION);
   const whole = scaled / 100n;
@@ -86,6 +97,28 @@ export function formatShares(shares: bigint): string {
 export function formatBps(bps: bigint | number): string {
   const val = typeof bps === "bigint" ? Number(bps) : bps;
   return `${(val / 100).toFixed(2)}%`;
+}
+
+/** Open interest (1e30 USD) divided by deposited capital (USDC 6 decimals). */
+export function formatLeverageRatio(
+  openInterest1e30: bigint,
+  depositedCapitalUsdc: bigint,
+): string {
+  if (depositedCapitalUsdc === 0n) return "--";
+  const levScale = PRICE_PRECISION / USDC_PRECISION;
+  const lev100 = (openInterest1e30 * 100n) / (depositedCapitalUsdc * levScale);
+  if (lev100 <= 0n) return "0x";
+
+  const whole = lev100 / 100n;
+  const frac = lev100 % 100n;
+  const wholeDisplay =
+    whole <= BigInt(Number.MAX_SAFE_INTEGER)
+      ? Number(whole).toLocaleString()
+      : whole.toString();
+
+  if (frac === 0n) return `${wholeDisplay}x`;
+  const fracStr = frac.toString().padStart(2, "0").replace(/0+$/, "");
+  return `${wholeDisplay}.${fracStr}x`;
 }
 
 export function formatAddress(addr: string): string {

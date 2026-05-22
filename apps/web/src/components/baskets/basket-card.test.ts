@@ -18,7 +18,7 @@ vi.mock("@/hooks/subgraph/useBasketTrends", () => ({
 }));
 
 describe("BasketCard", () => {
-  it("renders the upgraded hierarchy and trend placeholders", () => {
+  it("renders PnL, Assets, and the composition bar", () => {
     const html = renderToStaticMarkup(
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000002",
@@ -30,22 +30,27 @@ describe("BasketCard", () => {
         totalSupply: 1_000_000n,
         assetCount: 4,
         depositFee: 25n,
-        perpBlendBps: 2_500n,
       })
     );
 
     expect(html).toContain("Momentum Basket");
     expect(html).toContain("TVL");
-    expect(html).toContain("Share price");
-    expect(html).toContain("Perp exposure");
-    expect(html).toContain("Allocated");
+    expect(html).toContain("PnL");
+    expect(html).toContain("+25.00%");
+    expect(html).toContain("Assets");
+    expect(html).toContain(">4<");
+    expect(html).toContain("Composition");
+    expect(html).toContain("% idle");
+    expect(html).toContain("% allocated");
+    expect(html).not.toContain("Share price");
+    expect(html).not.toContain("Perp exposure");
     expect(html).toContain("24h");
     expect(html).toContain("7d");
     expect(html).toContain("fee");
     expect(html).toContain("25.00%");
   });
 
-  it("renders placeholder trend chips when trend data is unavailable", () => {
+  it("renders zero PnL and asset count when share price equals inception", () => {
     const html = renderToStaticMarkup(
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000003",
@@ -60,6 +65,14 @@ describe("BasketCard", () => {
     );
 
     expect(html).toContain("Fee --");
+    expect(html).toContain("PnL");
+    expect(html).toContain("0.00%");
+    expect(html).not.toContain("+0.00%");
+    expect(html).not.toContain("-0.00%");
+    expect(html).toContain(">2<");
+    expect(html).toContain("Composition");
+    expect(html).toContain("100% idle");
+    expect(html).toContain("0% allocated");
     expect(html).toContain("24h");
     expect(html).toContain("7d");
     expect(html).toContain("--");

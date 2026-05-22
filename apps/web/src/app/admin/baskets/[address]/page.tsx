@@ -30,6 +30,9 @@ import {
   formatAddress,
   formatUsd1e30,
   formatSignedUsdcAmount,
+  formatLeverageRatio,
+  formatPnLPct,
+  computePnLPctBps,
 } from "@/lib/format";
 import { formatApy } from "@/lib/apy";
 import { showToast } from "@/components/ui/toast";
@@ -56,12 +59,12 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
     unrealisedPnL,
     netPnL,
     capitalUtilPct,
-    leverageRatio,
     configuredAssetIds,
     blended,
     showAllocatedComposition,
     assetMeta,
     apy7d,
+    subgraphSharePrice,
     usdc,
   } = useBasketDashboardData(vault);
 
@@ -74,17 +77,29 @@ export default function AdminBasketDetailPage({ params }: { params: Promise<{ ad
   const unrealisedSign = unrealisedPnL > 0n ? 1 : unrealisedPnL < 0n ? -1 : 0;
 
   const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
+  // PnL tile mirrors the basket-list card's `PnL` chip: NAV growth per share
+  // since inception. Sourced from the same Envio `Basket` entity the list
+  // reads (`subgraphSharePrice`) so the two views never disagree because of
+  // RPC vs indexer lag.
+  const pnlBps = subgraphSharePrice !== null ? computePnLPctBps(subgraphSharePrice) : 0n;
+  const pnlSign = pnlBps > 0n ? 1 : pnlBps < 0n ? -1 : 0;
+  const pnlValue = subgraphSharePrice !== null ? formatPnLPct(subgraphSharePrice) : "--";
 
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl), testId: "metric-tvl" },
     { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign, testId: "metric-apy" },
+    { label: "PnL", value: pnlValue, pnl: subgraphSharePrice !== null, sign: pnlSign, testId: "metric-pnl-pct" },
     { label: "Perp Allocated", value: formatUSDC(basketInfo?.perpAllocated ?? 0n), testId: "metric-perp-allocated" },
     ...(state?.registered
       ? [
           { label: "Open Interest", value: formatUsd1e30(state.openInterest), testId: "metric-open-interest" },
           { label: "Net PnL", value: formatSignedUsdcAmount(netPnL), pnl: true, sign: netPnlSign, testId: "metric-net-pnl" },
           { label: "Unrealised", value: formatSignedUsdcAmount(unrealisedPnL), pnl: true, sign: unrealisedSign, testId: "metric-unrealised-pnl" },
-          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x`, testId: "metric-leverage" },
+          {
+            label: "Leverage",
+            value: formatLeverageRatio(state.openInterest, state.depositedCapital),
+            testId: "metric-leverage",
+          },
           { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%`, testId: "metric-capital-util" },
           { label: "Positions", value: String(state.positionCount), testId: "metric-positions" },
         ]

@@ -8,6 +8,7 @@ const {
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
+  getActionablePicks,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
@@ -703,4 +704,119 @@ test("computeAutoRebalanceClosures in short_only mode closes any long leg", () =
   assert.equal(closures.length, 1);
   assert.equal(closures[0].pos.assetId, "0xLONG_LEG");
   assert.match(closures[0].reason, /closing long leg/);
+});
+
+test("getActionablePicks returns score-passing quality picks regardless of tracked status", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+  });
+
+  const picks = [
+    { yahooSymbol: "AYM.AX", compositeScore: 90, tier: "Exceptional" },
+    { yahooSymbol: "GRSL.V", compositeScore: 85, tier: "Strong" },
+    { yahooSymbol: "LOWSCORE.V", compositeScore: 50, tier: "Moderate" },
+    { yahooSymbol: "", compositeScore: 95, tier: "Exceptional" },
+    null,
+    { yahooSymbol: "DUPE.V", compositeScore: 80, tier: "Strong" },
+    { yahooSymbol: "DUPE.V", compositeScore: 81, tier: "Strong" },
+  ];
+
+  const actionable = getActionablePicks({ policy, picks });
+
+  assert.deepEqual(
+    actionable.map((p) => p.yahooSymbol),
+    ["AYM.AX", "GRSL.V", "DUPE.V"],
+  );
+  assert.equal(actionable[0].score, 90);
+  assert.equal(actionable[0].tier, "Exceptional");
+});
+
+test("getActionablePicks caps at maxTrackedAssets for quality picks", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 50,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 2,
+  });
+
+  const picks = [
+    { yahooSymbol: "A.V", compositeScore: 90 },
+    { yahooSymbol: "B.V", compositeScore: 80 },
+    { yahooSymbol: "C.V", compositeScore: 70 },
+  ];
+
+  const actionable = getActionablePicks({ policy, picks });
+
+  assert.equal(actionable.length, 2);
+  assert.deepEqual(
+    actionable.map((p) => p.yahooSymbol),
+    ["A.V", "B.V"],
+  );
+});
+
+test("getActionablePicks returns score-passing ML picks ignoring tracked status", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 75,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 10,
+  });
+
+  const picks = [
+    { yahooSymbol: "AHR.V", mlScore: 99.5 },
+    { yahooSymbol: "GSR.V", mlScore: 75.0 },
+    { yahooSymbol: "BELOW.V", mlScore: 50.0 },
+  ];
+
+  const actionable = getActionablePicks({ policy, picks });
+
+  assert.deepEqual(
+    actionable.map((p) => p.yahooSymbol),
+    ["AHR.V", "GSR.V"],
+  );
+});
+
+test("getActionablePicks returns [] for non-score entry modes", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "momentum_volume",
+    entryMomentumPctMin: 2.0,
+    entryVolumeMin: 500000,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 3,
+  });
+
+  const actionable = getActionablePicks({
+    policy,
+    picks: [{ yahooSymbol: "FOO.V", compositeScore: 90 }],
+  });
+
+  assert.deepEqual(actionable, []);
+});
+
+test("getActionablePicks returns [] when picks is null/undefined", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+  });
+
+  assert.deepEqual(getActionablePicks({ policy, picks: null }), []);
+  assert.deepEqual(getActionablePicks({ policy, picks: undefined }), []);
+  assert.deepEqual(getActionablePicks({ policy }), []);
 });

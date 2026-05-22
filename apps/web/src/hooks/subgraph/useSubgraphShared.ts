@@ -73,6 +73,7 @@ export type RawBasketDetail = {
   redeemFeeBps: string;
   minReserveBps: string;
   maxPerpAllocation: string;
+  createdAt?: string | null;
   assets?: RawBasketAsset[] | null;
   exposures?: RawBasketExposure[] | null;
   activities?: RawBasketActivity[] | null;

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { TrendPill } from "@/components/ui/trend-pill";
-import { formatBps, formatPrice, formatUSDC } from "@/lib/format";
+import { computePnLPctBps, formatBps, formatPnLPct, formatPrice, formatUSDC } from "@/lib/format";
 import { computeApy, formatApy } from "@/lib/apy";
 import { type Address } from "viem";
 import { Bot } from "lucide-react";
@@ -23,7 +23,6 @@ interface BasketCardProps {
   perpAllocated: bigint;
   totalSupply: bigint;
   assetCount: number;
-  perpBlendBps?: bigint;
   depositFee?: bigint;
   redeemFee?: bigint;
   trend24h?: bigint | null;
@@ -39,7 +38,6 @@ export function BasketCard({
   usdcBalance,
   perpAllocated,
   assetCount,
-  perpBlendBps,
   depositFee,
   trend24h: trend24hProp,
   trend7d: trend7dProp,
@@ -59,8 +57,13 @@ export function BasketCard({
       : null;
 
   const tvl = usdcBalance + perpAllocated;
-  const allocatedPct = tvl > 0n ? Number((perpAllocated * 100n) / tvl) : 0;
-  const allocatedLabel = `${allocatedPct}%`;
+  const idlePctRaw = tvl > 0n ? Number((usdcBalance * 100n) / tvl) : 0;
+  const idlePct = Math.max(0, Math.min(100, idlePctRaw));
+  const perpPct = Math.max(0, 100 - idlePct);
+  const pnlBps = computePnLPctBps(sharePrice);
+  const pnlLabel = formatPnLPct(sharePrice);
+  const pnlColor =
+    pnlBps > 0n ? "text-app-success" : pnlBps < 0n ? "text-app-danger" : "text-app-muted";
   const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {
     if (delta === undefined || delta === null) return `${label} --`;
     const abs = delta < 0n ? -delta : delta;
@@ -124,30 +127,38 @@ export function BasketCard({
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
                 <BasketIcon name="sharePrice" />
-                <span>Share price</span>
+                <InfoLabel label="PnL" tooltipKey="pnlSinceInception" />
               </div>
-              <p className="mt-2 font-mono text-sm font-semibold text-app-text">{formatPrice(sharePrice)}</p>
+              <p className={`mt-2 font-mono text-sm font-semibold ${pnlColor}`}>{pnlLabel}</p>
             </div>
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
-                <BasketIcon name="perp" />
-                <InfoLabel label="Perp exposure" tooltipKey="perpExposure" />
+                <BasketIcon name="assets" />
+                <InfoLabel label="Assets" tooltipKey="tableAssets" />
               </div>
               <p className="mt-2 font-mono text-sm font-semibold text-app-text">
-                {perpBlendBps !== undefined ? formatBps(perpBlendBps) : "0.00%"}
+                {assetCount.toLocaleString()}
               </p>
             </div>
           </div>
 
           <div className="mt-4 flex-1">
             <div className="mb-1.5 flex items-center justify-between text-[11px] uppercase tracking-wide text-app-muted">
-              <InfoLabel label="Allocated" tooltipKey="perpAllocated" />
-              <span className="font-mono text-app-text">{allocatedLabel}</span>
+              <span>Composition</span>
+              <span className="font-mono">
+                <span className="text-app-muted">{idlePct}% idle</span>
+                <span className="mx-1.5 text-app-border">·</span>
+                <span className="text-app-text">{perpPct}% allocated</span>
+              </span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
+            <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
               <div
-                className="h-full rounded-full bg-app-accent transition-all"
-                style={{ width: `${allocatedPct}%` }}
+                className="h-full bg-app-muted/40 transition-all"
+                style={{ width: `${idlePct}%` }}
+              />
+              <div
+                className="h-full bg-app-accent transition-all"
+                style={{ width: `${perpPct}%` }}
               />
             </div>
           </div>

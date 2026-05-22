@@ -20,6 +20,7 @@ const AssetPricePanel = dynamic(
 );
 import { PositionsTable } from "@/components/baskets/positions-table";
 import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
+import { VaultThesisCard } from "@/components/baskets/vault-thesis-card";
 import {
   ActivityBadge,
   AiOperatorBadge,
@@ -57,7 +58,10 @@ import {
   formatSignedUsd1e30,
   formatSignedUsdcAmount,
   formatUsd1e30,
+  formatLeverageRatio,
   formatAssetId,
+  formatPnLPct,
+  computePnLPctBps,
 } from "@/lib/format";
 import { formatApy } from "@/lib/apy";
 import { type Address } from "viem";
@@ -78,7 +82,6 @@ import {
   Gauge,
   Landmark,
   Layers,
-  Lightbulb,
   LineChart,
   Scale,
   ShieldAlert,
@@ -112,12 +115,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     realisedPnL,
     netPnL,
     capitalUtilPct,
-    leverageRatio,
     configuredAssetIds,
     blended,
     showAllocatedComposition,
     assetMeta,
     apy7d,
+    subgraphSharePrice,
   } = useBasketDashboardData(vault);
 
   const [historySkip, setHistorySkip] = useState(0);
@@ -168,11 +171,20 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const unrealisedSign = unrealisedPnL > 0n ? 1 : unrealisedPnL < 0n ? -1 : 0;
 
   const apySign = apy7d !== null ? (apy7d > 0 ? 1 : apy7d < 0 ? -1 : 0) : 0;
+  // PnL tile mirrors the basket-list card's `PnL` chip: NAV growth per share
+  // since inception. Sourced from the same Envio `Basket` entity the list
+  // reads (`subgraphSharePrice`) so the two views never disagree because of
+  // RPC vs indexer lag — even when the live `getBasketInfo` RPC has moved
+  // ahead of (or behind) the indexer for this vault.
+  const pnlBps = subgraphSharePrice !== null ? computePnLPctBps(subgraphSharePrice) : 0n;
+  const pnlSign = pnlBps > 0n ? 1 : pnlBps < 0n ? -1 : 0;
+  const pnlValue = subgraphSharePrice !== null ? formatPnLPct(subgraphSharePrice) : "--";
 
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl), icon: Landmark, testId: "metric-tvl" },
     { label: "Share Price", value: formatPrice(basketInfo?.sharePrice ?? 0n), icon: Coins, testId: "metric-share-price" },
     { label: "APY (7d)", value: formatApy(apy7d), pnl: apy7d !== null, sign: apySign, icon: TrendingUp, testId: "metric-apy" },
+    { label: "PnL", value: pnlValue, pnl: subgraphSharePrice !== null, sign: pnlSign, icon: TrendingUp, testId: "metric-pnl-pct" },
     { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0", icon: Layers, testId: "metric-total-shares" },
     ...(hasPnLData
       ? [
@@ -183,7 +195,12 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     ...(state?.registered
       ? [
           { label: "Open Interest", value: formatUsd1e30(state.openInterest), icon: Target, testId: "metric-open-interest" },
-          { label: "Leverage", value: `${leverageRatio.toFixed(2)}x`, icon: Scale, testId: "metric-leverage" },
+          {
+            label: "Leverage",
+            value: formatLeverageRatio(state.openInterest, state.depositedCapital),
+            icon: Scale,
+            testId: "metric-leverage",
+          },
           { label: "Capital Util", value: `${capitalUtilPct.toFixed(1)}%`, icon: Gauge, testId: "metric-capital-util" },
         ]
       : []),
@@ -565,18 +582,18 @@ function AiActivitySection({
       </div>
 
       {/* Thesis */}
-      {agentMeta.thesis && (
-        <div className="mt-4 rounded-md border border-app-border bg-app-surface p-3">
-          <div className="flex items-center gap-1.5">
-            <Lightbulb className="h-4 w-4 shrink-0 text-app-accent" />
-            <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-app-muted">
-              Vault Thesis
-            </h4>
-            <InfoTooltipLazy tooltipKey="vaultThesis" ariaLabel="About Vault Thesis" />
-          </div>
-          <p className="mt-2 text-sm leading-relaxed text-app-text">{agentMeta.thesis}</p>
-        </div>
-      )}
+      <VaultThesisCard
+        className="mt-4"
+        thesis={agentMeta.thesis}
+        signalSource={agentMeta.signalSource}
+        entryMode={agentMeta.entryMode}
+        lastRunAt={lastRunIso ?? null}
+        agentName={agentMeta.agentName}
+        agentDescription={agentMeta.agentDescription}
+        latestRun={agentMeta.latestRun}
+        recentActions={agentMeta.recentActions ?? []}
+      />
+
 
       {/* All decisions (collapsed by default) */}
       {runs.length > 0 && (

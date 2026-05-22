@@ -31,6 +31,7 @@ export type BasketDetail = {
     redeemFeeBps: bigint;
     minReserveBps: bigint;
     maxPerpAllocation: bigint;
+    createdAt: bigint;
     assets: Array<{
       id: string;
       assetId: `0x${string}`;
@@ -115,6 +116,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
           redeemFeeBps: parseBigInt(result.basket.redeemFeeBps),
           minReserveBps: parseBigInt(result.basket.minReserveBps),
           maxPerpAllocation: parseBigInt(result.basket.maxPerpAllocation),
+          createdAt: parseBigInt(result.basket.createdAt),
           assets: (result.basket.assets ?? []).map((a: RawBasketAsset) => ({
             id: a.id,
             assetId: a.assetId as `0x${string}`,

@@ -967,6 +967,46 @@ function getEligibleMlScoreAssets({ policy, vaultState, oracleAssets, mlPicks })
   return deduped;
 }
 
+// Returns the picks above the entry score gate, IGNORING whether they are
+// already tracked by the vault. The existing `getEligible*ScoreAssets`
+// helpers intersect picks with the on-chain tracked set, so they return []
+// whenever the matrix rotates onto names that have not been wired/tracked
+// yet — which silently disables the `needsEntry` enforcement and lets the
+// LLM end the run without opening anything. This helper is the input to
+// the `needsRoll` directive, which forces the LLM to wire missing picks,
+// roll set_vault_assets onto the current top-N, and then open positions.
+//
+// Returns an array of `{ yahooSymbol, score, tier }`, capped at
+// `maxTrackedAssets`. Returns [] when entryMode is not score-based.
+function getActionablePicks({ policy, picks }) {
+  if (!policy?.enabled || !Array.isArray(picks)) return [];
+  const isQuality = policy.entryMode === "quality_score";
+  const isMl = policy.entryMode === "ml_score";
+  if (!isQuality && !isMl) return [];
+  const minScore = Number(
+    isQuality ? policy.entryQualityScoreMin ?? 0 : policy.entryMlScoreMin ?? 0,
+  );
+  const seen = new Set();
+  const out = [];
+  for (const pick of picks) {
+    if (!pick) continue;
+    const score = Number(
+      isQuality
+        ? pick.compositeScore ?? pick.composite ?? 0
+        : pick.mlScore ?? 0,
+    );
+    if (!Number.isFinite(score) || score < minScore) continue;
+    const yahooSymbol = String(pick.yahooSymbol || "").toUpperCase();
+    if (!yahooSymbol) continue;
+    if (seen.has(yahooSymbol)) continue;
+    seen.add(yahooSymbol);
+    out.push({ yahooSymbol, score, tier: pick.tier ?? null });
+  }
+  const cap = Math.max(0, Number(policy.maxTrackedAssets ?? 0));
+  if (cap > 0 && out.length > cap) return out.slice(0, cap);
+  return out;
+}
+
 // Pure decision helper for the deterministic pre-LLM auto-rebalance pass.
 // Given the list of open positions and the current Atlas ML top-N (as a set
 // of eligible Yahoo symbols), returns the closures the runner should
@@ -2278,6 +2318,20 @@ export async function runAgent(agentName) {
                 oracleAssets: policyRuntime.latestOracleAssets,
                 quotes: policyRuntime.latestQuotes,
               });
+      // Score-passing picks regardless of tracked status — used by the
+      // `needsRoll` enforcement branch below to force a wire→set→open
+      // sequence when the matrix has rotated onto names the vault has not
+      // tracked yet (in which case `eligibleAssets` is empty and the
+      // existing `needsEntry` directive silently does nothing).
+      const actionablePicks = getActionablePicks({
+        policy: config.policy,
+        picks:
+          config.policy?.entryMode === "quality_score"
+            ? policyRuntime.latestQualityPicks
+            : config.policy?.entryMode === "ml_score"
+              ? policyRuntime.latestMlPicks
+              : null,
+      });
       const allocationAmountRaw = computeAutoAllocationAmount(
         policyRuntime.latestVaultState,
         config.policy?.autoAllocateTargetBps || 0
@@ -2285,6 +2339,7 @@ export async function runAgent(agentName) {
       runSummary.policyDiagnostics.eligibleAssetCount = eligibleAssets.length;
       runSummary.policyDiagnostics.eligibleAssetIds = eligibleAssets.map((a) => a.assetId);
       runSummary.policyDiagnostics.eligibleSymbols = eligibleAssets.map((a) => a.symbol);
+      runSummary.policyDiagnostics.actionablePickSymbols = actionablePicks.map((p) => p.yahooSymbol);
       runSummary.policyDiagnostics.allocationRequiredRaw = allocationAmountRaw.toString();
       runSummary.policyDiagnostics.allocationWritesExecuted = policyRuntime.allocationWritesExecuted;
       runSummary.policyDiagnostics.opensExecuted = policyRuntime.opensExecuted;
@@ -2293,6 +2348,45 @@ export async function runAgent(agentName) {
         policyRuntime.allocationWritesExecuted > 0 || allocationAmountRaw > 0n;
       runSummary.policyDiagnostics.entryTriggered =
         policyRuntime.opensExecuted > 0 || eligibleAssets.length > 0;
+
+      // Cheap pre-LLM guard: reject `allocate_to_perp` calls whose `amount`
+      // is "0" when the auto-allocation target is positive. Run 1 of the
+      // quality-matrix-manager on 2026-05-21 burned 8 turns and reverted
+      // on-chain because the LLM proposed `amount: "0"` against a freshly
+      // created (empty) vault, then re-proposed the same call across retries.
+      // Replacing the obviously-wrong amount with the runner's computed
+      // `allocationAmountRaw` saves a turn and avoids the `Amount required`
+      // VaultAccounting revert. Skipped entirely for the (currently unused)
+      // case where the policy says no allocation is required this run.
+      if (
+        policyEnabled &&
+        classified.hasWriteCalls &&
+        allocationAmountRaw > 0n &&
+        policyRuntime.enforcementRounds < 8
+      ) {
+        const badAllocate = classified.writeCalls.find(
+          (c) =>
+            c.originalName === "allocate_to_perp" &&
+            (c.args?.amount === "0" || c.args?.amount === 0),
+        );
+        if (badAllocate) {
+          const activeVault =
+            capturedVaultAddress || state?.vaultAddress || badAllocate.args?.vault || null;
+          policyRuntime.enforcementRounds += 1;
+          messages.push(choice.message);
+          messages.push({
+            role: "user",
+            content:
+              `Policy violation: allocate_to_perp was called with amount=0 but VaultAccounting requires a positive amount and will revert with "Amount required". ` +
+              `The auto-allocation target this run is ${allocationAmountRaw.toString()} USDC base-units (autoAllocateTargetBps=${config.policy?.autoAllocateTargetBps || 0} bps of idle USDC). ` +
+              `Retry allocate_to_perp with { vault: "${activeVault}", amount: "${allocationAmountRaw.toString()}" }.`,
+          });
+          console.log(
+            `  [POLICY] Rejected allocate_to_perp amount=0; required allocationAmountRaw=${allocationAmountRaw.toString()}.`,
+          );
+          continue;
+        }
+      }
 
       if (policyEnabled && classified.hasWriteCalls) {
         const violation = validatePolicyWriteBatch({
@@ -2439,8 +2533,22 @@ export async function runAgent(agentName) {
             activeVault &&
             eligibleAssets.length > 0 &&
             policyRuntime.opensExecuted === 0;
+          // Stale tracked-asset set: picks exist above the score gate but
+          // none of them are currently tracked by the vault, so
+          // `eligibleAssets` is empty and `needsEntry` silently never fires.
+          // This is what stalled the quality-matrix-manager on 2026-05-22:
+          // the matrix rotated onto GRSL.V / A2GC.V / etc. but the vault's
+          // tracked list was still the pre-rotation set, so the run ended
+          // with allocate_to_perp and no opens. The directive below forces
+          // the LLM to wire missing picks, roll set_vault_assets, then open.
+          const needsRoll =
+            activeVault &&
+            policyRuntime.opensExecuted === 0 &&
+            eligibleAssets.length === 0 &&
+            actionablePicks.length > 0;
+          runSummary.policyDiagnostics.needsRollTriggered = Boolean(needsRoll);
 
-          if (needsAllocation || needsEntry) {
+          if (needsAllocation || needsEntry || needsRoll) {
             const policyDirectives = [];
             if (needsAllocation) {
               policyDirectives.push(
@@ -2457,6 +2565,34 @@ export async function runAgent(agentName) {
                 `2) Open long-only positions on eligible assets (${eligibleList}). Use at most ${maxOpens} new positions this run and choose sizing/collateral pragmatically.`
               );
             }
+            if (needsRoll && !needsEntry) {
+              const maxOpens = Math.max(0, Number(config.policy.maxNewPositionsPerRun || 0));
+              const cap = Math.max(0, Number(config.policy.maxTrackedAssets || 0)) || 12;
+              const filterLabel =
+                config.policy.entryMode === "ml_score"
+                  ? "Atlas ML score"
+                  : "Quality Matrix composite score";
+              const scoreLabel =
+                config.policy.entryMode === "ml_score"
+                  ? `mlScore >= ${config.policy.entryMlScoreMin ?? 0}`
+                  : `compositeScore >= ${config.policy.entryQualityScoreMin ?? 0}`;
+              const oracleSymbolSet = new Set(
+                (policyRuntime.latestOracleAssets?.assets || [])
+                  .map((a) => String(a?.symbol || "").toUpperCase())
+                  .filter(Boolean),
+              );
+              const unwiredPicks = actionablePicks
+                .filter((p) => !oracleSymbolSet.has(p.yahooSymbol))
+                .map((p) => p.yahooSymbol);
+              const allPickSymbols = actionablePicks.map((p) => p.yahooSymbol);
+              policyDirectives.push(
+                `3) Your tracked-asset list is stale vs the current top-N (${filterLabel}; ${scoreLabel}). ` +
+                  `Current top-N picks: ${allPickSymbols.join(", ") || "(none)"}. ` +
+                  `Picks NOT yet wired to the oracle (call yfinance_quote then wire_asset for each, in that order, using the exact priceUsd from yfinance_quote as seedPriceUsd): ${unwiredPicks.join(", ") || "(none)"}. ` +
+                  `Then call set_vault_assets with the assetIds of the current top-N picks (cap at maxTrackedAssets=${cap}). ` +
+                  `Then open up to ${maxOpens} long positions (isLong=true) on the highest-score picks now in the tracked set, sizing pragmatically against the perp capital available in the vault state.`,
+              );
+            }
 
             policyRuntime.enforcementRounds += 1;
             messages.push(choice.message);
@@ -2467,7 +2603,15 @@ export async function runAgent(agentName) {
                 policyDirectives.join("\n") +
                 "\nAfter executing required writes, re-read vault state and then summarize.",
             });
-            console.log("  [POLICY] Enforcing allocation/entry requirements before final summary.");
+            console.log(
+              `  [POLICY] Enforcing ${[
+                needsAllocation && "allocation",
+                needsEntry && "entry",
+                needsRoll && !needsEntry && "roll",
+              ]
+                .filter(Boolean)
+                .join("/")} requirements before final summary.`,
+            );
             continue;
           }
         }
@@ -2674,6 +2818,7 @@ export const __agentRunnerInternals = {
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
+  getActionablePicks,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  formatLeverageRatio,
   formatNetExposure1e30,
   formatSignedUsd1e30,
   formatSignedUsdcAmount,
@@ -58,6 +59,28 @@ describe("formatUsd1e30", () => {
       direction: "Flat",
       amount: "$0.00",
     });
+  });
+});
+
+describe("formatLeverageRatio", () => {
+  const PRICE_PRECISION = 10n ** 30n;
+  const USDC_PRECISION = 10n ** 6n;
+
+  it("returns -- when deposited capital is zero", () => {
+    expect(formatLeverageRatio(PRICE_PRECISION, 0n)).toBe("--");
+  });
+
+  it("formats 1:1 open interest to deposited capital", () => {
+    expect(formatLeverageRatio(PRICE_PRECISION, USDC_PRECISION)).toBe("1x");
+  });
+
+  it("formats fractional leverage with trimmed trailing zeros", () => {
+    expect(formatLeverageRatio((25n * PRICE_PRECISION) / 10n, USDC_PRECISION)).toBe("2.5x");
+    expect(formatLeverageRatio((201n * PRICE_PRECISION) / 100n, USDC_PRECISION)).toBe("2.01x");
+  });
+
+  it("returns 0x when open interest is zero", () => {
+    expect(formatLeverageRatio(0n, USDC_PRECISION)).toBe("0x");
   });
 });
 

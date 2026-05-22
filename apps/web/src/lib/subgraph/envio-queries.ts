@@ -55,6 +55,7 @@ export const ENVIO_GET_BASKET_DETAIL = gql`
       redeemFeeBps
       minReserveBps
       maxPerpAllocation
+      createdAt
       exposures(order_by: { netSize: desc }) {
         id
         assetId

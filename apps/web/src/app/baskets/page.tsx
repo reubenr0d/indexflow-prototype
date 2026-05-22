@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { type Address } from "viem";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
 import { BasketCard } from "@/components/baskets/basket-card";
@@ -21,15 +20,12 @@ import { FilterChipGroup } from "@/components/ui/filter-chip-group";
 import { Input } from "@/components/ui/input";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAllBaskets } from "@/hooks/useBasketFactory";
-import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { useMultiChainBaskets } from "@/hooks/useMultiChainBaskets";
-import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { type ComponentType } from "react";
 
-type SortKey = "tvl" | "price" | "newest";
+type SortKey = "tvl" | "pnl" | "newest";
 
 const FILTER_OPTIONS: Array<{
   value: BasketListFilterKey;
@@ -57,12 +53,6 @@ export default function BasketsPage() {
   const subgraphData = useMemo(
     () => (Array.isArray(subgraph.data) ? subgraph.data : []),
     [subgraph.data]
-  );
-
-  const { data: baskets } = useAllBaskets();
-  const vaultAddresses = useMemo(() => (baskets as unknown as Address[]) ?? [], [baskets]);
-  const { data: vaultStates, isLoading: vaultStatesLoading } = useVaultStateBatch(
-    isAllChains ? [] : vaultAddresses
   );
 
   const infoRows = useMemo<(BasketInfoRow & { chainId?: number })[]>(() => {
@@ -97,25 +87,7 @@ export default function BasketsPage() {
     }));
   }, [isAllChains, multiChain.data, subgraphData]);
 
-  const openInterestByVault = useMemo(() => {
-    if (isAllChains) return new Map<Address, bigint>();
-    const states = (vaultStates as Array<{ result?: { openInterest: bigint }; status: string }> | undefined) ?? [];
-    return new Map(
-      vaultAddresses.map((vault, i) => [
-        vault,
-        states[i]?.status === "success" ? states[i]?.result?.openInterest ?? 0n : 0n,
-      ])
-    );
-  }, [isAllChains, vaultAddresses, vaultStates]);
-
-  const rows = useMemo(
-    () =>
-      infoRows.map((info) => ({
-        ...info,
-        openInterest: openInterestByVault.get(info.vault) ?? 0n,
-      })),
-    [infoRows, openInterestByVault]
-  );
+  const rows = useMemo(() => infoRows, [infoRows]);
 
   const highTvlThreshold = useMemo(() => getHighTvlThreshold(rows), [rows]);
   const searchTerm = search.trim().toLowerCase();
@@ -135,7 +107,7 @@ export default function BasketsPage() {
       if (sort === "tvl") {
         return getBasketTvl(b) > getBasketTvl(a) ? 1 : -1;
       }
-      if (sort === "price") {
+      if (sort === "pnl") {
         return (b.sharePrice ?? 0n) > (a.sharePrice ?? 0n) ? 1 : -1;
       }
       return getBasketSortTimestamp(b) > getBasketSortTimestamp(a) ? 1 : -1;
@@ -143,9 +115,7 @@ export default function BasketsPage() {
     return items;
   }, [filteredRows, sort]);
 
-  const isLoading = isAllChains
-    ? multiChain.isLoading
-    : subgraph.isLoading || vaultStatesLoading;
+  const isLoading = isAllChains ? multiChain.isLoading : subgraph.isLoading;
 
   const toggleFilter = (value: BasketListFilterKey) => {
     setFilters((current) => {
@@ -204,7 +174,7 @@ export default function BasketsPage() {
         <SegmentedControl
           options={[
             { value: "tvl", label: "TVL" },
-            { value: "price", label: "Price" },
+            { value: "pnl", label: "PnL" },
             { value: "newest", label: "Newest" },
           ]}
           value={sort}
@@ -238,14 +208,6 @@ export default function BasketsPage() {
               totalSupply={info.totalSupply ?? 0n}
               assetCount={Number(info.assetCount ?? 0)}
               depositFee={info.depositFeeBps}
-              perpBlendBps={
-                computeBlendedComposition(
-                  info.usdcBalance ?? 0n,
-                  info.perpAllocated ?? 0n,
-                  info.openInterest ?? 0n,
-                  []
-                ).perpBlendBps
-              }
               trend24h={undefined}
               trend7d={undefined}
               index={i}

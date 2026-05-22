@@ -75,10 +75,6 @@ export function useBasketDashboardData(vault: Address) {
 
   const capitalUtilPct =
     tvl > 0n ? Number(((basketInfo?.perpAllocated ?? 0n) * 10000n) / tvl) / 100 : 0;
-  const leverageRatio =
-    state?.depositedCapital && state.depositedCapital > 0n
-      ? Number((state.openInterest * 100n) / state.depositedCapital) / 100
-      : 0;
 
   // ---- Configured assets + composition ----
 
@@ -190,6 +186,15 @@ export function useBasketDashboardData(vault: Address) {
       ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
       : null;
 
+  // PnL tile share price source. The basket-list card (`apps/web/src/app/baskets/page.tsx`)
+  // reads `sharePrice` straight from the Envio `Basket` entity (via
+  // `useBasketsOverviewQuery` / `useMultiChainBaskets`), so we mirror that
+  // here from `useBasketDetailQuery` instead of the live `PerpReader`
+  // RPC call. Otherwise indexer lag (or a fresh deploy where the indexer
+  // is still backfilling) would cause the detail-page PnL tile to disagree
+  // with the list-card PnL chip on the very same vault.
+  const subgraphSharePrice = basketDetail.data?.basket?.sharePrice ?? null;
+
   return {
     basketInfo,
     state,
@@ -207,12 +212,12 @@ export function useBasketDashboardData(vault: Address) {
     realisedPnL,
     netPnL,
     capitalUtilPct,
-    leverageRatio,
     configuredAssetIds,
     blended,
     showAllocatedComposition,
     assetMeta,
     apy7d,
+    subgraphSharePrice,
     usdc,
     chainId,
   };

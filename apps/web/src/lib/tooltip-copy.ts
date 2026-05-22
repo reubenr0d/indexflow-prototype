@@ -34,6 +34,8 @@ export const TOOLTIP_COPY = {
     "Historical share price over time, showing how the basket's NAV per share has evolved.",
   apy7d:
     "Annualised percentage yield estimated from the 7-day share price change. Positive values indicate growth; negative values indicate decline. Not a guarantee of future returns.",
+  pnlSinceInception:
+    "Basket NAV growth per share since inception, expressed as a percent of the $1.00 starting share price. Reflects accumulated perp PnL and fees.",
 
   // Fees and reserve policy
   depositFee: "Fee applied when users deposit USDC into the basket vault.",
@@ -186,7 +188,7 @@ export const TOOLTIP_COPY = {
   atlasMl:
     "Entry signals come from the Atlas mining-stock ML engine: a 180-day-horizon model ranking miners by drill activity, financials, and commodity factors. The vault auto-rebalances to track the latest Atlas top-N picks.",
   vaultThesis:
-    "The AI operator's current investment thesis — a summary of the strategy rationale and target exposures.",
+    "The AI operator's current investment thesis — a plain-English summary of the strategy rationale and target exposures. The header chips show the signal source (Atlas ML / Atlas Quality), the entry-mode policy, and how recently the operator last refreshed it. Inline tickers in the thesis (e.g. AHR.V, (CRML)) and the chips in the 'Top picks' rail beneath are clickable — they open the matching ticker on Yahoo Finance in a new tab. When a thesis hasn't been published yet, the card falls back to the latest run summary so you still see what the operator was thinking. Use 'Read more' to expand long write-ups.",
 } as const;
 
 export type TooltipKey = keyof typeof TOOLTIP_COPY;
