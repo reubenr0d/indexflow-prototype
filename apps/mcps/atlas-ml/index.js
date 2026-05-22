@@ -12,6 +12,17 @@ const ATLAS_API_URL = (process.env.ATLAS_API_URL || "https://atlas.minestarters.
 const ATLAS_API_KEY = process.env.ATLAS_API_KEY || "";
 const ATLAS_REQUEST_TIMEOUT_MS = parseInt(process.env.ATLAS_REQUEST_TIMEOUT_MS || "15000", 10);
 
+// When true (default), atlas-ml verifies every derived `yahooSymbol` against
+// Yahoo Finance and drops picks whose symbol does not resolve to a live quote.
+// This protects downstream agents from picking up tickers like Atlas's
+// `0R2O.L` (Freeport-McMoRan LSE depository line) that exist in Atlas's
+// universe but Yahoo Finance does not list — `wire_asset` and `yfinance_quote`
+// would otherwise reject them with INVALID_SYMBOL_POLICY every run. Set
+// `ATLAS_ML_VERIFY_YAHOO=0` to disable (e.g. offline tests).
+const VERIFY_YAHOO = process.env.ATLAS_ML_VERIFY_YAHOO !== "0";
+const YAHOO_VERIFY_TIMEOUT_MS = parseInt(process.env.ATLAS_ML_VERIFY_TIMEOUT_MS || "4000", 10);
+const YAHOO_VERIFY_TTL_MS = parseInt(process.env.ATLAS_ML_VERIFY_TTL_MS || "900000", 10); // 15 min default
+
 // ---------------------------------------------------------------------------
 // Exchange -> Yahoo Finance suffix map
 //
@@ -117,6 +128,94 @@ function httpErrorToTool(err) {
 }
 
 // ---------------------------------------------------------------------------
+// Yahoo symbol resolution (band-aid)
+//
+// Atlas's `LSE_TICKERS` universe currently contains depository / dual-listed
+// names like `0R2O` (Freeport-McMoRan, also NYSE `FCX`) that Yahoo Finance
+// does not list. After `buildYahooSymbol` prepends `.L`, the resulting
+// `0R2O.L` does not resolve, and downstream agents repeatedly retry
+// `wire_asset(0R2O.L)` which then trips the symbol-policy guard with
+// `INVALID_SYMBOL_POLICY`. Filtering at the atlas-ml MCP boundary stops the
+// retry loop entirely; the durable fix lives in atlas-prototype's universe
+// builder (see `feature-requests/lse-ticker-yahoo-resolution.md`).
+//
+// Implementation note: we use Yahoo's lightweight chart-meta endpoint via
+// `fetch` rather than adding a `yahoo-finance2` dep to atlas-ml so the
+// package stays a thin Atlas wrapper. Results are cached for 15 minutes by
+// default to avoid hammering Yahoo on every `get_ml_top_picks` call.
+// ---------------------------------------------------------------------------
+
+const _yahooCache = new Map(); // symbol -> { resolves: bool, ts: number }
+
+async function symbolResolvesOnYahoo(symbol) {
+  const sym = String(symbol || "").trim();
+  if (!sym) return false;
+
+  const cached = _yahooCache.get(sym);
+  if (cached && Date.now() - cached.ts < YAHOO_VERIFY_TTL_MS) {
+    return cached.resolves;
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), YAHOO_VERIFY_TIMEOUT_MS);
+  let resolves = false;
+  try {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=1d`;
+    const res = await fetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 atlas-ml-mcp",
+      },
+      signal: controller.signal,
+    });
+    if (!res.ok) {
+      resolves = false;
+    } else {
+      const json = await res.json().catch(() => null);
+      const result = json?.chart?.result;
+      const err = json?.chart?.error;
+      resolves = Array.isArray(result) && result.length > 0 && !err;
+    }
+  } catch {
+    // Network failure or abort — treat as "unresolved" but only cache for a
+    // short window so a flaky verifier doesn't poison subsequent runs.
+    resolves = false;
+    _yahooCache.set(sym, { resolves, ts: Date.now() - YAHOO_VERIFY_TTL_MS + 60_000 });
+    clearTimeout(timeoutId);
+    return resolves;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  _yahooCache.set(sym, { resolves, ts: Date.now() });
+  return resolves;
+}
+
+// Filter an array of normalised picks/companies, dropping any whose
+// `yahooSymbol` doesn't resolve on Yahoo. Logs each drop to stderr so CI logs
+// surface non-resolving Atlas entries.
+async function filterPicksByYahooResolution(picks, label = "pick") {
+  if (!VERIFY_YAHOO || !Array.isArray(picks) || picks.length === 0) return picks;
+  const checks = await Promise.all(
+    picks.map(async (p) => {
+      if (!p || !p.yahooSymbol) return { keep: false, p };
+      const ok = await symbolResolvesOnYahoo(p.yahooSymbol);
+      if (!ok) {
+        const ticker = p.ticker ?? "?";
+        const exchange = p.exchange ?? "?";
+        process.stderr.write(
+          `[atlas-ml] Dropped non-resolving ${label}: ${ticker}/${exchange} -> ${p.yahooSymbol}\n`,
+        );
+      }
+      return { keep: ok, p };
+    }),
+  );
+  return checks.filter((c) => c.keep).map((c) => c.p);
+}
+
+// ---------------------------------------------------------------------------
 // Shape normalisers
 // ---------------------------------------------------------------------------
 
@@ -197,11 +296,12 @@ server.registerTool(
       const picks = companies
         .map(normalisePick)
         .filter((p) => p && p.yahooSymbol);
+      const filtered = await filterPicksByYahooResolution(picks, "pick");
       const result = {
         status,
         asOfDate: new Date().toISOString().slice(0, 10),
-        count: picks.length,
-        picks,
+        count: filtered.length,
+        picks: filtered,
       };
       return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
     } catch (err) {
@@ -226,6 +326,8 @@ server.registerTool(
       const meta = data?.metadata ?? {};
       const featureImportance = Array.isArray(data?.feature_importance) ? data.feature_importance : [];
       const topPredictions = Array.isArray(data?.top_predictions) ? data.top_predictions : [];
+      const normalisedPredictions = topPredictions.slice(0, 10).map(normalisePick).filter(Boolean);
+      const filteredPredictions = await filterPicksByYahooResolution(normalisedPredictions, "topPrediction");
       const slim = {
         status: data?.status ?? "unknown",
         isHistorical: Boolean(data?.is_historical),
@@ -242,7 +344,7 @@ server.registerTool(
           importance: f.importance,
         })),
         scoreDistribution: data?.score_distribution ?? null,
-        topPredictions: topPredictions.slice(0, 10).map(normalisePick).filter(Boolean),
+        topPredictions: filteredPredictions,
       };
       return { content: [{ type: "text", text: JSON.stringify(slim, null, 2) }] };
     } catch (err) {
@@ -270,11 +372,12 @@ server.registerTool(
       const companies = Array.isArray(data?.companies)
         ? data.companies.map(normaliseBasketCompany).filter(Boolean)
         : [];
+      const filtered = await filterPicksByYahooResolution(companies, "basket entry");
       const result = {
         tag: data?.tag ?? tag ?? "latest",
         summary: data?.summary ?? {},
-        count: companies.length,
-        companies,
+        count: filtered.length,
+        companies: filtered,
       };
       return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
     } catch (err) {
@@ -303,13 +406,14 @@ server.registerTool(
       const companies = Array.isArray(data?.companies)
         ? data.companies.map(normaliseBasketCompany).filter(Boolean)
         : [];
+      const filtered = await filterPicksByYahooResolution(companies, "thesis entry");
       const result = {
         tag: data?.tag ?? tag ?? "latest",
         anthropicModel: data?.anthropic_model ?? null,
         thesis: typeof data?.thesis === "string" ? data.thesis : null,
         summary: data?.summary ?? {},
-        count: companies.length,
-        companies,
+        count: filtered.length,
+        companies: filtered,
       };
       return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
     } catch (err) {

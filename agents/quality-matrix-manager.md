@@ -73,17 +73,17 @@ Tools exposed by `atlas-quality-mcp` (full reference in the bundled `atlas-quali
 
 3. **Get Today's Quality Top Picks**: Call `get_quality_top_picks({ limit: 12, minCompositeScore: 75 })`. These are your candidate longs. Each pick already includes `compositeScore`, `tier`, `categoryScores`, and `yahooSymbol`.
 
-4. **Read Live Prices (on-chain)**: Call `get_oracle_assets()` once. This is your single source of truth for live USD prices and is what the chain will settle PnL against. Use these prices for every trading decision in this run. Do NOT call `yfinance_quote` for live price reads.
+4. **Read Live Prices (on-chain)**: Call `get_oracle_assets()` once. This is your single source of truth for live USD prices and is what the chain will settle PnL against. Use these prices for every trading decision in this run. Do NOT call `yfinance_quote` for live price reads. The response begins with a `summary: { symbols, activeSymbols, symbolToAssetId }` object — when you later need to decide whether a pick is already wired (step 7) consult `summary.symbols` rather than re-listing the full `assets` array.
 
 5. **Build per-pick justification context**: For each of the top ~5 picks you intend to act on, call `get_quality_company_card({ ticker })`. Identify the **top 2 contributing signals** (highest tier, EMPIRICAL provenance preferred) — you will quote these verbatim in the `justification` of every long `open_position`. Example: `"Exceptional GT=754 (NGEx Lunahuasi anchor); Strong Cu grade 2.25% over 335m (workbook anchor)"`.
 
 6. **Scan News (long AND short signal)**: Call `yfinance_news` twice — once on ~5 top-pick yahooSymbols (long context), and once on up to 5 currently-wired oracle assets that are *outside* the quality top-N (short candidates). Classify each headline as **bullish** / **bearish** / **neutral** and remember the strongest one per ticker for use in `justification` later. **A short candidate must have at least one concrete bearish headline you can quote in `justification`, in addition to the matrix Red-Flag signal — no headline, no short.**
 
-7. **Onboard New Assets — STRICT ORDER**. For each new top-pick whose symbol isn't already in `get_oracle_assets`:
+7. **Onboard New Assets — STRICT ORDER**. For each new top-pick whose `yahooSymbol` is NOT in `summary.symbols` from step 4:
    a. Call `yfinance_quote({ symbols: [yahooSymbol] })`. This is the single allowed use of `yfinance_quote` in this agent.
    b. If the response row has `error` or `priceUsd == null` (or `yahooSymbol` is null because there's no exchange-suffix mapping), SKIP this pick this run. It will be eligible again next run.
    c. Pass the EXACT numeric `priceUsd` value from (a) as `seedPriceUsd`. NEVER guess. NEVER reuse a value from `get_quality_company_card` / `get_quality_top_picks` / atlas — those expose `marketCapUsd`, not per-share USD. `wire_asset` independently fetches the live Yahoo USD and will REJECT a seed that differs by more than 20% with `error_code: "SEED_PRICE_DEVIATION"`.
-   d. Call `wire_asset({ symbol: yahooSymbol, seedPriceUsd })`.
+   d. Call `wire_asset({ symbol: yahooSymbol, seedPriceUsd })`. If the tool returns `error_code: "ALREADY_WIRED"`, the symbol was wired in a previous run — drop wire_asset and use the returned `assetId` directly in step 8. Do NOT re-call wire_asset for the same symbol in the same run.
 
 8. **Update Tracked Set**: Call `set_vault_assets` with the union of (a) currently tracked assets that are still in the top-N and (b) newly wired picks. Cap at `maxTrackedAssets` (12).
 

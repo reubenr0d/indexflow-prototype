@@ -299,6 +299,63 @@ function parseAgentPolicy(frontmatter) {
 }
 
 // ---------------------------------------------------------------------------
+// Vault-arg pinning (write tools)
+// ---------------------------------------------------------------------------
+
+// Tools that accept a `vault` arg and operate against a single bound vault.
+// For write tools we override hallucinated values with the agent's canonical
+// vault (state.vaultAddress / capturedVaultAddress) so the LLM cannot
+// accidentally target a sibling vault or burn gas on a malformed address.
+//
+// This is the belt-and-suspenders pair to the MCP-side INVALID_ADDRESS
+// validator added in `apps/mcps/vault-manager/address-validation.mjs`: by
+// pinning here the call never reaches the MCP with a bad shape, but if it
+// somehow does the MCP still rejects it cleanly. See the 2026-05-22
+// quality-matrix-manager incident (run-log entry `2026-05-22T...:open_position`)
+// where the LLM emitted `vault = 0xbd7ea7e23ae07f0dd65b2bf6ecc95018c610da029ccb697f17b69b2`
+// — the prefix of the real vault concatenated with the suffix of the GRSL.V
+// assetId — and burnt three turns retrying the same broken arg.
+const VAULT_ARG_WRITE_TOOLS = new Set([
+  "set_vault_assets",
+  "allocate_to_perp",
+  "withdraw_from_perp",
+  "open_position",
+  "close_position",
+]);
+
+// Pure helper. Mutates `args` in-place when an override is applied so the
+// downstream MCP call sees the canonical vault. Returns a structured
+// description of what (if anything) was overridden so the caller can log /
+// record diagnostics. Safe to call with non-write tool names; will no-op.
+function applyVaultArgPin({ toolName, args, canonicalVault }) {
+  if (!VAULT_ARG_WRITE_TOOLS.has(toolName)) {
+    return { overridden: false, reason: "TOOL_NOT_VAULT_WRITE" };
+  }
+  if (!canonicalVault || typeof canonicalVault !== "string") {
+    return { overridden: false, reason: "NO_CANONICAL_VAULT" };
+  }
+  if (typeof args !== "object" || args === null) {
+    return { overridden: false, reason: "ARGS_NOT_OBJECT" };
+  }
+  const supplied = typeof args.vault === "string" ? args.vault : "";
+  if (supplied && supplied.toLowerCase() === canonicalVault.toLowerCase()) {
+    return { overridden: false, reason: "ALREADY_CANONICAL" };
+  }
+  const note = `Runner pinned vault to canonical ${canonicalVault} (LLM supplied ${supplied || "(missing)"}).`;
+  args.vault = canonicalVault;
+  if (typeof args.justification === "string" && args.justification.length > 0) {
+    args.justification = `${args.justification} [runner: ${note}]`;
+  } else {
+    args.justification = note;
+  }
+  return {
+    overridden: true,
+    suppliedVault: supplied || null,
+    canonicalVault,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Memory helpers
 // ---------------------------------------------------------------------------
 
@@ -1863,6 +1920,30 @@ export async function runAgent(agentName) {
 
     async function executeToolCall(call, { forceSkipWrites = false } = {}) {
       const { toolCall, toolName, originalName, args, isWrite } = call;
+
+      // Pin the `vault` arg on write tools to the agent's canonical vault.
+      // We only override when (a) the agent has exactly one bound vault in
+      // memory, (b) the tool actually takes a vault parameter, and (c) the
+      // LLM-provided value differs case-insensitively from the canonical one.
+      const pin = applyVaultArgPin({
+        toolName: originalName,
+        args,
+        canonicalVault: capturedVaultAddress,
+      });
+      if (pin.overridden) {
+        console.log(
+          `  [POLICY] Overrode hallucinated vault arg ${pin.suppliedVault || "(missing)"} -> ${pin.canonicalVault} on ${originalName}.`,
+        );
+        if (!Array.isArray(runSummary.policyDiagnostics.vaultPinOverrides)) {
+          runSummary.policyDiagnostics.vaultPinOverrides = [];
+        }
+        runSummary.policyDiagnostics.vaultPinOverrides.push({
+          tool: originalName,
+          suppliedVault: pin.suppliedVault || null,
+          canonicalVault: pin.canonicalVault,
+        });
+      }
+
       console.log(`  Tool: ${toolName}(${JSON.stringify(args)})`);
       runSummary.toolCalls.push(toolName);
 
@@ -2805,6 +2886,8 @@ if (isDirectCliEntry) {
 }
 
 export const __agentRunnerInternals = {
+  applyVaultArgPin,
+  VAULT_ARG_WRITE_TOOLS,
   sanitizeNetworkKey,
   buildDeploymentFingerprint,
   shortHash,

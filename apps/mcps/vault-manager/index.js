@@ -19,6 +19,8 @@ import {
   deploySpokeTwin as deploySpokeTwinImpl,
 } from "./multichain-create.mjs";
 import { classifyAssetIds } from "./set-vault-assets-validation.mjs";
+import { validateAddress, validateBytes32, validateArgs } from "./address-validation.mjs";
+import { decodeCastRevert } from "./revert-decoder.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -285,11 +287,68 @@ function writeError(err) {
       "Set PRIVATE_KEY env var. Read-only tools (get_*) still work without it.");
   }
   const msg = err.message || String(err);
+
+  // Decode the embedded revert payload (`data: "0x..."`) emitted by foundry
+  // when the EVM reverts. This gives the LLM a structured `error_code` like
+  // `MAPPING_ALREADY_EXISTS` / `INSUFFICIENT_CAPITAL` instead of opaque
+  // selector hex.
+  const decoded = decodeCastRevert(msg);
+  if (decoded?.matched) {
+    const payload = {
+      success: false,
+      error_code: decoded.error_code,
+      message: decoded.message,
+      reverted_with: decoded.name,
+      selector: decoded.selector,
+      raw: redactSecrets(msg),
+    };
+    if (decoded.args) payload.args = decoded.args;
+    if (decoded.reason) payload.reason = decoded.reason;
+    if (decoded.panicCode) payload.panicCode = decoded.panicCode;
+    if (decoded.recovery_hint) payload.recovery_hint = decoded.recovery_hint;
+    return {
+      content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
+      isError: true,
+    };
+  }
+  if (decoded && !decoded.matched) {
+    return toolError(
+      "TX_REVERTED",
+      `Transaction reverted with unknown selector ${decoded.selector}. Raw: ${msg}`,
+      "Selector is not in vault-manager's known-error table. Use get_vault_state / get_position_tracking / get_oracle_assets to inspect on-chain state before retrying.",
+    );
+  }
+
   if (msg.includes("revert") || msg.includes("execution reverted")) {
     return toolError("TX_REVERTED", msg,
       "Transaction reverted. Use get_vault_state to check reserves, ownership, and asset configuration before retrying.");
   }
   return toolError("TX_FAILED", msg);
+}
+
+// Helper: validate {vault, assetId, ...} args before any cast call. Returns
+// an MCP tool response when an arg is malformed, or null when all pass.
+function checkArgs(specs) {
+  const violation = validateArgs(specs);
+  if (!violation) return null;
+  return {
+    content: [{
+      type: "text",
+      text: JSON.stringify({
+        success: false,
+        error_code: "INVALID_ARGUMENT",
+        message: `Argument "${violation.name}" failed validation: ${violation.reason}`,
+        argName: violation.name,
+        argKind: violation.kind,
+        argValue: violation.value,
+        recovery_hint:
+          violation.kind === "address"
+            ? "Pass a 0x-prefixed 20-byte hex string (40 hex chars). Common cause: the LLM concatenated parts of two hex strings; re-read the canonical vault address from agent state / get_all_vaults."
+            : "Pass a 0x-prefixed 32-byte hex string (64 hex chars). Use get_oracle_assets to fetch the canonical assetId for the symbol.",
+      }, null, 2),
+    }],
+    isError: true,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -408,6 +467,8 @@ server.registerTool(
     },
   },
   async ({ vault }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       const d = deployment();
       const state = readVaultSummary(vault, d);
@@ -471,6 +532,8 @@ server.registerTool(
     },
   },
   async ({ vault }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       const d = deployment();
       const pnlRaw = castCall(d.vaultAccounting, "getVaultPnL(address)(int256,int256)", [vault]);
@@ -512,16 +575,26 @@ server.registerTool(
     description:
       "List all assets configured in the OracleAdapter with their symbols, on-chain prices (8-decimal raw + human-readable USD), " +
       "active status, and feed type (1 = CustomRelayer for Yahoo Finance). " +
-      "Returns {count, assets: [{index, assetId, symbol, price, price_usd, active, feedType}]}. " +
-      "Use the assetId values from this response in set_vault_assets, open_position, and close_position.",
-    inputSchema: {},
+      "Returns {count, summary: {symbols, activeSymbols}, assets: [{index, assetId, symbol, price, price_usd, active, feedType}]}. " +
+      "Use the assetId values from this response in set_vault_assets, open_position, and close_position. " +
+      "When you only need to check whether a symbol is already wired, pass `compact: true` to get back just {count, summary} (~1.5 KB at 26 assets) " +
+      "so the response fits in the agent tool-response budget without truncating tail entries.",
+    inputSchema: {
+      compact: z.boolean().optional().describe(
+        "When true, omit per-asset price/feedType detail and return only {count, summary: {symbols, activeSymbols, symbolToAssetId}}. " +
+        "Use this for the 'is X already wired?' check before wire_asset; it preserves visibility of every asset even when the full list would exceed the tool-response truncation budget."
+      ),
+    },
   },
-  async () => {
+  async ({ compact } = {}) => {
     try {
       const d = deployment();
       const count = parseIntSafe(castCall(d.oracleAdapter, "getAssetCount()(uint256)"));
 
       const assets = [];
+      const symbols = [];
+      const activeSymbols = [];
+      const symbolToAssetId = {};
       for (let i = 0; i < count; i++) {
         const assetId = castCall(d.oracleAdapter, "assetList(uint256)(bytes32)", [String(i)]);
         const configRaw = castCall(
@@ -531,6 +604,18 @@ server.registerTool(
         );
         const symbol = stripQuotes(castCall(d.oracleAdapter, "assetSymbols(bytes32)(string)", [assetId]));
 
+        const activeMatch = configRaw.match(/,\s*(true|false)\s*\)/);
+        const active = activeMatch ? activeMatch[1] === "true" : false;
+
+        const feedTypeMatch = configRaw.match(/,\s*(\d+)\s*,/);
+        const feedType = feedTypeMatch ? parseInt(feedTypeMatch[1], 10) : -1;
+
+        symbols.push(symbol);
+        symbolToAssetId[symbol] = assetId;
+        if (active) activeSymbols.push(symbol);
+
+        if (compact) continue;
+
         let price = null;
         let price_usd = null;
         try {
@@ -538,15 +623,15 @@ server.registerTool(
           price_usd = formatOraclePrice8(price);
         } catch { /* price may not be set yet */ }
 
-        const activeMatch = configRaw.match(/,\s*(true|false)\s*\)/);
-        const active = activeMatch ? activeMatch[1] === "true" : false;
-
-        const feedTypeMatch = configRaw.match(/,\s*(\d+)\s*,/);
-        const feedType = feedTypeMatch ? parseInt(feedTypeMatch[1], 10) : -1;
-
         assets.push({ index: i, assetId, symbol, price, price_usd, active, feedType });
       }
-      return { content: [{ type: "text", text: JSON.stringify({ count, assets }, null, 2) }] };
+
+      const summary = { symbols, activeSymbols, symbolToAssetId };
+      const payload = compact
+        ? { count, summary }
+        : { count, summary, assets };
+
+      return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
     } catch (err) {
       return toolError("READ_FAILED", err.message,
         "Check that RPC_URL and DEPLOYMENT_CONFIG are correct and the chain is reachable.");
@@ -601,6 +686,8 @@ server.registerTool(
     },
   },
   async ({ vault }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       const d = deployment();
       const assetCount = parseIntSafe(castCall(vault, "getAssetCount()(uint256)"));
@@ -687,6 +774,11 @@ server.registerTool(
     },
   },
   async ({ vault, assetId, isLong }) => {
+    const argErr = checkArgs([
+      { name: "vault", value: vault, kind: "address" },
+      { name: "assetId", value: assetId, kind: "bytes32" },
+    ]);
+    if (argErr) return argErr;
     try {
       const d = deployment();
       const posKey = castCall(
@@ -735,6 +827,31 @@ server.registerTool(
     try {
       await validateWriteSymbolPolicy(symbol);
 
+      const d = deployment();
+
+      // Idempotency pre-check: AssetWiring.wireAsset is non-idempotent because
+      // PriceSync.addMapping reverts with MappingAlreadyExists on duplicates.
+      // If the symbol is already registered + active in OracleAdapter, return
+      // a clean ALREADY_WIRED short-circuit so the LLM stops retrying.
+      const existing = lookupOracleAssetBySymbol(d, symbol);
+      if (existing && existing.active) {
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              success: false,
+              error_code: "ALREADY_WIRED",
+              message: `Symbol "${symbol}" is already wired in OracleAdapter at assetId ${existing.assetId} (active=true).`,
+              symbol,
+              assetId: existing.assetId,
+              recovery_hint:
+                "This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.",
+            }, null, 2),
+          }],
+          isError: true,
+        };
+      }
+
       let live;
       try {
         live = await fetchLivePriceUsd(symbol);
@@ -758,7 +875,6 @@ server.registerTool(
         );
       }
 
-      const d = deployment();
       const seedPriceRaw8 = BigInt(Math.round(seedPriceUsd * 1e8)).toString();
       const rawReceipt = castSend(d.assetWiring, "wireAsset(string,uint256)", [symbol, seedPriceRaw8]);
       return writeResult(rawReceipt, [
@@ -900,6 +1016,8 @@ server.registerTool(
     },
   },
   async ({ vault, assetIds, justification }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       if (!Array.isArray(assetIds) || assetIds.length === 0) {
         return invalidAssetIdsResponse({
@@ -944,6 +1062,106 @@ function readOracleAssetIdList(d) {
     ids.push(castCall(d.oracleAdapter, "assetList(uint256)(bytes32)", [String(i)]));
   }
   return ids;
+}
+
+// Look up an asset by symbol using `keccak256(symbol)` against
+// OracleAdapter.getAssetConfig. Returns `{ assetId, active }` if the asset is
+// registered (active or not), `null` if there's no record. Used by the
+// idempotent pre-check in `wire_asset` so we can short-circuit re-wires of
+// already-active symbols with a clean ALREADY_WIRED error_code instead of
+// letting `priceSync.addMapping` revert later with `MappingAlreadyExists`.
+function lookupOracleAssetBySymbol(d, symbol) {
+  const sym = String(symbol ?? "");
+  if (!sym) return null;
+  let assetId;
+  try {
+    assetId = runCast(["keccak", sym]);
+  } catch {
+    return null;
+  }
+  if (!assetId || !/^0x[0-9a-fA-F]{64}$/.test(assetId)) return null;
+
+  let configRaw;
+  try {
+    configRaw = castCall(
+      d.oracleAdapter,
+      "getAssetConfig(bytes32)((address,uint8,uint256,uint256,uint8,bool))",
+      [assetId],
+    );
+  } catch {
+    return null;
+  }
+  // The struct is (feedAddress, feedType, stalenessThreshold, deviationBps,
+  // decimals, active). We only need `active` here. cast formats this either
+  // single-line `(0x..., 1, 86400, 2000, 8, true)` or multi-line; reuse the
+  // single regex used by `get_oracle_assets`.
+  const activeMatch = configRaw.match(/,\s*(true|false)\s*\)/);
+  const everConfigured = activeMatch !== null;
+  if (!everConfigured) return null;
+  return {
+    assetId,
+    active: activeMatch[1] === "true",
+  };
+}
+
+// Read the available USDC capital for a vault from VaultAccounting. Returns
+// `{ depositedCapital, realisedPnL, openInterest, collateralLocked, available }`
+// as bigints, or `null` when the vault is not registered / RPC unreachable.
+//
+// `available` mirrors the on-chain `_availableCapital` calculation:
+//   available = max(0, depositedCapital + realisedPnL - collateralLocked)
+//
+// This lets `open_position` short-circuit with INSUFFICIENT_COLLATERAL before
+// invoking `cast send` and incurring a gas-estimate revert.
+function readVaultAccountingState(d, vault) {
+  let raw;
+  try {
+    raw = castCall(
+      d.vaultAccounting,
+      "getVaultState(address)((uint256,int256,uint256,uint256,uint256,bool))",
+      [vault],
+    );
+  } catch {
+    return null;
+  }
+  const text = String(raw ?? "").trim();
+  if (!text) return null;
+  let inner = text;
+  if (text.startsWith("(") && text.endsWith(")")) {
+    inner = text.slice(1, -1);
+  }
+  const parts = inner
+    .split(/\r?\n|,/)
+    .map((s) => s.replace(/\s*\[[^\]]+\]\s*$/, "").trim())
+    .filter(Boolean);
+  if (parts.length < 6) return null;
+  const [depositedRaw, realisedPnLRaw, openInterestRaw, collateralLockedRaw, positionCountRaw, registeredRaw] = parts;
+  let depositedCapital;
+  let realisedPnL;
+  let openInterest;
+  let collateralLocked;
+  let positionCount;
+  try {
+    depositedCapital = parseCastBigInt(depositedRaw);
+    realisedPnL = parseCastBigInt(realisedPnLRaw);
+    openInterest = parseCastBigInt(openInterestRaw);
+    collateralLocked = parseCastBigInt(collateralLockedRaw);
+    positionCount = parseCastBigInt(positionCountRaw);
+  } catch {
+    return null;
+  }
+  const registered = /^true$/i.test(registeredRaw);
+  let available = depositedCapital + realisedPnL - collateralLocked;
+  if (available < 0n) available = 0n;
+  return {
+    depositedCapital,
+    realisedPnL,
+    openInterest,
+    collateralLocked,
+    positionCount,
+    registered,
+    available,
+  };
 }
 
 function invalidAssetIdsResponse({ malformed, unknown, valid, extraMessage }) {
@@ -995,6 +1213,8 @@ server.registerTool(
     },
   },
   async ({ vault, amount, justification }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       const rawReceipt = castSend(vault, "allocateToPerp(uint256)", [amount]);
       return writeResult(rawReceipt, [
@@ -1023,16 +1243,18 @@ server.registerTool(
     },
   },
   async ({ vault, amount, justification }) => {
+    const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
+    if (argErr) return argErr;
     try {
       const rawReceipt = castSend(vault, "withdrawFromPerp(uint256)", [amount]);
       return writeResult(rawReceipt, [
         { tool: "get_vault_state", reason: "Verify updated reserve and allocation", params_hint: { vault } },
       ], justification);
     } catch (err) {
-      if (err.message?.includes("InsufficientCapital")) {
-        return toolError("INSUFFICIENT_CAPITAL", err.message,
-          "Not enough free capital. Close open positions first with close_position, then retry.");
-      }
+      // The structured decoder in writeError() now picks up
+      // InsufficientCapital(address,uint256,uint256) and surfaces requested
+      // vs available, so the legacy substring check is redundant. Falling
+      // through to writeError() handles the decoded path uniformly.
       return writeError(err);
     }
   },
@@ -1059,8 +1281,71 @@ server.registerTool(
     },
   },
   async ({ vault, assetId, isLong, size, collateral, justification }) => {
+    const argErr = checkArgs([
+      { name: "vault", value: vault, kind: "address" },
+      { name: "assetId", value: assetId, kind: "bytes32" },
+    ]);
+    if (argErr) return argErr;
+
+    // Validate `collateral` and `size` are non-empty integer strings.
+    let collateralBn;
+    let sizeBn;
     try {
-      const d = deployment();
+      collateralBn = BigInt(String(collateral));
+      sizeBn = BigInt(String(size));
+    } catch {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `size/collateral must be integer-string values; got size=${size}, collateral=${collateral}.`,
+        "Pass GMX USD size as a base-10 integer string (e.g. '10000000000000000000000000000000000' = $10,000) and collateral as raw USDC integer (e.g. '2000000000' = $2,000).",
+      );
+    }
+    if (collateralBn <= 0n || sizeBn <= 0n) {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `size and collateral must be > 0; got size=${sizeBn}, collateral=${collateralBn}.`,
+        "Re-check sizing logic and pass positive integer values.",
+      );
+    }
+
+    const d = deployment();
+
+    // Pre-flight: short-circuit known-fail open_position calls before they
+    // hit `cast send`, so the LLM sees a structured INSUFFICIENT_COLLATERAL
+    // payload (with requested vs available) instead of an opaque gas-estimate
+    // revert. This is the same accounting check the on-chain
+    // `require(collateral <= available)` enforces in
+    // [src/perp/VaultAccounting.sol#L291], replicated locally over the
+    // current view from `getVaultState`.
+    const accountingState = readVaultAccountingState(d, vault);
+    if (accountingState && accountingState.registered) {
+      if (collateralBn > accountingState.available) {
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              success: false,
+              error_code: "INSUFFICIENT_COLLATERAL",
+              message:
+                `Vault ${vault} has only ${accountingState.available.toString()} raw USDC free for new collateral, but the call requested ${collateralBn.toString()}. ` +
+                `depositedCapital=${accountingState.depositedCapital.toString()}, collateralLocked=${accountingState.collateralLocked.toString()}, realisedPnL=${accountingState.realisedPnL.toString()}.`,
+              vault,
+              requestedCollateral: collateralBn.toString(),
+              availableCollateral: accountingState.available.toString(),
+              depositedCapital: accountingState.depositedCapital.toString(),
+              collateralLocked: accountingState.collateralLocked.toString(),
+              realisedPnL: accountingState.realisedPnL.toString(),
+              positionCount: accountingState.positionCount.toString(),
+              recovery_hint:
+                "Vault does not have enough free USDC for this open. Either size the new position down (reduce collateral so it fits availableCollateral), call close_position on a worst-PnL leg first to free locked capital, or call allocate_to_perp from the vault's idle USDC. Use list_open_positions + get_vault_pnl to pick a leg to close.",
+            }, null, 2),
+          }],
+          isError: true,
+        };
+      }
+    }
+
+    try {
       const rawReceipt = castSend(
         d.vaultAccounting,
         "openPosition(address,bytes32,bool,uint256,uint256)",
@@ -1096,8 +1381,86 @@ server.registerTool(
     },
   },
   async ({ vault, assetId, isLong, sizeDelta, collateralDelta, justification }) => {
+    const argErr = checkArgs([
+      { name: "vault", value: vault, kind: "address" },
+      { name: "assetId", value: assetId, kind: "bytes32" },
+    ]);
+    if (argErr) return argErr;
+
+    let sizeDeltaBn;
+    let collateralDeltaBn;
     try {
-      const d = deployment();
+      sizeDeltaBn = BigInt(String(sizeDelta));
+      collateralDeltaBn = BigInt(String(collateralDelta));
+    } catch {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `sizeDelta/collateralDelta must be integer-string values; got sizeDelta=${sizeDelta}, collateralDelta=${collateralDelta}.`,
+        "Pass GMX USD deltas as base-10 integer strings (~1e30 per $1 for sizeDelta, GMX units for collateralDelta).",
+      );
+    }
+    if (sizeDeltaBn <= 0n) {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `sizeDelta must be > 0; got sizeDelta=${sizeDeltaBn}.`,
+        "To fully close, pass the position's full `size` from get_position_tracking.",
+      );
+    }
+
+    const d = deployment();
+
+    // Pre-flight: short-circuit close_position when the leg doesn't exist or
+    // when sizeDelta exceeds the tracked size. The on-chain `require(sizeDelta
+    // <= pos.size)` in VaultAccounting.closePosition would otherwise revert
+    // with a generic Error(string) "Size exceeds position" payload.
+    try {
+      const posKey = castCall(
+        d.vaultAccounting,
+        "getPositionKey(address,bytes32,bool)(bytes32)",
+        [vault, assetId, String(isLong)],
+      );
+      const trackingRaw = castCall(
+        d.vaultAccounting,
+        "getPositionTracking(bytes32)((address,bytes32,bool,uint256,uint256,uint256,uint256,uint256,bool))",
+        [posKey],
+      );
+      const parsed = parseTrackingTuple(trackingRaw);
+      if (!parsed || !parsed.exists) {
+        return toolError(
+          "POSITION_NOT_FOUND",
+          `No tracked position for vault=${vault}, assetId=${assetId}, isLong=${isLong} (key=${posKey}).`,
+          "Use list_open_positions or get_position_tracking to confirm direction and existence before close_position.",
+        );
+      }
+      let posSize;
+      try { posSize = BigInt(parsed.size); } catch { posSize = null; }
+      if (posSize !== null && sizeDeltaBn > posSize) {
+        return {
+          content: [{
+            type: "text",
+            text: JSON.stringify({
+              success: false,
+              error_code: "SIZE_EXCEEDS_POSITION",
+              message: `sizeDelta ${sizeDeltaBn.toString()} exceeds tracked position size ${posSize.toString()} for ${assetId}.`,
+              vault,
+              assetId,
+              isLong,
+              positionSize: posSize.toString(),
+              requestedSizeDelta: sizeDeltaBn.toString(),
+              recovery_hint:
+                "Cap sizeDelta at the position's full size from get_position_tracking. To fully close, use posSize as sizeDelta.",
+            }, null, 2),
+          }],
+          isError: true,
+        };
+      }
+    } catch {
+      // Position read failed; fall through to cast send and let it surface
+      // the underlying error. We don't want to block legitimate closes on a
+      // transient RPC blip.
+    }
+
+    try {
       const rawReceipt = castSend(
         d.vaultAccounting,
         "closePosition(address,bytes32,bool,uint256,uint256)",
@@ -1108,10 +1471,6 @@ server.registerTool(
         { tool: "withdraw_from_perp", reason: "Withdraw freed capital back to vault if desired", params_hint: { vault } },
       ], justification);
     } catch (err) {
-      if (err.message?.includes("PositionNotFound")) {
-        return toolError("POSITION_NOT_FOUND", err.message,
-          "No open position for this vault/asset/direction. Use get_position_tracking to verify.");
-      }
       return writeError(err);
     }
   },
