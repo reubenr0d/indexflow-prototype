@@ -580,7 +580,9 @@ contract IntegrationTest is Test {
             gmxVault.getPositionDelta(address(vaultAccounting), address(usdc), address(gold), true);
         assertTrue(deltaProfit, "GMX delta should show profit");
         // getVaultPnL returns USDC 6-dec; deltaUsd is GMX 1e30 → divide by 1e24 to compare.
-        assertApproxEqAbs(uint256(unrealisedBefore), deltaUsd / 1e24, 1e3, "Aggregate unrealised matches GMX delta (USDC 6-dec)");
+        assertApproxEqAbs(
+            uint256(unrealisedBefore), deltaUsd / 1e24, 1e3, "Aggregate unrealised matches GMX delta (USDC 6-dec)"
+        );
 
         // Close full position
         uint256 vaBefore = usdc.balanceOf(address(vaultAccounting));

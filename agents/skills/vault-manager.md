@@ -23,7 +23,7 @@ All write tools return `{success, transactionHash, next_steps}` with structured 
 |------|---------|------------|
 | `wire_asset` | Register new tradeable asset | `symbol`, `seedPriceUsd` |
 | `create_vault` | Deploy new basket vault | `name`, `depositFeeBps`, `redeemFeeBps` |
-| `set_vault_assets` | Set vault's tracked assets | `vault`, `assetIds[]` |
+| `set_vault_assets` | Set vault's tracked assets (rejects unknown / malformed bytes32 ids locally with `INVALID_ASSET_ID` before broadcasting) | `vault`, `assetIds[]` |
 | `allocate_to_perp` | Move USDC to perp module | `vault`, `amount` (raw USDC) |
 | `withdraw_from_perp` | Pull USDC back to vault | `vault`, `amount` (raw USDC) |
 | `open_position` | Open/increase perp position | `vault`, `assetId`, `isLong`, `size`, `collateral` |

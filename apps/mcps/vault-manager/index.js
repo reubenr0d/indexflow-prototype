@@ -18,6 +18,7 @@ import {
   discoverSpokeContexts as discoverSpokeContextsImpl,
   deploySpokeTwin as deploySpokeTwinImpl,
 } from "./multichain-create.mjs";
+import { classifyAssetIds } from "./set-vault-assets-validation.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -890,6 +891,7 @@ server.registerTool(
       "Configure which oracle assets a vault tracks. Replaces the full asset list. " +
       "Each asset must be active in the OracleAdapter. Asset IDs are bytes32 hex strings (keccak256 of the Yahoo Finance symbol). " +
       "Use get_oracle_assets to find valid assetId values. " +
+      "The tool rejects malformed and unknown assetIds locally with error_code INVALID_ASSET_ID before broadcasting; never invent or pattern-fill bytes32 values. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
@@ -899,6 +901,23 @@ server.registerTool(
   },
   async ({ vault, assetIds, justification }) => {
     try {
+      if (!Array.isArray(assetIds) || assetIds.length === 0) {
+        return invalidAssetIdsResponse({
+          malformed: [],
+          unknown: [],
+          valid: [],
+          extraMessage:
+            "assetIds must be a non-empty array of bytes32 hex strings.",
+        });
+      }
+
+      const d = deployment();
+      const knownActiveIds = readOracleAssetIdList(d);
+      const classification = classifyAssetIds(assetIds, knownActiveIds);
+      if (classification.malformed.length > 0 || classification.unknown.length > 0) {
+        return invalidAssetIdsResponse(classification);
+      }
+
       const idsArg = `[${assetIds.join(",")}]`;
       const rawReceipt = castSend(vault, "setAssets(bytes32[])", [idsArg]);
       return writeResult(rawReceipt, [
@@ -909,6 +928,56 @@ server.registerTool(
     }
   },
 );
+
+// Bulk-read the OracleAdapter's full registered assetId list. Uses the same
+// getAssetCount() + assetList(uint256) loop pattern as get_oracle_assets
+// (above) but skips the per-id getAssetConfig / assetSymbols / getPrice round
+// trips that the LLM-facing read tool does — we only need the assetId set so
+// classifyAssetIds() can flag hallucinated bytes32 values before broadcast.
+// Inactive-but-registered IDs are still surfaced as "known" here; the
+// BasketVault.setAssets() require() will still revert with a more specific
+// "Asset not active" error on those, which is plenty actionable on its own.
+function readOracleAssetIdList(d) {
+  const count = parseIntSafe(castCall(d.oracleAdapter, "getAssetCount()(uint256)"));
+  const ids = [];
+  for (let i = 0; i < count; i++) {
+    ids.push(castCall(d.oracleAdapter, "assetList(uint256)(bytes32)", [String(i)]));
+  }
+  return ids;
+}
+
+function invalidAssetIdsResponse({ malformed, unknown, valid, extraMessage }) {
+  const parts = [];
+  if (unknown.length > 0) {
+    parts.push(`${unknown.length} assetId(s) are not registered in OracleAdapter`);
+  }
+  if (malformed.length > 0) {
+    parts.push(
+      `${malformed.length} assetId(s) are malformed (must match /^0x[0-9a-fA-F]{64}$/)`,
+    );
+  }
+  const summary =
+    parts.length > 0
+      ? `${parts.join(" and ")}; refusing to broadcast setAssets(bytes32[]).`
+      : "Refusing to broadcast setAssets(bytes32[]) — no valid assetIds provided.";
+  const message = extraMessage ? `${extraMessage} ${summary}` : summary;
+  return {
+    content: [{
+      type: "text",
+      text: JSON.stringify({
+        success: false,
+        error_code: "INVALID_ASSET_ID",
+        message,
+        invalidAssetIds: unknown,
+        malformedAssetIds: malformed,
+        validAssetIds: valid,
+        recovery_hint:
+          "Call get_oracle_assets to fetch the canonical {assetId, symbol} pairs, then retry set_vault_assets using only assetId values returned by that call. Do not invent or pattern-fill bytes32 values.",
+      }, null, 2),
+    }],
+    isError: true,
+  };
+}
 
 server.registerTool(
   "allocate_to_perp",

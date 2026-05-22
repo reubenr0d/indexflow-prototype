@@ -173,7 +173,11 @@ contract MigrateVaultAccounting is Script {
     /// @dev Reads `_availableCapital(basket)` indirectly by simulating `withdrawCapital(type(uint256).max)`
     /// would have surfaced it via the `InsufficientCapital(_, requested, available)` revert. Instead we use
     /// the more direct path: `getVaultState(basket).depositedCapital + realisedPnL - collateralLocked`.
-    function _availableCapital(address oldVa, address basket, address /* usdc */ )
+    function _availableCapital(
+        address oldVa,
+        address basket,
+        address /* usdc */
+    )
         internal
         view
         returns (uint256)

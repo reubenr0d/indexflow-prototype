@@ -103,12 +103,25 @@ runs:
           apps/mcps/0g-storage/node_modules
           apps/mcps/keeperhub/node_modules
           services/keeper/node_modules
-        key: node-modules-${{ runner.os }}-node22-${{ hashFiles('package-lock.json') }}
+        key: node-modules-${{ runner.os }}-node22-v2-${{ hashFiles('package-lock.json') }}
 
     - name: Install npm dependencies
       if: inputs.node-modules-cache != 'true' || steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
       run: npm ci
+
+    - name: Workaround npm/cli#4828 (ensure rollup native binary)
+      shell: bash
+      run: |
+        # The lockfile was generated on darwin-arm64 and only has a packages
+        # entry for @rollup/rollup-darwin-arm64, so on Linux runners npm ci
+        # doesn't pull @rollup/rollup-linux-x64-gnu and vitest fails with
+        # MODULE_NOT_FOUND. See https://github.com/npm/cli/issues/4828.
+        if ! node -e "require('@rollup/rollup-linux-x64-gnu')" >/dev/null 2>&1; then
+          ROLLUP_VERSION=$(node -p "require('rollup/package.json').version")
+          npm install --no-save --no-audit --prefer-offline \
+            "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}"
+        fi
 
     - name: Restore forge build cache
       if: inputs.forge-build-cache != ''

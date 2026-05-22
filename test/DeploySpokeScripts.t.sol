@@ -81,10 +81,15 @@ contract DeploySpokeScriptsTest is Test {
         BasketFactory factory = new BasketFactory(address(usdc), address(0), address(this));
         StateRelay relay = new StateRelay(1, 300, address(this), address(this));
 
+        // In production `_maybeBootstrapSpokeBasket` runs under `vm.startBroadcast(deployerPrivateKey)`,
+        // which pins msg.sender for every external call (mint/approve/topUpReserve) to ctx.deployer.
+        // In a test harness without an active broadcast, msg.sender for those external calls is the
+        // harness contract itself, so ctx.deployer must match address(harness) for the mint→approve→
+        // topUpReserve flow to balance.
         DeploySpoke.SpokeBootstrapContext memory ctx = DeploySpoke.SpokeBootstrapContext({
             basketFactory: address(factory),
             usdc: address(usdc),
-            deployer: address(this),
+            deployer: address(harness),
             stateRelay: address(relay),
             keeperAddr: address(this)
         });

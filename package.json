@@ -19,15 +19,15 @@
     "test:push-worker": "npm --prefix apps/push-worker run test",
     "lint:web": "npm --prefix apps/web run lint",
     "anvil": "anvil",
-    "deploy:local": "CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol:Deploy --rpc-url local --broadcast -vvv",
+    "deploy:local": "ETHERSCAN_API_KEY=local-not-required ARBISCAN_API_KEY=local-not-required SNOWTRACE_API_KEY=local-not-required CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol:Deploy --rpc-url local --broadcast -vvv",
     "keeper:once": "sh scripts/run-keeper-once.sh",
     "deploy:sepolia": "CHAIN=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --broadcast -vvv && npm run keeper:once",
     "deploy:fuji": "CHAIN=fuji forge script script/Deploy.s.sol:Deploy --rpc-url fuji --broadcast -vvv && npm run keeper:once",
     "deploy:chain": "sh scripts/deploy-chain.sh",
-    "sync:local": "forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast",
+    "sync:local": "ETHERSCAN_API_KEY=local-not-required ARBISCAN_API_KEY=local-not-required SNOWTRACE_API_KEY=local-not-required forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast",
     "sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url sepolia --broadcast",
     "sync:fuji": "DEPLOYMENT_CONFIG=apps/web/src/config/fuji-deployment.json forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url fuji --broadcast",
-    "submit-sync:local": "forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url local --broadcast",
+    "submit-sync:local": "ETHERSCAN_API_KEY=local-not-required ARBISCAN_API_KEY=local-not-required SNOWTRACE_API_KEY=local-not-required forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url local --broadcast",
     "submit-sync:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url sepolia --broadcast",
     "submit-sync:fuji": "DEPLOYMENT_CONFIG=apps/web/src/config/fuji-deployment.json forge script script/SubmitAndSyncOraclePrices.s.sol:SubmitAndSyncOraclePrices --rpc-url fuji --broadcast",
     "update-prices:sepolia": "DEPLOYMENT_CONFIG=apps/web/src/config/sepolia-deployment.json RPC_URL=sepolia node scripts/update-yahoo-finance-prices.js",
@@ -48,7 +48,7 @@
     "mcp:yfinance": "node apps/mcps/yfinance/index.js",
     "seed:fetch-prices": "node scripts/fetch-historical-prices.js BHP.AX XAU XAG GLEN.L",
     "seed:sepolia": "npm run seed:fetch-prices && CHAIN=sepolia forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url sepolia --broadcast -vvv && npm run keeper:once",
-    "seed:local": "npm run seed:fetch-prices && CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url local --broadcast -vvv"
+    "seed:local": "npm run seed:fetch-prices && ETHERSCAN_API_KEY=local-not-required ARBISCAN_API_KEY=local-not-required SNOWTRACE_API_KEY=local-not-required CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url local --broadcast -vvv"
   },
   "dependencies": {
     "@chainlink/contracts-ccip": "^1.6.4",
