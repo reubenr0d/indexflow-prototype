@@ -5,7 +5,10 @@
     "envPassthrough": [
       "DEPLOYMENT_CONFIG",
       "RPC_URL",
-      "PRIVATE_KEY"
+      "PRIVATE_KEY",
+      "SEPOLIA_RPC_URL",
+      "FUJI_RPC_URL",
+      "ARBITRUM_SEPOLIA_RPC_URL"
     ]
   },
   "yfinance-mcp": {

@@ -256,8 +256,11 @@ export function DepositRedeemPanel({
   useEffect(() => {
     if (depositReceipt.isSuccess) {
       setAmount("");
+      setApprovalInFlightAmount(0n);
+      refetchAllowance();
+      refetchSimDeposit();
     }
-  }, [depositReceipt.isSuccess]);
+  }, [depositReceipt.isSuccess, refetchAllowance, refetchSimDeposit]);
 
   useEffect(() => {
     if (redeemReceipt.isSuccess) {
@@ -566,9 +569,9 @@ function InlineTxStepper({ phase, action, hash, explorerUrl, onRetry }: InlineTx
       >
         <Loader2 className="h-4 w-4 animate-spin text-app-accent" />
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold text-app-text">{verb} pending</p>
+          <p className="text-sm font-semibold text-app-text">Signing {verb.toLowerCase()}…</p>
           <p className="text-xs text-app-muted">
-            Signed silently by your embedded wallet. No popup needed.
+            Authorizing on-chain transaction
           </p>
         </div>
       </div>

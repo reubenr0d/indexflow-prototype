@@ -13,6 +13,11 @@ import {
   SEED_PRICE_MAX_DEVIATION_BPS,
 } from "../../shared/yahoo-usd-quote.mjs";
 import { redactSecrets } from "../../../scripts/lib/redact-secrets.mjs";
+import {
+  SPOKE_STUB_ASSET_ID,
+  discoverSpokeContexts as discoverSpokeContextsImpl,
+  deploySpokeTwin as deploySpokeTwinImpl,
+} from "./multichain-create.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -23,6 +28,9 @@ const RPC_URL = process.env.RPC_URL ?? "sepolia";
 const PRIVATE_KEY = process.env.PRIVATE_KEY ?? "";
 const PROJECT_ROOT = process.env.PROJECT_ROOT ?? process.cwd();
 
+// Spoke discovery + twin-deploy helpers live in `./multichain-create.mjs` so
+// they can be unit-tested without spawning the MCP. `discoverSpokeContexts`
+// here is just a thin wrapper that binds the current PROJECT_ROOT + env.
 function deploymentPath() {
   const p = DEPLOYMENT_CONFIG;
   return isAbsolute(p) ? p : resolve(PROJECT_ROOT, p);
@@ -36,6 +44,10 @@ function deployment() {
     _deployment = JSON.parse(readFileSync(p, "utf8"));
   }
   return _deployment;
+}
+
+function discoverSpokeContexts() {
+  return discoverSpokeContextsImpl({ projectRoot: PROJECT_ROOT, env: process.env });
 }
 
 // ---------------------------------------------------------------------------
@@ -196,13 +208,20 @@ function castCall(contractAddr, sig, args = []) {
 }
 
 function castSend(contractAddr, sig, args = []) {
+  return castSendOnRpc(RPC_URL, contractAddr, sig, args);
+}
+
+// Per-RPC `cast send`, used by the multi-chain `create_vault` flow to deploy +
+// wire twin baskets on every configured spoke without re-spawning the MCP per
+// chain. The deployer wallet (`PRIVATE_KEY`) is the same across all chains.
+function castSendOnRpc(rpcUrl, contractAddr, sig, args = []) {
   if (!PRIVATE_KEY) {
     throw Object.assign(new Error("PRIVATE_KEY is required for write operations"), { code: "NO_PRIVATE_KEY" });
   }
   return runCast([
     "send", contractAddr, sig, ...args,
     "--private-key", PRIVATE_KEY,
-    "--rpc-url", RPC_URL,
+    "--rpc-url", rpcUrl,
     "--json",
   ]);
 }
@@ -774,29 +793,66 @@ server.registerTool(
   {
     title: "Create Vault",
     description:
-      "Deploy a new basket vault via BasketFactory.createBasket. The vault is auto-registered with VaultAccounting. " +
+      "Deploy a new basket vault via BasketFactory.createBasket on the hub chain and " +
+      "(by default) on every configured spoke chain so multi-chain deposits can route " +
+      "to a per-chain twin with the same name. The hub vault is auto-registered with " +
+      "VaultAccounting; spoke twins are wired with setStateRelay + setAssets([keccak256('USDC')]) " +
+      "(stub asset id matches `script/DeploySpoke.s.sol::_maybeBootstrapSpokeBasket` " +
+      "since spokes have no OracleAdapter deployed). " +
       "Fees are in basis points: 100 bps = 1%, max 500 bps = 5%. " +
-      "Returns {success, transactionHash, vaultAddress, next_steps}. " +
-      "After creation, use the returned vaultAddress with set_vault_assets to configure tracked assets.",
+      "Returns {success, transactionHash, vaultAddress (hub), twins[{chain, vaultAddress, success, error?}], next_steps}. " +
+      "`vaultAddress` is the HUB address — that's what agents track in agents/memory/<agent>/state.json. " +
+      "Spoke twins exist purely so the multi-chain deposit drawer can find a name-matched local vault on each chain. " +
+      "Set deployToSpokes:false to skip the spoke fan-out (single-chain creation, back-compat). " +
+      "After creation, use the returned vaultAddress with set_vault_assets to configure tracked assets on the HUB.",
     inputSchema: {
-      name: z.string().describe("Vault display name (e.g. 'Mining Basket')"),
+      name: z.string().describe("Vault display name (e.g. 'Mining Basket'). Used verbatim as the per-chain twin name."),
       depositFeeBps: z.number().int().min(0).max(500).describe("Deposit fee in bps (e.g. 50 = 0.5%)"),
       redeemFeeBps: z.number().int().min(0).max(500).describe("Redeem fee in bps (e.g. 50 = 0.5%)"),
+      deployToSpokes: z.boolean().optional().describe(
+        "When true (default), also deploy + wire twin baskets on every configured spoke chain. " +
+        "When false, only the hub vault is created."
+      ),
       justification: z.string().optional().describe("Why this action is being taken (surfaced in vault history UI)"),
     },
   },
-  async ({ name, depositFeeBps, redeemFeeBps, justification }) => {
+  async ({ name, depositFeeBps, redeemFeeBps, deployToSpokes, justification }) => {
     try {
       const d = deployment();
-      const rawReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
-      const tx = parseReceipt(rawReceipt);
-      const vaultAddress = extractVaultAddressFromCreateVaultReceipt(rawReceipt);
+      const includeSpokes = deployToSpokes !== false;
+
+      // Step 1 — Hub vault (existing behavior).
+      const hubReceipt = castSend(d.basketFactory, "createBasket(string,uint256,uint256)", [name, String(depositFeeBps), String(redeemFeeBps)]);
+      const hubTx = parseReceipt(hubReceipt);
+      const hubVaultAddress = extractVaultAddressFromCreateVaultReceipt(hubReceipt);
+
+      // Step 2 — Optional spoke fan-out. Failures on individual spokes are
+      // captured per-twin and do NOT fail the overall response: the hub vault
+      // is already on-chain and agents key off `vaultAddress` (the hub).
+      const twins = [];
+      if (includeSpokes && hubTx.status === "success" && hubVaultAddress) {
+        const spokeContexts = discoverSpokeContexts();
+        for (const spoke of spokeContexts) {
+          if (spoke.skipped) {
+            twins.push({
+              chain: spoke.chainKey,
+              success: false,
+              skipped: true,
+              error: spoke.reason,
+            });
+            continue;
+          }
+          twins.push(deploySpokeTwin(spoke, name, depositFeeBps, redeemFeeBps));
+        }
+      }
+
       const result = {
-        success: tx.status === "success",
-        ...tx,
-        vaultAddress,
+        success: hubTx.status === "success",
+        ...hubTx,
+        vaultAddress: hubVaultAddress,
+        twins,
         next_steps: [
-          { tool: "set_vault_assets", reason: "Configure which assets the vault tracks", params_hint: { vault: vaultAddress } },
+          { tool: "set_vault_assets", reason: "Configure which assets the vault tracks (hub only — twins already have a stub USDC asset id)", params_hint: { vault: hubVaultAddress } },
         ],
       };
       if (justification) result.justification = justification;
@@ -811,6 +867,20 @@ server.registerTool(
     }
   },
 );
+
+function deploySpokeTwin(spoke, name, depositFeeBps, redeemFeeBps) {
+  return deploySpokeTwinImpl(
+    spoke,
+    { name, depositFeeBps, redeemFeeBps },
+    {
+      castSendOnRpc,
+      parseReceipt,
+      extractVaultAddressFromCreateVaultReceipt,
+      redactSecrets,
+      stubAssetId: SPOKE_STUB_ASSET_ID,
+    },
+  );
+}
 
 server.registerTool(
   "set_vault_assets",

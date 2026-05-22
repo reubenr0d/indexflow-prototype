@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useAllBaskets, useCreateBasket } from "@/hooks/useBasketFactory";
+import { useAllBaskets } from "@/hooks/useBasketFactory";
 import { useVaultStateBatch } from "@/hooks/usePerpReader";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { formatUSDC, formatAddress, formatBps } from "@/lib/format";
@@ -14,11 +14,17 @@ import { computeBlendedComposition } from "@/lib/blendedComposition";
 import { showToast } from "@/components/ui/toast";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { AdminBasketsHeaderRow } from "@/components/baskets/admin-baskets-header";
-import { Plus, X } from "lucide-react";
+import { Plus, X, CheckCircle2, XCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { type Address } from "viem";
 import { motion, AnimatePresence } from "framer-motion";
-import { useContractErrorToast } from "@/hooks/useContractErrorToast";
+import { useDeploymentTarget } from "@/providers/DeploymentProvider";
+import {
+  useCreateMultichainBasket,
+  defaultSpokeTargetsForHub,
+  type CreateBasketChainStatus,
+} from "@/hooks/useCreateMultichainBasket";
+import { deploymentLabel, type DeploymentTarget } from "@/lib/deployment";
 
 export default function AdminBasketsPage() {
   const [showCreate, setShowCreate] = useState(false);
@@ -136,33 +142,105 @@ export default function AdminBasketsPage() {
   );
 }
 
+function statusLabel(status: CreateBasketChainStatus): string {
+  switch (status) {
+    case "idle":
+      return "Pending";
+    case "creating":
+      return "Creating basket…";
+    case "wiring_state_relay":
+      return "Wiring StateRelay…";
+    case "wiring_assets":
+      return "Wiring stub asset…";
+    case "success":
+      return "Done";
+    case "skipped":
+      return "Skipped";
+    case "error":
+      return "Failed";
+  }
+}
+
+function StatusIcon({ status }: { status: CreateBasketChainStatus }) {
+  if (status === "success") return <CheckCircle2 className="h-4 w-4 text-green-500" aria-hidden />;
+  if (status === "error") return <XCircle className="h-4 w-4 text-red-500" aria-hidden />;
+  if (status === "skipped") return <XCircle className="h-4 w-4 text-app-muted" aria-hidden />;
+  if (status === "idle") return <div className="h-4 w-4 rounded-full border border-app-border" aria-hidden />;
+  return <Loader2 className="h-4 w-4 animate-spin text-app-text" aria-hidden />;
+}
+
 function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
   const [name, setName] = useState("");
   const [depositFee, setDepositFee] = useState("10");
   const [redeemFee, setRedeemFee] = useState("10");
 
-  const { createBasket, receipt, isPending, error, isError } = useCreateBasket();
+  const { target: hubTarget, configuredTargets } = useDeploymentTarget();
+  const eligibleSpokes = useMemo(
+    () => defaultSpokeTargetsForHub(hubTarget),
+    [hubTarget],
+  );
+  // Defaults to "every eligible spoke selected". The user can deselect any
+  // spoke via the checkbox row, and the deselection is tracked separately so
+  // we don't need an effect to reset selection when `hubTarget` changes — the
+  // selected set is fully derived from `eligibleSpokes - deselectedSpokes`.
+  const [deselectedSpokes, setDeselectedSpokes] = useState<Set<DeploymentTarget>>(
+    () => new Set(),
+  );
+  const selectedSpokes = useMemo(
+    () => new Set(eligibleSpokes.filter((s) => !deselectedSpokes.has(s))),
+    [eligibleSpokes, deselectedSpokes],
+  );
+
+  const { state, createMultichainBasket, reset } = useCreateMultichainBasket();
+
+  const toggleSpoke = (target: DeploymentTarget) => {
+    setDeselectedSpokes((prev) => {
+      const next = new Set(prev);
+      if (next.has(target)) next.delete(target);
+      else next.add(target);
+      return next;
+    });
+  };
 
   useEffect(() => {
-    if (receipt.isSuccess) {
-      showToast("success", "Basket created");
+    if (!state.isExecuting && state.entries.length > 0 && !state.hasErrors) {
+      showToast(
+        "success",
+        state.entries.length > 1
+          ? `Basket created on ${state.entries.length} chain${state.entries.length === 1 ? "" : "s"}`
+          : "Basket created",
+      );
       onSuccess();
+      reset();
     }
-  }, [receipt.isSuccess, onSuccess]);
+  }, [state.isExecuting, state.entries.length, state.hasErrors, onSuccess, reset]);
 
-  useContractErrorToast({
-    writeError: error,
-    writeIsError: isError,
-    receiptError: receipt.error,
-    receiptIsError: receipt.isError,
-    fallbackMessage: "Basket creation failed",
-  });
+  useEffect(() => {
+    if (!state.isExecuting && state.hasErrors && state.entries.length > 0) {
+      const failed = state.entries.filter((e) => e.status === "error");
+      const firstError = failed[0];
+      const detail = firstError?.error ? `: ${firstError.error.slice(0, 160)}` : "";
+      const failedLabel = failed.map((e) => e.label).join(", ");
+      showToast(
+        "error",
+        `Basket creation failed on ${failedLabel}${detail}`,
+      );
+    }
+  }, [state.isExecuting, state.hasErrors, state.entries]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name) return;
-    createBasket(name, BigInt(depositFee), BigInt(redeemFee));
-    showToast("pending", "Creating basket...");
+    showToast("pending", "Creating basket…");
+    await createMultichainBasket({
+      name,
+      depositFeeBps: BigInt(depositFee),
+      redeemFeeBps: BigInt(redeemFee),
+      hubTarget,
+      spokeTargets: Array.from(selectedSpokes),
+    });
   };
+
+  const isMultiChain = configuredTargets.length > 1;
 
   return (
     <Card className="p-6">
@@ -201,14 +279,96 @@ function CreateBasketForm({ onSuccess }: { onSuccess: () => void }) {
         </div>
       </div>
 
+      {isMultiChain && eligibleSpokes.length > 0 && (
+        <div
+          className="mb-6 rounded-md border border-app-border bg-app-surface/40 p-4"
+          data-testid="admin-create-basket-chains"
+        >
+          <div className="mb-2 text-sm font-medium text-app-muted">
+            <InfoLabel label="Also deploy twin baskets on" tooltipKey="createNewBasket" />
+          </div>
+          <p className="mb-3 text-xs text-app-muted">
+            Twin baskets on spoke chains have the same name so the multi-chain
+            deposit drawer can route a fraction of every deposit to each
+            chain. Spokes are wired with <code className="text-[10px]">setStateRelay</code>{" "}
+            and a stub <code className="text-[10px]">setAssets([keccak256(&quot;USDC&quot;)])</code> so they accept
+            deposits immediately.
+          </p>
+          <div className="space-y-2">
+            <label className="flex items-center gap-2 text-sm text-app-text opacity-60">
+              <input
+                type="checkbox"
+                checked
+                disabled
+                className="h-4 w-4 accent-current"
+                data-testid="admin-create-basket-hub-check"
+              />
+              {deploymentLabel(hubTarget)} <span className="text-xs text-app-muted">(hub — required)</span>
+            </label>
+            {eligibleSpokes.map((spoke) => (
+              <label key={spoke} className="flex items-center gap-2 text-sm text-app-text">
+                <input
+                  type="checkbox"
+                  checked={selectedSpokes.has(spoke)}
+                  onChange={() => toggleSpoke(spoke)}
+                  className="h-4 w-4 accent-current"
+                  data-testid={`admin-create-basket-spoke-${spoke}`}
+                />
+                {deploymentLabel(spoke)}
+                <span className="text-xs text-app-muted">(spoke twin)</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {state.entries.length > 0 && (
+        <div
+          className="mb-6 space-y-2 rounded-md border border-app-border bg-app-surface/40 p-4"
+          data-testid="admin-create-basket-progress"
+        >
+          <div className="text-sm font-medium text-app-muted">Deployment progress</div>
+          {state.entries.map((entry) => (
+            <div
+              key={entry.target}
+              className="flex items-center justify-between text-sm"
+              data-testid={`admin-create-basket-entry-${entry.target}`}
+            >
+              <div className="flex items-center gap-2">
+                <StatusIcon status={entry.status} />
+                <span className="text-app-text">{entry.label}</span>
+                {entry.isHub && <span className="text-xs text-app-muted">(hub)</span>}
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="text-xs text-app-muted">{statusLabel(entry.status)}</span>
+                {entry.vaultAddress && (
+                  <span className="font-mono text-[10px] text-app-muted">
+                    {formatAddress(entry.vaultAddress)}
+                  </span>
+                )}
+                {entry.error && (
+                  <span className="max-w-[260px] truncate text-[10px] text-red-500" title={entry.error}>
+                    {entry.error}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
       <Button
         size="lg"
         className="w-full"
-        disabled={!name || isPending}
+        disabled={!name || state.isExecuting}
         onClick={handleSubmit}
         data-testid="admin-create-basket-submit"
       >
-        {isPending ? "Creating..." : "Create Basket"}
+        {state.isExecuting
+          ? "Creating…"
+          : isMultiChain
+            ? `Create on ${1 + selectedSpokes.size} chain${1 + selectedSpokes.size === 1 ? "" : "s"}`
+            : "Create Basket"}
       </Button>
     </Card>
   );

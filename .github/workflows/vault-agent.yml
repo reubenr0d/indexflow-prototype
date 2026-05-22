@@ -131,6 +131,14 @@ jobs:
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          # Spoke RPC URLs (same set the keeper uses). The vault-manager MCP
+          # reads `<RPC_ALIAS_UPPER>_RPC_URL` to fan `create_vault` out to
+          # twin baskets on every configured spoke. Missing secrets cause the
+          # MCP to mark that spoke as skipped with `twins[].reason` instead
+          # of failing the hub creation — see
+          # `apps/mcps/vault-manager/multichain-create.mjs::discoverSpokeContexts`.
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
           PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
           PROJECT_ROOT: ${{ github.workspace }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
@@ -191,7 +199,7 @@ jobs:
             git commit -F "$MSG_FILE"
           else
             echo "::warning::build-agent-commit-message.mjs failed; falling back to static message"
-            git commit -m "chore(agent): update agent memory and metadata"
+            git commit -m "memory(agent): update agent memory and metadata"
           fi
           git pull --rebase
           git push

@@ -12,6 +12,8 @@ import {
 } from "@/lib/oracle-price-history";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
+import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
+import { ExternalLink } from "lucide-react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -51,14 +53,20 @@ export function AssetPricePanel({ assetIds, className }: AssetPricePanelProps) {
         />
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {assetIds.map((assetId) => (
-          <AssetMiniChart
-            key={assetId}
-            assetId={assetId}
-            label={assetMeta.get(assetId)?.name ?? assetId.slice(0, 10)}
-            window={window}
-          />
-        ))}
+        {assetIds.map((assetId) => {
+          const name = assetMeta.get(assetId)?.name;
+          const label = name ?? assetId.slice(0, 10);
+          const yfinanceSymbol = name && !name.startsWith("0x") ? name : undefined;
+          return (
+            <AssetMiniChart
+              key={assetId}
+              assetId={assetId}
+              label={label}
+              yfinanceSymbol={yfinanceSymbol}
+              window={window}
+            />
+          );
+        })}
       </div>
     </div>
   );
@@ -93,10 +101,12 @@ function ChartTooltip({
 function AssetMiniChart({
   assetId,
   label,
+  yfinanceSymbol,
   window,
 }: {
   assetId: `0x${string}`;
   label: string;
+  yfinanceSymbol?: string;
   window: PriceHistoryWindow;
 }) {
   const { data: priceData } = useOracleAssetPrice(assetId);
@@ -128,7 +138,20 @@ function AssetMiniChart({
   return (
     <Card className="flex flex-col p-3">
       <div className="mb-1 flex items-center justify-between gap-2">
-        <span className="truncate text-xs font-semibold text-app-text">{label}</span>
+        {yfinanceSymbol ? (
+          <a
+            href={yahooFinanceQuoteUrl(yfinanceSymbol)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-w-0 items-center gap-1 truncate text-xs font-semibold text-app-text hover:text-app-accent"
+            aria-label={`View ${label} on Yahoo Finance`}
+          >
+            <span className="truncate">{label}</span>
+            <ExternalLink className="h-3 w-3 shrink-0 opacity-60" aria-hidden />
+          </a>
+        ) : (
+          <span className="truncate text-xs font-semibold text-app-text">{label}</span>
+        )}
         {change !== null && (
           <span
             className={cn(

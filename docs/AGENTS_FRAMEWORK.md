@@ -227,7 +227,7 @@ Per-network run logs prevent cross-network context bleed when an agent runs agai
 3. Runner reads `state.json` and the tail of `run-log.<network>.jsonl` (last 5 entries).
 4. If the fingerprint changed since the last saved state, the runner rotates the old `state.json` and `run-log.<network>.jsonl` into `archive/` and starts fresh.
 5. After the LLM loop, the runner writes the new state, publishes `apps/web/public/agent-metadata/<vault>.json`, and appends the run summary to the run-log.
-6. CI uploads both directories as `agent-output-<network>` artifacts, then the `commit-results` job pushes the deltas back to `main` with a `chore(agent): update agent memory and metadata` commit.
+6. CI uploads both directories as `agent-output-<network>` artifacts, then the `commit-results` job pushes the deltas back to `main` with a `memory(agent): update agent memory and metadata` commit.
 
 ---
 

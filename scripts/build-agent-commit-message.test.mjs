@@ -159,7 +159,7 @@ test("buildCommitMessage: two agents with mixed actions produces a structured su
     }),
   });
 
-  assert.ok(subject.startsWith("chore(agent): "), `subject should be conventional: ${subject}`);
+  assert.ok(subject.startsWith("memory(agent): "), `subject should be conventional: ${subject}`);
   assert.ok(subject.length <= SUBJECT_MAX, `subject ${subject.length}>72: ${subject}`);
   assert.ok(subject.includes("mining-manager"), `subject mentions mining-manager: ${subject}`);
   assert.ok(subject.includes("quality-matrix-manager"), `subject mentions quality-matrix-manager: ${subject}`);
@@ -192,14 +192,14 @@ test("buildCommitMessage: empty input falls back to memory-only or default subje
     readFile: () => null,
     now: () => "2026-05-22T00:00:00.000Z",
   });
-  assert.equal(refreshOnly.subject, "chore(agent): refresh memory only");
+  assert.equal(refreshOnly.subject, "memory(agent): refresh memory only");
   assert.ok(refreshOnly.body.includes("Run finished: 2026-05-22T00:00:00.000Z"));
 
   const nothingChanged = buildCommitMessage({
     readFile: () => null,
     now: () => "2026-05-22T00:00:00.000Z",
   });
-  assert.equal(nothingChanged.subject, "chore(agent): update agent memory and metadata");
+  assert.equal(nothingChanged.subject, "memory(agent): update agent memory and metadata");
 });
 
 test("buildCommitMessage: failed agent (zero actions, errors) renders FAILED in subject", () => {

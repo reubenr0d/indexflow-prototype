@@ -211,10 +211,23 @@ The frontend reads `StateRelay.getRoutingWeights()` across all chains and presen
 
 ### Per-chain twin basket requirement
 
-To deposit into a basket from "All Chains" view, the basket must be deployed on every chain you want it to receive routing weight from. The recommended deployment pattern is:
+To deposit into a basket from "All Chains" view, the basket must be deployed on every chain you want it to receive routing weight from. **Both creation paths now do this fan-out automatically** so you only have to deal with the manual recipe below when back-filling an existing single-chain basket.
+
+#### Automatic (new baskets)
+
+Both the agent MCP and the web admin UI now create + wire spoke twins in one shot:
+
+- **MCP `create_vault`** (`apps/mcps/vault-manager/index.js` + `apps/mcps/vault-manager/multichain-create.mjs`): after creating the hub vault, enumerates every `config/chains.json` `role: "spoke"` entry whose `apps/web/src/config/<chain>-deployment.json` exists AND whose RPC URL is resolvable from `<RPC_ALIAS_UPPER>_RPC_URL` env (e.g. `FUJI_RPC_URL`), then runs `createBasket(name, fees)` → `setStateRelay(<spoke.stateRelay>)` → `setAssets([keccak256("USDC")])` against each spoke. The response includes a `twins: [{ chain, vaultAddress, success, txHashes, error? }]` array; the top-level `vaultAddress` stays the hub address for back-compat with the agent runner. Pass `deployToSpokes: false` to opt out.
+- **Admin UI** (`apps/web/src/app/admin/baskets/page.tsx` + `apps/web/src/hooks/useCreateMultichainBasket.ts`): the create form shows a per-chain checkbox section (hub fixed-checked; spokes default-selected for every chain with both `basketFactory` AND `stateRelay` configured) and a per-step progress panel with live status, vault addresses, and per-step tx hashes. Failures on individual spokes don't roll back the hub — the operator can retry the failed spoke separately.
+
+Both paths use the same stub asset id (`keccak256("USDC")` = `0xd6aca1be9729c13d677335161321649cccae6a591554772516700f986f942eaa`), so baskets created via either path look identical on-chain and the deposit drawer's `useVaultAddressByName` lookup finds them both.
+
+#### Manual recipe (back-filling existing baskets)
+
+For baskets that pre-date the automatic fan-out (or when you want to add a twin on a newly configured spoke), the recommended deployment pattern is:
 
 1. Deploy on the hub via `BasketFactory.createBasket(name, depositFeeBps, redeemFeeBps)` — wires the oracle adapter automatically.
-2. Deploy on each spoke via the same factory call. The spoke deployment will not have an oracle adapter wired (spokes don't run the oracle stack), so call `setAssets(bytes32[])` with at least one stub asset id (e.g. `keccak256("USDC")`, same pattern as `DeploySpoke.s.sol::_maybeBootstrapSpokeBasket`) to unblock `deposit()` (which requires `assets.length > 0`).
+2. Deploy on each spoke via the same factory call. The spoke deployment will not have an oracle adapter wired (spokes don't run the oracle stack), so call `setAssets(bytes32[])` with at least one stub asset id (`keccak256("USDC")`, same pattern as `DeploySpoke.s.sol::_maybeBootstrapSpokeBasket`) to unblock `deposit()` (which requires `assets.length > 0`).
 3. On every chain, call `setStateRelay(stateRelay)` so the deposit weight guard is active.
 4. Optionally seed the spoke vault with mock USDC via `topUpReserve(amount)` so it has idle liquidity before any user deposits arrive.
 

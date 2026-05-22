@@ -17,7 +17,7 @@
  * Exit codes:
  *   0  - message written to stdout (subject + blank line + body)
  *   1  - unrecoverable failure (e.g. git not available); workflow falls back
- *        to the static `chore(agent): update agent memory and metadata`.
+ *        to the static `memory(agent): update agent memory and metadata`.
  *
  * The pure `buildCommitMessage(...)` builder below is the unit-test seam
  * (see scripts/build-agent-commit-message.test.mjs).
@@ -238,7 +238,7 @@ function buildAgentSubjectPhrase({ agentName, actions, runLog, style = "verbose"
 }
 
 function composeSubject(perAgentPhrases) {
-  return `chore(agent): ${perAgentPhrases.join("; ")}`;
+  return `memory(agent): ${perAgentPhrases.join("; ")}`;
 }
 
 function renderAgentBody({ agentName, vaultAddress, actions, runLog, metadataSummary }) {
@@ -339,8 +339,8 @@ export function buildCommitMessage({
   if (agentNames.length === 0) {
     const stateRefreshOnly = stagedStatePaths.length > 0;
     const subject = stateRefreshOnly
-      ? "chore(agent): refresh memory only"
-      : "chore(agent): update agent memory and metadata";
+      ? "memory(agent): refresh memory only"
+      : "memory(agent): update agent memory and metadata";
     const body = stateRefreshOnly
       ? `Updated ${stagedStatePaths.length} state file(s) with no per-run metadata or run-log changes.\n\nRun finished: ${now()}`
       : `Run finished: ${now()}`;
