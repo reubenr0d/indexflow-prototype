@@ -5,6 +5,7 @@ import { __agentRunnerInternals } from "./agent-runner.mjs";
 const {
   parseAgentPolicy,
   computeAutoAllocationAmount,
+  normalizeOracleAssets,
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
@@ -12,6 +13,7 @@ const {
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
+  pushRejectedToolResponses,
 } = __agentRunnerInternals;
 
 test("parseAgentPolicy parses enabled policy frontmatter", () => {
@@ -647,6 +649,88 @@ test("validatePolicyWriteBatch in quality_score mode uses 'Quality Matrix compos
   assert.match(violation, /Quality Matrix composite score/);
 });
 
+// Regression test for the 2026-05-22 quality-matrix-manager crash:
+//   "An assistant message with 'tool_calls' must be followed by tool
+//    messages responding to each 'tool_call_id'. The following
+//    tool_call_ids did not have response messages: call_..."
+//
+// The pre-LLM policy guards (bad allocate_to_perp amount=0 and
+// validatePolicyWriteBatch violations) push `choice.message` (which carries
+// `tool_calls`) and then a `role: "user"` directive. Without a matching
+// `role: "tool"` response per `tool_call_id`, the next chatCompletion
+// rejects with HTTP 400. `pushRejectedToolResponses` must emit one tool
+// response per pending tool_call_id so the conversation stays valid.
+test("pushRejectedToolResponses preserves OpenAI tool_call_id invariant after a policy rejection", () => {
+  const messages = [
+    { role: "system", content: "You are an agent." },
+    { role: "user", content: "Manage the vault." },
+  ];
+
+  const assistantMessage = {
+    role: "assistant",
+    content: null,
+    tool_calls: [
+      {
+        id: "call_alpha",
+        type: "function",
+        function: { name: "open_position", arguments: "{}" },
+      },
+      {
+        id: "call_beta",
+        type: "function",
+        function: { name: "allocate_to_perp", arguments: "{}" },
+      },
+    ],
+  };
+
+  messages.push(assistantMessage);
+  pushRejectedToolResponses(
+    messages,
+    assistantMessage.tool_calls,
+    "Policy violation: example reason for the regression test.",
+  );
+  messages.push({ role: "user", content: "Revise your tool calls." });
+
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
+    if (msg.role !== "assistant" || !Array.isArray(msg.tool_calls) || msg.tool_calls.length === 0) {
+      continue;
+    }
+    const pendingIds = msg.tool_calls.map((tc) => tc.id);
+    const respondedIds = [];
+    for (let j = i + 1; j < messages.length; j++) {
+      const next = messages[j];
+      if (next.role === "tool" && typeof next.tool_call_id === "string") {
+        respondedIds.push(next.tool_call_id);
+        continue;
+      }
+      break;
+    }
+    assert.deepEqual(
+      respondedIds,
+      pendingIds,
+      `assistant message at index ${i} must be followed by tool responses for each tool_call_id in order`,
+    );
+  }
+
+  const toolMessages = messages.filter((m) => m.role === "tool");
+  assert.equal(toolMessages.length, 2, "exactly one tool response per pending tool_call_id");
+  for (const tm of toolMessages) {
+    const payload = JSON.parse(tm.content);
+    assert.equal(payload.success, false);
+    assert.equal(payload.rejected, true);
+    assert.match(payload.reason, /Policy violation/);
+  }
+});
+
+test("pushRejectedToolResponses is a no-op when there are no pending tool calls", () => {
+  const messages = [{ role: "user", content: "hi" }];
+  pushRejectedToolResponses(messages, undefined, "n/a");
+  pushRejectedToolResponses(messages, [], "n/a");
+  pushRejectedToolResponses(messages, [{ id: "" }, { id: null }, null], "n/a");
+  assert.equal(messages.length, 1);
+});
+
 test("computeAutoRebalanceClosures in quality_score mode references the Quality top-N in reason text", () => {
   const policy = parseAgentPolicy({
     autoAllocateTargetBps: 5000,
@@ -819,4 +903,255 @@ test("getActionablePicks returns [] when picks is null/undefined", () => {
   assert.deepEqual(getActionablePicks({ policy, picks: null }), []);
   assert.deepEqual(getActionablePicks({ policy, picks: undefined }), []);
   assert.deepEqual(getActionablePicks({ policy }), []);
+});
+
+// ---------------------------------------------------------------------------
+// normalizeOracleAssets + compact-mode eligibility regression
+//
+// Pins the fix for the 2026-05-22 mining-manager loop: when the LLM called
+// `get_oracle_assets({ compact: true })`, the response omitted `assets[]`
+// entirely and the three eligibility helpers short-circuited to `[]` for
+// the whole run, which kept the `needsRoll` enforcement branch firing
+// every turn and burned 7 redundant `set_vault_assets` transactions.
+// ---------------------------------------------------------------------------
+
+test("normalizeOracleAssets returns assets[] verbatim when present (non-compact response)", () => {
+  const list = normalizeOracleAssets({
+    count: 2,
+    summary: { symbols: ["BHP.AX", "AHR.V"] },
+    assets: [
+      { index: 0, assetId: "0xa", symbol: "BHP.AX", price: "1" },
+      { index: 1, assetId: "0xb", symbol: "AHR.V", price: "2" },
+    ],
+  });
+  assert.equal(list.length, 2);
+  assert.equal(list[0].symbol, "BHP.AX");
+  assert.equal(list[1].assetId, "0xb");
+});
+
+test("normalizeOracleAssets projects summary.symbolToAssetId when assets[] is absent (compact response)", () => {
+  const list = normalizeOracleAssets({
+    count: 3,
+    summary: {
+      symbols: ["BHP.AX", "AHR.V", "GSR.V"],
+      activeSymbols: ["BHP.AX", "AHR.V", "GSR.V"],
+      symbolToAssetId: {
+        "BHP.AX": "0xaaa",
+        "AHR.V": "0xbbb",
+        "GSR.V": "0xccc",
+      },
+    },
+  });
+  assert.equal(list.length, 3);
+  const map = Object.fromEntries(list.map((a) => [a.symbol, a.assetId]));
+  assert.equal(map["BHP.AX"], "0xaaa");
+  assert.equal(map["AHR.V"], "0xbbb");
+  assert.equal(map["GSR.V"], "0xccc");
+});
+
+test("normalizeOracleAssets returns null when neither shape is usable", () => {
+  assert.equal(normalizeOracleAssets(null), null);
+  assert.equal(normalizeOracleAssets(undefined), null);
+  assert.equal(normalizeOracleAssets({ count: 0 }), null);
+  assert.equal(normalizeOracleAssets({ summary: {} }), null);
+  assert.equal(normalizeOracleAssets({ summary: { symbolToAssetId: null } }), null);
+});
+
+test("normalizeOracleAssets drops symbol/assetId entries that are missing or empty", () => {
+  const list = normalizeOracleAssets({
+    summary: {
+      symbolToAssetId: {
+        "AHR.V": "0xaaa",
+        "": "0xbbb",
+        "BAD.V": "",
+        "GSR.V": "0xccc",
+      },
+    },
+  });
+  assert.equal(list.length, 2);
+  assert.deepEqual(
+    list.map((a) => a.symbol).sort(),
+    ["AHR.V", "GSR.V"],
+  );
+});
+
+test("getEligibleMlScoreAssets works against a compact get_oracle_assets response", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+  });
+
+  // Exact tracked-asset set from the 2026-05-22T22:58:50 mining-manager run
+  // (after set_vault_assets succeeded on turn 5).
+  const trackedAssetIds = [
+    "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6", // AHR.V
+    "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245", // GSR.V
+    "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d", // PWM.V
+    "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206", // 0KXS.L
+    "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de", // VGZ.TO
+  ];
+  const vaultState = { assets: trackedAssetIds };
+
+  const oracleAssetsCompact = {
+    count: 5,
+    summary: {
+      symbols: ["AHR.V", "GSR.V", "PWM.V", "0KXS.L", "VGZ.TO"],
+      activeSymbols: ["AHR.V", "GSR.V", "PWM.V", "0KXS.L", "VGZ.TO"],
+      symbolToAssetId: {
+        "AHR.V": trackedAssetIds[0],
+        "GSR.V": trackedAssetIds[1],
+        "PWM.V": trackedAssetIds[2],
+        "0KXS.L": trackedAssetIds[3],
+        "VGZ.TO": trackedAssetIds[4],
+      },
+    },
+  };
+
+  const mlPicks = [
+    { yahooSymbol: "AHR.V", mlScore: 99.5 },
+    { yahooSymbol: "GSR.V", mlScore: 95.0 },
+    { yahooSymbol: "PWM.V", mlScore: 90.0 },
+    { yahooSymbol: "0KXS.L", mlScore: 88.0 },
+    { yahooSymbol: "VGZ.TO", mlScore: 85.0 },
+    { yahooSymbol: "0R2O.L", mlScore: 89.0 }, // unwired, must NOT show as eligible
+  ];
+
+  const eligible = getEligibleMlScoreAssets({
+    policy,
+    vaultState,
+    oracleAssets: oracleAssetsCompact,
+    mlPicks,
+  });
+
+  // The whole point of the regression: under compact mode this used to be 0.
+  assert.equal(eligible.length, 5);
+  assert.deepEqual(
+    eligible.map((a) => a.symbol).sort(),
+    ["0KXS.L", "AHR.V", "GSR.V", "PWM.V", "VGZ.TO"],
+  );
+  // Unwired pick must be filtered out.
+  assert.equal(
+    eligible.find((a) => a.symbol === "0R2O.L"),
+    undefined,
+  );
+});
+
+test("getEligibleQualityScoreAssets works against a compact get_oracle_assets response", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+  });
+
+  const vaultState = { assets: ["0xaaa", "0xbbb"] };
+  const oracleAssetsCompact = {
+    count: 2,
+    summary: {
+      symbols: ["AYM.AX", "GRSL.V"],
+      symbolToAssetId: { "AYM.AX": "0xaaa", "GRSL.V": "0xbbb" },
+    },
+  };
+  const qualityPicks = [
+    { yahooSymbol: "AYM.AX", compositeScore: 90 },
+    { yahooSymbol: "GRSL.V", compositeScore: 80 },
+    { yahooSymbol: "NOT_TRACKED.V", compositeScore: 95 },
+  ];
+
+  const eligible = getEligibleQualityScoreAssets({
+    policy,
+    vaultState,
+    oracleAssets: oracleAssetsCompact,
+    qualityPicks,
+  });
+
+  assert.equal(eligible.length, 2);
+  assert.deepEqual(
+    eligible.map((a) => a.symbol).sort(),
+    ["AYM.AX", "GRSL.V"],
+  );
+});
+
+test("getEligibleMomentumVolumeAssets works against a compact get_oracle_assets response", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 3000,
+    entryMode: "momentum_volume",
+    entryMomentumPctMin: 2.0,
+    entryVolumeMin: 500000,
+    entryDirection: "long_only",
+    maxNewPositionsPerRun: 5,
+    positionSizingMode: "model_decides",
+  });
+
+  const vaultState = { assets: ["0xasset1", "0xasset2"] };
+  const oracleAssetsCompact = {
+    count: 2,
+    summary: {
+      symbols: ["BHP", "HL"],
+      symbolToAssetId: { BHP: "0xasset1", HL: "0xasset2" },
+    },
+  };
+  const quotes = [
+    { symbol: "BHP", dayChangePct: 2.3, volume: 900000 },
+    { symbol: "HL", dayChangePct: 1.2, volume: 2000000 },
+  ];
+
+  const eligible = getEligibleMomentumVolumeAssets({
+    policy,
+    vaultState,
+    oracleAssets: oracleAssetsCompact,
+    quotes,
+  });
+
+  assert.equal(eligible.length, 1);
+  assert.equal(eligible[0].symbol, "BHP");
+});
+
+test("compact-mode eligibility helpers still respect tracked-asset intersection", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 3,
+    maxNewShortsPerRun: 1,
+    maxTrackedAssets: 12,
+  });
+
+  // Oracle has 3 symbols wired, but the vault only tracks 1 of them.
+  const vaultState = { assets: ["0xaaa"] };
+  const oracleAssetsCompact = {
+    summary: {
+      symbolToAssetId: {
+        "AHR.V": "0xaaa",
+        "GSR.V": "0xbbb",
+        "PWM.V": "0xccc",
+      },
+    },
+  };
+  const mlPicks = [
+    { yahooSymbol: "AHR.V", mlScore: 99 },
+    { yahooSymbol: "GSR.V", mlScore: 95 },
+    { yahooSymbol: "PWM.V", mlScore: 90 },
+  ];
+
+  const eligible = getEligibleMlScoreAssets({
+    policy,
+    vaultState,
+    oracleAssets: oracleAssetsCompact,
+    mlPicks,
+  });
+
+  // Only the tracked asset should be eligible — the helper must intersect
+  // wired-on-oracle with the vault's tracked set, even under compact mode.
+  assert.equal(eligible.length, 1);
+  assert.equal(eligible[0].symbol, "AHR.V");
 });

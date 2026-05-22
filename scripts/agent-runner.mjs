@@ -862,13 +862,37 @@ function computeAutoAllocationAmount(vaultState, autoAllocateTargetBps) {
   return (availableRaw * BigInt(autoAllocateTargetBps)) / 10_000n;
 }
 
+// Normalises a `get_oracle_assets` response into a `[{ assetId, symbol }]`
+// array regardless of whether the LLM called it with `compact: true` or not.
+// The compact response shape (see apps/mcps/vault-manager/index.js:583-632)
+// intentionally omits the full `assets[]` array to fit inside the agent's
+// tool-response budget; it returns `{ count, summary: { symbols,
+// activeSymbols, symbolToAssetId } }` only. Earlier versions of the
+// eligibility helpers below short-circuited to `[]` whenever
+// `oracleAssets.assets` was not an array, which trapped the mining-manager
+// in a `set_vault_assets` enforcement loop until `maxTurns`: `eligibleAssets`
+// stayed at zero forever even after the on-chain tracked set was correct.
+// Returning a minimal `{ assetId, symbol }` projection is sufficient because
+// the eligibility helpers only consume those two fields.
+function normalizeOracleAssets(oracleAssets) {
+  if (Array.isArray(oracleAssets?.assets)) return oracleAssets.assets;
+  const map = oracleAssets?.summary?.symbolToAssetId;
+  if (map && typeof map === "object") {
+    return Object.entries(map)
+      .filter(([symbol, assetId]) => symbol && assetId)
+      .map(([symbol, assetId]) => ({ symbol, assetId }));
+  }
+  return null;
+}
+
 function getEligibleMomentumVolumeAssets({ policy, vaultState, oracleAssets, quotes }) {
+  const oracleAssetList = normalizeOracleAssets(oracleAssets);
   if (
     !policy?.enabled ||
     policy.entryMode !== "momentum_volume" ||
     !vaultState ||
     !Array.isArray(vaultState.assets) ||
-    !Array.isArray(oracleAssets?.assets) ||
+    !oracleAssetList ||
     !Array.isArray(quotes)
   ) {
     return [];
@@ -876,7 +900,7 @@ function getEligibleMomentumVolumeAssets({ policy, vaultState, oracleAssets, quo
 
   const trackedAssetIds = new Set(vaultState.assets.map((a) => String(a).toLowerCase()));
   const oracleBySymbol = new Map();
-  for (const asset of oracleAssets.assets) {
+  for (const asset of oracleAssetList) {
     const symbol = String(asset.symbol || "").toUpperCase();
     if (!symbol) continue;
     if (!trackedAssetIds.has(String(asset.assetId || "").toLowerCase())) continue;
@@ -919,12 +943,13 @@ function getEligibleMomentumVolumeAssets({ policy, vaultState, oracleAssets, quo
 }
 
 function getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, qualityPicks }) {
+  const oracleAssetList = normalizeOracleAssets(oracleAssets);
   if (
     !policy?.enabled ||
     policy.entryMode !== "quality_score" ||
     !vaultState ||
     !Array.isArray(vaultState.assets) ||
-    !Array.isArray(oracleAssets?.assets) ||
+    !oracleAssetList ||
     !Array.isArray(qualityPicks)
   ) {
     return [];
@@ -932,7 +957,7 @@ function getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, quali
 
   const trackedAssetIds = new Set(vaultState.assets.map((a) => String(a).toLowerCase()));
   const oracleBySymbol = new Map();
-  for (const asset of oracleAssets.assets) {
+  for (const asset of oracleAssetList) {
     const symbol = String(asset.symbol || "").toUpperCase();
     if (!symbol) continue;
     if (!trackedAssetIds.has(String(asset.assetId || "").toLowerCase())) continue;
@@ -972,12 +997,13 @@ function getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, quali
 }
 
 function getEligibleMlScoreAssets({ policy, vaultState, oracleAssets, mlPicks }) {
+  const oracleAssetList = normalizeOracleAssets(oracleAssets);
   if (
     !policy?.enabled ||
     policy.entryMode !== "ml_score" ||
     !vaultState ||
     !Array.isArray(vaultState.assets) ||
-    !Array.isArray(oracleAssets?.assets) ||
+    !oracleAssetList ||
     !Array.isArray(mlPicks)
   ) {
     return [];
@@ -985,7 +1011,7 @@ function getEligibleMlScoreAssets({ policy, vaultState, oracleAssets, mlPicks })
 
   const trackedAssetIds = new Set(vaultState.assets.map((a) => String(a).toLowerCase()));
   const oracleBySymbol = new Map();
-  for (const asset of oracleAssets.assets) {
+  for (const asset of oracleAssetList) {
     const symbol = String(asset.symbol || "").toUpperCase();
     if (!symbol) continue;
     if (!trackedAssetIds.has(String(asset.assetId || "").toLowerCase())) continue;
@@ -1414,6 +1440,40 @@ function parseWriteConfirmationCommand(rawInput) {
   return { input, command: input.toLowerCase() };
 }
 
+// OpenAI's Chat Completions API requires that every assistant message
+// containing `tool_calls` is followed by `role: "tool"` messages — one per
+// `tool_call_id` — before any further `role: "user"` or `role: "assistant"`
+// message. The runner's pre-LLM policy guards (bad `allocate_to_perp`
+// amount=0, `validatePolicyWriteBatch` violations) reject a write batch
+// without ever executing the tools, so they short-circuit before
+// `executeToolCall` would have pushed the matching tool responses. Without
+// this helper, the next `chatCompletion` call crashes with:
+//   "An assistant message with 'tool_calls' must be followed by tool
+//    messages responding to each 'tool_call_id'. The following
+//    tool_call_ids did not have response messages: call_..."
+// (Reproduced on the 2026-05-22 quality-matrix-manager run: turn 13 emitted
+// a policy violation, turn 14 crashed with HTTP 400.)
+//
+// Call this immediately after `messages.push(choice.message)` for any
+// branch that wants to discard the LLM's proposed tool batch and replace
+// it with a `role: "user"` directive. Exported via __agentRunnerInternals
+// so tests can assert the invariant directly.
+function pushRejectedToolResponses(messages, toolCalls, reason) {
+  if (!Array.isArray(toolCalls)) return;
+  for (const tc of toolCalls) {
+    if (!tc || typeof tc.id !== "string" || !tc.id) continue;
+    messages.push({
+      role: "tool",
+      tool_call_id: tc.id,
+      content: JSON.stringify({
+        success: false,
+        rejected: true,
+        reason: typeof reason === "string" ? reason : String(reason ?? ""),
+      }),
+    });
+  }
+}
+
 async function confirmWriteBatchInteractively({
   initialChoice,
   initialClassified,
@@ -1742,6 +1802,13 @@ export async function runAgent(agentName) {
     // cannot silently "steal" another agent's vault address. See the 2026-05-21
     // VA-migration regression for the cross-agent contamination this prevents.
     createVaultFailedThisRun: false,
+    // Per-run blacklist of yahooSymbols whose `wire_asset` call failed with a
+    // structural / non-retryable error (e.g. `INVALID_SYMBOL_POLICY` when
+    // Yahoo cannot resolve the symbol). The `needsRoll` directive below
+    // strips these from `unwiredPicks` so the LLM stops re-proposing the
+    // same impossible wire on every enforcement round (e.g. Atlas surfacing
+    // `0R2O.L` for Freeport-McMoRan, which Yahoo Finance does not resolve).
+    persistentWireFailures: new Set(),
   };
 
   for (const serverDef of config.mcpServers) {
@@ -1959,6 +2026,56 @@ export async function runAgent(agentName) {
         return;
       }
 
+      // Cheap pre-execution guard: short-circuit `set_vault_assets` calls
+      // whose proposed assetIds set already matches the on-chain tracked
+      // set. Without this guard the mining-manager / quality-matrix-manager
+      // could burn 6+ redundant on-chain writes per run (one per policy
+      // enforcement round) when the tracked list was already correct but
+      // `eligibleAssets` was empty for unrelated reasons (e.g. the LLM
+      // called `get_oracle_assets({ compact: true })`, see
+      // normalizeOracleAssets above). Returning a synthetic success keeps
+      // the LLM moving forward without a turn-burning revise loop.
+      if (
+        originalName === "set_vault_assets" &&
+        Array.isArray(args?.assetIds) &&
+        Array.isArray(policyRuntime.latestVaultState?.assets)
+      ) {
+        const proposed = new Set(
+          args.assetIds.map((a) => String(a || "").toLowerCase()).filter(Boolean),
+        );
+        const current = new Set(
+          policyRuntime.latestVaultState.assets
+            .map((a) => String(a || "").toLowerCase())
+            .filter(Boolean),
+        );
+        const sameSet =
+          proposed.size === current.size &&
+          [...proposed].every((id) => current.has(id));
+        if (sameSet && proposed.size > 0) {
+          const skipMsg =
+            `[POLICY] Skipped set_vault_assets: proposed asset set (${proposed.size} ids) already matches on-chain tracked set; no transaction needed.`;
+          console.log(`  ${skipMsg}`);
+          runSummary.writeActions.push({
+            tool: toolName,
+            args,
+            skipped: true,
+            skipReason: "NO_CHANGE",
+            justification: args.justification || null,
+          });
+          messages.push({
+            role: "tool",
+            tool_call_id: toolCall.id,
+            content: JSON.stringify({
+              success: true,
+              skipped: "NO_CHANGE",
+              message:
+                "Proposed assetIds already match the on-chain tracked set; no write performed. Proceed to the next step (allocate / open / close) without re-issuing set_vault_assets.",
+            }),
+          });
+          return;
+        }
+      }
+
       const entry = toolMap.get(toolName);
       if (!entry) {
         const errMsg = `Unknown tool: ${toolName}`;
@@ -2085,6 +2202,27 @@ export async function runAgent(agentName) {
           policyRuntime.opensExecuted += 1;
           if (call.args?.isLong === false) {
             policyRuntime.shortOpensExecuted += 1;
+          }
+        }
+
+        // Track structurally-bad `wire_asset` failures so the `needsRoll`
+        // enforcement directive stops listing them as "unwired picks to
+        // wire" on every retry. `INVALID_SYMBOL_POLICY` means Yahoo Finance
+        // could not resolve the symbol at all (e.g. Atlas's `0R2O.L` for
+        // Freeport-McMoRan), and retrying within the same run cannot
+        // possibly succeed.
+        if (
+          originalName === "wire_asset" &&
+          isMcpError &&
+          parsed?.error_code === "INVALID_SYMBOL_POLICY"
+        ) {
+          const failedSymbol = String(args?.symbol || parsed?.requestedSymbol || "")
+            .toUpperCase();
+          if (failedSymbol) {
+            policyRuntime.persistentWireFailures.add(failedSymbol);
+            console.log(
+              `  [POLICY] Blacklisted ${failedSymbol} for this run (wire_asset INVALID_SYMBOL_POLICY).`,
+            );
           }
         }
 
@@ -2455,6 +2593,11 @@ export async function runAgent(agentName) {
             capturedVaultAddress || state?.vaultAddress || badAllocate.args?.vault || null;
           policyRuntime.enforcementRounds += 1;
           messages.push(choice.message);
+          pushRejectedToolResponses(
+            messages,
+            choice.message.tool_calls,
+            `allocate_to_perp amount=0 rejected by runner policy guard; the required allocation amount this run is ${allocationAmountRaw.toString()} USDC base-units.`,
+          );
           messages.push({
             role: "user",
             content:
@@ -2480,6 +2623,11 @@ export async function runAgent(agentName) {
         if (violation) {
           policyRuntime.enforcementRounds += 1;
           messages.push(choice.message);
+          pushRejectedToolResponses(
+            messages,
+            choice.message.tool_calls,
+            violation,
+          );
           messages.push({
             role: "user",
             content:
@@ -2658,18 +2806,27 @@ export async function runAgent(agentName) {
                   ? `mlScore >= ${config.policy.entryMlScoreMin ?? 0}`
                   : `compositeScore >= ${config.policy.entryQualityScoreMin ?? 0}`;
               const oracleSymbolSet = new Set(
-                (policyRuntime.latestOracleAssets?.assets || [])
+                (normalizeOracleAssets(policyRuntime.latestOracleAssets) || [])
                   .map((a) => String(a?.symbol || "").toUpperCase())
                   .filter(Boolean),
               );
+              // Strip symbols whose `wire_asset` call structurally failed
+              // earlier in this run (e.g. INVALID_SYMBOL_POLICY) so the
+              // directive does not keep instructing the LLM to re-wire
+              // impossible tickers on every enforcement round.
+              const blacklistedSymbols = [...policyRuntime.persistentWireFailures];
               const unwiredPicks = actionablePicks
                 .filter((p) => !oracleSymbolSet.has(p.yahooSymbol))
+                .filter((p) => !policyRuntime.persistentWireFailures.has(p.yahooSymbol))
                 .map((p) => p.yahooSymbol);
               const allPickSymbols = actionablePicks.map((p) => p.yahooSymbol);
+              const blacklistNote = blacklistedSymbols.length
+                ? ` Skip these symbols entirely for this run (wire_asset already failed with INVALID_SYMBOL_POLICY): ${blacklistedSymbols.join(", ")}.`
+                : "";
               policyDirectives.push(
                 `3) Your tracked-asset list is stale vs the current top-N (${filterLabel}; ${scoreLabel}). ` +
                   `Current top-N picks: ${allPickSymbols.join(", ") || "(none)"}. ` +
-                  `Picks NOT yet wired to the oracle (call yfinance_quote then wire_asset for each, in that order, using the exact priceUsd from yfinance_quote as seedPriceUsd): ${unwiredPicks.join(", ") || "(none)"}. ` +
+                  `Picks NOT yet wired to the oracle (call yfinance_quote then wire_asset for each, in that order, using the exact priceUsd from yfinance_quote as seedPriceUsd): ${unwiredPicks.join(", ") || "(none)"}.${blacklistNote} ` +
                   `Then call set_vault_assets with the assetIds of the current top-N picks (cap at maxTrackedAssets=${cap}). ` +
                   `Then open up to ${maxOpens} long positions (isLong=true) on the highest-score picks now in the tracked set, sizing pragmatically against the perp capital available in the vault state.`,
               );
@@ -2898,6 +3055,7 @@ export const __agentRunnerInternals = {
   rotateAgentMemoryForDeploymentChange,
   parseAgentPolicy,
   computeAutoAllocationAmount,
+  normalizeOracleAssets,
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
@@ -2905,6 +3063,7 @@ export const __agentRunnerInternals = {
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   parseWriteConfirmationCommand,
+  pushRejectedToolResponses,
   extractThesis,
   extractNewestVaultAddress,
   extractVaultAddressFromCreateVaultResponse,
