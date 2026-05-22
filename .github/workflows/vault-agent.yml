@@ -48,7 +48,7 @@ on:
           - sepolia
 
 env:
-  FOUNDRY_VERSION: v1.3.1
+  FOUNDRY_VERSION: v1.5.1
 
 # The commit-results job pushes updated agent memory + metadata back to the
 # default branch under the vault-agent[bot] identity. This requires write

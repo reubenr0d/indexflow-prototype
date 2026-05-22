@@ -23,7 +23,7 @@ on:
           - sepolia
 
 env:
-  FOUNDRY_VERSION: v1.3.1
+  FOUNDRY_VERSION: v1.5.1
 
 # Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
 # (keeper.yml, vault-agent.yml) so they can't race on the same nonce.

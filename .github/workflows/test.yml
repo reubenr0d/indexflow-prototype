@@ -11,7 +11,7 @@ on:
 
 env:
   FOUNDRY_PROFILE: ci
-  FOUNDRY_VERSION: v1.3.1
+  FOUNDRY_VERSION: v1.5.1
   ETHERSCAN_API_KEY: ci-not-required
   ARBISCAN_API_KEY: ci-not-required
 
