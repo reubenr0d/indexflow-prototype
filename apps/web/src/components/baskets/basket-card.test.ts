@@ -37,7 +37,8 @@ describe("BasketCard", () => {
     expect(html).toContain("Momentum Basket");
     expect(html).toContain("TVL");
     expect(html).toContain("Share price");
-    expect(html).toContain("Perp sleeve");
+    expect(html).toContain("Perp exposure");
+    expect(html).toContain("Allocated");
     expect(html).toContain("24h");
     expect(html).toContain("7d");
     expect(html).toContain("fee");

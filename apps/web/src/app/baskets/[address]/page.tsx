@@ -33,6 +33,13 @@ import {
   groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
 import { type AgentAction, useAgentMetadata } from "@/hooks/useAgentMetadata";
+import {
+  getActionMeta,
+  getToneChipClass,
+  getToneTileClass,
+  humanizeToolName,
+  renderActionChips,
+} from "@/lib/agent-action-meta";
 import { BasketTour } from "@/components/onboarding/basket-tour";
 import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
@@ -59,10 +66,15 @@ import {
   ArrowDownToLine,
   ArrowUpFromLine,
   Bot,
+  Brain,
   CalendarDays,
+  ChevronDown,
+  ChevronUp,
+  CircleSlash,
   Clock3,
   Coins,
   Copy,
+  ExternalLink,
   Gauge,
   Landmark,
   Layers,
@@ -71,6 +83,7 @@ import {
   Scale,
   ShieldAlert,
   ShieldCheck,
+  Sparkles,
   Target,
   TrendingUp,
 } from "lucide-react";
@@ -438,12 +451,43 @@ function HistoryRowView({
   );
 }
 
-function humanizeToolName(tool: string): string {
-  if (!tool) return "";
-  return tool
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+type RunGroup = {
+  runId: string;
+  finishedAtIso: string | null;
+  actions: AgentAction[];
+};
+
+function groupActionsByRun(actions: AgentAction[]): RunGroup[] {
+  const order: string[] = [];
+  const groups = new Map<string, RunGroup>();
+  for (const action of actions) {
+    const runId = action.runId ?? action.timestamp ?? "__unknown__";
+    let group = groups.get(runId);
+    if (!group) {
+      group = {
+        runId,
+        finishedAtIso: action.timestamp ?? null,
+        actions: [],
+      };
+      groups.set(runId, group);
+      order.push(runId);
+    }
+    group.actions.push(action);
+  }
+  return order.map((id) => groups.get(id)!).filter(Boolean);
 }
+
+const SIGNAL_SOURCE_LABEL: Record<string, string> = {
+  "atlas-ml": "Atlas ML",
+  "atlas-quality": "Atlas Quality",
+};
+
+const ENTRY_MODE_LABEL: Record<string, string> = {
+  ml_score: "ML score",
+  quality_score: "Quality score",
+  momentum_volume: "Momentum + volume",
+  manual: "Manual",
+};
 
 function AiActivitySection({
   vault,
@@ -454,16 +498,28 @@ function AiActivitySection({
   agentMeta: NonNullable<ReturnType<typeof useAgentMetadata>["data"]>;
   className?: string;
 }) {
-  const [summaryOpen, setSummaryOpen] = useState(false);
   const [decisionsOpen, setDecisionsOpen] = useState(false);
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
 
-  const allDecisions = agentMeta.recentActions ?? [];
   const lastRunIso = agentMeta.latestRun?.finishedAt || agentMeta.lastRunAt;
   const lastRunSeconds = lastRunIso ? Math.floor(new Date(lastRunIso).getTime() / 1000) : null;
   const lastRunRelative = lastRunSeconds ? formatRelativeTime(lastRunSeconds) : null;
+
+  const runs = useMemo(
+    () => groupActionsByRun(agentMeta.recentActions ?? []),
+    [agentMeta.recentActions],
+  );
+  const totalActions = runs.reduce((sum, run) => sum + run.actions.length, 0);
+  const latestRunId = agentMeta.latestRun?.runId ?? null;
+
+  const signalSourceLabel = agentMeta.signalSource
+    ? SIGNAL_SOURCE_LABEL[agentMeta.signalSource] ?? agentMeta.signalSource
+    : null;
+  const entryModeLabel = agentMeta.entryMode
+    ? ENTRY_MODE_LABEL[agentMeta.entryMode] ?? agentMeta.entryMode
+    : null;
 
   return (
     <Card
@@ -471,18 +527,30 @@ function AiActivitySection({
       data-testid={`ai-activity-${vault}`}
     >
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-app-accent/25 bg-app-accent/10 text-app-accent">
             <Bot className="h-3.5 w-3.5" />
           </span>
           <div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-1.5">
               <h3 className="text-sm font-semibold text-app-text">AI Operator</h3>
               <InfoTooltipLazy tooltipKey="aiOperator" ariaLabel="About AI Operator" />
+              {signalSourceLabel && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-app-accent/25 bg-app-accent/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
+                  <Brain className="h-3 w-3" />
+                  {signalSourceLabel}
+                </span>
+              )}
+              {entryModeLabel && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg-subtle px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+                  <Sparkles className="h-3 w-3" />
+                  {entryModeLabel}
+                </span>
+              )}
             </div>
             {agentMeta.agentName && (
-              <p className="text-[11px] text-app-muted">
+              <p className="mt-1 text-[11px] text-app-muted">
                 <span className="font-mono">{agentMeta.agentName}</span>
                 {agentMeta.agentDescription ? ` · ${agentMeta.agentDescription}` : ""}
               </p>
@@ -510,86 +578,216 @@ function AiActivitySection({
         </div>
       )}
 
-      {/* Latest run summary (collapsible) */}
-      {agentMeta.latestRun?.summary && (
-        <div className="mt-3">
-          <button
-            type="button"
-            className="text-xs font-semibold text-app-accent hover:underline"
-            onClick={() => setSummaryOpen((v) => !v)}
-            aria-expanded={summaryOpen}
-          >
-            {summaryOpen ? "Hide latest run summary" : "Show latest run summary"}
-          </button>
-          {summaryOpen && (
-            <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap rounded-md border border-app-border bg-app-bg-subtle/60 p-3 font-sans text-xs leading-relaxed text-app-muted">
-              {agentMeta.latestRun.summary}
-            </pre>
-          )}
-        </div>
-      )}
-
       {/* All decisions (collapsed by default) */}
-      {allDecisions.length > 0 && (
+      {runs.length > 0 && (
         <div className="mt-3">
           <button
             type="button"
-            className="flex items-center gap-1 text-xs font-semibold text-app-accent hover:underline"
+            className="flex items-center gap-1.5 text-xs font-semibold text-app-accent hover:underline"
             onClick={() => setDecisionsOpen((v) => !v)}
             aria-expanded={decisionsOpen}
             aria-controls="ai-all-decisions"
           >
+            {decisionsOpen ? (
+              <ChevronUp className="h-3.5 w-3.5" />
+            ) : (
+              <ChevronDown className="h-3.5 w-3.5" />
+            )}
             <span>
               {decisionsOpen ? "Hide all decisions" : "Show all decisions"}
             </span>
             <span className="font-mono text-[10px] text-app-muted">
-              ({allDecisions.length})
+              ({totalActions} actions · {runs.length} run{runs.length === 1 ? "" : "s"})
             </span>
           </button>
           {decisionsOpen && (
-            <ul
+            <div
               id="ai-all-decisions"
-              className="mt-2 max-h-96 space-y-2 overflow-y-auto pr-1"
+              className="mt-3 max-h-[40rem] space-y-3 overflow-y-auto pr-1"
             >
-              {allDecisions.map((a, i) => {
-                const ts = a.timestamp ? Math.floor(new Date(a.timestamp).getTime() / 1000) : null;
-                const rel = ts ? formatRelativeTime(ts) : null;
-                const txHref = explorer && a.txHash ? `${explorer}/tx/${a.txHash}` : null;
-                return (
-                  <li
-                    key={`${a.txHash ?? "no-tx"}-${i}`}
-                    className="rounded-md border border-app-border bg-app-surface p-3"
-                  >
-                    <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
-                      <span className="font-mono normal-case tracking-normal text-app-text">
-                        {humanizeToolName(a.tool)}
-                      </span>
-                      {rel && (
-                        <>
-                          <span className="text-app-muted">·</span>
-                          <span className="normal-case tracking-normal text-app-muted">{rel}</span>
-                        </>
-                      )}
-                    </div>
-                    <p className="mt-1 text-xs leading-relaxed text-app-text">{a.justification}</p>
-                    {txHref && (
-                      <a
-                        className="mt-1 inline-block font-mono text-[11px] text-app-accent hover:underline"
-                        href={txHref}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {`${a.txHash!.slice(0, 6)}...${a.txHash!.slice(-4)}`}
-                      </a>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+              {runs.map((run, idx) => (
+                <RunGroupCard
+                  key={`${run.runId}-${idx}`}
+                  run={run}
+                  index={runs.length - idx}
+                  totalRuns={runs.length}
+                  explorer={explorer}
+                  isLatestRun={!!latestRunId && run.runId === latestRunId}
+                />
+              ))}
+            </div>
           )}
         </div>
       )}
     </Card>
+  );
+}
+
+function RunGroupCard({
+  run,
+  index,
+  totalRuns,
+  explorer,
+  isLatestRun,
+}: {
+  run: RunGroup;
+  index: number;
+  totalRuns: number;
+  explorer?: string;
+  isLatestRun: boolean;
+}) {
+  const ts = run.finishedAtIso
+    ? Math.floor(new Date(run.finishedAtIso).getTime() / 1000)
+    : null;
+  const rel = ts ? formatRelativeTime(ts) : null;
+  const onChain = run.actions.filter((a) => !!a.txHash).length;
+  const offChain = run.actions.length - onChain;
+
+  return (
+    <section className="rounded-lg border border-app-border bg-app-surface/60 p-3">
+      <header className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-md border border-app-accent/25 bg-app-accent/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
+            <Activity className="h-3 w-3" />
+            Run {index} of {totalRuns}
+          </span>
+          {isLatestRun && (
+            <span className="inline-flex items-center gap-1 rounded-md border border-app-success/25 bg-app-success/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-success">
+              Latest
+            </span>
+          )}
+          {rel && (
+            <span className="inline-flex items-center gap-1 text-[11px] text-app-muted">
+              <Clock3 className="h-3 w-3" />
+              {rel}
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+          <span>
+            {run.actions.length} action{run.actions.length === 1 ? "" : "s"}
+          </span>
+          {onChain > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-app-accent/20 bg-app-accent/10 px-1.5 py-0.5 text-app-accent">
+              <ExternalLink className="h-2.5 w-2.5" />
+              {onChain} on-chain
+            </span>
+          )}
+          {offChain > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg-subtle px-1.5 py-0.5">
+              <CircleSlash className="h-2.5 w-2.5" />
+              {offChain} off-chain
+            </span>
+          )}
+        </div>
+      </header>
+      <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+        {run.actions.map((action, i) => (
+          <ActionCard
+            key={`${action.txHash ?? "no-tx"}-${i}`}
+            action={action}
+            explorer={explorer}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ActionCard({
+  action,
+  explorer,
+}: {
+  action: AgentAction;
+  explorer?: string;
+}) {
+  const meta = getActionMeta(action.tool, action.params);
+  const chips = renderActionChips(action);
+  const txHref = explorer && action.txHash ? `${explorer}/tx/${action.txHash}` : null;
+  const onChain = !!action.txHash;
+
+  return (
+    <article className="flex h-full flex-col rounded-md border border-app-border bg-app-surface p-3 transition-colors hover:border-app-accent/30">
+      <div className="flex items-start gap-2.5">
+        <span
+          className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border ${getToneTileClass(meta.tone)}`}
+          aria-hidden
+        >
+          <meta.icon className="h-4 w-4" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-xs font-semibold text-app-text">
+              {meta.label}
+            </span>
+            <span
+              className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] ${
+                onChain
+                  ? "border border-app-accent/25 bg-app-accent/10 text-app-accent"
+                  : "border border-app-border bg-app-bg-subtle text-app-muted"
+              }`}
+            >
+              {onChain ? (
+                <>
+                  <ExternalLink className="h-2.5 w-2.5" />
+                  On-chain
+                </>
+              ) : (
+                <>
+                  <CircleSlash className="h-2.5 w-2.5" />
+                  Off-chain
+                </>
+              )}
+            </span>
+          </div>
+          <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-app-muted">
+            {humanizeToolName(action.tool)}
+          </p>
+        </div>
+      </div>
+
+      {chips.length > 0 && (
+        <div className="mt-2.5 flex flex-wrap gap-1">
+          {chips.map((chip, i) => (
+            <span
+              key={`${chip.label}-${i}`}
+              className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] ${
+                chip.tone
+                  ? getToneChipClass(chip.tone)
+                  : "border-app-border bg-app-bg-subtle text-app-muted"
+              } ${chip.mono ? "font-mono" : ""}`}
+            >
+              {chip.label}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {action.justification && (
+        <p className="mt-2 line-clamp-3 text-xs italic leading-relaxed text-app-muted">
+          {action.justification}
+        </p>
+      )}
+
+      <div className="mt-auto pt-2">
+        {txHref ? (
+          <a
+            className="inline-flex items-center gap-1 font-mono text-[11px] text-app-accent hover:underline"
+            href={txHref}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <ExternalLink className="h-3 w-3" />
+            View tx · {`${action.txHash!.slice(0, 6)}…${action.txHash!.slice(-4)}`}
+          </a>
+        ) : (
+          <span className="inline-flex items-center gap-1 text-[11px] text-app-muted">
+            <CircleSlash className="h-3 w-3" />
+            No on-chain effect
+          </span>
+        )}
+      </div>
+    </article>
   );
 }
 

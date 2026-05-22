@@ -59,8 +59,15 @@ function assetMetaId(chainId: number, assetId: string): string {
   return `${chainId}-${lc(assetId)}`;
 }
 
-function chainPoolId(chainId: number, chainSelector: bigint): string {
-  return `${chainId}-${chainSelector.toString()}`;
+// `ChainPoolState` is the documented exception to the chain-scoped
+// `<chainId>-...` ID convention used elsewhere in this indexer. Every
+// `StateRelay.getRoutingWeights()` returns the same global routing table
+// (selectors of every chain in the network), so keying by `chainSelector`
+// alone gives one canonical row per chain. Last writer wins; both relays
+// publish the same logical state and are expected to converge. The row's
+// `chainId` field records which relay last reported the value.
+function chainPoolId(chainSelector: bigint): string {
+  return chainSelector.toString();
 }
 
 function positionId(chainId: number, account: string, bId: string): string {
@@ -822,7 +829,7 @@ StateRelay.StateUpdated.handler(async ({ event, context }) => {
     const selector = routing.selectors[i];
     const weight = routing.weights[i] ?? 0n;
     const amount = routing.amounts[i] ?? 0n;
-    const id = chainPoolId(chainId, selector);
+    const id = chainPoolId(selector);
 
     const current = await context.ChainPoolState.get(id);
     context.ChainPoolState.set({

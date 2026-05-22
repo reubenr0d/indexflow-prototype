@@ -39,8 +39,22 @@ export type PoolReserveRegistryView = {
 export function transformChainPoolStates(raw: RawChainPoolState[]): ChainState[] {
   const nowSec = Math.floor(Date.now() / 1000);
 
+  // Defense-in-depth: dedupe by `chainSelector`, keeping the freshest row per
+  // selector. The Envio handler already keys `ChainPoolState` by selector
+  // alone, but a regression there (or stale rows from before the indexer was
+  // redeployed) could otherwise show one card per relay that observed the
+  // chain (e.g. "2 Sepolia and 2 Fuji").
+  const freshestBySelector = new Map<string, RawChainPoolState>();
+  for (const r of raw) {
+    const existing = freshestBySelector.get(r.chainSelector);
+    if (!existing || Number(r.updatedAt) > Number(existing.updatedAt)) {
+      freshestBySelector.set(r.chainSelector, r);
+    }
+  }
+  const deduped = Array.from(freshestBySelector.values());
+
   let totalPool = 0n;
-  const parsed = raw.map((r) => {
+  const parsed = deduped.map((r) => {
     const poolDepth = BigInt(r.twapPoolAmount);
     totalPool += poolDepth;
     return { raw: r, poolDepth };

@@ -45,6 +45,12 @@ export interface TxRecord {
   meta?: {
     explorerUrl?: string;
     onRetry?: () => void;
+    // Re-open the originating modal/drawer for this record. The deposit
+    // confirm modal sets this when execution starts so the user can minimize
+    // the dialog mid-flight and tap the dock card to maximize it back.
+    // Cleared once the parent record reaches a terminal state where there's
+    // nothing useful to re-open.
+    onResume?: () => void;
   };
 }
 
@@ -184,11 +190,26 @@ export interface StartTxInput {
   meta?: TxRecord["meta"];
 }
 
-export interface TransactionStatusContextValue {
+/**
+ * Read-only slice of the transaction store. Re-renders any consumer
+ * whenever `state.records` changes. Use this in surfaces that actually
+ * display transaction state (e.g. the dock). Action-only consumers
+ * should use `TransactionActionsContext` instead so they don't re-render
+ * (and re-trigger effects) on every records mutation.
+ */
+export interface TransactionStateContextValue {
   records: TxRecord[];
   activeTxs: TxRecord[];
   inFlightCount: number;
   latestTx: TxRecord | undefined;
+}
+
+/**
+ * Stable-by-construction slice of the transaction store. The methods are
+ * wrapped in `useCallback` so the value reference does not change when
+ * records mutate; safe to put in `useEffect` dep arrays.
+ */
+export interface TransactionActionsContextValue {
   startTx: (input: StartTxInput) => string;
   updateTx: (
     id: string,
@@ -213,8 +234,19 @@ export interface TransactionStatusContextValue {
   ) => string | undefined;
 }
 
-const TransactionStatusContext =
-  createContext<TransactionStatusContextValue | null>(null);
+/**
+ * Combined value, kept for backwards compatibility with existing call sites.
+ * Prefer the split hooks (`useTransactionState` / `useTransactionActions`)
+ * in new code so action-only consumers don't subscribe to records updates.
+ */
+export interface TransactionStatusContextValue
+  extends TransactionStateContextValue,
+    TransactionActionsContextValue {}
+
+const TransactionStateContext =
+  createContext<TransactionStateContextValue | null>(null);
+const TransactionActionsContext =
+  createContext<TransactionActionsContextValue | null>(null);
 
 let txIdCounter = 0;
 function makeTxId(): string {
@@ -251,20 +283,21 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
     return id;
   }, []);
 
-  const updateTx = useCallback<
-    TransactionStatusContextValue["updateTx"]
-  >((id, patch) => {
-    dispatch({ type: "update", payload: { id, patch } });
-  }, []);
+  const updateTx = useCallback<TransactionActionsContextValue["updateTx"]>(
+    (id, patch) => {
+      dispatch({ type: "update", payload: { id, patch } });
+    },
+    []
+  );
 
   const updateChild = useCallback<
-    TransactionStatusContextValue["updateChild"]
+    TransactionActionsContextValue["updateChild"]
   >((parentId, childId, patch) => {
     dispatch({ type: "update-child", payload: { parentId, childId, patch } });
   }, []);
 
   const markSubmitted = useCallback<
-    TransactionStatusContextValue["markSubmitted"]
+    TransactionActionsContextValue["markSubmitted"]
   >((id, hash) => {
     dispatch({
       type: "update",
@@ -273,7 +306,7 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
   }, []);
 
   const completeTx = useCallback<
-    TransactionStatusContextValue["completeTx"]
+    TransactionActionsContextValue["completeTx"]
   >((id, { hash }) => {
     dispatch({
       type: "complete",
@@ -281,7 +314,7 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
     });
   }, []);
 
-  const failTx = useCallback<TransactionStatusContextValue["failTx"]>(
+  const failTx = useCallback<TransactionActionsContextValue["failTx"]>(
     (id, error) => {
       dispatch({
         type: "complete",
@@ -291,7 +324,7 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
     []
   );
 
-  const dismissTx = useCallback<TransactionStatusContextValue["dismissTx"]>(
+  const dismissTx = useCallback<TransactionActionsContextValue["dismissTx"]>(
     (id) => {
       dispatch({ type: "dismiss", payload: { id } });
     },
@@ -302,15 +335,8 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
     dispatch({ type: "clear-completed" });
   }, []);
 
-  const value = useMemo<TransactionStatusContextValue>(() => {
-    const active = state.records.filter(
-      (r) => r.status === "signing" || r.status === "submitted"
-    );
-    return {
-      records: state.records,
-      activeTxs: active,
-      inFlightCount: active.length,
-      latestTx: state.records[state.records.length - 1],
+  const actionsValue = useMemo<TransactionActionsContextValue>(
+    () => ({
       startTx,
       updateTx,
       updateChild,
@@ -320,43 +346,106 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
       dismissTx,
       clearCompleted,
       getExplorerUrl,
+    }),
+    [
+      clearCompleted,
+      completeTx,
+      dismissTx,
+      failTx,
+      getExplorerUrl,
+      markSubmitted,
+      startTx,
+      updateChild,
+      updateTx,
+    ]
+  );
+
+  const stateValue = useMemo<TransactionStateContextValue>(() => {
+    const active = state.records.filter(
+      (r) => r.status === "signing" || r.status === "submitted"
+    );
+    return {
+      records: state.records,
+      activeTxs: active,
+      inFlightCount: active.length,
+      latestTx: state.records[state.records.length - 1],
     };
-  }, [
-    clearCompleted,
-    completeTx,
-    dismissTx,
-    failTx,
-    getExplorerUrl,
-    markSubmitted,
-    startTx,
-    state.records,
-    updateChild,
-    updateTx,
-  ]);
+  }, [state.records]);
 
   return (
-    <TransactionStatusContext.Provider value={value}>
-      {children}
-    </TransactionStatusContext.Provider>
+    <TransactionActionsContext.Provider value={actionsValue}>
+      <TransactionStateContext.Provider value={stateValue}>
+        {children}
+      </TransactionStateContext.Provider>
+    </TransactionActionsContext.Provider>
   );
 }
 
-export function useTransactionStatus(): TransactionStatusContextValue {
-  const ctx = useContext(TransactionStatusContext);
+export function useTransactionState(): TransactionStateContextValue {
+  const ctx = useContext(TransactionStateContext);
   if (!ctx) {
     throw new Error(
-      "useTransactionStatus must be used within a TransactionStatusProvider"
+      "useTransactionState must be used within a TransactionStatusProvider"
     );
   }
   return ctx;
 }
 
 /**
- * Optional hook variant that returns null when no provider is mounted.
- * Useful for hooks that may run in both Privy-enabled and fallback trees.
+ * Optional state-only hook. Returns null when no provider is mounted.
+ */
+export function useOptionalTransactionState(): TransactionStateContextValue | null {
+  return useContext(TransactionStateContext);
+}
+
+export function useTransactionActions(): TransactionActionsContextValue {
+  const ctx = useContext(TransactionActionsContext);
+  if (!ctx) {
+    throw new Error(
+      "useTransactionActions must be used within a TransactionStatusProvider"
+    );
+  }
+  return ctx;
+}
+
+/**
+ * Optional actions-only hook. Returns null when no provider is mounted.
+ *
+ * Prefer this over `useOptionalTransactionStatus` for any consumer that
+ * only dispatches into the store: the returned value reference is stable
+ * across records updates, so putting it in a `useEffect` dep array won't
+ * cause re-fires when an unrelated transaction changes.
+ */
+export function useOptionalTransactionActions(): TransactionActionsContextValue | null {
+  return useContext(TransactionActionsContext);
+}
+
+/**
+ * Combined hook for backwards compatibility.
+ *
+ * NOTE: returns a new object reference on every render. Do NOT put the
+ * returned value in a `useEffect` dep array — the effect will re-fire on
+ * every records mutation (and risks infinite loops if the effect itself
+ * dispatches into the store). Prefer the split hooks
+ * (`useTransactionState` / `useTransactionActions`) in new code.
+ */
+export function useTransactionStatus(): TransactionStatusContextValue {
+  const stateValue = useTransactionState();
+  const actionsValue = useTransactionActions();
+  return { ...stateValue, ...actionsValue };
+}
+
+/**
+ * Optional combined hook, returns null when no provider is mounted.
+ *
+ * Same caveat as `useTransactionStatus`: returns a fresh object reference
+ * on every render. Don't put it in dep arrays.
  */
 export function useOptionalTransactionStatus(): TransactionStatusContextValue | null {
-  return useContext(TransactionStatusContext);
+  const stateValue = useOptionalTransactionState();
+  const actionsValue = useOptionalTransactionActions();
+  if (!stateValue || !actionsValue) return null;
+  return { ...stateValue, ...actionsValue };
 }
 
 /**
@@ -380,7 +469,7 @@ export function useTrackedTx(args: {
   label: string;
   chainId?: number;
 }) {
-  const tx = useOptionalTransactionStatus();
+  const actions = useOptionalTransactionActions();
   const txIdRef = useRef<string | null>(null);
   const lastSignalRef = useRef<{
     isPending: boolean;
@@ -397,11 +486,11 @@ export function useTrackedTx(args: {
   });
 
   useEffect(() => {
-    if (!tx) return;
+    if (!actions) return;
     const prev = lastSignalRef.current;
 
     if (args.isPending && !prev.isPending) {
-      const id = tx.startTx({
+      const id = actions.startTx({
         kind: args.kind,
         label: args.label,
         chainId: args.chainId,
@@ -410,7 +499,7 @@ export function useTrackedTx(args: {
     }
 
     if (args.hash && args.hash !== prev.hash && txIdRef.current) {
-      tx.markSubmitted(txIdRef.current, args.hash);
+      actions.markSubmitted(txIdRef.current, args.hash);
     }
 
     if (
@@ -418,7 +507,7 @@ export function useTrackedTx(args: {
       !prev.receiptSuccess &&
       txIdRef.current
     ) {
-      tx.completeTx(txIdRef.current, { hash: args.hash });
+      actions.completeTx(txIdRef.current, { hash: args.hash });
       txIdRef.current = null;
     }
 
@@ -429,7 +518,7 @@ export function useTrackedTx(args: {
         args.receipt.error?.message ??
         args.error?.message ??
         "Transaction failed";
-      tx.failTx(txIdRef.current, msg);
+      actions.failTx(txIdRef.current, msg);
       txIdRef.current = null;
     }
 
@@ -441,6 +530,7 @@ export function useTrackedTx(args: {
       writeError: args.isError,
     };
   }, [
+    actions,
     args.chainId,
     args.error,
     args.hash,
@@ -451,7 +541,6 @@ export function useTrackedTx(args: {
     args.receipt.error,
     args.receipt.isError,
     args.receipt.isSuccess,
-    tx,
   ]);
 }
 
@@ -461,9 +550,9 @@ export function useTrackedTx(args: {
  * up `useWaitForTransactionReceipt` plus the store separately.
  */
 export function useTxByHash(hash: `0x${string}` | undefined) {
-  const tx = useOptionalTransactionStatus();
-  if (!hash || !tx) return undefined;
-  return tx.records.find((r) => r.hash === hash);
+  const stateValue = useOptionalTransactionState();
+  if (!hash || !stateValue) return undefined;
+  return stateValue.records.find((r) => r.hash === hash);
 }
 
 // Re-export the wagmi hook so consumers can keep a single import surface

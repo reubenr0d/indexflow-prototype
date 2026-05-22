@@ -195,6 +195,12 @@ type ProtocolState {
   updatedBlock: BigInt!
 }
 
+# Canonical/global entity. Unlike most other entities in this schema (which
+# use chain-scoped `<chainId>-...` IDs), `ChainPoolState.id` is the
+# `chainSelector` alone. Every `StateRelay.getRoutingWeights()` reports the
+# same global routing table for every chain in the network, so a per-chain
+# prefix would create one duplicate row per relay observing each selector.
+# `chainId` records which relay last reported the value (last-writer-wins).
 type ChainPoolState {
   id: ID!
   chainId: Int!

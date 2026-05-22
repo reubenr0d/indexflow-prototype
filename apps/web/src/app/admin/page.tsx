@@ -86,7 +86,7 @@ export default function AdminOverview() {
         <StatCard
           label="Perp Allocated"
           value={formatUSDC(totalPerp)}
-          subValue={`Perp sleeve ${formatBps(aggregatePerpBlendBps)}`}
+          subValue={`Perp exposure ${formatBps(aggregatePerpBlendBps)}`}
           tooltipKey="perpAllocated"
         />
       </div>

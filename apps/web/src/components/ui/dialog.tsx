@@ -34,13 +34,21 @@ export const DialogContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-1/2 top-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-app-border bg-app-surface p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        // Width is viewport-bounded on phones so a side margin always remains;
+        // `max-w-lg` (or any width override from the consumer) wins from `sm` up.
+        // Height is capped to the dynamic viewport with internal scroll so tall
+        // modals don't fall off-screen on mobile browsers (where 100vh != actual
+        // visible area once the URL bar collapses).
+        "fixed left-1/2 top-1/2 z-50 w-[calc(100vw-1.5rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-app-border bg-app-surface p-4 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:p-6",
+        "max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain",
         className
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm text-app-muted transition-colors hover:text-app-text focus:outline-none focus-visible:ring-2 focus-visible:ring-app-accent">
+      <DialogPrimitive.Close
+        className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-md text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text focus:outline-none focus-visible:ring-2 focus-visible:ring-app-accent"
+      >
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>

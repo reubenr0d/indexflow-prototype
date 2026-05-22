@@ -6,6 +6,7 @@ import {
   ChevronUp,
   ExternalLink,
   Loader2,
+  Maximize2,
   X,
   XCircle,
   RotateCw,
@@ -13,10 +14,11 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
-  useOptionalTransactionStatus,
+  useOptionalTransactionActions,
+  useOptionalTransactionState,
   type TxRecord,
   type TxStatus,
-  type TransactionStatusContextValue,
+  type TransactionActionsContextValue,
 } from "@/providers/TransactionStatusProvider";
 import { getChainMeta } from "@/components/chains/chain-icons";
 
@@ -71,31 +73,35 @@ function chainBadge(chainId?: number) {
 }
 
 export function TransactionDock() {
-  const tx = useOptionalTransactionStatus();
+  const txState = useOptionalTransactionState();
+  const txActions = useOptionalTransactionActions();
   const [expanded, setExpanded] = useState(false);
+
+  const records = txState?.records;
+  const dismissTx = txActions?.dismissTx;
 
   // Auto-dismiss confirmed records after the linger window so the dock
   // self-cleans (Rainbow-style). Failed records persist until manually
   // dismissed or retried.
   useEffect(() => {
-    if (!tx) return;
+    if (!records || !dismissTx) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    for (const record of tx.records) {
+    for (const record of records) {
       if (record.status === "confirmed") {
         const elapsed = Date.now() - record.updatedAt;
         const wait = Math.max(SUCCESS_LINGER_MS - elapsed, 0);
         timers.push(
-          setTimeout(() => tx.dismissTx(record.id), wait)
+          setTimeout(() => dismissTx(record.id), wait)
         );
       }
     }
     return () => {
       timers.forEach((t) => clearTimeout(t));
     };
-  }, [tx]);
+  }, [records, dismissTx]);
 
-  if (!tx) return null;
-  const visibleRecords = tx.records;
+  if (!txState || !txActions) return null;
+  const visibleRecords = txState.records;
   if (visibleRecords.length === 0) return null;
 
   return (
@@ -111,15 +117,16 @@ export function TransactionDock() {
             <ExpandedView
               key="expanded"
               records={visibleRecords}
+              inFlightCount={txState.inFlightCount}
               onCollapse={() => setExpanded(false)}
-              tx={tx}
+              actions={txActions}
             />
           ) : (
             <CollapsedStack
               key="collapsed"
               records={visibleRecords}
               onExpand={() => setExpanded(true)}
-              tx={tx}
+              actions={txActions}
             />
           )}
         </AnimatePresence>
@@ -131,10 +138,10 @@ export function TransactionDock() {
 interface CollapsedStackProps {
   records: TxRecord[];
   onExpand: () => void;
-  tx: TransactionStatusContextValue;
+  actions: TransactionActionsContextValue;
 }
 
-function CollapsedStack({ records, onExpand, tx }: CollapsedStackProps) {
+function CollapsedStack({ records, onExpand, actions }: CollapsedStackProps) {
   // Show the most recent records first, capped at MAX_MINI_CARDS.
   const sorted = useMemo(
     () => [...records].sort((a, b) => b.updatedAt - a.updatedAt),
@@ -172,7 +179,7 @@ function CollapsedStack({ records, onExpand, tx }: CollapsedStackProps) {
             transition={{ type: "spring", stiffness: 360, damping: 30 }}
             className="w-full"
           >
-            <MiniCard record={record} onExpand={onExpand} tx={tx} />
+            <MiniCard record={record} onExpand={onExpand} actions={actions} />
           </motion.div>
         ))}
       </AnimatePresence>
@@ -183,21 +190,32 @@ function CollapsedStack({ records, onExpand, tx }: CollapsedStackProps) {
 interface MiniCardProps {
   record: TxRecord;
   onExpand: () => void;
-  tx: TransactionStatusContextValue;
+  actions: TransactionActionsContextValue;
 }
 
-function MiniCard({ record, onExpand, tx }: MiniCardProps) {
+function MiniCard({ record, onExpand, actions }: MiniCardProps) {
   const explorerUrl =
     record.hash && record.chainId
-      ? tx.getExplorerUrl(record.chainId, record.hash)
+      ? actions.getExplorerUrl(record.chainId, record.hash)
       : undefined;
   const failed = record.status === "failed";
+  // When the originating surface has registered a resume callback (e.g. the
+  // deposit confirm modal while execution is still in-flight or finished
+  // with errors), tapping the card body re-opens that surface. Otherwise we
+  // fall back to expanding the dock list as before.
+  const onResume = record.meta?.onResume;
+  const canResume = typeof onResume === "function";
+
+  const cardLabel = canResume
+    ? `Reopen ${record.label}`
+    : `${statusLabel(record)} – ${record.label}`;
 
   return (
     <div
       data-testid="transaction-dock-card"
       data-status={record.status}
       data-tx-id={record.id}
+      data-resumable={canResume ? "true" : undefined}
       className={cn(
         "flex items-center gap-3 rounded-xl border bg-app-surface px-3 py-2.5 shadow-[var(--shadow)] transition-colors",
         "border-app-border",
@@ -207,9 +225,10 @@ function MiniCard({ record, onExpand, tx }: MiniCardProps) {
     >
       <button
         type="button"
-        onClick={onExpand}
+        onClick={canResume ? onResume : onExpand}
         className="flex flex-1 items-center gap-3 text-left focus:outline-none"
-        aria-label={`${statusLabel(record)} – ${record.label}`}
+        aria-label={cardLabel}
+        data-testid={canResume ? "transaction-dock-card-resume" : undefined}
       >
         <div className="relative shrink-0">
           {chainBadge(record.chainId) ?? (
@@ -230,7 +249,11 @@ function MiniCard({ record, onExpand, tx }: MiniCardProps) {
               : ""}
           </p>
         </div>
-        <ChevronUp className="h-3.5 w-3.5 text-app-muted" aria-hidden />
+        {canResume ? (
+          <Maximize2 className="h-3.5 w-3.5 text-app-muted" aria-hidden />
+        ) : (
+          <ChevronUp className="h-3.5 w-3.5 text-app-muted" aria-hidden />
+        )}
       </button>
       <div className="flex items-center gap-1">
         {explorerUrl && (
@@ -238,7 +261,7 @@ function MiniCard({ record, onExpand, tx }: MiniCardProps) {
             href={explorerUrl}
             target="_blank"
             rel="noreferrer"
-            className="rounded-md p-1 text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
             aria-label="View on explorer"
           >
             <ExternalLink className="h-3.5 w-3.5" />
@@ -247,8 +270,8 @@ function MiniCard({ record, onExpand, tx }: MiniCardProps) {
         {(record.status === "confirmed" || failed) && (
           <button
             type="button"
-            onClick={() => tx.dismissTx(record.id)}
-            className="rounded-md p-1 text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
+            onClick={() => actions.dismissTx(record.id)}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
             aria-label="Dismiss"
           >
             <X className="h-3.5 w-3.5" />
@@ -261,11 +284,12 @@ function MiniCard({ record, onExpand, tx }: MiniCardProps) {
 
 interface ExpandedViewProps {
   records: TxRecord[];
+  inFlightCount: number;
   onCollapse: () => void;
-  tx: TransactionStatusContextValue;
+  actions: TransactionActionsContextValue;
 }
 
-function ExpandedView({ records, onCollapse, tx }: ExpandedViewProps) {
+function ExpandedView({ records, inFlightCount, onCollapse, actions }: ExpandedViewProps) {
   const sorted = useMemo(
     () => [...records].sort((a, b) => b.updatedAt - a.updatedAt),
     [records]
@@ -287,8 +311,8 @@ function ExpandedView({ records, onCollapse, tx }: ExpandedViewProps) {
         <div>
           <p className="text-sm font-semibold text-app-text">Transactions</p>
           <p className="text-[11px] text-app-muted">
-            {tx.inFlightCount > 0
-              ? `${tx.inFlightCount} in flight`
+            {inFlightCount > 0
+              ? `${inFlightCount} in flight`
               : "All caught up"}
           </p>
         </div>
@@ -305,7 +329,7 @@ function ExpandedView({ records, onCollapse, tx }: ExpandedViewProps) {
         <ul className="space-y-1.5">
           {sorted.map((record) => (
             <li key={record.id}>
-              <ExpandedRow record={record} tx={tx} />
+              <ExpandedRow record={record} actions={actions} />
             </li>
           ))}
         </ul>
@@ -317,7 +341,7 @@ function ExpandedView({ records, onCollapse, tx }: ExpandedViewProps) {
           </span>
           <button
             type="button"
-            onClick={tx.clearCompleted}
+            onClick={actions.clearCompleted}
             className="text-[11px] font-medium text-app-accent hover:underline"
           >
             Clear completed
@@ -330,21 +354,24 @@ function ExpandedView({ records, onCollapse, tx }: ExpandedViewProps) {
 
 interface ExpandedRowProps {
   record: TxRecord;
-  tx: TransactionStatusContextValue;
+  actions: TransactionActionsContextValue;
 }
 
-function ExpandedRow({ record, tx }: ExpandedRowProps) {
+function ExpandedRow({ record, actions }: ExpandedRowProps) {
   const explorerUrl =
     record.hash && record.chainId
-      ? tx.getExplorerUrl(record.chainId, record.hash)
+      ? actions.getExplorerUrl(record.chainId, record.hash)
       : undefined;
   const failed = record.status === "failed";
+  const onResume = record.meta?.onResume;
+  const canResume = typeof onResume === "function";
 
   return (
     <div
       data-testid="transaction-dock-row"
       data-status={record.status}
       data-tx-id={record.id}
+      data-resumable={canResume ? "true" : undefined}
       className={cn(
         "rounded-lg border bg-app-bg-subtle p-3",
         "border-app-border",
@@ -353,29 +380,55 @@ function ExpandedRow({ record, tx }: ExpandedRowProps) {
       )}
     >
       <div className="flex items-center gap-3">
-        <div className="relative shrink-0">
-          {chainBadge(record.chainId) ?? (
-            <div className="h-5 w-5 rounded-full bg-app-bg-subtle" />
-          )}
-          <div className="absolute -bottom-1 -right-1 rounded-full bg-app-surface p-0.5">
-            {statusIcon(record.status, "sm")}
-          </div>
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-app-text">
-            {record.label}
-          </p>
-          <p className={cn("text-[11px]", statusTone(record.status))}>
-            {statusLabel(record)}
-          </p>
-        </div>
+        {canResume ? (
+          <button
+            type="button"
+            onClick={onResume}
+            className="flex flex-1 items-center gap-3 text-left focus:outline-none"
+            aria-label={`Reopen ${record.label}`}
+            data-testid="transaction-dock-row-resume"
+          >
+            <div className="relative shrink-0">
+              {chainBadge(record.chainId) ?? (
+                <div className="h-5 w-5 rounded-full bg-app-bg-subtle" />
+              )}
+              <div className="absolute -bottom-1 -right-1 rounded-full bg-app-surface p-0.5">
+                {statusIcon(record.status, "sm")}
+              </div>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-app-text">{record.label}</p>
+              <p className={cn("text-[11px]", statusTone(record.status))}>
+                {statusLabel(record)}
+              </p>
+            </div>
+            <Maximize2 className="h-3.5 w-3.5 text-app-muted" aria-hidden />
+          </button>
+        ) : (
+          <>
+            <div className="relative shrink-0">
+              {chainBadge(record.chainId) ?? (
+                <div className="h-5 w-5 rounded-full bg-app-bg-subtle" />
+              )}
+              <div className="absolute -bottom-1 -right-1 rounded-full bg-app-surface p-0.5">
+                {statusIcon(record.status, "sm")}
+              </div>
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-medium text-app-text">{record.label}</p>
+              <p className={cn("text-[11px]", statusTone(record.status))}>
+                {statusLabel(record)}
+              </p>
+            </div>
+          </>
+        )}
         <div className="flex items-center gap-1">
           {explorerUrl && (
             <a
               href={explorerUrl}
               target="_blank"
               rel="noreferrer"
-              className="rounded-md p-1 text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
               aria-label="View on explorer"
             >
               <ExternalLink className="h-3.5 w-3.5" />
@@ -385,7 +438,7 @@ function ExpandedRow({ record, tx }: ExpandedRowProps) {
             <button
               type="button"
               onClick={() => record.meta?.onRetry?.()}
-              className="inline-flex items-center gap-1 rounded-md border border-app-border bg-app-surface px-2 py-1 text-[11px] font-medium text-app-text transition-colors hover:bg-app-bg-subtle"
+              className="inline-flex h-8 items-center gap-1 rounded-md border border-app-border bg-app-surface px-2 text-[11px] font-medium text-app-text transition-colors hover:bg-app-bg-subtle"
             >
               <RotateCw className="h-3 w-3" />
               Retry
@@ -394,8 +447,8 @@ function ExpandedRow({ record, tx }: ExpandedRowProps) {
           {(record.status === "confirmed" || failed) && (
             <button
               type="button"
-              onClick={() => tx.dismissTx(record.id)}
-              className="rounded-md p-1 text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
+              onClick={() => actions.dismissTx(record.id)}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-md text-app-muted transition-colors hover:bg-app-bg-subtle hover:text-app-text"
               aria-label="Dismiss"
             >
               <X className="h-3.5 w-3.5" />
@@ -412,7 +465,7 @@ function ExpandedRow({ record, tx }: ExpandedRowProps) {
         <ul className="mt-3 space-y-1.5 border-t border-app-border pt-3">
           {record.children.map((child) => {
             const childExplorer = child.hash
-              ? tx.getExplorerUrl(child.chainId, child.hash)
+              ? actions.getExplorerUrl(child.chainId, child.hash)
               : undefined;
             return (
               <li

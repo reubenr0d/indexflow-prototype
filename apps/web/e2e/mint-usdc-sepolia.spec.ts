@@ -265,11 +265,11 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
   await submit.click();
 
   const phaseNames = ['loading', 'no-routing', 'preview', 'executing', 'complete', 'error'] as const;
-  type DrawerPhase = (typeof phaseNames)[number];
-  const getCurrentPhase = async (): Promise<DrawerPhase | null> => {
+  type ModalPhase = (typeof phaseNames)[number];
+  const getCurrentPhase = async (): Promise<ModalPhase | null> => {
     for (const phase of phaseNames) {
       const attached = await page
-        .locator(`[data-testid="multi-chain-drawer-phase"][data-phase="${phase}"]`)
+        .locator(`[data-testid="deposit-confirm-modal-phase"][data-phase="${phase}"]`)
         .count()
         .then((count) => count > 0)
         .catch(() => false);
@@ -283,7 +283,7 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
     .not.toBeNull();
 
   let initialPhase = await getCurrentPhase();
-  console.log(`[E2E] runSplitDeposit: initial drawer phase = ${initialPhase}`);
+  console.log(`[E2E] runSplitDeposit: initial modal phase = ${initialPhase}`);
   if (initialPhase === 'loading') {
     await expect
       .poll(async () => await getCurrentPhase(), { timeout: 60_000 })
@@ -293,18 +293,18 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
   }
 
   if (!initialPhase) {
-    throw new Error('Multi-chain deposit drawer did not open after submit.');
+    throw new Error('Deposit confirm modal did not open after submit.');
   }
 
   if (initialPhase === 'no-routing') {
-    throw new Error('Multi-chain routing is unavailable (`no-routing` drawer phase).');
+    throw new Error('Multi-chain routing is unavailable (`no-routing` modal phase).');
   }
 
-  const phaseError = page.locator('[data-testid="multi-chain-drawer-phase"][data-phase="error"]');
-  const phaseComplete = page.locator('[data-testid="multi-chain-drawer-phase"][data-phase="complete"]');
+  const phaseError = page.locator('[data-testid="deposit-confirm-modal-phase"][data-phase="error"]');
+  const phaseComplete = page.locator('[data-testid="deposit-confirm-modal-phase"][data-phase="complete"]');
 
   if (initialPhase === 'preview') {
-    const confirm = page.getByTestId('multi-chain-confirm-deposit');
+    const confirm = page.getByTestId('deposit-confirm-submit');
     await expect(confirm).toBeEnabled({ timeout: 15_000 });
     console.log('[E2E] runSplitDeposit: clicking confirm');
     await confirm.click();
@@ -394,9 +394,9 @@ async function runSplitDeposit(page: Parameters<typeof test>[0]['page']) {
   }
 
   if (terminalPhase === 'error') {
-    const drawerContent = await page.locator('[data-testid="multi-chain-drawer-content"]').textContent().catch(() => '');
-    console.log(`[E2E] runSplitDeposit: ERROR phase reached. Drawer content:\n${drawerContent?.slice(0, 800)}`);
-    throw new Error(`Split deposit ended in error state. Drawer snapshot:\n${drawerContent?.slice(0, 1200)}`);
+    const modalContent = await page.locator('[data-testid="deposit-confirm-modal-content"]').textContent().catch(() => '');
+    console.log(`[E2E] runSplitDeposit: ERROR phase reached. Modal content:\n${modalContent?.slice(0, 800)}`);
+    throw new Error(`Split deposit ended in error state. Modal snapshot:\n${modalContent?.slice(0, 1200)}`);
   }
 
   const finalPhase = await getCurrentPhase();

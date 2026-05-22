@@ -158,7 +158,7 @@ export default function DashboardPage() {
                   {formatUSDC((info.usdcBalance ?? 0n) + (info.perpAllocated ?? 0n))}
                 </p>
                 <p className="mt-1 font-mono text-xs text-app-muted">TVL</p>
-                <p className="mt-1 text-xs text-app-muted">Perp sleeve {formatBps(perpBlendBps)}</p>
+                <p className="mt-1 text-xs text-app-muted">Perp exposure {formatBps(perpBlendBps)}</p>
               </Card>
                 );
               })()}

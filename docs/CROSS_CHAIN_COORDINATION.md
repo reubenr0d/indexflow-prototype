@@ -220,7 +220,7 @@ Both the agent MCP and the web admin UI now create + wire spoke twins in one sho
 - **MCP `create_vault`** (`apps/mcps/vault-manager/index.js` + `apps/mcps/vault-manager/multichain-create.mjs`): after creating the hub vault, enumerates every `config/chains.json` `role: "spoke"` entry whose `apps/web/src/config/<chain>-deployment.json` exists AND whose RPC URL is resolvable from `<RPC_ALIAS_UPPER>_RPC_URL` env (e.g. `FUJI_RPC_URL`), then runs `createBasket(name, fees)` → `setStateRelay(<spoke.stateRelay>)` → `setAssets([keccak256("USDC")])` against each spoke. The response includes a `twins: [{ chain, vaultAddress, success, txHashes, error? }]` array; the top-level `vaultAddress` stays the hub address for back-compat with the agent runner. Pass `deployToSpokes: false` to opt out.
 - **Admin UI** (`apps/web/src/app/admin/baskets/page.tsx` + `apps/web/src/hooks/useCreateMultichainBasket.ts`): the create form shows a per-chain checkbox section (hub fixed-checked; spokes default-selected for every chain with both `basketFactory` AND `stateRelay` configured) and a per-step progress panel with live status, vault addresses, and per-step tx hashes. Failures on individual spokes don't roll back the hub — the operator can retry the failed spoke separately.
 
-Both paths use the same stub asset id (`keccak256("USDC")` = `0xd6aca1be9729c13d677335161321649cccae6a591554772516700f986f942eaa`), so baskets created via either path look identical on-chain and the deposit drawer's `useVaultAddressByName` lookup finds them both.
+Both paths use the same stub asset id (`keccak256("USDC")` = `0xd6aca1be9729c13d677335161321649cccae6a591554772516700f986f942eaa`), so baskets created via either path look identical on-chain and the deposit confirm modal's `useVaultAddressByName` lookup finds them both.
 
 #### Manual recipe (back-filling existing baskets)
 
@@ -231,39 +231,31 @@ For baskets that pre-date the automatic fan-out (or when you want to add a twin 
 3. On every chain, call `setStateRelay(stateRelay)` so the deposit weight guard is active.
 4. Optionally seed the spoke vault with mock USDC via `topUpReserve(amount)` so it has idle liquidity before any user deposits arrive.
 
-If twins are missing, the multi-chain deposit drawer falls back to single-chain mode and surfaces the missing chains in a warning banner. The user can still deposit successfully — the deposit just doesn't split.
+If twins are missing, the deposit confirm modal falls back to single-chain mode and surfaces the missing chains in a warning banner. The user can still deposit successfully — the deposit just doesn't split.
 
-### Automated Multi-Chain Deposit Flow (Privy Users)
+### Unified Deposit Confirm Modal
 
-For users authenticated via Privy with embedded wallets, the frontend provides an automated multi-chain deposit flow that handles all transactions seamlessly:
+The web app now routes every deposit — single-chain or multi-chain — through one `DepositConfirmModal`. The user enters the amount once on the panel; the modal then bundles approve and deposit per chain so there is no separate "Approve USDC" click.
 
-1. **Routing Preview:** When the user enters a deposit amount and has "All Chains" view mode selected, the UI shows a routing breakdown with chain names, allocation percentages, and per-chain amounts.
+1. **Preview phase:** Enter an amount and click "Deposit" / "Multi-Chain Deposit" on the panel. The modal opens with a routing summary bar, per-chain rows showing chain name, %, USDC amount, and a live gas estimate (`Fuel` icon). Per-chain rows also indicate whether the chain needs an approval based on a pre-flight `allowance(owner, vault)` read.
 
-2. **Confirmation:** A slide-up drawer presents the full routing breakdown with a visual bar chart. The user confirms once to start all transactions.
+2. **Expandable details:** A collapsible "Routing & network details" panel shows the per-chain approve and deposit gas estimates, an indicator when the deposit estimate fell back to a constant (because the vault has no allowance yet), expected shares per chain, and the aggregated cross-chain network cost.
 
-3. **Parallel Execution:** All chain transactions execute simultaneously:
-   - For each target chain, the wallet switches chains automatically
-   - If USDC allowance is insufficient, an approve transaction is sent first
-   - The deposit transaction follows immediately after approval
-   - All chains process in parallel, not sequentially
+3. **Execution phase:** On Confirm, the modal walks each chain sequentially (so the deployer-wallet nonce is never raced across two simultaneous writes): per chain it sends `approve(vault, amount)` only if `needsApprovalPerChain[chainId]` is true, then `deposit(amount)`. After each successful deposit it invalidates the wagmi/react-query allowance cache for that chain so the panel button immediately reflects the consumed approval.
 
-4. **Status Tracking:** Per-chain status indicators show:
-   - Switching chain
-   - Approving USDC
-   - Depositing
-   - Success / Error
+4. **Status tracking:** Per-chain rows surface `switching` → `approving` → `depositing` → `success`/`error` with the matching `0x...` tx hashes. The same chain rows are mirrored into the global `TransactionDock` via `useOptionalTransactionActions`, so minimizing the modal during execution does not lose progress — the wrapper component stays mounted (only the dialog content unmounts) so the per-chain hook keeps running and the mirroring effect keeps dispatching updates into the dock. Each in-flight parent record carries a `meta.onResume` callback that the dock card uses to maximize the dialog back; that callback is cleared on success (no value in re-opening a confirmed deposit) and preserved on failure so users can tap the failed card to maximize and hit Retry.
 
-5. **Minimizable UI:** Users can minimize the deposit drawer to a floating pill showing progress (e.g., "Depositing... 2/3 chains"). Transactions continue in the background.
-
-6. **Gas Sponsorship:** When using Privy embedded wallets, gas fees are sponsored via Privy's `sendTransaction({ sponsor: true })` — users pay no gas.
+5. **Gas sponsorship:** When the user is on a Privy embedded wallet, both approve and deposit go through `sendSponsoredTx({ sponsor: true })`. With an external wallet (no Privy / E2E mode), `useParallelChainDeposits` falls back to `getWalletClient` from `@wagmi/core` and calls `switchChainAsync` before each tx.
 
 **Key components:**
-- `useParallelChainDeposits` hook — manages parallel execution state
-- `useRoutingWeights` hook — fetches weights from `StateRelay`
-- `MultiChainDepositDrawer` — the UI flow (preview → executing → complete)
-- `ChainDepositRow` — per-chain status display
 
-**Fallback:** If routing weights are unavailable or the user is not using Privy, the standard single-chain deposit flow is used.
+- `useParallelChainDeposits` hook — orchestrates approve + deposit sequencing per chain and invalidates allowance caches on success.
+- `useAllowancesPerChain` hook — pre-flight per-chain allowance read used to compute `needsApprovalPerChain`.
+- `useChainGasEstimates` hook — per-chain `estimateGas` + `getGasPrice` for the details panel; deposit estimate falls back to a constant when no allowance is yet in place.
+- `useRoutingWeights` hook — fetches weights from `StateRelay`.
+- `DepositConfirmModal` — the unified preview/executing/complete/error flow.
+
+**Fallback:** If routing weights are unavailable or only one chain matches, the modal collapses to a single-chain row and still drives the same approve + deposit pipeline.
 
 ## Trust Model and Failure Modes
 

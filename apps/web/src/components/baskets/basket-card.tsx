@@ -59,7 +59,8 @@ export function BasketCard({
       : null;
 
   const tvl = usdcBalance + perpAllocated;
-  const perpShare = tvl > 0n ? `${Number((perpAllocated * 100n) / tvl)}% in perp` : "No perp allocation";
+  const allocatedPct = tvl > 0n ? Number((perpAllocated * 100n) / tvl) : 0;
+  const allocatedLabel = `${allocatedPct}%`;
   const formatTrendText = (label: "24h" | "7d", delta?: bigint | null) => {
     if (delta === undefined || delta === null) return `${label} --`;
     const abs = delta < 0n ? -delta : delta;
@@ -130,21 +131,23 @@ export function BasketCard({
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
                 <BasketIcon name="perp" />
-                <span>Perp sleeve</span>
+                <InfoLabel label="Perp exposure" tooltipKey="perpExposure" />
               </div>
               <p className="mt-2 font-mono text-sm font-semibold text-app-text">
-                {perpBlendBps !== undefined ? formatBps(perpBlendBps) : perpShare}
+                {perpBlendBps !== undefined ? formatBps(perpBlendBps) : "0.00%"}
               </p>
             </div>
           </div>
 
           <div className="mt-4 flex-1">
+            <div className="mb-1.5 flex items-center justify-between text-[11px] uppercase tracking-wide text-app-muted">
+              <InfoLabel label="Allocated" tooltipKey="perpAllocated" />
+              <span className="font-mono text-app-text">{allocatedLabel}</span>
+            </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full bg-app-bg-subtle">
               <div
                 className="h-full rounded-full bg-app-accent transition-all"
-                style={{
-                  width: perpAllocated > 0n ? `${Number((perpAllocated * 100n) / (tvl || 1n))}%` : "0%",
-                }}
+                style={{ width: `${allocatedPct}%` }}
               />
             </div>
           </div>

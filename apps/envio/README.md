@@ -39,6 +39,10 @@ first failure for each `(chainId, op)` pair to make this visible in logs.
 
 - Dynamic vault indexing is registered from `BasketFactory.BasketCreated` via `context.BasketVault.add(...)`.
 - Entity IDs are chain-scoped (`<chainId>-...`) to avoid cross-chain collisions.
+  Documented exception: `ChainPoolState.id` is the `chainSelector` alone, because
+  every `StateRelay.getRoutingWeights()` returns the same global routing table
+  (one entry per chain in the network); keying by `chainSelector` keeps the entity
+  canonical/global and prevents one duplicate row per relay observing each selector.
 - Envio is the only indexer in the repo. The legacy `apps/subgraph` (The Graph) has been removed.
 - After changing RPC URLs you typically need to redeploy the indexer so it
   replays events against the new RPC and back-populates live state.

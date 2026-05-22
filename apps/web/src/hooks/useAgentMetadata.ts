@@ -1,6 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import type { Address } from "viem";
 
+export type AgentActionParams =
+  | { kind: "wire_asset"; symbol: string; seedPriceUsd?: number }
+  | {
+      kind: "create_vault";
+      name: string;
+      depositFeeBps: number;
+      redeemFeeBps: number;
+      deployToSpokes?: boolean;
+    }
+  | { kind: "set_vault_assets"; assetIds: string[]; count: number }
+  | {
+      kind: "allocate_to_perp" | "withdraw_from_perp";
+      amountUsdc: string;
+    }
+  | {
+      kind: "open_position";
+      assetId: string;
+      isLong: boolean;
+      size: string;
+      collateral: string;
+    }
+  | {
+      kind: "close_position";
+      assetId: string;
+      isLong: boolean;
+      sizeDelta: string;
+      collateralDelta: string;
+    };
+
 export type AgentAction = {
   tool: string;
   justification: string;
@@ -8,6 +37,7 @@ export type AgentAction = {
   txHash?: string | null;
   agentName?: string;
   runId?: string;
+  params?: AgentActionParams;
 };
 
 export type AgentRun = {

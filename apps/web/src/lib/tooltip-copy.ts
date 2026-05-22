@@ -103,8 +103,10 @@ export const TOOLTIP_COPY = {
   transactionRail:
     "Inline transaction status with step-by-step feedback, explorer links, and a retry path when a submit fails.",
   connectWallet: "Connect a wallet before submitting basket deposits or redemptions.",
-  approveAction: "Authorize BasketVault to move the selected USDC amount before deposit submission.",
-  depositAction: "Submit USDC into the basket vault and mint basket shares.",
+  approveAction:
+    "USDC approvals are bundled into the deposit confirm modal — you only enter the amount once and the modal handles approve plus deposit per chain.",
+  depositAction:
+    "Opens the deposit confirm modal: review routing, expected shares, and per-chain network costs before the modal auto-approves and deposits across the eligible chains.",
   redeemAction: "Burn basket shares to withdraw USDC from the basket vault.",
   txPending: "The current transaction is waiting to be confirmed by the network.",
   txConfirmed: "The current transaction confirmed successfully.",
@@ -120,11 +122,11 @@ export const TOOLTIP_COPY = {
   multiChainDepositRouting:
     "Your deposit is automatically distributed across chains based on keeper-posted routing weights. Underweight chains receive more deposits, creating a self-balancing effect.",
   multiChainDepositStatus:
-    "Real-time status for each chain's approval and deposit transactions. You can minimize this view and transactions will continue in the background.",
-  multiChainDepositMinimize:
-    "Minimize the deposit modal to a floating indicator. Transactions continue processing in the background and you can restore the full view at any time.",
+    "Real-time status for each chain's approval and deposit transactions. You can minimize this dialog and the transaction dock will keep showing progress — tap the dock card to bring the dialog back at any time.",
+  multiChainDepositDetails:
+    "Expand the routing & network details panel to see per-chain approve and deposit gas estimates, expected shares per chain, and the total cross-chain network cost.",
   multiChainDepositParallel:
-    "All chain transactions are executed simultaneously using Privy's embedded wallet. Gas fees are sponsored — you only need to approve the transactions once.",
+    "All chain transactions execute sequentially using Privy's embedded wallet. Gas fees are sponsored — approval and deposit are bundled, so you only enter the amount once.",
 
   // Push notification settings
   pushMasterToggle: "Master switch for all real-time push notification categories.",
@@ -180,7 +182,7 @@ export const TOOLTIP_COPY = {
 
   // AI agent vault management
   aiOperator:
-    "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations.",
+    "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations. Expand 'Show all decisions' to see every justified tool call grouped by run, with the asset, side, size, and on-chain status for each action.",
   atlasMl:
     "Entry signals come from the Atlas mining-stock ML engine: a 180-day-horizon model ranking miners by drill activity, financials, and commodity factors. The vault auto-rebalances to track the latest Atlas top-N picks.",
   vaultThesis:

@@ -12,6 +12,7 @@ import {
   ChevronUp,
   Fuel,
   Loader2,
+  Minimize2,
   RotateCcw,
   ShieldCheck,
   XCircle,
@@ -35,6 +36,7 @@ import {
   type ChainDepositStatus,
   type ChainTxStatus,
   type DepositSplit,
+  type ParallelDepositsState,
 } from "@/hooks/useParallelChainDeposits";
 import { useChainGasEstimates } from "@/hooks/useChainGasEstimates";
 import { useRoutingWeights } from "@/hooks/useRoutingWeights";
@@ -47,7 +49,7 @@ import { formatUSDC, formatShares } from "@/lib/format";
 import { PRICE_PRECISION } from "@/lib/constants";
 import { BasketVaultABI } from "@/abi/contracts";
 import {
-  useOptionalTransactionStatus,
+  useOptionalTransactionActions,
   type TxChildRecord,
   type TxStatus,
 } from "@/providers/TransactionStatusProvider";
@@ -72,6 +74,18 @@ type ModalPhase = "preview" | "executing" | "complete" | "error";
 
 const MODAL_SAFETY_TIMEOUT_MS = 160_000;
 
+interface ChainVaultMapping {
+  chainId: number;
+  vaultAddress: Address;
+}
+
+interface ConfirmArgs {
+  splits: DepositSplit[];
+  vaultMappings: ChainVaultMapping[];
+  needsApprovalPerChain: Record<number, boolean>;
+  amount: bigint;
+}
+
 interface DepositConfirmModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -80,8 +94,23 @@ interface DepositConfirmModalProps {
   sharePrice: bigint;
   depositFeeBps: bigint;
   onSuccess?: () => void;
+  /**
+   * Fired with `true` while the wrapper's phase is anything other than
+   * "preview" (executing, complete, error). The deposit panel uses it to
+   * lock its amount input so the `amount` prop can't drift mid-flight.
+   */
+  onInFlightChange?: (active: boolean) => void;
 }
 
+/**
+ * Outer wrapper. This component stays mounted for the lifetime of the parent
+ * panel — that's where the per-chain deposit hook, the phase machine, and the
+ * mirroring effect into the global TransactionDock live. Hosting them here
+ * (rather than inside `DepositConfirmModalContent`, which Radix unmounts on
+ * close) is what lets the user minimize the dialog mid-execution: the
+ * transactions and dock updates continue while the dialog content is gone,
+ * and a tap on the dock card maximizes back via `meta.onResume`.
+ */
 export function DepositConfirmModal({
   open,
   onOpenChange,
@@ -90,34 +119,189 @@ export function DepositConfirmModal({
   sharePrice,
   depositFeeBps,
   onSuccess,
+  onInFlightChange,
 }: DepositConfirmModalProps) {
-  const [isExecuting, setIsExecuting] = useState(false);
+  const [phase, setPhase] = useState<ModalPhase>("preview");
+  const { state: depositState, execute, reset } = useParallelChainDeposits();
+  const txActions = useOptionalTransactionActions();
+  const parentTxIdRef = useRef<string | null>(null);
 
+  // Notify the parent panel whenever the wrapper is holding live execution
+  // state. Fires once per phase change; not bundled into other effects to
+  // keep the in-flight signal cleanly decoupled from the deposit hook
+  // mirroring loop above.
+  useEffect(() => {
+    onInFlightChange?.(phase !== "preview");
+  }, [phase, onInFlightChange]);
+
+  // Mirror per-chain progress into the global transaction store so the dock
+  // keeps showing this deposit even after the modal is minimized. `txActions`
+  // is provided via a dedicated context whose value reference is stable across
+  // record mutations, so it's safe to keep in the dep array.
+  useEffect(() => {
+    const parentId = parentTxIdRef.current;
+    if (!txActions || !parentId) return;
+    if (depositState.chainStatuses.length === 0) return;
+
+    for (const child of depositState.chainStatuses) {
+      const patch: Partial<TxChildRecord> = {
+        status: mapChainStatusToTxStatus(child.status),
+        hash: child.depositTxHash ?? child.approveTxHash,
+        error: child.error,
+      };
+      txActions.updateChild(parentId, `chain-${child.chainId}`, patch);
+    }
+
+    const allConfirmed =
+      depositState.totalCount > 0 &&
+      depositState.completedCount === depositState.totalCount &&
+      !depositState.hasErrors;
+    if (allConfirmed) {
+      // On success there's nothing useful to re-open — drop the resume meta
+      // so the dock card doesn't pop an empty preview modal during the
+      // 4s linger before auto-dismiss.
+      txActions.updateTx(parentId, { meta: undefined });
+      txActions.completeTx(parentId, {});
+      parentTxIdRef.current = null;
+    } else if (!depositState.isExecuting && depositState.hasErrors) {
+      // On failure we deliberately keep meta.onResume so the user can tap the
+      // failed dock card to maximize the modal and hit Retry.
+      const firstError =
+        depositState.chainStatuses.find((s) => s.status === "error")?.error ??
+        "One or more chain deposits failed";
+      txActions.failTx(parentId, firstError);
+      parentTxIdRef.current = null;
+    }
+  }, [
+    depositState.chainStatuses,
+    depositState.completedCount,
+    depositState.hasErrors,
+    depositState.isExecuting,
+    depositState.totalCount,
+    txActions,
+  ]);
+
+  // Phase machine: executing -> complete | error. Sponsorship-error popup
+  // logic stays inside the content component because that's where the
+  // sponsorship dialog renders.
+  useEffect(() => {
+    if (depositState.isExecuting || depositState.totalCount === 0) return;
+    if (depositState.hasErrors) {
+      console.log("[DepositConfirmModal] Phase transition: executing -> error");
+      queueMicrotask(() => setPhase("error"));
+    } else if (depositState.completedCount === depositState.totalCount) {
+      console.log("[DepositConfirmModal] Phase transition: executing -> complete");
+      queueMicrotask(() => {
+        setPhase("complete");
+        onSuccess?.();
+      });
+    }
+  }, [
+    depositState.completedCount,
+    depositState.hasErrors,
+    depositState.isExecuting,
+    depositState.totalCount,
+    onSuccess,
+  ]);
+
+  // Safety net for the case where the per-chain execution stalls without ever
+  // resolving; force the phase to "error" so the UI doesn't sit on the
+  // executing screen forever.
+  useEffect(() => {
+    if (phase !== "executing") return;
+    const safetyTimeout = setTimeout(() => {
+      console.warn("[DepositConfirmModal] Safety timeout reached - forcing error phase");
+      setPhase("error");
+    }, MODAL_SAFETY_TIMEOUT_MS);
+    return () => clearTimeout(safetyTimeout);
+  }, [phase]);
+
+  const handleConfirm = useCallback(
+    (args: ConfirmArgs) => {
+      console.log("[DepositConfirmModal] Phase transition: preview -> executing");
+      setPhase("executing");
+
+      if (txActions) {
+        const children: TxChildRecord[] = args.splits.map((split) => ({
+          id: `chain-${split.chainId}`,
+          chainId: split.chainId,
+          chainName: split.chainName,
+          label: `${formatUSDC(split.amount)} USDC on ${split.chainName}`,
+          status: "signing",
+        }));
+        parentTxIdRef.current = txActions.startTx({
+          kind: args.splits.length > 1 ? "multi-chain-deposit" : "deposit",
+          label:
+            args.splits.length > 1
+              ? `Multi-chain deposit · ${formatUSDC(args.amount)} USDC`
+              : `Deposit · ${formatUSDC(args.amount)} USDC`,
+          children,
+          meta: {
+            // Lets a tap on the dock card re-open the dialog while execution
+            // is still in flight (or once it has terminated, so the user can
+            // hit Retry on a failed deposit).
+            onResume: () => onOpenChange(true),
+          },
+        });
+      }
+
+      void execute(args.splits, args.vaultMappings, {
+        needsApprovalPerChain: args.needsApprovalPerChain,
+      });
+    },
+    [execute, onOpenChange, txActions]
+  );
+
+  const handleRetry = useCallback(() => {
+    reset();
+    setPhase("preview");
+  }, [reset]);
+
+  const handleClose = useCallback(() => {
+    reset();
+    setPhase("preview");
+    onOpenChange(false);
+  }, [reset, onOpenChange]);
+
+  const handleMinimize = useCallback(() => {
+    onOpenChange(false);
+  }, [onOpenChange]);
+
+  // The dialog should behave like a regular dialog except mid-execution, where
+  // any close gesture (X, ESC, overlay click, explicit Minimize button) should
+  // hide the surface without tearing down the live execution state.
   const handleOpenChange = useCallback(
     (nextOpen: boolean) => {
-      if (!nextOpen && isExecuting) {
-        console.log("[DepositConfirmModal] Prevented close during execution");
+      if (nextOpen) {
+        onOpenChange(true);
         return;
       }
-      onOpenChange(nextOpen);
+      if (phase === "executing") {
+        handleMinimize();
+      } else {
+        handleClose();
+      }
     },
-    [isExecuting, onOpenChange]
+    [handleClose, handleMinimize, onOpenChange, phase]
   );
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         data-testid="deposit-confirm-modal-content"
-        className="max-w-2xl"
+        className="sm:max-w-2xl"
       >
         <DepositConfirmModalContent
           amount={amount}
           vaultAddress={vaultAddress}
           sharePrice={sharePrice}
           depositFeeBps={depositFeeBps}
-          onSuccess={onSuccess}
-          onClose={() => handleOpenChange(false)}
-          onExecutingChange={setIsExecuting}
+          phase={phase}
+          depositState={depositState}
+          onConfirm={handleConfirm}
+          onRetry={handleRetry}
+          onClose={handleClose}
+          onMinimize={handleMinimize}
         />
       </DialogContent>
     </Dialog>
@@ -129,9 +313,12 @@ interface DepositConfirmModalContentProps {
   vaultAddress: Address;
   sharePrice: bigint;
   depositFeeBps: bigint;
-  onSuccess?: () => void;
+  phase: ModalPhase;
+  depositState: ParallelDepositsState;
+  onConfirm: (args: ConfirmArgs) => void;
+  onRetry: () => void;
   onClose: () => void;
-  onExecutingChange?: (isExecuting: boolean) => void;
+  onMinimize: () => void;
 }
 
 function DepositConfirmModalContent({
@@ -139,9 +326,12 @@ function DepositConfirmModalContent({
   vaultAddress,
   sharePrice,
   depositFeeBps,
-  onSuccess,
+  phase,
+  depositState,
+  onConfirm,
+  onRetry,
   onClose,
-  onExecutingChange,
+  onMinimize,
 }: DepositConfirmModalContentProps) {
   const { address } = useAccount();
   const { wallets } = useWallets();
@@ -150,13 +340,10 @@ function DepositConfirmModalContent({
   const { configuredTargets, chainId: referenceChainId, viewMode } = useDeploymentTarget();
   const isMultiChainEnabled = isPrivyConfigured && viewMode === "all";
 
-  const [phase, setPhase] = useState<ModalPhase>("preview");
   const [detailsExpanded, setDetailsExpanded] = useState(false);
   const [showSponsorshipError, setShowSponsorshipError] = useState(false);
   const [sponsorshipErrorMessage, setSponsorshipErrorMessage] = useState<string | undefined>();
 
-  // Resolve the StateRelay address (lives on the hub chain) so we can read
-  // current cross-chain routing weights.
   const stateRelayAddress = useMemo(() => {
     const hubTarget = configuredTargets.find((t) => CHAIN_REGISTRY[t]?.role === "hub");
     if (!hubTarget) return undefined;
@@ -165,8 +352,6 @@ function DepositConfirmModalContent({
 
   const { data: routingWeights, isLoading: weightsLoading } = useRoutingWeights(stateRelayAddress);
 
-  // Read the basket name from the reference vault so we can resolve per-chain
-  // twin addresses by name.
   const { data: vaultNameRaw, isLoading: nameLoading } = useReadContract({
     address: vaultAddress,
     abi: BasketVaultABI,
@@ -201,9 +386,9 @@ function DepositConfirmModalContent({
       .map((m) => ({ target: m.target, chainId: m.chainId }));
   }, [vaultMatches]);
 
-  // Compute the planned per-chain split. For single-chain mode (or when no
-  // routing weights are configured) fall back to a single split on the
-  // reference chain so the modal works uniformly for both flows.
+  // Per-chain split for the deposit. Falls back to single-chain on the
+  // reference chain when multi-chain routing is disabled or no eligible
+  // weights are configured.
   const splits = useMemo<DepositSplit[]>(() => {
     if (vaultMatchesLoading || !vaultMatches) return [];
 
@@ -248,22 +433,18 @@ function DepositConfirmModalContent({
     vaultMatchesLoading,
   ]);
 
-  // Build the per-chain vault map for execution. For single-chain mode this is
-  // just the reference vault; for multi-chain it's the twin map.
-  const executionVaultMappings = useMemo(() => {
+  const executionVaultMappings = useMemo<ChainVaultMapping[]>(() => {
     if (!isMultiChainEnabled) {
       return splits
         .map((s) => {
           const match = vaultMappings.find((m) => m.chainId === s.chainId);
           return match ? { chainId: s.chainId, vaultAddress: match.vaultAddress } : null;
         })
-        .filter((m): m is { chainId: number; vaultAddress: Address } => m !== null);
+        .filter((m): m is ChainVaultMapping => m !== null);
     }
     return vaultMappings;
   }, [isMultiChainEnabled, splits, vaultMappings]);
 
-  // Pre-flight allowance read per chain so the modal can show approve steps up
-  // front and the execution hook can skip approvals that aren't needed.
   const allowanceInputs = useMemo(
     () =>
       executionVaultMappings.filter((m) =>
@@ -278,8 +459,6 @@ function DepositConfirmModalContent({
     [splits, allowancesByChain]
   );
 
-  // Live gas estimate per chain — only fetched while preview is showing, so we
-  // stop polling once the user confirms.
   const gasInputs = useMemo(
     () =>
       splits.map((s) => {
@@ -306,149 +485,55 @@ function DepositConfirmModalContent({
     return map;
   }, [gasEstimates]);
 
-  const { state: depositState, execute, reset } = useParallelChainDeposits();
-  const txStatus = useOptionalTransactionStatus();
-  const parentTxIdRef = useRef<string | null>(null);
-
-  // Mirror per-chain progress into the global transaction store so the
-  // TransactionDock keeps showing this deposit even after the modal is closed.
+  // Sponsorship error UX: pop the dedicated dialog if the failure on any
+  // chain was a sponsorship issue. Cleared once the user retries (phase
+  // returns to "preview").
   useEffect(() => {
-    const parentId = parentTxIdRef.current;
-    if (!txStatus || !parentId) return;
-    if (depositState.chainStatuses.length === 0) return;
-
-    for (const child of depositState.chainStatuses) {
-      const patch: Partial<TxChildRecord> = {
-        status: mapChainStatusToTxStatus(child.status),
-        hash: child.depositTxHash ?? child.approveTxHash,
-        error: child.error,
-      };
-      txStatus.updateChild(parentId, `chain-${child.chainId}`, patch);
+    if (phase === "preview") {
+      if (showSponsorshipError) setShowSponsorshipError(false);
+      if (sponsorshipErrorMessage) setSponsorshipErrorMessage(undefined);
+      return;
     }
-
-    const allConfirmed =
-      depositState.totalCount > 0 &&
-      depositState.completedCount === depositState.totalCount &&
-      !depositState.hasErrors;
-    if (allConfirmed) {
-      txStatus.completeTx(parentId, {});
-      parentTxIdRef.current = null;
-    } else if (!depositState.isExecuting && depositState.hasErrors) {
-      const firstError =
-        depositState.chainStatuses.find((s) => s.status === "error")?.error ??
-        "One or more chain deposits failed";
-      txStatus.failTx(parentId, firstError);
-      parentTxIdRef.current = null;
-    }
-  }, [
-    depositState.chainStatuses,
-    depositState.completedCount,
-    depositState.hasErrors,
-    depositState.isExecuting,
-    depositState.totalCount,
-    txStatus,
-  ]);
-
-  useEffect(() => {
-    if (!depositState.isExecuting && depositState.totalCount > 0) {
-      if (depositState.hasErrors) {
-        const failedChain = depositState.chainStatuses.find((s) => s.status === "error");
-        const errorMsg = failedChain?.error;
-
-        if (errorMsg && isSponsorshipError({ message: errorMsg })) {
-          queueMicrotask(() => {
-            setSponsorshipErrorMessage(errorMsg);
-            setShowSponsorshipError(true);
-          });
-        }
-        console.log("[DepositConfirmModal] Phase transition: executing -> error");
-        queueMicrotask(() => {
-          setPhase("error");
-          onExecutingChange?.(false);
-        });
-      } else if (depositState.completedCount === depositState.totalCount) {
-        console.log("[DepositConfirmModal] Phase transition: executing -> complete");
-        queueMicrotask(() => {
-          setPhase("complete");
-          onSuccess?.();
-          onExecutingChange?.(false);
-        });
-      }
-    }
-  }, [
-    depositState.isExecuting,
-    depositState.completedCount,
-    depositState.totalCount,
-    depositState.hasErrors,
-    depositState.chainStatuses,
-    onSuccess,
-    onExecutingChange,
-  ]);
-
-  useEffect(() => {
-    if (phase === "executing") {
-      const safetyTimeout = setTimeout(() => {
-        console.warn("[DepositConfirmModal] Safety timeout reached - forcing error phase");
-        setPhase("error");
-      }, MODAL_SAFETY_TIMEOUT_MS);
-      return () => clearTimeout(safetyTimeout);
-    }
-  }, [phase]);
-
-  const handleConfirm = useCallback(async () => {
-    if (!senderAddress || splits.length === 0) return;
-    console.log("[DepositConfirmModal] Phase transition: preview -> executing");
-    setPhase("executing");
-    setDetailsExpanded(true);
-    onExecutingChange?.(true);
-
-    if (txStatus) {
-      const children: TxChildRecord[] = splits.map((split) => ({
-        id: `chain-${split.chainId}`,
-        chainId: split.chainId,
-        chainName: split.chainName,
-        label: `${formatUSDC(split.amount)} USDC on ${split.chainName}`,
-        status: "signing",
-      }));
-      parentTxIdRef.current = txStatus.startTx({
-        kind: splits.length > 1 ? "multi-chain-deposit" : "deposit",
-        label:
-          splits.length > 1
-            ? `Multi-chain deposit · ${formatUSDC(amount)} USDC`
-            : `Deposit · ${formatUSDC(amount)} USDC`,
-        children,
+    if (phase !== "error") return;
+    const failed = depositState.chainStatuses.find((s) => s.status === "error");
+    if (failed?.error && isSponsorshipError({ message: failed.error })) {
+      queueMicrotask(() => {
+        setSponsorshipErrorMessage(failed.error);
+        setShowSponsorshipError(true);
       });
     }
+    // Watching the entire chainStatuses array keeps this stable even though
+    // we only read one entry — the array reference changes when the hook
+    // updates the failed chain's status.
+  }, [phase, depositState.chainStatuses, showSponsorshipError, sponsorshipErrorMessage]);
 
-    await execute(splits, executionVaultMappings, { needsApprovalPerChain });
-  }, [
-    amount,
-    executionVaultMappings,
-    execute,
-    needsApprovalPerChain,
-    onExecutingChange,
-    senderAddress,
-    splits,
-    txStatus,
-  ]);
+  const handleConfirmClick = useCallback(() => {
+    if (!senderAddress || splits.length === 0) return;
+    setDetailsExpanded(true);
+    onConfirm({
+      splits,
+      vaultMappings: executionVaultMappings,
+      needsApprovalPerChain,
+      amount,
+    });
+  }, [amount, executionVaultMappings, needsApprovalPerChain, onConfirm, senderAddress, splits]);
 
-  const handleRetry = useCallback(() => {
-    reset();
+  const handleRetryClick = useCallback(() => {
     setShowSponsorshipError(false);
     setSponsorshipErrorMessage(undefined);
-    setPhase("preview");
-  }, [reset]);
+    onRetry();
+  }, [onRetry]);
 
   const handleSponsorshipRetry = useCallback(() => {
     setShowSponsorshipError(false);
-    handleRetry();
-  }, [handleRetry]);
+    handleRetryClick();
+  }, [handleRetryClick]);
 
-  const handleClose = useCallback(() => {
-    reset();
-    setPhase("preview");
+  const handleCloseClick = useCallback(() => {
+    setShowSponsorshipError(false);
+    setSponsorshipErrorMessage(undefined);
     onClose();
-  }, [reset, onClose]);
+  }, [onClose]);
 
   const sponsorshipDialog = (
     <SponsorshipErrorDialog
@@ -459,7 +544,12 @@ function DepositConfirmModalContent({
     />
   );
 
-  if (weightsLoading || nameLoading || vaultMatchesLoading) {
+  // The preview-side queries (routing weights, vault name, twin lookup) only
+  // matter while the user is in preview. Once execution has started we have
+  // everything we need from `depositState.chainStatuses` and can render the
+  // executing/complete/error UI immediately — even if a re-mount (e.g. after
+  // a minimize → maximize) catches a brief refetch.
+  if (phase === "preview" && (weightsLoading || nameLoading || vaultMatchesLoading)) {
     return (
       <>
         <div data-testid="deposit-confirm-modal-phase" data-phase="loading" className="hidden" />
@@ -475,7 +565,7 @@ function DepositConfirmModalContent({
     );
   }
 
-  if (splits.length === 0) {
+  if (phase === "preview" && splits.length === 0) {
     const hasRoutingWeights = (routingWeights?.length ?? 0) > 0;
     const hasAnyTwin = vaultMappings.length > 0;
     const message = !hasRoutingWeights
@@ -498,7 +588,7 @@ function DepositConfirmModalContent({
           </div>
         </div>
         <div className="mt-6 flex justify-end">
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleCloseClick}>
             Close
           </Button>
         </div>
@@ -506,17 +596,23 @@ function DepositConfirmModalContent({
     );
   }
 
+  // From here on we either have eligible splits (preview) or live chain
+  // statuses to render against (executing / complete / error).
+  const displayRows: DepositSplit[] =
+    splits.length > 0
+      ? splits
+      : depositState.chainStatuses.map((s) => ({
+          chainId: s.chainId,
+          chainSelector: s.chainSelector,
+          chainName: s.chainName,
+          amount: s.amount,
+          percentage: s.percentage,
+        }));
+
   const totalEstimatedShares =
     sharePrice > 0n
       ? (amount * (10000n - depositFeeBps) * PRICE_PRECISION) / (10000n * sharePrice)
       : 0n;
-
-  const totalNativeCostByChain = new Map<number, string>();
-  for (const [chainId, est] of Array.from(
-    gasByChain.entries() as IterableIterator<[number, NonNullable<ReturnType<typeof gasByChain.get>>]>
-  )) {
-    totalNativeCostByChain.set(chainId, est.nativeCostFormatted);
-  }
 
   return (
     <>
@@ -528,7 +624,7 @@ function DepositConfirmModalContent({
       {sponsorshipDialog}
 
       <DialogHeader>
-        <DialogTitle className="flex items-center gap-3">
+        <DialogTitle className="flex flex-wrap items-center gap-3">
           {phase === "complete" ? (
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-app-success/10">
               <CheckCircle2 className="h-5 w-5 text-app-success" />
@@ -538,7 +634,7 @@ function DepositConfirmModalContent({
               <AlertTriangle className="h-5 w-5 text-app-danger" />
             </span>
           ) : null}
-          <span>
+          <span className="min-w-0 break-words">
             {phase === "complete"
               ? "Deposit complete"
               : phase === "error"
@@ -550,14 +646,14 @@ function DepositConfirmModalContent({
         </DialogTitle>
         <DialogDescription>
           {phase === "preview" &&
-            (splits.length > 1
-              ? `Your deposit will be split across ${splits.length} chains based on current routing weights.`
-              : `Your deposit will go to ${splits[0]?.chainName ?? "the available chain"}.`)}
+            (displayRows.length > 1
+              ? `Your deposit will be split across ${displayRows.length} chains based on current routing weights.`
+              : `Your deposit will go to ${displayRows[0]?.chainName ?? "the available chain"}.`)}
           {phase === "executing" &&
             `${depositState.completedCount} of ${depositState.totalCount} chains complete.`}
           {phase === "complete" &&
-            `Successfully deposited ${formatUSDC(amount)} USDC across ${splits.length} chain${
-              splits.length > 1 ? "s" : ""
+            `Successfully deposited ${formatUSDC(amount)} USDC across ${displayRows.length} chain${
+              displayRows.length > 1 ? "s" : ""
             }.`}
           {phase === "error" &&
             "Some chain deposits failed. You can retry the failed chains or close and try again later."}
@@ -565,10 +661,10 @@ function DepositConfirmModalContent({
       </DialogHeader>
 
       <div className="mt-4 space-y-4">
-        <RoutingBar splits={splits} />
+        <RoutingBar splits={displayRows} />
 
         <RoutingSummary
-          splits={splits}
+          splits={displayRows}
           statuses={phase === "preview" ? null : depositState.chainStatuses}
           needsApprovalPerChain={needsApprovalPerChain}
           gasByChain={gasByChain}
@@ -580,7 +676,7 @@ function DepositConfirmModalContent({
           forceExpanded={phase !== "preview"}
         >
           <PerChainDetails
-            splits={splits}
+            splits={displayRows}
             statuses={phase === "preview" ? null : depositState.chainStatuses}
             needsApprovalPerChain={needsApprovalPerChain}
             gasByChain={gasByChain}
@@ -627,9 +723,10 @@ function DepositConfirmModalContent({
       <ModalFooter
         phase={phase}
         canConfirm={Boolean(senderAddress) && splits.length > 0}
-        onConfirm={handleConfirm}
-        onRetry={handleRetry}
-        onClose={handleClose}
+        onConfirm={handleConfirmClick}
+        onRetry={handleRetryClick}
+        onClose={handleCloseClick}
+        onMinimize={onMinimize}
       />
     </>
   );
@@ -662,7 +759,10 @@ function RoutingSummary({ splits, statuses, needsApprovalPerChain, gasByChain }:
             data-chain-name={meta.name}
             data-status={status?.status ?? "idle"}
             className={cn(
-              "flex items-center justify-between rounded-lg border bg-app-bg-subtle p-3 transition-colors",
+              // Stacked layout on mobile, single-line above `sm` — keeps the
+              // chain identifier from being crowded by the USDC + gas column
+              // on narrow viewports.
+              "flex flex-col gap-2 rounded-lg border bg-app-bg-subtle p-3 transition-colors sm:flex-row sm:items-center sm:justify-between",
               status && (status.status === "approving" || status.status === "depositing" || status.status === "switching")
                 ? "border-app-accent/50 ring-1 ring-app-accent/20"
                 : "border-app-border",
@@ -693,10 +793,10 @@ function RoutingSummary({ splits, statuses, needsApprovalPerChain, gasByChain }:
               </div>
             </div>
 
-            <div className="text-right">
+            <div className="flex items-center justify-between sm:block sm:text-right">
               <p className="text-sm font-semibold text-app-text">{formatUSDC(split.amount)} USDC</p>
               {gas && (
-                <p className="flex items-center justify-end gap-1 text-xs text-app-muted">
+                <p className="flex items-center gap-1 text-xs text-app-muted sm:justify-end">
                   <Fuel className="h-3 w-3" />
                   {gas.nativeCostFormatted}
                 </p>
@@ -872,7 +972,7 @@ function PerChainDetails({
 
             {status?.error && (
               <div className="mt-2 rounded-md bg-app-danger/10 px-2 py-1">
-                <p className="text-xs text-app-danger">{status.error}</p>
+                <p className="break-words text-xs text-app-danger">{status.error}</p>
               </div>
             )}
           </div>
@@ -892,8 +992,8 @@ interface StepRowProps {
 
 function StepRow({ label, status, gasUnits, gasIsFallback, txHash }: StepRowProps) {
   return (
-    <div className="flex items-center justify-between py-1 text-xs">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 py-1 text-xs">
+      <div className="flex min-w-0 items-center gap-2">
         <StepIcon status={status} />
         <span
           className={cn(
@@ -911,7 +1011,7 @@ function StepRow({ label, status, gasUnits, gasIsFallback, txHash }: StepRowProp
           <span className="text-app-muted">(approval already in place)</span>
         )}
       </div>
-      <div className="flex items-center gap-2 text-app-muted">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-app-muted">
         {gasUnits && gasUnits > 0n && status !== "skipped" && (
           <span>
             ~{Number(gasUnits).toLocaleString()} gas
@@ -919,7 +1019,7 @@ function StepRow({ label, status, gasUnits, gasIsFallback, txHash }: StepRowProp
           </span>
         )}
         {txHash && (
-          <span className="font-mono">
+          <span className="truncate font-mono">
             {txHash.slice(0, 6)}...{txHash.slice(-4)}
           </span>
         )}
@@ -974,9 +1074,10 @@ interface ModalFooterProps {
   onConfirm: () => void;
   onRetry: () => void;
   onClose: () => void;
+  onMinimize: () => void;
 }
 
-function ModalFooter({ phase, canConfirm, onConfirm, onRetry, onClose }: ModalFooterProps) {
+function ModalFooter({ phase, canConfirm, onConfirm, onRetry, onClose, onMinimize }: ModalFooterProps) {
   if (phase === "preview") {
     return (
       <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
@@ -996,10 +1097,21 @@ function ModalFooter({ phase, canConfirm, onConfirm, onRetry, onClose }: ModalFo
 
   if (phase === "executing") {
     return (
-      <div className="mt-6">
+      <div className="mt-6 space-y-2">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          <Button
+            variant="secondary"
+            onClick={onMinimize}
+            data-testid="deposit-confirm-minimize"
+          >
+            <Minimize2 className="mr-1.5 h-3.5 w-3.5" />
+            Minimize
+          </Button>
+        </div>
         <p className="text-xs text-app-muted">
-          Transactions will continue in the background. You can close this dialog and the dock
-          will keep showing progress.
+          Transactions keep running in the background. Minimize this dialog and the
+          transaction dock will keep showing progress — tap the dock card to bring
+          this dialog back.
         </p>
       </div>
     );
@@ -1007,7 +1119,7 @@ function ModalFooter({ phase, canConfirm, onConfirm, onRetry, onClose }: ModalFo
 
   if (phase === "complete") {
     return (
-      <div className="mt-6 flex justify-end">
+      <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <Button onClick={onClose}>Done</Button>
       </div>
     );

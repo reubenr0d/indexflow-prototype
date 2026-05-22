@@ -1429,6 +1429,78 @@ async function confirmWriteBatchInteractively({
 
 const AGENT_METADATA_ACTION_LIMIT_DEFAULT = 100;
 
+// Per-tool params summary surfaced in the AI Activity panel. We deliberately
+// drop the `vault` address and `justification` (already on the parent action)
+// and only keep human-meaningful fields. Unknown tools produce no params so
+// the UI can fall back to the justification only.
+function summarizeActionParams(tool, args) {
+  if (!args || typeof args !== "object") return undefined;
+  switch (tool) {
+    case "wire_asset":
+      if (typeof args.symbol !== "string") return undefined;
+      return {
+        kind: "wire_asset",
+        symbol: args.symbol,
+        ...(typeof args.seedPriceUsd === "number"
+          ? { seedPriceUsd: args.seedPriceUsd }
+          : {}),
+      };
+    case "create_vault":
+      if (typeof args.name !== "string") return undefined;
+      return {
+        kind: "create_vault",
+        name: args.name,
+        depositFeeBps: Number(args.depositFeeBps) || 0,
+        redeemFeeBps: Number(args.redeemFeeBps) || 0,
+        ...(typeof args.deployToSpokes === "boolean"
+          ? { deployToSpokes: args.deployToSpokes }
+          : {}),
+      };
+    case "set_vault_assets": {
+      if (!Array.isArray(args.assetIds)) return undefined;
+      const assetIds = args.assetIds.filter((v) => typeof v === "string");
+      return {
+        kind: "set_vault_assets",
+        assetIds,
+        count: assetIds.length,
+      };
+    }
+    case "allocate_to_perp":
+    case "withdraw_from_perp":
+      if (typeof args.amount !== "string") return undefined;
+      return {
+        kind: tool,
+        amountUsdc: args.amount,
+      };
+    case "open_position":
+      if (typeof args.assetId !== "string") return undefined;
+      return {
+        kind: "open_position",
+        assetId: args.assetId,
+        isLong: Boolean(args.isLong),
+        size: typeof args.size === "string" ? args.size : String(args.size ?? ""),
+        collateral: typeof args.collateral === "string"
+          ? args.collateral
+          : String(args.collateral ?? ""),
+      };
+    case "close_position":
+      if (typeof args.assetId !== "string") return undefined;
+      return {
+        kind: "close_position",
+        assetId: args.assetId,
+        isLong: Boolean(args.isLong),
+        sizeDelta: typeof args.sizeDelta === "string"
+          ? args.sizeDelta
+          : String(args.sizeDelta ?? ""),
+        collateralDelta: typeof args.collateralDelta === "string"
+          ? args.collateralDelta
+          : String(args.collateralDelta ?? ""),
+      };
+    default:
+      return undefined;
+  }
+}
+
 function publishAgentMetadata(config, currentState, runSummary) {
   if (!currentState?.vaultAddress) return;
   const metaDir = resolve(PROJECT_ROOT, "apps/web/public/agent-metadata");
@@ -1440,14 +1512,18 @@ function publishAgentMetadata(config, currentState, runSummary) {
 
   const recentActions = (runSummary.writeActions || [])
     .filter((a) => !a.skipped && a.justification)
-    .map((a) => ({
-      tool: a.tool,
-      justification: a.justification,
-      timestamp: runSummary.finishedAt,
-      txHash: a.txHash || null,
-      agentName: config.name,
-      runId,
-    }));
+    .map((a) => {
+      const params = summarizeActionParams(a.tool, a.args);
+      return {
+        tool: a.tool,
+        justification: a.justification,
+        timestamp: runSummary.finishedAt,
+        txHash: a.txHash || null,
+        agentName: config.name,
+        runId,
+        ...(params ? { params } : {}),
+      };
+    });
 
   let existing = { recentActions: [] };
   if (existsSync(metaPath)) {
@@ -2607,6 +2683,7 @@ export const __agentRunnerInternals = {
   recordMcpErrorIfPresent,
   verifyVaultNameMatch,
   publishAgentMetadata,
+  summarizeActionParams,
   parseRetryAfterHeader,
   parseRetryHintFromBody,
   computeRetryWaitMs,

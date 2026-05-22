@@ -62,6 +62,60 @@ describe("transformChainPoolStates", () => {
     expect(bySelector.get("16015286601757825753")).toBe(2500);
     expect(bySelector.get("14767482510784806043")).toBe(7500);
   });
+
+  it("dedupes rows with the same chainSelector, keeping the freshest by updatedAt", () => {
+    // Simulates the pre-fix indexer state where each chain's StateRelay
+    // produced its own (chainId, chainSelector) row, so the same selector
+    // appears twice. The transform should collapse them to one row using
+    // the freshest `updatedAt`.
+    const raw: RawChainPoolState[] = [
+      {
+        id: "11155111-16015286601757825753",
+        chainSelector: "16015286601757825753",
+        twapPoolAmount: "1000000",
+        availableLiquidity: "650000",
+        reservedAmount: "350000",
+        utilizationBps: "3500",
+        snapshotTimestamp: "1700000000",
+        snapshotCount: "1",
+        updatedAt: "1700000000",
+      },
+      {
+        id: "43113-16015286601757825753",
+        chainSelector: "16015286601757825753",
+        twapPoolAmount: "2000000",
+        availableLiquidity: "1500000",
+        reservedAmount: "500000",
+        utilizationBps: "2500",
+        snapshotTimestamp: "1700000050",
+        snapshotCount: "1",
+        updatedAt: "1700000050",
+      },
+      {
+        id: "43113-14767482510784806043",
+        chainSelector: "14767482510784806043",
+        twapPoolAmount: "3000000",
+        availableLiquidity: "2700000",
+        reservedAmount: "300000",
+        utilizationBps: "1000",
+        snapshotTimestamp: "1700000005",
+        snapshotCount: "1",
+        updatedAt: "1700000005",
+      },
+    ];
+
+    const out = transformChainPoolStates(raw);
+    expect(out).toHaveLength(2);
+
+    const sepolia = out.find((r) => r.chainSelector.toString() === "16015286601757825753");
+    expect(sepolia).toBeDefined();
+    expect(sepolia!.poolDepth).toBe(2_000_000n);
+    expect(sepolia!.timestamp).toBe(1_700_000_050);
+
+    const fuji = out.find((r) => r.chainSelector.toString() === "14767482510784806043");
+    expect(fuji).toBeDefined();
+    expect(fuji!.poolDepth).toBe(3_000_000n);
+  });
 });
 
 describe("usePoolReserveRegistryState", () => {

@@ -218,7 +218,7 @@ Per-network run logs prevent cross-network context bleed when an agent runs agai
 | `thesis` | string \| null | Parsed from the LLM's final `## Thesis` section; displayed as the Vault Thesis card |
 | `lastRunAt` | ISO timestamp | Display only |
 | `latestRun` | `{ runId, finishedAt, summary }` | `summary` is the 500-char truncated final agent message; rendered in the collapsible "Show latest run summary" panel |
-| `recentActions[]` | `{ tool, justification, timestamp, txHash, agentName, runId }` | LLM-authored justifications attached to MCP write-tool calls. Deduplicated by `txHash` and capped (default 100, override with `AGENT_METADATA_ACTION_LIMIT`). The web app renders the full list in the collapsible "Show all decisions" panel (scrollable when long) and joins entries by `txHash` to the on-chain Vault History rows. |
+| `recentActions[]` | `{ tool, justification, timestamp, txHash, agentName, runId, params? }` | LLM-authored justifications attached to MCP write-tool calls. Deduplicated by `txHash` and capped (default 100, override with `AGENT_METADATA_ACTION_LIMIT`). The web app groups entries by `runId` and renders icon-driven cards in the collapsible "Show all decisions" panel, then joins entries by `txHash` to the on-chain Vault History rows. `params` is a per-tool params summary (asset id, side, size, collateral, amount, etc.) emitted by `summarizeActionParams`; see `apps/web/public/agent-metadata/README.md` for the per-tool shape. |
 
 ### Run lifecycle
 
