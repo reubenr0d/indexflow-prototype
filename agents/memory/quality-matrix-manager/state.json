@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-23T02:06:10.002Z",
-  "thesis": "This run successfully re-entered long positions on three top picks in the mining sector, leveraging strong composite scores and exceptional drilling results. The focus was on silver, gold, and copper mining, with each position justified by empirical data from the Quality Matrix.",
-  "lastThesisUpdate": "2026-05-23T02:06:10.002Z"
+  "lastRunAt": "2026-05-23T02:38:16.506Z",
+  "thesis": "This run focused on maintaining strong entries in gold and copper mining. Great Pacific Gold Corp. was successfully opened with a long position due to its strong composite score of 80, driven by a moderate gold grade of 4.95 g/t over 200m and a moderate drill program type. The focus remains on leveraging strong composite scores and exceptional drilling results.",
+  "lastThesisUpdate": "2026-05-23T02:38:16.506Z"
 }

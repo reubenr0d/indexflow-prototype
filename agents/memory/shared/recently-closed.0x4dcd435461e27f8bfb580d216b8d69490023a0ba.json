@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-05-23T02:00:50.619Z",
+  "updatedAt": "2026-05-23T02:33:25.082Z",
   "closures": {
     "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d": {
       "ticker": "PWM.V",
@@ -37,6 +37,18 @@
       "isLong": true,
       "closedAt": "2026-05-23T02:00:50.619Z",
       "closedReason": "auto-rebalance: rank rotation: closing #4 0KXS.L (pnl 0.00%) to free room for #2 GSR.V"
+    },
+    "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d": {
+      "ticker": "TNR.V",
+      "isLong": true,
+      "closedAt": "2026-05-23T02:33:13.489Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #11 TNR.V (pnl 0.00%) to free room for #1 AHR.V"
+    },
+    "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5": {
+      "ticker": "PPP.V",
+      "isLong": true,
+      "closedAt": "2026-05-23T02:33:25.082Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #10 PPP.V (pnl 0.00%) to free room for #2 GSR.V"
     }
   }
 }

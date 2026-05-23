@@ -1,427 +1,161 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T02:02:49.791Z",
+  "updatedAt": "2026-05-23T02:33:47.261Z",
   "entries": {
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T01:32:56.186Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T02:33:47.068Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T01:32:56.186Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T01:32:56.186Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T01:32:56.186Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T01:32:56.186Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "fetchedAt": "2026-05-23T02:33:47.068Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "fetchedAt": "2026-05-23T02:33:47.068Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HHH.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T02:33:47.068Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
-      "headlines": [
-        {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ACVA"
-          ]
-        },
-        {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
-          ]
-        },
-        {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "fetchedAt": "2026-05-23T02:33:47.068Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -458,150 +192,191 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T02:33:47.261Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PPP.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T02:33:47.261Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TNR.V": {
-      "fetchedAt": "2026-05-23T01:32:58.095Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T02:33:47.261Z",
       "headlines": [
         {
-          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
-          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ACVA"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
-          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BMY",
-            "PFE",
-            "CL=F"
+            "TECK",
+            "HG=F"
           ]
         },
         {
-          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
-          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NUE"
+            "TRP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0R2O.L": {
-      "fetchedAt": "2026-05-23T02:02:49.791Z",
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T02:33:47.261Z",
       "headlines": [
         {
-          "title": "'It fails or it blows up.' 40,000 in California ordered to evacuate over chemical threat",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/37a3e939-f671-3986-8878-ce617ec4cc8c/%27it-fails-or-it-blows-up.%27.html",
-          "publishedAt": "2026-05-23T01:50:30.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "3 Dividend Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/9ec91ddb-4b0b-3655-afea-dc411e6f7ea3/3-dividend-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-23T01:50:00.000Z",
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "INTC"
+            "TFII",
+            "BMO"
           ]
         },
         {
-          "title": "Medical Devices & Supplies - Specialty Stocks Q1 Highlights: Haemonetics (NYSE:HAE)",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/medical-devices-supplies-specialty-stocks-014855001.html",
-          "publishedAt": "2026-05-23T01:48:55.000Z",
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HAE"
+            "TECK",
+            "HG=F"
+          ]
+        },
+        {
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TRP"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T02:33:47.261Z",
+      "headlines": [
+        {
+          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
+          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TFII",
+            "BMO"
+          ]
+        },
+        {
+          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
+          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TECK",
+            "HG=F"
+          ]
+        },
+        {
+          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
+          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TRP"
           ]
         }
       ],
