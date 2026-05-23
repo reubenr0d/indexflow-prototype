@@ -135,9 +135,15 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Growth strategy and 4-layer framework ([growth/README.md](growth/README.md))
 - [x] Content calendar with layer-tagged backlog ([growth/CONTENT_CALENDAR.md](growth/CONTENT_CALENDAR.md))
 - [x] VC outreach playbook ([growth/VC_OUTREACH_PLAYBOOK.md](growth/VC_OUTREACH_PLAYBOOK.md))
-- [x] Content templates (blog, tweet thread, Substack, LinkedIn, podcast pitch, Farcaster)
+- [x] Content templates (blog, tweet thread, tweet standalone, Substack, LinkedIn, podcast pitch, Farcaster)
 - [x] Drafts workflow and naming conventions ([growth/drafts/README.md](growth/drafts/README.md))
 - [x] In-app SEO blog (`/blog`, `/blog/[slug]`) with frontmatter, JSON-LD, sitemap, reading time
+- [x] X growth plan with 4-week activation sequence ([growth/X_GROWTH_PLAN.md](growth/X_GROWTH_PLAN.md))
+- [x] X content calendar (Season 1, date-slotted) ([growth/X_CONTENT_CALENDAR.md](growth/X_CONTENT_CALENDAR.md))
+- [x] Galxe campaign plan (Operator Trials, Option C scope) ([growth/GALXE_CAMPAIGN_PLAN.md](growth/GALXE_CAMPAIGN_PLAN.md))
+- [x] Partnerships tracker (active partners + per-partner files) ([growth/partnerships/README.md](growth/partnerships/README.md))
+- [x] Season 1 X drafts seeded (Mon May 25 → Sat Jun 20, 26 drafts in `growth/drafts/`)
+- [ ] Boost.xyz campaign plan (high-value onchain actions, separate from Galxe scope) (`growth/BOOST_CAMPAIGN_PLAN.md`)
 
 ### Social Channels
 
@@ -160,6 +166,33 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Technical breakdown blog draft: cross-chain coordination layer (`growth/drafts/2026-04-15-blog-cross-chain-coordination-layer.md`)
 - [x] X thread draft: cross-chain coordination layer (`growth/drafts/2026-04-15-thread-cross-chain-coordination.md`)
 - [x] Autonomous-AI-agents-managing-vaults blog refreshed for OpenAI-powered agents with git-committed memory and static `/agent-metadata/<vault>.json` (`content/blog/autonomous-ai-agents-managing-vaults.md`)
+
+### Season 1 Operator Trials (Activation Campaign)
+
+Hybrid Galxe + Boost.xyz testnet activation campaign, Mon May 25 → Sun Jun 21, 2026. Scope and design live in [growth/X_GROWTH_PLAN.md](growth/X_GROWTH_PLAN.md) and [growth/GALXE_CAMPAIGN_PLAN.md](growth/GALXE_CAMPAIGN_PLAN.md).
+
+- [ ] Galxe space created (Operator Trials) and 5 OATs uploaded (NAV Initiate, Reserve Designer, Risk Cartographer, Operator Voice, Doc Mason)
+- [ ] Galxe REST credential endpoint deployed (`apps/web/src/app/api/galxe/credential/route.ts`)
+- [ ] Boost.xyz One-Time Actions submitted for review (Week 0 prep)
+- [ ] Boost.xyz Time-Based Incentives configured (Curators, Allocators, Engineers, Educators, Cross-Chain Couriers)
+- [ ] Boost.xyz hub-chain support confirmed for the testnet (Week 0 blocker)
+- [ ] `/operators` Hall of Fame page deployed (multi-dimensional leaderboard view, tier badges, Boost claim UI)
+- [ ] Leaderboard worker deployed (Cloud Run) — fuses Galxe loyalty points, Boost.xyz claim state, and Envio quality-multiplier inputs
+- [ ] Auto-broadcast bot deployed (X account watching `BasketCreated` events via Envio subscription)
+- [ ] AGENT_DEPLOYMENT_MEMORY.md entries added for the three new services (owner: user)
+- [ ] Season 1 official launch thread posted (Sat May 30, [growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md](growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md))
+- [ ] Season 1 close Spaces hosted (Sun Jun 21 21:00 UTC; raffle + Season 2 preview)
+- [ ] Season 1 recap blog post published
+
+### Partnerships
+
+Active partner relationships are tracked in [`growth/partnerships/`](growth/partnerships/) with YAML-frontmatter per-partner files (counterpart, status, next milestone, co-branded surfaces, guilds touched). The Season 1 partner slots concentrate in Week 2 (Mantle spoke demo) and Week 3 (the confidential-infra trinity: iExec compute, Secret state, Nox signing).
+
+- [x] Partnerships index + per-partner files ([growth/partnerships/README.md](growth/partnerships/README.md))
+- [x] Secret Network — Confidential State leg, Week 3 trinity ([growth/partnerships/secret-network.md](growth/partnerships/secret-network.md))
+- [x] Mantle — Spoke demo, Week 2 ([growth/partnerships/mantle.md](growth/partnerships/mantle.md))
+- [x] iExec — Confidential Compute leg, Week 3 trinity ([growth/partnerships/iexec.md](growth/partnerships/iexec.md))
+- [ ] Nox — MPC Signing leg, Week 3 trinity (canonical X handle TBD) ([growth/partnerships/nox.md](growth/partnerships/nox.md))
 
 ### Lead Capture (Layer 2)
 
