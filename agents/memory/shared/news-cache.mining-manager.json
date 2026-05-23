@@ -1,161 +1,315 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T02:33:47.261Z",
+  "updatedAt": "2026-05-23T04:10:46.175Z",
   "entries": {
-    "0KXS.L": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T04:10:43.366Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T04:10:43.366Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
           ]
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TRP"
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T04:10:43.366Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
+          ]
+        },
+        {
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T04:10:43.366Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
+          ]
+        },
+        {
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T04:10:43.366Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
+          ]
+        },
+        {
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
           ]
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -192,191 +346,205 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-23T04:10:46.005Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-23T04:10:46.175Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "TNR.V": {
+      "fetchedAt": "2026-05-23T04:10:46.175Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "URBN"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
+            "BA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-23T04:10:46.175Z",
+      "headlines": [
+        {
+          "title": "Ashley McBryde Exposes Her Life, Grit in New Album",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/33bfaf72-5242-3390-9529-21ccff5b207d/ashley-mcbryde-exposes-her.html",
+          "publishedAt": "2026-05-23T04:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "URBN Q1 Deep Dive: Free People and Subscription Momentum Drive Growth Amid Tariff Uncertainty",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/urbn-q1-deep-dive-free-035655146.html",
+          "publishedAt": "2026-05-23T03:56:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "URBN"
           ]
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "Jury clears Boeing of fraud in $153 million 737 Max lawsuit by LOT Polish Airlines",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jury-clears-boeing-fraud-153-035043291.html",
+          "publishedAt": "2026-05-23T03:50:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TRP"
+            "BA"
           ]
         }
       ],
