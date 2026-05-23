@@ -46,6 +46,25 @@ function parseBandEnv(name, fallback) {
 const PNL_BAND_TP_PCT = parseBandEnv("MCP_PNL_BAND_TP_PCT", PNL_BAND_DEFAULTS.takeProfitPct);
 const PNL_BAND_SL_PCT = parseBandEnv("MCP_PNL_BAND_SL_PCT", PNL_BAND_DEFAULTS.stopLossPct);
 
+// ---------------------------------------------------------------------------
+// On-chain perp engine constants (GMX fork, deployed via script/Deploy.s.sol)
+// ---------------------------------------------------------------------------
+//
+// These mirror the GMX `Vault` constants surfaced in `VaultUtils.validateLiquidation`:
+//   - `liquidationFeeUsd = 5e30` ($5) → any position opened with collateral
+//     below ~$5 (after the opening margin fee) reverts with
+//     `Vault: liquidation fees exceed collateral`. We require a 2x buffer
+//     ($10) by default so a small adverse move at open time still clears the
+//     check.
+//   - `maxLeverage = 500_000` (50x) → positions where
+//     `size / remainingCollateral > 50` revert with `Vault: maxLeverage exceeded`.
+//   - GMX position state is denominated in USD at 1e30 per $1; raw USDC is
+//     6 decimals, so `raw_usdc * 1e24 = gmx_usd`.
+const MIN_COLLATERAL_USDC_RAW = 10_000_000n; // $10 — 2x the on-chain $5 liquidationFeeUsd buffer.
+const CHAIN_MAX_LEVERAGE = 50; // matches GMX `maxLeverage = 500_000` (`/1e4`).
+const USDC_TO_GMX_USD_SCALE = 10n ** 24n; // raw USDC (6 dec) * 1e24 = GMX-USD (1e30).
+const LIQUIDATION_FEE_USD = "5"; // $5 — surfaced in plan_open_position responses.
+
 // Spoke discovery + twin-deploy helpers live in `./multichain-create.mjs` so
 // they can be unit-tested without spawning the MCP. `discoverSpokeContexts`
 // here is just a thin wrapper that binds the current PROJECT_ROOT + env.
@@ -887,6 +906,201 @@ server.registerTool(
 );
 
 server.registerTool(
+  "plan_open_position",
+  {
+    title: "Plan Open Position",
+    description:
+      "Read-only sizing helper that converts target leverage and the vault's free collateral into safe raw `size` and `collateral` integers ready to pass into `open_position` verbatim. " +
+      `Enforces the on-chain liquidationFeeUsd floor (min collateral $${Number(MIN_COLLATERAL_USDC_RAW) / 1e6} USDC per slot) ` +
+      `and the GMX maxLeverage cap (${CHAIN_MAX_LEVERAGE}x). ` +
+      "Returns {size, collateral, leverage, notionalUsd, availableCollateral, warnings, nextSteps}. " +
+      "The returned `size` and `collateral` are the EXACT raw strings to pass into `open_position` — do not recompute them. " +
+      "If per-slot collateral is below the liquidationFeeUsd buffer, returns `error_code: \"INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER\"` with the open-position roster so you can close a leg first.",
+    inputSchema: {
+      vault: z.string().describe("BasketVault address (0x...)"),
+      assetId: z.string().describe("bytes32 asset id from get_oracle_assets — echoed back in nextSteps params_hint"),
+      isLong: z.boolean().describe("true = long, false = short — echoed back in nextSteps params_hint"),
+      targetLeverage: z.number().optional().describe(`Target effective leverage (default 10, hard max ${CHAIN_MAX_LEVERAGE}; agent policy is typically 10x for longs and <=5x for shorts)`),
+      numNewSlots: z.number().int().optional().describe("How many new opens to split availableCollateral across (default 1). Mirrors equal-weight intent across this turn's batch of new entrants."),
+      maxCollateralUsdcRaw: z.string().optional().describe("Optional cap on per-slot collateral in raw USDC (6 decimals). Useful when an agent-side per-slot budget is smaller than `availableCollateral / numNewSlots`."),
+    },
+  },
+  async ({ vault, assetId, isLong, targetLeverage, numNewSlots, maxCollateralUsdcRaw }) => {
+    const argErr = checkArgs([
+      { name: "vault", value: vault, kind: "address" },
+      { name: "assetId", value: assetId, kind: "bytes32" },
+    ]);
+    if (argErr) return argErr;
+
+    const lev = targetLeverage == null ? 10 : Number(targetLeverage);
+    if (!Number.isFinite(lev) || lev <= 0 || lev > CHAIN_MAX_LEVERAGE) {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `targetLeverage must be in (0, ${CHAIN_MAX_LEVERAGE}]; got ${targetLeverage}.`,
+        `The GMX vault rejects positions with effective leverage > ${CHAIN_MAX_LEVERAGE}x. Agent policy is typically <= 10x for longs and <= 5x for shorts.`,
+      );
+    }
+    const slots = numNewSlots == null ? 1 : Number(numNewSlots);
+    if (!Number.isInteger(slots) || slots < 1) {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `numNewSlots must be an integer >= 1; got ${numNewSlots}.`,
+        "Pass the count of new opens you intend to fund this turn so available collateral is split evenly.",
+      );
+    }
+
+    let maxCollateralCap = null;
+    if (maxCollateralUsdcRaw != null && maxCollateralUsdcRaw !== "") {
+      try {
+        maxCollateralCap = BigInt(String(maxCollateralUsdcRaw));
+      } catch {
+        return toolError(
+          "INVALID_ARGUMENT",
+          `maxCollateralUsdcRaw must be an integer string in raw USDC (6 decimals); got "${maxCollateralUsdcRaw}".`,
+          "Pass e.g. '500000000' = $500 to cap the per-slot collateral.",
+        );
+      }
+      if (maxCollateralCap <= 0n) {
+        return toolError(
+          "INVALID_ARGUMENT",
+          `maxCollateralUsdcRaw must be > 0; got "${maxCollateralUsdcRaw}".`,
+          "Remove the field or pass a positive raw USDC integer.",
+        );
+      }
+    }
+
+    try {
+      const d = deployment();
+      const accountingState = readVaultAccountingState(d, vault);
+      if (!accountingState || !accountingState.registered) {
+        return toolError(
+          "READ_FAILED",
+          `Could not read VaultAccounting state for vault ${vault}, or the vault is not yet registered with the perp engine.`,
+          "Verify the vault address and ensure `allocate_to_perp` has been called at least once so the perp accounting record exists.",
+        );
+      }
+
+      const available = accountingState.available;
+      const perSlot = available / BigInt(slots);
+      let collateralRaw = perSlot;
+      if (maxCollateralCap != null && maxCollateralCap < collateralRaw) {
+        collateralRaw = maxCollateralCap;
+      }
+
+      if (collateralRaw < MIN_COLLATERAL_USDC_RAW) {
+        let openPositions = [];
+        let rosterError = null;
+        try {
+          openPositions = buildOpenPositionsRoster(vault, d).map((p) => ({
+            assetId: p.assetId,
+            symbol: p.symbol,
+            isLong: p.isLong,
+            size: p.size,
+            collateral: p.collateral,
+            collateralUsdc: p.collateralUsdc,
+            collateralUsdc_usdc: p.collateralUsdc_usdc,
+            unrealisedPnlUsdc: p.unrealisedPnlUsdc,
+            unrealisedPnlUsdc_usdc: p.unrealisedPnlUsdc_usdc,
+            unrealisedPnlPctOfCollateral: p.unrealisedPnlPctOfCollateral,
+            pnlBandOutcome: p.pnlBandOutcome,
+          }));
+        } catch (rosterErr) {
+          rosterError = redactSecrets(rosterErr.message || String(rosterErr));
+        }
+
+        const payload = {
+          success: false,
+          error_code: "INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER",
+          message:
+            `Per-slot collateral would be ${collateralRaw.toString()} raw USDC ($${formatUsdc(collateralRaw.toString())}), ` +
+            `below the on-chain liquidationFeeUsd buffer minimum of ${MIN_COLLATERAL_USDC_RAW.toString()} raw USDC ($${formatUsdc(MIN_COLLATERAL_USDC_RAW.toString())}). ` +
+            `availableCollateral=${available.toString()} raw USDC ($${formatUsdc(available.toString())}), numNewSlots=${slots}` +
+            (maxCollateralCap != null ? `, maxCollateralUsdcRaw=${maxCollateralCap.toString()}.` : "."),
+          vault,
+          availableCollateral: available.toString(),
+          availableCollateral_usdc: formatUsdc(available.toString()),
+          minCollateralPerSlot: MIN_COLLATERAL_USDC_RAW.toString(),
+          minCollateralPerSlot_usdc: formatUsdc(MIN_COLLATERAL_USDC_RAW.toString()),
+          numNewSlots: slots,
+          chainCaps: {
+            maxLeverage: CHAIN_MAX_LEVERAGE,
+            liquidationFeeUsd: LIQUIDATION_FEE_USD,
+          },
+          openPositions,
+          recovery_hint:
+            "Either reduce `numNewSlots` to widen each slot's collateral, drop `maxCollateralUsdcRaw` (if you set one), or close the leg with the worst `unrealisedPnlPctOfCollateral` (or any leg whose `pnlBandOutcome` is `above_take_profit` / `below_stop_loss`) via `close_position` to free locked capital, then retry `plan_open_position`.",
+        };
+        if (rosterError) payload.rosterError = rosterError;
+        return {
+          content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
+          isError: true,
+        };
+      }
+
+      // Two-digit leverage precision so values like 10.5x round-trip cleanly
+      // (10.5x => levBp = 1050; size = collateral * 1e24 * 1050 / 100).
+      const levBp = BigInt(Math.round(lev * 100));
+      const sizeRaw = (collateralRaw * USDC_TO_GMX_USD_SCALE * levBp) / 100n;
+      const notionalUsdcRaw = (collateralRaw * levBp) / 100n;
+
+      const warnings = [];
+      if (lev > 20) {
+        warnings.push(
+          `targetLeverage=${lev}x exceeds the recommended 10x agent cap. Confirm your prompt allows leverage this high.`,
+        );
+      }
+      if (collateralRaw < MIN_COLLATERAL_USDC_RAW * 2n) {
+        warnings.push(
+          `Per-slot collateral ($${formatUsdc(collateralRaw.toString())}) is within 2x of the $${formatUsdc(MIN_COLLATERAL_USDC_RAW.toString())} liquidationFeeUsd floor; small adverse moves at open time can still trip the liquidation-fee check.`,
+        );
+      }
+
+      const payload = {
+        vault: vault.toLowerCase(),
+        assetId: assetId.toLowerCase(),
+        isLong,
+        leverage: lev,
+        size: sizeRaw.toString(),
+        collateral: collateralRaw.toString(),
+        collateral_usdc: formatUsdc(collateralRaw.toString()),
+        notionalUsd: formatUsdc(notionalUsdcRaw.toString()),
+        availableCollateral: available.toString(),
+        availableCollateral_usdc: formatUsdc(available.toString()),
+        numNewSlots: slots,
+        chainCaps: {
+          maxLeverage: CHAIN_MAX_LEVERAGE,
+          liquidationFeeUsd: LIQUIDATION_FEE_USD,
+          minCollateralPerSlot: MIN_COLLATERAL_USDC_RAW.toString(),
+          minCollateralPerSlot_usdc: formatUsdc(MIN_COLLATERAL_USDC_RAW.toString()),
+        },
+        warnings,
+        nextSteps: [
+          {
+            tool: "open_position",
+            reason:
+              "Pass `size` and `collateral` from this response verbatim into open_position; do not recompute.",
+            params_hint: {
+              vault,
+              assetId,
+              isLong,
+              size: sizeRaw.toString(),
+              collateral: collateralRaw.toString(),
+            },
+          },
+        ],
+      };
+      return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
+    } catch (err) {
+      return toolError(
+        "READ_FAILED",
+        err.message,
+        "Verify the vault address is correct and the VaultAccounting deployment is reachable.",
+      );
+    }
+  },
+);
+
+server.registerTool(
   "get_position_tracking",
   {
     title: "Get Position Tracking",
@@ -1395,9 +1609,10 @@ server.registerTool(
       "Open or increase a perp position for a vault via VaultAccounting. " +
       "Size is in GMX USD units (~1e30 scale: '1000000000000000000000000000000' = $1). " +
       "Collateral is in raw USDC (6 decimals: '1000000' = 1 USDC). " +
-      "Effective leverage = size / (collateral * 1e24). Keep collateral >= 10% of size for safety. " +
+      `Effective leverage = size / (collateral * 1e24). On-chain caps: maxLeverage ${CHAIN_MAX_LEVERAGE}x and a ~$${Number(MIN_COLLATERAL_USDC_RAW) / 1e6} minimum collateral (the $${LIQUIDATION_FEE_USD} liquidationFeeUsd buffer). ` +
+      "RECOMMENDED: call `plan_open_position` first — it converts your target leverage + available collateral into the exact raw `size`/`collateral` integers to pass here, so you don't have to do 1e30 math yourself or risk `Vault: maxLeverage exceeded` / `Vault: liquidation fees exceed collateral` reverts. " +
       "Requires capital allocated via allocate_to_perp first. Caller must be vault owner. " +
-      "BEFORE calling, run `get_perp_capital_snapshot` (or read the same fields from `get_vault_pnl`) so the requested `collateral` fits the vault's `availableCollateral`; the MCP will otherwise short-circuit with `INSUFFICIENT_COLLATERAL` and embed the open-position roster so you can pick a leg to close. " +
+      "BEFORE calling, run `plan_open_position` (or at minimum `get_perp_capital_snapshot` / `get_vault_pnl`) so the requested `collateral` fits the vault's `availableCollateral`; the MCP will otherwise short-circuit with `INSUFFICIENT_COLLATERAL` and embed the open-position roster so you can pick a leg to close. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),

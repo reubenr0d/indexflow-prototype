@@ -2,6 +2,14 @@ import { PRICE_PRECISION, USDC_PRECISION } from "@/lib/constants";
 
 export type PriceHistoryWindow = "24H" | "7D" | "30D";
 
+export type PriceChartSource = "onchain" | "yahoo" | "both";
+
+export const PRICE_CHART_SOURCE_OPTIONS: { value: PriceChartSource; label: string }[] = [
+  { value: "onchain", label: "On-chain" },
+  { value: "yahoo", label: "Yahoo Finance" },
+  { value: "both", label: "Both" },
+];
+
 export const PRICE_HISTORY_WINDOW_SECONDS: Record<PriceHistoryWindow, bigint> = {
   "24H": 24n * 60n * 60n,
   "7D": 7n * 24n * 60n * 60n,

@@ -14,6 +14,9 @@ Your capabilities for managing on-chain basket vaults with perpetual hedging.
 | `get_vault_pnl` | Unrealised/realised PnL | `vault` |
 | `get_oracle_assets` | All oracle assets with prices | -- |
 | `get_position_tracking` | Single position details | `vault`, `assetId`, `isLong` |
+| `list_open_positions` | All open legs for a vault (with per-leg unrealised PnL + `pnlBandOutcome`) | `vault` |
+| `get_perp_capital_snapshot` | Vault accounting + `availableCollateral` + full open-position roster — call before any open | `vault` |
+| `plan_open_position` | **Safe sizing helper.** Converts target leverage + free collateral into the exact raw `size`/`collateral` to pass into `open_position`. Enforces $10 min collateral and 50x cap. | `vault`, `assetId`, `isLong`, `targetLeverage?`, `numNewSlots?`, `maxCollateralUsdcRaw?` |
 
 ### Write Tools
 
@@ -40,6 +43,21 @@ All write tools return `{success, transactionHash, next_steps}` with structured 
 
 Tool responses include `_usdc`, `_usd`, and `_pct` companion fields with human-readable conversions.
 For equities, prefer exchange-suffixed Yahoo symbols (`BHP.AX`, `RIO.AX`, `BHP.L`) to avoid cross-exchange ambiguity.
+
+### Safe perp sizing
+
+`open_position` takes raw GMX-USD `size` (1e30 per $1) and raw USDC `collateral` (6 decimals), and the on-chain GMX vault enforces two hard caps that revert the tx if violated:
+
+- **`Vault: maxLeverage exceeded`** when `size / (collateral * 1e24) > 50`.
+- **`Vault: liquidation fees exceed collateral`** when remaining collateral (after the opening margin fee) drops below the `$5` `liquidationFeeUsd` buffer.
+
+Don't hand-roll the 1e30 math. Instead, for every new open:
+
+1. `get_perp_capital_snapshot({ vault })` — read `accounting.availableCollateral` and the open-position roster.
+2. `plan_open_position({ vault, assetId, isLong, targetLeverage: 10, numNewSlots: <count> })` — returns the exact raw `size` and `collateral` strings.
+3. `open_position({ vault, assetId, isLong, size, collateral, justification })` — pass the helper's strings verbatim.
+
+If `plan_open_position` returns `error_code: "INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER"`, close a leg from the embedded `openPositions` roster (worst `unrealisedPnlPctOfCollateral`, or any `above_take_profit` / `below_stop_loss`) and retry.
 
 ## Workflows
 

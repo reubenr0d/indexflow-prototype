@@ -20,12 +20,10 @@ const path = require("path");
 const PRICE_DECIMALS = 8;
 const DEFAULT_DAYS = 90;
 
-// Maps oracle symbol → Yahoo Finance ticker when they differ.
-// Gold/silver commodity codes are not quoteable on Yahoo; use COMEX futures.
-const YAHOO_SYMBOL_MAP = {
-  XAU: "GC=F",
-  XAG: "SI=F",
-};
+// Shared oracle→Yahoo symbol map (kept in apps/shared so the web app and this
+// script stay in lockstep). Loaded lazily inside main() because this is a CJS
+// file and the shared module is ESM.
+let YAHOO_SYMBOL_MAP = {};
 
 const oracleSymbols = process.argv.slice(2);
 if (oracleSymbols.length === 0) {
@@ -69,6 +67,9 @@ function toRaw8(usdPrice) {
 async function main() {
   const YahooFinance = require("yahoo-finance2").default;
   const yf = new YahooFinance({ suppressNotices: ["yahooSurvey", "ripHistorical"] });
+
+  const sharedMapPath = path.join(__dirname, "..", "apps", "shared", "yahoo-symbol-map.mjs");
+  ({ YAHOO_SYMBOL_MAP } = await import(`file://${sharedMapPath}`));
 
   const now = new Date();
   const period1 = new Date(now);

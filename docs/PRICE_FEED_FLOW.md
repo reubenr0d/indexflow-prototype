@@ -392,8 +392,10 @@ sequenceDiagram
 ## 10. Web monitoring surfaces for price operations
 
 - `/prices` shows current oracle price, freshness status, and source badge for each configured asset (`Chainlink` or `Custom Oracle`).
-- `/prices/[assetId]` shows a per-asset `PriceUpdated` history timeline and trend chart with `24H`, `7D`, and `30D` windows.
-- Use the detail page when triaging stale-feed incidents to confirm whether updates are missing entirely or simply lagging cadence.
+- `/prices/[assetId]` shows a per-asset `PriceUpdated` history timeline and trend chart with `24H`, `7D`, and `30D` windows. The trend chart has a Source selector (`On-chain` / `Yahoo Finance` / `Both`) so operators can compare the on-chain oracle history against the live Yahoo Finance feed for the same window. The right-hand "Price Updates" list always reflects on-chain `PriceUpdated` events (with tx hashes) regardless of the Source setting.
+- The basket detail page mini-chart grid (`/baskets/[address]`) exposes the same Source selector globally for all assets in the basket, with a per-card "No Yahoo" badge and graceful fallback when an oracle symbol does not map to a Yahoo ticker (e.g. address-style placeholders).
+- The Yahoo time series is served by the Next.js route `/api/yahoo-finance/history?symbol=…&window=24H|7D|30D`, which wraps `yahoo-finance2`'s `chart()` and converts non-USD prices to USD using the same FX cache as the live quote route. On-chain oracle prices remain the source of truth for vault NAV, perp valuations, and the keeper at `scripts/update-yahoo-finance-prices.js`; the new Yahoo chart series is for visual comparison only.
+- Use the detail page when triaging stale-feed incidents to confirm whether updates are missing entirely or simply lagging cadence; switching the Source dropdown to `Both` quickly reveals whether the oracle is actually behind market movement or just sampling at a slower cadence.
 
 ---
 
