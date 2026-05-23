@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-23T04:15:17.948Z",
-  "thesis": "This run focused on opening long positions in companies with strong composite scores driven by exceptional drilling results. The selected companies include Giant Mining Corp., Bullion Gold Resources Corp., and NorthIsle Copper and Gold Inc., each demonstrating strong potential in their respective commodities. Giant Mining Corp. was chosen for its exceptional copper grade, Bullion Gold Resources Corp. for its strong gold grade, and NorthIsle Copper and Gold Inc. for its exceptional gold grade and strong economic studies.",
-  "lastThesisUpdate": "2026-05-23T04:15:17.948Z"
+  "lastRunAt": "2026-05-23T06:52:36.073Z",
+  "thesis": "This run focused on reinforcing long positions in companies with strong composite scores driven by exceptional drilling results. The selected companies include GR Silver Mining Ltd., A2 Gold Corp., and Giant Mining Corp., each demonstrating strong potential in their respective commodities. GR Silver Mining Ltd. was chosen for its strong silver grade, A2 Gold Corp. for its exceptional gold grade, and Giant Mining Corp. for its exceptional copper grade.",
+  "lastThesisUpdate": "2026-05-23T06:52:36.073Z"
 }
