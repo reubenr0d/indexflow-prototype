@@ -1,161 +1,111 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T02:33:47.261Z",
+  "updatedAt": "2026-05-23T09:15:26.194Z",
   "entries": {
-    "0KXS.L": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
+      "headlines": [
+        {
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
-      "headlines": [
-        {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TFII",
-            "BMO"
-          ]
-        },
-        {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
-      "headlines": [
-        {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TFII",
-            "BMO"
-          ]
-        },
-        {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T02:33:47.068Z",
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -192,192 +142,206 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "SAMARITAN'S PURSE AIRLIFTS EBOLA TREATMENT CENTER TO THE DEMOCRATIC REPUBLIC OF THE CONGO",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/samaritans-purse-airlifts-ebola-treatment-091300865.html",
+          "publishedAt": "2026-05-23T09:13:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TFII",
-            "BMO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TRP"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CGNT.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
+      "headlines": [
+        {
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TECK",
-            "HG=F"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-23T02:33:47.261Z",
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "Here’s Why TFI International (TFII) is Among the 10 Best Performing Canadian Stocks So Far in 2026",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-tfi-international-tfii-among-023117454.html",
-          "publishedAt": "2026-05-23T02:31:17.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TFII",
-            "BMO"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Deutsche Bank Raises its Price Target on Teck Resources (TECK)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deutsche-bank-raises-price-target-023108089.html",
-          "publishedAt": "2026-05-23T02:31:08.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TECK",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "RBC Capital Raises its Price Target on TC Energy (TRP)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/rbc-capital-raises-price-target-023101286.html",
-          "publishedAt": "2026-05-23T02:31:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TRP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
