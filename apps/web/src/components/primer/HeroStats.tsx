@@ -27,20 +27,20 @@ export default function HeroStats() {
   const isAllChains = viewMode === "all";
 
   return (
-    <div className="mt-10 border-t border-app-border pt-6">
-      <div className="inline-flex items-center gap-2 rounded-full border border-app-border bg-app-surface px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-app-accent">
+    <div className="mt-6 border-t border-app-border pt-4">
+      <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-300">
         <span className="relative flex h-2.5 w-2.5">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500/75" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500" />
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-500/70" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-amber-500" />
         </span>
         Live testnet stats
         {isAllChains && (
-          <span className="ml-1 normal-case tracking-normal text-app-muted">
+          <span className="ml-1 normal-case tracking-normal text-amber-700/70 dark:text-amber-300/70">
             across {configuredTargets.length} chains
           </span>
         )}
       </div>
-      <div className="mt-4 flex flex-wrap gap-10">
+      <div className="mt-3 flex flex-wrap gap-x-7 gap-y-3 sm:gap-x-9">
         <StatCell
           label="Total TVL"
           loading={isLoading}
@@ -78,14 +78,10 @@ export default function HeroStats() {
         />
       </div>
       {isError && (
-        <p className="mt-3 text-xs text-red-400">
+        <p className="mt-2 text-xs text-red-400">
           Unable to load stats from the indexer — data may be stale.
         </p>
       )}
-      <p className="mt-4 max-w-3xl text-xs leading-relaxed text-app-muted">
-        These metrics reflect the current testnet deployment and are shown for
-        product preview purposes, not live mainnet capital.
-      </p>
     </div>
   );
 }
@@ -105,9 +101,9 @@ function StatCell({
         {label}
       </span>
       {loading ? (
-        <span className="mt-0.5 h-6 w-16 animate-pulse rounded bg-app-surface" />
+        <span className="mt-0.5 h-5 w-14 animate-pulse rounded bg-app-surface" />
       ) : (
-        <span className="mt-0.5 font-mono text-base font-semibold text-app-text">
+        <span className="mt-0.5 font-mono text-sm font-semibold text-app-text sm:text-base">
           {value}
         </span>
       )}

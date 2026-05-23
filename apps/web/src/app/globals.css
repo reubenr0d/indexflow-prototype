@@ -23,6 +23,7 @@
   --landing-grad-a: rgba(13, 148, 136, 0.22);
   --landing-grad-b: rgba(14, 116, 144, 0.16);
   --landing-grad-c: rgba(12, 74, 110, 0.11);
+  --testnet-banner-h: 28px;
 }
 
 .dark {
@@ -216,6 +217,25 @@ body {
 
 .dark .primer-hero-noise {
   opacity: 0.06;
+}
+
+/* Testnet banner — meld into landing hero only on '/' */
+/* NOTE: do not set `position: relative` here — it would override the
+   Tailwind `sticky` class on the banner and break sticky scrolling on
+   the landing page. `position: sticky` already establishes a containing
+   block for the absolutely positioned ::after gradient below. */
+
+.testnet-banner-landing::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 -8px 0;
+  height: 8px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 18%, transparent) 0%,
+    transparent 100%
+  );
 }
 
 /* Animated floating orbs */

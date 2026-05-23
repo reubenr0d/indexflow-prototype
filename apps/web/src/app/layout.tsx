@@ -15,6 +15,13 @@ const Header = dynamic(
   () => import("@/components/layout/header").then((m) => ({ default: m.Header })),
 );
 
+const TestnetBanner = dynamic(
+  () =>
+    import("@/components/layout/testnet-banner").then((m) => ({
+      default: m.TestnetBanner,
+    })),
+);
+
 const ToastContainer = dynamic(
   () => import("@/components/ui/toast").then((m) => ({ default: m.ToastContainer })),
 );
@@ -94,6 +101,7 @@ export default async function RootLayout({
         <PwaBootstrap />
         <Web3Provider>
           <TourProvider>
+            <TestnetBanner />
             <PriceTickerHydrated initialData={tickerData} />
             <Header />
             <ToastContainer />

@@ -23,7 +23,9 @@ import { useSponsoredTransactionAdapter } from "@/hooks/useSponsoredTransactionA
 import { useTheme } from "@/hooks/useTheme";
 import { cn } from "@/lib/utils";
 import { Sun, Moon, Menu, X, LogOut, Settings, PieChart, Coins, Loader2 } from "lucide-react";
-import { NetworkSelector } from "@/components/layout/network-selector";
+// TODO(cross-chain-deposits): Re-enable or remove NetworkSelector once cross-chain
+// deposits work properly. Hidden in UI for now.
+// import { NetworkSelector } from "@/components/layout/network-selector";
 import { SponsorshipErrorDialog, isSponsorshipError } from "@/components/baskets/sponsorship-error-dialog";
 
 const navItems = [
@@ -313,7 +315,7 @@ export function Header() {
     <>
       <header
         className={cn(
-          "sticky top-0 z-40 border-b border-app-border bg-app-bg/90 backdrop-blur-md",
+          "sticky top-[var(--testnet-banner-h,0px)] z-40 border-b border-app-border bg-app-bg/90 backdrop-blur-md",
           onHome && "border-transparent bg-app-bg/70"
         )}
       >
@@ -389,9 +391,11 @@ export function Header() {
                 {isConnectPending ? "Connecting..." : "E2E Connect"}
               </button>
             )}
-            <div className="hidden sm:block">
+            {/* TODO(cross-chain-deposits): Re-enable or remove NetworkSelector once
+                cross-chain deposits work properly. Hidden in UI for now. */}
+            {/* <div className="hidden sm:block">
               <NetworkSelector />
-            </div>
+            </div> */}
             <div className="hidden sm:block">
               <ConnectWalletButton theme={theme} toggle={toggle} />
             </div>
@@ -417,7 +421,7 @@ export function Header() {
 
       <div
         className={cn(
-          "fixed inset-x-0 top-14 z-30 overflow-hidden border-b border-app-border bg-app-surface transition-[max-height,opacity] duration-200 ease-in-out md:hidden",
+          "fixed inset-x-0 top-[calc(3.5rem+var(--testnet-banner-h,0px))] z-30 overflow-hidden border-b border-app-border bg-app-surface transition-[max-height,opacity] duration-200 ease-in-out md:hidden",
           mobileOpen ? "max-h-[80vh] opacity-100" : "pointer-events-none max-h-0 opacity-0 border-transparent"
         )}
       >
@@ -465,9 +469,11 @@ export function Header() {
               </Link>
             );
           })}
-          <div className="pt-2 sm:hidden">
+          {/* TODO(cross-chain-deposits): Re-enable or remove NetworkSelector once
+              cross-chain deposits work properly. Hidden in UI for now. */}
+          {/* <div className="pt-2 sm:hidden">
             <NetworkSelector />
-          </div>
+          </div> */}
           <button
             type="button"
             onClick={toggle}
