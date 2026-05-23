@@ -1,6 +1,6 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T01:32:58.095Z",
+  "updatedAt": "2026-05-23T02:02:49.791Z",
   "entries": {
     "CGNT.V": {
       "fetchedAt": "2026-05-23T01:32:56.186Z",
@@ -567,6 +567,41 @@
           "type": "STORY",
           "relatedTickers": [
             "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0R2O.L": {
+      "fetchedAt": "2026-05-23T02:02:49.791Z",
+      "headlines": [
+        {
+          "title": "'It fails or it blows up.' 40,000 in California ordered to evacuate over chemical threat",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/37a3e939-f671-3986-8878-ce617ec4cc8c/%27it-fails-or-it-blows-up.%27.html",
+          "publishedAt": "2026-05-23T01:50:30.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "3 Dividend Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9ec91ddb-4b0b-3655-afea-dc411e6f7ea3/3-dividend-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-23T01:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Medical Devices & Supplies - Specialty Stocks Q1 Highlights: Haemonetics (NYSE:HAE)",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/medical-devices-supplies-specialty-stocks-014855001.html",
+          "publishedAt": "2026-05-23T01:48:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HAE"
           ]
         }
       ],

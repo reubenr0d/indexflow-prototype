@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-23T01:36:30.296Z",
-  "thesis": "This run focused on maintaining strong entries in gold and copper mining. Great Pacific Gold Corp. was successfully opened with a long position due to its strong composite score of 80, driven by moderate gold grade at 4.95 g/t over 200m. The other top picks, GR Silver Mining Ltd., A2 Gold Corp., and Giant Mining Corp., were not reopened due to the churn guard cooldown from recent auto-rebalance actions.\n\nNo short positions were opened this run as there were no Red-Flag signals detected in critical categories for the wired oracle assets outside the top-N.",
-  "lastThesisUpdate": "2026-05-23T01:36:30.296Z"
+  "lastRunAt": "2026-05-23T02:06:10.002Z",
+  "thesis": "This run successfully re-entered long positions on three top picks in the mining sector, leveraging strong composite scores and exceptional drilling results. The focus was on silver, gold, and copper mining, with each position justified by empirical data from the Quality Matrix.",
+  "lastThesisUpdate": "2026-05-23T02:06:10.002Z"
 }

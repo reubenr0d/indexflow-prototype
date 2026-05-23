@@ -4,14 +4,99 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Royal Gold Inc. (0KXS.L) and Empire Metals Limited (EEE.L), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastRunAt": "2026-05-23T01:33:27.908Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Prospector Metals Corp. (PPP.V) and TNR Gold Corp. (TNR.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
+  "lastRunAt": "2026-05-23T02:02:53.405Z",
   "latestRun": {
-    "runId": "2026-05-23T01:33:27.908Z",
-    "finishedAt": "2026-05-23T01:33:27.908Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Royal Gold Inc. (0KXS.L) and Empire Metals Limited (EEE.L), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired orac"
+    "runId": "2026-05-23T02:02:53.405Z",
+    "finishedAt": "2026-05-23T02:02:53.405Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Prospector Metals Corp. (PPP.V) and TNR Gold Corp. (TNR.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired orac"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #6 EEE.L (pnl 0.00%) to free room for #1 AHR.V",
+      "timestamp": "2026-05-23T02:02:53.405Z",
+      "txHash": "0x767b8d6ca96fcd6dc61fd526c0211cc07a5e943489b4142c83f2c0c3928da32f",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T02:02:53.405Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+        "isLong": true,
+        "sizeDelta": "9207764520000000000000000000000000",
+        "collateralDelta": "920776452"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #4 0KXS.L (pnl 0.00%) to free room for #2 GSR.V",
+      "timestamp": "2026-05-23T02:02:53.405Z",
+      "txHash": "0xfe60e56d7a4dbe7a5a39293b175b2090f6ba2e8db338402423b81c19b76285cf",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T02:02:53.405Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+        "isLong": true,
+        "sizeDelta": "9207764520000000000000000000000000",
+        "collateralDelta": "920776452"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new entrant in the top ML picks with a high score and predicted return.",
+      "timestamp": "2026-05-23T02:02:53.405Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T02:02:53.405Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "CRML",
+        "seedPriceUsd": 10.98
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both assets are new entrants with high ML scores; no recent losses >10% on CRML; available collateral is sufficient at $2762.33."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Prospector Metals Corp. (PPP.V) based on its high ML score and predicted return.",
+      "timestamp": "2026-05-23T02:02:53.405Z",
+      "txHash": "0xb06fa5266deab781e75cf4a6a9ab7a1ad90ef994ad9bdef602a627d04db99ac7",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T02:02:53.405Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
+        "isLong": true,
+        "size": "9207764520000000000000000000000000",
+        "collateral": "920776452"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (920.78/2762.33), within safe limits and consistent with metals_risk_off regime."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on TNR Gold Corp. (TNR.V) based on its high ML score and predicted return.",
+      "timestamp": "2026-05-23T02:02:53.405Z",
+      "txHash": "0xf5b2c29239ac15900ee31d087083b93ca8dd91ee838be0fc4d5fa4be0c2e0bcd",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T02:02:53.405Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
+        "isLong": true,
+        "size": "9207764520000000000000000000000000",
+        "collateral": "920776452"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (920.78/2762.33), within safe limits and consistent with metals_risk_off regime."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #5 CRML (pnl 0.00%) to free room for #1 AHR.V",
