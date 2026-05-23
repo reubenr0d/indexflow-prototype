@@ -1,168 +1,441 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T12:10:05.828Z",
+  "updatedAt": "2026-05-23T14:03:51.229Z",
   "entries": {
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T12:10:05.828Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
       "headlines": [
         {
-          "title": "Considering un-retirement? More older Americans are rejoining the workforce, often out of financial need.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/considering-un-retirement-more-older-americans-are-rejoining-the-workforce-often-out-of-financial-need-120341567.html",
-          "publishedAt": "2026-05-23T12:03:41.000Z",
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Your CDs Feel Safe. The 1.5 Percentage Points of Income They’re Not Paying You Aren’t.",
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/672f810b-ebd9-3ad8-9416-712ec9fb7d76/your-cds-feel-safe.-the-1.5.html",
-          "publishedAt": "2026-05-23T12:00:46.000Z",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SUB",
+            "SPY",
+            "USMV",
+            "PJUL",
             "NVDA"
           ]
         },
         {
-          "title": "Medicare Premium Jumps Hundreds a Month in 2026 From a 2024 Asset Sale You Forgot About",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/37bb2f5b-3fb0-3673-98f3-daf4f7190a62/medicare-premium-jumps.html",
-          "publishedAt": "2026-05-23T12:00:24.000Z",
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CRML": {
+      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "headlines": [
+        {
+          "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/crml-executes-15-binding-definitive-114000090.html",
+          "publishedAt": "2026-05-21T11:40:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ALOY",
+            "CRML"
+          ]
+        },
+        {
+          "title": "Assessing Critical Metals (CRML) Valuation After Strong Share Price And P/B Premium",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-critical-metals-crml-valuation-002731399.html",
+          "publishedAt": "2026-05-22T00:27:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CRML"
+          ]
+        },
+        {
+          "title": "Critical Metals Signs Offtake Agreement With REalloys for Rare Earth Concentrate",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/critical-metals-signs-offtake-agreement-123655525.html",
+          "publishedAt": "2026-05-21T12:36:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ALOY",
+            "CRML"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AYM.AX": {
-      "fetchedAt": "2026-05-23T12:10:05.828Z",
+      "fetchedAt": "2026-05-23T14:03:51.229Z",
       "headlines": [
         {
-          "title": "Considering un-retirement? More older Americans are rejoining the workforce, often out of financial need.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/considering-un-retirement-more-older-americans-are-rejoining-the-workforce-often-out-of-financial-need-120341567.html",
-          "publishedAt": "2026-05-23T12:03:41.000Z",
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Your CDs Feel Safe. The 1.5 Percentage Points of Income They’re Not Paying You Aren’t.",
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/672f810b-ebd9-3ad8-9416-712ec9fb7d76/your-cds-feel-safe.-the-1.5.html",
-          "publishedAt": "2026-05-23T12:00:46.000Z",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SUB",
+            "SPY",
+            "USMV",
+            "PJUL",
             "NVDA"
           ]
         },
         {
-          "title": "Medicare Premium Jumps Hundreds a Month in 2026 From a 2024 Asset Sale You Forgot About",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/37bb2f5b-3fb0-3673-98f3-daf4f7190a62/medicare-premium-jumps.html",
-          "publishedAt": "2026-05-23T12:00:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T12:10:05.828Z",
-      "headlines": [
-        {
-          "title": "Considering un-retirement? More older Americans are rejoining the workforce, often out of financial need.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/considering-un-retirement-more-older-americans-are-rejoining-the-workforce-often-out-of-financial-need-120341567.html",
-          "publishedAt": "2026-05-23T12:03:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Your CDs Feel Safe. The 1.5 Percentage Points of Income They’re Not Paying You Aren’t.",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/672f810b-ebd9-3ad8-9416-712ec9fb7d76/your-cds-feel-safe.-the-1.5.html",
-          "publishedAt": "2026-05-23T12:00:46.000Z",
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SUB",
-            "NVDA"
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
           ]
-        },
-        {
-          "title": "Medicare Premium Jumps Hundreds a Month in 2026 From a 2024 Asset Sale You Forgot About",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/37bb2f5b-3fb0-3673-98f3-daf4f7190a62/medicare-premium-jumps.html",
-          "publishedAt": "2026-05-23T12:00:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CGNT.V": {
-      "fetchedAt": "2026-05-23T12:10:05.828Z",
+      "fetchedAt": "2026-05-23T14:03:51.229Z",
       "headlines": [
         {
-          "title": "Considering un-retirement? More older Americans are rejoining the workforce, often out of financial need.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/considering-un-retirement-more-older-americans-are-rejoining-the-workforce-often-out-of-financial-need-120341567.html",
-          "publishedAt": "2026-05-23T12:03:41.000Z",
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Your CDs Feel Safe. The 1.5 Percentage Points of Income They’re Not Paying You Aren’t.",
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/672f810b-ebd9-3ad8-9416-712ec9fb7d76/your-cds-feel-safe.-the-1.5.html",
-          "publishedAt": "2026-05-23T12:00:46.000Z",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SUB",
+            "SPY",
+            "USMV",
+            "PJUL",
             "NVDA"
           ]
         },
         {
-          "title": "Medicare Premium Jumps Hundreds a Month in 2026 From a 2024 Asset Sale You Forgot About",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/37bb2f5b-3fb0-3673-98f3-daf4f7190a62/medicare-premium-jumps.html",
-          "publishedAt": "2026-05-23T12:00:24.000Z",
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T14:03:51.229Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-23T12:10:05.828Z",
+      "fetchedAt": "2026-05-23T14:03:51.229Z",
       "headlines": [
         {
-          "title": "Considering un-retirement? More older Americans are rejoining the workforce, often out of financial need.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/considering-un-retirement-more-older-americans-are-rejoining-the-workforce-often-out-of-financial-need-120341567.html",
-          "publishedAt": "2026-05-23T12:03:41.000Z",
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Your CDs Feel Safe. The 1.5 Percentage Points of Income They’re Not Paying You Aren’t.",
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/672f810b-ebd9-3ad8-9416-712ec9fb7d76/your-cds-feel-safe.-the-1.5.html",
-          "publishedAt": "2026-05-23T12:00:46.000Z",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SUB",
+            "SPY",
+            "USMV",
+            "PJUL",
             "NVDA"
           ]
         },
         {
-          "title": "Medicare Premium Jumps Hundreds a Month in 2026 From a 2024 Asset Sale You Forgot About",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/37bb2f5b-3fb0-3673-98f3-daf4f7190a62/medicare-premium-jumps.html",
-          "publishedAt": "2026-05-23T12:00:24.000Z",
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T14:03:51.229Z",
+      "headlines": [
+        {
+          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
+          "publishedAt": "2026-05-23T13:58:27.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
+          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPY",
+            "USMV",
+            "PJUL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
+          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "AXP",
+            "AAPL",
+            "KO"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
