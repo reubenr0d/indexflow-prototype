@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:15:21.593Z",
-  "lastRunAt": "2026-05-23T21:12:22.500Z",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well with the current market conditions, providing a balanced exposure to both stability and growth potential.\n\nNo short positions are being opened this run as no concrete bearish news was identified on out-of-basket names. The focus remains on capitalizing on the strengths of the long picks identified by the Atlas model.",
-  "lastThesisUpdate": "2026-05-23T21:12:22.500Z"
+  "lastRunAt": "2026-05-23T22:12:22.104Z",
+  "thesis": "The current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well with the current market conditions, providing a balanced exposure to both stability and growth potential.\n\nNo short positions are being opened this run as no concrete bearish news was identified on out-of-basket names. The focus remains on capitalizing on the strengths of the long picks identified by the Atlas model.",
+  "lastThesisUpdate": "2026-05-23T22:12:22.104Z"
 }
