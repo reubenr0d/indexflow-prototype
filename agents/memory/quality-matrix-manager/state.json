@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-23T18:19:19.698Z",
-  "thesis": "This run successfully opened long positions on three top picks from the Quality Matrix, leveraging strong composite scores and exceptional drilling results. The focus was on GR Silver Mining Ltd. (GRSL.V), A2 Gold Corp. (AUAU.V), and NorthIsle Copper and Gold Inc. (NCX.V), each selected for their strong potential based on the matrix scoring. \n\n- **GR Silver Mining Ltd. (GRSL.V)**: Chosen for its strong silver grade at 308 g/t (PAAS anchor) and moderate drill program type.\n- **A2 Gold Corp. (AUAU.V)**: Selected due to its exceptional gold grade at 93.3 g/t and moderate drill program type.\n- **NorthIsle Copper and Gold Inc. (NCX.V)**: Included for its strong composite score and favorable drilling results.\n\nThe vault remains fully allocated with no idle USDC available for further allocations this run. No new short positions were opened due to the absence of concrete bearish headlines and Red-Flag signals.",
-  "lastThesisUpdate": "2026-05-23T18:19:19.698Z"
+  "lastRunAt": "2026-05-23T19:46:13.279Z",
+  "thesis": "This run successfully opened long positions on three top picks from the Quality Matrix, leveraging strong composite scores and exceptional drilling results. The focus was on GR Silver Mining Ltd. (GRSL.V), A2 Gold Corp. (AUAU.V), and NorthIsle Copper and Gold Inc. (NCX.V), each selected for their strong potential based on the matrix scoring. The churn guard was bypassed due to the strong signals from the Quality Matrix, allowing re-entry into these positions.",
+  "lastThesisUpdate": "2026-05-23T19:46:13.279Z"
 }
