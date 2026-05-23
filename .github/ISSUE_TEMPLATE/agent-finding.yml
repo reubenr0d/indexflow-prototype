@@ -1,0 +1,94 @@
+name: Agent finding
+description: A strategy idea, refactor, new MCP/skill, data gap, or investigation surfaced by (or on behalf of) an autonomous agent.
+title: "agent: "
+labels: ["agent-finding", "needs-human-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is **schema-locked** to
+        [`apps/mcps/repo-editor/issue-manifest.js`](../../apps/mcps/repo-editor/issue-manifest.js).
+        Changing the field ids here without updating `formatIssueBody` /
+        `CATEGORY_ENUM` will break the round-trip dedupe used by the
+        future `scripts/apply-self-improvement-issues.mjs` applier.
+
+        Humans: use this when you want to feed an observation back into
+        the self-improver loop (it will be deduped against agent-filed
+        issues via the marker at the bottom).
+
+        Agents (`self-improver-issues` etc.): the applier renders against
+        this exact field order — keep them aligned.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Must match `CATEGORY_ENUM` in `apps/mcps/repo-editor/issue-manifest.js` verbatim.
+      options:
+        - new_mcp_or_skill
+        - strategy_idea
+        - data_gap
+        - refactor
+        - investigation
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One paragraph. What did the agent (or you) observe? What should change?
+    validations:
+      required: true
+  - type: input
+    id: agent_name
+    attributes:
+      label: Agent name
+      description: "Source agent. e.g. `self-improver`, `vault-manager`, `mining-manager`, `quality-matrix-manager`. Use `human` if filed manually."
+      placeholder: "self-improver"
+    validations:
+      required: true
+  - type: textarea
+    id: justification
+    attributes:
+      label: Justification
+      description: Why the agent surfaced this. Cite memory tail entries, run-log signals, or specific runs if possible.
+    validations:
+      required: true
+  - type: dropdown
+    id: conviction_weight
+    attributes:
+      label: Conviction weight
+      description: Self-reported confidence in the [0, 1] range. Matches the `clampConviction` clamp in the manifest.
+      options:
+        - "0.1"
+        - "0.2"
+        - "0.3"
+        - "0.4"
+        - "0.5"
+        - "0.6"
+        - "0.7"
+        - "0.8"
+        - "0.9"
+        - "1.0"
+      default: 4
+    validations:
+      required: true
+  - type: textarea
+    id: trigger_signals
+    attributes:
+      label: Trigger signals (Layer A)
+      description: Bullet list of signals from `scripts/detect-self-improvement-signal.mjs` that were active when this finding was drafted. Leave empty for purely speculative ideas.
+      placeholder: |
+        - `recurring_losers` on `quality-matrix-manager` (sepolia): GSR.V closed at -22% twice in 5 days.
+        - `loss_streak` on `vault-manager` (sepolia): 4 closures < -5% in 24h.
+  - type: input
+    id: manifest_id
+    attributes:
+      label: Manifest id
+      description: Optional round-trip id. Agents populate this from `addIssue` so the applier can dedupe.
+      placeholder: "12-char sha-256 prefix, e.g. `a1b2c3d4e5f6`"
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        <!-- self-improver-issue-id: __MANIFEST_ID__ -->
+        <!-- Agent findings are reviewed by a human before any code change lands. Close to suppress for ~24h. -->

@@ -264,18 +264,21 @@ jobs:
   # Self-improver meta-loop (see docs/AGENTS_FRAMEWORK.md § Self-Improvement)
   # ---------------------------------------------------------------------------
   # Runs AFTER `commit-results` so the freshly-pushed run log is available
-  # on `main` when the deterministic signal detector reads it.
+  # on `main` when the deterministic signal detector reads it. Two parallel
+  # channels live in this single job (so they share the checkout +
+  # concurrency slot):
   #
+  # PR channel (gated on Layer A signal; produces narrow, code-actionable PRs):
   #   1. Layer A — scripts/detect-self-improvement-signal.mjs runs first.
-  #      If `shouldRun: false`, every subsequent step is skipped (zero LLM
-  #      cost on quiet ticks).
+  #      If `shouldRun: false`, every PR-channel step is skipped (zero LLM
+  #      cost on quiet ticks). Issues channel still fires.
   #   2. Layer B — `node scripts/agent-runner.mjs self-improver` invokes
   #      the existing runner, which spawns the repo-editor MCP, executes
   #      the meta-agent loop, and persists a manifest at
   #      `.agent-self-improvement/proposed-edits.json`.
   #   3. Layer C — scripts/run-self-improvement-risk-officer.mjs reviews
   #      the manifest (approve / downsize / veto). Veto is logged and
-  #      short-circuits the rest of the job.
+  #      short-circuits the rest of the PR channel.
   #   4. Layer E — scripts/apply-self-improvement-proposals.mjs --apply-
   #      locally-only mutates the working tree, then a dry-run replay of
   #      every touched agent confirms the prompt still parses and the
@@ -286,9 +289,27 @@ jobs:
   #      a PR labelled `agent-self-improvement` + `needs-human-review`.
   #      Never auto-merges — humans review and merge.
   #
+  # Issues channel (runs every tick regardless of Layer A; produces broader,
+  # more speculative GitHub Issues for human triage):
+  #   F. Layer F  — `node scripts/agent-runner.mjs self-improver-issues`
+  #      invokes the same runner with a sibling meta-agent that brainstorms
+  #      issues and persists them to
+  #      `.agent-self-improvement/proposed-issues.json`.
+  #   F'. Layer F' — scripts/run-self-improvement-issue-risk-officer.mjs
+  #      reviews the issue manifest with a softer rubric (issues don't
+  #      change code; the cost of filing a weak one is low). Same
+  #      approve / downsize / veto schema.
+  #   F''. Layer F'' — scripts/apply-self-improvement-issues.mjs
+  #      --open-issues dedupes against open issues via `gh issue list`,
+  #      respects MAX_OPEN_SELF_IMPROVER_ISSUES (default 10), and calls
+  #      `gh issue create` per surviving proposal with labels
+  #      `agent-self-improvement-issue` + `needs-human-triage` +
+  #      `category:<x>`. Never edits or closes existing issues.
+  #
   # Skipped on ad-hoc workflow_dispatch with `dry_run=true` or
   # `vault_address` set: those are exploration runs that should never
-  # alter the agent strategy.
+  # alter the agent strategy. The issues channel ALSO honours this skip
+  # since both channels share the job's top-level `if`.
   self-improve:
     name: Self-improver meta-loop
     needs: commit-results
@@ -302,6 +323,7 @@ jobs:
     permissions:
       contents: write       # for the feature branch only; main is untouched
       pull-requests: write  # for `gh pr create`
+      issues: write         # for `gh issue create` (issues channel — Layer F'')
     # Separate concurrency group from the trading agents above: this job
     # never signs anything with KEEPER_PRIVATE_KEY so it doesn't need the
     # `keeper-key-serialized` slot, but it DOES need to serialise against
@@ -423,12 +445,90 @@ jobs:
           PROJECT_ROOT: ${{ github.workspace }}
         run: node scripts/apply-self-improvement-proposals.mjs --open-pr
 
+      # -----------------------------------------------------------------------
+      # Issues channel — runs unconditionally (no `should_run` gate). The PR
+      # channel only fires when Layer A signals a concrete fault; the issues
+      # channel fires every tick to surface broader, more speculative ideas
+      # for human triage. Same risk-officer rigour with a softer rubric;
+      # always additive (no edit / close / assign).
+      # -----------------------------------------------------------------------
+
+      - name: Layer F — run self-improver-issues meta-agent
+        if: always()
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # `list_open_issues` (a propose_issue-sibling tool on the
+          # repo-editor MCP) shells out to `gh issue list`, so the runner
+          # needs a GH token. Read-only — token never sees `gh issue create`.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          # The repo-editor MCP only writes to .agent-self-improvement/,
+          # so the runner doesn't need on-chain write execution here. We
+          # still set this so the runner doesn't skip `propose_issue`
+          # calls due to the non-interactive write-confirmation gate.
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
+          AGENT_MAX_TURNS: "12"
+          AGENT_NETWORK: "sepolia"
+        run: node scripts/agent-runner.mjs self-improver-issues
+
+      - name: Layer F' — issue risk-officer review
+        if: always()
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # `gh issue list` for the openIssues payload used by the cap
+          # preflight + LLM context.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          # Configurable per-period cap on open self-improver-filed
+          # issues. The risk-officer vetoes once this is hit; the opener
+          # is a belt-and-braces second check.
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/run-self-improvement-issue-risk-officer.mjs
+
+      - name: Inspect issue risk-officer verdict
+        id: issue_verdict
+        if: always()
+        run: |
+          if [ ! -f .agent-self-improvement/issue-risk-officer-verdict.json ]; then
+            echo "verdict_kind=missing" >> "$GITHUB_OUTPUT"
+            echo "proposal_count=0" >> "$GITHUB_OUTPUT"
+            echo "::notice::no issue risk-officer verdict file — issues channel skipped (likely empty manifest)"
+            exit 0
+          fi
+          kind=$(jq -r '.verdict' .agent-self-improvement/issue-risk-officer-verdict.json)
+          count=$(jq -r '.proposalCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          dropped=$(jq -r '.droppedCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          echo "verdict_kind=${kind}" >> "$GITHUB_OUTPUT"
+          echo "proposal_count=${count}" >> "$GITHUB_OUTPUT"
+          echo "dropped_count=${dropped}" >> "$GITHUB_OUTPUT"
+          echo "::notice::issue risk-officer verdict=${kind} (${dropped}/${count} issues dropped)"
+
+      - name: Layer F'' — open issues
+        if: >-
+          always() &&
+          steps.issue_verdict.outputs.verdict_kind != 'veto' &&
+          steps.issue_verdict.outputs.verdict_kind != 'missing' &&
+          steps.issue_verdict.outputs.proposal_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/apply-self-improvement-issues.mjs --open-issues
+
       - name: Upload self-improver artefacts
-        if: always() && steps.signal.outputs.should_run == 'true'
+        # Upload whenever any self-improver work happened — that's either
+        # a PR-channel run (`should_run == 'true'`) or an issues-channel
+        # run (always-on, leaves files under .agent-self-improvement/).
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: self-improver-artefacts
           path: |
             .agent-self-improvement/
             agents/memory/self-improver/
+            agents/memory/self-improver-issues/
           retention-days: 14

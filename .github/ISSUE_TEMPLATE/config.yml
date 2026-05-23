@@ -1,0 +1,19 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security disclosure (do NOT open a public issue)
+    url: mailto:security@indexflow.app
+    about: >-
+      Privately report vulnerabilities in BasketVault, VaultAccounting,
+      OracleAdapter, PriceSync, FundingRateManager, PricingEngine, the GMX
+      v1 fork, StateRelay, or RedemptionReceiver. Public issues for
+      security bugs will be redirected to this address.
+  - name: Operator runbook / docs index
+    url: https://github.com/reubenr0d/indexflow-prototype/blob/main/docs/README.md
+    about: >-
+      Operational questions (deploys, keeper, oracle, agents) are usually
+      already answered under /docs. Check there before filing.
+  - name: Agent framework reference
+    url: https://github.com/reubenr0d/indexflow-prototype/blob/main/docs/AGENTS_FRAMEWORK.md
+    about: >-
+      Background on how the self-improver, vault-manager, and other agents
+      author PRs and issues. Read before filing an `agent-finding` issue.

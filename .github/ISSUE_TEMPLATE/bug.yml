@@ -1,0 +1,110 @@
+name: Bug report
+description: Report a defect in contracts, web app, agents, MCP servers, keeper, indexer, or infra.
+title: "bug: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Before submitting:
+        - **Security vulnerabilities must NOT be filed here** — use the
+          Security disclosure contact link instead.
+        - Search existing open issues; comment on a match rather than
+          duplicating.
+        - Reproduction steps make the difference between a fast fix and a
+          stale ticket.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences. What's broken?
+      placeholder: "BasketVault.deposit() reverts with `INSUFFICIENT_RESERVE` even when reserveBps is well above the minimum."
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps that another contributor could follow exactly.
+      placeholder: |
+        1. `npm run local:up`
+        2. `npm run deploy:local`
+        3. Call `basket.deposit(...)` from a fresh wallet with 1000 USDC.
+        4. Observe the revert.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: Include error codes, revert reasons, or screenshots if relevant.
+    validations:
+      required: true
+  - type: dropdown
+    id: affected_surface
+    attributes:
+      label: Affected surface
+      description: Pick the closest match. Multi-select if the bug spans layers.
+      multiple: true
+      options:
+        - solidity-contracts (src/**)
+        - apps/web
+        - apps/push-worker
+        - apps/envio
+        - services/keeper
+        - agent-runner (scripts/agent-runner.mjs)
+        - mcp-servers (apps/mcps/**)
+        - infra/ci (.github/**)
+        - docs
+        - other
+    validations:
+      required: true
+  - type: dropdown
+    id: network
+    attributes:
+      label: Network
+      options:
+        - local (anvil)
+        - sepolia
+        - fuji
+        - mainnet-future
+        - n/a
+    validations:
+      required: true
+  - type: input
+    id: relevant_tx_or_addr
+    attributes:
+      label: Relevant tx hash / contract address
+      description: Optional — paste any tx hash, vault address, or asset id that helps narrow it down.
+      placeholder: "0xabc… or basket=0xdef…"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / console output
+      description: Paste relevant logs. Will be rendered as a fenced code block automatically.
+      render: shell
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Node version, OS, browser (if web), foundry version, anything else relevant.
+      placeholder: |
+        - Node: v22.x
+        - OS: macOS 14.x
+        - Foundry: v1.5.1
+        - Browser: Chrome 139
+  - type: checkboxes
+    id: housekeeping
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I confirm this is NOT a security vulnerability (those go to `security@indexflow.app`).
+          required: true
+        - label: I searched existing open issues and this isn't a duplicate.
+          required: true

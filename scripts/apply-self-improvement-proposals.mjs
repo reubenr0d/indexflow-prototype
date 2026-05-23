@@ -107,33 +107,90 @@ export function buildPrTitle({ signals }) {
   return `agent: self-improvement (${firstAgent}) — ${kinds}`;
 }
 
+// Section headings here are intentionally aligned with
+// `.github/pull_request_template.md` so agent-authored PRs render with
+// the same structure a human would fill in. Tests in
+// `apply-self-improvement-proposals.test.mjs` pin the visible headings.
 export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedPaths }) {
+  const edits = manifest?.edits || [];
+  const strongest = edits.reduce((acc, e) => {
+    const w = Number(e?.convictionWeight ?? 0);
+    return w > acc ? w : acc;
+  }, 0);
+  const reviewKinds = Array.from(
+    new Set(edits.map((e) => e.requiresReviewKind).filter(Boolean)),
+  ).sort();
+  const touchedAgentsFromEdits = Array.from(
+    new Set(
+      edits
+        .map((e) => (typeof e.path === "string" ? e.path : null))
+        .filter((p) => p && p.startsWith("agents/") && p.endsWith(".md") && !p.startsWith("agents/skills/"))
+        .map((p) => p.replace(/^agents\//, "").replace(/\.md$/, "")),
+    ),
+  ).sort();
+  const firstAgent = signals && signals.length > 0 ? signals[0].agent : touchedAgentsFromEdits[0] || "self-improver";
+
   const lines = [];
-  lines.push("This PR was opened by the `self-improver` meta-agent after a vault-agent CI tick.");
+
+  // 1. Summary
+  lines.push("## Summary");
   lines.push("");
-  lines.push("## Trigger signals");
-  if (!signals || signals.length === 0) {
-    lines.push("- (no signals — likely a housekeeping-only PR)");
-  } else {
-    for (const s of signals) {
-      lines.push(`- **${s.kind}** on \`${s.agent}\` (${s.network}): ${s.summary}`);
+  lines.push(
+    `Self-improver meta-agent run on \`${firstAgent}\` proposed ${edits.length} edit${edits.length === 1 ? "" : "s"}` +
+      (signals && signals.length > 0
+        ? ` after the deterministic detector emitted ${signals.length} signal${signals.length === 1 ? "" : "s"}.`
+        : ` (housekeeping-only run — no Layer A signals fired).`),
+  );
+  lines.push("");
+
+  // 2. Type of change
+  lines.push("## Type of change");
+  lines.push("");
+  lines.push("- [x] Agent-authored self-improvement");
+  if (reviewKinds.includes("runner") || reviewKinds.includes("mcp") || reviewKinds.includes("shared")) {
+    lines.push("- [x] Infra / CI / build (touches runner, MCP, or shared code — extra-careful review required)");
+  }
+  lines.push("");
+
+  // 3. Linked issues
+  lines.push("## Linked issues");
+  lines.push("");
+  lines.push("_None — agent loop does not file issues from this path._");
+  lines.push("");
+
+  // 4. Test plan
+  lines.push("## Test plan");
+  lines.push("");
+  lines.push(
+    "Layer E (dry-run replay) ran `AGENT_DRY_RUN=1 node scripts/agent-runner.mjs <agent>` for every touched agent before this PR opened. Manual checks left for the reviewer:",
+  );
+  lines.push("");
+  lines.push("- [ ] `forge fmt --check` is clean (N/A unless this PR touched `src/**`).");
+  lines.push("- [ ] `forge test` passes (N/A unless this PR touched `src/**`).");
+  lines.push("- [ ] `npm run lint:web` passes (N/A unless this PR touched `apps/web/**`).");
+  lines.push(`- [ ] Re-ran \`node scripts/apply-self-improvement-proposals.mjs --apply-locally-only\` and inspected \`git diff\`.`);
+  if (touchedAgentsFromEdits.length > 0) {
+    lines.push(`- [ ] Re-ran dry-run for every touched agent:`);
+    for (const a of touchedAgentsFromEdits) {
+      lines.push(`    - \`AGENT_DRY_RUN=1 node scripts/agent-runner.mjs ${a}\``);
     }
   }
   lines.push("");
-  lines.push("## Proposed edits");
+
+  // 5. Risk + rollback
+  lines.push("## Risk + rollback");
   lines.push("");
-  lines.push("| id | kind | path | conviction | requiresReviewKind |");
-  lines.push("|---|---|---|---|---|");
-  for (const e of manifest.edits || []) {
-    lines.push(`| \`${e.id}\` | ${e.kind} | \`${e.path}\` | ${e.convictionWeight.toFixed(2)} | ${e.requiresReviewKind || "—"} |`);
-  }
+  const blastRadius =
+    reviewKinds.length === 0
+      ? "Low — prompt-only edits under `agents/**`."
+      : reviewKinds.includes("runner") || reviewKinds.includes("shared")
+      ? `High — touches \`requiresReviewKind\`: ${reviewKinds.map((k) => `\`${k}\``).join(", ")}. Review against the allowlist in \`apps/mcps/repo-editor/allowlist.js\`.`
+      : `Medium — touches \`requiresReviewKind\`: ${reviewKinds.map((k) => `\`${k}\``).join(", ")}.`;
+  lines.push(`- **Blast radius:** ${blastRadius}`);
+  lines.push(`- **Affected surfaces:** ${touchedPaths.length} file(s); see **Files touched** below.`);
+  lines.push("- **Rollback path:** revert this PR. No migrations. Memory archive is rotation-only and recoverable from `agents/memory/<agent>/archive/`.");
   lines.push("");
-  lines.push("### Justifications");
-  for (const e of manifest.edits || []) {
-    lines.push(`- **\`${e.id}\`** (\`${e.path}\`): ${e.justification}`);
-  }
-  lines.push("");
-  lines.push("## Risk officer verdict");
+  lines.push("### Risk officer verdict");
   lines.push("");
   if (verdict) {
     lines.push(`- **verdict**: \`${verdict.verdict}\``);
@@ -146,15 +203,66 @@ export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedP
     lines.push("- (verdict file missing — opened with caveat)");
   }
   lines.push("");
+
+  // 6. Docs + ABIs + changelog
+  lines.push("## Docs + ABIs + changelog");
+  lines.push("");
+  lines.push("- [ ] N/A — allowlist forbids agent edits to `apps/web/src/abi/**`, `apps/envio/abis/**`, `CHANGELOG.md`, and `AGENTS.md` (see `apps/mcps/repo-editor/allowlist.js`).");
+  lines.push("");
+
+  // 7. Agent metadata
+  lines.push("## Agent metadata");
+  lines.push("");
+  lines.push(`- **agent:** \`${firstAgent}\``);
+  lines.push(`- **manifestPath:** \`.agent-self-improvement/proposed-edits.json\``);
+  lines.push(`- **requiresReviewKind:** ${reviewKinds.length > 0 ? reviewKinds.map((k) => `\`${k}\``).join(", ") : "_prompt-only_"}`);
+  lines.push(`- **convictionWeight (strongest edit):** ${strongest.toFixed(2)}`);
+  lines.push(`- **riskOfficerVerdict:** ${verdict ? `\`${verdict.verdict}\`` : "_(verdict file missing)_"}`);
+  lines.push("");
+  lines.push("### Trigger signals");
+  lines.push("");
+  if (!signals || signals.length === 0) {
+    lines.push("- (no signals — likely a housekeeping-only PR)");
+  } else {
+    for (const s of signals) {
+      lines.push(`- **${s.kind}** on \`${s.agent}\` (${s.network}): ${s.summary}`);
+    }
+  }
+  lines.push("");
+  lines.push("### Proposed edits");
+  lines.push("");
+  lines.push("| id | kind | path | conviction | requiresReviewKind |");
+  lines.push("|---|---|---|---|---|");
+  for (const e of edits) {
+    lines.push(`| \`${e.id}\` | ${e.kind} | \`${e.path}\` | ${e.convictionWeight.toFixed(2)} | ${e.requiresReviewKind || "—"} |`);
+  }
+  lines.push("");
+  lines.push("#### Justifications");
+  lines.push("");
+  for (const e of edits) {
+    lines.push(`- **\`${e.id}\`** (\`${e.path}\`): ${e.justification}`);
+  }
+  lines.push("");
   if (housekeeping && housekeeping.length > 0) {
-    lines.push("## Housekeeping rotations");
+    lines.push("### Housekeeping rotations");
+    lines.push("");
     for (const h of housekeeping) {
       lines.push(`- \`${h.sourceFile}\` → \`${h.archiveFile}\` (${h.entryCount} entries older than 90d)`);
     }
     lines.push("");
   }
-  lines.push("## Files touched");
+  lines.push("### Files touched");
+  lines.push("");
   for (const p of touchedPaths) lines.push(`- \`${p}\``);
+  lines.push("");
+
+  // 8. Reviewer checklist
+  lines.push("## Reviewer checklist");
+  lines.push("");
+  lines.push("- [ ] I read **Agent metadata** and skimmed the linked manifest.");
+  lines.push("- [ ] Every proposed-edit path is allowed by `apps/mcps/repo-editor/allowlist.js`.");
+  lines.push("- [ ] I re-ran `node scripts/apply-self-improvement-proposals.mjs --apply-locally-only` locally and inspected `git diff`.");
+  lines.push("- [ ] No secrets, private keys, or `.env*` files are touched.");
   lines.push("");
   lines.push("---");
   lines.push("");

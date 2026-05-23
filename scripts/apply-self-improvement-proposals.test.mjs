@@ -118,12 +118,25 @@ test("buildPrBody renders a complete markdown body with every section", () => {
     ],
     touchedPaths: ["agents/qm.md"],
   });
+  // Top-level section headings must match `.github/pull_request_template.md`
+  // so agent PRs render with the same structure a human PR would.
+  assert.match(body, /## Summary/);
+  assert.match(body, /## Type of change/);
+  assert.match(body, /## Test plan/);
+  assert.match(body, /## Risk \+ rollback/);
+  assert.match(body, /## Docs \+ ABIs \+ changelog/);
+  assert.match(body, /## Agent metadata/);
+  assert.match(body, /## Reviewer checklist/);
+  // Agent-metadata sub-sections still surface the historical names
+  // (existing CI tooling greps for them).
   assert.match(body, /Trigger signals/);
   assert.match(body, /Proposed edits/);
   assert.match(body, /edit-1/);
   assert.match(body, /Risk officer verdict/);
   assert.match(body, /Housekeeping rotations/);
   assert.match(body, /needs-human-review/);
+  // Type-of-change checkbox must be auto-ticked for agent-authored PRs.
+  assert.match(body, /\[x\] Agent-authored self-improvement/);
 });
 
 test("buildPrBody handles missing verdict + zero housekeeping gracefully", () => {
@@ -137,4 +150,48 @@ test("buildPrBody handles missing verdict + zero housekeeping gracefully", () =>
   assert.match(body, /verdict file missing/);
   assert.match(body, /\(no signals/);
   assert.ok(!body.includes("Housekeeping rotations"));
+  // Template headings must render even on the empty-manifest path.
+  assert.match(body, /## Summary/);
+  assert.match(body, /## Agent metadata/);
+  assert.match(body, /## Reviewer checklist/);
+});
+
+test("buildPrBody flags runner/mcp/shared edits as high blast radius", () => {
+  const body = buildPrBody({
+    manifest: {
+      edits: [
+        {
+          id: "edit-1",
+          kind: "replace",
+          path: "scripts/agent-runner.mjs",
+          convictionWeight: 0.7,
+          requiresReviewKind: "runner",
+          justification: "Tighten retry loop",
+        },
+      ],
+    },
+    verdict: { verdict: "approve", reason: "ok", kind: "approve" },
+    signals: [{ kind: "new_error_code", agent: "vault-manager", network: "sepolia", summary: "EBADF" }],
+    housekeeping: [],
+    touchedPaths: ["scripts/agent-runner.mjs"],
+  });
+  assert.match(body, /High — touches `requiresReviewKind`: `runner`/);
+  assert.match(body, /\[x\] Infra \/ CI \/ build/);
+});
+
+test("buildPrBody computes strongest conviction across edits", () => {
+  const body = buildPrBody({
+    manifest: {
+      edits: [
+        { id: "a", kind: "replace", path: "agents/x.md", convictionWeight: 0.3, requiresReviewKind: null, justification: "j1" },
+        { id: "b", kind: "replace", path: "agents/y.md", convictionWeight: 0.9, requiresReviewKind: null, justification: "j2" },
+        { id: "c", kind: "replace", path: "agents/z.md", convictionWeight: 0.7, requiresReviewKind: null, justification: "j3" },
+      ],
+    },
+    verdict: { verdict: "approve", reason: "ok", kind: "approve" },
+    signals: [],
+    housekeeping: [],
+    touchedPaths: ["agents/x.md", "agents/y.md", "agents/z.md"],
+  });
+  assert.match(body, /convictionWeight \(strongest edit\):\*\* 0\.90/);
 });

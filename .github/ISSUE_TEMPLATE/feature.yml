@@ -1,0 +1,75 @@
+name: Feature request
+description: Propose a new feature, enhancement, or capability.
+title: "feat: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for human-authored feature requests. If you are
+        an agent proposing a strategy idea, refactor, new MCP/skill, data
+        gap, or investigation — file an **Agent finding** issue instead so
+        the request flows through the self-improver dedupe pass.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What is the user / operator / agent currently unable to do? Why does it matter?
+      placeholder: "Operators can't see funding-rate accrual for a vault over the past 24h from the UI."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Concrete description of what should change. Sketch of the API / UI / contract surface is welcome.
+    validations:
+      required: true
+  - type: dropdown
+    id: affected_surface
+    attributes:
+      label: Affected surface
+      multiple: true
+      options:
+        - solidity-contracts (src/**)
+        - apps/web
+        - apps/push-worker
+        - apps/envio
+        - services/keeper
+        - agent-runner (scripts/agent-runner.mjs)
+        - mcp-servers (apps/mcps/**)
+        - infra/ci (.github/**)
+        - docs
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance criteria
+      description: Bullet list of "done means …". Reviewer will use this to size + close out.
+      placeholder: |
+        - [ ] Vault detail page shows 24h funding accrual chart.
+        - [ ] Tooltip explains positive vs negative funding.
+        - [ ] Vitest covers the data adapter.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives_considered
+    attributes:
+      label: Alternatives considered
+      description: Other shapes you weighed and why this one wins. Optional but appreciated.
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks / open questions
+      description: Anything that could block scoping — e.g. contract upgrade required, oracle latency unknown.
+  - type: checkboxes
+    id: housekeeping
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I searched existing open issues and discussions and this isn't a duplicate.
+          required: true
+        - label: This is a feature/enhancement request, not a bug report.
+          required: true
