@@ -1,149 +1,427 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T00:48:16.261Z",
+  "updatedAt": "2026-05-23T01:32:58.095Z",
   "entries": {
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T01:32:56.186Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T01:32:56.186Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T01:32:56.186Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T01:32:56.186Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T01:32:56.186Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMBQ"
+            "ACVA"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-23T00:48:16.089Z",
-      "headlines": [
-        {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMBQ"
+            "BMY",
+            "PFE",
+            "CL=F"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-23T00:48:16.089Z",
-      "headlines": [
-        {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMBQ"
-          ]
-        },
-        {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RIVN",
-            "TSLA"
+            "NUE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMBQ"
+            "ACVA"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
+      "headlines": [
+        {
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ACVA"
+          ]
+        },
+        {
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -180,176 +458,115 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T00:48:16.261Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMBQ"
+            "ACVA"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T00:48:16.261Z",
+    "PPP.V": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMBQ"
+            "ACVA"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
+            "BMY",
+            "PFE",
+            "CL=F"
+          ]
+        },
+        {
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NUE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T00:48:16.261Z",
+    "TNR.V": {
+      "fetchedAt": "2026-05-23T01:32:58.095Z",
       "headlines": [
         {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "title": "Online Marketplace Stocks Q1 Teardown: ACV Auctions (NYSE:ACVA) Vs The Rest",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/online-marketplace-stocks-q1-teardown-012455611.html",
+          "publishedAt": "2026-05-23T01:24:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMBQ"
+            "ACVA"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Fed Hawks Now Rule. Will Warsh Go Along with Them?",
+          "publisher": "Barrons.com",
+          "link": "https://finance.yahoo.com/m/4585feec-7dfb-37b5-b73f-84a2c30481dc/fed-hawks-now-rule.-will.html",
+          "publishedAt": "2026-05-23T01:23:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T00:48:16.261Z",
-      "headlines": [
-        {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMBQ"
+            "BMY",
+            "PFE",
+            "CL=F"
           ]
         },
         {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "title": "Nucor Opens Lexington Rebar Micro Mill To Target Infrastructure Demand",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/nucor-opens-lexington-rebar-micro-011700041.html",
+          "publishedAt": "2026-05-23T01:17:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RIVN",
-            "TSLA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T00:48:16.261Z",
-      "headlines": [
-        {
-          "title": "SpaceX's enormous Starship splashes down after test flight",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
-          "publishedAt": "2026-05-23T00:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
-          "publishedAt": "2026-05-23T00:37:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMBQ"
-          ]
-        },
-        {
-          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
-          "publishedAt": "2026-05-23T00:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RIVN",
-            "TSLA"
+            "NUE"
           ]
         }
       ],
