@@ -11,8 +11,8 @@ You will be given a JSON object with:
 
 - `manifest` — the full issue-proposal manifest (every `{ id, title, body, category, justification, convictionWeight, createdAt }` entry).
 - `signals` — Layer A's detected triggers (context, NOT a gate; the issues channel fires every tick regardless).
-- `openIssues` — the result of `gh issue list --label agent-self-improvement-issue --state open`. Each entry has `{ number, title, labels, createdAt, url }`. Use this for dedup checks.
-- `currentOpenIssueCount` — total count of currently-open agent-self-improvement-issue tickets. The per-period cap (default 10) lives in env `MAX_OPEN_SELF_IMPROVER_ISSUES`; the opener enforces it, but you should veto if this is already ≥ the cap.
+- `openIssues` — the result of `gh issue list --label agent-finding --state open` (the same label the [`agent-finding.yml`](.github/ISSUE_TEMPLATE/agent-finding.yml) issue template applies, so this also sees human-filed findings). Each entry has `{ number, title, labels, createdAt, url }`. Use this for dedup checks.
+- `currentOpenIssueCount` — total count of currently-open `agent-finding` tickets. The per-period cap (default 10) lives in env `MAX_OPEN_SELF_IMPROVER_ISSUES`; the opener enforces it, but you should veto if this is already ≥ the cap.
 - `cap` — the configured `MAX_OPEN_SELF_IMPROVER_ISSUES` value.
 - `recentSelfImproverIssueRuns` — your own previous verdicts (`approve` / `downsize` / `veto`) on prior issue-proposal manifests, so you don't keep approving the same theme across two ticks.
 

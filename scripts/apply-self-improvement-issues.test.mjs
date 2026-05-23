@@ -10,6 +10,7 @@ import { strict as assert } from "node:assert";
 import {
   readIssueCap,
   buildIssueBody,
+  buildIssueTitle,
   shouldSkipProposal,
   applyCapFilter,
   buildGhCreateArgs,
@@ -64,12 +65,55 @@ test("buildIssueBody embeds the id marker and signal context", () => {
   assert.match(body, /recurring_losers/);
 });
 
-test("buildIssueBody produces a byte-identical result to formatIssueBody when called with the same args", () => {
+test("buildIssueBody defaults agentName to 'self-improver-issues' so the agent-finding form's Agent name field is populated", () => {
+  const body = buildIssueBody({ issue: proposal(), signals: [] });
+  // The Agent name line is rendered by formatIssueBody whenever agentName
+  // is provided. Defaulting at the buildIssueBody layer means the opener
+  // never produces a body with a blank Agent name field.
+  assert.match(body, /\*\*Agent name\*\*:\s*`self-improver-issues`/);
+});
+
+test("buildIssueBody respects an explicit agentName override on the Agent name field", () => {
+  const body = buildIssueBody({
+    issue: proposal(),
+    signals: [],
+    agentName: "human-curator",
+  });
+  assert.match(body, /\*\*Agent name\*\*:\s*`human-curator`/);
+  // The "Agent name" field itself must NOT carry the default identity
+  // even though the static footer comment may mention `self-improver-issues`
+  // (the footer describes the channel, not the per-issue agent identity).
+  assert.ok(
+    !body.includes("**Agent name**: `self-improver-issues`"),
+    "Agent name field should not fall back to the default when overridden",
+  );
+});
+
+test("buildIssueBody produces a body identical to formatIssueBody when both are passed agentName", () => {
   const issue = proposal();
   const signals = [{ kind: "loss_streak", agent: "qm", summary: "3 losses in a row" }];
-  const a = buildIssueBody({ issue, signals });
-  const b = formatIssueBody({ issue, signals });
+  const a = buildIssueBody({ issue, signals, agentName: "self-improver-issues" });
+  const b = formatIssueBody({ issue, signals, agentName: "self-improver-issues" });
   assert.equal(a, b);
+});
+
+// ---------------------------------------------------------------------------
+// buildIssueTitle — agent-finding template's `agent: ` prefix
+// ---------------------------------------------------------------------------
+
+test("buildIssueTitle prepends 'agent: ' to bare manifest titles", () => {
+  assert.equal(buildIssueTitle("Consider an Atlas news MCP"), "agent: Consider an Atlas news MCP");
+});
+
+test("buildIssueTitle is idempotent (does NOT double-prefix already-prefixed titles)", () => {
+  assert.equal(buildIssueTitle("agent: already prefixed"), "agent: already prefixed");
+  // Case-insensitive: a human-typed "Agent: Foo" should be treated as
+  // already prefixed too, since GitHub renders titles case-as-typed.
+  assert.equal(buildIssueTitle("Agent: weird casing"), "Agent: weird casing");
+});
+
+test("buildIssueTitle trims surrounding whitespace before prefixing", () => {
+  assert.equal(buildIssueTitle("   some idea   "), "agent: some idea");
 });
 
 // ---------------------------------------------------------------------------
@@ -90,9 +134,23 @@ test("shouldSkipProposal skips when an open issue carries the id marker", () => 
   assert.equal(r.dedupeMatch.number, 42);
 });
 
-test("shouldSkipProposal skips on exact title match", () => {
+test("shouldSkipProposal skips on exact title match against the raw manifest title", () => {
+  // Caught case: a human-filed agent-finding issue whose author omitted
+  // the `agent: ` prefix the form auto-applies.
   const open = [
     { number: 7, title: "Consider adding an Atlas news MCP", body: "no marker" },
+  ];
+  const r = shouldSkipProposal({ proposal: proposal(), openIssues: open });
+  assert.equal(r.skip, true);
+  assert.match(r.reason, /exact title match/);
+});
+
+test("shouldSkipProposal skips on exact title match against the prefixed bot-filed title", () => {
+  // Caught case: a previous bot-filed issue whose body no longer carries
+  // the marker (e.g. a human edited it out) — the prefixed title still
+  // dedups.
+  const open = [
+    { number: 11, title: "agent: Consider adding an Atlas news MCP", body: "no marker" },
   ];
   const r = shouldSkipProposal({ proposal: proposal(), openIssues: open });
   assert.equal(r.skip, true);
@@ -159,16 +217,32 @@ test("applyCapFilter clamps negative headroom to 0", () => {
 });
 
 // ---------------------------------------------------------------------------
-// buildGhCreateArgs — argv shape pinned
+// buildGhCreateArgs — argv shape pinned to the agent-finding template
 // ---------------------------------------------------------------------------
 
-test("buildGhCreateArgs emits the expected argv with all three labels", () => {
+test("buildGhCreateArgs prefixes the title with 'agent: ' (matching agent-finding.yml) and emits all three labels", () => {
   const args = buildGhCreateArgs({ proposal: proposal(), body: "BODY" });
-  assert.deepEqual(args.slice(0, 4), ["issue", "create", "--title", "Consider adding an Atlas news MCP"]);
+  assert.deepEqual(
+    args.slice(0, 4),
+    ["issue", "create", "--title", "agent: Consider adding an Atlas news MCP"],
+  );
   assert.deepEqual(args.slice(4, 6), ["--body", "BODY"]);
-  assert.ok(args.includes("agent-self-improvement-issue"));
-  assert.ok(args.includes("needs-human-triage"));
+  // Labels match `.github/ISSUE_TEMPLATE/agent-finding.yml` verbatim so
+  // bot-filed and human-filed findings share the same triage queue.
+  assert.ok(args.includes("agent-finding"));
+  assert.ok(args.includes("needs-human-review"));
   assert.ok(args.includes("category:new_mcp_or_skill"));
+  // Should NOT include the previous bespoke label pair.
+  assert.ok(!args.includes("agent-self-improvement-issue"));
+  assert.ok(!args.includes("needs-human-triage"));
+});
+
+test("buildGhCreateArgs does not double-prefix titles that already start with 'agent: '", () => {
+  const args = buildGhCreateArgs({
+    proposal: proposal({ title: "agent: already prefixed" }),
+    body: "BODY",
+  });
+  assert.equal(args[3], "agent: already prefixed");
 });
 
 test("buildGhCreateArgs encodes the category from the proposal", () => {

@@ -41,7 +41,10 @@ const ISSUE_MANIFEST_PATH = resolve(PROJECT_ROOT, ISSUE_MANIFEST_REL);
 const VERDICT_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "issue-risk-officer-verdict.json");
 const PROMPT_PATH = resolve(PROJECT_ROOT, "agents", "risk-officer-self-improvement-issues.md");
 const RECENT_VERDICTS_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "recent-issue-verdicts.json");
-const ISSUE_LABEL = "agent-self-improvement-issue";
+// Matches the `agent-finding.yml` issue-template label so the cap-respecting
+// dedup also catches issues a human filed via the form (kept in sync with
+// `LABEL_AGENT` in scripts/apply-self-improvement-issues.mjs).
+const ISSUE_LABEL = "agent-finding";
 
 const LLM_API_KEY = process.env.LLM_API_KEY;
 const LLM_BASE_URL = process.env.LLM_BASE_URL || "https://api.openai.com/v1";

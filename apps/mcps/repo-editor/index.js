@@ -605,7 +605,7 @@ server.registerTool(
       label: z
         .string()
         .optional()
-        .describe("Optional label filter, e.g. 'agent-self-improvement-issue' to scope to the self-improver's own issues"),
+        .describe("Optional label filter, e.g. 'agent-finding' to scope to the self-improver-issues template's queue (and human-filed findings)"),
       search: z
         .string()
         .optional()

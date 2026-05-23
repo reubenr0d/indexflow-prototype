@@ -10,8 +10,9 @@
 //   --open-issues    Dedupe against open issues via `gh issue list`, respect
 //                    the MAX_OPEN_SELF_IMPROVER_ISSUES cap (default 10), and
 //                    call `gh issue create` per surviving proposal with
-//                    labels: `agent-self-improvement-issue`,
-//                    `needs-human-triage`, `category:<x>`.
+//                    labels matching `.github/ISSUE_TEMPLATE/agent-finding.yml`
+//                    (`agent-finding`, `needs-human-review`) plus a
+//                    dynamic `category:<x>` label.
 //
 // Pure additive: never edits existing issues, never assigns, never closes
 // anything. The id marker embedded in the issue body
@@ -35,8 +36,18 @@ const ISSUE_MANIFEST_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "pr
 const VERDICT_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "issue-risk-officer-verdict.json");
 const SIGNAL_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "signal.json");
 
-const LABEL_AGENT = "agent-self-improvement-issue";
-const LABEL_TRIAGE = "needs-human-triage";
+// Labels match `.github/ISSUE_TEMPLATE/agent-finding.yml` verbatim so an
+// issue filed by the bot and one filed by a human via the form land in
+// the same triage queue (and the dedup pass below sees both).
+const LABEL_AGENT = "agent-finding";
+const LABEL_TRIAGE = "needs-human-review";
+// Title prefix the agent-finding form auto-applies (`title: "agent: "`).
+// Mirroring it here keeps bot-filed and human-filed issues sortable
+// together in the GitHub issue list.
+const TITLE_PREFIX = "agent: ";
+// The agent identity threaded into the rendered body's "Agent name"
+// field (matches the `agent_name` form input on agent-finding.yml).
+const SELF_IMPROVER_ISSUES_AGENT_NAME = "self-improver-issues";
 const DEFAULT_OPEN_ISSUE_CAP = 10;
 const GH_LIST_MAX = 100;
 
@@ -53,21 +64,45 @@ export function readIssueCap(env = process.env) {
 
 // Build the full body string the applier ships to `gh issue create`.
 // Wrapper around the shared `formatIssueBody` so the opener has a single
-// callsite (and the tests don't need to import two modules).
-export function buildIssueBody({ issue, signals = [], manifestId = null }) {
-  return formatIssueBody({ issue, signals, manifestId });
+// callsite (and the tests don't need to import two modules). Defaults
+// `agentName` to the self-improver-issues identity so the rendered body
+// fills in the agent-finding form's `agent_name` field; callers can
+// override (e.g. for tests, or a future channel that re-uses this
+// helper).
+export function buildIssueBody({
+  issue,
+  signals = [],
+  manifestId = null,
+  agentName = SELF_IMPROVER_ISSUES_AGENT_NAME,
+}) {
+  return formatIssueBody({ issue, signals, manifestId, agentName });
+}
+
+// Bot-filed issues are prefixed with `agent: ` to match the
+// agent-finding form's auto-applied title prefix. Idempotent: re-runs
+// against a manifest entry already prefixed don't double up.
+export function buildIssueTitle(proposalTitle) {
+  const t = String(proposalTitle || "").trim();
+  if (t.toLowerCase().startsWith(TITLE_PREFIX)) return t;
+  return `${TITLE_PREFIX}${t}`;
 }
 
 // Decide whether to file `proposal` given the current set of open issues.
-// Returns `{ skip, reason, dedupeMatch? }`. We dedupe by:
-//   1. id marker baked into an open issue's body (round-trip key), and
-//   2. exact title match.
-// The risk-officer already pre-screens dedup, but a follow-up tick that
-// runs while the previous PR is still mid-flight could still race with it.
+// Returns `{ skip, reason, dedupeMatch? }`. We dedupe by (in order):
+//   1. id marker baked into an open issue's body (round-trip key; survives
+//      title drift and is the load-bearing dedup),
+//   2. exact title match after applying the `agent: ` prefix the bot
+//      uses (so a previous bot-filed issue is caught regardless of
+//      whether its body still contains the marker), and
+//   3. exact title match against the raw (unprefixed) manifest title
+//      (catches human-filed `agent-finding` issues whose author
+//      omitted the prefix).
 export function shouldSkipProposal({ proposal, openIssues }) {
   if (!proposal || !proposal.id || !proposal.title) {
     return { skip: true, reason: "proposal missing id or title" };
   }
+  const rawTitle = String(proposal.title).trim();
+  const prefixedTitle = buildIssueTitle(rawTitle);
   for (const oi of openIssues || []) {
     const marker = extractIssueIdMarker(oi.body || "");
     if (marker && marker === proposal.id) {
@@ -77,7 +112,8 @@ export function shouldSkipProposal({ proposal, openIssues }) {
         dedupeMatch: oi,
       };
     }
-    if ((oi.title || "").trim() === proposal.title.trim()) {
+    const openTitle = String(oi.title || "").trim();
+    if (openTitle === prefixedTitle || openTitle === rawTitle) {
       return {
         skip: true,
         reason: `exact title match with open issue #${oi.number}`,
@@ -111,13 +147,17 @@ export function applyCapFilter({ survivors, openIssueCount, cap }) {
 
 // Pure: build the argv array that the applier will hand to
 // `gh issue create`. Extracted so the tests can pin exact label / arg
-// ordering without spawning anything.
+// ordering without spawning anything. Title is always re-prefixed with
+// `agent: ` (idempotent) and labels mirror the agent-finding template
+// (`agent-finding` + `needs-human-review`) plus the dynamic
+// `category:<x>` label the form can't auto-apply since it depends on
+// the dropdown selection.
 export function buildGhCreateArgs({ proposal, body }) {
   return [
     "issue",
     "create",
     "--title",
-    proposal.title,
+    buildIssueTitle(proposal.title),
     "--body",
     body,
     "--label",

@@ -303,8 +303,11 @@ jobs:
   #      --open-issues dedupes against open issues via `gh issue list`,
   #      respects MAX_OPEN_SELF_IMPROVER_ISSUES (default 10), and calls
   #      `gh issue create` per surviving proposal with labels
-  #      `agent-self-improvement-issue` + `needs-human-triage` +
-  #      `category:<x>`. Never edits or closes existing issues.
+  #      matching .github/ISSUE_TEMPLATE/agent-finding.yml verbatim
+  #      (`agent-finding` + `needs-human-review`) plus a dynamic
+  #      `category:<x>` label. Bot-filed and human-filed agent
+  #      findings therefore share the same triage queue.
+  #      Never edits or closes existing issues.
   #
   # Skipped on ad-hoc workflow_dispatch with `dry_run=true` or
   # `vault_address` set: those are exploration runs that should never
