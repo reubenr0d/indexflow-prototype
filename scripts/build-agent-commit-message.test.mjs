@@ -2,7 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { buildCommitMessage, __internals } from "./build-agent-commit-message.mjs";
 
-const { SUBJECT_MAX, classifyStagedPaths, shortAddr, truncate } = __internals;
+const {
+  SUBJECT_MAX,
+  classifyStagedPaths,
+  shortAddr,
+  truncate,
+  groupErrorsByCode,
+  extractErrorCodeFromEntry,
+} = __internals;
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -113,7 +120,16 @@ function qualityMetadataFixture() {
   });
 }
 
-function runLogFixture({ agent, network = "sepolia", turns = 12, errors = [], vault = null, skippedWrites = 0, summary = "" }) {
+function runLogFixture({
+  agent,
+  network = "sepolia",
+  turns = 12,
+  errors = [],
+  softFailures = [],
+  vault = null,
+  skippedWrites = 0,
+  summary = "",
+}) {
   const writeActions = [];
   for (let i = 0; i < skippedWrites; i++) {
     writeActions.push({ tool: "open_position", args: {}, skipped: true });
@@ -128,6 +144,7 @@ function runLogFixture({ agent, network = "sepolia", turns = 12, errors = [], va
     writeActions,
     confirmationBatches: [],
     errors,
+    softFailures,
     summary,
   };
   return `${JSON.stringify(entry)}\n`;
@@ -226,7 +243,140 @@ test("buildCommitMessage: failed agent (zero actions, errors) renders FAILED in 
   assert.ok(subject.includes("mining-manager FAILED (3 errors)"), `subject should mark failure: ${subject}`);
   assert.ok(subject.length <= SUBJECT_MAX);
   assert.ok(body.includes("3 errors"), "body header includes error count");
-  assert.ok(body.includes("Errors: 3 (first:"), "body lists first error");
+  assert.ok(body.includes("Errors: 3"), "body labels the error block");
+  // Free-text errors with no error_code still get grouped under "(no error_code)".
+  assert.ok(
+    body.includes("(no error_code)"),
+    "body emits one bucket per distinct code (or 'no error_code')",
+  );
+});
+
+test("buildCommitMessage: body groups errors by error_code, surfaces revert alongside churn", () => {
+  // Regression for ab42c05 where the commit body only showed the first
+  // yfinance_news validation error, completely hiding three on-chain
+  // REQUIRE_REVERTs behind a bare "Errors: 8" count.
+  const logPath = "agents/memory/mining-manager/run-log.sepolia.jsonl";
+  const errs = [
+    { tool: "yfinance_news", error: "MCP error -32602: Input validation error" },
+    {
+      tool: "open_position",
+      errorCode: "REQUIRE_REVERT",
+      error: JSON.stringify({
+        success: false,
+        error_code: "REQUIRE_REVERT",
+        message: "Contract reverted with require(string): Vault: _size must be more than _collateral",
+      }),
+    },
+    {
+      tool: "open_position",
+      errorCode: "REQUIRE_REVERT",
+      error: JSON.stringify({
+        success: false,
+        error_code: "REQUIRE_REVERT",
+        message: "Contract reverted with require(string): Vault: _size must be more than _collateral",
+      }),
+    },
+    {
+      tool: "open_position",
+      errorCode: "REQUIRE_REVERT",
+      error: JSON.stringify({
+        success: false,
+        error_code: "REQUIRE_REVERT",
+        message: "Contract reverted with require(string): Vault: _size must be more than _collateral",
+      }),
+    },
+  ];
+  const { subject, body } = buildCommitMessage({
+    stagedMetadataPaths: [],
+    stagedRunLogPaths: [logPath],
+    stagedStatePaths: [],
+    readFile: makeReadFile({
+      [logPath]: runLogFixture({
+        agent: "mining-manager",
+        turns: 12,
+        errors: errs,
+        vault: MINING_VAULT,
+      }),
+    }),
+  });
+
+  assert.ok(subject.includes("mining-manager FAILED (4 errors)"), `subject: ${subject}`);
+  assert.ok(body.includes("Errors: 4"), "body header still shows total count");
+  assert.ok(
+    body.includes("REQUIRE_REVERT × 3"),
+    "body must group reverts so 3 of them aren't hidden behind the first single yfinance error",
+  );
+  assert.ok(
+    body.includes("Vault: _size must be more than _collateral"),
+    "body must include the actual revert message, not just the count",
+  );
+  assert.ok(
+    body.includes("(no error_code) × 1"),
+    "free-text errors (no error_code) still get a row so they aren't dropped",
+  );
+});
+
+test("buildCommitMessage: soft refusals render as a tally line, do NOT inflate FAILED count", () => {
+  const logPath = "agents/memory/mining-manager/run-log.sepolia.jsonl";
+  const { subject, body } = buildCommitMessage({
+    stagedMetadataPaths: [],
+    stagedRunLogPaths: [logPath],
+    stagedStatePaths: [],
+    readFile: makeReadFile({
+      [logPath]: runLogFixture({
+        agent: "mining-manager",
+        turns: 8,
+        errors: [], // zero hard errors
+        softFailures: [
+          { tool: "plan_open_position", errorCode: "CHURN_GUARD_COOLDOWN", error: "{}" },
+          { tool: "plan_open_position", errorCode: "CHURN_GUARD_COOLDOWN", error: "{}" },
+          { tool: "plan_open_position", errorCode: "CHURN_GUARD_COOLDOWN", error: "{}" },
+          { tool: "wire_asset", errorCode: "ALREADY_WIRED", error: "{}" },
+        ],
+        vault: MINING_VAULT,
+      }),
+    }),
+  });
+
+  assert.ok(
+    !subject.includes("FAILED"),
+    `soft-only runs must NOT be marked FAILED: ${subject}`,
+  );
+  assert.ok(body.includes("Soft refusals: 4"), "body surfaces the soft tally explicitly");
+  assert.ok(
+    body.includes("CHURN_GUARD_COOLDOWN:3"),
+    "soft tally breaks down counts by code so the dominant refusal is visible",
+  );
+  assert.ok(body.includes("ALREADY_WIRED:1"));
+});
+
+test("extractErrorCodeFromEntry: prefers explicit errorCode field, falls back to regex", () => {
+  assert.equal(
+    extractErrorCodeFromEntry({ errorCode: "REQUIRE_REVERT", error: "{}" }),
+    "REQUIRE_REVERT",
+    "explicit errorCode field wins (preferred path for entries written by the modern runner)",
+  );
+  assert.equal(
+    extractErrorCodeFromEntry({ error: '{"success":false,"error_code":"CHURN_GUARD_COOLDOWN"}' }),
+    "CHURN_GUARD_COOLDOWN",
+    "regex fallback works on older log entries that pre-date the errorCode field",
+  );
+  assert.equal(extractErrorCodeFromEntry({ error: "MCP error -32603: Internal error" }), null);
+  assert.equal(extractErrorCodeFromEntry(null), null);
+});
+
+test("groupErrorsByCode: sorts by count desc, then code asc, for deterministic output", () => {
+  const grouped = groupErrorsByCode([
+    { tool: "a", errorCode: "Z_CODE", error: "{}" },
+    { tool: "b", errorCode: "A_CODE", error: "{}" },
+    { tool: "c", errorCode: "A_CODE", error: "{}" },
+    { tool: "d", error: "untyped" },
+  ]);
+  assert.equal(grouped[0].code, "A_CODE", "most-frequent first");
+  assert.equal(grouped[0].count, 2);
+  // The two singletons sort by code asc; (no error_code) sorts as "(" which precedes letters.
+  assert.equal(grouped[1].code, null, "untyped errors sort first alphabetically due to '(' bucket key");
+  assert.equal(grouped[2].code, "Z_CODE");
 });
 
 test("buildCommitMessage: mixed long+short opens render as 'opened L long + S short'", () => {

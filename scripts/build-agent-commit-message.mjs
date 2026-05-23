@@ -31,6 +31,11 @@ import { fileURLToPath } from "node:url";
 const SUBJECT_MAX = 72;
 const SUMMARY_MAX = 240;
 const JUSTIFICATION_MAX = 110;
+// Errors get a wider per-line budget than justifications because the
+// structured payload is the most actionable piece of the commit body —
+// hiding revert messages behind tight truncation was the whole reason the
+// commit body was useless on `ab42c05`.
+const ERROR_SAMPLE_MAX = 200;
 const MAX_JUSTIFICATIONS_PER_TOOL = 2;
 const MAX_BODY_LINES_PER_AGENT = 25;
 
@@ -88,6 +93,71 @@ function parseMetadata(text, path) {
   };
 }
 
+// Extract a structured MCP error_code from an `errors[]` / `softFailures[]`
+// entry. The agent-runner writes `entry.errorCode` directly (since
+// 2026-05-23) but older run-log lines only have `entry.error` as a JSON
+// string we have to parse out of. Returns null when no code is present
+// (e.g. free-text MCP -32xxx errors).
+function extractErrorCodeFromEntry(entry) {
+  if (!entry || typeof entry !== "object") return null;
+  if (typeof entry.errorCode === "string" && entry.errorCode) return entry.errorCode;
+  const errText = typeof entry.error === "string" ? entry.error : "";
+  if (!errText) return null;
+  const jsonMatch = errText.match(/"error_code"\s*:\s*"([A-Z][A-Z0-9_]+)"/);
+  if (jsonMatch) return jsonMatch[1];
+  const looseMatch = errText.match(/\berror_code\s*[:=]\s*"?([A-Z][A-Z0-9_]+)"?/);
+  if (looseMatch) return looseMatch[1];
+  return null;
+}
+
+// Extract a short, human-friendly excerpt from a structured MCP error
+// payload. Prefers `.message` so operators see "Vault: _size must be more
+// than _collateral" rather than 30 chars of JSON wrapper before truncation
+// hides the actual revert reason. Falls back to the raw string for
+// non-JSON / free-text errors (e.g. "MCP error -32603: Internal error").
+function summarizeErrorPayload(rawText) {
+  if (typeof rawText !== "string" || !rawText) return "";
+  const trimmed = rawText.trim();
+  if (!trimmed.startsWith("{")) return trimmed;
+  try {
+    const parsed = JSON.parse(trimmed);
+    if (parsed && typeof parsed === "object" && typeof parsed.message === "string") {
+      return parsed.message;
+    }
+  } catch {
+    // fall through
+  }
+  return trimmed;
+}
+
+// Group `errors[]` (or `softFailures[]`) entries by error_code. The first
+// occurrence's elided error text is kept verbatim so operators can grep
+// the commit body for the offending payload. Returns
+//   [{ code, count, firstTool, firstError, firstMessage }]
+// sorted by count desc then code asc for deterministic output.
+function groupErrorsByCode(entries) {
+  const byCode = new Map();
+  for (const entry of entries) {
+    const code = extractErrorCodeFromEntry(entry);
+    const key = code || "(no error_code)";
+    if (!byCode.has(key)) {
+      const rawError = typeof entry?.error === "string" ? entry.error : "";
+      byCode.set(key, {
+        code,
+        count: 0,
+        firstTool: entry?.tool || null,
+        firstError: rawError,
+        firstMessage: summarizeErrorPayload(rawError),
+      });
+    }
+    byCode.get(key).count += 1;
+  }
+  return Array.from(byCode.values()).sort((a, b) => {
+    if (b.count !== a.count) return b.count - a.count;
+    return String(a.code || "").localeCompare(String(b.code || ""));
+  });
+}
+
 // Parse the LAST JSON line of `agents/memory/<agent>/run-log.<network>.jsonl`.
 // We only need the most recent run; older entries are persisted history.
 function parseRunLogTail(text, path) {
@@ -112,12 +182,16 @@ function parseRunLogTail(text, path) {
   const skippedWrites = Array.isArray(last.writeActions)
     ? last.writeActions.filter((w) => w && w.skipped).length
     : 0;
+  const errors = Array.isArray(last.errors) ? last.errors : [];
+  const softFailures = Array.isArray(last.softFailures) ? last.softFailures : [];
   return {
     agentName: last.agent || inferredAgent,
     network: last.network || null,
     turns: Number.isFinite(last.turns) ? last.turns : null,
-    errorCount: Array.isArray(last.errors) ? last.errors.length : 0,
-    errors: Array.isArray(last.errors) ? last.errors : [],
+    errorCount: errors.length,
+    errors,
+    softFailureCount: softFailures.length,
+    softFailures,
     skippedWrites,
     finishedAt: last.timestamp || null,
     summary: typeof last.summary === "string" ? last.summary : "",
@@ -287,9 +361,21 @@ function renderAgentBody({ agentName, vaultAddress, actions, runLog, metadataSum
   }
 
   if (runLog?.errorCount > 0) {
-    const firstErr = runLog.errors[0];
-    const errText = firstErr?.error || firstErr?.tool || "(no detail)";
-    lines.push(`  Errors: ${runLog.errorCount} (first: ${truncate(errText, JUSTIFICATION_MAX)})`);
+    lines.push(`  Errors: ${runLog.errorCount}`);
+    const grouped = groupErrorsByCode(runLog.errors);
+    for (const g of grouped) {
+      const label = g.code || "(no error_code)";
+      const toolPrefix = g.firstTool ? `${g.firstTool}: ` : "";
+      const sampleSource = g.firstMessage || g.firstError;
+      const sample = sampleSource ? truncate(sampleSource, ERROR_SAMPLE_MAX) : "(no detail)";
+      lines.push(`    - ${label} × ${g.count} — ${toolPrefix}${sample}`);
+    }
+  }
+
+  if ((runLog?.softFailureCount ?? 0) > 0) {
+    const grouped = groupErrorsByCode(runLog.softFailures);
+    const tally = grouped.map((g) => `${g.code || "uncoded"}:${g.count}`).join(", ");
+    lines.push(`  Soft refusals: ${runLog.softFailureCount} (${tally})`);
   }
 
   if (lines.length > MAX_BODY_LINES_PER_AGENT) {
@@ -476,5 +562,7 @@ export const __internals = {
   buildAgentSubjectPhrase,
   renderAgentBody,
   groupActionsByTool,
+  groupErrorsByCode,
+  extractErrorCodeFromEntry,
   SUBJECT_MAX,
 };

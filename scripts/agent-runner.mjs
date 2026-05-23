@@ -2108,11 +2108,87 @@ function extractVaultAddressFromCreateVaultResponse(content) {
   return null;
 }
 
+// MCP error codes that represent the MCP correctly REFUSING an action (no tx
+// submitted, structured payload with a `recovery_hint`). These are not
+// failures in the "something broke" sense — they are policy/idempotency
+// guards working as designed. We bucket them under `runSummary.softFailures`
+// so the `errors[]` count + `FAILED (N errors)` commit subject only reflect
+// failures the agent (or operator) should actually investigate.
+const SOFT_REFUSAL_ERROR_CODES = new Set([
+  "CHURN_GUARD_COOLDOWN",
+  "ALREADY_WIRED",
+  "INVALID_SYMBOL_POLICY",
+  "MAX_POSITIONS_PER_RUN_EXCEEDED",
+  "MAX_SHORTS_PER_RUN_EXCEEDED",
+  "INSUFFICIENT_COLLATERAL",
+  "INSUFFICIENT_RESERVES",
+  "LEVERAGE_BELOW_1X",
+]);
+
+// Maximum characters preserved per MCP error before we elide the rest. The
+// historical 500-char cap silently chopped revert payloads mid-JSON,
+// hiding `recovery_hint`, `assetId`, and the structured fields the
+// self-improvement detector relies on. 8 KB fits every observed MCP error
+// payload (REQUIRE_REVERT cast output is the largest at ~2 KB) while
+// keeping run-log JSONL files bounded. Operators can override via
+// `AGENT_RUNNER_MCP_ERROR_MAX_CHARS` if a future MCP starts emitting
+// larger payloads.
+const MCP_ERROR_MAX_CHARS = (() => {
+  const raw = process.env.AGENT_RUNNER_MCP_ERROR_MAX_CHARS;
+  const parsed = Number.parseInt(raw || "", 10);
+  if (Number.isFinite(parsed) && parsed > 0) return parsed;
+  return 8000;
+})();
+
+// Pure helper: classify an MCP error payload as soft (policy refusal, no
+// tx submitted, recoverable) or hard (revert, schema validation, RPC
+// failure). Free-text errors default to hard because we cannot prove the
+// MCP refused safely.
+function classifyMcpErrorPayload(content) {
+  const raw = String(content ?? "");
+  if (!raw.trim()) return { code: null, isSoft: false };
+  let parsed = null;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return { code: null, isSoft: false };
+  }
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return { code: null, isSoft: false };
+  }
+  const code = typeof parsed.error_code === "string" ? parsed.error_code : null;
+  if (code && SOFT_REFUSAL_ERROR_CODES.has(code)) {
+    return { code, isSoft: true };
+  }
+  // Generic soft heuristic: success:false with a recovery_hint and no tx
+  // submitted. Matches future MCP refusals we haven't enumerated yet.
+  if (
+    parsed.success === false &&
+    typeof parsed.recovery_hint === "string" &&
+    parsed.recovery_hint.length > 0 &&
+    !parsed.transactionHash
+  ) {
+    return { code, isSoft: true };
+  }
+  return { code, isSoft: false };
+}
+
 // Pure helper for executeToolCall: inspects an MCP tool response and, if it
 // signals failure via the MCP `isError: true` convention, records it on the
 // shared run summary + policy runtime. Returns true iff the response was an
 // error, so the caller can branch (e.g. skip vault-address capture from a
 // follow-up get_all_vaults). Exported via __agentRunnerInternals for tests.
+//
+// Failures are split into two buckets:
+//   - `runSummary.errors[]`        — hard failures (reverts, schema errors,
+//                                    RPC failures). These drive `FAILED (N)`
+//                                    in the commit subject and feed the
+//                                    self-improvement `new_error_code` /
+//                                    `recurring_error_code` detectors.
+//   - `runSummary.softFailures[]`  — policy refusals / idempotency skips
+//                                    that did NOT submit a tx and ship a
+//                                    `recovery_hint`. Surfaced in the
+//                                    commit body as a tally only.
 function recordMcpErrorIfPresent({
   result,
   content,
@@ -2122,8 +2198,24 @@ function recordMcpErrorIfPresent({
   originalName,
 }) {
   if (result?.isError !== true) return false;
-  const failurePreview = String(content ?? "").slice(0, 500);
-  runSummary.errors.push({ tool: toolName, error: failurePreview });
+  const raw = String(content ?? "");
+  const elided = raw.length > MCP_ERROR_MAX_CHARS
+    ? raw.slice(0, MCP_ERROR_MAX_CHARS) +
+      `\n... [truncated ${raw.length - MCP_ERROR_MAX_CHARS} chars; raise AGENT_RUNNER_MCP_ERROR_MAX_CHARS to see more]`
+    : raw;
+  const classification = classifyMcpErrorPayload(raw);
+  const entry = { tool: toolName, error: elided };
+  if (classification.code) entry.errorCode = classification.code;
+  if (classification.isSoft) {
+    if (!Array.isArray(runSummary.softFailures)) runSummary.softFailures = [];
+    runSummary.softFailures.push(entry);
+  } else {
+    runSummary.errors.push(entry);
+  }
+  // create_vault failures always arm the suppression flag regardless of
+  // classification: even a soft refusal (e.g. policy guard rejected a
+  // proposed vault name) must prevent the get_all_vaults fallback from
+  // capturing a sibling agent's vault address.
   if (originalName === "create_vault" && policyRuntime) {
     policyRuntime.createVaultFailedThisRun = true;
   }
@@ -2769,6 +2861,12 @@ export async function runAgent(agentName) {
     // from its own wins/losses.
     closedPositions: [],
     errors: [],
+    // Soft refusals: MCP tools that returned isError:true but did not
+    // submit a tx and ship a `recovery_hint` (e.g. CHURN_GUARD_COOLDOWN,
+    // ALREADY_WIRED, INSUFFICIENT_COLLATERAL pre-flight). Tracked
+    // separately from `errors[]` so the FAILED-(N) commit subject only
+    // reflects hard failures the agent should actually investigate.
+    softFailures: [],
     policyDiagnostics: {
       enabled: config.policy?.enabled || false,
       autoAllocateTargetBps: config.policy?.autoAllocateTargetBps || 0,
@@ -4284,6 +4382,7 @@ export async function runAgent(agentName) {
           riskOfficerVerdicts: policyRuntime.riskOfficerVerdicts || [],
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
+          softFailures: runSummary.softFailures || [],
           summary: summarySnippet,
         }));
         console.log(`Memory: run log appended via ${memory.mode} adapter.`);
@@ -4323,6 +4422,7 @@ export async function runAgent(agentName) {
           closedPositions: runSummary.closedPositions || [],
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
+          softFailures: runSummary.softFailures || [],
           summary: "FAILED: " + safeAgentErr,
         }));
       } catch (logErr) {
@@ -4386,6 +4486,9 @@ export const __agentRunnerInternals = {
   extractNewestVaultAddress,
   extractVaultAddressFromCreateVaultResponse,
   recordMcpErrorIfPresent,
+  classifyMcpErrorPayload,
+  SOFT_REFUSAL_ERROR_CODES,
+  MCP_ERROR_MAX_CHARS,
   verifyVaultNameMatch,
   publishAgentMetadata,
   summarizeActionParams,

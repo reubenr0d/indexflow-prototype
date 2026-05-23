@@ -11,11 +11,13 @@ import { join } from "node:path";
 import {
   detectRecurringLosers,
   detectNewErrorCodes,
+  detectRecurringErrorCodes,
   detectCapSaturation,
   detectRiskOfficerDissonance,
   detectLossStreak,
   detectSelfImprovementSignals,
   extractErrorCode,
+  classifyErrorCodeSeverity,
   computeHousekeeping,
 } from "./detect-self-improvement-signal.mjs";
 
@@ -180,6 +182,116 @@ test("detectNewErrorCodes does NOT fire on codes seen in prior 100 runs", () => 
   ];
   const sigs = detectNewErrorCodes({ runs: [...historical, ...recent], agent: "qm", network: "sepolia" });
   assert.equal(sigs.length, 0);
+});
+
+// ---------------------------------------------------------------------------
+// Trigger 2b — recurring error_code
+// ---------------------------------------------------------------------------
+
+test("detectRecurringErrorCodes fires when same code recurs in >=3 of last 10 runs", () => {
+  // Reproduces the ab42c05 pattern: REQUIRE_REVERT appears in three
+  // separate runs in quick succession. `new_error_code` would only fire
+  // on the first occurrence, leaving the subsequent reverts invisible to
+  // the self-improver loop until this signal exists.
+  const runs = [
+    run({ ageMs: 5 * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"REQUIRE_REVERT","message":"Vault: _size must be more than _collateral"}' }] }),
+    run({ ageMs: 4 * HOUR, errors: [] }),
+    run({ ageMs: 3 * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"REQUIRE_REVERT","message":"Vault: _size must be more than _collateral"}' }] }),
+    run({ ageMs: 2 * HOUR, errors: [] }),
+    run({ ageMs: 1 * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"REQUIRE_REVERT","message":"Vault: _size must be more than _collateral"}' }] }),
+  ];
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 1);
+  assert.equal(sigs[0].kind, "recurring_error_code");
+  assert.equal(sigs[0].severity, "high", "REQUIRE_REVERT must be classified as high-severity");
+  assert.equal(sigs[0].evidence.length, 3);
+  assert.match(sigs[0].summary, /REQUIRE_REVERT/);
+  assert.match(sigs[0].summary, /HIGH-SEVERITY revert pattern/);
+});
+
+test("detectRecurringErrorCodes does NOT fire when below the 3-run threshold", () => {
+  const runs = [
+    run({ ageMs: 3 * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' }] }),
+    run({ ageMs: 2 * HOUR, errors: [] }),
+    run({ ageMs: 1 * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' }] }),
+  ];
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 0, "2 runs is below the min-3-distinct-runs threshold");
+});
+
+test("detectRecurringErrorCodes counts distinct runs, not raw occurrences", () => {
+  // A single run that hit the same code 5x is one bug instance, not five.
+  // If we counted occurrences the threshold would trigger on a single
+  // batch of three open_position calls — way too noisy.
+  const runs = [
+    run({
+      ageMs: 1 * HOUR,
+      errors: [
+        { tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' },
+        { tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' },
+        { tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' },
+        { tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' },
+        { tool: "open_position", error: '{"error_code":"REQUIRE_REVERT"}' },
+      ],
+    }),
+  ];
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 0, "5 same-run occurrences is still 1 run, not 5");
+});
+
+test("detectRecurringErrorCodes ignores soft-classified codes (CHURN_GUARD_COOLDOWN does not live in errors[])", () => {
+  // Soft refusals are routed into runSummary.softFailures by the agent
+  // runner (see scripts/agent-runner.mjs::recordMcpErrorIfPresent), so
+  // they NEVER appear in runs[].errors[]. The detector therefore can't
+  // see them — verifying the integration boundary here.
+  const runs = [
+    run({ ageMs: 3 * HOUR, errors: [] }),
+    run({ ageMs: 2 * HOUR, errors: [] }),
+    run({ ageMs: 1 * HOUR, errors: [] }),
+  ];
+  // Even if the test fixture had softFailures attached, the detector
+  // wouldn't scan them — it only reads errors[]. Asserting empty result.
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 0);
+});
+
+test("detectRecurringErrorCodes scans only the last 10 runs by default", () => {
+  // 15 runs total, REQUIRE_REVERT in the OLDEST 4 + nothing in the
+  // newest 11. The last-10 window contains only empty runs, so the
+  // historical pattern must NOT fire.
+  const runs = [];
+  for (let i = 0; i < 4; i++) {
+    runs.push(run({ ageMs: (20 - i) * HOUR, errors: [{ tool: "open_position", error: '{"error_code":"OLD_REVERT"}' }] }));
+  }
+  for (let i = 0; i < 11; i++) {
+    runs.push(run({ ageMs: (15 - i) * HOUR, errors: [] }));
+  }
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 0, "revert pattern from >10 runs ago must not fire");
+});
+
+test("detectRecurringErrorCodes severity routing: medium codes get a softer summary", () => {
+  const runs = [
+    run({ ageMs: 3 * HOUR, errors: [{ tool: "some_tool", error: '{"error_code":"UNKNOWN_SOMETHING"}' }] }),
+    run({ ageMs: 2 * HOUR, errors: [{ tool: "some_tool", error: '{"error_code":"UNKNOWN_SOMETHING"}' }] }),
+    run({ ageMs: 1 * HOUR, errors: [{ tool: "some_tool", error: '{"error_code":"UNKNOWN_SOMETHING"}' }] }),
+  ];
+  const sigs = detectRecurringErrorCodes({ runs, agent: "mm", network: "sepolia" });
+  assert.equal(sigs.length, 1);
+  assert.equal(sigs[0].severity, "medium");
+  assert.match(sigs[0].summary, /recurring error pattern/);
+  assert.doesNotMatch(sigs[0].summary, /HIGH-SEVERITY/, "medium-severity must not be advertised as high");
+});
+
+test("classifyErrorCodeSeverity: known severity tiers", () => {
+  assert.equal(classifyErrorCodeSeverity("REQUIRE_REVERT"), "high");
+  assert.equal(classifyErrorCodeSeverity("INSUFFICIENT_RESERVES"), "high");
+  assert.equal(classifyErrorCodeSeverity("LEVERAGE_BELOW_1X"), "high");
+  assert.equal(classifyErrorCodeSeverity("INVALID_ARGUMENT"), "low");
+  assert.equal(classifyErrorCodeSeverity("INVALID_ASSET_ID"), "low");
+  assert.equal(classifyErrorCodeSeverity("UNKNOWN_FUTURE_CODE"), "medium");
+  assert.equal(classifyErrorCodeSeverity(null), "unknown");
+  assert.equal(classifyErrorCodeSeverity(""), "unknown");
 });
 
 // ---------------------------------------------------------------------------

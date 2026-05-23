@@ -65,12 +65,43 @@ const RECURRING_LOSER_THRESHOLD_PCT = -0.05;
 const RECURRING_LOSER_MIN_COUNT = 2;
 const NEW_ERROR_CODE_HISTORY_WINDOW = 100; // entries to scan for "seen before"
 const NEW_ERROR_CODE_RECENT_WINDOW = 10; // recent entries that count as "now"
+const RECURRING_ERROR_CODE_WINDOW = 10; // entries to scan for recurrence
+const RECURRING_ERROR_CODE_MIN_RUNS = 3; // distinct runs the code must hit
 const CAP_SATURATION_RUN_COUNT = 3;
 const RISK_OFFICER_VETO_WINDOW_MS = 24 * 60 * 60 * 1000;
 const RISK_OFFICER_VETO_MIN_COUNT = 3;
 const LOSS_STREAK_WINDOW_MS = 24 * 60 * 60 * 1000;
 const LOSS_STREAK_MIN_COUNT = 3;
 const HOUSEKEEPING_RUN_LOG_MAX_AGE_MS = 90 * 24 * 60 * 60 * 1000;
+
+// Error-code severity classification. Used to weight `recurring_error_code`
+// signals — a REQUIRE_REVERT recurring 3+ times means actual gas was burnt
+// on every reverted tx and almost certainly indicates either an MCP
+// pre-flight gap (the MCP didn't refuse a guaranteed-revert call) or a
+// runner/policy bug, both of which warrant a high-conviction PR from the
+// `self-improver` meta-agent. Lower-severity codes still fire the signal
+// but get a softer summary, which routes them toward the
+// `self-improver-issues` channel via `convictionWeight` scaling.
+const HIGH_SEVERITY_ERROR_CODES = new Set([
+  "REQUIRE_REVERT",
+  "TX_REVERTED",
+  "INSUFFICIENT_RESERVES",
+  "LEVERAGE_BELOW_1X",
+  "INSUFFICIENT_COLLATERAL",
+  "VAULT_IDENTITY_MISMATCH",
+]);
+const LOW_SEVERITY_ERROR_CODES = new Set([
+  // Schema / argument validation — agent prompt issue, not infra.
+  "INVALID_ARGUMENT",
+  "INVALID_ASSET_ID",
+]);
+
+export function classifyErrorCodeSeverity(code) {
+  if (!code) return "unknown";
+  if (HIGH_SEVERITY_ERROR_CODES.has(code)) return "high";
+  if (LOW_SEVERITY_ERROR_CODES.has(code)) return "low";
+  return "medium";
+}
 
 // ---------------------------------------------------------------------------
 // Run-log discovery
@@ -300,6 +331,96 @@ export function extractErrorCode(errLike) {
 }
 
 // ---------------------------------------------------------------------------
+// Trigger 2b — recurring error_code
+//
+// Complements `new_error_code` (which only fires the FIRST time an MCP code
+// shows up). A REQUIRE_REVERT or INSUFFICIENT_RESERVES code that recurs
+// across N of the last K runs means the prior signal was missed and the
+// underlying bug is still costing the vault gas / capital. We escalate
+// such patterns with a `severity` field so the self-improver can route by
+// conviction (high → PR-channel proposal; medium/low → issue-channel
+// pitch).
+//
+// We deliberately scan `run.errors[]` ONLY (not `run.softFailures[]`)
+// because soft refusals are recoverable, no-tx events that don't justify
+// PR churn. The agent-runner's classifier (see
+// scripts/agent-runner.mjs::recordMcpErrorIfPresent) routes
+// CHURN_GUARD_COOLDOWN / ALREADY_WIRED / INSUFFICIENT_COLLATERAL into
+// softFailures, leaving errors[] for the real failures we want to learn
+// from.
+// ---------------------------------------------------------------------------
+
+export function detectRecurringErrorCodes({ runs, agent, network }) {
+  const total = runs.length;
+  if (total === 0) return [];
+  const windowStart = Math.max(0, total - RECURRING_ERROR_CODE_WINDOW);
+  const window = runs.slice(windowStart);
+
+  // For each error_code, track the distinct runs it appears in. We count
+  // runs (not raw occurrences) because a single run that fired the same
+  // error 5x is one bug instance, not five.
+  const byCode = new Map();
+  for (const run of window) {
+    const errs = Array.isArray(run?.errors) ? run.errors : [];
+    const seenInThisRun = new Set();
+    for (const e of errs) {
+      const code = extractErrorCode(e?.error || e);
+      if (!code) continue;
+      seenInThisRun.add(code);
+    }
+    for (const code of seenInThisRun) {
+      if (!byCode.has(code)) byCode.set(code, []);
+      byCode.get(code).push({
+        runTimestamp: run.timestamp || null,
+        // Capture the first error of this code from this run so the
+        // evidence array isn't redundant. We don't slice — the runner's
+        // 8 KB cap (AGENT_RUNNER_MCP_ERROR_MAX_CHARS) already bounds it,
+        // and the self-improver wants the structured fields for
+        // root-cause analysis.
+        sample: pickFirstErrorByCode(errs, code),
+      });
+    }
+  }
+
+  const signals = [];
+  for (const [code, runHits] of byCode.entries()) {
+    if (runHits.length < RECURRING_ERROR_CODE_MIN_RUNS) continue;
+    const severity = classifyErrorCodeSeverity(code);
+    const sevLabel =
+      severity === "high"
+        ? "HIGH-SEVERITY revert pattern"
+        : severity === "low"
+          ? "schema/validation pattern"
+          : "recurring error pattern";
+    signals.push({
+      id: signalId(["recurring_error_code", agent, code]),
+      kind: "recurring_error_code",
+      agent,
+      network,
+      severity,
+      evidence: runHits.slice(0, 5),
+      summary:
+        `${sevLabel}: MCP error_code "${code}" appeared in ${runHits.length} of the last ` +
+        `${window.length} runs — the prior new_error_code signal was either missed or the ` +
+        `underlying issue is still unresolved. ${severity === "high" ? "Each recurrence likely burnt gas on a reverted tx; treat as PR-worthy." : "Likely an agent-prompt or MCP-schema gap."}`,
+    });
+  }
+  return signals;
+}
+
+function pickFirstErrorByCode(errs, code) {
+  for (const e of errs) {
+    if (extractErrorCode(e?.error || e) === code) {
+      return {
+        tool: e?.tool || null,
+        error: typeof e?.error === "string" ? e.error : null,
+      };
+    }
+  }
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Trigger 3 — cap saturation
 // ---------------------------------------------------------------------------
 
@@ -427,6 +548,7 @@ export function detectSignalsForAgent({ runs, agent, network, now }) {
   return [
     ...detectRecurringLosers({ runs, agent, network, now }),
     ...detectNewErrorCodes({ runs, agent, network }),
+    ...detectRecurringErrorCodes({ runs, agent, network }),
     ...detectCapSaturation({ runs, agent, network }),
     ...detectRiskOfficerDissonance({ runs, agent, network, now }),
     ...detectLossStreak({ runs, agent, network, now }),

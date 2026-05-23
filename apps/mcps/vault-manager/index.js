@@ -1690,6 +1690,7 @@ server.registerTool(
       "Move USDC from the vault's idle balance to VaultAccounting for perp trading. " +
       "Amount is in raw USDC units (6 decimals: 1000000 = 1 USDC). Only the vault owner can call this. " +
       "Respects minReserveBps and maxPerpAllocation caps — use get_vault_state to check availableForPerp first. " +
+      "PRE-FLIGHT: the MCP reads `getAvailableForPerpUsdc()` directly and short-circuits with `INSUFFICIENT_RESERVES` (no tx, no gas) when the requested amount exceeds the on-chain available reserve — this catches cents-level rounding/staleness bugs from agents that allocated against a snapshot. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
@@ -1700,6 +1701,67 @@ server.registerTool(
   async ({ vault, amount, justification }) => {
     const argErr = checkArgs([{ name: "vault", value: vault, kind: "address" }]);
     if (argErr) return argErr;
+
+    // Validate `amount` is a non-empty positive integer string before we
+    // make any RPC calls (matches the open_position arg validation style).
+    let amountBn;
+    try {
+      amountBn = BigInt(String(amount));
+    } catch {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `amount must be an integer-string value; got amount=${amount}.`,
+        "Pass amount as a base-10 integer string in raw USDC units (e.g. '1000000' = 1 USDC).",
+      );
+    }
+    if (amountBn <= 0n) {
+      return toolError(
+        "INVALID_ARGUMENT",
+        `amount must be > 0; got amount=${amountBn}.`,
+        "Pass a positive integer amount in raw USDC units.",
+      );
+    }
+
+    // Pre-flight: read the vault's `getAvailableForPerpUsdc()` view
+    // directly so we can refuse with a structured INSUFFICIENT_RESERVES
+    // payload BEFORE `cast send` burns gas on a guaranteed revert. This
+    // is the exact accounting the on-chain
+    // `require(amount <= getAvailableForPerpUsdc())` enforces. A common
+    // failure mode is agents allocating against a slightly-stale snapshot
+    // — `2_762_330` requested vs `2_762_329` available, off by cents from
+    // a fee accrual since the last `get_vault_state` read. Best-effort:
+    // an RPC blip here must not block legitimate allocations, so we fall
+    // back to the live `cast send` path if the read fails.
+    let availableForPerp = null;
+    try {
+      const rawAvail = castCall(vault, "getAvailableForPerpUsdc()(uint256)");
+      availableForPerp = parseCastBigInt(rawAvail);
+    } catch {
+      availableForPerp = null;
+    }
+    if (availableForPerp !== null && amountBn > availableForPerp) {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            success: false,
+            error_code: "INSUFFICIENT_RESERVES",
+            message:
+              `Vault ${vault} has only ${availableForPerp.toString()} raw USDC available for perp allocation, ` +
+              `but the call requested ${amountBn.toString()} (off by ${(amountBn - availableForPerp).toString()} raw USDC). ` +
+              `getAvailableForPerpUsdc() respects minReserveBps and maxPerpAllocation caps; the prior snapshot may be stale by cents due to fee accrual or interim deposits/withdrawals.`,
+            vault,
+            requestedAmount: amountBn.toString(),
+            availableAmount: availableForPerp.toString(),
+            shortfall: (amountBn - availableForPerp).toString(),
+            recovery_hint:
+              "Re-read `get_vault_state` for the fresh `availableForPerp` value, then retry with `amount = availableForPerp` (or any smaller value). Do not rely on a snapshot from earlier in the run — fee accrual and concurrent deposits move the available reserve between reads.",
+          }, null, 2),
+        }],
+        isError: true,
+      };
+    }
+
     try {
       const rawReceipt = castSend(vault, "allocateToPerp(uint256)", [amount]);
       return writeResult(rawReceipt, [
@@ -1757,6 +1819,7 @@ server.registerTool(
       "RECOMMENDED: call `plan_open_position` first — it converts your target leverage + available collateral into the exact raw `size`/`collateral` integers to pass here, so you don't have to do 1e30 math yourself or risk `Vault: maxLeverage exceeded` / `Vault: liquidation fees exceed collateral` reverts. " +
       "Requires capital allocated via allocate_to_perp first. Caller must be vault owner. " +
       "BEFORE calling, run `plan_open_position` (or at minimum `get_perp_capital_snapshot` / `get_vault_pnl`) so the requested `collateral` fits the vault's `availableCollateral`; the MCP will otherwise short-circuit with `INSUFFICIENT_COLLATERAL` and embed the open-position roster so you can pick a leg to close. " +
+      "PRE-FLIGHT: the MCP also refuses below-1x positions with `LEVERAGE_BELOW_1X` (no tx, no gas) when `size <= collateral * 1e24` — catches the common scaling bug where the agent multiplies size by 1e30 but forgets that collateral is in 1e6 USDC. " +
       "Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
@@ -1792,6 +1855,32 @@ server.registerTool(
         "INVALID_ARGUMENT",
         `size and collateral must be > 0; got size=${sizeBn}, collateral=${collateralBn}.`,
         "Re-check sizing logic and pass positive integer values.",
+      );
+    }
+
+    // Pre-flight: refuse below-1x positions BEFORE `cast send` burns gas
+    // on a guaranteed revert. The on-chain check is approximately
+    // `require(_size > _collateral, "Vault: _size must be more than
+    // _collateral")` evaluated AFTER both are normalised to the same
+    // 1e30 USD scale — GMX-style size is in 1e30 USD scale while
+    // collateral is in 1e6 USDC, so a 1x position needs
+    //   size > collateral * 10**(30-6) = collateral * 1e24
+    // Observed in commit ab42c05 (2026-05-23): the agent passed
+    //   size=1e30 (1 USD), collateral=2.5e8 (250 USDC)
+    // which scales to `1e30 vs 2.5e8 * 1e24 = 2.5e32` — way below 1x.
+    // All three open_position calls reverted, burning gas, with the
+    // raw require message providing no actionable detail (the agent
+    // couldn't tell whether it was a sizing bug or a collateral bug).
+    const COLLATERAL_TO_SIZE_SCALE = 10n ** 24n;
+    if (sizeBn <= collateralBn * COLLATERAL_TO_SIZE_SCALE) {
+      const sizeUsd = Number(sizeBn) / 1e30;
+      const collateralUsd = Number(collateralBn) / 1e6;
+      return toolError(
+        "LEVERAGE_BELOW_1X",
+        `Position is below 1x leverage: size=${sizeBn.toString()} GMX-USD (~$${sizeUsd.toFixed(4)}) ` +
+          `vs collateral=${collateralBn.toString()} raw USDC (~$${collateralUsd.toFixed(2)}). ` +
+          `On-chain require(size > collateral * 1e24) will revert with "Vault: _size must be more than _collateral".`,
+        "Call `plan_open_position` to convert your target leverage + collateral into the exact raw `size`/`collateral` integers (size must satisfy `size > collateral * 1e24`). For a manual 1x position: pass `size = collateral * 1e24 + 1`. For 2x: `size = collateral * 2e24`. The MCP refuses to broadcast positions that the contract is guaranteed to revert.",
       );
     }
 
