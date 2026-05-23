@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { Code, Send, BookOpen, FileText, BarChart3, Scale, Shield } from "lucide-react";
+import { XLogo } from "@/components/icons/x-logo";
 
 const TELEGRAM_URL = "https://t.me/+gNSBM_gBQ1NkNTY1";
 const GITHUB_URL = "https://github.com/reubenr0d/indexflow-prototype";
+const X_URL = "https://x.com/indexflowDAO";
 
 const productLinks = [
   { href: "/baskets", label: "Baskets", Icon: BarChart3 },
@@ -19,6 +21,7 @@ const developerLinks = [
 
 const communityLinks = [
   { href: TELEGRAM_URL, label: "Telegram", Icon: Send, external: true },
+  { href: X_URL, label: "X (Twitter)", Icon: XLogo, external: true },
 ];
 
 function ExtOrIntLink({

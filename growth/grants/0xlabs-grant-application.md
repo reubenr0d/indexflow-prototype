@@ -90,7 +90,7 @@ Date: 2026-04-15
 | Question | Answer                                                           |
 | -------- | ---------------------------------------------------------------- |
 | Discord  | Not yet set up                                                   |
-| Twitter  | Not yet set up                                                   |
+| Twitter  | [https://x.com/indexflowDAO](https://x.com/indexflowDAO)         |
 | Telegram | [https://t.me/+vAT7osyaJCVmMDY1](https://t.me/+vAT7osyaJCVmMDY1) |
 
 

@@ -10,6 +10,7 @@ import {
   LineChart,
   Send,
 } from "lucide-react";
+import { XLogo } from "@/components/icons/x-logo";
 
 const LazyHeroIllustration = lazy(() => import("./HeroIllustration"));
 const LazyHeroStats = lazy(() => import("./HeroStats"));
@@ -17,6 +18,7 @@ const LazyHeroStats = lazy(() => import("./HeroStats"));
 export type MouseOffset = { x: number; y: number };
 
 const TELEGRAM_URL = "https://t.me/+gNSBM_gBQ1NkNTY1";
+const X_URL = "https://x.com/indexflowDAO";
 
 const HERO_BENEFITS = [
   { icon: Layers3, label: "Diversified exposure" },
@@ -109,6 +111,15 @@ export function PrimerHero() {
               >
                 <Send className="h-4 w-4" />
                 Join Telegram
+              </a>
+              <a
+                href={X_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-lg border border-app-border px-6 py-3 text-sm font-semibold text-app-text transition-colors hover:border-app-accent hover:text-app-accent"
+              >
+                <XLogo className="h-4 w-4" />
+                Follow on X
               </a>
             </div>
 

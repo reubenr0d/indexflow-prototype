@@ -66,6 +66,8 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     images: ["/og-image.png"],
+    site: "@indexflowDAO",
+    creator: "@indexflowDAO",
   },
 };
 

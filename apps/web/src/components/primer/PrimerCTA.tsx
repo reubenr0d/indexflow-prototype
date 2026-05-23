@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Code, Send } from "lucide-react";
+import { XLogo } from "@/components/icons/x-logo";
 
 interface Action {
-  Icon: typeof ArrowRight;
+  Icon: React.ComponentType<{ className?: string }>;
   label: string;
   desc: string;
   href: string;
@@ -35,6 +36,14 @@ const actions: Action[] = [
     label: "Join Telegram",
     desc: "Chat with the team, read the whitepaper, and follow protocol updates.",
     href: "https://t.me/+gNSBM_gBQ1NkNTY1",
+    primary: false,
+    external: true,
+  },
+  {
+    Icon: XLogo,
+    label: "Follow on X",
+    desc: "Follow @indexflowDAO for protocol updates, agent decisions, and market commentary.",
+    href: "https://x.com/indexflowDAO",
     primary: false,
     external: true,
   },
@@ -73,7 +82,7 @@ export default function PrimerCTA() {
           </p>
         </motion.div>
 
-        <div className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-3">
+        <div className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {actions.map((a, i) => {
             const cardClass = a.primary
               ? "border-app-accent bg-app-accent/5 hover:bg-app-accent/10 hover:shadow-[0_0_30px_-6px_color-mix(in_srgb,var(--accent)_40%,transparent)]"

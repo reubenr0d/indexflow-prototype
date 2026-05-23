@@ -141,7 +141,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 
 ### Social Channels
 
-- [ ] Set up X / Twitter account
+- [x] X / Twitter account live ([@indexflowDAO](https://x.com/indexflowDAO))
 - [ ] Set up Discord server
 - [x] Telegram community live
 
