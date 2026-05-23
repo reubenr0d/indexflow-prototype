@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-23T09:22:44.529Z",
-  "thesis": "This run focused on reinforcing long positions in companies with strong composite scores driven by exceptional drilling results. GR Silver Mining Ltd. and A2 Gold Corp. were selected for their strong potential in silver and gold, respectively. These positions align with the strategy of maintaining exposure to high-quality mining assets based on the Quality Matrix scoring.",
-  "lastThesisUpdate": "2026-05-23T09:22:44.529Z"
+  "lastRunAt": "2026-05-23T10:52:39.393Z",
+  "thesis": "This run successfully opened long positions on three top picks from the Quality Matrix, leveraging strong composite scores and exceptional drilling results. The focus was on GR Silver Mining Ltd. (GRSL.V), A2 Gold Corp. (AUAU.V), and NCX.V, each selected for their strong potential based on the matrix scoring. GR Silver Mining Ltd. and A2 Gold Corp. were re-opened with churn-guard bypass due to their compelling composite scores and drilling results. NCX.V was added as a new entrant with a strong composite score.",
+  "lastThesisUpdate": "2026-05-23T10:52:39.393Z"
 }
