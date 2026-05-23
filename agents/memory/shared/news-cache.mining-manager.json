@@ -1,137 +1,372 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T22:11:36.141Z",
+  "updatedAt": "2026-05-23T23:12:41.641Z",
   "entries": {
-    "AHR.V": {
-      "fetchedAt": "2026-05-23T22:11:35.917Z",
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T23:12:39.789Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T23:12:39.789Z",
+      "headlines": [
+        {
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T23:12:39.789Z",
+      "headlines": [
+        {
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T23:12:39.789Z",
+      "headlines": [
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T23:12:39.789Z",
+      "headlines": [
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T22:11:35.917Z",
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-23T22:11:35.917Z",
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
+      "headlines": [
+        {
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-23T22:11:35.917Z",
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T22:11:35.917Z",
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -168,161 +403,244 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T22:11:36.141Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T22:11:36.141Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T22:11:36.141Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T22:11:36.141Z",
+    "TNR.V": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
+          "publishedAt": "2026-05-23T23:09:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "TEAM"
+          ]
+        },
+        {
+          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
+          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MMS.AX"
+          ]
+        },
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T22:11:36.141Z",
+    "PPP.V": {
+      "fetchedAt": "2026-05-23T23:12:41.405Z",
       "headlines": [
         {
-          "title": "Russell snatches pole in Canada with late lap to frustrate Antonelli",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/83dac26d-e9af-3c42-ba35-a8978a06161e/russell-snatches-pole-in.html",
-          "publishedAt": "2026-05-23T22:02:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran move World Cup base from US to Mexico",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/12486a9e-8820-3a6a-9af2-47eab9fffcfb/iran-move-world-cup-base-from.html",
-          "publishedAt": "2026-05-23T22:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "FLO Q1 Deep Dive: Volume Pressures Offset by Brand Relaunch and Cost Initiatives",
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flo-q1-deep-dive-volume-215655539.html",
-          "publishedAt": "2026-05-23T21:56:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-23T23:12:41.641Z",
+      "headlines": [
+        {
+          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
+          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ADI",
+            "OLED",
+            "MCHP",
+            "MCHPP",
+            "TXN"
+          ]
+        },
+        {
+          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
+          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA"
+          ]
+        },
+        {
+          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
+          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TPH",
+            "GTLS"
           ]
         }
       ],

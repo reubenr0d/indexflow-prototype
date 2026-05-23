@@ -1,24 +1,18 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-05-23T22:10:49.420Z",
+  "updatedAt": "2026-05-23T23:12:12.988Z",
   "closures": {
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
       "ticker": "GSR.V",
       "isLong": true,
-      "closedAt": "2026-05-23T22:10:25.252Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML"
+      "closedAt": "2026-05-23T23:12:01.827Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #3 PWM.V"
     },
     "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6": {
       "ticker": "AHR.V",
       "isLong": true,
-      "closedAt": "2026-05-23T22:10:49.420Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L"
-    },
-    "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f": {
-      "ticker": "CRML",
-      "isLong": true,
-      "closedAt": "2026-05-23T18:13:13.398Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #5 CRML (pnl 0.00%) to free room for #1 AHR.V"
+      "closedAt": "2026-05-23T23:12:12.988Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #4 0KXS.L"
     },
     "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d": {
       "ticker": "PWM.V",

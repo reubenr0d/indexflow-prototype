@@ -5,13 +5,100 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well with the current market conditions, providing a balanced exposure to both stability and growth potential.\n\nNo short positions are being opened this run as no concrete bearish news was identified on out-of-basket names. The focus remains on capitalizing on the strengths of the long picks identified by the Atlas model.",
-  "lastRunAt": "2026-05-23T22:12:22.104Z",
+  "lastRunAt": "2026-05-23T23:13:44.576Z",
   "latestRun": {
-    "runId": "2026-05-23T22:12:22.104Z",
-    "finishedAt": "2026-05-23T22:12:22.104Z",
-    "summary": "### Summary\n\n#### Thesis\nThe current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold a"
+    "runId": "2026-05-23T23:13:44.576Z",
+    "finishedAt": "2026-05-23T23:13:44.576Z",
+    "summary": "### Summary\n\nThe current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well w"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #3 PWM.V",
+      "timestamp": "2026-05-23T23:13:44.576Z",
+      "txHash": "0x69f09975d1d1f8752a6470103e1d9e1036ce4f907c04af3629078bca48f87f0a",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T23:13:44.576Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "9172776510000000000000000000000000",
+        "collateralDelta": "917277651"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #4 0KXS.L",
+      "timestamp": "2026-05-23T23:13:44.576Z",
+      "txHash": "0xe0fd1a9f05a48b92cc5d60e00455f6fbe8d82acdb860d3d4ce4ecfeca9c3a52d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T23:13:44.576Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "9172776510000000000000000000000000",
+        "collateralDelta": "917277651"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-opening AHR.V due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-23T23:13:44.576Z",
+      "txHash": "0x69de2cae34773a62f6d3887fb27c8746a5eef8951a403fcea98c9063c29d4031",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T23:13:44.576Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "9172776510000000000000000000000000",
+        "collateral": "917277651"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral (917.28) is within availableCollateral (2751.83) and recent post-mortems show no significant losses."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-opening GSR.V due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-23T23:13:44.576Z",
+      "txHash": "0x1831374a074add47363d776ee91f93d59b8c42c24b1dc186e040b49bcf06e5d7",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T23:13:44.576Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "size": "9172776510000000000000000000000000",
+        "collateral": "917277651"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral (917.28) is within availableCollateral (2751.83) and recent post-mortems show no significant losses."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-opening PWM.V due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-23T23:13:44.576Z",
+      "txHash": "0x4cec42794e06b844ccadc43aaa9e1553861cebb5e12b9f842ee93001923b418d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T23:13:44.576Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "size": "9172776510000000000000000000000000",
+        "collateral": "917277651"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral (917.28) is within availableCollateral (2751.83) and recent post-mortems show no significant losses."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
@@ -1678,79 +1765,6 @@
         "isLong": true,
         "sizeDelta": "10000000000000000000000000000000000",
         "collateralDelta": "1000000000"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #6 EEE.L",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": "0x36acb006c7bf4b08d8a2c95a2c611a5c09f2837025425af3762733b4b61d12d4",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-        "isLong": true,
-        "sizeDelta": "4500000000000000000000000000000000",
-        "collateralDelta": "450000000"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #7 HHH.V",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": "0xd5a82fdb06f3a4923b2200d840e44d06a02a317928951c199c92a23b29f789f9",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "5000000000000000000000000000000000",
-        "collateralDelta": "500000000"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #8 GTWO.TO",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": "0xdc3246aa57a357b6af5e750e4f1720ec43052b9e62ba545623dc5a0b1e83501d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "9000000000000000000000000000000000",
-        "collateralDelta": "765000000"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Freeport-McMoRan Inc. (0R2O.L) as it is a top pick by the Atlas ML model with a high ML score and predicted return.",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "0R2O.L",
-        "seedPriceUsd": 28.714
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": "0x83fe093e65bda6c72e28ce07a0b4c7dc989f6e171b10bb8fb53439fde1b20c5a",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "size": "10000000000000000000000000000000000",
-        "collateral": "900000000"
       }
     }
   ]
