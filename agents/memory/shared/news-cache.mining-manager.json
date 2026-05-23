@@ -1,335 +1,111 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T06:47:01.170Z",
+  "updatedAt": "2026-05-23T09:15:26.194Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        },
-        {
-          "title": "2 Sectors Where the Ultra-Wealthy Are Putting Their Money",
-          "publisher": "Barrons.com",
-          "link": "https://finance.yahoo.com/m/e3b081e3-f79f-33b9-9cf1-9323d36e913a/2-sectors-where-the.html",
-          "publishedAt": "2026-05-23T06:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NTRS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
+        },
+        {
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0R2O.L": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T06:46:56.223Z",
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -366,362 +142,206 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T09:15:26.030Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "SAMARITAN'S PURSE AIRLIFTS EBOLA TREATMENT CENTER TO THE DEMOCRATIC REPUBLIC OF THE CONGO",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/samaritans-purse-airlifts-ebola-treatment-091300865.html",
+          "publishedAt": "2026-05-23T09:13:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "LGC.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
+        },
+        {
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GRSL.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
+        },
+        {
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
+      "headlines": [
+        {
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BRK-B",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AYM.AX": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
+        },
+        {
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
+      "fetchedAt": "2026-05-23T09:15:26.194Z",
       "headlines": [
         {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "Why the 2.8% Social Security COLA Is Already Losing Ground to Inflation in 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/863f92e8-db66-37d8-984a-34698ff2223b/why-the-2.8%25-social-security.html",
+          "publishedAt": "2026-05-23T09:08:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
+          "title": "The Best Warren Buffett Stocks to Buy With $3,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/67366541-f4e8-39fb-aad8-2de1c1a0def7/the-best-warren-buffett.html",
+          "publishedAt": "2026-05-23T09:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AUAU.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
+            "BRK-B",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
+          "title": "How MAGA is too MAGA for Georgia? Governor runoff candidates tow line",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/29a88e7d-34ee-3828-8b93-dacde314074b/how-maga-is-too-maga-for.html",
+          "publishedAt": "2026-05-23T09:04:21.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BFG.CN": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GPAC.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BGD.V": {
-      "fetchedAt": "2026-05-23T06:47:01.170Z",
-      "headlines": [
-        {
-          "title": "DECK Q1 Deep Dive: Brand Diversification and Product Expansion Shape Deckers’ Outlook",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/deck-q1-deep-dive-brand-063655031.html",
-          "publishedAt": "2026-05-23T06:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DECK"
-          ]
-        },
-        {
-          "title": "Cannes highlights as film festival wraps up",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/a6faad8f-724d-37cc-9970-ccaa930a889f/cannes-highlights-as-film.html",
-          "publishedAt": "2026-05-23T06:35:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "How Ukraine’s drone edge made it a sought-after solution – reports WSJ",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/00463612-b94d-3719-a3c2-cb9f0cc7d96d/how-ukraine%E2%80%99s-drone-edge-made.html",
-          "publishedAt": "2026-05-23T06:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LMT",
-            "NOC",
-            "RTX"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"

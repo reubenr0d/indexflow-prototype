@@ -5,13 +5,115 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were re-entered due to strong ML signals and model preference, despite the recent churn guard cooldown.",
-  "lastRunAt": "2026-05-23T06:48:21.304Z",
+  "lastRunAt": "2026-05-23T09:16:42.644Z",
   "latestRun": {
-    "runId": "2026-05-23T06:48:21.304Z",
-    "finishedAt": "2026-05-23T06:48:21.304Z",
+    "runId": "2026-05-23T09:16:42.644Z",
+    "finishedAt": "2026-05-23T09:16:42.644Z",
     "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were re-entered due to strong ML signals and model preference, despite the recent churn guard cooldown.\n\n#### Vault Address and State\n- **Vault Address"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0x3d36e12bdfa0b0fe935b7fbc5859aea52d4a26b5b6539cc1822a355614ad6b57",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "sizeDelta": "6880836480000000000000000000000000",
+        "collateralDelta": "688083648"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0x6997cb8535244ec3fadcb8805368649130e549d9f06456c68db7e14d9bd838d1",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "6880836480000000000000000000000000",
+        "collateralDelta": "688083648"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0xf3d5bfc008a6b6204802e1b3ab3cc9472cdeff06ba8a463dfcf8fdaf833f8ee9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "6880836480000000000000000000000000",
+        "collateralDelta": "688083648"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-entering long position on Amarc Resources Ltd. (AHR.V) due to strong ML signal and model preference. Churn-guard bypass active.",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0x773f971b352644598a3d48442b879083182ae123ce6d8f5005c2da1de03cb246",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "9172934850000000000000000000000000",
+        "collateral": "917293485"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral ($917.29) is well within available collateral ($2751.88), and no recent losses >10% on these tickers."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-entering long position on Gold Strike Resources Corp. (GSR.V) due to strong ML signal and model preference. Churn-guard bypass active.",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0x044e050d5234b6aaa07fd6517524abc811475d28bfc8ad0223aa37c022ed6cf9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "size": "9172934850000000000000000000000000",
+        "collateral": "917293485"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral ($917.29) is well within available collateral ($2751.88), and no recent losses >10% on these tickers."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Re-entering long position on Power Metals Corp. (PWM.V) due to strong ML signal and model preference. Churn-guard bypass active.",
+      "timestamp": "2026-05-23T09:16:42.644Z",
+      "txHash": "0x3d2aa5024ce9f579412157242c667c912ca20cd6b11fe05a773c2b6d60e7f982",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T09:16:42.644Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "size": "9172934850000000000000000000000000",
+        "collateral": "917293485"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Each position's collateral ($917.29) is well within available collateral ($2751.88), and no recent losses >10% on these tickers."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
