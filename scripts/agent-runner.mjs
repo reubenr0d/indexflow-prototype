@@ -930,6 +930,223 @@ function setActiveModel({ model, source }) {
   activeModel = model;
   activeModelSource = source;
 }
+
+// Predicate: does `model` need to be called via /v1/responses instead of
+// /v1/chat/completions? Currently only the `gpt-5-codex` family
+// (including future dated snapshots like `gpt-5-codex-2025-09-15`) and
+// `gpt-5.1-codex` family are responses-API-only. Trading models
+// (`gpt-4o`, `gpt-5`, `gpt-5-mini`, etc.) continue on chat-completions.
+//
+// Exported for unit tests; also drives the dispatch branch in
+// `chatCompletion`. Operators can force the responses path independently
+// of the model name via `LLM_USE_RESPONSES_API=1` (handled at the call
+// site, not here, so this helper stays pure).
+export function modelRequiresResponsesApi(model) {
+  if (typeof model !== "string") return false;
+  const m = model.trim().toLowerCase();
+  if (!m) return false;
+  if (m === "gpt-5-codex" || m === "gpt-5.1-codex") return true;
+  if (m.startsWith("gpt-5-codex-")) return true;
+  if (m.startsWith("gpt-5.1-codex-")) return true;
+  return false;
+}
+
+// Pure helper: translate the chat-completions-shape request the runner
+// builds internally into the /v1/responses request body. Kept pure (no
+// fetch, no module-state reads) so tests can pin the schema without
+// hitting the network.
+//
+// Inputs:
+//   messages    — chat-completions messages array. The runner only ever
+//                 seeds ONE system message at the start of the
+//                 conversation (verified across all 4 chatCompletion
+//                 callers). Subsequent system messages, if any sneak in
+//                 later, are appended as `role: "developer"` input items
+//                 so the model still sees them.
+//   tools       — chat-completions wrapped form
+//                 [{ type: "function", function: { name, description, parameters } }]
+//                 or undefined/empty for tool-less calls (risk-officer).
+//   temperature — pass-through.
+//   model       — pass-through to the request body.
+//
+// Output is a plain object ready to JSON.stringify. `tools` is omitted
+// entirely when none are provided so the responses API doesn't reject
+// an empty array.
+export function translateToResponsesRequest({ messages, tools, temperature, model }) {
+  let instructions;
+  const inputMessages = [];
+
+  const list = Array.isArray(messages) ? messages : [];
+  for (const msg of list) {
+    if (!msg || typeof msg !== "object") continue;
+    const role = msg.role;
+
+    if (role === "system") {
+      // First system → instructions. Subsequent system messages → developer
+      // input items (rare; the runner doesn't currently produce them, but
+      // we don't want to silently drop them if a future caller does).
+      if (instructions === undefined) {
+        instructions = typeof msg.content === "string" ? msg.content : String(msg.content || "");
+      } else {
+        inputMessages.push({
+          type: "message",
+          role: "developer",
+          content: [{ type: "input_text", text: String(msg.content || "") }],
+        });
+      }
+      continue;
+    }
+
+    if (role === "user") {
+      inputMessages.push({
+        type: "message",
+        role: "user",
+        content: [{ type: "input_text", text: String(msg.content || "") }],
+      });
+      continue;
+    }
+
+    if (role === "assistant") {
+      // Assistant text (if any) is emitted as a message item BEFORE the
+      // function_call items, mirroring the chronological order the
+      // chat-completions API uses (text + tool_calls live on the same
+      // message object but the model "thinks" before calling).
+      if (typeof msg.content === "string" && msg.content.length > 0) {
+        inputMessages.push({
+          type: "message",
+          role: "assistant",
+          content: [{ type: "output_text", text: msg.content }],
+        });
+      }
+      const toolCalls = Array.isArray(msg.tool_calls) ? msg.tool_calls : [];
+      for (const tc of toolCalls) {
+        if (!tc || tc.type !== "function" || !tc.function) continue;
+        inputMessages.push({
+          type: "function_call",
+          call_id: tc.id,
+          name: tc.function.name,
+          arguments:
+            typeof tc.function.arguments === "string"
+              ? tc.function.arguments
+              : JSON.stringify(tc.function.arguments ?? {}),
+        });
+      }
+      continue;
+    }
+
+    if (role === "tool") {
+      inputMessages.push({
+        type: "function_call_output",
+        call_id: msg.tool_call_id,
+        output: typeof msg.content === "string" ? msg.content : String(msg.content ?? ""),
+      });
+      continue;
+    }
+  }
+
+  const body = {
+    model,
+    input: inputMessages,
+    // store: false — the runner always resends the full conversation,
+    // so server-side storage adds nothing but a privacy/audit surface.
+    store: false,
+  };
+  if (instructions !== undefined) body.instructions = instructions;
+  if (typeof temperature === "number") body.temperature = temperature;
+
+  // Tools: chat-completions wrapped → responses flat. The explicit
+  // strict: false is load-bearing — without it the responses API
+  // normalizes the schema (all fields required, additionalProperties:false),
+  // which breaks MCP tools with optional params (e.g. wire_asset's
+  // seedPriceUsd, propose_file_edit's various optional fields).
+  if (Array.isArray(tools) && tools.length > 0) {
+    body.tools = tools
+      .map((t) => {
+        if (!t || typeof t !== "object") return null;
+        if (t.type === "function" && t.function && typeof t.function === "object") {
+          return {
+            type: "function",
+            name: t.function.name,
+            description: t.function.description || "",
+            parameters: t.function.parameters || { type: "object", properties: {} },
+            strict: false,
+          };
+        }
+        // Pass through tools already in responses-flat shape unchanged.
+        if (t.type === "function" && typeof t.name === "string") {
+          return { strict: false, ...t };
+        }
+        return null;
+      })
+      .filter(Boolean);
+  }
+
+  return body;
+}
+
+// Pure helper: translate a /v1/responses response payload into the
+// chat-completions-shape object the runner's existing call sites expect
+// (`response.choices[0].message.{content,tool_calls}` plus
+// `response.choices[0].finish_reason`). Reasoning items are dropped —
+// the runner never surfaces chain-of-thought to MCP or memory.
+//
+// `call_id` from each function_call output item becomes the
+// chat-completions `id`, which keeps `pushRejectedToolResponses` and
+// the `role: "tool"` round-trip working without further changes.
+export function translateFromResponsesResponse(json) {
+  const outputItems = Array.isArray(json?.output) ? json.output : [];
+  const textParts = [];
+  const toolCalls = [];
+
+  for (const item of outputItems) {
+    if (!item || typeof item !== "object") continue;
+    if (item.type === "message") {
+      const contents = Array.isArray(item.content) ? item.content : [];
+      for (const c of contents) {
+        if (!c || typeof c !== "object") continue;
+        if (c.type === "output_text" && typeof c.text === "string") {
+          textParts.push(c.text);
+        }
+      }
+      continue;
+    }
+    if (item.type === "function_call") {
+      toolCalls.push({
+        id: item.call_id || item.id,
+        type: "function",
+        function: {
+          name: item.name,
+          arguments:
+            typeof item.arguments === "string"
+              ? item.arguments
+              : JSON.stringify(item.arguments ?? {}),
+        },
+      });
+      continue;
+    }
+    // reasoning, refusal, tool_search, etc. → ignored.
+  }
+
+  const message = {
+    role: "assistant",
+    content: textParts.join(""),
+  };
+  // Match chat-completions semantics: omit tool_calls entirely when
+  // none are present so `!choice.message.tool_calls?.length` keeps
+  // working unchanged.
+  if (toolCalls.length > 0) message.tool_calls = toolCalls;
+
+  return {
+    choices: [
+      {
+        index: 0,
+        message,
+        finish_reason: toolCalls.length > 0 ? "tool_calls" : "stop",
+      },
+    ],
+  };
+}
+
 const DRY_RUN = ["1", "true", "yes"].includes(
   (process.env.AGENT_DRY_RUN || "").toLowerCase()
 );
@@ -1075,12 +1292,38 @@ function computeRetryWaitMs({
   return clamp(jittered);
 }
 
+// Operator escape hatch: force the responses API for the current run
+// regardless of model name. Useful for testing the responses path against
+// a chat-completions-compatible model (e.g. gpt-5) before flipping a new
+// agent over. Defaults to off so trading agents stay on chat-completions.
+const FORCE_RESPONSES_API = ["1", "true", "yes"].includes(
+  (process.env.LLM_USE_RESPONSES_API || "").toLowerCase().trim()
+);
+
+// Returns true when the current run should POST to /v1/responses instead
+// of /v1/chat/completions. Predicate is purely model-driven (see
+// `modelRequiresResponsesApi`) plus the env-side override above.
+function useResponsesApiForActiveModel() {
+  if (FORCE_RESPONSES_API) return true;
+  return modelRequiresResponsesApi(activeModel);
+}
+
 // Optional `stats` accumulator: if provided, retry count + total wait time are
 // added to it so the caller can surface the wall-clock cost of 429/5xx retries
 // separately from the agent turn counter (retries never consume turns).
 async function chatCompletion(messages, tools, temperature, stats = null) {
-  const endpoint = `${LLM_BASE_URL}/chat/completions`;
-  const body = { model: activeModel, messages, tools, temperature };
+  const useResponses = useResponsesApiForActiveModel();
+  const endpoint = useResponses
+    ? `${LLM_BASE_URL}/responses`
+    : `${LLM_BASE_URL}/chat/completions`;
+  const body = useResponses
+    ? translateToResponsesRequest({
+        messages,
+        tools,
+        temperature,
+        model: activeModel,
+      })
+    : { model: activeModel, messages, tools, temperature };
 
   let lastError;
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
@@ -1095,7 +1338,8 @@ async function chatCompletion(messages, tools, temperature, stats = null) {
       });
 
       if (res.ok) {
-        return await res.json();
+        const json = await res.json();
+        return useResponses ? translateFromResponsesResponse(json) : json;
       }
 
       const text = await res.text();
@@ -2330,6 +2574,20 @@ export async function runAgent(agentName) {
   console.log(`\n=== Agent: ${config.name} ===`);
   if (config.description) console.log(`Description: ${config.description}`);
   console.log(`Model: ${modelResolution.model} (source: ${modelResolution.source}${modelResolution.envKey ? ` via ${modelResolution.envKey}` : ""})`);
+  // Surface the resolved OpenAI endpoint kind so CI logs make it obvious
+  // when a model takes the responses-API code path (`gpt-5-codex` and
+  // siblings, or any model when `LLM_USE_RESPONSES_API=1` is set). The
+  // chat-completions vs responses translation happens inside
+  // `chatCompletion`; this is purely diagnostic.
+  const endpointKind = useResponsesApiForActiveModel()
+    ? "responses"
+    : "chat/completions";
+  const endpointSource = FORCE_RESPONSES_API
+    ? "LLM_USE_RESPONSES_API"
+    : modelRequiresResponsesApi(modelResolution.model)
+      ? "model"
+      : "default";
+  console.log(`OpenAI endpoint: ${endpointKind} (source: ${endpointSource})`);
   console.log(`Max turns: ${maxTurns}`);
   console.log(`Dry run: ${DRY_RUN}`);
   console.log(`Confirm writes: ${CONFIRM_WRITES}`);
@@ -4138,4 +4396,7 @@ export const __agentRunnerInternals = {
   RETRY_BASE_MS,
   RETRY_MAX_MS,
   RETRY_HINT_PAD_MS,
+  modelRequiresResponsesApi,
+  translateToResponsesRequest,
+  translateFromResponsesResponse,
 };
