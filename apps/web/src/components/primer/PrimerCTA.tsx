@@ -110,7 +110,7 @@ export default function PrimerCTA() {
             </div>
           </motion.div>
 
-          {/* Card 2 — Invest in baskets */}
+          {/* Card 2 — View baskets */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -129,7 +129,7 @@ export default function PrimerCTA() {
                 <Wallet className="h-5 w-5" />
               </div>
               <h3 className="mt-4 font-semibold text-app-text">
-                Invest in baskets
+                View Baskets
               </h3>
               <p className="mt-2 text-sm text-app-muted">
                 Deposit test USDC on testnet into curated baskets and hold a

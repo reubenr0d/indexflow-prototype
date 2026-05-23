@@ -129,7 +129,7 @@ export function PrimerHero() {
                   className="inline-flex h-12 items-center gap-2 rounded-lg border border-app-border bg-app-surface/60 px-6 text-sm font-semibold text-app-text backdrop-blur-sm transition-colors hover:border-app-accent hover:text-app-accent sm:text-base"
                 >
                   <Wallet className="h-5 w-5" />
-                  Invest in baskets
+                  View Baskets
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
