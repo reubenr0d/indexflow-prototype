@@ -38,7 +38,7 @@ interface AssetPricePanelProps {
 
 export function AssetPricePanel({ assetIds, className }: AssetPricePanelProps) {
   const [window, setWindow] = useState<PriceHistoryWindow>("7D");
-  const [source, setSource] = useState<PriceChartSource>("onchain");
+  const [source, setSource] = useState<PriceChartSource>("both");
   const { data: assetMeta } = useOracleAssetMetaMap();
 
   if (assetIds.length === 0) return null;

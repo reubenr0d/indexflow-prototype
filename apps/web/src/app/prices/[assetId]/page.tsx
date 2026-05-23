@@ -63,7 +63,7 @@ export default function AssetPriceDetailPage() {
   const rawAssetId = params.assetId;
   const assetId = normalizeAssetId(rawAssetId);
   const [window, setWindow] = useState<PriceHistoryWindow>("7D");
-  const [source, setSource] = useState<PriceChartSource>("onchain");
+  const [source, setSource] = useState<PriceChartSource>("both");
   const chainId = useChainId();
 
   const { data: assetLabels } = useOracleAssetLabelMap();
