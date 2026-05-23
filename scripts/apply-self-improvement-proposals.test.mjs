@@ -11,6 +11,8 @@ import {
   computeBranchName,
   buildPrTitle,
   buildPrBody,
+  requiredPrLabelNames,
+  labelBootstrapFailures,
 } from "./apply-self-improvement-proposals.mjs";
 
 import { PR_LABELS } from "../apps/mcps/repo-editor/agent-labels.js";
@@ -222,4 +224,47 @@ test("PR_LABELS entries declare name + color + description (gh label create requ
     assert.equal(typeof label.description, "string", `label "${label.name}" description must be a string`);
     assert.ok(label.description.length > 0, `label "${label.name}" description must be non-empty`);
   }
+});
+
+// ---------------------------------------------------------------------------
+// requiredPrLabelNames + labelBootstrapFailures — hard-fail gate matching
+// the issue-opener's behaviour (see apply-self-improvement-issues.test.mjs).
+// ---------------------------------------------------------------------------
+
+test("requiredPrLabelNames pins exactly the two labels openPr attaches", () => {
+  const names = requiredPrLabelNames();
+  assert.ok(names.has("agent-self-improvement"));
+  assert.ok(names.has("needs-human-review"));
+  assert.equal(names.size, 2);
+});
+
+test("labelBootstrapFailures returns empty when every required PR label succeeded", () => {
+  const failures = labelBootstrapFailures({
+    ensureResults: [
+      { name: "agent-self-improvement", ok: true },
+      { name: "needs-human-review", ok: true },
+    ],
+    requiredNames: requiredPrLabelNames(),
+  });
+  assert.deepEqual(failures, []);
+});
+
+test("labelBootstrapFailures surfaces required-PR-label bootstrap failures with their gh stderr", () => {
+  const failures = labelBootstrapFailures({
+    ensureResults: [
+      { name: "agent-self-improvement", ok: false, message: "HTTP 422: description too long" },
+      { name: "needs-human-review", ok: true },
+    ],
+    requiredNames: requiredPrLabelNames(),
+  });
+  assert.equal(failures.length, 1);
+  assert.equal(failures[0].name, "agent-self-improvement");
+  assert.match(failures[0].message, /description too long/);
+});
+
+test("labelBootstrapFailures handles missing ensureResults defensively (returns empty)", () => {
+  assert.deepEqual(
+    labelBootstrapFailures({ ensureResults: null, requiredNames: requiredPrLabelNames() }),
+    [],
+  );
 });

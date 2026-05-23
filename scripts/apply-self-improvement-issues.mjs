@@ -173,6 +173,33 @@ export function buildGhCreateArgs({ proposal, body }) {
   ];
 }
 
+// Pure: deterministic set of label names the upcoming `gh issue create`
+// calls will reference. Used by the label-bootstrap hard-fail check so
+// a `gh label create` failure on a label the openers actually need
+// aborts the run BEFORE the cascading "could not add label: '<x>' not
+// found" red herring lands in CI. Labels in `ISSUE_LABELS` that no
+// proposal will reference this tick (e.g. unused category labels) are
+// allowed to soft-fail.
+export function requiredIssueLabelNames(proposals) {
+  const names = new Set([LABEL_AGENT, LABEL_TRIAGE]);
+  for (const p of proposals || []) {
+    if (p && p.category) names.add(`category:${p.category}`);
+  }
+  return names;
+}
+
+// Pure: given the results from `ensureLabelsExist`, return the subset
+// that failed AND are required by the upcoming `gh issue create` calls.
+// Non-empty result means we MUST abort before shelling out to gh, since
+// the cascading "label not found" failure is far less actionable than
+// the original `gh label create` stderr.
+export function labelBootstrapFailures({ ensureResults, requiredNames }) {
+  if (!Array.isArray(ensureResults)) return [];
+  return ensureResults.filter(
+    (r) => r && r.ok === false && requiredNames.has(r.name),
+  );
+}
+
 // ---------------------------------------------------------------------------
 // IO + gh shell-outs
 // ---------------------------------------------------------------------------
@@ -320,8 +347,38 @@ export async function applyIssueProposals({ mode, ghRunner, ghCreate = ghIssueCr
   // "could not add label: 'agent-finding' not found". Only run when
   // we actually have proposals to file — no point churning labels on
   // an empty manifest.
+  let ensureResults = [];
   if (cap_filter.kept.length > 0) {
-    ensureLabelsExist({ labels: ISSUE_LABELS, runner: ghRunner });
+    ensureResults = ensureLabelsExist({ labels: ISSUE_LABELS, runner: ghRunner });
+    // Hard-fail if any label the upcoming `gh issue create` calls
+    // depend on failed to bootstrap. Without this we'd cascade into
+    // N copies of "could not add label: '<x>' not found", which hides
+    // the real root cause (e.g. the 105-char description regression
+    // that originally surfaced this hardening). Aborting here surfaces
+    // the actual `gh label create` stderr — usually a 422 from GitHub.
+    const requiredNames = requiredIssueLabelNames(cap_filter.kept);
+    const bootstrapFailures = labelBootstrapFailures({
+      ensureResults,
+      requiredNames,
+    });
+    if (bootstrapFailures.length > 0) {
+      return {
+        ok: false,
+        mode,
+        cap,
+        openIssueCount: openIssues.length,
+        ghAvailable: ghList.available,
+        dedupeSkipped: dedupe.skipped,
+        capDropped: cap_filter.dropped.map((p) => ({ id: p.id, title: p.title })),
+        filed: [],
+        failed: [],
+        error_code: "LABEL_BOOTSTRAP_FAILED",
+        error: `gh label create failed for required label(s): ${bootstrapFailures
+          .map((f) => `${f.name} — ${String(f.message || "").slice(0, 200)}`)
+          .join("; ")}`,
+        labelBootstrapFailures: bootstrapFailures,
+      };
+    }
   }
 
   const filed = [];

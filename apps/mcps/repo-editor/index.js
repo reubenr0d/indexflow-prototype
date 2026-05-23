@@ -60,6 +60,7 @@ import {
   MAX_TITLE_CHARS,
   MAX_BODY_CHARS,
 } from "./issue-manifest.js";
+import { previewReplaceEdit, replayPriorEdits } from "./edit-replay.js";
 
 const PROJECT_ROOT = resolve(process.env.PROJECT_ROOT || process.cwd());
 const MANIFEST_PATH = resolve(PROJECT_ROOT, PROPOSAL_MANIFEST_REL);
@@ -374,30 +375,49 @@ server.registerTool(
     } catch (err) {
       return toolError("FILE_READ_FAILED", err.message);
     }
-    let scratch = current;
-    for (const r of replacements) {
-      const idx = scratch.indexOf(r.search);
-      if (idx === -1) {
-        return toolError(
-          "SEARCH_NOT_FOUND",
-          `Refused: replacement #${replacements.indexOf(r) + 1} \`search\` was not found in ${guard.relPath}. Call read_repo_file and copy the exact substring (incl. whitespace).`,
-          { snippetTried: r.search.slice(0, 200) },
-        );
-      }
-      const before = scratch.slice(0, idx);
-      const after = scratch.slice(idx + r.search.length);
-      const dupAfter = after.indexOf(r.search);
-      if (dupAfter !== -1) {
-        return toolError(
-          "SEARCH_AMBIGUOUS",
-          `Refused: replacement #${replacements.indexOf(r) + 1} \`search\` appears more than once in ${guard.relPath}. Expand the snippet so it uniquely identifies the location.`,
-        );
-      }
-      scratch = before + r.replace + after;
-    }
+    // Load the manifest BEFORE validating so we can replay prior edits
+    // against the same path — this catches cross-edit interference
+    // (edit A perturbs the region edit B's `search` covers) at
+    // propose-time instead of leaving it for the applier to discover
+    // after the risk-officer turn has already burned LLM budget.
     let manifest;
     try {
       manifest = readManifest();
+    } catch (err) {
+      return toolError("MANIFEST_READ_FAILED", err.message);
+    }
+    const replay = replayPriorEdits({
+      manifest,
+      targetPath: guard.relPath,
+      baseContents: current,
+    });
+    if (!replay.ok) {
+      return toolError(
+        "PRIOR_EDIT_REPLAY_FAILED",
+        `${replay.message}. Re-read the file and reconcile with the prior manifest entry (or drop it via summarize_proposals) before stacking another edit.`,
+        { offendingEditId: replay.offendingEditId },
+      );
+    }
+    const preview = previewReplaceEdit({
+      filePath: guard.relPath,
+      contents: replay.scratch,
+      replacements,
+    });
+    if (!preview.ok) {
+      const replacementIdx = Number.isInteger(preview.replacementIndex)
+        ? preview.replacementIndex
+        : 0;
+      const offending = replacements[replacementIdx];
+      const hint = preview.error_code === "SEARCH_NOT_FOUND"
+        ? `Refused: replacement #${replacementIdx + 1} \`search\` was not found in ${guard.relPath} (after replaying ${manifest.edits.filter((e) => e.path === guard.relPath && e.kind === "replace").length} prior edit(s) against the same file). Call read_repo_file and copy the exact substring (incl. whitespace).`
+        : `Refused: replacement #${replacementIdx + 1} \`search\` appears more than once in ${guard.relPath} (after replaying prior edits). Expand the snippet so it uniquely identifies the location.`;
+      return toolError(preview.error_code, hint, {
+        snippetTried: offending && typeof offending.search === "string"
+          ? offending.search.slice(0, 200)
+          : null,
+      });
+    }
+    try {
       const { added, edit } = addReplaceEdit(manifest, {
         path: guard.relPath,
         requiresReviewKind: guard.requiresReviewKind,

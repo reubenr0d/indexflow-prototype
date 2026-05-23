@@ -14,6 +14,8 @@ import {
   shouldSkipProposal,
   applyCapFilter,
   buildGhCreateArgs,
+  requiredIssueLabelNames,
+  labelBootstrapFailures,
 } from "./apply-self-improvement-issues.mjs";
 
 import {
@@ -308,4 +310,67 @@ test("ISSUE_LABELS entries declare name + color + description (gh label create r
     assert.equal(typeof label.description, "string", `label "${label.name}" description must be a string`);
     assert.ok(label.description.length > 0, `label "${label.name}" description must be non-empty`);
   }
+});
+
+// ---------------------------------------------------------------------------
+// requiredIssueLabelNames + labelBootstrapFailures — the hard-fail gate
+// that converts a `gh label create` HTTP 422 from "could not add label:
+// '<x>' not found" cascade noise into an actionable abort. Regression
+// guard for the May 2026 105-char-description bug.
+// ---------------------------------------------------------------------------
+
+test("requiredIssueLabelNames always includes the two static labels", () => {
+  const names = requiredIssueLabelNames([]);
+  assert.ok(names.has("agent-finding"));
+  assert.ok(names.has("needs-human-review"));
+  assert.equal(names.size, 2);
+});
+
+test("requiredIssueLabelNames adds the dynamic category:<x> labels referenced by the proposals", () => {
+  const names = requiredIssueLabelNames([
+    proposal({ category: "new_mcp_or_skill" }),
+    proposal({ category: "investigation" }),
+    proposal({ category: "new_mcp_or_skill" }), // duplicate — dedupes
+  ]);
+  assert.ok(names.has("agent-finding"));
+  assert.ok(names.has("needs-human-review"));
+  assert.ok(names.has("category:new_mcp_or_skill"));
+  assert.ok(names.has("category:investigation"));
+  assert.equal(names.size, 4);
+});
+
+test("labelBootstrapFailures returns empty when every required label succeeded", () => {
+  const failures = labelBootstrapFailures({
+    ensureResults: [
+      { name: "agent-finding", ok: true },
+      { name: "needs-human-review", ok: true },
+      { name: "category:new_mcp_or_skill", ok: true },
+    ],
+    requiredNames: requiredIssueLabelNames([proposal()]),
+  });
+  assert.deepEqual(failures, []);
+});
+
+test("labelBootstrapFailures isolates required-label failures from soft-fail (unused-label) failures", () => {
+  const requiredNames = requiredIssueLabelNames([proposal({ category: "new_mcp_or_skill" })]);
+  const failures = labelBootstrapFailures({
+    ensureResults: [
+      { name: "agent-finding", ok: false, message: "HTTP 422: description too long" },
+      { name: "needs-human-review", ok: true },
+      { name: "category:new_mcp_or_skill", ok: true },
+      // Unused-this-tick failure — must NOT block the run.
+      { name: "category:refactor", ok: false, message: "transient" },
+    ],
+    requiredNames,
+  });
+  assert.equal(failures.length, 1);
+  assert.equal(failures[0].name, "agent-finding");
+  assert.match(failures[0].message, /description too long/);
+});
+
+test("labelBootstrapFailures handles missing ensureResults defensively (returns empty)", () => {
+  assert.deepEqual(
+    labelBootstrapFailures({ ensureResults: null, requiredNames: new Set(["agent-finding"]) }),
+    [],
+  );
 });

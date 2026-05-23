@@ -38,6 +38,7 @@ import {
   PR_LABELS,
   buildLabelCreateArgs,
 } from "../apps/mcps/repo-editor/agent-labels.js";
+import { previewReplaceEdit as sharedPreviewReplaceEdit } from "../apps/mcps/repo-editor/edit-replay.js";
 import { detectSelfImprovementSignals } from "./detect-self-improvement-signal.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -48,6 +49,25 @@ const SIGNAL_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "signal.jso
 
 const PR_LABEL_AGENT = "agent-self-improvement";
 const PR_LABEL_REVIEW = "needs-human-review";
+
+// Pure: deterministic set of label names the upcoming `gh pr create`
+// call will reference. Used by the label-bootstrap hard-fail check so
+// a `gh label create` failure on a label `openPr` actually needs
+// aborts the run BEFORE the cascading "could not add label: '<x>' not
+// found" failure-mode that originally hid the 105-char-description bug.
+export function requiredPrLabelNames() {
+  return new Set([PR_LABEL_AGENT, PR_LABEL_REVIEW]);
+}
+
+// Pure: filter `ensureLabelsExist` results down to failures that block
+// the upcoming `gh pr create` call. Non-empty result means we MUST
+// abort before shelling out to gh.
+export function labelBootstrapFailures({ ensureResults, requiredNames }) {
+  if (!Array.isArray(ensureResults)) return [];
+  return ensureResults.filter(
+    (r) => r && r.ok === false && requiredNames.has(r.name),
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Pure helpers
@@ -66,33 +86,15 @@ function readJsonOrNull(p) {
   }
 }
 
-// Returns { ok, file, error_code?, message? }. Validates that `search`
-// is present AND unique in the current file contents, so the applier
-// can never silently mis-target a hit.
-export function previewReplaceEdit({ filePath, contents, replacements }) {
-  let scratch = contents;
-  for (let i = 0; i < replacements.length; i++) {
-    const r = replacements[i];
-    const idx = scratch.indexOf(r.search);
-    if (idx === -1) {
-      return {
-        ok: false,
-        error_code: "SEARCH_NOT_FOUND",
-        message: `Replacement #${i + 1} \`search\` not found in ${filePath}`,
-      };
-    }
-    const before = scratch.slice(0, idx);
-    const after = scratch.slice(idx + r.search.length);
-    if (after.indexOf(r.search) !== -1) {
-      return {
-        ok: false,
-        error_code: "SEARCH_AMBIGUOUS",
-        message: `Replacement #${i + 1} \`search\` appears more than once in ${filePath}`,
-      };
-    }
-    scratch = before + r.replace + after;
-  }
-  return { ok: true, newContents: scratch };
+// Returns { ok, file, error_code?, message? }. Re-exported from the
+// shared `apps/mcps/repo-editor/edit-replay.js` module so this script
+// and the `propose_file_edit` handler in the MCP enforce the exact
+// same invariant: every `search` must be present AND unique in the
+// scratch buffer at the moment its replacement runs. Tests in this
+// suite still import `previewReplaceEdit` from here, so the wrapper
+// is retained as a thin pass-through.
+export function previewReplaceEdit(args) {
+  return sharedPreviewReplaceEdit(args);
 }
 
 export function computeBranchName({ signals, now = new Date() }) {
@@ -623,9 +625,28 @@ export async function applyProposals({ mode, signalsOverride, now = new Date() }
 
   // Bootstrap the labels `openPr` will attach so the first call in a
   // fresh repo doesn't fail with "could not add label: '...' not
-  // found". Idempotent + soft-fails so transient permission issues
-  // don't abort the PR opener.
-  ensureLabelsExist({ labels: PR_LABELS });
+  // found". Hard-fail if a required label fails to bootstrap so the
+  // operator sees the real `gh label create` stderr (e.g. an HTTP 422
+  // from GitHub) instead of a cascade of "label not found" errors
+  // from `gh pr create`. Non-required label failures still soft-fail
+  // via `console.warn` inside `ensureLabelsExist`.
+  const ensureResults = ensureLabelsExist({ labels: PR_LABELS });
+  const requiredNames = requiredPrLabelNames();
+  const bootstrapFailures = labelBootstrapFailures({
+    ensureResults,
+    requiredNames,
+  });
+  if (bootstrapFailures.length > 0) {
+    return {
+      ok: false,
+      error_code: "LABEL_BOOTSTRAP_FAILED",
+      error: `gh label create failed for required PR label(s): ${bootstrapFailures
+        .map((f) => `${f.name} — ${String(f.message || "").slice(0, 200)}`)
+        .join("; ")}`,
+      labelBootstrapFailures: bootstrapFailures,
+      branchName,
+    };
+  }
 
   try {
     const prUrl = openPr({ branchName, title, body });

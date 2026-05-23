@@ -12,6 +12,15 @@
 // Keep this module pure (no shell-outs, no IO) so both the openers and
 // the unit tests can import it directly.
 
+// GitHub caps label `description` at 100 characters; the API returns
+// `HTTP 422: description is too long (maximum is 100 characters)` on
+// overflow, and a failed `gh label create` then cascades into
+// `could not add label: '<name>' not found` on the very next
+// `gh issue create` / `gh pr create`. The invariant block at the
+// bottom of this module enforces the cap at module-load time so a
+// future regression trips a unit test, not CI.
+export const GITHUB_LABEL_DESCRIPTION_MAX = 100;
+
 // Issue-channel labels. Mirror `.github/ISSUE_TEMPLATE/agent-finding.yml`
 // (`labels: ["agent-finding", "needs-human-review"]`) plus a
 // `category:<x>` label for every `CATEGORY_ENUM` value in
@@ -23,8 +32,9 @@ export const ISSUE_LABELS = [
   {
     name: "agent-finding",
     color: "fbca04",
+    // Keep <= 100 chars (GitHub label-description cap). Previously 105.
     description:
-      "Issue surfaced by the self-improver-issues agent or a human via .github/ISSUE_TEMPLATE/agent-finding.yml.",
+      "Issue surfaced by self-improver-issues agent or human via .github/ISSUE_TEMPLATE/agent-finding.yml.",
   },
   {
     name: "needs-human-review",
@@ -76,10 +86,37 @@ export const PR_LABELS = [
   },
 ];
 
+// Pure: defensively truncate a label description to GitHub's cap
+// (currently 100 chars). The static invariant at the bottom of this
+// module catches drift in the shipped specs at module-load time, but
+// this is the belt-and-braces guard for any caller that hand-rolls a
+// label spec at runtime (e.g. a future per-category dynamic label).
+// Returns `{ description, truncated }` so callers can warn on
+// truncation rather than silently lose context.
+export function truncateLabelDescription(description) {
+  const raw = String(description ?? "");
+  if (raw.length <= GITHUB_LABEL_DESCRIPTION_MAX) {
+    return { description: raw, truncated: false };
+  }
+  return {
+    description: raw.slice(0, GITHUB_LABEL_DESCRIPTION_MAX),
+    truncated: true,
+  };
+}
+
 // Pure: build the argv array the openers hand to `gh label create`.
 // `--force` makes the call idempotent (updates colour/description if
-// the label already exists, no-ops on identical specs).
+// the label already exists, no-ops on identical specs). Descriptions
+// are truncated to GitHub's 100-char cap and a `console.warn` is
+// emitted on truncation so the operator sees drift before it shows
+// up as an HTTP 422 in CI.
 export function buildLabelCreateArgs(label) {
+  const { description, truncated } = truncateLabelDescription(label.description);
+  if (truncated) {
+    console.warn(
+      `[agent-labels] description for "${label.name}" exceeded ${GITHUB_LABEL_DESCRIPTION_MAX} chars; truncated to fit GitHub's cap`,
+    );
+  }
   return [
     "label",
     "create",
@@ -87,7 +124,23 @@ export function buildLabelCreateArgs(label) {
     "--color",
     label.color,
     "--description",
-    label.description,
+    description,
     "--force",
   ];
+}
+
+// Module-load invariant: every shipped label spec must respect
+// GitHub's 100-char description cap. If a future edit reintroduces
+// the bug that prompted this hardening (the 105-char `agent-finding`
+// description on May 23, 2026), this throws on import so the
+// `agent-labels.test.mjs` smoke test catches it before CI shells
+// out to `gh label create`.
+const ALL_LABELS = [...ISSUE_LABELS, ...PR_LABELS];
+for (const label of ALL_LABELS) {
+  if (typeof label.description !== "string") continue;
+  if (label.description.length > GITHUB_LABEL_DESCRIPTION_MAX) {
+    throw new Error(
+      `[agent-labels] label "${label.name}" description is ${label.description.length} chars; GitHub caps at ${GITHUB_LABEL_DESCRIPTION_MAX}. Shorten it before shipping.`,
+    );
+  }
 }

@@ -9,6 +9,13 @@ writeTools:
   - propose_file_rename
 maxTurns: 20
 temperature: 0.1
+# Code-tuned model: this meta-agent's entire job is exact-substring
+# search/replace edits over agent prompts and runner JS. `gpt-5-codex`
+# is materially better at preserving whitespace and respecting the
+# `propose_file_edit` `search` contract than the trading-agent default.
+# Override via `LLM_MODEL_SELF_IMPROVER` env var if needed; falls back
+# to global `LLM_MODEL` then `gpt-4o`.
+model: gpt-5-codex
 ---
 
 You are the SELF-IMPROVER for the Minestarters autonomous vault stack. You do not trade. You read what the trading agents (`mining-manager`, `quality-matrix-manager`, …) actually did across recent runs and propose targeted, durable edits to the strategy that drove those runs.

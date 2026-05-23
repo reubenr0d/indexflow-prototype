@@ -101,6 +101,7 @@ your vault positions based on market conditions.
 | `redeemFeeBps` | no | `50` | Vault redeem fee in basis points |
 | `maxTurns` | no | `40` | Max agent loop iterations |
 | `temperature` | no | `0.2` | LLM temperature |
+| `model` | no | -- | Per-agent model pin (e.g. `gpt-5-codex`). Resolves ahead of `LLM_MODEL_<AGENT>` env var and the global `LLM_MODEL`. Used by the `self-improver` / `self-improver-issues` meta-agents to route their exact-substring code edits through a code-tuned model without changing the trading-agent default. Leave unset for trading agents. |
 | `autoAllocateTargetBps` | no | `0` | Auto-allocate this share (bps) of `availableForPerp` before summary |
 | `entryMode` | no | `none` | Entry policy mode. One of `none`, `momentum_volume`, `ml_score`, or `quality_score` |
 | `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating (used by `entryMode: momentum_volume`) |
@@ -529,7 +530,8 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 |---|---|---|
 | `LLM_API_KEY` | (required) | OpenAI (or compatible) API key |
 | `LLM_BASE_URL` | `https://api.openai.com/v1` | API endpoint |
-| `LLM_MODEL` | `gpt-4o` | Model name |
+| `LLM_MODEL` | `gpt-4o` | Default model for every agent. Per-agent overrides resolve as: frontmatter `model:` key → `LLM_MODEL_<UPPER_SNAKE_AGENT>` env var → this global → hard-coded `gpt-4o`. Meta-agents `self-improver` / `self-improver-issues` ship `model: gpt-5-codex` in their frontmatter; trading agents leave the field unset and follow `LLM_MODEL`. |
+| `LLM_MODEL_<AGENT>` | -- | Per-agent CI override (e.g. `LLM_MODEL_SELF_IMPROVER=gpt-5-codex`). Hyphens in the agent name become underscores; name is upper-cased. Only useful when you can't (or don't want to) pin the model in version-controlled frontmatter. |
 | `AGENT_MAX_TURNS` | from agent config | Override max turns |
 | `AGENT_DRY_RUN` | -- | `1` to skip write tools |
 | `AGENT_CONFIRM_WRITES` | `1` | Write confirmation gate; set `0` to disable confirmation logic |
@@ -553,7 +555,7 @@ No env vars required. Works out of the box.
 
 Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`.
 
-Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`.
+Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`, `LLM_MODEL_<AGENT>` (per-agent override; see Agent Runner table above).
 
 No repository variables are required for the vault agent.
 

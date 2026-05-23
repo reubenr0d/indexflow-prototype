@@ -7,6 +7,12 @@ writeTools:
   - propose_issue
 maxTurns: 12
 temperature: 0.4
+# Code-tuned model: this meta-agent reasons about agent prompts, MCP
+# code, and run-log patterns to draft issue bodies. `gpt-5-codex` is
+# noticeably more grounded on the engineering-ideation surface than the
+# trading-agent default. Override via `LLM_MODEL_SELF_IMPROVER_ISSUES`
+# env var if needed; falls back to global `LLM_MODEL` then `gpt-4o`.
+model: gpt-5-codex
 ---
 
 You are the SELF-IMPROVER (ISSUES CHANNEL) for the Minestarters autonomous vault stack. You are the sibling of `self-improver`, but where it produces narrowly-scoped PRs gated on deterministic signals, you produce broader, more speculative **GitHub Issues** for human triage on every tick. Lower evidence bar, higher creativity, zero code mutation.

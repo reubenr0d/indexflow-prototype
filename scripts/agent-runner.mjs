@@ -865,6 +865,13 @@ function loadAgentConfig(agentName) {
     vaultName: frontmatter.vaultName || null,
     depositFeeBps: frontmatter.depositFeeBps ?? 50,
     redeemFeeBps: frontmatter.redeemFeeBps ?? 50,
+    // Optional per-agent model pin. Preferred way to give a single
+    // agent (typically a meta-agent like `self-improver`) a stronger
+    // code-tuned model without changing the global `LLM_MODEL` for
+    // trading agents. Resolved via `resolveAgentModel` in runAgent.
+    model: typeof frontmatter.model === "string" && frontmatter.model.trim()
+      ? frontmatter.model.trim()
+      : null,
     fileHash,
   };
 }
@@ -876,6 +883,53 @@ function loadAgentConfig(agentName) {
 const LLM_API_KEY = process.env.LLM_API_KEY;
 const LLM_BASE_URL = process.env.LLM_BASE_URL || "https://api.openai.com/v1";
 const LLM_MODEL = process.env.LLM_MODEL || "gpt-4o";
+
+// Mutable active-model slot used by `chatCompletion`. Defaults to the
+// global `LLM_MODEL` for back-compat (callers that never invoke
+// `setActiveModel` get the env-derived value, unchanged). The runner
+// sets this once per `runAgent` invocation via `resolveAgentModel` so
+// the same Node process can host different model choices for different
+// agents on subsequent invocations (e.g. tests). See `resolveAgentModel`
+// below for precedence rules.
+let activeModel = LLM_MODEL;
+let activeModelSource = "env-global";
+
+// Pure helper exposed for unit tests. Returns `{ model, source }`
+// where `source` is one of:
+//   "frontmatter"   — `frontmatter.model` (per-agent, version-controlled)
+//   "env-per-agent" — `LLM_MODEL_<UPPER_SNAKE_AGENT>` (CI-side override)
+//   "env-global"    — `LLM_MODEL` (legacy default; trading agents)
+//   "default"       — hard-coded `gpt-4o` fallback
+//
+// Precedence is intentional: meta-agents like `self-improver` whose
+// entire job is exact-substring code edits ship `model: gpt-5-codex`
+// in their frontmatter, so a vanilla repo checkout uses the code-tuned
+// model for them without any operator action. Trading agents leave the
+// field unset and continue to follow `LLM_MODEL`.
+export function resolveAgentModel({ agentName, frontmatter, env = process.env } = {}) {
+  if (frontmatter && typeof frontmatter.model === "string" && frontmatter.model.trim()) {
+    return { model: frontmatter.model.trim(), source: "frontmatter" };
+  }
+  if (typeof agentName === "string" && agentName.trim()) {
+    const envKey = `LLM_MODEL_${agentName.trim().toUpperCase().replace(/[^A-Z0-9]+/g, "_")}`;
+    const perAgent = env[envKey];
+    if (typeof perAgent === "string" && perAgent.trim()) {
+      return { model: perAgent.trim(), source: "env-per-agent", envKey };
+    }
+  }
+  const global = env.LLM_MODEL;
+  if (typeof global === "string" && global.trim()) {
+    return { model: global.trim(), source: "env-global" };
+  }
+  return { model: "gpt-4o", source: "default" };
+}
+
+// Module-private setter. Splitting set + resolve keeps the resolver
+// pure (and unit-testable without mutating module state).
+function setActiveModel({ model, source }) {
+  activeModel = model;
+  activeModelSource = source;
+}
 const DRY_RUN = ["1", "true", "yes"].includes(
   (process.env.AGENT_DRY_RUN || "").toLowerCase()
 );
@@ -1026,7 +1080,7 @@ function computeRetryWaitMs({
 // separately from the agent turn counter (retries never consume turns).
 async function chatCompletion(messages, tools, temperature, stats = null) {
   const endpoint = `${LLM_BASE_URL}/chat/completions`;
-  const body = { model: LLM_MODEL, messages, tools, temperature };
+  const body = { model: activeModel, messages, tools, temperature };
 
   let lastError;
   for (let attempt = 0; attempt < RETRY_ATTEMPTS; attempt++) {
@@ -2240,7 +2294,7 @@ export async function runAgent(agentName) {
 
   console.log(`\n[LLM Backend] OpenAI-compatible API`);
   console.log(`  Endpoint: ${LLM_BASE_URL}`);
-  console.log(`  Model: ${LLM_MODEL}`);
+  console.log(`  Model (global env): ${LLM_MODEL}`);
 
   const config = loadAgentConfig(agentName);
   const runNetwork = resolveRunNetworkKey();
@@ -2250,6 +2304,16 @@ export async function runAgent(agentName) {
     process.env.AGENT_MAX_TURNS || String(config.maxTurns),
     10
   );
+
+  // Resolve and lock in the per-agent model BEFORE any `chatCompletion`
+  // call. `frontmatter.model` wins over `LLM_MODEL_<AGENT>` over the
+  // global `LLM_MODEL`. The resolver is pure; setActiveModel mutates
+  // the module-scoped slot that `chatCompletion` reads.
+  const modelResolution = resolveAgentModel({
+    agentName: config.name,
+    frontmatter: { model: config.model },
+  });
+  setActiveModel(modelResolution);
 
   // Propagate AGENT_NAME into the environment so MCP servers spawned below
   // can tag shared-memory writes (news cache + recently-closed) with the
@@ -2265,7 +2329,7 @@ export async function runAgent(agentName) {
 
   console.log(`\n=== Agent: ${config.name} ===`);
   if (config.description) console.log(`Description: ${config.description}`);
-  console.log(`Model: ${LLM_MODEL}`);
+  console.log(`Model: ${modelResolution.model} (source: ${modelResolution.source}${modelResolution.envKey ? ` via ${modelResolution.envKey}` : ""})`);
   console.log(`Max turns: ${maxTurns}`);
   console.log(`Dry run: ${DRY_RUN}`);
   console.log(`Confirm writes: ${CONFIRM_WRITES}`);
@@ -2431,7 +2495,8 @@ export async function runAgent(agentName) {
 
   const runSummary = {
     agent: config.name,
-    model: LLM_MODEL,
+    model: activeModel,
+    modelSource: activeModelSource,
     dryRun: DRY_RUN,
     confirmWrites: CONFIRM_WRITES,
     network: runNetwork,
