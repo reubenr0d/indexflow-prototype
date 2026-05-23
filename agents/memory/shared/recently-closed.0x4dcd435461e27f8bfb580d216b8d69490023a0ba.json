@@ -1,11 +1,11 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-05-23T14:03:37.888Z",
+  "updatedAt": "2026-05-23T15:20:25.371Z",
   "closures": {
     "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d": {
       "ticker": "PWM.V",
       "isLong": true,
-      "closedAt": "2026-05-23T14:03:13.930Z",
+      "closedAt": "2026-05-23T15:20:25.371Z",
       "closedReason": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L"
     },
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {

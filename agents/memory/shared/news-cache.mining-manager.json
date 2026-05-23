@@ -1,209 +1,161 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T14:03:51.229Z",
+  "updatedAt": "2026-05-23T15:20:45.356Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
-      "headlines": [
-        {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "fetchedAt": "2026-05-23T15:20:44.820Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "fetchedAt": "2026-05-23T15:20:44.820Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "fetchedAt": "2026-05-23T15:20:44.820Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T15:20:44.820Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T14:03:51.050Z",
+      "fetchedAt": "2026-05-23T15:20:44.820Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -240,201 +192,385 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T14:03:51.229Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-23T15:20:44.980Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T14:03:51.229Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-23T15:20:44.980Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-23T15:20:44.980Z",
+      "headlines": [
+        {
+          "title": "Rubio renews ties with India after Trump's China lovefest",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-23T15:20:44.980Z",
+      "headlines": [
+        {
+          "title": "Rubio renews ties with India after Trump's China lovefest",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-05-23T15:20:44.980Z",
+      "headlines": [
+        {
+          "title": "Rubio renews ties with India after Trump's China lovefest",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "LGC.V": {
-      "fetchedAt": "2026-05-23T14:03:51.229Z",
+      "fetchedAt": "2026-05-23T15:20:45.356Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T15:20:45.356Z",
+      "headlines": [
+        {
+          "title": "Rubio renews ties with India after Trump's China lovefest",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-23T15:20:45.356Z",
+      "headlines": [
+        {
+          "title": "Rubio renews ties with India after Trump's China lovefest",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-23T14:03:51.229Z",
+      "fetchedAt": "2026-05-23T15:20:45.356Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
+          "title": "Rubio renews ties with India after Trump's China lovefest",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
+          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
+          "publishedAt": "2026-05-23T15:10:27.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
-            "NVDA"
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "WMT",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T14:03:51.229Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T15:20:45.356Z",
       "headlines": [
         {
-          "title": "Man Utd's Fernandes named Premier League Player of the Season",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/c83f20de-c100-3f4c-ac45-03bbf8899db9/man-utd%27s-fernandes-named.html",
-          "publishedAt": "2026-05-23T13:58:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "PJUL Caps Your S&P 500 Gains at 11% While Protecting Against 40% Crashes: The Math for Retirees",
+          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7f66bc27-951c-373d-80bc-0a73a76e186e/pjul-caps-your-s%26p-500-gains.html",
-          "publishedAt": "2026-05-23T13:54:51.000Z",
+          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
+          "publishedAt": "2026-05-23T15:05:18.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPY",
-            "USMV",
-            "PJUL",
+            "NVDA",
+            "AIPO",
+            "FIDU",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "Where Will Walmart Stock Be By 2030?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
+          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WMT",
             "NVDA"
           ]
         },
         {
-          "title": "Why American Express Is Still a Top Buffett Stock After All These Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8b0e58df-3806-350b-9255-8806ff86c665/why-american-express-is-still.html",
-          "publishedAt": "2026-05-23T13:52:00.000Z",
+          "title": "Your Treasury Income May Already Be Paying California, Unless You’re Holding It in This ETF",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/81221e84-4094-3606-8f5d-2ac6d72b24b3/your-treasury-income-may.html",
+          "publishedAt": "2026-05-23T15:04:27.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BRK-B",
-            "AXP",
-            "AAPL",
-            "KO"
+            "GOVT",
+            "NVDA",
+            "CMF"
           ]
         }
       ],

@@ -4,14 +4,48 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains.",
-  "lastRunAt": "2026-05-23T14:05:16.925Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and ROYAL GOLD INC (0KXS.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete bearish news was identified on out-of-basket names.",
+  "lastRunAt": "2026-05-23T15:21:08.518Z",
   "latestRun": {
-    "runId": "2026-05-23T14:05:16.925Z",
-    "finishedAt": "2026-05-23T14:05:16.925Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains.\n\n#### Vault Address and State\n- **Vault Address**: 0x4dc"
+    "runId": "2026-05-23T15:21:08.518Z",
+    "finishedAt": "2026-05-23T15:21:08.518Z",
+    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and ROYAL GOLD INC (0KXS.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
+      "timestamp": "2026-05-23T15:21:08.518Z",
+      "txHash": "0x70dbb5572bdfc9fb6af975b9e5485db531ff8e4cd9e2480a84f681c31aa905e9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T15:21:08.518Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "sizeDelta": "1000000000000000000000000000000000",
+        "collateralDelta": "250000000"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on ROYAL GOLD INC (0KXS.L) due to strong ML signals and model preference, with a high ML score and predicted return.",
+      "timestamp": "2026-05-23T15:21:08.518Z",
+      "txHash": "0x48cbb8d21e8373d38e318895e8a67be36034f263c5ba45a592b94c2803173671",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T15:21:08.518Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+        "isLong": true,
+        "size": "7500000000000000000000000000000000",
+        "collateral": "750000000"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on ROYAL GOLD INC uses 33.3% of available collateral ($750 out of $2251.88), which is within acceptable limits."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
