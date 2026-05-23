@@ -57,6 +57,14 @@ The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%
 
 ## Workflow
 
+## Error Handling
+
+- **ALREADY_WIRED**: If this error occurs, it indicates the asset is already active in the OracleAdapter. Skip the `wire_asset` step for this asset and proceed with other operations.
+
+## Error Handling
+
+- **ALREADY_WIRED**: If this error occurs, it indicates the asset is already active in the OracleAdapter. Skip the `wire_asset` step for this asset and proceed with other operations.
+
 1. **Check Vault**: If the "Your Vault" section lists an address, call `get_vault_state` with that address. If you need to deploy, call `create_vault` — the runner will detect the new address from the tool result and persist it to `state.json` for the next run.
 
 2. **Ground in the Model**: Call `get_ml_model_info()` once so you understand the current model's strengths and feature mix.
@@ -67,7 +75,7 @@ The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%
 
 5. **Scan News (long AND short signal)**: Call `yfinance_news` twice — once on ~5 top-pick yahooSymbols (long context), and once on up to 5 currently-wired oracle assets that are *outside* the Atlas top-N (short candidates). For each result, classify each headline as **bullish** (earnings beat, mine permit granted, resource upgrade, M&A bid, commodity rally, analyst upgrade), **bearish** (guidance cut, mine halt or closure, fraud/regulatory action, resource downgrade, miss, analyst downgrade, commodity collapse), or **neutral**. Reuse the strongest headline as the `justification` text on the relevant `open_position` / `close_position` call later in the run. **A short candidate must have at least one concrete bearish headline you can quote in `justification` — no headline, no short.**
 
-6. **Onboard New Assets — STRICT ORDER**. For each new pick whose `yahooSymbol` is NOT in `summary.symbols` from step 4:
+6. **Onboard New Assets — STRICT ORDER**. Before wiring a new asset, verify if the asset is already wired by checking `summary.symbols` from step 4. If the asset is already wired, skip the `wire_asset` step for that asset.
    a. Call `yfinance_quote({ symbols: [yahooSymbol] })`. This is the single allowed use of `yfinance_quote` in this agent.
    b. If the response row has `error` or `priceUsd == null` (or `yahooSymbol` is null because there's no exchange-suffix mapping), SKIP this pick this run. It will be eligible again next run.
    c. Pass the EXACT numeric `priceUsd` value from (a) as `seedPriceUsd`. NEVER guess. NEVER reuse a value from `get_ml_top_picks` / `get_ml_basket` / atlas — those expose `marketCapUsd`, not per-share USD. `wire_asset` independently fetches the live Yahoo USD and will REJECT a seed that differs by more than 20% with `error_code: "SEED_PRICE_DEVIATION"`.
