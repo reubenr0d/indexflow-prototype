@@ -4,14 +4,125 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and ROYAL GOLD INC (0KXS.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete bearish news was identified on out-of-basket names.",
-  "lastRunAt": "2026-05-23T15:21:08.518Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Critical Metals Corp. (CRML) and Freeport-McMoRan Inc. (0R2O.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete bearish news was identified on out-of-basket names.",
+  "lastRunAt": "2026-05-23T17:19:04.556Z",
   "latestRun": {
-    "runId": "2026-05-23T15:21:08.518Z",
-    "finishedAt": "2026-05-23T15:21:08.518Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and ROYAL GOLD INC (0KXS.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete"
+    "runId": "2026-05-23T17:19:04.556Z",
+    "finishedAt": "2026-05-23T17:19:04.556Z",
+    "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Critical Metals Corp. (CRML) and Freeport-McMoRan Inc. (0R2O.L), each boasting high ML scores and promising predicted returns. These positions were opened due to strong ML signals, indicating robust potential for medium-term gains. No short positions are being opened this run as no concrete bearish news was identified on out-o"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #4 0KXS.L (pnl 0.00%) to free room for #3 PWM.V",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": "0xe08f4dd954727921a4a70b782e99715727881c560fca95668cc19b0779d22c9a",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+        "isLong": true,
+        "sizeDelta": "7500000000000000000000000000000000",
+        "collateralDelta": "750000000"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": "0xb504b1caad256567b644a585c1b2d4905b84f4290cec6d8e5c5fc6f3eb533c85",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "1000000000000000000000000000000000",
+        "collateralDelta": "250000000"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": "0xd69e44d02c126bea64b1db5f1469c4a1b26dc8d1617c257d3197468f03c701eb",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "1000000000000000000000000000000000",
+        "collateralDelta": "250000000"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new top pick from Atlas ML model with a high predicted return.",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "0R2O.L",
+        "seedPriceUsd": 28.714
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with available collateral ($2751.83) and regime conditions (longBonus=1, shortPenalty=1), with no recent losses >10% on re-opened tickers."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the latest Atlas ML top picks.",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": "0xcf198f03e479008169bb76244a75bd3ee1e49743c82815966786cfa81d282a16",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+          "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+          "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0x589f520e7575c048358b1bb88e24b586aac2e17b288cb832ba8172859aa46315",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
+          "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
+          "0xc046404b0803dafd50388584d33c83661011a555f6bfac862d8d00d515a6b2de",
+          "0xa6a463452d580deb8ec322d23a82cfeb4552da030bd3d4db8db762f3ded88a8f"
+        ],
+        "count": 12
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with available collateral ($2751.83) and regime conditions (longBonus=1, shortPenalty=1), with no recent losses >10% on re-opened tickers."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Critical Metals Corp. due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-23T17:19:04.556Z",
+      "txHash": "0xccf361a812cf92d5930112e8875682853cb571704f9a032aa26663b4fb94411d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-23T17:19:04.556Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
+        "isLong": true,
+        "size": "27518329550000000000000000000000000",
+        "collateral": "2751832955"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position uses 100% of available collateral ($2751.83), which is within acceptable limits given the metals_risk_off regime with longBonus=1."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",

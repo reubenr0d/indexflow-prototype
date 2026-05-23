@@ -1,161 +1,161 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T15:20:45.356Z",
+  "updatedAt": "2026-05-23T17:18:16.455Z",
   "entries": {
-    "PWM.V": {
-      "fetchedAt": "2026-05-23T15:20:44.820Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T17:18:16.171Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-23T15:20:44.820Z",
+      "fetchedAt": "2026-05-23T17:18:16.171Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-23T15:20:44.820Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T17:18:16.171Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-23T15:20:44.820Z",
+      "fetchedAt": "2026-05-23T17:18:16.171Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T15:20:44.820Z",
+      "fetchedAt": "2026-05-23T17:18:16.171Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -192,386 +192,192 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-23T15:20:44.980Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-23T15:20:44.980Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-23T15:20:44.980Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-23T15:20:44.980Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-05-23T15:20:44.980Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T15:20:45.356Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "AYM.AX": {
-      "fetchedAt": "2026-05-23T15:20:45.356Z",
+      "fetchedAt": "2026-05-23T17:18:16.455Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "VGZ.TO": {
-      "fetchedAt": "2026-05-23T15:20:45.356Z",
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T17:18:16.455Z",
       "headlines": [
         {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T15:20:45.356Z",
-      "headlines": [
-        {
-          "title": "Rubio renews ties with India after Trump's China lovefest",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/05d830bf-d367-3b4e-bc2c-17306d64c7fb/rubio-renews-ties-with-india.html",
-          "publishedAt": "2026-05-23T15:10:27.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CGNT.V": {
-      "fetchedAt": "2026-05-23T15:20:45.356Z",
+      "fetchedAt": "2026-05-23T17:18:16.455Z",
       "headlines": [
         {
-          "title": "Should You Buy, Or Sell Fidelity’s MSCI Industrials Index ETF (FIDU) Today?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/7808d3b0-2683-3508-b678-eb8a1433462e/should-you-buy%2C-or-sell.html",
-          "publishedAt": "2026-05-23T15:05:18.000Z",
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "AIPO",
-            "FIDU",
-            "^GSPC"
+            "^GSPC",
+            "DBX"
           ]
         },
         {
-          "title": "Where Will Walmart Stock Be By 2030?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/384c485d-678a-359d-a8d9-f0b475707cf8/where-will-walmart-stock-be.html",
-          "publishedAt": "2026-05-23T15:04:46.000Z",
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "WMT",
-            "NVDA"
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
           ]
         },
         {
-          "title": "Your Treasury Income May Already Be Paying California, Unless You’re Holding It in This ETF",
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
           "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/81221e84-4094-3606-8f5d-2ac6d72b24b3/your-treasury-income-may.html",
-          "publishedAt": "2026-05-23T15:04:27.000Z",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T17:18:16.455Z",
+      "headlines": [
+        {
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GOVT",
-            "NVDA",
-            "CMF"
+            "^GSPC",
+            "DBX"
           ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T17:18:16.455Z",
+      "headlines": [
+        {
+          "title": "3 Reasons to Avoid DBX and 1 Stock to Buy Instead",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/3-reasons-avoid-dbx-1-170855705.html",
+          "publishedAt": "2026-05-23T17:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "DBX"
+          ]
+        },
+        {
+          "title": "GM, Ford, Stellantis CEOs go back to the drawing board with EVs",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/fbe12cbd-f8b8-3f61-b28d-af898372461f/gm%2C-ford%2C-stellantis-ceos-go.html",
+          "publishedAt": "2026-05-23T17:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GM",
+            "TSLA",
+            "F",
+            "STLA"
+          ]
+        },
+        {
+          "title": "4.4 Months of Housing Supply: Why That’s Still Leaving Buyers Behind",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e140196b-19c5-3ecc-ba98-60c33713de73/4.4-months-of-housing-supply%3A.html",
+          "publishedAt": "2026-05-23T17:05:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
