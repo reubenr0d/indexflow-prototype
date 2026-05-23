@@ -186,13 +186,18 @@ Hybrid Galxe + Boost.xyz testnet activation campaign, Mon May 25 → Sun Jun 21,
 
 ### Partnerships
 
-Active partner relationships are tracked in [`growth/partnerships/`](growth/partnerships/) with YAML-frontmatter per-partner files (counterpart, status, next milestone, co-branded surfaces, guilds touched). The Season 1 partner slots concentrate in Week 2 (Mantle spoke demo) and Week 3 (the confidential-infra trinity: iExec compute, Secret state, Nox signing).
+Active partner relationships are tracked in [`growth/partnerships/`](growth/partnerships/) with YAML-frontmatter per-partner files (counterpart, status, next milestone, co-branded surfaces, guilds touched). The Season 1 partner slots concentrate in Week 2 (Mantle spoke demo) and Week 3 (the confidential-infra trinity: iExec compute, Secret state, Nox signing). Chain partnerships (counterparts IndexFlow may deploy a hub or spoke onto — currently Mantle, Avalanche, BNB, Alephium) are tracked separately under [`growth/partnerships/chains/`](growth/partnerships/chains/) because they have a deployment lifecycle (testnet → mainnet) on top of the usual co-tweet / Galxe / Boost surfaces; the chain-partner rows double as the index into [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md).
 
 - [x] Partnerships index + per-partner files ([growth/partnerships/README.md](growth/partnerships/README.md))
 - [x] Secret Network — Confidential State leg, Week 3 trinity ([growth/partnerships/secret-network.md](growth/partnerships/secret-network.md))
-- [x] Mantle — Spoke demo, Week 2 ([growth/partnerships/mantle.md](growth/partnerships/mantle.md))
+- [x] Mantle — Spoke demo, Week 2 ([growth/partnerships/chains/mantle.md](growth/partnerships/chains/mantle.md))
 - [x] iExec — Confidential Compute leg, Week 3 trinity ([growth/partnerships/iexec.md](growth/partnerships/iexec.md))
 - [ ] Nox — MPC Signing leg, Week 3 trinity (canonical X handle TBD) ([growth/partnerships/nox.md](growth/partnerships/nox.md))
+- [x] Chain partnerships tracker (chains/ subfolder + per-chain files + deployment-status legend) ([growth/partnerships/chains/README.md](growth/partnerships/chains/README.md))
+- [x] Avalanche chain partnership — Fuji spoke live; mainnet C-Chain in discussion ([growth/partnerships/chains/avalanche.md](growth/partnerships/chains/avalanche.md))
+- [ ] Mantle chain partnership — Mantle Sepolia spoke deploy pending (hackathon target) ([growth/partnerships/chains/mantle.md](growth/partnerships/chains/mantle.md))
+- [ ] BNB chain partnership — BNB Smart Chain Testnet spoke deploy pending (hackathon target; CCIP lane verification prerequisite) ([growth/partnerships/chains/bnb.md](growth/partnerships/chains/bnb.md))
+- [ ] Alephium chain partnership — non-EVM (UTXO + Ralph); hackathon target; scope decision pending (real Ralph spoke vs. wrapped/co-marketing-only) ([growth/partnerships/chains/alephium.md](growth/partnerships/chains/alephium.md))
 
 ### Lead Capture (Layer 2)
 
