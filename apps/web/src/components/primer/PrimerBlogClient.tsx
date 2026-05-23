@@ -17,7 +17,7 @@ export default function PrimerBlogClient({ posts }: { posts: BlogPostMeta[] }) {
     <section
       id="blog"
       ref={ref}
-      className="primer-section-glow primer-section-glow-br relative border-b border-app-border bg-app-surface py-24 sm:py-32"
+      className="primer-section-glow primer-section-glow-br relative overflow-hidden border-b border-app-border bg-app-surface py-24 sm:py-32"
     >
       <div
         className="absolute inset-x-0 top-0 h-px"

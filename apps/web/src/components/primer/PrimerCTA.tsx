@@ -30,7 +30,7 @@ export default function PrimerCTA() {
     <section
       id="cta"
       ref={ref}
-      className="primer-section-glow primer-section-glow-tl relative py-24 sm:py-32"
+      className="primer-section-glow primer-section-glow-tl relative overflow-hidden py-24 sm:py-32"
     >
       <div
         className="absolute inset-x-0 top-0 h-px"

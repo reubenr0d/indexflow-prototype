@@ -71,6 +71,7 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 html:not(.dark) {

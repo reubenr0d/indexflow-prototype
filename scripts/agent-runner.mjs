@@ -966,7 +966,8 @@ export function modelRequiresResponsesApi(model) {
 //   tools       — chat-completions wrapped form
 //                 [{ type: "function", function: { name, description, parameters } }]
 //                 or undefined/empty for tool-less calls (risk-officer).
-//   temperature — pass-through.
+//   temperature — pass-through, except when `model` is codex-family on the
+//                 Responses API, which rejects it.
 //   model       — pass-through to the request body.
 //
 // Output is a plain object ready to JSON.stringify. `tools` is omitted
@@ -1052,7 +1053,14 @@ export function translateToResponsesRequest({ messages, tools, temperature, mode
     store: false,
   };
   if (instructions !== undefined) body.instructions = instructions;
-  if (typeof temperature === "number") body.temperature = temperature;
+  // gpt-5-codex / gpt-5.1-codex (and future reasoning-only models routed
+  // here by name) reject `temperature` with HTTP 400. When an operator
+  // forces a non-codex model onto the Responses path via
+  // LLM_USE_RESPONSES_API=1, `temperature` is still valid — so we gate on
+  // the model name, not the endpoint.
+  if (typeof temperature === "number" && !modelRequiresResponsesApi(model)) {
+    body.temperature = temperature;
+  }
 
   // Tools: chat-completions wrapped → responses flat. The explicit
   // strict: false is load-bearing — without it the responses API

@@ -226,22 +226,29 @@ test("translateToResponsesRequest: omits tools field entirely when none provided
     model: "gpt-5-codex",
   });
   assert.equal("tools" in body, false);
-  assert.equal(body.temperature, 0);
+  assert.equal("temperature" in body, false);
 });
 
-test("translateToResponsesRequest: temperature is passed through when numeric, omitted otherwise", () => {
-  const withTemp = translateToResponsesRequest({
+test("translateToResponsesRequest: temperature dropped for codex-family models, passed through for non-codex models forced via LLM_USE_RESPONSES_API", () => {
+  const codexWithTemp = translateToResponsesRequest({
     messages: [{ role: "system", content: "x" }],
     temperature: 0.1,
     model: "gpt-5-codex",
   });
-  assert.equal(withTemp.temperature, 0.1);
+  assert.equal("temperature" in codexWithTemp, false);
 
-  const withoutTemp = translateToResponsesRequest({
+  const codexWithoutTemp = translateToResponsesRequest({
     messages: [{ role: "system", content: "x" }],
     model: "gpt-5-codex",
   });
-  assert.equal("temperature" in withoutTemp, false);
+  assert.equal("temperature" in codexWithoutTemp, false);
+
+  const nonCodexWithTemp = translateToResponsesRequest({
+    messages: [{ role: "system", content: "x" }],
+    temperature: 0.1,
+    model: "gpt-4o",
+  });
+  assert.equal(nonCodexWithTemp.temperature, 0.1);
 });
 
 test("translateToResponsesRequest: assistant tool_call with object arguments is JSON-stringified", () => {
