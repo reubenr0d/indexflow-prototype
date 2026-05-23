@@ -29,6 +29,10 @@ import {
   extractIssueIdMarker,
   ISSUE_ID_MARKER_PREFIX,
 } from "../apps/mcps/repo-editor/issue-manifest.js";
+import {
+  ISSUE_LABELS,
+  buildLabelCreateArgs,
+} from "../apps/mcps/repo-editor/agent-labels.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(process.env.PROJECT_ROOT || resolve(__dirname, ".."));
@@ -222,6 +226,42 @@ function ghIssueCreate(args) {
   return execFileSync("gh", args, { cwd: PROJECT_ROOT, encoding: "utf8" }).trim();
 }
 
+// Idempotently `gh label create --force` every label spec we ship to
+// `gh issue create`. `--force` updates colour/description if the label
+// already exists, so this is safe to call every tick. Soft-fails per
+// label (warns but does not throw) — if `gh issue create` then
+// succeeds because the label happened to already exist, we keep
+// going; if it still fails, the original error surfaces as before.
+export function ensureLabelsExist({ labels, runner = spawnSync } = {}) {
+  const results = [];
+  for (const label of labels || []) {
+    const args = buildLabelCreateArgs(label);
+    const result = runner("gh", args, {
+      cwd: PROJECT_ROOT,
+      encoding: "utf8",
+      timeout: 20_000,
+      env: { ...process.env },
+    });
+    if (result.error) {
+      console.warn(
+        `[apply-self-improvement-issues] could not bootstrap label "${label.name}": ${result.error.message}`,
+      );
+      results.push({ name: label.name, ok: false, message: result.error.message });
+      continue;
+    }
+    if (result.status !== 0) {
+      const stderr = (result.stderr || "").trim();
+      console.warn(
+        `[apply-self-improvement-issues] gh label create exited ${result.status} for "${label.name}": ${stderr.slice(0, 200)}`,
+      );
+      results.push({ name: label.name, ok: false, message: stderr });
+      continue;
+    }
+    results.push({ name: label.name, ok: true });
+  }
+  return results;
+}
+
 // ---------------------------------------------------------------------------
 // Top-level orchestration
 // ---------------------------------------------------------------------------
@@ -273,6 +313,15 @@ export async function applyIssueProposals({ mode, ghRunner, ghCreate = ghIssueCr
       capDropped: cap_filter.dropped.map((p) => ({ id: p.id, title: p.title })),
       wouldFile: cap_filter.kept.map((p) => ({ id: p.id, title: p.title, category: p.category })),
     };
+  }
+
+  // Bootstrap the labels referenced by `buildGhCreateArgs` so the
+  // first `gh issue create` doesn't fail with
+  // "could not add label: 'agent-finding' not found". Only run when
+  // we actually have proposals to file — no point churning labels on
+  // an empty manifest.
+  if (cap_filter.kept.length > 0) {
+    ensureLabelsExist({ labels: ISSUE_LABELS, runner: ghRunner });
   }
 
   const filed = [];

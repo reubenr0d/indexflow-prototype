@@ -23,7 +23,7 @@
 // file, and an explicit allowlist of files staged into the commit prevents
 // drift between "what the manifest covers" and "what git sees".
 
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync, appendFileSync, statSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { dirname, resolve, basename } from "node:path";
@@ -34,6 +34,10 @@ import {
   PROPOSAL_MANIFEST_REL,
 } from "../apps/mcps/repo-editor/allowlist.js";
 import { listTouchedAgents, listTouchedPaths } from "../apps/mcps/repo-editor/proposal-manifest.js";
+import {
+  PR_LABELS,
+  buildLabelCreateArgs,
+} from "../apps/mcps/repo-editor/agent-labels.js";
 import { detectSelfImprovementSignals } from "./detect-self-improvement-signal.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -391,6 +395,42 @@ function gh(args, opts = {}) {
   return execFileSync("gh", args, { cwd: PROJECT_ROOT, encoding: "utf8", stdio: opts.stdio || "pipe", ...opts });
 }
 
+// Idempotently `gh label create --force` every label spec we ship to
+// `gh pr create`. `--force` updates colour/description if the label
+// already exists, so this is safe to call every tick. Soft-fails per
+// label (warns but does not throw) — if `gh pr create` then succeeds
+// because the label happened to already exist, we keep going; if it
+// still fails, the original error surfaces as before.
+export function ensureLabelsExist({ labels, runner = spawnSync } = {}) {
+  const results = [];
+  for (const label of labels || []) {
+    const args = buildLabelCreateArgs(label);
+    const result = runner("gh", args, {
+      cwd: PROJECT_ROOT,
+      encoding: "utf8",
+      timeout: 20_000,
+      env: { ...process.env },
+    });
+    if (result.error) {
+      console.warn(
+        `[apply-self-improvement-proposals] could not bootstrap label "${label.name}": ${result.error.message}`,
+      );
+      results.push({ name: label.name, ok: false, message: result.error.message });
+      continue;
+    }
+    if (result.status !== 0) {
+      const stderr = (result.stderr || "").trim();
+      console.warn(
+        `[apply-self-improvement-proposals] gh label create exited ${result.status} for "${label.name}": ${stderr.slice(0, 200)}`,
+      );
+      results.push({ name: label.name, ok: false, message: stderr });
+      continue;
+    }
+    results.push({ name: label.name, ok: true });
+  }
+  return results;
+}
+
 function ensureBranch(branchName) {
   // Stash uncommitted changes first? In the workflow we run on a clean
   // checkout so this is mostly defensive.
@@ -580,6 +620,12 @@ export async function applyProposals({ mode, signalsOverride, now = new Date() }
       reused: true,
     };
   }
+
+  // Bootstrap the labels `openPr` will attach so the first call in a
+  // fresh repo doesn't fail with "could not add label: '...' not
+  // found". Idempotent + soft-fails so transient permission issues
+  // don't abort the PR opener.
+  ensureLabelsExist({ labels: PR_LABELS });
 
   try {
     const prUrl = openPr({ branchName, title, body });

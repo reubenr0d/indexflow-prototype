@@ -19,7 +19,12 @@ import {
 import {
   formatIssueBody,
   ISSUE_ID_MARKER_PREFIX,
+  CATEGORY_ENUM,
 } from "../apps/mcps/repo-editor/issue-manifest.js";
+import {
+  ISSUE_LABELS,
+  buildLabelCreateArgs,
+} from "../apps/mcps/repo-editor/agent-labels.js";
 
 function proposal(overrides = {}) {
   return {
@@ -251,4 +256,56 @@ test("buildGhCreateArgs encodes the category from the proposal", () => {
     body: "BODY",
   });
   assert.ok(args.includes("category:investigation"));
+});
+
+// ---------------------------------------------------------------------------
+// buildLabelCreateArgs + ISSUE_LABELS drift guard
+// ---------------------------------------------------------------------------
+
+test("buildLabelCreateArgs pins exact argv shape for gh label create --force", () => {
+  const args = buildLabelCreateArgs({
+    name: "agent-finding",
+    color: "fbca04",
+    description: "Issue surfaced by the self-improver-issues agent.",
+  });
+  assert.deepEqual(args, [
+    "label",
+    "create",
+    "agent-finding",
+    "--color",
+    "fbca04",
+    "--description",
+    "Issue surfaced by the self-improver-issues agent.",
+    "--force",
+  ]);
+});
+
+test("ISSUE_LABELS covers every label name buildGhCreateArgs emits (drift guard)", () => {
+  // Every label name the issue opener attaches via --label must have
+  // a matching spec in ISSUE_LABELS so the bootstrap step can create
+  // it before `gh issue create`. If this test fails, you probably
+  // added a new CATEGORY_ENUM entry but forgot the matching label
+  // spec in apps/mcps/repo-editor/agent-labels.js.
+  const labelNames = new Set(ISSUE_LABELS.map((l) => l.name));
+  const requiredStatic = ["agent-finding", "needs-human-review"];
+  for (const name of requiredStatic) {
+    assert.ok(labelNames.has(name), `ISSUE_LABELS missing required static label "${name}"`);
+  }
+  for (const category of CATEGORY_ENUM) {
+    const dynamic = `category:${category}`;
+    assert.ok(
+      labelNames.has(dynamic),
+      `ISSUE_LABELS missing dynamic label "${dynamic}" — add it to apps/mcps/repo-editor/agent-labels.js`,
+    );
+  }
+});
+
+test("ISSUE_LABELS entries declare name + color + description (gh label create requirements)", () => {
+  for (const label of ISSUE_LABELS) {
+    assert.equal(typeof label.name, "string", "label.name must be a string");
+    assert.ok(label.name.length > 0, "label.name must be non-empty");
+    assert.match(label.color, /^[0-9a-f]{6}$/i, `label "${label.name}" color must be a 6-char hex string`);
+    assert.equal(typeof label.description, "string", `label "${label.name}" description must be a string`);
+    assert.ok(label.description.length > 0, `label "${label.name}" description must be non-empty`);
+  }
 });

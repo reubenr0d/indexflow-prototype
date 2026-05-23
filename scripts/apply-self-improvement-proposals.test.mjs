@@ -13,6 +13,8 @@ import {
   buildPrBody,
 } from "./apply-self-improvement-proposals.mjs";
 
+import { PR_LABELS } from "../apps/mcps/repo-editor/agent-labels.js";
+
 // ---------------------------------------------------------------------------
 // previewReplaceEdit
 // ---------------------------------------------------------------------------
@@ -194,4 +196,30 @@ test("buildPrBody computes strongest conviction across edits", () => {
     touchedPaths: ["agents/x.md", "agents/y.md", "agents/z.md"],
   });
   assert.match(body, /convictionWeight \(strongest edit\):\*\* 0\.90/);
+});
+
+// ---------------------------------------------------------------------------
+// PR_LABELS drift guard — every label `openPr` attaches via --label
+// must have a matching spec in PR_LABELS so the bootstrap step can
+// create it before `gh pr create`.
+// ---------------------------------------------------------------------------
+
+test("PR_LABELS covers every label name openPr emits (drift guard)", () => {
+  const labelNames = new Set(PR_LABELS.map((l) => l.name));
+  for (const name of ["agent-self-improvement", "needs-human-review"]) {
+    assert.ok(
+      labelNames.has(name),
+      `PR_LABELS missing required label "${name}" — add it to apps/mcps/repo-editor/agent-labels.js`,
+    );
+  }
+});
+
+test("PR_LABELS entries declare name + color + description (gh label create requirements)", () => {
+  for (const label of PR_LABELS) {
+    assert.equal(typeof label.name, "string", "label.name must be a string");
+    assert.ok(label.name.length > 0, "label.name must be non-empty");
+    assert.match(label.color, /^[0-9a-f]{6}$/i, `label "${label.name}" color must be a 6-char hex string`);
+    assert.equal(typeof label.description, "string", `label "${label.name}" description must be a string`);
+    assert.ok(label.description.length > 0, `label "${label.name}" description must be non-empty`);
+  }
 });

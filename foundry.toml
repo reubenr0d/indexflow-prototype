@@ -33,14 +33,21 @@ arbitrum_sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
 fuji = "${FUJI_RPC_URL}"
 
 [etherscan]
-# Anvil (chain id 31337) has no public Etherscan URL. Without an explicit entry,
-# Foundry's Etherscan trace identifier — created whenever ETHERSCAN_API_KEY is in
-# scope, regardless of which chain is actually being broadcast to — falls through
-# to "No known Etherscan API URL for chain `anvil-hardhat`" and aborts the script
-# before any tx is broadcast (foundry-rs/foundry#11351 / #11444). The placeholder
-# URL below is never contacted because none of our `*:local` flows pass --verify;
-# it exists only so the chain-31337 lookup returns Some(_) instead of erroring.
-local = { key = "anvil-noop", chain = 31337, url = "http://127.0.0.1:8545/verify" }
+# Anvil (chain id 31337 / "anvil-hardhat") needs the alias entry below so that
+# Foundry's Etherscan trace identifier — instantiated on every `forge script`
+# whenever ETHERSCAN_API_KEY is present in the process environment (any value,
+# auto-loaded from .env) — has somewhere to land instead of bailing with
+# "No known Etherscan API URL for chain `anvil-hardhat`" (foundry-rs/foundry#11351,
+# fixed in #11356 / #11444). The placeholder URL is never contacted because no
+# `*:local` flow passes --verify.
+#
+# We deliberately do NOT set `chain = 31337` here: with the Etherscan v2 client
+# in Foundry 1.5.x that field is validated against v2's hard list of supported
+# chain IDs, and 31337 isn't on it, which raises a *different* error,
+# "Error: Chain anvil-hardhat not supported" (foundry-rs/foundry#10893).
+# Omitting `chain` keeps the alias matchable via `--rpc-url local` without
+# triggering the v2 chain-support check.
+local = { key = "anvil-noop", url = "http://127.0.0.1:8545/verify" }
 sepolia = { key = "${ETHERSCAN_API_KEY}", chain = "sepolia" }
 arbitrum = { key = "${ARBISCAN_API_KEY}", chain = "arbitrum" }
 fuji = { key = "${SNOWTRACE_API_KEY}", chain = "avalanche-fuji" }
