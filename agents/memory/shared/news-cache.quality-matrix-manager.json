@@ -1,0 +1,244 @@
+{
+  "agentName": "quality-matrix-manager",
+  "updatedAt": "2026-05-23T00:52:14.116Z",
+  "entries": {
+    "GPAC.V": {
+      "fetchedAt": "2026-05-23T00:52:13.939Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "BFG.CN": {
+      "fetchedAt": "2026-05-23T00:52:13.939Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "AUAU.V": {
+      "fetchedAt": "2026-05-23T00:52:13.939Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "GRSL.V": {
+      "fetchedAt": "2026-05-23T00:52:13.939Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T00:52:14.116Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T00:52:14.116Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-23T00:52:14.116Z",
+      "headlines": [
+        {
+          "title": "A Look Back at Engineered Components and Systems Stocks’ Q1 Earnings: ESCO (NYSE:ESE) Vs The Rest Of The Pack",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-back-engineered-components-systems-004455177.html",
+          "publishedAt": "2026-05-23T00:44:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ESE"
+          ]
+        },
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        }
+      ],
+      "sourceAgent": "quality-matrix-manager"
+    }
+  }
+}

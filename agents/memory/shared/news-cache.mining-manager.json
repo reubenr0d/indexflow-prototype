@@ -1,0 +1,359 @@
+{
+  "agentName": "mining-manager",
+  "updatedAt": "2026-05-23T00:48:16.261Z",
+  "entries": {
+    "AHR.V": {
+      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CRML": {
+      "fetchedAt": "2026-05-23T00:48:16.089Z",
+      "headlines": [
+        {
+          "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/crml-executes-15-binding-definitive-114000090.html",
+          "publishedAt": "2026-05-21T11:40:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ALOY",
+            "CRML"
+          ]
+        },
+        {
+          "title": "Assessing Critical Metals (CRML) Valuation After Strong Share Price And P/B Premium",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-critical-metals-crml-valuation-002731399.html",
+          "publishedAt": "2026-05-22T00:27:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CRML"
+          ]
+        },
+        {
+          "title": "Critical Metals Signs Offtake Agreement With REalloys for Rare Earth Concentrate",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/critical-metals-signs-offtake-agreement-123655525.html",
+          "publishedAt": "2026-05-21T12:36:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ALOY",
+            "CRML"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-23T00:48:16.261Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-23T00:48:16.261Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-23T00:48:16.261Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CGNT.V": {
+      "fetchedAt": "2026-05-23T00:48:16.261Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-23T00:48:16.261Z",
+      "headlines": [
+        {
+          "title": "SpaceX's enormous Starship splashes down after test flight",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/61f06ff6-66ab-3be3-bf10-b64e51eece2c/spacex%27s-enormous-starship.html",
+          "publishedAt": "2026-05-23T00:40:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ambiq Micro's CFO Sold Company Shares Worth $1.8 Million. Here's What That Means for Investors.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/06cac495-93de-3abf-93df-61343293a2d1/ambiq-micro%27s-cfo-sold.html",
+          "publishedAt": "2026-05-23T00:37:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Prediction: Rivian Stock Could Soar in the Next 3 Years If These 2 Things Happen",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/83689c61-a112-37ec-9dc8-35f28234f50f/prediction%3A-rivian-stock.html",
+          "publishedAt": "2026-05-23T00:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RIVN",
+            "TSLA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    }
+  }
+}

@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:30df657079ed4a93ef9bded359ff85402c63fcbb24de2f56659961fd29eb598b",
+  "agentFileHash": "sha256:3a59303d1d6ec6c48baebcf8d42ccbf9eda082aea91a1e8d206bffff59f29692",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:15:21.593Z",
-  "lastRunAt": "2026-05-22T23:49:37.952Z",
-  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. Despite attempts to wire new assets like Freeport-McMoRan Inc. (0R2O.L), these transactions failed due to technical issues, which will need to be addressed in future runs. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
-  "lastThesisUpdate": "2026-05-22T23:49:37.952Z"
+  "lastRunAt": "2026-05-23T00:48:53.071Z",
+  "thesis": "The Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. Critical Metals Corp. (CRML) was also highlighted for its strong ML score and predicted return, leading to a new long position. The model's focus on features like volatility and momentum suggests a preference for companies with strong market dynamics. No short positions were opened this run as no concrete bearish news was found for any wired oracle assets outside the top-N.",
+  "lastThesisUpdate": "2026-05-23T00:48:53.071Z"
 }

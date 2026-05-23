@@ -1,0 +1,18 @@
+{
+  "vault": "0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3",
+  "updatedAt": "2026-05-23T00:51:02.540Z",
+  "closures": {
+    "0x3b094510f54bf7ffb005a5f926a0cff4d9891fa32e85933375c5b89da0e84573": {
+      "ticker": "AUAU.V",
+      "isLong": true,
+      "closedAt": "2026-05-23T00:50:50.784Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #2 AUAU.V (pnl 0.00%) to free room for #3 BFG.CN"
+    },
+    "0x0b8f04590706f001d3a317c46965b2bf6ecc95018c610da029ccb697f17b69b2": {
+      "ticker": "GRSL.V",
+      "isLong": true,
+      "closedAt": "2026-05-23T00:51:02.540Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #1 GRSL.V (pnl 0.00%) to free room for #4 GPAC.V"
+    }
+  }
+}
