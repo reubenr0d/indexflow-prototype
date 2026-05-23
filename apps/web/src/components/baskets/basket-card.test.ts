@@ -18,7 +18,7 @@ vi.mock("@/hooks/subgraph/useBasketTrends", () => ({
 }));
 
 describe("BasketCard", () => {
-  it("renders PnL, Assets, and the composition bar", () => {
+  it("renders NET PnL, Assets, and the composition bar", () => {
     const html = renderToStaticMarkup(
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000002",
@@ -35,7 +35,7 @@ describe("BasketCard", () => {
 
     expect(html).toContain("Momentum Basket");
     expect(html).toContain("TVL");
-    expect(html).toContain("PnL");
+    expect(html).toContain("NET PnL");
     expect(html).toContain("+25.00%");
     expect(html).toContain("Assets");
     expect(html).toContain(">4<");
@@ -50,7 +50,7 @@ describe("BasketCard", () => {
     expect(html).toContain("25.00%");
   });
 
-  it("renders zero PnL and asset count when share price equals inception", () => {
+  it("renders zero NET PnL and asset count when share price equals inception", () => {
     const html = renderToStaticMarkup(
       createElement(BasketCard, {
         vault: "0x0000000000000000000000000000000000000003",
@@ -65,7 +65,7 @@ describe("BasketCard", () => {
     );
 
     expect(html).toContain("Fee --");
-    expect(html).toContain("PnL");
+    expect(html).toContain("NET PnL");
     expect(html).toContain("0.00%");
     expect(html).not.toContain("+0.00%");
     expect(html).not.toContain("-0.00%");

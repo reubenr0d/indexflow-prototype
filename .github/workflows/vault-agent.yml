@@ -259,3 +259,176 @@ jobs:
           # per-run by `agent-runner.mjs` and never hand-edited.
           git pull --rebase --strategy-option=theirs
           git push
+
+  # ---------------------------------------------------------------------------
+  # Self-improver meta-loop (see docs/AGENTS_FRAMEWORK.md § Self-Improvement)
+  # ---------------------------------------------------------------------------
+  # Runs AFTER `commit-results` so the freshly-pushed run log is available
+  # on `main` when the deterministic signal detector reads it.
+  #
+  #   1. Layer A — scripts/detect-self-improvement-signal.mjs runs first.
+  #      If `shouldRun: false`, every subsequent step is skipped (zero LLM
+  #      cost on quiet ticks).
+  #   2. Layer B — `node scripts/agent-runner.mjs self-improver` invokes
+  #      the existing runner, which spawns the repo-editor MCP, executes
+  #      the meta-agent loop, and persists a manifest at
+  #      `.agent-self-improvement/proposed-edits.json`.
+  #   3. Layer C — scripts/run-self-improvement-risk-officer.mjs reviews
+  #      the manifest (approve / downsize / veto). Veto is logged and
+  #      short-circuits the rest of the job.
+  #   4. Layer E — scripts/apply-self-improvement-proposals.mjs --apply-
+  #      locally-only mutates the working tree, then a dry-run replay of
+  #      every touched agent confirms the prompt still parses and the
+  #      LLM still produces a coherent plan with NO on-chain writes.
+  #   5. Layer D — scripts/apply-self-improvement-proposals.mjs --open-pr
+  #      creates a stable `agent-improve/<UTC date>-<signal hash>` branch,
+  #      commits + pushes under the `vault-agent[bot]` identity, and opens
+  #      a PR labelled `agent-self-improvement` + `needs-human-review`.
+  #      Never auto-merges — humans review and merge.
+  #
+  # Skipped on ad-hoc workflow_dispatch with `dry_run=true` or
+  # `vault_address` set: those are exploration runs that should never
+  # alter the agent strategy.
+  self-improve:
+    name: Self-improver meta-loop
+    needs: commit-results
+    if: >-
+      always() && needs.commit-results.result == 'success' && (
+        github.event_name == 'schedule'
+        || github.event_name == 'repository_dispatch'
+        || (github.event.inputs.dry_run != 'true' && github.event.inputs.vault_address == '')
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # for the feature branch only; main is untouched
+      pull-requests: write  # for `gh pr create`
+    # Separate concurrency group from the trading agents above: this job
+    # never signs anything with KEEPER_PRIVATE_KEY so it doesn't need the
+    # `keeper-key-serialized` slot, but it DOES need to serialise against
+    # itself so two ticks can't race on the same `agent-improve/...` branch.
+    concurrency:
+      group: agent-self-improver
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        # Need full history so `git checkout -B` from main + `gh pr create`
+        # against `--base main` work; `git pull` in commit-results above
+        # implies main is reachable.
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: Layer A — detect signal (deterministic, no LLM)
+        id: signal
+        run: |
+          mkdir -p .agent-self-improvement
+          node scripts/detect-self-improvement-signal.mjs > .agent-self-improvement/signal.json
+          should=$(jq -r '.shouldRun' .agent-self-improvement/signal.json)
+          echo "should_run=${should}" >> "$GITHUB_OUTPUT"
+          if [ "${should}" = "true" ]; then
+            echo "::notice::self-improvement signal detected; running meta-agent"
+            jq '.signals[] | "- " + .kind + " on " + .agent + ": " + .summary' .agent-self-improvement/signal.json || true
+          else
+            echo "::notice::no self-improvement signal; meta-agent skipped"
+          fi
+
+      - name: Layer B — run self-improver meta-agent
+        if: steps.signal.outputs.should_run == 'true'
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          # The repo-editor MCP only writes to .agent-self-improvement/,
+          # so the runner doesn't need on-chain write execution here.
+          # We still set this so the runner doesn't skip `propose_file_*`
+          # calls due to the non-interactive write-confirmation gate.
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
+          AGENT_MAX_TURNS: "20"
+          # The meta-agent doesn't need a vault network — pin to sepolia
+          # so its own run-log file lands at agents/memory/self-improver/
+          # run-log.sepolia.jsonl alongside the trading agents'.
+          AGENT_NETWORK: "sepolia"
+        run: node scripts/agent-runner.mjs self-improver
+
+      - name: Layer C — risk-officer review of proposal
+        if: steps.signal.outputs.should_run == 'true'
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: node scripts/run-self-improvement-risk-officer.mjs
+
+      - name: Inspect risk-officer verdict
+        id: verdict
+        if: steps.signal.outputs.should_run == 'true'
+        run: |
+          if [ ! -f .agent-self-improvement/risk-officer-verdict.json ]; then
+            echo "verdict_kind=missing" >> "$GITHUB_OUTPUT"
+            echo "::warning::risk-officer verdict file missing — skipping PR"
+            exit 0
+          fi
+          kind=$(jq -r '.verdict' .agent-self-improvement/risk-officer-verdict.json)
+          count=$(jq -r '.proposalCount' .agent-self-improvement/risk-officer-verdict.json)
+          dropped=$(jq -r '.droppedCount' .agent-self-improvement/risk-officer-verdict.json)
+          echo "verdict_kind=${kind}" >> "$GITHUB_OUTPUT"
+          echo "proposal_count=${count}" >> "$GITHUB_OUTPUT"
+          echo "dropped_count=${dropped}" >> "$GITHUB_OUTPUT"
+          echo "::notice::risk-officer verdict=${kind} (${dropped}/${count} edits dropped)"
+
+      - name: Layer E — apply manifest locally + dry-run replay
+        if: >-
+          steps.signal.outputs.should_run == 'true' &&
+          steps.verdict.outputs.verdict_kind != 'veto' &&
+          steps.verdict.outputs.verdict_kind != 'missing' &&
+          steps.verdict.outputs.proposal_count != '0'
+        env:
+          AGENT_DRY_RUN: "1"
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # Read-only spoke RPC keys so the dry-run can call get_oracle_assets
+          # and friends; PRIVATE_KEY is intentionally NOT exported here.
+          SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
+          FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
+          ATLAS_API_URL: ${{ secrets.ATLAS_API_URL || 'https://atlas.minestarters.com' }}
+          ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: |
+          set -euo pipefail
+          node scripts/apply-self-improvement-proposals.mjs --apply-locally-only
+          # Dry-run replay every touched agent so a malformed prompt that
+          # parses but errors on first MCP call is caught BEFORE the PR
+          # is opened.
+          agents=$(jq -r '.touchedAgents[]?' .agent-self-improvement/proposed-edits.json | sort -u)
+          for a in ${agents}; do
+            echo "--- dry-run replay: ${a} ---"
+            node scripts/agent-runner.mjs "${a}" || {
+              echo "::error::dry-run replay failed for agent '${a}' — refusing to open PR"
+              exit 1
+            }
+          done
+
+      - name: Layer D — open PR
+        if: >-
+          steps.signal.outputs.should_run == 'true' &&
+          steps.verdict.outputs.verdict_kind != 'veto' &&
+          steps.verdict.outputs.verdict_kind != 'missing' &&
+          steps.verdict.outputs.proposal_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: node scripts/apply-self-improvement-proposals.mjs --open-pr
+
+      - name: Upload self-improver artefacts
+        if: always() && steps.signal.outputs.should_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: self-improver-artefacts
+          path: |
+            .agent-self-improvement/
+            agents/memory/self-improver/
+          retention-days: 14

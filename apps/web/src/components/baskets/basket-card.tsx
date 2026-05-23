@@ -127,7 +127,7 @@ export function BasketCard({
             <div className="rounded-lg border border-app-border bg-app-bg-subtle/60 p-3">
               <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-app-muted">
                 <BasketIcon name="sharePrice" />
-                <InfoLabel label="PnL" tooltipKey="pnlSinceInception" />
+                <InfoLabel label="NET PnL" tooltipKey="pnlSinceInception" />
               </div>
               <p className={`mt-2 font-mono text-sm font-semibold ${pnlColor}`}>{pnlLabel}</p>
             </div>

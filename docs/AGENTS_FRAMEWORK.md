@@ -400,6 +400,52 @@ npm run agent:vault       # full live run
 npm run agent:vault:dry   # dry-run (no on-chain writes)
 ```
 
+### Self-Improvement (PR-only meta-loop)
+
+After every vault-agent CI tick, a separate `self-improve` job in `.github/workflows/vault-agent.yml` runs a deterministic detector (`scripts/detect-self-improvement-signal.mjs`) over the freshly-committed `agents/memory/<agent>/run-log.<network>.jsonl` tails. The detector emits JSON for five trigger conditions:
+
+| Signal | Condition |
+|---|---|
+| `recurring_losers` | Same `(ticker, side)` appears in `closedPositions[]` with `realizedPnlPctOfCollateral < -5%` ≥ 2 times in the last 7 days. |
+| `new_error_code` | An MCP `error_code` in `errors[]` that did NOT appear in the prior 100 runs. |
+| `cap_saturation` | `maxNewPositionsPerRun` / `maxNewShortsPerRun` hit on ≥ 3 consecutive most-recent runs. |
+| `risk_officer_dissonance` | ≥ 3 risk-officer `veto` verdicts on the same vault in the last 24h. |
+| `loss_streak` | ≥ 3 closed positions with `<-5%` PnL of collateral in the last 24h. |
+
+When `shouldRun: false`, the meta-loop short-circuits before any LLM call — quiet ticks cost zero tokens. When at least one signal fires, the layered pipeline runs:
+
+1. **Layer B — meta-agent.** `agents/self-improver.md` is invoked via `node scripts/agent-runner.mjs self-improver`. It connects to a single MCP server (`repo-editor-mcp`) and uses `propose_file_edit` / `propose_file_create` / `propose_file_rename` to draft a manifest at `.agent-self-improvement/proposed-edits.json`. **The meta-agent NEVER mutates the repo on disk** — the manifest is the only side-effect.
+2. **Layer C — risk-officer review.** `scripts/run-self-improvement-risk-officer.mjs` reads the manifest, the trigger evidence, the current contents of every touched file, and recent verdicts, and asks the LLM (prompt body in `agents/risk-officer-self-improvement.md`) for `approve` / `downsize` / `veto`. A `veto` clears the manifest and short-circuits the PR. A `downsize` keeps only edits whose `convictionWeight ≥ threshold`.
+3. **Layer E — dry-run replay.** `scripts/apply-self-improvement-proposals.mjs --apply-locally-only` mutates the working tree (re-checking the allowlist for every path, re-verifying every `search` string is present-and-unique). Then `AGENT_DRY_RUN=1 node scripts/agent-runner.mjs <agent>` runs for every agent whose `.md` was edited so a prompt that parses-but-errors is caught BEFORE the PR opens.
+4. **Layer D — PR.** `scripts/apply-self-improvement-proposals.mjs --open-pr` creates a stable `agent-improve/<UTC date>-<signal hash>` branch (so two ticks firing the same signal set in the same UTC day collapse onto one branch), commits + pushes under the `vault-agent[bot]` identity, and runs `gh pr create --label agent-self-improvement --label needs-human-review --base main`. **No auto-merge** — a human reviews and merges. Housekeeping rotations (run-log entries older than 90 days → `agents/memory/<agent>/archive/`) emitted by the signal detector ride along on the same PR.
+
+The MCP server is a thin wrapper around `apps/mcps/repo-editor/allowlist.js`. The allowlist is the load-bearing safety rail; both the MCP (when the meta-agent calls `propose_file_*`) and the PR-opener (before any disk mutation) re-check every proposed path. The list:
+
+- **Allow**: `agents/*.md`, `agents/skills/*.md`, `agents/mcp-servers.json`, `scripts/agent-runner*.{mjs,js}` (flagged `requiresReviewKind=runner`), `apps/mcps/**/*.{mjs,js}` (flagged `requiresReviewKind=mcp`), `apps/shared/**/*.{mjs,js}` (flagged `requiresReviewKind=shared`).
+- **Deny (always)**: every `*.sol`, `lib/**`, `src/**`, `script/**`, `test/**`, `.github/workflows/**`, `.github/actions/**`, `apps/web/src/abi/**`, `apps/envio/abis/**`, `apps/web/src/config/*-deployment.json`, `.env*`, `**/credentials*`, `**/*.secret*`, `*.pem`/`*.key`, `AGENTS.md`, `AGENT_DEPLOYMENT_MEMORY.md`, `CHANGELOG.md`, `.cursor/rules/**`, `agents/memory/**`, `apps/web/public/agent-metadata/**`, `node_modules/**`, `.git/**`, lockfiles, `scripts/agent-debug-log.jsonl`.
+- **Default deny**: any path not on the allow-list.
+
+The meta-agent's own memory lives at `agents/memory/self-improver/` (same shape as every other agent), and the same `commit-results` job that pushes the trading agents' memory back to `main` carries it along. The `self-improver-artefacts` workflow artefact preserves the per-tick `.agent-self-improvement/` scratch dir for 14 days for audit.
+
+Local invocation (for testing the meta-loop without firing CI):
+
+```bash
+# 1. See whether a signal fires
+node scripts/detect-self-improvement-signal.mjs | jq .
+
+# 2. Run the meta-agent itself (writes a manifest only)
+LLM_API_KEY=sk-... AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 node scripts/agent-runner.mjs self-improver
+
+# 3. Risk-officer review of the manifest
+LLM_API_KEY=sk-... node scripts/run-self-improvement-risk-officer.mjs
+
+# 4. Apply to the working tree (no push) and inspect the diff
+node scripts/apply-self-improvement-proposals.mjs --apply-locally-only
+git diff
+```
+
+The PR creation step (`--open-pr`) requires a `gh` auth context and is intended for the CI workflow only.
+
 ### GitHub Actions
 
 The workflow at `.github/workflows/vault-agent.yml` runs the full agent matrix (`vault-manager`, `mining-manager`, `quality-matrix-manager`) against Sepolia.

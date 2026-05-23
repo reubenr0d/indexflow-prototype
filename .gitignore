@@ -24,3 +24,9 @@ apps/web/playwright-report/
 # scheduled run — see docs/AGENTS_FRAMEWORK.md for details.
 
 .DS_Store
+
+# Self-improver meta-loop scratch dir (proposal manifest + risk-officer
+# verdict + signal snapshot + recent verdicts). Regenerated every CI tick
+# by .github/workflows/vault-agent.yml `self-improve` job and uploaded as
+# the `self-improver-artefacts` artefact for audit; never committed.
+.agent-self-improvement/

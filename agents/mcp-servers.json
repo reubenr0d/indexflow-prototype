@@ -40,5 +40,12 @@
       "ATLAS_API_KEY",
       "ATLAS_REQUEST_TIMEOUT_MS"
     ]
+  },
+  "repo-editor-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/repo-editor/index.js"],
+    "envPassthrough": [
+      "AGENT_NAME"
+    ]
   }
 }
