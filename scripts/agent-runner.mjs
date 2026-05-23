@@ -55,8 +55,14 @@ import {
   shouldBypassWriteConfirmation,
   shouldSkipWritesForNonInteractiveSession,
   isInteractiveTty,
+  runRiskOfficerPass,
+  DEFAULT_RISK_OFFICER_SYSTEM_PROMPT,
 } from "./agent-runner-confirmation.mjs";
 import { redactSecrets, redactSecretsDeep } from "./lib/redact-secrets.mjs";
+import {
+  recordRecentlyClosed,
+  CHURN_GUARD_WINDOW_MS,
+} from "../apps/shared/agent-shared-memory.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, "..");
@@ -555,6 +561,211 @@ function appendRunLog(agentName, networkKey, entry) {
   appendFileSync(runLogPath(agentName, networkKey), JSON.stringify(entry) + "\n");
 }
 
+// ---------------------------------------------------------------------------
+// Closed-position post-mortems + "## Lessons" prompt block
+// ---------------------------------------------------------------------------
+//
+// On every successful close we look up the matching open in (a) the current
+// run's writeActions and (b) `recentRuns` (the tail of run-log.<network>.jsonl
+// that was read at startup) and emit a `closedPositions[]` entry with both
+// justifications, hold time, and realised PnL when known. The next run picks
+// these up via `buildLessonsBlock` and surfaces the top-3 winners / losers
+// in the "## Lessons" section of the system prompt — the agent literally
+// reads what worked and what didn't before its next round of decisions.
+
+function _normalizeAssetId(value) {
+  return String(value || "").toLowerCase();
+}
+
+// Walk current-run writeActions first (newest first), then recentRuns
+// (newest first), and return the most recent matching open_position entry
+// or null. Match key is `(vault, assetId, isLong)`.
+export function findMatchingOpen({
+  vault,
+  assetId,
+  isLong,
+  currentRunActions = [],
+  recentRuns = [],
+} = {}) {
+  if (!vault || !assetId || typeof isLong !== "boolean") return null;
+  const wantVault = String(vault).toLowerCase();
+  const wantAssetId = _normalizeAssetId(assetId);
+
+  const matches = (action, fallbackTimestamp) => {
+    if (!action || action.tool !== "open_position") return null;
+    if (action.skipped) return null;
+    const args = action.args || {};
+    if (String(args.vault || "").toLowerCase() !== wantVault) return null;
+    if (_normalizeAssetId(args.assetId) !== wantAssetId) return null;
+    if (typeof args.isLong !== "boolean" || args.isLong !== isLong) return null;
+    return {
+      timestamp: action.timestamp || fallbackTimestamp || null,
+      justification: action.justification || args.justification || null,
+      runId: action.runId || null,
+      txHash: action.txHash || null,
+      size: args.size || null,
+      collateral: args.collateral || null,
+    };
+  };
+
+  // 1) Current run, newest last in the array.
+  for (let i = currentRunActions.length - 1; i >= 0; i--) {
+    const hit = matches(currentRunActions[i]);
+    if (hit) return hit;
+  }
+
+  // 2) Recent runs from disk, newest last in the array.
+  for (let i = recentRuns.length - 1; i >= 0; i--) {
+    const run = recentRuns[i];
+    const ts = run?.timestamp || null;
+    const actions = Array.isArray(run?.writeActions) ? run.writeActions : [];
+    for (let j = actions.length - 1; j >= 0; j--) {
+      const hit = matches(actions[j], ts);
+      if (hit) {
+        if (!hit.runId) hit.runId = ts;
+        return hit;
+      }
+    }
+  }
+  return null;
+}
+
+// Build a single post-mortem entry for the close-side of a position.
+// `realizedPnlUsdc` and `realizedPnlPctOfCollateral` may be null when the
+// close path could not opportunistically capture them (e.g. an LLM-driven
+// close without a pre-close roster snapshot); the entry is still useful
+// for chronological "I just closed X" context even without numbers.
+export function buildClosedPositionEntry({
+  vault,
+  assetId,
+  isLong,
+  ticker,
+  closedAt,
+  closedReason,
+  closeJustification,
+  realizedPnlUsdc = null,
+  realizedPnlPctOfCollateral = null,
+  matchingOpen = null,
+} = {}) {
+  const closedAtMs = closedAt ? Date.parse(closedAt) : Date.now();
+  let holdHours = null;
+  if (matchingOpen?.timestamp) {
+    const openedAtMs = Date.parse(matchingOpen.timestamp);
+    if (Number.isFinite(openedAtMs) && Number.isFinite(closedAtMs)) {
+      holdHours = Math.max(0, (closedAtMs - openedAtMs) / (1000 * 60 * 60));
+    }
+  }
+  return {
+    vault: vault ? String(vault).toLowerCase() : null,
+    assetId: _normalizeAssetId(assetId),
+    ticker: ticker || null,
+    side: isLong ? "long" : "short",
+    closedAt: closedAt || new Date(closedAtMs).toISOString(),
+    closedReason: closedReason || null,
+    closeJustification: closeJustification || null,
+    realizedPnlUsdc: realizedPnlUsdc != null ? String(realizedPnlUsdc) : null,
+    realizedPnlPctOfCollateral:
+      Number.isFinite(realizedPnlPctOfCollateral) ? realizedPnlPctOfCollateral : null,
+    holdHours: Number.isFinite(holdHours) ? Number(holdHours.toFixed(2)) : null,
+    entryRunId: matchingOpen?.runId || null,
+    entryTimestamp: matchingOpen?.timestamp || null,
+    entryJustification: matchingOpen?.justification || null,
+    entryTxHash: matchingOpen?.txHash || null,
+  };
+}
+
+const LESSONS_DEFAULT_WINDOW_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+const LESSONS_DEFAULT_TOP_N = 3;
+
+// Format a single closed-position entry into a one-line bullet for the
+// "## Lessons" block. Quoting the entry justification verbatim is the whole
+// point — the agent reads back what reasoning it used previously and reuses
+// or discards it based on the realised outcome.
+function _formatLessonRow(entry) {
+  const ticker = entry.ticker || entry.assetId.slice(0, 10) + "…";
+  const side = entry.side || "long";
+  const pctPart =
+    Number.isFinite(entry.realizedPnlPctOfCollateral)
+      ? `${(entry.realizedPnlPctOfCollateral * 100).toFixed(1)}%`
+      : "n/a";
+  const sign = Number.isFinite(entry.realizedPnlPctOfCollateral)
+    ? entry.realizedPnlPctOfCollateral >= 0
+      ? "+"
+      : ""
+    : "";
+  const holdPart =
+    Number.isFinite(entry.holdHours)
+      ? `${entry.holdHours.toFixed(1)}h`
+      : "?h";
+  const just = entry.entryJustification
+    ? `"${entry.entryJustification.replace(/\s+/g, " ").slice(0, 140).trim()}"`
+    : "(no entry justification on file)";
+  const exitReason = entry.closedReason
+    ? ` — exit: ${entry.closedReason.replace(/\s+/g, " ").slice(0, 80).trim()}`
+    : "";
+  return `${ticker} ${side} ${sign}${pctPart} (${holdPart}) ${just}${exitReason}`;
+}
+
+// Scan the runlog tail for `closedPositions[]` entries within `windowMs`,
+// rank by realised PnL, and emit a markdown "## Lessons" block with the
+// top winners + losers. Returns an empty string when no usable data is
+// available (e.g. a fresh agent with no prior closes), so the caller can
+// inject it unconditionally without producing an empty heading.
+export function buildLessonsBlock({
+  runs = [],
+  now = Date.now(),
+  windowMs = LESSONS_DEFAULT_WINDOW_MS,
+  topN = LESSONS_DEFAULT_TOP_N,
+} = {}) {
+  if (!Array.isArray(runs) || runs.length === 0) return "";
+  const cutoff = now - windowMs;
+  const closures = [];
+  for (const run of runs) {
+    const list = Array.isArray(run?.closedPositions) ? run.closedPositions : [];
+    for (const closure of list) {
+      if (!closure) continue;
+      const closedAtMs = Date.parse(closure.closedAt || "");
+      if (!Number.isFinite(closedAtMs) || closedAtMs < cutoff) continue;
+      closures.push(closure);
+    }
+  }
+  if (closures.length === 0) return "";
+
+  const ranked = closures.filter((c) => Number.isFinite(c.realizedPnlPctOfCollateral));
+  const winners = ranked
+    .filter((c) => c.realizedPnlPctOfCollateral > 0)
+    .sort((a, b) => b.realizedPnlPctOfCollateral - a.realizedPnlPctOfCollateral)
+    .slice(0, topN);
+  const losers = ranked
+    .filter((c) => c.realizedPnlPctOfCollateral < 0)
+    .sort((a, b) => a.realizedPnlPctOfCollateral - b.realizedPnlPctOfCollateral)
+    .slice(0, topN);
+
+  const flat = ranked.length === 0 ? closures.slice(0, topN) : null;
+
+  const lines = ["", "## Lessons (last 30 days, closed positions)"];
+  if (winners.length > 0) {
+    lines.push("");
+    lines.push("**Wins** (highest realised PnL on collateral; lean into similar setups):");
+    for (const w of winners) lines.push(`- ${_formatLessonRow(w)}`);
+  }
+  if (losers.length > 0) {
+    lines.push("");
+    lines.push("**Losses** (worst realised PnL on collateral; do not re-enter these theses without a fresh signal):");
+    for (const l of losers) lines.push(`- ${_formatLessonRow(l)}`);
+  }
+  if (winners.length === 0 && losers.length === 0 && flat) {
+    lines.push("");
+    lines.push("Recent closes (no realised PnL captured — chronological only):");
+    for (const c of flat) lines.push(`- ${_formatLessonRow(c)}`);
+  }
+  lines.push("");
+  lines.push(
+    "Use these post-mortems as PRIORS only — current Atlas/Quality picks + live news still drive every decision. If you re-cite a winning entry justification verbatim, it should be because the same setup recurs, not because it worked once.",
+  );
+  return lines.join("\n");
+}
+
 // File-based memory adapter. Writes everything under agents/memory/<agent>/,
 // which is tracked in git so CI runs can commit state + run-log back after
 // each scheduled execution (see .github/workflows/vault-agent.yml).
@@ -678,6 +889,29 @@ const MAX_TOOL_RESPONSE = parseInt(
   process.env.AGENT_MAX_TOOL_RESPONSE || "6000",
   10
 );
+
+// Risk-officer second-pass: defaults ON; set AGENT_RISK_OFFICER=0 to bypass
+// (e.g. when running an agent that has no LLM budget for the extra call).
+// The risk-officer prompt body is loaded from `agents/risk-officer.md` at
+// startup; on read failure we fall back to DEFAULT_RISK_OFFICER_SYSTEM_PROMPT
+// so a missing file never blocks a run.
+const RISK_OFFICER_ENABLED = !["0", "false", "no"].includes(
+  (process.env.AGENT_RISK_OFFICER || "").toLowerCase().trim(),
+);
+
+function loadRiskOfficerPrompt() {
+  try {
+    const p = resolve(PROJECT_ROOT, "agents", "risk-officer.md");
+    if (!existsSync(p)) return DEFAULT_RISK_OFFICER_SYSTEM_PROMPT;
+    const raw = readFileSync(p, "utf8");
+    const { systemPrompt } = parseAgentMarkdown(raw);
+    return systemPrompt && systemPrompt.length > 0
+      ? systemPrompt
+      : DEFAULT_RISK_OFFICER_SYSTEM_PROMPT;
+  } catch {
+    return DEFAULT_RISK_OFFICER_SYSTEM_PROMPT;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // MCP Client — spawn one per server definition
@@ -1325,11 +1559,32 @@ function validatePolicyWriteBatch({
   opensExecutedSoFar,
   shortOpensExecutedSoFar = 0,
   eligibleAssets,
+  marketRegime = null,
 }) {
   if (!policy?.enabled || !classified?.hasWriteCalls) return null;
 
   const openCalls = classified.writeCalls.filter((c) => c.originalName === "open_position");
   if (openCalls.length === 0) return null;
+
+  // Regime-based short gate: when the pre-LLM market-regime snapshot tags
+  // the metals/miners tape as a squeeze risk (XME or GDX day-change >= +3%
+  // = shortPenalty 2) refuse every new short. The agent gets the reason in
+  // the rejection so the next turn can pivot to longs or skip the open.
+  const shortPenalty = Number(marketRegime?.shortPenalty || 0);
+  if (shortPenalty >= 2) {
+    const shortOpens = openCalls.filter((c) => c.args?.isLong === false);
+    if (shortOpens.length > 0) {
+      const tickers = shortOpens
+        .map((c) => String(c.args?.assetId || "").slice(0, 10) + "…")
+        .join(", ");
+      return (
+        `Policy violation: shortPenalty=${shortPenalty} from get_market_regime (` +
+        (marketRegime?.summary || "miners ETF day-change >= +3%") +
+        `). All new short open_position calls are rejected this run with error_code SHORT_BLOCKED_BY_REGIME (tried: ${tickers}). ` +
+        "Drop the short batch and revise the turn — either focus on longs above the score gate or skip new opens entirely."
+      );
+    }
+  }
 
   // Direction gating: enforce per-direction rules. The Atlas-ML eligibility
   // check below applies only to long opens, since Atlas ranks longs and
@@ -1411,7 +1666,7 @@ function extractThesis(summaryText) {
 // Build system prompt with vault context, memory, and dry-run notice
 // ---------------------------------------------------------------------------
 
-function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
+function buildSystemPrompt(config, state, recentRuns, needsNewVault, marketRegime = null) {
   let prompt = config.systemPrompt;
 
   // Skills (generalised tool/API references)
@@ -1451,6 +1706,49 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault) {
         (run.summary ? ` — ${run.summary.slice(0, 200)}` : "") +
         "\n";
     }
+  }
+
+  // Lessons block — top-3 winners / losers from `closedPositions[]` in the
+  // recent run log. Emits an empty string when no usable data is available
+  // so a fresh agent doesn't get an empty heading.
+  const lessons = buildLessonsBlock({ runs: recentRuns });
+  if (lessons) {
+    prompt += `\n${lessons}`;
+  }
+
+  // Market regime tag — the pre-LLM pass calls get_market_regime once per
+  // run and pins the result into the prompt so the LLM doesn't have to
+  // remember to fetch it (and the prompt is consistent within the run even
+  // if the metals tape moves mid-turn). The runner ALSO enforces the
+  // short-side gate deterministically when shortPenalty >= 2 via
+  // validatePolicyWriteBatch, so the line below is informational + lets the
+  // LLM size its conviction weights against the tape.
+  if (marketRegime && typeof marketRegime === "object") {
+    const lines = ["", "## Today's Metals Regime"];
+    if (marketRegime.summary) {
+      lines.push(marketRegime.summary);
+    } else {
+      lines.push(`Regime: ${marketRegime.regime || "metals_neutral"}`);
+    }
+    const sp = Number(marketRegime.shortPenalty || 0);
+    if (sp >= 2) {
+      lines.push(
+        "shortPenalty=2 — the runner will auto-block every new short open_position this run with `SHORT_BLOCKED_BY_REGIME`. Do not propose shorts; the rejection costs a turn.",
+      );
+    } else if (sp === 1) {
+      lines.push(
+        "shortPenalty=1 — proceed with shorts only on clear red-flag names (treasury risk, fatal drill miss, dilution); the runner does not auto-block at this level but the squeeze odds are elevated.",
+      );
+    } else {
+      lines.push("shortPenalty=0 — no regime-based short blocking active.");
+    }
+    const lb = Number(marketRegime.longBonus || 0);
+    if (lb >= 2) {
+      lines.push(
+        "longBonus=2 — miners deeply red on the day; consider upweighting long convictionWeights on top-quartile picks.",
+      );
+    }
+    prompt += `\n${lines.join("\n")}`;
   }
 
   // Current vault thesis
@@ -1861,6 +2159,11 @@ function publishAgentMetadata(config, currentState, runSummary) {
         agentName: config.name,
         runId,
         ...(params ? { params } : {}),
+        // Risk-officer verdict (approve | downsize | veto) + reason +
+        // per-call downsize audit (when the officer rescaled this open).
+        // The web UI's "Show all decisions" panel renders this next to the
+        // tx so investors can see the second-pass commentary.
+        ...(a.riskOfficer ? { riskOfficer: a.riskOfficer } : {}),
       };
     });
 
@@ -1948,6 +2251,18 @@ export async function runAgent(agentName) {
     10
   );
 
+  // Propagate AGENT_NAME into the environment so MCP servers spawned below
+  // can tag shared-memory writes (news cache + recently-closed) with the
+  // correct agent identity. envPassthrough in agents/mcp-servers.json picks
+  // this up and forwards it to each child process.
+  process.env.AGENT_NAME = config.name;
+
+  // Load the risk-officer system prompt once per run. The body is read from
+  // agents/risk-officer.md so operators can tune the rules without touching
+  // JS. Falls back to DEFAULT_RISK_OFFICER_SYSTEM_PROMPT if the file is
+  // missing or unparseable.
+  const riskOfficerPrompt = loadRiskOfficerPrompt();
+
   console.log(`\n=== Agent: ${config.name} ===`);
   if (config.description) console.log(`Description: ${config.description}`);
   console.log(`Model: ${LLM_MODEL}`);
@@ -1991,6 +2306,26 @@ export async function runAgent(agentName) {
     // same impossible wire on every enforcement round (e.g. Atlas surfacing
     // `0R2O.L` for Freeport-McMoRan, which Yahoo Finance does not resolve).
     persistentWireFailures: new Set(),
+    // Most recent open-positions roster the LLM has fetched in this run
+    // (from list_open_positions or get_perp_capital_snapshot). Consulted by
+    // the LLM-driven close path so the post-mortem entry can attach realised
+    // PnL without an extra MCP round-trip.
+    lastOpenPositionsRoster: null,
+    // Most recent get_perp_capital_snapshot payload fetched in this run.
+    // Reused by the risk-officer pass when an LLM-driven turn proposes a
+    // write batch without first refreshing the snapshot itself.
+    lastPerpCapitalSnapshot: null,
+    // Pre-LLM market regime snapshot (filled in below before the prompt is
+    // built). Used by validatePolicyWriteBatch to deterministically reject
+    // new shorts when shortPenalty >= 2.
+    marketRegime: null,
+    // Risk-officer second-pass audit. `riskOfficerVerdicts` is appended once
+    // per reviewed write batch (approve / downsize / veto), and
+    // `pendingRiskOfficerVerdict` is the per-batch handoff so
+    // `executeToolCall` can stamp each write action with the verdict that
+    // approved or rescaled it.
+    riskOfficerVerdicts: [],
+    pendingRiskOfficerVerdict: null,
   };
 
   for (const serverDef of config.mcpServers) {
@@ -2104,6 +2439,12 @@ export async function runAgent(agentName) {
     toolCalls: [],
     writeActions: [],
     confirmationBatches: [],
+    // Post-mortems for every position the runner closed this run. Hydrated by
+    // `recordClosedPosition` from `(vault, assetId, isLong)` matches against
+    // prior open_position calls in this run + recentRuns. Surfaced back into
+    // the next run's system prompt by `buildLessonsBlock` so the agent learns
+    // from its own wins/losses.
+    closedPositions: [],
     errors: [],
     policyDiagnostics: {
       enabled: config.policy?.enabled || false,
@@ -2156,11 +2497,42 @@ export async function runAgent(agentName) {
     const allTools = [...toolMap.values()].map((v) => v.tool);
     const openaiTools = mcpToolsToOpenAI(allTools);
 
+    // Pre-LLM market-regime fetch. Pinned into the system prompt so the
+    // model doesn't have to remember to call it AND so the runner's short-
+    // side gate (validatePolicyWriteBatch) can reject shorts deterministically
+    // when shortPenalty >= 2. Best-effort: a Yahoo blip just leaves the
+    // prompt without the regime block; the runner gate then no-ops.
+    let marketRegime = null;
+    const regimeEntry = toolMap.get("get_market_regime");
+    if (regimeEntry) {
+      try {
+        const res = await regimeEntry.client.callTool({
+          name: "get_market_regime",
+          arguments: {},
+        });
+        const content = res.content
+          .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+          .join("\n");
+        const parsed = parseJsonText(content);
+        if (parsed && typeof parsed === "object") {
+          marketRegime = parsed;
+          policyRuntime.marketRegime = parsed;
+          console.log(
+            `[REGIME] ${parsed.summary || `regime=${parsed.regime} shortPenalty=${parsed.shortPenalty}`}`,
+          );
+        }
+      } catch (err) {
+        const safeErr = redactSecrets(err?.message || String(err));
+        console.warn(`[REGIME] get_market_regime fetch failed: ${safeErr}`);
+      }
+    }
+
     const systemPrompt = buildSystemPrompt(
       config,
       state,
       recentRuns,
-      needsNewVault
+      needsNewVault,
+      marketRegime,
     );
 
     const messages = [
@@ -2244,6 +2616,7 @@ export async function runAgent(agentName) {
             skipped: true,
             skipReason: "NO_CHANGE",
             justification: args.justification || null,
+            timestamp: new Date().toISOString(),
           });
           messages.push({
             role: "tool",
@@ -2282,6 +2655,7 @@ export async function runAgent(agentName) {
           args,
           skipped: true,
           justification: args.justification || null,
+          timestamp: new Date().toISOString(),
         });
         messages.push({
           role: "tool",
@@ -2333,13 +2707,35 @@ export async function runAgent(agentName) {
         }
 
         if (isWrite) {
-          runSummary.writeActions.push({
+          const writeAction = {
             tool: toolName,
             args,
             skipped: false,
             failed: isMcpError || undefined,
             justification: args.justification || null,
-          });
+            timestamp: new Date().toISOString(),
+          };
+          const pendingRO = policyRuntime.pendingRiskOfficerVerdict;
+          if (pendingRO) {
+            writeAction.riskOfficer = {
+              verdict: pendingRO.verdict,
+              reason: pendingRO.reason || null,
+              ...(pendingRO.verdict === "downsize"
+                ? { downsizeFactor: pendingRO.downsizeFactor }
+                : {}),
+            };
+            // Surface the per-call downsize record (before / after) so the
+            // UI can render "Risk officer downsized 50%: ..." next to the
+            // tx hash without re-deriving the math.
+            if (pendingRO.verdict === "downsize" && Array.isArray(pendingRO.audit)) {
+              const perCall = pendingRO.audit.find(
+                (a) =>
+                  String(a.assetId || "").toLowerCase() === String(args.assetId || "").toLowerCase(),
+              );
+              if (perCall) writeAction.riskOfficer.downsize = perCall;
+            }
+          }
+          runSummary.writeActions.push(writeAction);
         }
 
         const parsed = parseJsonText(content);
@@ -2355,6 +2751,31 @@ export async function runAgent(agentName) {
         }
         if (originalName === "yfinance_quote" && Array.isArray(parsed)) {
           policyRuntime.latestQuotes = parsed;
+        }
+        // Cache the most recent open-positions roster so the LLM-driven
+        // close path can attach realised PnL to its post-mortem entry
+        // without burning an extra MCP read. Both tools return the same
+        // per-leg fields (unrealisedPnlUsdc, unrealisedPnlPctOfCollateral)
+        // from `buildOpenPositionsRoster` in apps/mcps/vault-manager.
+        if (
+          (originalName === "list_open_positions" || originalName === "get_perp_capital_snapshot") &&
+          parsed &&
+          typeof parsed === "object"
+        ) {
+          const positions = Array.isArray(parsed.positions)
+            ? parsed.positions
+            : Array.isArray(parsed.openPositions)
+              ? parsed.openPositions
+              : null;
+          if (positions) {
+            policyRuntime.lastOpenPositionsRoster = {
+              fetchedAt: new Date().toISOString(),
+              positions,
+            };
+          }
+          if (originalName === "get_perp_capital_snapshot") {
+            policyRuntime.lastPerpCapitalSnapshot = parsed;
+          }
         }
         if (
           originalName === "get_ml_top_picks" &&
@@ -2386,6 +2807,62 @@ export async function runAgent(agentName) {
           if (call.args?.isLong === false) {
             policyRuntime.shortOpensExecuted += 1;
           }
+        }
+        // LLM-driven closes also feed the churn-guard. The reason string is
+        // free-form so the agent's `justification` is the audit trail; we
+        // tag the entry as `llm_judged` so plan_open_position's response
+        // makes it clear this wasn't an auto-exit.
+        if (originalName === "close_position" && parsed?.success === true) {
+          const vaultArg = args?.vault || capturedVaultAddress;
+          const assetIdArg = args?.assetId;
+          const isLongArg = typeof args?.isLong === "boolean" ? args.isLong : null;
+          const justificationArg = args?.justification ? String(args.justification).slice(0, 200) : null;
+          const tickerHint = lookupSymbolForAssetId(assetIdArg);
+          recordCloseInChurnGuard({
+            vault: vaultArg,
+            assetId: assetIdArg,
+            isLong: isLongArg,
+            ticker: tickerHint,
+            reason: justificationArg
+              ? `llm_judged: ${justificationArg}`
+              : "llm_judged",
+          });
+          // Post-mortem: realised PnL is not in the close_position tool
+          // response, so we fall back to the most recent open-position roster
+          // we observed this run (from list_open_positions or
+          // get_perp_capital_snapshot). When unavailable the entry still
+          // captures the entry/exit justifications + hold time, which is
+          // useful even without a PnL ranking.
+          let pnlUsdc = null;
+          let pnlPct = null;
+          if (vaultArg && assetIdArg && isLongArg !== null) {
+            const cached = policyRuntime.lastOpenPositionsRoster?.positions;
+            if (Array.isArray(cached)) {
+              const match = cached.find(
+                (p) =>
+                  String(p?.assetId || "").toLowerCase() === String(assetIdArg).toLowerCase() &&
+                  p?.isLong === isLongArg,
+              );
+              if (match) {
+                pnlUsdc = match.unrealisedPnlUsdc ?? null;
+                if (Number.isFinite(match.unrealisedPnlPctOfCollateral)) {
+                  pnlPct = Number(match.unrealisedPnlPctOfCollateral);
+                }
+              }
+            }
+          }
+          recordClosedPosition({
+            vault: vaultArg,
+            assetId: assetIdArg,
+            isLong: isLongArg,
+            ticker: tickerHint,
+            closedReason: justificationArg
+              ? `llm_judged: ${justificationArg}`
+              : "llm_judged",
+            closeJustification: justificationArg,
+            realizedPnlUsdc: pnlUsdc,
+            realizedPnlPctOfCollateral: pnlPct,
+          });
         }
 
         // Track structurally-bad `wire_asset` failures so the `needsRoll`
@@ -2480,6 +2957,7 @@ export async function runAgent(agentName) {
           args,
           skipped: true,
           justification: `${writeJustification} (skipped due to dry/non-interactive)`,
+          timestamp: new Date().toISOString(),
         });
         return { content: [{ type: "text", text: JSON.stringify({ success: false, skipped: true }, null, 2) }] };
       }
@@ -2497,6 +2975,7 @@ export async function runAgent(agentName) {
           skipped: false,
           justification: writeJustification,
           txHash: parsed?.transactionHash ?? null,
+          timestamp: new Date().toISOString(),
         });
       }
       return { content, parsed: parseJsonText(content) };
@@ -2524,6 +3003,34 @@ export async function runAgent(agentName) {
         );
         if (closeRes.parsed?.success === true) {
           runSummary.policyDiagnostics.autoExitsClosed += 1;
+          // Churn-guard: record so plan_open_position blocks re-opens of
+          // the rotated/banded ticker for CHURN_GUARD_WINDOW_MS.
+          recordCloseInChurnGuard({
+            vault: capturedVaultAddress,
+            assetId: pos.assetId,
+            isLong: pos.isLong,
+            ticker: pos.symbol || null,
+            reason: `${label.toLowerCase()}: ${reason}`,
+          });
+          // Post-mortem: realised PnL at close ≈ unrealised PnL at the
+          // moment of the close call (the position was marked-to-market
+          // against the same oracle price that settles the on-chain close
+          // — see VaultAccounting.closePosition / GMX vault settlement).
+          // `pos` was built by buildOpenPositionsRoster (`list_open_positions`
+          // or `get_perp_capital_snapshot`) which attaches both fields.
+          recordClosedPosition({
+            vault: capturedVaultAddress,
+            assetId: pos.assetId,
+            isLong: pos.isLong,
+            ticker: pos.symbol || null,
+            closedReason: `${label.toLowerCase()}: ${reason}`,
+            closeJustification: `${label.toLowerCase()}: ${reason}`,
+            realizedPnlUsdc: pos.unrealisedPnlUsdc ?? null,
+            realizedPnlPctOfCollateral:
+              Number.isFinite(pos.unrealisedPnlPctOfCollateral)
+                ? Number(pos.unrealisedPnlPctOfCollateral)
+                : null,
+          });
           return true;
         }
       } catch (err) {
@@ -2532,6 +3039,160 @@ export async function runAgent(agentName) {
         runSummary.errors.push({ tool: "close_position", error: safeErr });
       }
       return false;
+    }
+
+    // Build context + dispatch one risk-officer pass for a proposed write
+    // batch. The LLM call uses a single-message system+user prompt with
+    // temperature 0 (deterministic verdicts) and a small max_tokens budget
+    // so the per-tick cost is bounded.
+    async function runRiskOfficerForBatch(writeCalls) {
+      const recentClosedPositions = [
+        ...(runSummary.closedPositions || []),
+        // Then walk recentRuns (newest last) and pull their closures.
+        ...recentRuns
+          .flatMap((r) => (Array.isArray(r?.closedPositions) ? r.closedPositions : []))
+          .slice(-10),
+      ].slice(-5);
+
+      let vaultSnapshot = policyRuntime.lastPerpCapitalSnapshot || null;
+      // Best-effort fresh snapshot. If we can't read it, fall back to the
+      // last cached one; if neither exists we still run the pass — the LLM
+      // is told the snapshot is null and decides accordingly.
+      if (!vaultSnapshot && capturedVaultAddress) {
+        try {
+          const snapshotRes = await runMcpTool("get_perp_capital_snapshot", {
+            vault: capturedVaultAddress,
+          });
+          if (snapshotRes?.parsed && typeof snapshotRes.parsed === "object") {
+            vaultSnapshot = snapshotRes.parsed;
+            policyRuntime.lastPerpCapitalSnapshot = snapshotRes.parsed;
+          }
+        } catch (err) {
+          const safeErr = redactSecrets(err?.message || String(err));
+          console.warn(`[RISK-OFFICER] snapshot fetch failed: ${safeErr}`);
+        }
+      }
+
+      const verdict = await runRiskOfficerPass({
+        writeBatch: writeCalls,
+        vaultSnapshot,
+        recentClosedPositions,
+        marketRegime: policyRuntime.marketRegime,
+        systemPrompt: riskOfficerPrompt,
+        async llmCall(system, user) {
+          const resp = await chatCompletion(
+            [
+              { role: "system", content: system },
+              { role: "user", content: user },
+            ],
+            undefined, // no tool definitions — the risk officer only emits text
+            0,
+          );
+          const choice = resp?.choices?.[0];
+          return choice?.message?.content || "";
+        },
+      });
+      return verdict;
+    }
+
+    // Append a post-mortem entry to `runSummary.closedPositions` so the
+    // run-log (and the next run's "## Lessons" block) can connect each
+    // close back to the matching open and surface realised PnL. Best-effort:
+    // a duplicate close on the same `(vault, assetId, isLong)` within a
+    // single run is collapsed into the first entry so the log stays clean.
+    function recordClosedPosition({
+      vault,
+      assetId,
+      isLong,
+      ticker,
+      closedReason,
+      closeJustification,
+      realizedPnlUsdc,
+      realizedPnlPctOfCollateral,
+    }) {
+      if (!vault || !assetId || typeof isLong !== "boolean") return;
+      const closedAt = new Date().toISOString();
+      const matchingOpen = findMatchingOpen({
+        vault,
+        assetId,
+        isLong,
+        currentRunActions: runSummary.writeActions || [],
+        recentRuns,
+      });
+      const entry = buildClosedPositionEntry({
+        vault,
+        assetId,
+        isLong,
+        ticker,
+        closedAt,
+        closedReason,
+        closeJustification,
+        realizedPnlUsdc,
+        realizedPnlPctOfCollateral,
+        matchingOpen,
+      });
+      // Collapse duplicates within a single run (e.g. an LLM close fired
+      // after the auto-rebalance pass already closed the same leg).
+      const dupIdx = runSummary.closedPositions.findIndex(
+        (c) => c.vault === entry.vault && c.assetId === entry.assetId && c.side === entry.side,
+      );
+      if (dupIdx >= 0) {
+        // Keep the first record (autopilot path) but augment it with any
+        // realised PnL the second path observed if the first missed it.
+        const existing = runSummary.closedPositions[dupIdx];
+        if (existing.realizedPnlPctOfCollateral == null && entry.realizedPnlPctOfCollateral != null) {
+          existing.realizedPnlPctOfCollateral = entry.realizedPnlPctOfCollateral;
+          existing.realizedPnlUsdc = entry.realizedPnlUsdc;
+        }
+        return;
+      }
+      runSummary.closedPositions.push(entry);
+    }
+
+    // Best-effort write into agents/memory/shared/recently-closed.<vault>.json
+    // so plan_open_position can refuse churn re-opens. Never blocks; a write
+    // failure is logged to stderr and dropped.
+    function recordCloseInChurnGuard({ vault, assetId, isLong, ticker, reason }) {
+      if (!vault || !assetId) return;
+      try {
+        recordRecentlyClosed({
+          vault,
+          assetId,
+          ticker: ticker || null,
+          isLong: typeof isLong === "boolean" ? isLong : null,
+          closedReason: reason || null,
+          projectRoot: PROJECT_ROOT,
+        });
+      } catch (err) {
+        const safeErr = redactSecrets(err?.message || String(err));
+        console.error(
+          `[CHURN-GUARD] failed to record close for ${assetId}: ${safeErr}`,
+        );
+      }
+    }
+
+    // Reverse lookup symbol from assetId using the most recent oracle reads.
+    // Used by the LLM-driven close path where we only know the bytes32 id.
+    function lookupSymbolForAssetId(assetId) {
+      if (!assetId) return null;
+      const key = String(assetId).toLowerCase();
+      const oracle = policyRuntime.latestOracleAssets;
+      if (!oracle) return null;
+      const summary = oracle.summary && typeof oracle.summary === "object" ? oracle.summary : null;
+      if (summary?.symbolToAssetId && typeof summary.symbolToAssetId === "object") {
+        for (const [sym, id] of Object.entries(summary.symbolToAssetId)) {
+          if (String(id).toLowerCase() === key) return sym;
+        }
+      }
+      const assets = Array.isArray(oracle.assets) ? oracle.assets : null;
+      if (assets) {
+        for (const asset of assets) {
+          if (String(asset?.assetId || "").toLowerCase() === key) {
+            return asset?.symbol || null;
+          }
+        }
+      }
+      return null;
     }
 
     async function enforceAutoRebalance() {
@@ -2884,6 +3545,7 @@ export async function runAgent(agentName) {
           opensExecutedSoFar: policyRuntime.opensExecuted,
           shortOpensExecutedSoFar: policyRuntime.shortOpensExecuted,
           eligibleAssets,
+          marketRegime: policyRuntime.marketRegime,
         });
         if (violation) {
           policyRuntime.enforcementRounds += 1;
@@ -3128,9 +3790,72 @@ export async function runAgent(agentName) {
       }
 
       messages.push(choice.message);
+
+      // Risk-officer second-pass: vet the proposed write batch before
+      // dispatching. Skipped when:
+      //  - AGENT_RISK_OFFICER=0
+      //  - there are no write calls this turn
+      //  - skipWritesThisBatch already short-circuited execution
+      //  - DRY_RUN is active (no writes to vet)
+      if (
+        RISK_OFFICER_ENABLED &&
+        !DRY_RUN &&
+        !skipWritesThisBatch &&
+        classified.hasWriteCalls
+      ) {
+        const verdict = await runRiskOfficerForBatch(classified.writeCalls);
+        if (verdict.verdict === "veto") {
+          policyRuntime.riskOfficerVerdicts.push({
+            turn: turn + 1,
+            verdict: "veto",
+            reason: verdict.reason,
+            proposedTools: classified.writeCalls.map((c) => c.originalName || c.toolName),
+          });
+          pushRejectedToolResponses(
+            messages,
+            choice.message.tool_calls,
+            `risk-officer vetoed the write batch: ${verdict.reason}`,
+          );
+          messages.push({
+            role: "user",
+            content:
+              `Risk officer VETOED the proposed write batch.\nReason: ${verdict.reason}\n` +
+              "Revise your plan and propose an alternative batch — do not retry the same calls verbatim.",
+          });
+          console.log(`  [RISK-OFFICER] veto: ${verdict.reason}`);
+          continue;
+        }
+        if (verdict.verdict === "downsize") {
+          policyRuntime.riskOfficerVerdicts.push({
+            turn: turn + 1,
+            verdict: "downsize",
+            reason: verdict.reason,
+            downsizeFactor: verdict.downsizeFactor,
+            audit: verdict.audit,
+            proposedTools: classified.writeCalls.map((c) => c.originalName || c.toolName),
+          });
+          console.log(
+            `  [RISK-OFFICER] downsized factor=${verdict.downsizeFactor}: ${verdict.reason}`,
+          );
+        } else {
+          policyRuntime.riskOfficerVerdicts.push({
+            turn: turn + 1,
+            verdict: "approve",
+            reason: verdict.reason,
+            proposedTools: classified.writeCalls.map((c) => c.originalName || c.toolName),
+          });
+        }
+        // Stash the verdict for executeToolCall so it can stamp it onto
+        // runSummary.writeActions[].riskOfficer when the call resolves.
+        policyRuntime.pendingRiskOfficerVerdict = verdict;
+      } else {
+        policyRuntime.pendingRiskOfficerVerdict = null;
+      }
+
       for (const call of classified.calls) {
         await executeToolCall(call, { forceSkipWrites: skipWritesThisBatch });
       }
+      policyRuntime.pendingRiskOfficerVerdict = null;
     }
 
     // --- Persist memory ---
@@ -3232,6 +3957,8 @@ export async function runAgent(agentName) {
           turns: runSummary.turns,
           toolCalls: runSummary.toolCalls,
           writeActions: runSummary.writeActions,
+          closedPositions: runSummary.closedPositions || [],
+          riskOfficerVerdicts: policyRuntime.riskOfficerVerdicts || [],
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
           summary: summarySnippet,
@@ -3270,6 +3997,7 @@ export async function runAgent(agentName) {
           turns: runSummary.turns,
           toolCalls: runSummary.toolCalls,
           writeActions: runSummary.writeActions,
+          closedPositions: runSummary.closedPositions || [],
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
           summary: "FAILED: " + safeAgentErr,

@@ -9,6 +9,7 @@ skills:
   - atlas-quality
   - yfinance
   - vault-manager
+  - lessons
 writeTools:
   - wire_asset
   - create_vault

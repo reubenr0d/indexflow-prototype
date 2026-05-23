@@ -5,6 +5,8 @@ mcpServers:
   - vault-manager-mcp
   - yfinance-mcp
   - atlas-ml-mcp
+skills:
+  - lessons
 writeTools:
   - wire_asset
   - create_vault

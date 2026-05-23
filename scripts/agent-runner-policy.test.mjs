@@ -457,6 +457,98 @@ test("validatePolicyWriteBatch in short_only mode rejects long opens and skips l
   assert.equal(okShortBatch, null);
 });
 
+test("validatePolicyWriteBatch rejects shorts when marketRegime.shortPenalty >= 2", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 4,
+    maxNewShortsPerRun: 2,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+
+  const violation = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [{ assetId: "0xLONG1", symbol: "GSR.V" }],
+    marketRegime: {
+      regime: "metals_risk_on",
+      shortPenalty: 2,
+      summary: "metals_risk_on (XME: +3.40%, GDX: +2.80%)",
+    },
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: false, assetId: "0xSHORT1" } },
+      ],
+    },
+  });
+  assert.match(violation, /shortPenalty=2/);
+  assert.match(violation, /SHORT_BLOCKED_BY_REGIME/);
+});
+
+test("validatePolicyWriteBatch allows shorts when marketRegime.shortPenalty === 1", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 4,
+    maxNewShortsPerRun: 2,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  const result = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [],
+    marketRegime: { regime: "metals_neutral", shortPenalty: 1 },
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: false, assetId: "0xS1" } },
+      ],
+    },
+  });
+  // Caution-only at shortPenalty=1; nothing else trips here because the
+  // direction is long_short and we don't fail without a long open in the batch.
+  assert.equal(result, null);
+});
+
+test("validatePolicyWriteBatch ignores regime when marketRegime is null (back-compat)", () => {
+  const policy = parseAgentPolicy({
+    autoAllocateTargetBps: 5000,
+    entryMode: "ml_score",
+    entryMlScoreMin: 85,
+    entryDirection: "long_short",
+    maxNewPositionsPerRun: 4,
+    maxNewShortsPerRun: 2,
+    maxTrackedAssets: 12,
+    positionSizingMode: "equal_weight",
+    rebalanceMode: "track_top_n",
+  });
+  const result = validatePolicyWriteBatch({
+    policy,
+    opensExecutedSoFar: 0,
+    shortOpensExecutedSoFar: 0,
+    eligibleAssets: [],
+    // marketRegime omitted entirely
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        { originalName: "open_position", args: { isLong: false, assetId: "0xS1" } },
+      ],
+    },
+  });
+  assert.equal(result, null);
+});
+
 test("computeAutoRebalanceClosures in long_short mode does not close shorts outside the ML top-N", () => {
   const policy = parseAgentPolicy({
     autoAllocateTargetBps: 5000,

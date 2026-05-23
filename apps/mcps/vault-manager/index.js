@@ -22,6 +22,10 @@ import { classifyAssetIds } from "./set-vault-assets-validation.mjs";
 import { validateAddress, validateBytes32, validateArgs } from "./address-validation.mjs";
 import { decodeCastRevert } from "./revert-decoder.mjs";
 import { computePositionPnl, PNL_BAND_DEFAULTS } from "./position-pnl.mjs";
+import {
+  checkChurnGuard,
+  CHURN_GUARD_WINDOW_MS,
+} from "../../shared/agent-shared-memory.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -45,6 +49,23 @@ function parseBandEnv(name, fallback) {
 }
 const PNL_BAND_TP_PCT = parseBandEnv("MCP_PNL_BAND_TP_PCT", PNL_BAND_DEFAULTS.takeProfitPct);
 const PNL_BAND_SL_PCT = parseBandEnv("MCP_PNL_BAND_SL_PCT", PNL_BAND_DEFAULTS.stopLossPct);
+
+// Churn-guard configuration. The window defaults to CHURN_GUARD_WINDOW_MS
+// (4h) from the shared-memory module; operators can shorten it for testing
+// via AGENT_CHURN_GUARD_WINDOW_MS or disable the guard entirely with
+// AGENT_CHURN_GUARD_DISABLED=1.
+const CHURN_GUARD_DISABLED = ["1", "true", "yes"].includes(
+  String(process.env.AGENT_CHURN_GUARD_DISABLED || "").toLowerCase().trim(),
+);
+const CHURN_GUARD_WINDOW_MS_OVERRIDE = (() => {
+  const raw = process.env.AGENT_CHURN_GUARD_WINDOW_MS;
+  if (!raw) return undefined;
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed) || parsed <= 0) return undefined;
+  return parsed;
+})();
+const EFFECTIVE_CHURN_GUARD_WINDOW_MS =
+  CHURN_GUARD_WINDOW_MS_OVERRIDE ?? CHURN_GUARD_WINDOW_MS;
 
 // ---------------------------------------------------------------------------
 // On-chain perp engine constants (GMX fork, deployed via script/Deploy.s.sol)
@@ -915,7 +936,8 @@ server.registerTool(
       `and the GMX maxLeverage cap (${CHAIN_MAX_LEVERAGE}x). ` +
       "Returns {size, collateral, leverage, notionalUsd, availableCollateral, warnings, nextSteps}. " +
       "The returned `size` and `collateral` are the EXACT raw strings to pass into `open_position` — do not recompute them. " +
-      "If per-slot collateral is below the liquidationFeeUsd buffer, returns `error_code: \"INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER\"` with the open-position roster so you can close a leg first.",
+      "If per-slot collateral is below the liquidationFeeUsd buffer, returns `error_code: \"INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER\"` with the open-position roster so you can close a leg first. " +
+      "If the same `(vault, assetId)` was closed inside the churn-guard window (default 4h), returns `error_code: \"CHURN_GUARD_COOLDOWN\"` with `cooldownEndsAt` + `lastCloseReason` so the agent skips re-opening a freshly rotated ticker. Pass `bypassChurnGuard: true` together with `bypassReason` if you have a fresh thesis that overrides the rotation.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
       assetId: z.string().describe("bytes32 asset id from get_oracle_assets — echoed back in nextSteps params_hint"),
@@ -923,14 +945,80 @@ server.registerTool(
       targetLeverage: z.number().optional().describe(`Target effective leverage (default 10, hard max ${CHAIN_MAX_LEVERAGE}; agent policy is typically 10x for longs and <=5x for shorts)`),
       numNewSlots: z.number().int().optional().describe("How many new opens to split availableCollateral across (default 1). Mirrors equal-weight intent across this turn's batch of new entrants."),
       maxCollateralUsdcRaw: z.string().optional().describe("Optional cap on per-slot collateral in raw USDC (6 decimals). Useful when an agent-side per-slot budget is smaller than `availableCollateral / numNewSlots`."),
+      convictionWeight: z.number().optional().describe("This slot's conviction weight in [0, 1] (typically `(score - entryScoreMin) / (100 - entryScoreMin)` from get_ml_top_picks / get_quality_top_picks). When provided WITH `totalConvictionWeight`, the per-slot collateral is computed as `availableCollateral * convictionWeight / totalConvictionWeight` instead of `availableCollateral / numNewSlots`. Omit both to keep the equal-weight default."),
+      totalConvictionWeight: z.number().optional().describe("Sum of convictionWeights across every slot you plan to open this turn. Required when `convictionWeight` is set so the per-slot share normalises correctly to availableCollateral."),
+      bypassChurnGuard: z.boolean().optional().describe("When true, override the recently-closed cooldown for (vault, assetId). Must be paired with `bypassReason` — both are surfaced in the agent metadata for audit."),
+      bypassReason: z.string().optional().describe("Required when `bypassChurnGuard` is true. Free-form rationale persisted alongside the next open so operators can audit churn-guard overrides."),
     },
   },
-  async ({ vault, assetId, isLong, targetLeverage, numNewSlots, maxCollateralUsdcRaw }) => {
+  async ({
+    vault,
+    assetId,
+    isLong,
+    targetLeverage,
+    numNewSlots,
+    maxCollateralUsdcRaw,
+    convictionWeight,
+    totalConvictionWeight,
+    bypassChurnGuard,
+    bypassReason,
+  }) => {
     const argErr = checkArgs([
       { name: "vault", value: vault, kind: "address" },
       { name: "assetId", value: assetId, kind: "bytes32" },
     ]);
     if (argErr) return argErr;
+
+    // Churn-guard short-circuit: refuse to re-plan an open on a leg the
+    // runner just closed (rank-swap rotation, pnl-band TP/SL, or LLM-judged
+    // close) inside the cooldown window. Bypassable when the agent supplies
+    // a `bypassReason` so operators can audit the override.
+    if (!CHURN_GUARD_DISABLED) {
+      const guard = checkChurnGuard({
+        vault,
+        assetId,
+        windowMs: EFFECTIVE_CHURN_GUARD_WINDOW_MS,
+      });
+      if (guard.inCooldown) {
+        if (bypassChurnGuard) {
+          const trimmedReason = String(bypassReason || "").trim();
+          if (!trimmedReason) {
+            return toolError(
+              "CHURN_GUARD_BYPASS_REQUIRES_REASON",
+              `bypassChurnGuard=true requires a non-empty bypassReason. Cooldown is active for (vault=${vault}, assetId=${assetId}); closed at ${guard.closedAt} (${guard.closedReason || "reason unknown"}).`,
+              "Either drop the bypass and wait until cooldownEndsAt, or pass `bypassReason: '<short audit string>'` so the override is recorded in the action metadata.",
+            );
+          }
+          // Allowed bypass — fall through to normal sizing; the runner
+          // attaches the bypassReason to the next open_position action.
+        } else {
+          const payload = {
+            success: false,
+            error_code: "CHURN_GUARD_COOLDOWN",
+            message:
+              `Re-opening (vault=${vault}, assetId=${assetId}, isLong=${isLong}) is blocked: a close was recorded at ${guard.closedAt} (${guard.closedReason || "reason unknown"}). ` +
+              `Cooldown ends at ${guard.cooldownEndsAt} (window ${Math.round(EFFECTIVE_CHURN_GUARD_WINDOW_MS / 60000)} min).`,
+            vault,
+            assetId: assetId.toLowerCase(),
+            isLong,
+            ticker: guard.ticker,
+            lastClose: {
+              closedAt: guard.closedAt,
+              closedReason: guard.closedReason,
+              isLong: guard.isLong,
+            },
+            cooldownEndsAt: guard.cooldownEndsAt,
+            cooldownWindowMs: EFFECTIVE_CHURN_GUARD_WINDOW_MS,
+            recovery_hint:
+              "Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.",
+          };
+          return {
+            content: [{ type: "text", text: JSON.stringify(payload, null, 2) }],
+            isError: true,
+          };
+        }
+      }
+    }
 
     const lev = targetLeverage == null ? 10 : Number(targetLeverage);
     if (!Number.isFinite(lev) || lev <= 0 || lev > CHAIN_MAX_LEVERAGE) {
@@ -981,7 +1069,50 @@ server.registerTool(
       }
 
       const available = accountingState.available;
-      const perSlot = available / BigInt(slots);
+
+      // Per-slot collateral. Default = equal-weight (available / numNewSlots).
+      // Optional override = conviction-weighted (available * convictionWeight
+      // / totalConvictionWeight). Both inputs must be supplied together so
+      // the share normalises cleanly to `available`; the response echoes the
+      // chosen mode so the agent can reason about why two opens at the same
+      // numNewSlots got different collateral.
+      let perSlot;
+      let sizingMode;
+      const conviction = Number.isFinite(convictionWeight) ? Number(convictionWeight) : null;
+      const totalConviction = Number.isFinite(totalConvictionWeight)
+        ? Number(totalConvictionWeight)
+        : null;
+      if (conviction != null || totalConviction != null) {
+        if (conviction == null || totalConviction == null) {
+          return toolError(
+            "INVALID_ARGUMENT",
+            `convictionWeight and totalConvictionWeight must be supplied together; got convictionWeight=${convictionWeight}, totalConvictionWeight=${totalConvictionWeight}.`,
+            "Either omit both to keep the equal-weight default, or pass both as numbers (this slot's weight + the sum across every slot you intend to open this turn).",
+          );
+        }
+        if (conviction <= 0) {
+          return toolError(
+            "INVALID_ARGUMENT",
+            `convictionWeight must be > 0; got ${conviction}.`,
+            "Drop the slot from the batch instead of passing convictionWeight=0; opens with zero conviction should not be sized.",
+          );
+        }
+        if (totalConviction < conviction) {
+          return toolError(
+            "INVALID_ARGUMENT",
+            `totalConvictionWeight (${totalConviction}) must be >= convictionWeight (${conviction}).`,
+            "totalConvictionWeight is the SUM of every slot's convictionWeight in this turn's batch (including this slot), so it can never be smaller than the per-slot value.",
+          );
+        }
+        const SCALE = 1_000_000n;
+        const numerator = BigInt(Math.round(conviction * 1_000_000));
+        const denominator = BigInt(Math.round(totalConviction * 1_000_000));
+        perSlot = (available * numerator) / (denominator === 0n ? SCALE : denominator);
+        sizingMode = "conviction_weighted";
+      } else {
+        perSlot = available / BigInt(slots);
+        sizingMode = "equal_weight";
+      }
       let collateralRaw = perSlot;
       if (maxCollateralCap != null && maxCollateralCap < collateralRaw) {
         collateralRaw = maxCollateralCap;
@@ -1067,6 +1198,9 @@ server.registerTool(
         availableCollateral: available.toString(),
         availableCollateral_usdc: formatUsdc(available.toString()),
         numNewSlots: slots,
+        sizingMode,
+        convictionWeight: conviction,
+        totalConvictionWeight: totalConviction,
         chainCaps: {
           maxLeverage: CHAIN_MAX_LEVERAGE,
           liquidationFeeUsd: LIQUIDATION_FEE_USD,
@@ -1089,6 +1223,16 @@ server.registerTool(
           },
         ],
       };
+      if (bypassChurnGuard) {
+        payload.churnGuardBypass = {
+          bypassed: true,
+          reason: String(bypassReason || "").trim(),
+        };
+        payload.warnings = [
+          ...warnings,
+          `churn-guard bypass active for (vault=${vault}, assetId=${assetId}); reason="${String(bypassReason || "").trim()}". Persist this reason in the open_position justification so the audit trail is preserved.`,
+        ];
+      }
       return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
     } catch (err) {
       return toolError(

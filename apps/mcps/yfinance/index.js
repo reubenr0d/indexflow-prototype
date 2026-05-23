@@ -5,6 +5,26 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import { classifySymbolWithSearch } from "../../shared/yahoo-symbol-policy.mjs";
 import { fetchLivePriceUsd } from "../../shared/yahoo-usd-quote.mjs";
+import {
+  getCachedNews,
+  writeNewsCache,
+} from "../../shared/agent-shared-memory.mjs";
+import {
+  classifyMarketRegime,
+  REGIME_COMPONENT_SYMBOLS,
+} from "../../shared/market-regime.mjs";
+
+const AGENT_NAME = process.env.AGENT_NAME || "";
+const NEWS_CACHE_DISABLED = ["1", "true", "yes"].includes(
+  String(process.env.AGENT_NEWS_CACHE_DISABLED || "").toLowerCase().trim(),
+);
+const NEWS_CACHE_TTL_MS = (() => {
+  const raw = process.env.AGENT_NEWS_CACHE_TTL_MS;
+  if (!raw) return undefined;
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed) || parsed <= 0) return undefined;
+  return parsed;
+})();
 
 // ---------------------------------------------------------------------------
 // Yahoo Finance client (lazy-loaded)
@@ -179,8 +199,26 @@ server.registerTool(
     const perSymbolCap = Math.min(Math.max(limitPerSymbol ?? 3, 1), 10);
     try {
       const client = await yf();
+      const freshEntries = {};
       const results = await Promise.all(
         symbols.map(async (symbol) => {
+          // Cache lookup first. The cache key is the requested symbol
+          // string verbatim (uppercased inside the helper). Cached entries
+          // are sliced down to `perSymbolCap` so a previous call that
+          // requested 10 headlines transparently serves a request for 3.
+          if (!NEWS_CACHE_DISABLED) {
+            const cached = getCachedNews({ symbol, ttlMs: NEWS_CACHE_TTL_MS });
+            if (cached) {
+              return {
+                symbol,
+                headlines: (cached.headlines || []).slice(0, perSymbolCap),
+                _cacheHit: true,
+                _cacheFetchedAt: cached.fetchedAt,
+                _cacheSourceAgent: cached.sourceAgent || null,
+              };
+            }
+          }
+
           try {
             const raw = await client.search(symbol, {
               quotesCount: 0,
@@ -206,16 +244,35 @@ server.registerTool(
                 relatedTickers: Array.isArray(item.relatedTickers) ? item.relatedTickers : [],
               };
             });
-            return { symbol, headlines };
+            // Stash for the post-call cache write; we batch all freshly
+            // fetched symbols into a single atomic write at the end so
+            // partial failures don't leave the cache half-updated.
+            if (!NEWS_CACHE_DISABLED) {
+              freshEntries[symbol] = headlines;
+            }
+            return { symbol, headlines, _cacheHit: false };
           } catch (err) {
             return {
               symbol,
               headlines: [],
               error: err?.message ?? "news lookup failed",
+              _cacheHit: false,
             };
           }
         }),
       );
+      if (!NEWS_CACHE_DISABLED && AGENT_NAME && Object.keys(freshEntries).length > 0) {
+        try {
+          writeNewsCache({
+            agentName: AGENT_NAME,
+            entries: freshEntries,
+            ttlMs: NEWS_CACHE_TTL_MS,
+          });
+        } catch (err) {
+          // Cache write failures are non-fatal; surface in stderr only.
+          console.error(`yfinance_news: cache write failed: ${err?.message || err}`);
+        }
+      }
       return { content: [{ type: "text", text: JSON.stringify(results, null, 2) }] };
     } catch (err) {
       return toolError(
@@ -225,6 +282,52 @@ server.registerTool(
           "Per-symbol errors are returned inline, so a full-call failure usually indicates a transient outage.",
       );
     }
+  },
+);
+
+server.registerTool(
+  "get_market_regime",
+  {
+    title: "Get Market Regime (Metals + Miners)",
+    description:
+      "Snapshot of today's metals/miners tape derived from five Yahoo Finance day-change components: " +
+      `${REGIME_COMPONENT_SYMBOLS.join(", ")}. ` +
+      "Returns {regime, components, shortPenalty, longBonus, summary}. " +
+      "`regime` is one of `metals_risk_on` / `metals_risk_off` / `metals_neutral` " +
+      "based on whether ≥3 of the 5 components agree on direction (miners ETFs up, USD down = bullish for miners). " +
+      "`shortPenalty` is the runner's gate for new shorts: 0 (allowed), 1 (caution), 2 (auto-blocked by the runner — XME or GDX day change >= +3%). " +
+      "`longBonus` mirrors on the downside (miners deeply red). Call this once near the top of every run to size and gate new entries against the macro tape — it is free vs the equivalent batch of yfinance_quote calls (no FX leg). " +
+      "Per-symbol fetch failures are surfaced via `components[symbol].status === \"unavailable\"`; the regime classification proceeds with whatever components were available.",
+    inputSchema: {},
+  },
+  async () => {
+    const components = {};
+    await Promise.all(
+      REGIME_COMPONENT_SYMBOLS.map(async (symbol) => {
+        try {
+          const client = await yf();
+          const q = await client.quote(symbol);
+          const dayChangePct = q?.regularMarketChangePercent;
+          if (Number.isFinite(dayChangePct)) {
+            components[symbol] = dayChangePct;
+          }
+        } catch {
+          // Leave the symbol out so classifyMarketRegime marks it `unavailable`.
+        }
+      }),
+    );
+    const classified = classifyMarketRegime(components);
+    const payload = {
+      ...classified,
+      fetchedAt: new Date().toISOString(),
+      gateNote:
+        classified.shortPenalty >= 2
+          ? "shortPenalty=2 — the agent runner WILL reject every new short open_position in this batch with error_code: 'SHORT_BLOCKED_BY_REGIME'."
+          : classified.shortPenalty === 1
+            ? "shortPenalty=1 — proceed with shorts only on clear red-flag names; the runner does not auto-block at this level."
+            : "shortPenalty=0 — no regime-based short blocking active.",
+    };
+    return { content: [{ type: "text", text: JSON.stringify(payload, null, 2) }] };
   },
 );
 

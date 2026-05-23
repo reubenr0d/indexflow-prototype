@@ -175,8 +175,13 @@ jobs:
           # because each agent writes a per-vault `<vault>.json` and vault
           # addresses are unique per agent (the two artifacts therefore never
           # collide on a metadata file).
+          # `agents/memory/shared/` carries cross-agent state (Yahoo news
+          # cache + per-vault recently-closed churn-guard); each agent
+          # contributes per-agent / per-vault files (no collisions) and the
+          # download-artifact merge unions them back into a single tree.
           path: |
             agents/memory/${{ matrix.agent }}/
+            agents/memory/shared/
             apps/web/public/agent-metadata/
           retention-days: 1
 
@@ -216,7 +221,11 @@ jobs:
       # rebase conflict on the very next tick and aborted the push.
       - name: Clean agent-managed files before artifact extraction
         run: |
-          rm -rf agents/memory/*/
+          # Wipe every per-agent memory directory but keep `shared/` intact
+          # so the cross-agent news cache + recently-closed churn-guard from
+          # the current artifact set merges cleanly with what's already on
+          # main (per-file keys are agent- or vault-scoped, no collisions).
+          find agents/memory -mindepth 1 -maxdepth 1 -type d ! -name shared ! -name archive -exec rm -rf {} +
           find apps/web/public/agent-metadata -maxdepth 1 -type f -name '0x*.json' -delete
       - name: Download all agent outputs
         uses: actions/download-artifact@v4

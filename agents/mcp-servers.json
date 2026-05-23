@@ -8,13 +8,20 @@
       "PRIVATE_KEY",
       "SEPOLIA_RPC_URL",
       "FUJI_RPC_URL",
-      "ARBITRUM_SEPOLIA_RPC_URL"
+      "ARBITRUM_SEPOLIA_RPC_URL",
+      "AGENT_NAME",
+      "AGENT_CHURN_GUARD_DISABLED",
+      "AGENT_CHURN_GUARD_WINDOW_MS"
     ]
   },
   "yfinance-mcp": {
     "command": "node",
     "args": ["apps/mcps/yfinance/index.js"],
-    "envPassthrough": []
+    "envPassthrough": [
+      "AGENT_NAME",
+      "AGENT_NEWS_CACHE_TTL_MS",
+      "AGENT_NEWS_CACHE_DISABLED"
+    ]
   },
   "atlas-ml-mcp": {
     "command": "node",

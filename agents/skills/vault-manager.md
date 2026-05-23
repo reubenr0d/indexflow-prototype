@@ -16,7 +16,7 @@ Your capabilities for managing on-chain basket vaults with perpetual hedging.
 | `get_position_tracking` | Single position details | `vault`, `assetId`, `isLong` |
 | `list_open_positions` | All open legs for a vault (with per-leg unrealised PnL + `pnlBandOutcome`) | `vault` |
 | `get_perp_capital_snapshot` | Vault accounting + `availableCollateral` + full open-position roster — call before any open | `vault` |
-| `plan_open_position` | **Safe sizing helper.** Converts target leverage + free collateral into the exact raw `size`/`collateral` to pass into `open_position`. Enforces $10 min collateral and 50x cap. | `vault`, `assetId`, `isLong`, `targetLeverage?`, `numNewSlots?`, `maxCollateralUsdcRaw?` |
+| `plan_open_position` | **Safe sizing helper.** Converts target leverage + free collateral into the exact raw `size`/`collateral` to pass into `open_position`. Enforces $10 min collateral and 50x cap. Pass `convictionWeight` + `totalConvictionWeight` to size proportionally to your pick's score (typically `(score - entryScoreMin) / (100 - entryScoreMin)`); omit both for the equal-weight default. Also consults the churn-guard (`agents/memory/shared/recently-closed.<vault>.json`) and returns `error_code: "CHURN_GUARD_COOLDOWN"` when the same `(vault, assetId)` was closed in the last 4h; pass `bypassChurnGuard: true` + `bypassReason: "..."` to override (the reason is persisted in the next open's metadata). | `vault`, `assetId`, `isLong`, `targetLeverage?`, `numNewSlots?`, `maxCollateralUsdcRaw?`, `convictionWeight?`, `totalConvictionWeight?`, `bypassChurnGuard?`, `bypassReason?` |
 
 ### Write Tools
 
@@ -58,6 +58,8 @@ Don't hand-roll the 1e30 math. Instead, for every new open:
 3. `open_position({ vault, assetId, isLong, size, collateral, justification })` — pass the helper's strings verbatim.
 
 If `plan_open_position` returns `error_code: "INSUFFICIENT_FREE_COLLATERAL_FOR_LIQ_FEE_BUFFER"`, close a leg from the embedded `openPositions` roster (worst `unrealisedPnlPctOfCollateral`, or any `above_take_profit` / `below_stop_loss`) and retry.
+
+If `plan_open_position` returns `error_code: "CHURN_GUARD_COOLDOWN"`, the runner closed this exact `(vault, assetId)` inside the cooldown window (the `lastClose` field tells you the reason — `rank_swap`, `pnl_band:above_take_profit`, `pnl_band:below_stop_loss`, or `llm_judged: ...`). Skip the ticker for the rest of the run unless your fresh signal genuinely contradicts the closure. To override, call `plan_open_position` again with `bypassChurnGuard: true` AND `bypassReason: "<short audit string>"`; the bypass + reason are persisted alongside the next open in agent metadata.
 
 ## Workflows
 
