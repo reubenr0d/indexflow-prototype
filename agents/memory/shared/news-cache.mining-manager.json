@@ -1,61 +1,31 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T14:01:30.030Z",
+  "updatedAt": "2026-05-24T15:35:31.213Z",
   "entries": {
-    "AHR.V": {
-      "fetchedAt": "2026-05-24T14:01:29.717Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-24T15:35:30.937Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T14:01:29.717Z",
-      "headlines": [
-        {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -63,59 +33,89 @@
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-24T14:01:29.717Z",
+      "fetchedAt": "2026-05-24T15:35:30.937Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PWM.V": {
-      "fetchedAt": "2026-05-24T14:01:29.717Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T15:35:30.937Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T15:35:30.937Z",
+      "headlines": [
+        {
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "China launches three-crew space flight as part of Moon ambitions",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -123,7 +123,7 @@
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T14:01:29.717Z",
+      "fetchedAt": "2026-05-24T15:35:30.937Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -160,150 +160,150 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "OOR.V": {
-      "fetchedAt": "2026-05-24T14:01:30.030Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-24T15:35:31.213Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-24T14:01:30.030Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-24T15:35:31.213Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-24T14:01:30.030Z",
+    "PPP.V": {
+      "fetchedAt": "2026-05-24T15:35:31.213Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-24T14:01:30.030Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-24T15:35:31.213Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GRSL.V": {
-      "fetchedAt": "2026-05-24T14:01:30.030Z",
+    "TNR.V": {
+      "fetchedAt": "2026-05-24T15:35:31.213Z",
       "headlines": [
         {
-          "title": "Iran and US closing in on deal to end war",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7aef20e6-0b60-350f-a5cf-02aebd23115a/iran-and-us-closing-in-on.html",
-          "publishedAt": "2026-05-24T13:56:02.000Z",
+          "title": "Welcome Back to the Neighborhood, Mister Rogers",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/welcome-back-neighborhood-mister-rogers-153000771.html",
+          "publishedAt": "2026-05-24T15:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New Fed Chair Kevin Warsh suggests he may take an Alan Greenspan-style approach at the central bank",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/policy/article/new-fed-chair-kevin-warsh-suggests-he-may-take-an-alan-greenspan-style-approach-at-the-central-bank-135046787.html",
-          "publishedAt": "2026-05-24T13:50:46.000Z",
+          "title": "Salah starts in final Liverpool game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/522b4f8c-ad81-3f86-a370-d532fc1ab877/salah-starts-in-final.html",
+          "publishedAt": "2026-05-24T15:26:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Kostyuk dedicates opening Roland Garros win to Ukraine",
+          "title": "China launches three-crew space flight as part of Moon ambitions",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/817b8f65-de54-3694-8d87-df3776674ca7/kostyuk-dedicates-opening.html",
-          "publishedAt": "2026-05-24T13:50:40.000Z",
+          "link": "https://finance.yahoo.com/m/9b500ef7-800e-3d6e-9bda-03311c9afc02/china-launches-three-crew.html",
+          "publishedAt": "2026-05-24T15:23:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
