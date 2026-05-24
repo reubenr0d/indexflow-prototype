@@ -1,161 +1,81 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T00:13:16.371Z",
+  "updatedAt": "2026-05-24T04:40:00.789Z",
   "entries": {
-    "PWM.V": {
-      "fetchedAt": "2026-05-24T00:13:16.254Z",
+    "BFG.CN": {
+      "fetchedAt": "2026-05-24T04:40:00.629Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GDDY"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-24T00:13:16.254Z",
+    "AUAU.V": {
+      "fetchedAt": "2026-05-24T04:40:00.629Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T00:13:16.254Z",
-      "headlines": [
-        {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "GDDY"
           ]
-        },
-        {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BJ"
-          ]
-        },
-        {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-24T00:13:16.254Z",
-      "headlines": [
-        {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
-          ]
-        },
-        {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BJ"
-          ]
-        },
-        {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T00:13:16.254Z",
+      "fetchedAt": "2026-05-24T04:40:00.629Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -192,154 +112,254 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-24T00:13:16.371Z",
+    "GRSL.V": {
+      "fetchedAt": "2026-05-24T04:40:00.629Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GDDY"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-24T00:13:16.371Z",
+    "GPAC.V": {
+      "fetchedAt": "2026-05-24T04:40:00.629Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GDDY"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "OOR.V": {
-      "fetchedAt": "2026-05-24T00:13:16.371Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T04:40:00.789Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GDDY"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-24T00:13:16.371Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-24T04:40:00.789Z",
       "headlines": [
         {
-          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
-          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRVL",
-            "TKR",
-            "WMS",
-            "TBBK",
-            "ENSG"
+            "RLI"
           ]
         },
         {
-          "title": "Why BJ's (BJ) Shares Are Sliding Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
-          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BJ"
+            "FLO"
           ]
         },
         {
-          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
-          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GDDY"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T04:40:00.789Z",
+      "headlines": [
+        {
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RLI"
+          ]
+        },
+        {
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FLO"
+          ]
+        },
+        {
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GDDY"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-24T04:40:00.789Z",
+      "headlines": [
+        {
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RLI"
+          ]
+        },
+        {
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FLO"
+          ]
+        },
+        {
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GDDY"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-24T04:40:00.789Z",
+      "headlines": [
+        {
+          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
+          "publishedAt": "2026-05-24T04:21:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RLI"
+          ]
+        },
+        {
+          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
+          "publishedAt": "2026-05-24T04:21:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FLO"
+          ]
+        },
+        {
+          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
+          "publishedAt": "2026-05-24T04:21:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GDDY"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
