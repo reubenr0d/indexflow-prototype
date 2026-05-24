@@ -4,14 +4,113 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well with the current market conditions, providing a balanced exposure to both stability and growth potential.\n\nNo short positions are being opened this run as no concrete bearish news was identified on out-of-basket names. The focus remains on capitalizing on the strengths of the long picks identified by the Atlas model.",
-  "lastRunAt": "2026-05-23T23:13:44.576Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks, such as Critical Metals Corp. (CRML) and Royal Gold Inc. (0KXS.L), exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential. No short positions were opened this run as no concrete bearish news was identified on out-of-basket names.",
+  "lastRunAt": "2026-05-24T00:14:16.521Z",
   "latestRun": {
-    "runId": "2026-05-23T23:13:44.576Z",
-    "finishedAt": "2026-05-23T23:13:44.576Z",
-    "summary": "### Summary\n\nThe current Atlas ML model continues to favor a diverse set of mining stocks, with a strong emphasis on diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Power Metals Corp. (PWM.V), each boasting high ML scores and promising predicted returns. These positions were identified due to strong ML signals, indicating robust potential for medium-term gains. The model's focus on diversified metals and gold aligns well w"
+    "runId": "2026-05-24T00:14:16.521Z",
+    "finishedAt": "2026-05-24T00:14:16.521Z",
+    "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks, such as Critical Metals Corp. (CRML) and Royal Gold Inc. (0KXS.L), exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential. No short positions we"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": "0xb32e68257ad3cbc9604e5907d1e37c4ad995b341b7047f20d7cba1d368e27f75",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "sizeDelta": "9172776510000000000000000000000000",
+        "collateralDelta": "917277651"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": "0x14719e6d1c29bd183dd7c8356c54a0374ba03631fa6ab085e5fd47d4e994fc96",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "9172776510000000000000000000000000",
+        "collateralDelta": "917277651"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": "0x24baf3b312e040860491505f40cb7aa84b4c1ada6ca95b41b0a1bc6270035355",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "9172776510000000000000000000000000",
+        "collateralDelta": "917277651"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Critical Metals Corp. (CRML) as a new entrant in the top-N picks.",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "CRML"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets and wires a new asset, with no immediate capital allocation or risk exposure changes."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Critical Metals Corp. (CRML) due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": "0xfdf24a04d000b7d17eb4277a06fe4fb480c55bc33601731f4f6a0aed959b9be8",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
+        "isLong": true,
+        "size": "10000000000000000000000000000000000",
+        "collateral": "1000000000"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 36.4% of available collateral each, totaling 72.8%, which is within the 90% limit for a single name."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Royal Gold Inc. (0KXS.L) due to strong ML signals and high predicted returns.",
+      "timestamp": "2026-05-24T00:14:16.521Z",
+      "txHash": "0x4e222a7b3aa8fb5d1af9a071a86d361e6197472ea51fd41e678235ee45d85c90",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T00:14:16.521Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
+        "isLong": true,
+        "size": "10000000000000000000000000000000000",
+        "collateral": "1000000000"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 36.4% of available collateral each, totaling 72.8%, which is within the 90% limit for a single name."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #3 PWM.V",
@@ -1668,103 +1767,6 @@
         "isLong": true,
         "sizeDelta": "10000000000000000000000000000000000",
         "collateralDelta": "900000000"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
-      "timestamp": "2026-05-23T00:48:53.071Z",
-      "txHash": "0xe410ff66ce412eb1188832553be7a2f691efa2395cb328070c7b88591d74a5de",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T00:48:53.071Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "10000000000000000000000000000000000",
-        "collateralDelta": "900000000"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
-      "timestamp": "2026-05-23T00:48:53.071Z",
-      "txHash": "0x7604a8a12e5ad971b3092f69385fb9dcbd6c426f779b193ea60dfe2db1e971e1",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T00:48:53.071Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "10000000000000000000000000000000000",
-        "collateralDelta": "900000000"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Freeport-McMoRan Inc. is a top pick by the Atlas ML model with a high predicted return.",
-      "timestamp": "2026-05-23T00:48:53.071Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T00:48:53.071Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "0R2O.L",
-        "seedPriceUsd": 28.714
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch aligns with available collateral ($2762.33) and regime (metals_risk_off, shortPenalty=1, longBonus=1); no recent losses >10% on proposed assets."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating 50% of available USDC to perp trading as per strategy.",
-      "timestamp": "2026-05-23T00:48:53.071Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T00:48:53.071Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "1381164679"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch aligns with available collateral ($2762.33) and regime (metals_risk_off, shortPenalty=1, longBonus=1); no recent losses >10% on proposed assets."
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Critical Metals Corp. (CRML) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-23T00:48:53.071Z",
-      "txHash": "0x4f6ea42cad84fa67144ff28f891e13aa162285b315757184dc449fda64108a9b",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T00:48:53.071Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
-        "isLong": true,
-        "size": "27623293580000000000000000000000000",
-        "collateral": "2762329358"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The long position on CRML uses 100% of available collateral ($2762.33), which is within acceptable limits given no open positions and a neutral regime."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #4 0KXS.L (pnl 0.00%) to free room for #5 CRML",
-      "timestamp": "2026-05-22T23:49:37.952Z",
-      "txHash": "0xd15c45bbe6514d2f8cde28122d0e8e2c7ed1d7cb37002a80d0eea924900052d9",
-      "agentName": "mining-manager",
-      "runId": "2026-05-22T23:49:37.952Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0xcb6c73b659a7080d37020bf99df803ff73df4164dde6afd39b4867f1518cf206",
-        "isLong": true,
-        "sizeDelta": "10000000000000000000000000000000000",
-        "collateralDelta": "1000000000"
       }
     }
   ]

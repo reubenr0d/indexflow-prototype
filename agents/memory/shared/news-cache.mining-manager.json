@@ -1,372 +1,161 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-23T23:12:41.641Z",
+  "updatedAt": "2026-05-24T00:13:16.371Z",
   "entries": {
-    "LGC.V": {
-      "fetchedAt": "2026-05-23T23:12:39.789Z",
-      "headlines": [
-        {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TEAM"
-          ]
-        },
-        {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-23T23:12:39.789Z",
-      "headlines": [
-        {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TEAM"
-          ]
-        },
-        {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-23T23:12:39.789Z",
-      "headlines": [
-        {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TEAM"
-          ]
-        },
-        {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-23T23:12:39.789Z",
-      "headlines": [
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        },
-        {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA"
-          ]
-        },
-        {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TPH",
-            "GTLS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-23T23:12:39.789Z",
-      "headlines": [
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        },
-        {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA"
-          ]
-        },
-        {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TPH",
-            "GTLS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "PWM.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+      "fetchedAt": "2026-05-24T00:13:16.254Z",
       "headlines": [
         {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TEAM"
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
           ]
         },
         {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
-      "headlines": [
-        {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TEAM"
+            "BJ"
           ]
         },
         {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
-      "headlines": [
-        {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TEAM"
-          ]
-        },
-        {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+      "fetchedAt": "2026-05-24T00:13:16.254Z",
       "headlines": [
         {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
+          ]
+        },
+        {
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
+            "BJ"
           ]
         },
         {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T00:13:16.254Z",
+      "headlines": [
+        {
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSLA"
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
           ]
         },
         {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TPH",
-            "GTLS"
+            "BJ"
           ]
+        },
+        {
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T00:13:16.254Z",
+      "headlines": [
+        {
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
+          ]
+        },
+        {
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BJ"
+          ]
+        },
+        {
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+      "fetchedAt": "2026-05-24T00:13:16.254Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -403,245 +192,154 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+    "LGC.V": {
+      "fetchedAt": "2026-05-24T00:13:16.371Z",
       "headlines": [
         {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
+          ]
+        },
+        {
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
+            "BJ"
           ]
         },
         {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TSLA"
-          ]
-        },
-        {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TPH",
-            "GTLS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-24T00:13:16.371Z",
       "headlines": [
         {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TEAM"
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
           ]
         },
         {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
+            "BJ"
           ]
+        },
+        {
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HHH.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+    "OOR.V": {
+      "fetchedAt": "2026-05-24T00:13:16.371Z",
       "headlines": [
         {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TEAM"
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
           ]
         },
         {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
+            "BJ"
           ]
+        },
+        {
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TNR.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
+    "AYM.AX": {
+      "fetchedAt": "2026-05-24T00:13:16.371Z",
       "headlines": [
         {
-          "title": "Here’s What Jim Cramer Thinks About Atlassian’s (TEAM) YouTube Controversy",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jim-cramer-thinks-atlassian-team-230901954.html",
-          "publishedAt": "2026-05-23T23:09:01.000Z",
+          "title": "CorVel Stock Is Down 45%, But This Fund Just Made a $20 Million Move",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/64ed1a0a-bbc4-37d8-89bf-37387962f915/corvel-stock-is-down-45%25%2C-but.html",
+          "publishedAt": "2026-05-24T00:05:17.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TEAM"
+            "CRVL",
+            "TKR",
+            "WMS",
+            "TBBK",
+            "ENSG"
           ]
         },
         {
-          "title": "Is Now The Time To Put McMillan Shakespeare (ASX:MMS) On Your Watchlist?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/now-time-put-mcmillan-shakespeare-230340142.html",
-          "publishedAt": "2026-05-23T23:03:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MMS.AX"
-          ]
-        },
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
+          "title": "Why BJ's (BJ) Shares Are Sliding Today",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-bjs-bj-shares-sliding-000455823.html",
+          "publishedAt": "2026-05-24T00:04:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-23T23:12:41.405Z",
-      "headlines": [
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
+            "BJ"
           ]
         },
         {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
+          "title": "A 75 Year Old With $3 Million in a 401(k) Discovers Three Years of RMDs Will Cost Her $42,000 in Medicare Surcharges Alone",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1c30a407-f18e-3abc-9757-52d86aa3f6e9/a-75-year-old-with-%243-million.html",
+          "publishedAt": "2026-05-24T00:04:13.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TSLA"
-          ]
-        },
-        {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TPH",
-            "GTLS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "VGZ.TO": {
-      "fetchedAt": "2026-05-23T23:12:41.641Z",
-      "headlines": [
-        {
-          "title": "Universal Display and Microchip Technology Shares Are Soaring, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/universal-display-microchip-technology-shares-230055577.html",
-          "publishedAt": "2026-05-23T23:00:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ADI",
-            "OLED",
-            "MCHP",
-            "MCHPP",
-            "TXN"
-          ]
-        },
-        {
-          "title": "The 1 AI Stock I'm Buying Every Single Time It Dips Below $10",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7b092c6a-e5c0-3f41-8df9-9c57a52a9eb3/the-1-ai-stock-i%27m-buying.html",
-          "publishedAt": "2026-05-23T22:58:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA"
-          ]
-        },
-        {
-          "title": "What to Know About This Fund's $65 Million Homebuilder Bet Before a $47-Per-Share Buyout",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0f88ea7d-91cb-3432-827c-d34467bcde9d/what-to-know-about-this.html",
-          "publishedAt": "2026-05-23T22:55:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TPH",
-            "GTLS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
