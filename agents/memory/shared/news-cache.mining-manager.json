@@ -1,285 +1,129 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T18:14:51.989Z",
+  "updatedAt": "2026-05-24T19:42:16.323Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T19:42:16.101Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "fetchedAt": "2026-05-24T19:42:16.101Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
-      "headlines": [
-        {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
-        },
-        {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
-        },
-        {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "fetchedAt": "2026-05-24T19:42:16.101Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T19:42:16.101Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
-      "headlines": [
-        {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
-        },
-        {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
-        },
-        {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "fetchedAt": "2026-05-24T19:42:16.101Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -316,140 +160,152 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "PPP.V": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+    "OOR.V": {
+      "fetchedAt": "2026-05-24T19:42:16.323Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-24T19:42:16.323Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0R2O.L": {
-      "fetchedAt": "2026-05-24T18:14:51.989Z",
+    "AYM.AX": {
+      "fetchedAt": "2026-05-24T19:42:16.323Z",
       "headlines": [
         {
-          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
-          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GFS",
-            "^GSPC",
-            "^IXIC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Investors drop bold Fed rate-cut signal to Warsh",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
-          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "WSFX.BO"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
-          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "MO",
-            "VZ",
-            "DVY",
-            "TROW",
-            "PFE",
-            "PRU",
-            "OKE"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-24T19:42:16.323Z",
+      "headlines": [
+        {
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GRSL.V": {
+      "fetchedAt": "2026-05-24T19:42:16.323Z",
+      "headlines": [
+        {
+          "title": "Zensulin Claims Evaluated: Full Consumer Report Reveals the Truth Behind the \"Sugar Destroyer\" Herb",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/zensulin-claims-evaluated-full-consumer-193600660.html",
+          "publishedAt": "2026-05-24T19:36:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Memopezil 2026 Warning: (Memopezil Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/memopezil-2026-warning-memopezil-official-193000904.html",
+          "publishedAt": "2026-05-24T19:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Jelly Tide Gummy (Jelly Tide Official Website Scam WARNING) – Ingredients Investigated",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/jelly-tide-gummy-jelly-tide-192900433.html",
+          "publishedAt": "2026-05-24T19:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
