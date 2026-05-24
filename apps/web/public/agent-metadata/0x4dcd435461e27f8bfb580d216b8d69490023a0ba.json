@@ -4,14 +4,79 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks, such as Amarc Resources Ltd. (AHR.V) and Gold Strike Resources Corp. (GSR.V), exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential. No short positions were opened this run as no concrete bearish news was identified on out-of-basket names.",
-  "lastRunAt": "2026-05-24T04:41:05.486Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V) and Gold Strike Resources Corp. (GSR.V), which exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential.",
+  "lastRunAt": "2026-05-24T08:02:54.728Z",
   "latestRun": {
-    "runId": "2026-05-24T04:41:05.486Z",
-    "finishedAt": "2026-05-24T04:41:05.486Z",
-    "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks, such as Amarc Resources Ltd. (AHR.V) and Gold Strike Resources Corp. (GSR.V), exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential. No short p"
+    "runId": "2026-05-24T08:02:54.728Z",
+    "finishedAt": "2026-05-24T08:02:54.728Z",
+    "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals and gold. The top picks include Amarc Resources Ltd. (AHR.V) and Gold Strike Resources Corp. (GSR.V), which exhibit high ML scores and predicted returns, indicating robust potential for medium-term gains. The focus on diversified metals and gold aligns well with current market conditions, providing balanced exposure to both stability and growth potential.\n\n####"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #3 PWM.V",
+      "timestamp": "2026-05-24T08:02:54.728Z",
+      "txHash": "0x1bb74e3179f5aab23f3e0cd0a908f03168a9ac29f1cf6c80ed316875529801f9",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T08:02:54.728Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "9170941950000000000000000000000000",
+        "collateralDelta": "917094195"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #4 0KXS.L",
+      "timestamp": "2026-05-24T08:02:54.728Z",
+      "txHash": "0x16a1a1d9e3d3581441dcfa1f8b04b39569b7c40aec02c75c346340c5bacf0849",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T08:02:54.728Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "9170941950000000000000000000000000",
+        "collateralDelta": "917094195"
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating 50% of available collateral to perp trading as per policy.",
+      "timestamp": "2026-05-24T08:02:54.728Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T08:02:54.728Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "1375494557"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Allocating 50% of available collateral ($1375.49) to perp trading is within policy and consistent with available collateral of $2750.99."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on PWM.V based on strong ML score and predicted return. Churn guard prevents re-entry on AHR.V and GSR.V this run.",
+      "timestamp": "2026-05-24T08:02:54.728Z",
+      "txHash": "0x274c32d602693a3fe1489605ba0e8707471681d2f091a0ca3b52974ee88ac76e",
+      "agentName": "mining-manager",
+      "runId": "2026-05-24T08:02:54.728Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+        "isLong": true,
+        "size": "9169963710000000000000000000000000",
+        "collateral": "916996371"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on PWM.V uses 33.3% of available collateral ($916.99 out of $2750.99), which is within acceptable limits."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #5 CRML (pnl 0.00%) to free room for #1 AHR.V",
@@ -1695,76 +1760,6 @@
         "isLong": true,
         "sizeDelta": "9207764520000000000000000000000000",
         "collateralDelta": "920776452"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as it is a new entrant in the top ML picks with a high score and predicted return.",
-      "timestamp": "2026-05-23T02:02:53.405Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T02:02:53.405Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "CRML",
-        "seedPriceUsd": 10.98
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both assets are new entrants with high ML scores; no recent losses >10% on CRML; available collateral is sufficient at $2762.33."
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on Prospector Metals Corp. (PPP.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-23T02:02:53.405Z",
-      "txHash": "0xb06fa5266deab781e75cf4a6a9ab7a1ad90ef994ad9bdef602a627d04db99ac7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T02:02:53.405Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
-        "isLong": true,
-        "size": "9207764520000000000000000000000000",
-        "collateral": "920776452"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 33.3% of available collateral each (920.78/2762.33), within safe limits and consistent with metals_risk_off regime."
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening a long position on TNR Gold Corp. (TNR.V) based on its high ML score and predicted return.",
-      "timestamp": "2026-05-23T02:02:53.405Z",
-      "txHash": "0xf5b2c29239ac15900ee31d087083b93ca8dd91ee838be0fc4d5fa4be0c2e0bcd",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T02:02:53.405Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x16d3512823016c351c3702c17f19384adb17b5606d3d2b63eb8840d36ac93d9d",
-        "isLong": true,
-        "size": "9207764520000000000000000000000000",
-        "collateral": "920776452"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 33.3% of available collateral each (920.78/2762.33), within safe limits and consistent with metals_risk_off regime."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #5 CRML (pnl 0.00%) to free room for #1 AHR.V",
-      "timestamp": "2026-05-23T01:33:27.908Z",
-      "txHash": "0x77f5a59daf89fe82907a8ab4f8821f2f5e8c8745a78d870500aaf3fb21f94832",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T01:33:27.908Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
-        "isLong": true,
-        "sizeDelta": "27623293580000000000000000000000000",
-        "collateralDelta": "2762329358"
       }
     }
   ]

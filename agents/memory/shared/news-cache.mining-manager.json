@@ -1,81 +1,419 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T04:40:00.789Z",
+  "updatedAt": "2026-05-24T08:02:32.859Z",
   "entries": {
-    "BFG.CN": {
-      "fetchedAt": "2026-05-24T04:40:00.629Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
       "headlines": [
         {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RLI"
+            "MSFT",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
           "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "HICL.L"
           ]
         },
         {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GDDY"
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AUAU.V": {
-      "fetchedAt": "2026-05-24T04:40:00.629Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
       "headlines": [
         {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RLI"
+            "MSFT",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
           "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FLO"
+            "HICL.L"
           ]
         },
         {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GDDY"
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "headlines": [
+        {
+          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
+          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSFT",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
+          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HICL.L"
+          ]
+        },
+        {
+          "title": "3 Monster Stocks to Hold for the Next 20 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
+          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AMZN",
+            "TSLA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T04:40:00.629Z",
+      "fetchedAt": "2026-05-24T08:02:32.859Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -107,258 +445,6 @@
           "relatedTickers": [
             "ALOY",
             "CRML"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GRSL.V": {
-      "fetchedAt": "2026-05-24T04:40:00.629Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GPAC.V": {
-      "fetchedAt": "2026-05-24T04:40:00.629Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-24T04:40:00.789Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-24T04:40:00.789Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T04:40:00.789Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-24T04:40:00.789Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-24T04:40:00.789Z",
-      "headlines": [
-        {
-          "title": "Assessing RLI (RLI) Valuation After Dividend Hike Special Payout And New Buyback Program",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-rli-rli-valuation-dividend-042117496.html",
-          "publishedAt": "2026-05-24T04:21:17.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RLI"
-          ]
-        },
-        {
-          "title": "Flowers Foods Resets Nature’s Own Brand And Dividend Story",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/flowers-foods-resets-nature-own-042116374.html",
-          "publishedAt": "2026-05-24T04:21:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FLO"
-          ]
-        },
-        {
-          "title": "GoDaddy (GDDY) Valuation Check As New AI Tools And Partnerships Draw Fresh Market Attention",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/godaddy-gddy-valuation-check-ai-042111710.html",
-          "publishedAt": "2026-05-24T04:21:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GDDY"
           ]
         }
       ],
