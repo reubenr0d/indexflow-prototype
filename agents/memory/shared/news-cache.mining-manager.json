@@ -1,419 +1,149 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T08:02:32.859Z",
+  "updatedAt": "2026-05-24T10:11:22.581Z",
   "entries": {
-    "0KXS.L": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-24T10:11:22.322Z",
       "headlines": [
         {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
+            "AREB",
+            "AREBW"
           ]
         },
         {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HICL.L"
+            "GS"
           ]
         },
         {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "fetchedAt": "2026-05-24T10:11:22.322Z",
       "headlines": [
         {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
+            "AREB",
+            "AREBW"
           ]
         },
         {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HICL.L"
+            "GS"
           ]
         },
         {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-24T10:11:22.322Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
+            "AREB",
+            "AREBW"
           ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
+      "fetchedAt": "2026-05-24T10:11:22.322Z",
       "headlines": [
         {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
+            "AREB",
+            "AREBW"
           ]
         },
         {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HICL.L"
+            "GS"
           ]
         },
         {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "VGZ.TO": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-05-24T08:02:32.728Z",
-      "headlines": [
-        {
-          "title": "The Gates Foundation Just Sold All of Its Microsoft Stock. Is It Time to Panic?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/604e2394-70b1-3bcd-8565-ea6c31d7d517/the-gates-foundation-just.html",
-          "publishedAt": "2026-05-24T07:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSFT",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "HICL Infrastructure PLC (LON:HICL) Passed Our Checks, And It's About To Pay A UK£0.0209 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hicl-infrastructure-plc-lon-hicl-074521172.html",
-          "publishedAt": "2026-05-24T07:45:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HICL.L"
-          ]
-        },
-        {
-          "title": "3 Monster Stocks to Hold for the Next 20 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b5710ed7-d705-33d8-9abd-0edccaa99844/3-monster-stocks-to-hold-for.html",
-          "publishedAt": "2026-05-24T07:45:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AMZN",
-            "TSLA",
-            "INTC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T08:02:32.859Z",
+      "fetchedAt": "2026-05-24T10:11:22.322Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -446,6 +176,181 @@
             "ALOY",
             "CRML"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CGNT.V": {
+      "fetchedAt": "2026-05-24T10:11:22.581Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AREB",
+            "AREBW"
+          ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-24T10:11:22.581Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AREB",
+            "AREBW"
+          ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-24T10:11:22.581Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AREB",
+            "AREBW"
+          ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-24T10:11:22.581Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AREB",
+            "AREBW"
+          ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GRSL.V": {
+      "fetchedAt": "2026-05-24T10:11:22.581Z",
+      "headlines": [
+        {
+          "title": "American Rebel Light Beer Fuels Memorial Day Weekend Party as Andy Ross Opens for Brantley Gilbert, Aaron Lewis & Payton Smith at Black Oak Amphitheater",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/american-rebel-light-beer-fuels-100000170.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AREB",
+            "AREBW"
+          ]
+        },
+        {
+          "title": "Best CD rates today, May 24, 2026: Lock in up to 4% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-cd-rates-today-sunday-may-24-2026-100000299.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS"
+          ]
+        },
+        {
+          "title": "Best high-yield savings interest rates today, Sunday, May 24, 2026: Earn up to 4.1% APY",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/banking/article/best-high-yield-savings-interest-rates-today-sunday-may-24-2026-100000899.html",
+          "publishedAt": "2026-05-24T10:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
