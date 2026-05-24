@@ -1,351 +1,285 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T17:16:54.599Z",
+  "updatedAt": "2026-05-24T18:14:51.989Z",
   "entries": {
-    "CGNT.V": {
-      "fetchedAt": "2026-05-24T17:16:52.631Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-24T17:16:52.631Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-24T17:16:52.631Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LGC.V": {
-      "fetchedAt": "2026-05-24T17:16:52.631Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-24T17:16:52.631Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-24T17:16:54.395Z",
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-24T17:16:54.395Z",
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-24T17:16:54.395Z",
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T17:16:54.395Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "headlines": [
+        {
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GFS",
+            "^GSPC",
+            "^IXIC"
+          ]
+        },
+        {
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "WSFX.BO"
+          ]
+        },
+        {
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T17:16:54.395Z",
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -382,191 +316,139 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-24T17:16:54.599Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-24T17:16:54.599Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-24T17:16:54.599Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-05-24T17:16:54.599Z",
-      "headlines": [
-        {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
-          ]
-        },
-        {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVY"
-          ]
-        },
-        {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QUBT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "PPP.V": {
-      "fetchedAt": "2026-05-24T17:16:54.599Z",
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
       "headlines": [
         {
-          "title": "A Look At FTAI Aviation (FTAI) Valuation After Powerful Multi Year Total Returns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-ftai-aviation-ftai-valuation-170856081.html",
-          "publishedAt": "2026-05-24T17:08:56.000Z",
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FTAI",
-            "FTAIM",
-            "FTAIN"
+            "GFS",
+            "^GSPC",
+            "^IXIC"
           ]
         },
         {
-          "title": "What Avery Dennison (AVY)'s RFID Sorting Breakthrough Means For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/avery-dennison-avy-rfid-sorting-170846563.html",
-          "publishedAt": "2026-05-24T17:08:46.000Z",
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVY"
+            "CL=F",
+            "WSFX.BO"
           ]
         },
         {
-          "title": "Quantum Computing (QUBT) Is Up 17.2% After Acquisition-Driven Revenue Surge And New Product Launches – Has The Bull Case Changed?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/quantum-computing-qubt-17-2-170825916.html",
-          "publishedAt": "2026-05-24T17:08:25.000Z",
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "QUBT"
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "headlines": [
+        {
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GFS",
+            "^GSPC",
+            "^IXIC"
+          ]
+        },
+        {
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "WSFX.BO"
+          ]
+        },
+        {
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0R2O.L": {
+      "fetchedAt": "2026-05-24T18:14:51.989Z",
+      "headlines": [
+        {
+          "title": "Why GlobalFoundries Stock Skyrocketed This Week",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/743dedeb-5574-35f0-aae7-27af1283f4e7/why-globalfoundries-stock.html",
+          "publishedAt": "2026-05-24T18:04:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GFS",
+            "^GSPC",
+            "^IXIC"
+          ]
+        },
+        {
+          "title": "Investors drop bold Fed rate-cut signal to Warsh",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2030913a-d8d0-35e3-8844-2dd7f66aa2bc/investors-drop-bold-fed.html",
+          "publishedAt": "2026-05-24T18:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "WSFX.BO"
+          ]
+        },
+        {
+          "title": "Why Retirees Keep Buying This Dividend ETF After 22 Years of Payments",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e35f7409-2f40-3933-a0eb-4fb15dbf8a9b/why-retirees-keep-buying-this.html",
+          "publishedAt": "2026-05-24T18:00:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "MO",
+            "VZ",
+            "DVY",
+            "TROW",
+            "PFE",
+            "PRU",
+            "OKE"
           ]
         }
       ],

@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-24T17:23:00.245Z",
-  "thesis": "This run focused on leveraging the Quality Matrix's top picks, emphasizing strong composite scores and exceptional drilling results. We successfully opened a long position on GR Silver Mining Ltd. (GRSL.V) due to its strong silver grade and moderate drill program type. No shorts were opened this run due to the absence of concrete bearish headlines paired with Red-Flag signals. The churn guard prevented reopening positions on A2 Gold Corp. and Marimaca Copper, which will be reconsidered in future runs once the cooldown period ends.",
-  "lastThesisUpdate": "2026-05-24T17:23:00.245Z"
+  "lastRunAt": "2026-05-24T18:20:28.477Z",
+  "thesis": "This run focused on leveraging the Quality Matrix's top picks, emphasizing strong composite scores and exceptional drilling results. We successfully opened long positions on three top picks:\n\n1. **A2 Gold Corp. (AUAU.V)**: Exceptional Gold Grade (93.3 g/t Au) — Open Pit; Moderate Drill Program Type (Exploration vs Resource).\n2. **Marimaca Copper (MC2.AX)**: Strong Copper Grade 2.2% over 424m (NGEx Lunahuasi anchor); Moderate Drill Program Type (Exploration vs Resource).\n3. **Endeavour Mining (EDV.L)**: Exceptional Gold Grade (278 g/t Au) — Open Pit; Exceptional Economic Studies.\n\nNo shorts were opened this run due to the absence of concrete bearish headlines paired with Red-Flag signals. The churn guard prevented reopening positions on GR Silver Mining Ltd., which will be reconsidered in future runs once the cooldown period ends.",
+  "lastThesisUpdate": "2026-05-24T18:20:28.477Z"
 }
