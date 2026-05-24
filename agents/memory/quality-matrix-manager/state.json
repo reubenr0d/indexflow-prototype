@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-24T22:17:41.347Z",
-  "thesis": "This run focused on leveraging the Quality Matrix's top picks, emphasizing strong composite scores and exceptional drilling results. We successfully opened a long position on GR Silver Mining Ltd. (GRSL.V) due to its strong composite score and exceptional silver grade at 308 g/t, anchored by Pan American Silver. The drill program type was moderate, supporting our decision to invest.",
-  "lastThesisUpdate": "2026-05-24T22:17:41.347Z"
+  "lastRunAt": "2026-05-24T23:21:53.395Z",
+  "thesis": "This run focused on leveraging the Quality Matrix's top picks, emphasizing strong composite scores and exceptional drilling results. We successfully opened long positions on three top picks:\n\n1. **A2 Gold Corp. (AUAU.V)**: Exceptional gold grade at 93.3 g/t (≥45 g/t) and moderate drill program type.\n2. **Marimaca Copper (MC2.AX)**: Strong copper grade at 2.2% (1.4–5%) and moderate drill program type.\n3. **Endeavour Mining (EDV.L)**: Exceptional gold grade at 278 g/t (≥45 g/t) and moderate drill program type.",
+  "lastThesisUpdate": "2026-05-24T23:21:53.395Z"
 }

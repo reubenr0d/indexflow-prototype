@@ -1,209 +1,129 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T22:13:04.860Z",
+  "updatedAt": "2026-05-24T23:16:53.911Z",
   "entries": {
-    "0KXS.L": {
-      "fetchedAt": "2026-05-24T22:13:04.641Z",
-      "headlines": [
-        {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
-        },
-        {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "PWM.V": {
-      "fetchedAt": "2026-05-24T22:13:04.641Z",
+      "fetchedAt": "2026-05-24T23:16:53.731Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T22:13:04.641Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-24T23:16:53.731Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-24T22:13:04.641Z",
+      "fetchedAt": "2026-05-24T23:16:53.731Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "headlines": [
+        {
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T22:13:04.641Z",
+      "fetchedAt": "2026-05-24T23:16:53.731Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -240,252 +160,152 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-24T22:13:04.860Z",
-      "headlines": [
-        {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
-        },
-        {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "LGC.V": {
-      "fetchedAt": "2026-05-24T22:13:04.860Z",
+      "fetchedAt": "2026-05-24T23:16:53.911Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-24T22:13:04.860Z",
-      "headlines": [
-        {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
-        },
-        {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AYM.AX": {
-      "fetchedAt": "2026-05-24T22:13:04.860Z",
+      "fetchedAt": "2026-05-24T23:16:53.911Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "headlines": [
+        {
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CGNT.V": {
+      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "headlines": [
+        {
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-24T22:13:04.860Z",
+      "fetchedAt": "2026-05-24T23:16:53.911Z",
       "headlines": [
         {
-          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
-          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "title": "California’s Chemical Leak Threat: What to Know",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
+          "publishedAt": "2026-05-24T23:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BEN",
-            "MS"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
-          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
+          "publishedAt": "2026-05-24T23:04:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CL=F",
-            "VIAV",
-            "LITE",
-            "^DJI",
-            "TSLA",
-            "ASML",
-            "DELL",
-            "COST",
-            "^GSPC",
-            "^IXIC",
-            "GLW",
-            "GEV",
-            "MRVL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
-          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "title": "What are carbon plate running shoes and do I need them?",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
+          "publishedAt": "2026-05-24T23:03:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SJM",
-            "JPM"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
