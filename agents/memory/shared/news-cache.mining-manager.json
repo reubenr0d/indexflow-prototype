@@ -1,163 +1,209 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T21:14:14.690Z",
+  "updatedAt": "2026-05-24T22:13:04.860Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-05-24T21:14:14.390Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-24T22:13:04.641Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-24T21:14:14.390Z",
-      "headlines": [
-        {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HON",
-            "BRC"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
           ]
         },
         {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "WMT",
-            "MS"
-          ]
-        },
-        {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SOL-USD"
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-24T21:14:14.390Z",
+      "fetchedAt": "2026-05-24T22:13:04.641Z",
       "headlines": [
         {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
           ]
         },
         {
-          "title": "China Against Everybody: The New Geopolitics of Rare Earth Elements",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/cb3d99fc-a6d7-3c32-a222-6043df337076/china-against-everybody%3A-the.html",
-          "publishedAt": "2026-05-24T21:01:32.000Z",
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MP",
-            "UUUU",
-            "USAR",
-            "NVDA"
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-24T21:14:14.390Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-24T22:13:04.641Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-24T22:13:04.641Z",
+      "headlines": [
+        {
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BEN",
+            "MS"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T21:14:14.390Z",
+      "fetchedAt": "2026-05-24T22:13:04.641Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -194,193 +240,251 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-24T21:14:14.690Z",
+    "CGNT.V": {
+      "fetchedAt": "2026-05-24T22:13:04.860Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-05-24T21:14:14.690Z",
+    "LGC.V": {
+      "fetchedAt": "2026-05-24T22:13:04.860Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PPP.V": {
-      "fetchedAt": "2026-05-24T21:14:14.690Z",
+    "BHP.AX": {
+      "fetchedAt": "2026-05-24T22:13:04.860Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HHH.V": {
-      "fetchedAt": "2026-05-24T21:14:14.690Z",
+    "AYM.AX": {
+      "fetchedAt": "2026-05-24T22:13:04.860Z",
       "headlines": [
         {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
           ]
         },
         {
-          "title": "China Against Everybody: The New Geopolitics of Rare Earth Elements",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/cb3d99fc-a6d7-3c32-a222-6043df337076/china-against-everybody%3A-the.html",
-          "publishedAt": "2026-05-24T21:01:32.000Z",
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MP",
-            "UUUU",
-            "USAR",
-            "NVDA"
+            "SJM",
+            "JPM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TNR.V": {
-      "fetchedAt": "2026-05-24T21:14:14.690Z",
+    "OOR.V": {
+      "fetchedAt": "2026-05-24T22:13:04.860Z",
       "headlines": [
         {
-          "title": "Honeywell International Nears June 29 Split With 'All Green Lights,' Reaffirms Outlook",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/ceaa2bf5-13a0-3f29-a3ac-e2199330f7ca/honeywell-international-nears.html",
-          "publishedAt": "2026-05-24T21:04:01.000Z",
+          "title": "Morgan Stanley Sees Broader Turnaround Emerging at Franklin Resources (BEN)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/morgan-stanley-sees-broader-turnaround-220941414.html",
+          "publishedAt": "2026-05-24T22:09:41.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HON",
-            "BRC"
-          ]
-        },
-        {
-          "title": "Morgan Stanley resets Walmart forecast on high inflation",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/e4d8b6da-fad3-3538-bc46-fa1f8f4fac16/morgan-stanley-resets-walmart.html",
-          "publishedAt": "2026-05-24T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "WMT",
+            "BEN",
             "MS"
           ]
         },
         {
-          "title": "Where Will Solana (SOL) Be in 5 Years?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/843ca942-9c06-37f3-bbd1-df8e9affe359/where-will-solana-%28sol%29-be-in.html",
-          "publishedAt": "2026-05-24T21:02:40.000Z",
+          "title": "Dow Jones Futures Rise, Oil Prices Fall: Trump Says No 'Rush' For Iran Deal",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/879072fd-2d18-3074-b2ec-2e92c37a571e/dow-jones-futures-rise%2C-oil.html",
+          "publishedAt": "2026-05-24T22:07:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOL-USD"
+            "CL=F",
+            "VIAV",
+            "LITE",
+            "^DJI",
+            "TSLA",
+            "ASML",
+            "DELL",
+            "COST",
+            "^GSPC",
+            "^IXIC",
+            "GLW",
+            "GEV",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "J.M. Smucker (SJM) Faces Lower Forward Estimates as JPMorgan Cuts Price Target",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/j-m-smucker-sjm-faces-220631937.html",
+          "publishedAt": "2026-05-24T22:06:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SJM",
+            "JPM"
           ]
         }
       ],
