@@ -320,15 +320,85 @@ Runs in parallel with Phase 0. Must complete before Phase 1 begins.
 - **No ODI filing needed** (you don't own the entity).
 - Income from employer (salary/bonus/contractor fee) = normal Indian taxable income.
 
+### Parallel research spike — options-retargeting feasibility
+
+The bot uses ~10x synthetic perp leverage on testnet. **No real venue offers comparable leverage on TSX-V mining juniors**, so the broker mirror defaults to unlevered. But before committing to cash-only, we want to know: can the *signal* be ported to a structurally different instrument that natively offers leverage — specifically, equity options on US-listed mining majors?
+
+This is a **read-only analytical spike** that runs in parallel with Phase 0 mock dev. No agent changes, no broker code, no live trades. Pure backtest + report.
+
+**Deliverable**: `docs/research/options-retargeting-feasibility.md`
+
+**Universe mapping** (each junior the bot trades → closest optioned US-listed major or sector ETF):
+
+
+| Bot's symbols                                                                      | Closest optioned proxy                                                                           |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| Gold juniors (`SXGC.TO`, `AUAU.V`, `ABRA.TO`, `VGZ.TO`, `TNR.V`, `AHR.V`, `GSR.V`) | `GDXJ` (Junior Gold Miners ETF, deep options), or `JNUG`/`JDST` (2x leveraged ETFs with options) |
+| Gold majors (`AEM.TO`, `EDV.L`)                                                    | `NEM`, `GOLD`, `FNV`, `AEM`, `KGC`, `WPM`, `AU`, `GFI` (all liquid options)                      |
+| Silver (`BIG.V`, `SGN.V`, `MAG.V` analogs)                                         | `PAAS`, `HL`, `CDE`, `AG`, `ASM`, `MAG`, or `SIL`/`SILJ` ETFs                                    |
+| Copper (`CUU.V`, `LUN.TO`, `SURG.V`, `MC2.AX`)                                     | `FCX`, `SCCO`, `TECK`, `ERO`, `HBM`, or `COPX` ETF                                               |
+| Lithium / critical minerals (`PMT.AX`, `CRML`, `NCX.V`)                            | `ALB`, `SQM`, `LAC`, `MP`, `LTHM`, `REMX` ETF                                                    |
+| Uranium (`EEE.L`, `PWM.V`)                                                         | `CCJ`, `URA`, `URNM` ETFs                                                                        |
+| No clean proxy (`0KXS.L`, `0R2O.L`, `TEX.CN`, etc.)                                | Drop from candidate set                                                                          |
+
+
+**Options structures evaluated**:
+
+1. **ATM monthly calls/puts** (30-45 DTE, delta ~0.5) — 2-4x effective leverage, manageable theta.
+2. **Slightly OTM monthly calls/puts** (delta ~0.25-0.35) — 4-8x effective leverage, higher theta drag.
+3. **Vertical spreads** (call/put debit spreads) — defined risk, capped reward, 3-5x effective leverage, theta-neutral early.
+4. **2x leveraged sector ETFs unlevered** (`JNUG`, `NUGT`, `DUST`, `JDST`) — 2x baseline; with Reg-T 2x = 4x effective; beta-decay penalty if held >5 days.
+
+**Backtest methodology**:
+
+- Source: 30 days of bot trades from `agents/memory/{mining,quality-matrix}-manager/run-log.sepolia.jsonl` (~390 fills).
+- For each bot trade, find the corresponding proxy + options structure entry on the same date.
+- Simulate fill at mid + estimated half-spread (use yfinance options chain history; if unavailable, use Black-Scholes with historical IV proxy).
+- Apply same exit logic as bot (PnL band ±8%/-6%, or rank rotation close).
+- Track per-trade: structure cost, entry IV, exit IV, theta accrued, PnL, effective leverage realized.
+- Aggregate: total PnL vs synthetic perp PnL, Sharpe vs synthetic perp, max drawdown vs synthetic perp.
+
+**Comparison output**:
+
+
+| Strategy variant                         | Total return | Sharpe | Max DD | Effective leverage | Theta drag | Notes                              |
+| ---------------------------------------- | ------------ | ------ | ------ | ------------------ | ---------- | ---------------------------------- |
+| Synthetic perp (testnet baseline)        | X%           | Y      | Z%     | 10x                | None       | Reference                          |
+| Cash unlevered, US-major proxies         | A%           | B      | C%     | 1x                 | None       | Plan default                       |
+| Cash unlevered, original junior universe | A'%          | B'     | C'%    | 1x                 | None       | Can't actually execute (no broker) |
+| ATM monthly options on proxies           | D%           | E      | F%     | 3-4x               | High       |                                    |
+| OTM monthly options on proxies           | G%           | H      | I%     | 5-8x               | Very high  |                                    |
+| Vertical spreads on proxies              | J%           | K      | L%     | 3-5x               | Low        |                                    |
+| 2x leveraged ETF (JNUG/NUGT)             | M%           | N      | O%     | 4x with margin     | None       | Beta decay penalty                 |
+
+
+**Decision outputs from the spike**:
+
+- **If options on proxies preserve >50% of testnet PnL with manageable theta**: trigger a follow-up plan to retarget agents to the proxy universe + add options-aware decision logic + extend broker mirror with options-trading client capability.
+- **If options PnL is dominated by theta/IV losses**: confirm cash-unlevered is the only realistic path; the testnet PnL was structurally unique to the perp engine.
+- **If 2x leveraged ETFs preserve the directional signal**: simplest path — extend broker mirror with ETF symbol mappings only, no options complexity.
+
+**What this spike does NOT do**:
+
+- Doesn't change the bot's agent prompts.
+- Doesn't change the broker mirror code.
+- Doesn't open any accounts.
+- Doesn't produce live PnL — purely backtested + simulated.
+
+**Time budget**: 2-3 days of focused work. Can run entirely in parallel with Phase 0 mock dev.
+
 ### Out of scope for this plan
 
 - Live trading rollout (separate plan with full risk controls — `live-cap-rollout` todo).
+- Options retargeting *implementation* — only the research spike is in scope here. If findings are positive, implementation gets a dedicated plan.
 - Web UI for the report (data first, UI second).
 - Smart order types (we use MKT only; limit/VWAP after Phase 1 fill quality is known).
 - Position reconciliation if mirror gets out of sync (manual flatten + restart for v1).
 - Mirroring `allocate_to_perp`, `wire_asset`, or any non-position MCP calls.
 - Personal IBKR India / IBKR LLC account in your name — eliminated; not needed with mock-first approach.
 - ODI-structured personal foreign vehicle (Path C2) — blocked by RBI rules, not pursuing.
+- Prime brokerage / TRS structures — only relevant if this becomes a 7-figure deployment, separate plan.
+- CFD brokers — blocked for Indian residents under SEBI; not pursuing.
 
 ### Risks I want to flag explicitly
 
@@ -341,7 +411,10 @@ Runs in parallel with Phase 0. Must complete before Phase 1 begins.
 ### Optional follow-ups (separate plans, only triggered by data)
 
 - **Live trading switchover** (Phase 2) — hard daily loss caps, pre-trade compliance, position reconciliation, alerting. Built only after Phase 1 produces clean reconciliation data.
-- **Strategy retargeting** to US-listed mining subset — only relevant if Path C1 falls through. Rewrites `agents/mining-manager.md` and `agents/quality-matrix-manager.md` prompts to constrain candidate universe; signal quality on US-listed majors is materially different from TSX-V juniors, so expect different (likely lower) edge.
+- **Options-retargeting implementation** — triggered if the research spike (above) finds that options on US-listed major proxies preserve enough of the testnet PnL to be worth the strategy rewrite. Would rewrite `agents/mining-manager.md` and `agents/quality-matrix-manager.md` prompts to operate on the proxy universe with options-aware decision logic, and extend the broker mirror with an options-capable client.
+- **Leveraged ETF retargeting** — triggered if research spike finds that 2x sector ETFs (JNUG/NUGT etc.) preserve the directional signal cleanly. Lighter rewrite than options path — just extends symbol map, no new instrument logic.
+- **Portfolio Margin enablement** — if employer authorizes margin trading and account qualifies (>$110k equity), raise `leverage_cap` in `ibkr-pro.json` profile from 1.0 to 3-5x with margin-call pre-flatten controls.
+- **Strategy retargeting to US-listed cash equities** — fallback if Path C1 falls through. Rewrites agent prompts to constrain to US-listed majors only. Signal quality on majors is materially different from TSX-V juniors, so expect different (likely lower) edge.
 - **Cloud-hosted real-IBKR client** via TWS API in a headless container — if local clientportal.gw becomes operationally annoying.
 - **Multi-broker support** — write Tradier/Alpaca clients against the same interface, run cross-broker reconciliation.
 

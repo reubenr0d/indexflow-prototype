@@ -202,7 +202,7 @@ export function useBasketActivitiesInfiniteQuery(vault: Address | undefined, pag
   return useInfiniteQuery({
     queryKey: ["subgraph", "basketActivitiesInfinite", chainId, vault, pageSize],
     initialPageParam: 0,
-    getNextPageParam: (lastPage, allPages) =>
+    getNextPageParam: (lastPage: BasketActivityRow[], allPages) =>
       lastPage.length < pageSize ? undefined : allPages.length * pageSize,
     queryFn: async ({ pageParam }) => {
       if (!client || !vault) return [] as BasketActivityRow[];
