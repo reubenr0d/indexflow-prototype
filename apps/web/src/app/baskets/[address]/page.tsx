@@ -327,7 +327,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
         </div>
 
         {/* ── Vault history ── */}
-        <div className="order-6 lg:order-none lg:col-span-2">
+        <div className="order-6 lg:order-none lg:col-span-3 lg:col-start-1 lg:row-start-5">
           <VaultHistoryTable vault={vault} actionByTxHash={actionByTxHash} />
         </div>
       </div>
