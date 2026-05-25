@@ -1,91 +1,34 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T09:08:38.889Z",
+  "updatedAt": "2026-05-25T12:47:08.195Z",
   "entries": {
     "CUU.V": {
-      "fetchedAt": "2026-05-25T09:08:37.835Z",
+      "fetchedAt": "2026-05-25T12:47:08.047Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-25T09:08:37.835Z",
-      "headlines": [
-        {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-25T09:08:37.835Z",
-      "headlines": [
-        {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,29 +36,98 @@
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-25T09:08:37.835Z",
+      "fetchedAt": "2026-05-25T12:47:08.047Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
+        },
+        {
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-25T12:47:08.047Z",
+      "headlines": [
+        {
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
+        },
+        {
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-25T12:47:08.047Z",
+      "headlines": [
+        {
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
+        },
+        {
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -123,89 +135,32 @@
       "sourceAgent": "mining-manager"
     },
     "USA.TO": {
-      "fetchedAt": "2026-05-25T09:08:37.835Z",
+      "fetchedAt": "2026-05-25T12:47:08.047Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-25T09:08:38.889Z",
-      "headlines": [
-        {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-25T09:08:38.889Z",
-      "headlines": [
-        {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -213,89 +168,98 @@
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-25T09:08:38.889Z",
+      "fetchedAt": "2026-05-25T12:47:08.195Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-25T09:08:38.889Z",
+    "PWM.V": {
+      "fetchedAt": "2026-05-25T12:47:08.195Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-25T09:08:38.889Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-25T12:47:08.195Z",
       "headlines": [
         {
-          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
-          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
+          "publishedAt": "2026-05-25T12:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Puzzle solutions for Monday, May. 25, 2026",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
-          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
+          "publishedAt": "2026-05-25T12:38:33.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "BATX.CN",
+            "002594.SZ"
+          ]
         },
         {
-          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
-          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "title": "UK beats May heat record with 33.5C registered near London",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
+          "publishedAt": "2026-05-25T12:38:05.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
