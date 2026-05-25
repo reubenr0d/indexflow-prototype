@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-05-25T12:46:02.755Z",
+  "updatedAt": "2026-05-25T16:04:12.540Z",
   "closures": {
     "0x792d36d7169db72bf3dbfd4767c4ccfc2d7c4631289f824556373106a32652de": {
       "ticker": "CUU.V",
@@ -13,6 +13,12 @@
       "isLong": true,
       "closedAt": "2026-05-25T12:46:02.755Z",
       "closedReason": "auto-rebalance: rank rotation: closing #1 ABRA.TO (pnl 0.00%) to free room for #4 BIG.V"
+    },
+    "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932": {
+      "ticker": "BIG.V",
+      "isLong": true,
+      "closedAt": "2026-05-25T16:04:12.540Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #4 BIG.V (pnl 0.00%) to free room for #1 ABRA.TO"
     }
   }
 }

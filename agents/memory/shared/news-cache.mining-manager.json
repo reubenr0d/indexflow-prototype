@@ -1,265 +1,524 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T12:47:08.195Z",
+  "updatedAt": "2026-05-25T16:05:24.014Z",
   "entries": {
-    "CUU.V": {
-      "fetchedAt": "2026-05-25T12:47:08.047Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "LSS.PA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-25T12:47:08.047Z",
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-25T12:47:08.047Z",
-      "headlines": [
-        {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "LSS.PA"
           ]
-        },
-        {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "EEE.L": {
-      "fetchedAt": "2026-05-25T12:47:08.047Z",
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CUU.V": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FFM.TO": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "USA.TO": {
-      "fetchedAt": "2026-05-25T12:47:08.047Z",
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "LSS.PA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-05-25T12:47:08.195Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "LSS.PA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PWM.V": {
-      "fetchedAt": "2026-05-25T12:47:08.195Z",
+    "SURG.V": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SXGC.TO": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LUN.TO": {
+      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-25T12:47:08.195Z",
+      "fetchedAt": "2026-05-25T16:05:24.014Z",
       "headlines": [
         {
-          "title": "My granddaughter racked up $5,185 in international calls on my cellphone. Can I fight the charges?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/granddaughter-racked-5-185-international-124000272.html",
-          "publishedAt": "2026-05-25T12:40:00.000Z",
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Battery X Reports Driving Range Increases After \"Rebalancing\" Trials, Announces $2.0 Million Financing",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/battery-x-reports-driving-range-123833592.html",
-          "publishedAt": "2026-05-25T12:38:33.000Z",
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BATX.CN",
-            "002594.SZ"
+            "IPN.PA",
+            "GNFT.PA"
           ]
         },
         {
-          "title": "UK beats May heat record with 33.5C registered near London",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ec725ddc-aa89-3023-8cc9-a469f4a57fc5/uk-beats-may-heat-record-with.html",
-          "publishedAt": "2026-05-25T12:38:05.000Z",
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LSS.PA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "headlines": [
+        {
+          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
+          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IPN.PA",
+            "GNFT.PA"
+          ]
+        },
+        {
+          "title": "United States Mint Releases Declaration of Independence Quarters into Circulation",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/united-states-mint-releases-declaration-160000672.html",
+          "publishedAt": "2026-05-25T16:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
