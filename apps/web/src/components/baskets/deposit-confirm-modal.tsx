@@ -45,7 +45,7 @@ import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { getContractsForDeploymentTarget } from "@/config/contracts";
 import { CHAIN_REGISTRY, deploymentLabel } from "@/lib/deployment";
 import { getChainMeta } from "@/components/chains/chain-icons";
-import { formatUSDC, formatShares } from "@/lib/format";
+import { formatUSDC, formatShares, formatVaultDisplayName } from "@/lib/format";
 import { PRICE_PRECISION } from "@/lib/constants";
 import { BasketVaultABI } from "@/abi/contracts";
 import {
@@ -360,6 +360,7 @@ function DepositConfirmModalContent({
     query: { staleTime: 60_000 },
   });
   const vaultName = typeof vaultNameRaw === "string" ? vaultNameRaw : undefined;
+  const vaultDisplayName = vaultName ? formatVaultDisplayName(vaultName) : undefined;
 
   const { data: vaultMatches, isLoading: vaultMatchesLoading } = useVaultAddressByName(
     vaultName,
@@ -571,8 +572,8 @@ function DepositConfirmModalContent({
     const message = !hasRoutingWeights
       ? "No cross-chain routing weights are configured. This basket can only accept deposits on its native chain."
       : hasAnyTwin
-        ? `Routing weights are live, but ${vaultName ?? "this basket"} only exists on the chain you have selected.`
-        : `${vaultName ?? "This basket"} is not deployed on any configured chain.`;
+        ? `Routing weights are live, but ${vaultDisplayName ?? "this basket"} only exists on the chain you have selected.`
+        : `${vaultDisplayName ?? "This basket"} is not deployed on any configured chain.`;
     return (
       <>
         <div data-testid="deposit-confirm-modal-phase" data-phase="no-routing" className="hidden" />
@@ -711,7 +712,7 @@ function DepositConfirmModalContent({
             <div className="flex items-start gap-2">
               <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-app-warning" />
               <p className="text-app-muted">
-                <span className="font-medium text-app-text">{vaultName ?? "This basket"}</span> is not
+                <span className="font-medium text-app-text">{vaultDisplayName ?? "This basket"}</span> is not
                 deployed on {missingTwinTargets.map((m) => deploymentLabel(m.target)).join(", ")}.
                 Those chains are skipped from this routing split.
               </p>

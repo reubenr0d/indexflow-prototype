@@ -180,6 +180,10 @@ export function parseTokenAmountInput(value: string, decimals: number): bigint |
   return whole * scale + frac;
 }
 
+export function formatVaultDisplayName(name: string): string {
+  return name.trim().replace(/^minestarters\s+/i, "").trim();
+}
+
 export function formatTokenAmount(amount: bigint, decimals: number, maxFractionDigits = 4): string {
   if (!Number.isInteger(decimals) || decimals < 0) return amount.toString();
 

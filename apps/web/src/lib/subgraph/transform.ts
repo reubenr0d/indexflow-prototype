@@ -1,4 +1,5 @@
 import { type Address } from "viem";
+import { formatVaultDisplayName } from "@/lib/format";
 
 export function parseBigInt(value: string | null | undefined): bigint {
   if (!value) return 0n;
@@ -12,7 +13,7 @@ export function parseBigInt(value: string | null | undefined): bigint {
 export function toBasketOverviewRows(rows: Array<Record<string, string>>) {
   return rows.map((b) => ({
     vault: (b.vault ?? b.id) as Address,
-    name: b.name ?? "",
+    name: formatVaultDisplayName(b.name ?? ""),
     shareToken: b.shareToken as Address,
     assetCount: parseBigInt(b.assetCount),
     basketPrice: parseBigInt(b.basketPrice),
@@ -36,7 +37,7 @@ export function toUserPortfolioRows(rows: Array<Record<string, unknown>>) {
     return {
       id: String(p.id),
       vault: (basket.vault ?? basket.id) as Address,
-      name: basket.name ?? "",
+      name: formatVaultDisplayName(basket.name ?? ""),
       shareToken: basket.shareToken as Address,
       sharePrice,
       basketPrice: parseBigInt(basket.basketPrice),

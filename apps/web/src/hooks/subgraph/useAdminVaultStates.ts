@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { parseBigInt } from "@/lib/subgraph/transform";
+import { formatVaultDisplayName } from "@/lib/format";
 import { GET_ADMIN_VAULT_STATES } from "@/lib/subgraph/queries";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { useAvailableSubgraph, DEFAULT_PAGE_SIZE, type RawVaultState } from "./useSubgraphShared";
@@ -54,7 +55,7 @@ export function useVaultStatesQuery(params?: { first?: number; skip?: number }) 
         updatedAt: parseBigInt(v.updatedAt),
         basket: {
           id: v.basket.id as Address,
-          name: v.basket.name ?? "",
+          name: formatVaultDisplayName(v.basket.name ?? ""),
           vault: (v.basket.vault ?? v.basket.id) as Address,
           tvlBookUsdc: parseBigInt(v.basket.tvlBookUsdc),
           perpAllocatedUsdc: parseBigInt(v.basket.perpAllocatedUsdc),

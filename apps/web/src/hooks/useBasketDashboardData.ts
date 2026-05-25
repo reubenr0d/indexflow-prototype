@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useBasketInfo, useVaultPnL, useVaultState } from "@/hooks/usePerpReader";
 import { useBasketDetailQuery } from "@/hooks/subgraph/useBasketDetail";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
-import { computeApy } from "@/lib/apy";
+import { computeApy7dFromWeekSeries } from "@/lib/apy";
 import {
   useBasketFees,
   useMinReserveBps,
@@ -181,10 +181,7 @@ export function useBasketDashboardData(vault: Address) {
   const showAllocatedComposition = hasExposureRows && hasNonZeroAllocation;
 
   const { data: trendData } = useBasketTrendSnapshots(vault);
-  const apy7d =
-    trendData?.week?.current && trendData?.week?.previous
-      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
-      : null;
+  const apy7d = computeApy7dFromWeekSeries(trendData?.week);
 
   // PnL tile share price source. The basket-list card (`apps/web/src/app/baskets/page.tsx`)
   // reads `sharePrice` straight from the Envio `Basket` entity (via

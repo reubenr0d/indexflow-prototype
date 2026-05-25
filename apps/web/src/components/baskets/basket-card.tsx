@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { InfoLabel } from "@/components/ui/info-tooltip";
 import { TrendPill } from "@/components/ui/trend-pill";
 import { computePnLPctBps, formatBps, formatPnLPct, formatPrice, formatUSDC } from "@/lib/format";
-import { computeApy, formatApy } from "@/lib/apy";
+import { computeApy7dFromWeekSeries, formatApy } from "@/lib/apy";
 import { type Address } from "viem";
 import { Bot } from "lucide-react";
 import { BasketIcon } from "./basket-icons";
@@ -51,10 +51,7 @@ export function BasketCard({
   const trend24h = trend24hProp ?? trendData?.day?.delta?.sharePrice ?? null;
   const trend7d = trend7dProp ?? trendData?.week?.delta?.sharePrice ?? null;
 
-  const apy =
-    trendData?.week?.current && trendData?.week?.previous
-      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
-      : null;
+  const apy = computeApy7dFromWeekSeries(trendData?.week);
 
   const tvl = usdcBalance + perpAllocated;
   const idlePctRaw = tvl > 0n ? Number((usdcBalance * 100n) / tvl) : 0;

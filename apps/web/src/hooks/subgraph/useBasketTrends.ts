@@ -41,6 +41,8 @@ export type BasketTrendSnapshot = BasketTrendState & {
 export type BasketTrendSeries = {
   current: BasketTrendSnapshot | null;
   previous: BasketTrendSnapshot | null;
+  /** Daily snapshot closest to 7d before `current`; used when no prior 7d bucket exists. */
+  apyAnchor: BasketTrendSnapshot | null;
   delta: BasketTrendState | null;
 };
 
@@ -53,7 +55,10 @@ export type BasketTrendSnapshotsResult = {
 type RawBasketWeekSnapshotGroup = {
   id: string;
   vault?: string | null;
-  snapshots: RawBasketSnapshot[];
+  weekSnapshots?: RawBasketSnapshot[];
+  apyAnchorSnapshots?: RawBasketSnapshot[];
+  /** @deprecated use weekSnapshots */
+  snapshots?: RawBasketSnapshot[];
 };
 
 export function useBasketTrendSnapshots(vault: Address | undefined) {
@@ -73,11 +78,13 @@ export function useBasketTrendSnapshots(vault: Address | undefined) {
         const result = await client.request<{
           daySnapshots: RawBasketSnapshot[];
           weekSnapshots: RawBasketSnapshot[];
+          apyAnchorSnapshots: RawBasketSnapshot[];
         }>(GET_BASKET_TREND_SNAPSHOTS, { id: `${chainId}-${vault.toLowerCase()}` });
 
         return toBasketTrendSnapshotsResult(
           result.daySnapshots ?? [],
           result.weekSnapshots ?? [],
+          result.apyAnchorSnapshots ?? [],
           "subgraph"
         );
       } catch {
@@ -119,7 +126,11 @@ export function useBasketsWeekSnapshots(vaults: Address[]) {
         return new Map(
           (result.baskets ?? []).map((row) => [
             ((row.vault ?? row.id).split("-").pop() ?? row.id).toLowerCase() as Address,
-            toBasketTrendSeries(row.snapshots ?? [], "7d"),
+            toBasketTrendSeries(
+              row.weekSnapshots ?? row.snapshots ?? [],
+              "7d",
+              row.apyAnchorSnapshots ?? [],
+            ),
           ])
         );
       } catch {
@@ -132,28 +143,62 @@ export function useBasketsWeekSnapshots(vaults: Address[]) {
   });
 }
 
+const SECONDS_PER_DAY = 86_400n;
+const APY_LOOKBACK_SEC = 7n * SECONDS_PER_DAY;
+
 function toBasketTrendSnapshotsResult(
   daySnapshots: RawBasketSnapshot[],
   weekSnapshots: RawBasketSnapshot[],
+  apyAnchorSnapshots: RawBasketSnapshot[],
   source: BasketTrendSnapshotsResult["source"]
 ): BasketTrendSnapshotsResult {
   return {
     day: toBasketTrendSeries(daySnapshots, "1d"),
-    week: toBasketTrendSeries(weekSnapshots, "7d"),
+    week: toBasketTrendSeries(weekSnapshots, "7d", apyAnchorSnapshots),
     source,
   };
 }
 
+function pickApyAnchor(
+  current: BasketTrendSnapshot | null,
+  dailyRows: RawBasketSnapshot[],
+): BasketTrendSnapshot | null {
+  if (!current || dailyRows.length === 0) return null;
+
+  const target = current.bucketStart - APY_LOOKBACK_SEC;
+  let best: BasketTrendSnapshot | null = null;
+  let bestDist: bigint | null = null;
+
+  for (const row of dailyRows) {
+    const snap = toBasketTrendSnapshot(row, "1d");
+    if (snap.bucketStart >= current.bucketStart) continue;
+
+    const dist = snap.bucketStart > target ? snap.bucketStart - target : target - snap.bucketStart;
+    if (bestDist === null || dist < bestDist) {
+      bestDist = dist;
+      best = snap;
+    }
+  }
+
+  if (!best) return null;
+  const elapsedSec = current.bucketStart - best.bucketStart;
+  if (elapsedSec < SECONDS_PER_DAY) return null;
+  return best;
+}
+
 function toBasketTrendSeries(
   rows: RawBasketSnapshot[],
-  period: BasketSnapshotPeriod
+  period: BasketSnapshotPeriod,
+  apyAnchorDailyRows: RawBasketSnapshot[] = [],
 ): BasketTrendSeries {
   const snapshots = rows.map((row) => toBasketTrendSnapshot(row, period));
   const current = snapshots[0] ?? null;
   const previous = snapshots[1] ?? null;
+  const apyAnchor = pickApyAnchor(current, apyAnchorDailyRows);
   return {
     current,
     previous,
+    apyAnchor,
     delta: current && previous ? diffBasketTrendState(current, previous) : null,
   };
 }
@@ -209,8 +254,8 @@ function diffBasketTrendState(current: BasketTrendState, previous: BasketTrendSt
 
 function emptyBasketTrendSnapshots(): BasketTrendSnapshotsResult {
   return {
-    day: { current: null, previous: null, delta: null },
-    week: { current: null, previous: null, delta: null },
+    day: { current: null, previous: null, apyAnchor: null, delta: null },
+    week: { current: null, previous: null, apyAnchor: null, delta: null },
     source: "empty",
   };
 }

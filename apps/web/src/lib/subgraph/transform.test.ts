@@ -31,6 +31,27 @@ describe("subgraph transform utilities", () => {
     expect(rows[0].assetCount).toBe(2n);
   });
 
+  it("strips Minestarters prefix from vault display names", () => {
+    const rows = toBasketOverviewRows([
+      {
+        id: "0x1111111111111111111111111111111111111111",
+        name: "Minestarters ML Picks",
+        shareToken: "0x2222222222222222222222222222222222222222",
+        assetCount: "1",
+        basketPrice: "1000000000000000000000000000000",
+        sharePrice: "1000000000000000000000000000000",
+        usdcBalanceUsdc: "0",
+        perpAllocatedUsdc: "0",
+        tvlBookUsdc: "0",
+        totalSupplyShares: "0",
+        createdAt: "1",
+        updatedAt: "2",
+      },
+    ]);
+
+    expect(rows[0].name).toBe("ML Picks");
+  });
+
   it("normalizes user portfolio rows and computes total", () => {
     const result = toUserPortfolioRows([
       {

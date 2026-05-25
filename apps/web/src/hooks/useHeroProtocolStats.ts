@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
-import { computeApy } from "@/lib/apy";
+import { computeApy7dFromWeekSeries } from "@/lib/apy";
 import { USDC_PRECISION } from "@/lib/constants";
 import { chainIdForDeploymentTarget, type DeploymentTarget } from "@/lib/deployment";
 import { GET_BASKETS_OVERVIEW, GET_TOKEN_HOLDER_ADDRESSES } from "@/lib/subgraph/queries";
@@ -97,9 +97,7 @@ function useSingleChainHeroStats() {
     for (const basket of baskets) {
       const vault = basket.vault.toLowerCase() as Address;
       const snapshot = weekSnapshots.data.get(vault);
-      if (!snapshot?.current || !snapshot.previous) continue;
-
-      const apy = computeApy(snapshot.current.sharePrice, snapshot.previous.sharePrice, 7);
+      const apy = computeApy7dFromWeekSeries(snapshot);
       if (apy === null) continue;
 
       const tvl = Number(

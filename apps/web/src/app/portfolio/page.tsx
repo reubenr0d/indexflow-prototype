@@ -12,7 +12,7 @@ import { useMultiChainPortfolio } from "@/hooks/useMultiChainPortfolio";
 import { useBasketTrendSnapshots } from "@/hooks/subgraph/useBasketTrends";
 import { CHAIN_META } from "@/components/chains/chain-icons";
 import { formatUSDC, formatShares, formatCompact, formatBps } from "@/lib/format";
-import { computeApy, formatApy } from "@/lib/apy";
+import { computeApy7dFromWeekSeries, formatApy } from "@/lib/apy";
 import { USDC_PRECISION } from "@/lib/constants";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import Link from "next/link";
@@ -208,10 +208,7 @@ function HoldingCard({
   const chainMeta = chainId != null ? CHAIN_META[String(chainId)] : undefined;
   const ChainIcon = chainMeta?.icon;
   const { data: trendData } = useBasketTrendSnapshots(vault);
-  const apy =
-    trendData?.week?.current && trendData?.week?.previous
-      ? computeApy(trendData.week.current.sharePrice, trendData.week.previous.sharePrice, 7)
-      : null;
+  const apy = computeApy7dFromWeekSeries(trendData?.week);
 
   return (
     <motion.div

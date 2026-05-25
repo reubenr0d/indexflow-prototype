@@ -180,44 +180,50 @@ function AssetMiniChart({
   const onchainPoints = useMemo(() => historyChartPoints(history), [history]);
   const yahooPoints = yahooQuery.data;
 
+  const hasOnchainData = onchainPoints.length >= 2;
+  const hasYahooData = yahooPoints.length >= 2;
+
   const chartData = useMemo(
     () =>
       mergeSeries(
-        showOnchain ? onchainPoints : [],
-        showYahoo ? yahooPoints : [],
+        showOnchain && hasOnchainData ? onchainPoints : [],
+        showYahoo && hasYahooData ? yahooPoints : [],
       ),
-    [onchainPoints, yahooPoints, showOnchain, showYahoo],
+    [onchainPoints, yahooPoints, showOnchain, showYahoo, hasOnchainData, hasYahooData],
   );
 
   const change = useMemo(() => {
-    const reference = showYahoo && !showOnchain ? yahooPoints : onchainPoints;
-    if (reference.length < 2) return null;
+    const reference =
+      showOnchain && hasOnchainData
+        ? onchainPoints
+        : showYahoo && hasYahooData
+          ? yahooPoints
+          : null;
+    if (!reference || reference.length < 2) return null;
     const first = reference[0].priceUsd;
     const last = reference[reference.length - 1].priceUsd;
     if (first === 0) return null;
     const pct = ((last - first) / first) * 100;
     return { pct, positive: pct >= 0 };
-  }, [onchainPoints, yahooPoints, showOnchain, showYahoo]);
+  }, [onchainPoints, yahooPoints, showOnchain, showYahoo, hasOnchainData, hasYahooData]);
 
   const priceRange = useMemo(() => {
     const values: number[] = [];
-    if (showOnchain) for (const p of onchainPoints) values.push(p.priceUsd);
-    if (showYahoo) for (const p of yahooPoints) values.push(p.priceUsd);
+    if (showOnchain && hasOnchainData) for (const p of onchainPoints) values.push(p.priceUsd);
+    if (showYahoo && hasYahooData) for (const p of yahooPoints) values.push(p.priceUsd);
     if (values.length === 0) return { min: 0, max: 1 };
     const min = Math.min(...values);
     const max = Math.max(...values);
     const pad = (max - min) * 0.1 || 0.01;
     return { min: Math.max(0, min - pad), max: max + pad };
-  }, [onchainPoints, yahooPoints, showOnchain, showYahoo]);
+  }, [onchainPoints, yahooPoints, showOnchain, showYahoo, hasOnchainData, hasYahooData]);
 
   const onchainStroke =
     change === null || change.positive ? "var(--success)" : "var(--danger)";
   const yahooStroke = ONCHAIN_COLOR;
 
   const isLoading = (showOnchain && isOnchainLoading) || (showYahoo && yahooQuery.isLoading);
-  const hasData =
-    (showOnchain && onchainPoints.length >= 2) ||
-    (showYahoo && yahooPoints.length >= 2);
+  const hasData = hasOnchainData || hasYahooData;
 
   const yahooMissing = source !== "onchain" && !yahooSymbol;
   const yahooFetchError = wantsYahoo && yahooQuery.error != null;
@@ -286,7 +292,7 @@ function AssetMiniChart({
               </defs>
               <YAxis domain={[priceRange.min, priceRange.max]} hide />
               <RechartsTooltip content={<ChartTooltip />} />
-              {showOnchain && (
+              {showOnchain && hasOnchainData && (
                 <Area
                   type="monotone"
                   dataKey="onchainUsd"
@@ -299,7 +305,7 @@ function AssetMiniChart({
                   connectNulls
                 />
               )}
-              {showYahoo && (
+              {showYahoo && hasYahooData && (
                 <Area
                   type="monotone"
                   dataKey="yahooUsd"

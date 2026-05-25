@@ -14,6 +14,7 @@ import {
   formatBps,
   formatUSDC,
   formatUsd1e30,
+  formatVaultDisplayName,
 } from "@/lib/format";
 import type { AgentAction, AgentActionParams } from "@/hooks/useAgentMetadata";
 
@@ -162,7 +163,7 @@ export function renderActionChips(action: AgentAction): ActionChip[] {
     }
     case "create_vault": {
       const chips: ActionChip[] = [
-        { label: params.name, mono: true, tone: "accent" },
+        { label: formatVaultDisplayName(params.name), mono: true, tone: "accent" },
         { label: `${formatBps(params.depositFeeBps)} deposit` },
         { label: `${formatBps(params.redeemFeeBps)} redeem` },
       ];

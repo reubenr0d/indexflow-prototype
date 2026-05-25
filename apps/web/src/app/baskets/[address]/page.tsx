@@ -20,18 +20,13 @@ const AssetPricePanel = dynamic(
 );
 import { PositionsTable } from "@/components/baskets/positions-table";
 import { CompositionSidebar } from "@/components/baskets/composition-sidebar";
+import { VaultHistoryTable } from "@/components/baskets/vault-history-table";
 import { VaultThesisCard } from "@/components/baskets/vault-thesis-card";
 import {
-  ActivityBadge,
   AiOperatorBadge,
   AtlasMlBadge,
-  type BasketHistoryRow,
   StatusChip,
-  SectionHeader,
-  formatHistoryLabel,
-  formatHistoryTime,
   getBasketActivityMeta,
-  groupHistoryRowsByDay,
 } from "@/components/baskets/basket-detail-ui";
 import { type AgentAction, useAgentMetadata } from "@/hooks/useAgentMetadata";
 import { useOracleAssetMetaMap } from "@/hooks/useOracle";
@@ -45,7 +40,6 @@ import {
 import { BasketTour } from "@/components/onboarding/basket-tour";
 import { useBasketDashboardData } from "@/hooks/useBasketDashboardData";
 import {
-  type BasketActivityRow,
   useBasketActivitiesQuery,
 } from "@/hooks/subgraph/useBasketDetail";
 import { useAccount, useConfig, useReadContract } from "wagmi";
@@ -56,11 +50,9 @@ import {
   formatAddress,
   formatPrice,
   formatRelativeTime,
-  formatSignedUsd1e30,
   formatSignedUsdcAmount,
   formatUsd1e30,
   formatLeverageRatio,
-  formatAssetId,
   formatPnLPct,
   computePnLPctBps,
 } from "@/lib/format";
@@ -72,7 +64,6 @@ import {
   ArrowUpFromLine,
   Bot,
   Brain,
-  CalendarDays,
   ChevronDown,
   ChevronUp,
   CircleSlash,
@@ -93,8 +84,6 @@ import {
 } from "lucide-react";
 import { showToast } from "@/components/ui/toast";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
-
-const HISTORY_PAGE_SIZE = 20;
 
 export default function BasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -124,8 +113,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     subgraphSharePrice,
   } = useBasketDashboardData(vault);
 
-  const [historySkip, setHistorySkip] = useState(0);
-  const subgraphHistory = useBasketActivitiesQuery(vault, HISTORY_PAGE_SIZE, historySkip);
+  const latestActivityQuery = useBasketActivitiesQuery(vault, 1, 0);
 
   const { data: shareBalance } = useReadContract({
     address: basketInfo?.shareToken,
@@ -139,13 +127,9 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
   const hasPnLData = unrealisedPnL !== 0n || realisedPnL !== 0n || (state?.registered ?? false);
 
-  const historyRows = useMemo(
-    () => (subgraphHistory.data ?? []) as BasketHistoryRow[],
-    [subgraphHistory.data],
-  );
-  const canLoadMore = (subgraphHistory.data?.length ?? 0) === HISTORY_PAGE_SIZE;
-  const historyGroups = useMemo(() => groupHistoryRowsByDay(historyRows), [historyRows]);
-  const latestActivityMeta = historyRows[0] ? getBasketActivityMeta(historyRows[0]) : undefined;
+  const latestActivityMeta = latestActivityQuery.data?.[0]
+    ? getBasketActivityMeta(latestActivityQuery.data[0])
+    : undefined;
 
   const actionByTxHash = useMemo(() => {
     if (!agentMeta?.recentActions) return new Map<string, AgentAction>();
@@ -344,128 +328,10 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
 
         {/* ── Vault history ── */}
         <div className="order-6 lg:order-none lg:col-span-2">
-          <Card className="p-5">
-            <SectionHeader
-              icon={Clock3}
-              title="Vault History"
-              meta={`${historyRows.length} shown across ${historyGroups.length} day bucket${historyGroups.length === 1 ? "" : "s"}`}
-            />
-            <div className="max-h-[32rem] overflow-y-auto overflow-x-hidden rounded-xl border border-app-border">
-              {historyRows.length === 0 ? (
-                <div className="flex flex-col items-center justify-center gap-2 px-6 py-10 text-center text-sm text-app-muted">
-                  <CalendarDays className="h-5 w-5 text-app-muted" />
-                  No vault activity indexed yet.
-                </div>
-              ) : (
-                <div className="divide-y divide-app-border">
-                  {historyGroups.map((group) => (
-                    <div key={group.key} className="bg-app-surface">
-                      <div className="flex items-center justify-between gap-3 border-b border-app-border bg-app-bg-subtle/60 px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-app-border bg-app-surface text-app-text">
-                            <CalendarDays className="h-3.5 w-3.5" />
-                          </span>
-                          <div>
-                            <p className="text-sm font-semibold text-app-text">{group.label}</p>
-                            <p className="text-xs text-app-muted">
-                              {group.rows.length} event{group.rows.length === 1 ? "" : "s"}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="divide-y divide-app-border">
-                        {group.rows.map((row) => (
-                          <HistoryRowView
-                            key={row.id}
-                            row={row}
-                            action={actionByTxHash.get(row.txHash.toLowerCase())}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            {subgraphHistory.data && canLoadMore && (
-              <button
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-app-accent hover:underline"
-                onClick={() => setHistorySkip((s) => s + HISTORY_PAGE_SIZE)}
-              >
-                Load more
-              </button>
-            )}
-          </Card>
+          <VaultHistoryTable vault={vault} actionByTxHash={actionByTxHash} />
         </div>
       </div>
     </PageWrapper>
-  );
-}
-
-function HistoryRowView({
-  row,
-  action,
-}: {
-  row: BasketHistoryRow | BasketActivityRow;
-  action?: AgentAction;
-}) {
-  const config = useConfig();
-  const { chainId } = useDeploymentTarget();
-  const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
-  const txHref = explorer ? `${explorer}/tx/${row.txHash}` : "#";
-  const meta = getBasketActivityMeta(row);
-  const toolLabel = action ? humanizeToolName(action.tool) : null;
-
-  return (
-    <div className="flex items-start gap-3 px-4 py-4 text-sm">
-      <ActivityBadge meta={meta} />
-      <div className="min-w-0 flex-1">
-        <p className="font-medium text-app-text">{formatHistoryLabel(row)}</p>
-        <p className="mt-1 text-xs text-app-muted">
-          {[meta.detail, row.assetId ? formatAssetId(row.assetId) : undefined, formatHistoryTime(row.timestamp)]
-            .filter(Boolean)
-            .join(" · ")}
-        </p>
-        {action && (
-          <div className="mt-2 rounded-md border border-app-accent/20 bg-app-accent/5 px-2.5 py-1.5">
-            <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-app-accent">
-              <Bot className="h-3 w-3 shrink-0" />
-              <span>AI{action.agentName ? `: ${action.agentName}` : ""}</span>
-              {toolLabel && (
-                <>
-                  <span className="text-app-muted">·</span>
-                  <span className="font-mono normal-case tracking-normal text-app-text">
-                    {toolLabel}
-                  </span>
-                </>
-              )}
-            </div>
-            <p className="mt-1 text-xs italic leading-relaxed text-app-muted">
-              {action.justification}
-            </p>
-          </div>
-        )}
-      </div>
-      <div className="shrink-0 text-right">
-        <p className="font-mono text-app-text">
-          {row.amountUsdc !== undefined
-            ? formatUSDC(row.amountUsdc)
-            : row.size !== undefined
-              ? formatUsd1e30(row.size)
-              : row.pnl !== undefined
-                ? formatSignedUsd1e30(row.pnl)
-                : "--"}
-        </p>
-        <a
-          className="font-mono text-xs text-app-accent hover:underline"
-          href={txHref}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {`${row.txHash.slice(0, 6)}...${row.txHash.slice(-4)}`}
-        </a>
-      </div>
-    </div>
   );
 }
 

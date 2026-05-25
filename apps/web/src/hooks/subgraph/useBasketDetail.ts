@@ -1,8 +1,9 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { type Address } from "viem";
 import { parseBigInt } from "@/lib/subgraph/transform";
+import { formatVaultDisplayName } from "@/lib/format";
 import { GET_BASKET_DETAIL, GET_BASKET_ACTIVITIES } from "@/lib/subgraph/queries";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
@@ -77,6 +78,24 @@ export type BasketActivityRow = {
   txHash: `0x${string}`;
 };
 
+function mapRawActivity(a: RawBasketActivity): BasketActivityRow {
+  return {
+    id: a.id,
+    activityType: a.activityType,
+    userId: a.user?.id ? (a.user.id.split("-").pop() as Address) : undefined,
+    assetId: a.assetId as `0x${string}` | undefined,
+    isLong: a.isLong ?? undefined,
+    amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,
+    shares: a.shares ? parseBigInt(a.shares) : undefined,
+    size: a.size ? parseBigInt(a.size) : undefined,
+    collateral: a.collateral ? parseBigInt(a.collateral) : undefined,
+    pnl: a.pnl ? parseBigInt(a.pnl) : undefined,
+    recipient: a.recipient as Address | undefined,
+    timestamp: parseBigInt(a.timestamp),
+    txHash: a.txHash as `0x${string}`,
+  };
+}
+
 export function useBasketDetailQuery(vault: Address | undefined, activityFirst = 20, activitySkip = 0) {
   const { client, isAvailable } = useAvailableSubgraph();
   const { chainId } = useDeploymentTarget();
@@ -102,7 +121,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
       return {
         basket: {
           id: (result.basket.vault ?? vault) as Address,
-          name: result.basket.name ?? "",
+          name: formatVaultDisplayName(result.basket.name ?? ""),
           vault: (result.basket.vault ?? result.basket.id) as Address,
           shareToken: result.basket.shareToken as Address,
           assetCount: parseBigInt(result.basket.assetCount),
@@ -131,21 +150,7 @@ export function useBasketDetailQuery(vault: Address | undefined, activityFirst =
             netSize: parseBigInt(e.netSize),
             updatedAt: parseBigInt(e.updatedAt),
           })),
-          activities: (result.basket.activities ?? []).map((a: RawBasketActivity): BasketActivityRow => ({
-            id: a.id,
-            activityType: a.activityType,
-            userId: (a.user?.id ? (a.user.id.split("-").pop() as Address) : undefined),
-            assetId: a.assetId as `0x${string}` | undefined,
-            isLong: a.isLong ?? undefined,
-            amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,
-            shares: a.shares ? parseBigInt(a.shares) : undefined,
-            size: a.size ? parseBigInt(a.size) : undefined,
-            collateral: a.collateral ? parseBigInt(a.collateral) : undefined,
-            pnl: a.pnl ? parseBigInt(a.pnl) : undefined,
-            recipient: a.recipient as Address | undefined,
-            timestamp: parseBigInt(a.timestamp),
-            txHash: a.txHash as `0x${string}`,
-          })),
+          activities: (result.basket.activities ?? []).map(mapRawActivity),
         },
         vaultStateCurrent: result.vaultStateCurrent
           ? {
@@ -182,21 +187,34 @@ export function useBasketActivitiesQuery(vault: Address | undefined, first = 20,
         skip,
       });
 
-      return result.basketActivities.map((a: RawBasketActivity): BasketActivityRow => ({
-        id: a.id,
-        activityType: a.activityType,
-        userId: (a.user?.id ? (a.user.id.split("-").pop() as Address) : undefined),
-        assetId: a.assetId as `0x${string}` | undefined,
-        isLong: a.isLong ?? undefined,
-        amountUsdc: a.amountUsdc ? parseBigInt(a.amountUsdc) : undefined,
-        shares: a.shares ? parseBigInt(a.shares) : undefined,
-        size: a.size ? parseBigInt(a.size) : undefined,
-        collateral: a.collateral ? parseBigInt(a.collateral) : undefined,
-        pnl: a.pnl ? parseBigInt(a.pnl) : undefined,
-        recipient: a.recipient as Address | undefined,
-        timestamp: parseBigInt(a.timestamp),
-        txHash: a.txHash as `0x${string}`,
-      }));
+      return result.basketActivities.map(mapRawActivity);
+    },
+    enabled: isAvailable && Boolean(vault),
+    staleTime: 15_000,
+    retry: 1,
+  });
+}
+
+export function useBasketActivitiesInfiniteQuery(vault: Address | undefined, pageSize = 50) {
+  const { client, isAvailable } = useAvailableSubgraph();
+  const { chainId } = useDeploymentTarget();
+
+  return useInfiniteQuery({
+    queryKey: ["subgraph", "basketActivitiesInfinite", chainId, vault, pageSize],
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length < pageSize ? undefined : allPages.length * pageSize,
+    queryFn: async ({ pageParam }) => {
+      if (!client || !vault) return [] as BasketActivityRow[];
+      const result = await client.request<{ basketActivities: RawBasketActivity[] }>(
+        GET_BASKET_ACTIVITIES,
+        {
+          id: `${chainId}-${vault.toLowerCase()}`,
+          first: pageSize,
+          skip: pageParam,
+        },
+      );
+      return result.basketActivities.map(mapRawActivity);
     },
     enabled: isAvailable && Boolean(vault),
     staleTime: 15_000,

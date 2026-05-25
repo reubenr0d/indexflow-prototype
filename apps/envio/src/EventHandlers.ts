@@ -737,14 +737,14 @@ VaultAccounting.PauseToggled.handler(async ({ event, context }) => {
 VaultAccounting.MaxOpenInterestSet.handler(async ({ event, context }) => {
   const basket = await getOrCreateBasket(context, toInt(event.chainId), event.params.vault, event.block);
   await createActivity(context, event, basket, "maxOpenInterestSet", {
-    amountUsdc: event.params.cap,
+    size: event.params.cap,
   });
 });
 
 VaultAccounting.MaxPositionSizeSet.handler(async ({ event, context }) => {
   const basket = await getOrCreateBasket(context, toInt(event.chainId), event.params.vault, event.block);
   await createActivity(context, event, basket, "maxPositionSizeSet", {
-    amountUsdc: event.params.cap,
+    size: event.params.cap,
   });
 });
 

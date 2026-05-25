@@ -26,7 +26,7 @@ import {
   formatAssetId,
   formatBps,
   formatRelativeTime,
-  formatSignedUsd1e30,
+  formatSignedUsdcAmount,
   formatUSDC,
   formatUsd1e30,
   type ExposureDirection,
@@ -223,10 +223,80 @@ function getToneForDirection(direction: ExposureDirection): Tone {
   return "muted";
 }
 
+export function hasRealisedPnl(row: BasketHistoryRow): boolean {
+  return (
+    row.pnl !== undefined &&
+    (row.activityType === "pnlRealized" || row.activityType === "positionClosed")
+  );
+}
+
+export function realisedPnlTone(pnl: bigint): Tone {
+  if (pnl > 0n) return "success";
+  if (pnl < 0n) return "danger";
+  return "muted";
+}
+
+function realisedPnlToneClass(pnl: bigint, variant: "text" | "chip"): string {
+  const tone = realisedPnlTone(pnl);
+  if (variant === "chip") {
+    return tone === "success"
+      ? "border-app-success/30 bg-app-success/15 text-app-success"
+      : tone === "danger"
+        ? "border-app-danger/30 bg-app-danger/15 text-app-danger"
+        : "border-app-border bg-app-bg-subtle text-app-muted";
+  }
+  return tone === "success"
+    ? "text-app-success"
+    : tone === "danger"
+      ? "text-app-danger"
+      : "text-app-muted";
+}
+
+export function RealisedPnlChip({ pnl, className }: { pnl: bigint; className?: string }) {
+  const Icon = pnl > 0n ? TrendingUp : pnl < 0n ? TrendingDown : Activity;
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 font-mono text-[11px] font-semibold tracking-tight",
+        realisedPnlToneClass(pnl, "chip"),
+        className,
+      )}
+    >
+      <Icon className="h-3 w-3 shrink-0" aria-hidden />
+      <span>Realised {formatSignedUsdcAmount(pnl)}</span>
+    </span>
+  );
+}
+
+export function formatHistoryAmount(row: BasketHistoryRow): {
+  value: string;
+  className: string;
+} {
+  if (row.activityType === "maxOpenInterestSet" || row.activityType === "maxPositionSizeSet") {
+    return {
+      value: formatUsd1e30(row.size ?? row.amountUsdc ?? 0n),
+      className: "font-mono text-app-text",
+    };
+  }
+  if (row.amountUsdc !== undefined) {
+    return { value: formatUSDC(row.amountUsdc), className: "font-mono text-app-text" };
+  }
+  if (row.size !== undefined) {
+    return { value: formatUsd1e30(row.size), className: "font-mono text-app-text" };
+  }
+  if (row.pnl !== undefined) {
+    return {
+      value: formatSignedUsdcAmount(row.pnl),
+      className: cn("font-mono text-sm font-semibold", realisedPnlToneClass(row.pnl, "text")),
+    };
+  }
+  return { value: "--", className: "font-mono text-app-muted" };
+}
+
 function formatActivityAmount(row: BasketHistoryRow): string | undefined {
   if (row.amountUsdc !== undefined) return formatUSDC(row.amountUsdc);
   if (row.size !== undefined) return formatUsd1e30(row.size);
-  if (row.pnl !== undefined) return formatSignedUsd1e30(row.pnl);
+  if (row.pnl !== undefined) return formatSignedUsdcAmount(row.pnl);
   return undefined;
 }
 
@@ -282,19 +352,20 @@ export function getBasketActivityMeta(row: BasketHistoryRow): HistoryActivityMet
     case "positionClosed":
       return {
         title: row.isLong === undefined ? "Closed position" : `Closed ${positionSideLabel(row)} position`,
-        detail: [asset, row.pnl !== undefined ? `${formatSignedUsd1e30(row.pnl)} PnL` : undefined]
-          .filter(Boolean)
-          .join(" · "),
+        detail: asset ?? (row.pnl !== undefined ? "Realised PnL booked to vault" : undefined),
         icon: MinusCircle,
-        tone: "muted",
+        tone: row.pnl !== undefined ? realisedPnlTone(row.pnl) : "muted",
       };
-    case "pnlRealized":
+    case "pnlRealized": {
+      const pnl = row.pnl ?? 0n;
       return {
-        title: "Realized PnL",
-        detail: amount ? `${amount} booked` : "PnL booked",
-        icon: Activity,
-        tone: amount && row.pnl && row.pnl > 0n ? "success" : "warning",
+        title:
+          pnl > 0n ? "Realised profit" : pnl < 0n ? "Realised loss" : "Realised PnL",
+        detail: "Booked to vault NAV",
+        icon: pnl > 0n ? TrendingUp : pnl < 0n ? TrendingDown : Activity,
+        tone: realisedPnlTone(pnl),
       };
+    }
     case "feesCollected":
       return {
         title: "Collected fees",
@@ -352,19 +423,23 @@ export function getBasketActivityMeta(row: BasketHistoryRow): HistoryActivityMet
         tone: "warning",
       };
     case "maxOpenInterestSet":
+    case "maxPositionSizeSet": {
+      const cap =
+        row.size !== undefined
+          ? formatUsd1e30(row.size)
+          : row.amountUsdc !== undefined
+            ? formatUsd1e30(row.amountUsdc)
+            : undefined;
       return {
-        title: "Set max open interest",
-        detail: amount ? `${amount} cap` : "Cap updated",
+        title:
+          row.activityType === "maxOpenInterestSet"
+            ? "Set max open interest"
+            : "Set max position size",
+        detail: cap ? `${cap} cap` : "Cap updated",
         icon: Gauge,
         tone: "warning",
       };
-    case "maxPositionSizeSet":
-      return {
-        title: "Set max position size",
-        detail: amount ? `${amount} cap` : "Cap updated",
-        icon: Gauge,
-        tone: "warning",
-      };
+    }
     default:
       return {
         title: row.activityType.replace(/([a-z])([A-Z])/g, "$1 $2"),

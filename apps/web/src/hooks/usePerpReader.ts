@@ -5,7 +5,24 @@ import { PerpReaderABI } from "@/abi/PerpReader";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
+import { formatVaultDisplayName } from "@/lib/format";
 import { type Address } from "viem";
+
+type BasketInfo = {
+  vault: Address;
+  shareToken: Address;
+  name: string;
+  basketPrice: bigint;
+  sharePrice: bigint;
+  usdcBalance: bigint;
+  perpAllocated: bigint;
+  totalSupply: bigint;
+  assetCount: bigint;
+};
+
+function formatBasketInfo(info: BasketInfo): BasketInfo {
+  return { ...info, name: formatVaultDisplayName(info.name) };
+}
 
 export function useBasketInfo(vault: Address) {
   const { chainId } = useDeploymentTarget();
@@ -16,7 +33,10 @@ export function useBasketInfo(vault: Address) {
     abi: PerpReaderABI,
     functionName: "getBasketInfo",
     args: [vault],
-    query: { refetchInterval: REFETCH_INTERVAL },
+    query: {
+      refetchInterval: REFETCH_INTERVAL,
+      select: (data) => formatBasketInfo(data as BasketInfo),
+    },
   });
 }
 
@@ -29,7 +49,11 @@ export function useBasketInfoBatch(vaults: Address[]) {
     abi: PerpReaderABI,
     functionName: "getBasketInfoBatch",
     args: [vaults],
-    query: { enabled: vaults.length > 0, refetchInterval: REFETCH_INTERVAL },
+    query: {
+      enabled: vaults.length > 0,
+      refetchInterval: REFETCH_INTERVAL,
+      select: (data) => (data as BasketInfo[]).map(formatBasketInfo),
+    },
   });
 }
 

@@ -6,6 +6,7 @@ import {
   formatSignedUsdcAmount,
   formatUsd1e30,
   formatUsdcAmount,
+  formatVaultDisplayName,
   parseTokenAmountInput,
 } from "./format";
 
@@ -84,6 +85,23 @@ describe("formatLeverageRatio", () => {
   });
 });
 
+describe("formatVaultDisplayName", () => {
+  it("strips Minestarters prefix from agent vault names", () => {
+    expect(formatVaultDisplayName("Minestarters ML Picks")).toBe("ML Picks");
+    expect(formatVaultDisplayName("Minestarters Quality Matrix")).toBe("Quality Matrix");
+  });
+
+  it("is case-insensitive and trims surrounding whitespace", () => {
+    expect(formatVaultDisplayName("minestarters ML Picks")).toBe("ML Picks");
+    expect(formatVaultDisplayName("  Minestarters   ML Picks  ")).toBe("ML Picks");
+  });
+
+  it("leaves unrelated vault names unchanged", () => {
+    expect(formatVaultDisplayName("Metals Basket")).toBe("Metals Basket");
+    expect(formatVaultDisplayName("")).toBe("");
+  });
+});
+
 describe("formatUsdcAmount / formatSignedUsdcAmount", () => {
   it("formats full USD values from USDC 6-decimal amounts", () => {
     expect(formatUsdcAmount(0n)).toBe("$0.00");
@@ -98,5 +116,11 @@ describe("formatUsdcAmount / formatSignedUsdcAmount", () => {
     expect(formatSignedUsdcAmount(-2_000_000n)).toBe("-$2.00");
     expect(formatSignedUsdcAmount(1_234_560_000n)).toBe("+$1,234.56");
     expect(formatSignedUsdcAmount(-1_234_560_000n)).toBe("-$1,234.56");
+  });
+
+  it("formats vault realised PnL from BasketActivity (USDC 6-dec, not 1e30)", () => {
+    expect(formatSignedUsdcAmount(945_278_838n)).toBe("+$945.28");
+    expect(formatSignedUsdcAmount(876_495_507n)).toBe("+$876.50");
+    expect(formatSignedUsdcAmount(-152_540n)).toBe("-$0.15");
   });
 });

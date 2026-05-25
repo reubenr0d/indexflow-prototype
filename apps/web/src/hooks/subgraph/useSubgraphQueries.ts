@@ -2,6 +2,7 @@ export { useBasketsOverviewQuery, type BasketOverview } from "./useBasketOvervie
 export {
   useBasketDetailQuery,
   useBasketActivitiesQuery,
+  useBasketActivitiesInfiniteQuery,
   type BasketDetail,
   type BasketActivityRow,
 } from "./useBasketDetail";

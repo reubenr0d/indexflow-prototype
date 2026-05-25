@@ -162,6 +162,35 @@ export const ENVIO_GET_BASKET_TREND_SNAPSHOTS = gql`
       collateralLocked
       positionCount
     }
+    apyAnchorSnapshots: BasketSnapshot(
+      where: { basket: { id: { _eq: $id } }, period: { _eq: "1d" } }
+      limit: 8
+      order_by: { bucketStart: desc }
+    ) {
+      id
+      period
+      bucketStart
+      bucketEnd
+      createdAt
+      updatedAt
+      sharePrice
+      basketPrice
+      usdcBalanceUsdc
+      perpAllocatedUsdc
+      tvlBookUsdc
+      totalSupplyShares
+      assetCount
+      depositFeeBps
+      redeemFeeBps
+      minReserveBps
+      requiredReserveUsdc
+      availableForPerpUsdc
+      collectedFeesUsdc
+      cumulativeFeesCollectedUsdc
+      openInterest
+      collateralLocked
+      positionCount
+    }
   }
 `;
 
@@ -170,7 +199,36 @@ export const ENVIO_GET_BASKETS_WEEK_SNAPSHOTS = gql`
     baskets: Basket(where: { id: { _in: $ids } }) {
       id
       vault
-      snapshots(where: { period: { _eq: "7d" } }, limit: 2, order_by: { bucketStart: desc }) {
+      weekSnapshots: snapshots(where: { period: { _eq: "7d" } }, limit: 2, order_by: { bucketStart: desc }) {
+        id
+        period
+        bucketStart
+        bucketEnd
+        createdAt
+        updatedAt
+        sharePrice
+        basketPrice
+        usdcBalanceUsdc
+        perpAllocatedUsdc
+        tvlBookUsdc
+        totalSupplyShares
+        assetCount
+        depositFeeBps
+        redeemFeeBps
+        minReserveBps
+        requiredReserveUsdc
+        availableForPerpUsdc
+        collectedFeesUsdc
+        cumulativeFeesCollectedUsdc
+        openInterest
+        collateralLocked
+        positionCount
+      }
+      apyAnchorSnapshots: snapshots(
+        where: { period: { _eq: "1d" } }
+        limit: 8
+        order_by: { bucketStart: desc }
+      ) {
         id
         period
         bucketStart
