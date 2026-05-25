@@ -1,129 +1,161 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-24T23:16:53.911Z",
+  "updatedAt": "2026-05-25T00:15:17.110Z",
   "entries": {
     "PWM.V": {
-      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CRML": {
-      "fetchedAt": "2026-05-24T23:16:53.731Z",
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
           "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
@@ -160,152 +192,230 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-24T23:16:53.911Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-25T00:15:16.854Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-25T00:15:17.110Z",
+      "headlines": [
+        {
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
+        },
+        {
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AYM.AX": {
-      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "fetchedAt": "2026-05-25T00:15:17.110Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BHP.AX": {
-      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "fetchedAt": "2026-05-25T00:15:17.110Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CGNT.V": {
-      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "fetchedAt": "2026-05-25T00:15:17.110Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "OOR.V": {
-      "fetchedAt": "2026-05-24T23:16:53.911Z",
+      "fetchedAt": "2026-05-25T00:15:17.110Z",
       "headlines": [
         {
-          "title": "California’s Chemical Leak Threat: What to Know",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/03219a68-86ce-3549-941a-d0b88c33a742/california%E2%80%99s-chemical-leak.html",
-          "publishedAt": "2026-05-24T23:05:00.000Z",
+          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
+          "publishedAt": "2026-05-25T00:02:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "6599.KL",
+            "AEON"
+          ]
         },
         {
-          "title": "Antonelli regrets Russell retirement but happy with F1 lead",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/7a57b402-22b4-39ad-9add-187eb567d47f/antonelli-regrets-russell.html",
-          "publishedAt": "2026-05-24T23:04:56.000Z",
+          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MELI",
+            "^GSPC"
+          ]
         },
         {
-          "title": "What are carbon plate running shoes and do I need them?",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/b56e60cc-740c-3dbe-a48b-b87338c67817/what-are-carbon-plate-running.html",
-          "publishedAt": "2026-05-24T23:03:00.000Z",
+          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
+          "publishedAt": "2026-05-25T00:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SM.XPHS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
