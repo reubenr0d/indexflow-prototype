@@ -11,6 +11,7 @@ import {
   computeBranchName,
   buildPrTitle,
   buildPrBody,
+  resolveTargetIssue,
   requiredPrLabelNames,
   labelBootstrapFailures,
 } from "./apply-self-improvement-proposals.mjs";
@@ -82,6 +83,60 @@ test("computeBranchName produces deterministic names for the same signal set on 
 test("computeBranchName falls back to a nosignal suffix when no signals fired", () => {
   const day = new Date("2026-05-23T00:00:00Z");
   assert.equal(computeBranchName({ signals: [], now: day }), "agent-improve/2026-05-23-nosignal");
+});
+
+test("computeBranchName uses stable agent-improve/issue-N when targetIssue is set", () => {
+  assert.equal(computeBranchName({ signals: [{ id: "x", kind: "a" }], targetIssue: "42" }), "agent-improve/issue-42");
+  assert.equal(
+    computeBranchName({ signals: [], targetIssue: "42" }),
+    computeBranchName({ signals: [{ kind: "b" }], targetIssue: "42" }),
+    "issue branch must not depend on signals",
+  );
+});
+
+test("resolveTargetIssue reads explicit arg over env", () => {
+  const prev = process.env.AGENT_TARGET_ISSUE;
+  process.env.AGENT_TARGET_ISSUE = "99";
+  try {
+    assert.equal(resolveTargetIssue("7"), "7");
+    assert.equal(resolveTargetIssue(), "99");
+    assert.equal(resolveTargetIssue(""), null);
+  } finally {
+    if (prev === undefined) delete process.env.AGENT_TARGET_ISSUE;
+    else process.env.AGENT_TARGET_ISSUE = prev;
+  }
+});
+
+test("buildPrTitle prefixes with implement #N when targetIssue is set", () => {
+  const title = buildPrTitle({
+    targetIssue: "42",
+    signals: [{ kind: "refactor", agent: "issue-implementer" }],
+  });
+  assert.match(title, /^agent: implement #42 — /);
+});
+
+test("buildPrBody links Fixes #N when targetIssue is set", () => {
+  const body = buildPrBody({
+    targetIssue: "42",
+    manifest: {
+      edits: [
+        {
+          id: "e1",
+          kind: "replace",
+          path: "agents/foo.md",
+          convictionWeight: 0.8,
+          requiresReviewKind: null,
+          justification: "implements issue #42 summary section",
+        },
+      ],
+    },
+    verdict: { verdict: "approve", reason: "ok", kind: "approve" },
+    signals: [],
+    housekeeping: [],
+    touchedPaths: ["agents/foo.md"],
+  });
+  assert.match(body, /## Linked issues[\s\S]*Fixes #42/);
+  assert.match(body, /Issue implementer run for GitHub issue #42/);
 });
 
 test("buildPrTitle includes the first agent and unique signal kinds", () => {

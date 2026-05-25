@@ -42,8 +42,8 @@ body:
     id: agent_name
     attributes:
       label: Agent name
-      description: "Source agent. e.g. `self-improver`, `vault-manager`, `mining-manager`, `quality-matrix-manager`. Use `human` if filed manually."
-      placeholder: "self-improver"
+      description: "Source agent. e.g. `self-improver-issues`, `issue-implementer`, `mining-manager`, `quality-matrix-manager`. Use `human` if filed manually."
+      placeholder: "self-improver-issues"
     validations:
       required: true
   - type: textarea

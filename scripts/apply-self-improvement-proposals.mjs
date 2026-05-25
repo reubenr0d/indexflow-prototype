@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-// PR-opener for the self-improver meta-loop. Reads:
+// PR-opener for agent edit manifests. Reads:
 //   - .agent-self-improvement/proposed-edits.json (the manifest the
-//     `self-improver` agent built via the repo-editor MCP)
+//     `issue-implementer` agent built via the repo-editor MCP)
 //   - .agent-self-improvement/risk-officer-verdict.json (output of
 //     scripts/run-self-improvement-risk-officer.mjs)
 //
@@ -46,6 +46,7 @@ const PROJECT_ROOT = resolve(process.env.PROJECT_ROOT || resolve(__dirname, ".."
 const MANIFEST_PATH = resolve(PROJECT_ROOT, PROPOSAL_MANIFEST_REL);
 const VERDICT_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "risk-officer-verdict.json");
 const SIGNAL_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "signal.json");
+const LAST_PR_URL_PATH = resolve(PROJECT_ROOT, ".agent-self-improvement", "last-pr-url.txt");
 
 const PR_LABEL_AGENT = "agent-self-improvement";
 const PR_LABEL_REVIEW = "needs-human-review";
@@ -97,7 +98,15 @@ export function previewReplaceEdit(args) {
   return sharedPreviewReplaceEdit(args);
 }
 
-export function computeBranchName({ signals, now = new Date() }) {
+export function resolveTargetIssue(explicit) {
+  const raw = explicit ?? process.env.AGENT_TARGET_ISSUE;
+  if (raw === undefined || raw === null || String(raw).trim() === "") return null;
+  return String(raw).trim();
+}
+
+export function computeBranchName({ signals, now = new Date(), targetIssue } = {}) {
+  const issueNum = resolveTargetIssue(targetIssue);
+  if (issueNum) return `agent-improve/issue-${issueNum}`;
   const dateStr = now.toISOString().slice(0, 10); // YYYY-MM-DD
   if (!signals || signals.length === 0) return `agent-improve/${dateStr}-nosignal`;
   // Stable hash across the signal ids so two ticks firing the same set of
@@ -106,7 +115,16 @@ export function computeBranchName({ signals, now = new Date() }) {
   return `agent-improve/${dateStr}-${shortHash(ids)}`;
 }
 
-export function buildPrTitle({ signals }) {
+export function buildPrTitle({ signals, targetIssue } = {}) {
+  const issueNum = resolveTargetIssue(targetIssue);
+  if (issueNum) {
+    if (!signals || signals.length === 0) {
+      return `agent: implement #${issueNum} — scoped edits`;
+    }
+    const firstAgent = signals[0].agent || "issue-implementer";
+    const kinds = Array.from(new Set(signals.map((s) => s.kind))).sort().join(", ");
+    return `agent: implement #${issueNum} — ${firstAgent} (${kinds})`;
+  }
   if (!signals || signals.length === 0) return "agent: self-improvement proposals";
   const firstAgent = signals[0].agent || "agent";
   const kinds = Array.from(new Set(signals.map((s) => s.kind))).sort().join(", ");
@@ -117,7 +135,7 @@ export function buildPrTitle({ signals }) {
 // `.github/pull_request_template.md` so agent-authored PRs render with
 // the same structure a human would fill in. Tests in
 // `apply-self-improvement-proposals.test.mjs` pin the visible headings.
-export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedPaths }) {
+export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedPaths, targetIssue } = {}) {
   const edits = manifest?.edits || [];
   const strongest = edits.reduce((acc, e) => {
     const w = Number(e?.convictionWeight ?? 0);
@@ -134,19 +152,29 @@ export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedP
         .map((p) => p.replace(/^agents\//, "").replace(/\.md$/, "")),
     ),
   ).sort();
-  const firstAgent = signals && signals.length > 0 ? signals[0].agent : touchedAgentsFromEdits[0] || "self-improver";
+  const issueNum = resolveTargetIssue(targetIssue);
+  const firstAgent =
+    signals && signals.length > 0
+      ? signals[0].agent
+      : touchedAgentsFromEdits[0] || (issueNum ? "issue-implementer" : "agent");
 
   const lines = [];
 
   // 1. Summary
   lines.push("## Summary");
   lines.push("");
-  lines.push(
-    `Self-improver meta-agent run on \`${firstAgent}\` proposed ${edits.length} edit${edits.length === 1 ? "" : "s"}` +
-      (signals && signals.length > 0
-        ? ` after the deterministic detector emitted ${signals.length} signal${signals.length === 1 ? "" : "s"}.`
-        : ` (housekeeping-only run — no Layer A signals fired).`),
-  );
+  if (issueNum) {
+    lines.push(
+      `Issue implementer run for GitHub issue #${issueNum} proposed ${edits.length} edit${edits.length === 1 ? "" : "s"} on \`${firstAgent}\`.`,
+    );
+  } else {
+    lines.push(
+      `Agent meta-loop run on \`${firstAgent}\` proposed ${edits.length} edit${edits.length === 1 ? "" : "s"}` +
+        (signals && signals.length > 0
+          ? ` after the deterministic detector emitted ${signals.length} signal${signals.length === 1 ? "" : "s"}.`
+          : ` (housekeeping-only run — no Layer A signals fired).`),
+    );
+  }
   lines.push("");
 
   // 2. Type of change
@@ -161,7 +189,11 @@ export function buildPrBody({ manifest, verdict, signals, housekeeping, touchedP
   // 3. Linked issues
   lines.push("## Linked issues");
   lines.push("");
-  lines.push("_None — agent loop does not file issues from this path._");
+  if (issueNum) {
+    lines.push(`Fixes #${issueNum}`);
+  } else {
+    lines.push("_None — agent loop does not file issues from this path._");
+  }
   lines.push("");
 
   // 4. Test plan
@@ -567,13 +599,15 @@ export async function applyProposals({ mode, signalsOverride, now = new Date() }
   }
 
   // mode === "open-pr": commit + push + gh pr create
+  const targetIssue = resolveTargetIssue();
   const signals = signalsOverride || signalPayload.signals || [];
-  const branchName = computeBranchName({ signals, now });
-  const title = buildPrTitle({ signals });
+  const branchName = computeBranchName({ signals, now, targetIssue });
+  const title = buildPrTitle({ signals, targetIssue });
   const body = buildPrBody({
     manifest,
     verdict,
     signals,
+    targetIssue,
     housekeeping: housekeepingResult,
     touchedPaths: listTouchedPaths(manifest).concat(
       (housekeepingResult || [])
@@ -613,6 +647,8 @@ export async function applyProposals({ mode, signalsOverride, now = new Date() }
 
   const existing = findExistingPr(branchName);
   if (existing) {
+    mkdirSync(dirname(LAST_PR_URL_PATH), { recursive: true });
+    writeFileSync(LAST_PR_URL_PATH, existing.url + "\n");
     return {
       ok: true,
       mode,
@@ -650,6 +686,8 @@ export async function applyProposals({ mode, signalsOverride, now = new Date() }
 
   try {
     const prUrl = openPr({ branchName, title, body });
+    mkdirSync(dirname(LAST_PR_URL_PATH), { recursive: true });
+    writeFileSync(LAST_PR_URL_PATH, prUrl + "\n");
     return { ok: true, mode, branchName, prUrl };
   } catch (err) {
     return { ok: false, error: `gh pr create failed: ${err.message}` };

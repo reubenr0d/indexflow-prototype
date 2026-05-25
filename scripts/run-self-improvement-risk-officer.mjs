@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Risk-officer pass for the self-improver meta-agent's proposal manifest.
+// Risk-officer pass for the issue-implementer agent's proposal manifest.
 // Reads `.agent-self-improvement/proposed-edits.json`, builds the
 // user-payload (manifest + Layer A signals + current contents of every
 // touched file + recent self-improver verdicts), calls the LLM with the

@@ -10,10 +10,10 @@ import { resolveAgentModel } from "./agent-runner.mjs";
 
 test("resolveAgentModel: frontmatter.model wins over every env var", () => {
   const r = resolveAgentModel({
-    agentName: "self-improver",
+    agentName: "issue-implementer",
     frontmatter: { model: "gpt-5-codex" },
     env: {
-      LLM_MODEL_SELF_IMPROVER: "claude-x",
+      LLM_MODEL_ISSUE_IMPLEMENTER: "claude-x",
       LLM_MODEL: "gpt-4o",
     },
   });
@@ -78,9 +78,9 @@ test("resolveAgentModel: empty-string frontmatter.model is treated as unset (fal
 
 test("resolveAgentModel: empty-string per-agent env is treated as unset (falls through to global)", () => {
   const r = resolveAgentModel({
-    agentName: "self-improver",
+    agentName: "issue-implementer",
     frontmatter: {},
-    env: { LLM_MODEL_SELF_IMPROVER: "", LLM_MODEL: "gpt-4o" },
+    env: { LLM_MODEL_ISSUE_IMPLEMENTER: "", LLM_MODEL: "gpt-4o" },
   });
   assert.equal(r.model, "gpt-4o");
   assert.equal(r.source, "env-global");
@@ -94,7 +94,7 @@ test("resolveAgentModel: missing agentName still resolves via global env", () =>
 
 test("resolveAgentModel: trims surrounding whitespace from accepted values", () => {
   const r = resolveAgentModel({
-    agentName: "self-improver",
+    agentName: "issue-implementer",
     frontmatter: { model: "  gpt-5-codex  " },
   });
   assert.equal(r.model, "gpt-5-codex");
@@ -123,8 +123,8 @@ function readFrontmatterModel(relPath) {
   return m ? m[1].trim() : null;
 }
 
-test("self-improver agent frontmatter pins model: gpt-5-codex", () => {
-  assert.equal(readFrontmatterModel("agents/self-improver.md"), "gpt-5-codex");
+test("issue-implementer agent frontmatter pins model: gpt-5-codex", () => {
+  assert.equal(readFrontmatterModel("agents/issue-implementer.md"), "gpt-5-codex");
 });
 
 test("self-improver-issues agent frontmatter pins model: gpt-5-codex", () => {

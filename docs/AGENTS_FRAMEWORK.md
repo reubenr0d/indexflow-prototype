@@ -101,7 +101,7 @@ your vault positions based on market conditions.
 | `redeemFeeBps` | no | `50` | Vault redeem fee in basis points |
 | `maxTurns` | no | `40` | Max agent loop iterations |
 | `temperature` | no | `0.2` | LLM temperature |
-| `model` | no | -- | Per-agent model pin (e.g. `gpt-5-codex`). Resolves ahead of `LLM_MODEL_<AGENT>` env var and the global `LLM_MODEL`. Used by the `self-improver` / `self-improver-issues` meta-agents to route their exact-substring code edits through a code-tuned model without changing the trading-agent default. Leave unset for trading agents. |
+| `model` | no | -- | Per-agent model pin (e.g. `gpt-5-codex`). Resolves ahead of `LLM_MODEL_<AGENT>` env var and the global `LLM_MODEL`. Used by the `issue-implementer` / `self-improver-issues` meta-agents to route their exact-substring code edits through a code-tuned model without changing the trading-agent default. Leave unset for trading agents. |
 | `autoAllocateTargetBps` | no | `0` | Auto-allocate this share (bps) of `availableForPerp` before summary |
 | `entryMode` | no | `none` | Entry policy mode. One of `none`, `momentum_volume`, `ml_score`, or `quality_score` |
 | `entryMomentumPctMin` | no | `0` | Minimum `dayChangePct` threshold for momentum gating (used by `entryMode: momentum_volume`) |
@@ -401,64 +401,21 @@ npm run agent:vault       # full live run
 npm run agent:vault:dry   # dry-run (no on-chain writes)
 ```
 
-### Self-Improvement (PR + issues meta-loop)
+### Self-Improvement (issues + human-gated PRs)
 
-After every vault-agent CI tick, a separate `self-improve` job in `.github/workflows/vault-agent.yml` runs the meta-loop. The job hosts **two parallel channels** that share the same checkout and concurrency slot but produce independent outputs:
+The bot **never opens code PRs autonomously**. After every vault-agent CI tick, the `self-improve` job in [`.github/workflows/vault-agent.yml`](../.github/workflows/vault-agent.yml) runs only the **issues channel** — it files `agent-finding` GitHub Issues for human triage. Code changes happen only when a repo collaborator comments `/agent implement` on an issue, which triggers [`.github/workflows/issue-implementer.yml`](../.github/workflows/issue-implementer.yml).
 
-- the **PR channel** (described below) is intentionally narrow — it only fires when a deterministic Layer A signal crosses a threshold and demands a literal `search`/`replace` diff with ≥2 cited run-log entries, and
-- the **issues channel** (see [§ Self-Improvement issues channel](#self-improvement-issues-channel) further down) runs on every tick regardless of Layer A. It surfaces broader, more speculative observations ("we should wire up an Atlas news MCP", "this vault has a weird PnL pattern, worth a look") as GitHub Issues for human triage. Same risk-officer rigour with a softer rubric; never mutates code.
-
-Both channels render their final outputs against the GitHub PR / issue templates shipped at [`.github/pull_request_template.md`](../.github/pull_request_template.md) and [`.github/ISSUE_TEMPLATE/agent-finding.yml`](../.github/ISSUE_TEMPLATE/agent-finding.yml). The PR channel's `buildPrBody` emits the template's eight top-level sections (Summary, Type of change, Linked issues, Test plan, Risk + rollback, Docs + ABIs + changelog, Agent metadata, Reviewer checklist) and auto-ticks `[x] Agent-authored self-improvement` (plus `[x] Infra / CI / build` when any edit has `requiresReviewKind` ∈ {`runner`, `mcp`, `shared`}). The issues channel's `formatIssueBody` emits the agent-finding form's field order (Category → Summary → Agent name → Justification → Conviction → Trigger signals → `<!-- self-improver-issue-id: <SHA-12> -->` marker footer), prefixes every title with `agent: ` to match the form's auto-applied prefix, and labels every issue with `agent-finding` + `needs-human-review` + `category:<x>` — the same labels the form applies, so bot-filed and human-filed agent findings share one triage queue and the same `gh issue list --label agent-finding` dedup catches duplicates from either source.
-
-#### PR channel
-
-Layer A runs the deterministic detector (`scripts/detect-self-improvement-signal.mjs`) over the freshly-committed `agents/memory/<agent>/run-log.<network>.jsonl` tails. The detector emits JSON for five trigger conditions:
-
-| Signal | Condition |
-|---|---|
-| `recurring_losers` | Same `(ticker, side)` appears in `closedPositions[]` with `realizedPnlPctOfCollateral < -5%` ≥ 2 times in the last 7 days. |
-| `new_error_code` | An MCP `error_code` in `errors[]` that did NOT appear in the prior 100 runs. |
-| `cap_saturation` | `maxNewPositionsPerRun` / `maxNewShortsPerRun` hit on ≥ 3 consecutive most-recent runs. |
-| `risk_officer_dissonance` | ≥ 3 risk-officer `veto` verdicts on the same vault in the last 24h. |
-| `loss_streak` | ≥ 3 closed positions with `<-5%` PnL of collateral in the last 24h. |
-
-When `shouldRun: false`, the meta-loop short-circuits before any LLM call — quiet ticks cost zero tokens. When at least one signal fires, the layered pipeline runs:
-
-1. **Layer B — meta-agent.** `agents/self-improver.md` is invoked via `node scripts/agent-runner.mjs self-improver`. It connects to a single MCP server (`repo-editor-mcp`) and uses `propose_file_edit` / `propose_file_create` / `propose_file_rename` to draft a manifest at `.agent-self-improvement/proposed-edits.json`. **The meta-agent NEVER mutates the repo on disk** — the manifest is the only side-effect.
-2. **Layer C — risk-officer review.** `scripts/run-self-improvement-risk-officer.mjs` reads the manifest, the trigger evidence, the current contents of every touched file, and recent verdicts, and asks the LLM (prompt body in `agents/risk-officer-self-improvement.md`) for `approve` / `downsize` / `veto`. A `veto` clears the manifest and short-circuits the PR. A `downsize` keeps only edits whose `convictionWeight ≥ threshold`.
-3. **Layer E — dry-run replay.** `scripts/apply-self-improvement-proposals.mjs --apply-locally-only` mutates the working tree (re-checking the allowlist for every path, re-verifying every `search` string is present-and-unique). Then `AGENT_DRY_RUN=1 node scripts/agent-runner.mjs <agent>` runs for every agent whose `.md` was edited so a prompt that parses-but-errors is caught BEFORE the PR opens.
-4. **Layer D — PR.** `scripts/apply-self-improvement-proposals.mjs --open-pr` creates a stable `agent-improve/<UTC date>-<signal hash>` branch (so two ticks firing the same signal set in the same UTC day collapse onto one branch), commits + pushes under the `vault-agent[bot]` identity, and runs `gh pr create --label agent-self-improvement --label needs-human-review --base main`. **No auto-merge** — a human reviews and merges. Housekeeping rotations (run-log entries older than 90 days → `agents/memory/<agent>/archive/`) emitted by the signal detector ride along on the same PR.
-
-The MCP server is a thin wrapper around `apps/mcps/repo-editor/allowlist.js`. The allowlist is the load-bearing safety rail; both the MCP (when the meta-agent calls `propose_file_*`) and the PR-opener (before any disk mutation) re-check every proposed path. The list:
-
-- **Allow**: `agents/*.md`, `agents/skills/*.md`, `agents/mcp-servers.json`, `scripts/agent-runner*.{mjs,js}` (flagged `requiresReviewKind=runner`), `apps/mcps/**/*.{mjs,js}` (flagged `requiresReviewKind=mcp`), `apps/shared/**/*.{mjs,js}` (flagged `requiresReviewKind=shared`).
-- **Deny (always)**: every `*.sol`, `lib/**`, `src/**`, `script/**`, `test/**`, `.github/workflows/**`, `.github/actions/**`, `apps/web/src/abi/**`, `apps/envio/abis/**`, `apps/web/src/config/*-deployment.json`, `.env*`, `**/credentials*`, `**/*.secret*`, `*.pem`/`*.key`, `AGENTS.md`, `AGENT_DEPLOYMENT_MEMORY.md`, `CHANGELOG.md`, `.cursor/rules/**`, `agents/memory/**`, `apps/web/public/agent-metadata/**`, `node_modules/**`, `.git/**`, lockfiles, `scripts/agent-debug-log.jsonl`.
-- **Default deny**: any path not on the allow-list.
-
-The meta-agent's own memory lives at `agents/memory/self-improver/` (same shape as every other agent), and the same `commit-results` job that pushes the trading agents' memory back to `main` carries it along. The `self-improver-artefacts` workflow artefact preserves the per-tick `.agent-self-improvement/` scratch dir for 14 days for audit.
-
-Local invocation (for testing the meta-loop without firing CI):
-
-```bash
-# 1. See whether a signal fires
-node scripts/detect-self-improvement-signal.mjs | jq .
-
-# 2. Run the meta-agent itself (writes a manifest only)
-LLM_API_KEY=sk-... AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 node scripts/agent-runner.mjs self-improver
-
-# 3. Risk-officer review of the manifest
-LLM_API_KEY=sk-... node scripts/run-self-improvement-risk-officer.mjs
-
-# 4. Apply to the working tree (no push) and inspect the diff
-node scripts/apply-self-improvement-proposals.mjs --apply-locally-only
-git diff
+```text
+hourly tick → self-improver-issues → GitHub Issue (needs-human-review)
+human reviews → /agent implement [optional steering]
+→ issue-implementer → risk-officer → draft PR (Fixes #N)
 ```
 
-The PR creation step (`--open-pr`) requires a `gh` auth context and is intended for the CI workflow only.
+Issue bodies use [`.github/ISSUE_TEMPLATE/agent-finding.yml`](../.github/ISSUE_TEMPLATE/agent-finding.yml). PR bodies use [`.github/pull_request_template.md`](../.github/pull_request_template.md) via `scripts/apply-self-improvement-proposals.mjs::buildPrBody`.
 
 #### Self-Improvement issues channel
 
-The PR channel's narrow bar keeps the proposed-edit noise floor low but means **observations that aren't yet provable as code edits never reach humans**. The issues channel exists for that gap. It is **always-on**: every tick it runs a sibling meta-agent that brainstorms broader ideas (a new MCP, a strategy tweak, an investigation against a specific vault) and files them as GitHub Issues for human triage.
+The issues channel is **always-on**: every tick it brainstorms broader ideas (a new MCP, a strategy tweak, an investigation against a specific vault) and files them as GitHub Issues for human triage.
 
 Components (all sibling-of-PR-channel; no shared state beyond the run log + the repo-editor MCP):
 
@@ -490,6 +447,45 @@ node scripts/apply-self-improvement-issues.mjs --open-issues
 ```
 
 The same `self-improver-artefacts` workflow artefact preserves `.agent-self-improvement/proposed-issues.json`, `issue-risk-officer-verdict.json`, and the issue meta-agent's `agents/memory/self-improver-issues/` memory for 14 days for audit.
+
+#### Implementing issues with `/agent implement`
+
+After you review an `agent-finding` issue (or any issue you want implemented), comment on the issue:
+
+```text
+/agent implement
+```
+
+Optional steering on the same line:
+
+```text
+/agent implement focus only on agents/mining-manager.md — skip the test changes mentioned in the body.
+```
+
+**Who can trigger:** repository `OWNER`, `MEMBER`, or `COLLABORATOR` only (prevents drive-by LLM spend).
+
+**What runs:** [`.github/workflows/issue-implementer.yml`](../.github/workflows/issue-implementer.yml) checks out the repo, builds `.agent-self-improvement/issue-context.json` from the issue title/body/all comments, runs `node scripts/agent-runner.mjs issue-implementer`, risk-officer review, then `scripts/apply-self-improvement-proposals.mjs --open-pr`. The bot replies on the issue with the PR link.
+
+**Steering / iteration:** Post another `/agent implement` comment with new instructions. The workflow re-reads the full thread; the same branch `agent-improve/issue-<N>` is force-pushed so the existing PR updates.
+
+**Allowlist (unchanged):** `issue-implementer` uses `apps/mcps/repo-editor/allowlist.js` — same rails as before:
+
+- **Allow**: `agents/*.md`, `agents/skills/*.md`, `agents/mcp-servers.json`, `scripts/agent-runner*.{mjs,js}`, `apps/mcps/**/*.{mjs,js}`, `apps/shared/**/*.{mjs,js}`.
+- **Deny (always)**: contracts, CI workflows, ABIs, deployment configs, secrets, governance docs, `agents/memory/**`, and everything else not explicitly allowed.
+
+Local dry-run (manifest only, no `gh`):
+
+```bash
+# Build context from a real issue (requires gh auth)
+GH_TOKEN=$(gh auth token) node scripts/build-issue-context.mjs 123
+
+LLM_API_KEY=sk-... AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 AGENT_TARGET_ISSUE=123 \
+  node scripts/agent-runner.mjs issue-implementer
+
+LLM_API_KEY=sk-... node scripts/run-self-improvement-risk-officer.mjs
+node scripts/apply-self-improvement-proposals.mjs --apply-locally-only
+git diff
+```
 
 ### GitHub Actions
 
@@ -530,7 +526,7 @@ Set variables in your shell, or create a **repo-root** `.env` or `.env.local` (g
 |---|---|---|
 | `LLM_API_KEY` | (required) | OpenAI (or compatible) API key |
 | `LLM_BASE_URL` | `https://api.openai.com/v1` | API endpoint |
-| `LLM_MODEL` | `gpt-4o` | Default model for every agent. Per-agent overrides resolve as: frontmatter `model:` key → `LLM_MODEL_<UPPER_SNAKE_AGENT>` env var → this global → hard-coded `gpt-4o`. Meta-agents `self-improver` / `self-improver-issues` ship `model: gpt-5-codex` in their frontmatter; trading agents leave the field unset and follow `LLM_MODEL`. |
+| `LLM_MODEL` | `gpt-4o` | Default model for every agent. Per-agent overrides resolve as: frontmatter `model:` key → `LLM_MODEL_<UPPER_SNAKE_AGENT>` env var → this global → hard-coded `gpt-4o`. Meta-agents `issue-implementer` / `self-improver-issues` ship `model: gpt-5-codex` in their frontmatter; trading agents leave the field unset and follow `LLM_MODEL`. |
 | `LLM_MODEL_<AGENT>` | -- | Per-agent CI override (e.g. `LLM_MODEL_SELF_IMPROVER=gpt-5-codex`). Hyphens in the agent name become underscores; name is upper-cased. Only useful when you can't (or don't want to) pin the model in version-controlled frontmatter. |
 | `AGENT_MAX_TURNS` | from agent config | Override max turns |
 | `AGENT_DRY_RUN` | -- | `1` to skip write tools |

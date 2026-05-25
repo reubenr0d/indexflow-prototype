@@ -1,0 +1,103 @@
+name: Issue Implementer
+
+on:
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue number to implement"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: agent-issue-${{ github.event.issue.number || github.event.inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  implement:
+    if: >-
+      github.event_name == 'workflow_dispatch' || (
+        github.event.issue.pull_request == null &&
+        startsWith(github.event.comment.body, '/agent implement') &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: React eyes on triggering comment
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          gh api -X POST
+          repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions
+          -f content=eyes
+
+      - name: Build issue context
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || github.event.inputs.issue_number }}
+          GITHUB_EVENT_COMMENT_BODY: ${{ github.event.comment.body }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: node scripts/build-issue-context.mjs "$ISSUE_NUMBER"
+
+      - name: Layer B — run issue-implementer
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
+          AGENT_MAX_TURNS: "30"
+          AGENT_NETWORK: "sepolia"
+          AGENT_TARGET_ISSUE: ${{ github.event.issue.number || github.event.inputs.issue_number }}
+        run: node scripts/agent-runner.mjs issue-implementer
+
+      - name: Layer C — risk-officer review
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: node scripts/run-self-improvement-risk-officer.mjs
+
+      - name: Layer E — apply locally
+        env:
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_TARGET_ISSUE: ${{ github.event.issue.number || github.event.inputs.issue_number }}
+        run: node scripts/apply-self-improvement-proposals.mjs --apply-locally-only
+
+      - name: Layer D — open PR
+        id: open_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_TARGET_ISSUE: ${{ github.event.issue.number || github.event.inputs.issue_number }}
+        run: |
+          set -euo pipefail
+          node scripts/apply-self-improvement-proposals.mjs --open-pr > /tmp/open-pr-result.json
+          cat /tmp/open-pr-result.json
+          if jq -e '.reused == true' /tmp/open-pr-result.json > /dev/null 2>&1; then
+            echo "AGENT_PR_REUSED=1" >> "$GITHUB_ENV"
+          fi
+
+      - name: Comment back on issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || github.event.inputs.issue_number }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_PR_REUSED: ${{ env.AGENT_PR_REUSED }}
+        run: node scripts/post-issue-implementer-reply.mjs "$ISSUE_NUMBER"

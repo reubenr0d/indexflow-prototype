@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-// MCP server for the `self-improver` meta-agent. Read-only against the
+// MCP server for repo-editing meta-agents (`issue-implementer`,
+// `self-improver-issues`). Read-only against the
 // whole repo (gated by `allowlist.js`), write-only into a proposal
 // manifest at `.agent-self-improvement/proposed-edits.json`. The on-disk
 // repo is never mutated by this server — that happens in
@@ -9,6 +10,7 @@
 //
 // Tools exposed (see plan, Layer B' + Layer F-MCP):
 //   - get_self_improvement_signals()
+//   - get_issue_context()                                              ← issue-implementer
 //   - list_run_log({ agent, network, limit })
 //   - read_repo_file({ path, sliceStart?, sliceLength? })
 //   - propose_file_edit({ path, replacements[], justification, convictionWeight? })
@@ -66,6 +68,8 @@ const PROJECT_ROOT = resolve(process.env.PROJECT_ROOT || process.cwd());
 const MANIFEST_PATH = resolve(PROJECT_ROOT, PROPOSAL_MANIFEST_REL);
 const ISSUE_MANIFEST_REL = ".agent-self-improvement/proposed-issues.json";
 const ISSUE_MANIFEST_PATH = resolve(PROJECT_ROOT, ISSUE_MANIFEST_REL);
+const ISSUE_CONTEXT_REL = ".agent-self-improvement/issue-context.json";
+const ISSUE_CONTEXT_PATH = resolve(PROJECT_ROOT, ISSUE_CONTEXT_REL);
 const SIGNAL_DETECTOR_SCRIPT = resolve(PROJECT_ROOT, "scripts", "detect-self-improvement-signal.mjs");
 const MAX_FILE_READ_BYTES = 256 * 1024; // 256 KB is more than enough for any agent .md or runner section
 const MAX_RUN_LOG_LIMIT = 200;
@@ -227,6 +231,39 @@ server.registerTool(
       return toolError(result.error_code, result.message);
     }
     return toolText(result);
+  },
+);
+
+server.registerTool(
+  "get_issue_context",
+  {
+    title: "Get GitHub Issue Context",
+    description:
+      "Reads `.agent-self-improvement/issue-context.json` written by the issue-implementer workflow before this agent runs. Returns `{ available, issue: { number, title, body, labels, comments[] }, extraInstructions? }`. Call this FIRST — if `available` is false, stop without proposing edits.",
+    inputSchema: {},
+  },
+  async () => {
+    if (!existsSync(ISSUE_CONTEXT_PATH)) {
+      return toolText({
+        available: false,
+        error_code: "ISSUE_CONTEXT_MISSING",
+        message: `No issue context at ${ISSUE_CONTEXT_REL}. The issue-implementer workflow must run scripts/build-issue-context.mjs first.`,
+      });
+    }
+    try {
+      const raw = readFileSync(ISSUE_CONTEXT_PATH, "utf8");
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") {
+        return toolText({
+          available: false,
+          error_code: "ISSUE_CONTEXT_INVALID",
+          message: "issue-context.json is not a valid object",
+        });
+      }
+      return toolText({ available: true, ...parsed });
+    } catch (err) {
+      return toolError("ISSUE_CONTEXT_READ_FAILED", err.message);
+    }
   },
 );
 

@@ -1,7 +1,7 @@
 {
   "name": "repo-editor-mcp",
   "version": "1.0.0",
-  "description": "MCP server that lets the self-improver meta-agent read repo files and propose edits to a manifest (never directly to disk). Used by the Self-Improving Vault Agent loop to draft PRs from accumulated run-log memory.",
+  "description": "MCP server for repo-editing meta-agents (issue-implementer, self-improver-issues). Read-only against the repo; propose_file_* writes manifests only.",
   "private": true,
   "type": "module",
   "main": "index.js",

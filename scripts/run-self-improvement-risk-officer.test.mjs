@@ -17,7 +17,7 @@ import {
 function manifestWith(edits) {
   return {
     version: 1,
-    agent: "self-improver",
+    agent: "issue-implementer",
     createdAt: "2026-05-23T00:00:00Z",
     updatedAt: "2026-05-23T00:00:00Z",
     edits,
