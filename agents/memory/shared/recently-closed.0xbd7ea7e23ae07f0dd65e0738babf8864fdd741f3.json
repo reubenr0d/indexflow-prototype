@@ -1,18 +1,24 @@
 {
   "vault": "0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3",
-  "updatedAt": "2026-05-23T00:51:02.540Z",
+  "updatedAt": "2026-05-25T05:05:13.925Z",
   "closures": {
-    "0x3b094510f54bf7ffb005a5f926a0cff4d9891fa32e85933375c5b89da0e84573": {
-      "ticker": "AUAU.V",
-      "isLong": true,
-      "closedAt": "2026-05-23T00:50:50.784Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #2 AUAU.V (pnl 0.00%) to free room for #3 BFG.CN"
-    },
     "0x0b8f04590706f001d3a317c46965b2bf6ecc95018c610da029ccb697f17b69b2": {
       "ticker": "GRSL.V",
       "isLong": true,
-      "closedAt": "2026-05-23T00:51:02.540Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #1 GRSL.V (pnl 0.00%) to free room for #4 GPAC.V"
+      "closedAt": "2026-05-25T05:04:49.808Z",
+      "closedReason": "auto-rebalance: dropped from Quality top-12 (score < 75)"
+    },
+    "0x3b094510f54bf7ffb005a5f926a0cff4d9891fa32e85933375c5b89da0e84573": {
+      "ticker": "AUAU.V",
+      "isLong": true,
+      "closedAt": "2026-05-25T05:05:02.773Z",
+      "closedReason": "auto-rebalance: dropped from Quality top-12 (score < 75)"
+    },
+    "0x3f50a6b33dfb745ba81a989e2a1e0d42b98300d21f8d76749df6f32b6177fb26": {
+      "ticker": "MC2.AX",
+      "isLong": true,
+      "closedAt": "2026-05-25T05:05:13.925Z",
+      "closedReason": "auto-rebalance: dropped from Quality top-12 (score < 75)"
     }
   }
 }
