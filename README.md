@@ -156,6 +156,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] First blog post published (cross-chain liquidity routing)
 - [x] Second blog post published (five waves of on-chain exposure)
 - [x] TradFi asset manager blog post published (`/blog/if-you-run-money-the-old-way-crypto-question`)
+- [x] First X post live (Mon May 25 standalone, [@indexflowDAO](https://x.com/indexflowDAO/status/2059033907975295163))
 - [ ] First X thread published
 - [ ] First LinkedIn post published
 - [ ] First Substack issue published
@@ -166,6 +167,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Technical breakdown blog draft: cross-chain coordination layer (`growth/drafts/2026-04-15-blog-cross-chain-coordination-layer.md`)
 - [x] X thread draft: cross-chain coordination layer (`growth/drafts/2026-04-15-thread-cross-chain-coordination.md`)
 - [x] Autonomous-AI-agents-managing-vaults blog refreshed for OpenAI-powered agents with git-committed memory and static `/agent-metadata/<vault>.json` (`content/blog/autonomous-ai-agents-managing-vaults.md`)
+- [x] Testnet live agents blog draft seeded (`growth/drafts/2026-05-26-blog-two-ai-agents-live-on-testnet.md`)
 
 ### Season 1 Operator Trials (Activation Campaign)
 

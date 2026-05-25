@@ -50,28 +50,44 @@ todos:
 isProject: false
 ---
 
-## Broker Mirror — Mock Now, Real When Corporate Account Lands
+## Broker Mirror — Public Credibility Wedge for IndexFlow
+
+### Strategic positioning (why this exists)
+
+IndexFlow's defensible USP is **leveraged synthetic exposure to the long-tail global mining/commodity equities, vault-managed by AI agents, with onchain audit trail, cross-chain access**. No competitor offers this combination — Helix has US-major synthetic perps but not TSX-V juniors; Backed/Dinari have tokenized stocks but no leverage; Mirror and Synthetix synths are dead.
+
+The hardest sell to institutional LPs and serious capital allocators is: "but your PnL is testnet/synthetic — does the strategy actually work in real markets?". This broker-mirror is the answer. By running the same AI agents against a real (paper, then live) brokerage account and publishing the reconciliation reports + attested monthly statements, we get an audited real-money track record that proves the signal survives real fills, spreads, and execution constraints.
+
+**The mirror is therefore a public marketing/credibility surface, not a private trading desk.** This shapes every design choice below — attestation matters, publishing requires legal review, Phase 1 needs a go/no-go gate before any data goes public.
 
 ### Goal
 
-Every time `mining-manager` or `quality-matrix-manager` successfully fires an on-chain `open_position` or `close_position`, we also fire an equivalent broker order. Phase 0 uses a **mock IBKR client** (deterministic simulated fills, no real account, no money flow). Phase 1 swaps to the **real IBKR Client Portal client** against the employer's corporate paper account when KYC clears. Phase 2 (separate plan) is live trading with hard caps.
+Every time `mining-manager` or `quality-matrix-manager` successfully fires an on-chain `open_position` or `close_position`, we also fire an equivalent broker order. Phase 0 uses a **mock IBKR client** (deterministic simulated fills, no real account, no money flow). Phase 1 swaps to the **real IBKR Client Portal client** against the employer's corporate paper account when KYC clears. Phase 2 (separate plan) is live trading with hard caps. Reports get published at each phase — but only **after** a per-phase go/no-go gate.
 
 **Crucially: leverage is always dropped.** The synthetic perp runs up to 50x; the broker mirror trades cash-equivalent notional initially, with up to 2-4x Reg-T margin only if employer explicitly authorizes. We need to know what the strategy returns **unlevered first**.
 
-### Why mock-first
+### Phases + publishing gates
 
 
-|                   | Phase 0 (mock, weeks 1-2)                            | Phase 1 (real corporate paper, weeks 4-8)                      | Phase 2 (live, week 8+)                |
-| ----------------- | ---------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------- |
-| Account holder    | None (no IBKR account exists)                        | Employer's foreign entity                                      | Same                                   |
-| IBKR client       | `mock-ibkr.mjs` (stub)                               | `real-ibkr.mjs` (Client Portal)                                | Same                                   |
-| Capital           | Virtual                                              | $1M virtual (corporate paper)                                  | Employer's authorized cap              |
-| Time to start     | Day 1                                                | After corporate KYC (4-8 weeks)                                | After Phase 1 + employer sign-off      |
-| Validates         | Code correctness, event flow, sizing, reconciliation | Real IBKR API quirks, real fill quality, real exchange routing | Strategy survives real-money execution |
-| Compliance burden | Zero                                                 | Schedule FA (signing authority) + employer agreement           | Same as Phase 1 + ongoing reporting    |
+|                         | Phase 0 (mock, weeks 1-2)                            | Phase 1 (real corporate paper, weeks 4-8)                                   | Phase 2 (live, week 8+)                        |
+| ----------------------- | ---------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------------- |
+| Account holder          | None (no IBKR account exists)                        | Employer's foreign entity                                                   | Same                                           |
+| IBKR client             | `mock-ibkr.mjs` (stub)                               | `real-ibkr.mjs` (Client Portal)                                             | Same                                           |
+| Capital                 | Virtual                                              | $1M virtual (corporate paper)                                               | Employer's authorized cap                      |
+| Time to start           | Day 1                                                | After corporate KYC (4-8 weeks)                                             | After Phase 1 + employer sign-off              |
+| Validates               | Code correctness, event flow, sizing, reconciliation | Real IBKR API quirks, real fill quality, real exchange routing              | Strategy survives real-money execution         |
+| Compliance burden       | Zero                                                 | Schedule FA (signing authority) + employer agreement                        | Same as Phase 1 + ongoing reporting            |
+| **Published publicly?** | **No** — internal dev data only                      | **Gated** — only after Phase 1 go/no-go criteria met (`phase1-public-gate`) | **Yes** — with monthly attested PDF statements |
+| Marketing claim         | None                                                 | "Paper-traded reconciliation track record vs. testnet"                      | "Audited live brokerage track record"          |
 
 
 The mock-first approach eliminates 4-8 weeks of waiting before any code can be written. By the time the corporate account is approved, the entire pipeline has been exercised for weeks against real on-chain agent fills, and Phase 1 is a single env-var swap.
+
+**The publishing gates are non-negotiable.** Publishing reconciliation data that shows the strategy losing money in real markets is reputational damage to the entire protocol's USP. Each phase needs criteria-based clearance before its data goes public:
+
+- **Phase 0**: never published. Internal validation only.
+- **Phase 1 → public**: requires (a) ≥2 weeks of corporate paper data, (b) real-fill PnL within agreed tolerance of oracle PnL (slippage acceptable), (c) no execution bugs, (d) legal review complete (`legal-review-marketing-rule`), (e) attestation pipeline working (`attestation-pipeline`). Failures = fix + re-paper, don't publish.
+- **Phase 2 → public**: live data publishes monthly with attested PDF statements. Real-money loss months get published anyway (selective publishing destroys credibility faster than admitted losses) — but only after Phase 1 has established trust.
 
 ### Reality-check checkpoints baked into the plan
 
@@ -280,7 +296,57 @@ Daily cron (GitHub Actions, same workflow as `vault-agent.yml`): reads `events.j
 
 Phase 0 caveat: `mirrorPnlUsdUnlevered` is **simulated**, not real. The number is informative for code correctness (leverage stripping math, oracle→mirror mapping, reconciliation join) but **not for strategy validation**. Phase 1 swap is what produces decision-grade data.
 
-Render at `/operators/broker-mirror` (new page in web app, simple table — add after Phase 0 produces data).
+**Render at `/operators/broker-mirror`** (new public page in web app — see "Public Credibility Track" below for full UI spec). Built during Phase 0 but kept behind a feature flag until Phase 1 publishing gate passes.
+
+### Public Credibility Track (because the mirror is a marketing surface, not a private desk)
+
+**8. Public dashboard (`apps/web/src/app/operators/broker-mirror/page.tsx`)**
+
+The page is designed to be **screenshot-able and shareable** — institutional LPs, prospective vault depositors, X/LinkedIn audiences. Spec:
+
+- **Hero metric**: live cumulative real-fill PnL (with phase label: "Mock" / "Paper" / "Live") and # days running.
+- **Comparison chart**: oracle PnL vs real-fill PnL over time (cumulative %, dual-line).
+- **Per-agent breakdown table**: events / mirrored / skipped / oracle-PnL / real-PnL / slippage bps / hit-rate.
+- **Per-symbol coverage strip**: shows which of the bot's universe is being mirrored, which is skipped (with reason).
+- **Monthly attested-statement links**: prominent PDF links per month for transparency.
+- **Methodology page** (sub-route): explains mock-vs-paper-vs-live phases, redaction approach, what's verifiable, what's not.
+- **Phase / verification badge**: clear visual indicator of current phase (`MOCK — NOT REAL DATA`, `PAPER — REAL IBKR EXECUTION`, `LIVE — ATTESTED BROKERAGE STATEMENTS`). No ambiguity for a reader landing on the page.
+- **Feature-flagged behind `NEXT_PUBLIC_BROKER_MIRROR_PUBLIC`** until Phase 1 publishing gate passes.
+
+**9. Attestation pipeline**
+
+Monthly cycle once Phase 2 (live) begins:
+
+- Export IBKR brokerage statement PDF (account-level, includes all fills + balances) from Client Portal.
+- Redaction script (`scripts/redact-brokerage-statement.mjs`) blacks out account number, employer entity name (if confidential), and any non-trading account details. Leaves fills, dates, symbols, sizes, P&L visible.
+- Upload to `apps/web/public/proofs/<YYYY-MM>.pdf`.
+- Append metadata to `apps/web/public/agent-metadata/broker-mirror-attestations.json`: `{month, pdfPath, sha256, signedBy, signedAt}`.
+- Optional v2: third-party CPA signs a one-page attestation each month ("I attest these PDFs match the IBKR account [REDACTED] for which I have read-only access"). Adds real credibility, costs ~$200-500/month.
+
+What this is NOT (yet):
+
+- Not zero-knowledge proofs (Reclaim Protocol / TLSNotary attestations of brokerage portal screenshots are a v3 enhancement, not v1).
+- Not real-time — monthly cadence only.
+
+**10. Legal review (`legal-review-marketing-rule` todo, BLOCKING for public publishing)**
+
+Verify with foundation counsel before any data publishes:
+
+- Does publishing brokerage track record alongside protocol marketing trigger investment-adviser registration (SEC Marketing Rule 206(4)-1, ESMA MAR, SEBI advertising code)? Likely depends on jurisdiction + framing.
+- Required disclosures: "past performance not indicative", "synthetic perp PnL is not equivalent to real-market returns", "paper-trading limitations", "results from employer-funded corporate account, not user funds".
+- Geographic restrictions on the dashboard (e.g., geo-block US viewers if the foundation determines the page constitutes solicitation in the US).
+- Whether the employer entity name needs to be disclosed or can stay redacted.
+
+Output: a one-page disclosures doc rendered on the methodology page + footer of `/operators/broker-mirror`.
+
+**11. Content infrastructure**
+
+Tie into existing `growth/` content system:
+
+- `growth/drafts/broker-mirror-monthly-template.md` — monthly performance recap blog post template.
+- `growth/drafts/broker-mirror-thread-template.md` — X thread template for monthly highlights.
+- `growth/drafts/broker-mirror-institutional-pager.md` — one-pager for institutional-LP outreach (joined to the existing `growth/VC_OUTREACH_PLAYBOOK.md`).
+- Templates stay as drafts until first attestation cycle completes (don't pre-write fictional performance posts).
 
 **8. Env + config**
 
@@ -402,11 +468,23 @@ This is a **read-only analytical spike** that runs in parallel with Phase 0 mock
 
 ### Risks I want to flag explicitly
 
-- **Phase 0 mock data is not strategy validation.** It tells us the code is correct. Don't draw strategy conclusions from it.
+**Technical / execution**
+
+- **Phase 0 mock data is not strategy validation.** It tells us the code is correct. Don't draw strategy conclusions from it. Don't publish it.
 - **IBKR Client Portal API (Phase 1) requires a local gateway process** (`clientportal.gw`) that holds a browser session. Annoying to run on Cloud Run; v1 is local-only. If you want fully cloud-hosted, we switch to **TWS API in a headless container** (more work, separate plan).
 - Many TSX-V symbols (`AHR.V`, `BIG.V`, `0KXS.L`) trade <$50k/day. A real market order for $10k notional will move the print 2-8%. Phase 1 paper fills won't reflect that — IBKR's paper engine fills near mid. Phase 2 live fills will likely be **worse** than paper. The mock should over-estimate slippage so Phase 0 expectations are conservative.
 - The strategy is built to monetize 50x leverage on equities. Stripping leverage means a winning unlevered signal may still be unprofitable after commissions + spreads. Phase 1 will tell us within 2 weeks.
 - **Path C1 negotiation may stall** (employer says no, VC LPs object, jurisdiction issues). If that happens, all Phase 0 work is still useful — the mock pipeline is self-contained and can re-target a different broker (Tradier, Alpaca on a US-only retargeted strategy) by writing a third client implementation. Sunk cost is low.
+
+**Public-posture-specific (these are the ones that didn't exist when this was a private desk)**
+
+- **Publishing a losing track record is reputational napalm for the protocol.** Phase 1 publishing gate is the single most important risk control in this plan. Don't ship the dashboard live until paper data justifies it. If Phase 1 data is bad, don't publish anything and pause the strategy.
+- **Selective publishing kills credibility faster than admitted losses.** Once you start publishing monthly performance, every month gets published — even bad ones. This is a multi-year commitment, not an opt-out-when-convenient marketing channel. If you can't commit to that, don't start publishing at all.
+- **Past-performance disclaimers must be prominent and legally cleared.** Skipping this is what gets foundations sued or fined. `legal-review-marketing-rule` is blocking — not optional.
+- **Employer needs to consent to being part of a public credibility story.** Even with their name redacted, "a corporate entity is funding this strategy" implies the existence of the relationship. If the employer doesn't want any public association, Phase 2 publishing might need to wait until you can fund a separate vehicle (which loops back to the ODI/structure problem).
+- **Attestation fraud risk if redaction is sloppy.** PDFs with metadata, layer-based redactions (where the underlying text is recoverable), or unintentional account-number leaks have ended careers. Use proper redaction (flatten + re-render the PDF as raster images of redacted regions), not just black rectangles overlaid on text. The redaction script needs adversarial testing before any PDF goes public.
+- **Strategy improvement vs. consistency tradeoff.** Iterating on agent prompts mid-stream changes the strategy. A published track record needs to either (a) freeze the strategy or (b) clearly version + segment performance by strategy version. Continuous fine-tuning is incompatible with a clean credibility story.
+- **Jurisdiction blocking might be required.** US/UK/Singapore retail securities laws are aggressive about public performance advertising of investment strategies. The foundation's legal counsel may require geo-blocking the public dashboard from certain jurisdictions, which limits the marketing reach exactly where institutional capital lives.
 
 ### Optional follow-ups (separate plans, only triggered by data)
 

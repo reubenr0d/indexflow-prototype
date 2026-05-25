@@ -18,7 +18,10 @@
 
 Portfolio value and exit liquidity are not the same thing.
 
-The number on the dashboard is what your shares are worth. The number that matters is what the vault can actually return when you press redeem.
+The number on the dashboard is what your shares are worth.
+The number that matters is what you can actually return when you press redeem.
+
+Posted: https://x.com/indexflowDAO/status/2059033907975295163
 
 ---
 

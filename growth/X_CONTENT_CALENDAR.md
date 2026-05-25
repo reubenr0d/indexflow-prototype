@@ -26,7 +26,7 @@ Status transitions: `seeded` → `polished` → `scheduled` → `posted`. A row 
 
 ## Cadence and mix
 
-Six posts/week (Week 3 is seven due to the confidential-infra trinity). 60% educational/thought leadership, 30% project updates, 10% promotional across the season. One thread per week is the Operator-of-the-Week spotlight from Week 2 onward.
+Six posts/week baseline. Week 2 and Week 3 are seven — Week 2 carries an extra Sun Jun 7 reinforcement beat (the canonical "route by depth, not by default." standalone, bumped from Wed May 27 when the testnet-agents-live teaser took that slot); Week 3 is seven due to the confidential-infra trinity. 60% educational/thought leadership, 30% project updates, 10% promotional across the season. One thread per week is the Operator-of-the-Week spotlight from Week 2 onward.
 
 Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces start at **21:00 UTC** on Sun Jun 21. All deep-links carry `utm_source=x&utm_campaign=season-1` so Envio can attribute `BasketCreated` events back to the source post.
 
@@ -36,9 +36,9 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 
 | date | day | time_utc | slot_type | track | guild | pillar | hook_type | draft_path | status | posted_url |
 | ---- | --- | -------- | --------- | ----- | ----- | ------ | --------- | ---------- | ------ | ---------- |
-| 2026-05-25 | Mon | 16:30 | standalone | A | none | P1 | Contrarian | `growth/drafts/2026-05-25-tweet-portfolio-value-vs-exit-liquidity.md` | seeded |  |
+| 2026-05-25 | Mon | 16:30 | standalone | A | none | P1 | Contrarian | `growth/drafts/2026-05-25-tweet-portfolio-value-vs-exit-liquidity.md` | posted | https://x.com/indexflowDAO/status/2059033907975295163 |
 | 2026-05-26 | Tue | 15:00 | thread | A | none | P1 | Contrarian | `growth/drafts/2026-05-26-thread-nav-is-not-exit-liquidity.md` | seeded |  |
-| 2026-05-27 | Wed | 16:30 | standalone | A | none | P3 | Insider Knowledge | `growth/drafts/2026-05-27-tweet-route-by-depth-not-by-default.md` | seeded |  |
+| 2026-05-27 | Wed | 16:30 | standalone | cross | none | P3 | Data | `growth/drafts/2026-05-27-tweet-testnet-agents-live.md` | seeded |  |
 | 2026-05-28 | Thu | 15:00 | thread | A | none | P3 | Contrarian | `growth/drafts/2026-05-28-thread-six-contracts-zero-chain-pickers.md` | seeded |  |
 | 2026-05-29 | Fri | 16:30 | standalone | A | none | P1 | Curiosity Gap | `growth/drafts/2026-05-29-tweet-reserve-depth-is-product-quality.md` | seeded |  |
 | 2026-05-30 | Sat | 15:00 | thread | cross | none | P4 | Insider Knowledge | `growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md` | seeded |  |
@@ -49,6 +49,7 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 | 2026-06-04 | Thu | 16:30 | standalone | B | Cross-Chain Couriers | P3 | Data | `growth/drafts/2026-06-04-tweet-mantle-spoke-demo.md` | seeded |  |
 | 2026-06-05 | Fri | 15:00 | thread | A | none | P2 | Insider Knowledge | `growth/drafts/2026-06-05-thread-five-waves-of-onchain-exposure.md` | seeded |  |
 | 2026-06-06 | Sat | 16:30 | standalone | B | Curators | P4 | Stakes | `growth/drafts/2026-06-06-tweet-spaces-announcement-week-2.md` | seeded |  |
+| 2026-06-07 | Sun | 16:30 | standalone | A | none | P3 | Insider Knowledge | `growth/drafts/2026-06-07-tweet-route-by-depth-not-by-default.md` | seeded |  |
 | 2026-06-08 | Mon | 15:00 | thread | C | Engineers | P3 | Curiosity Gap | `growth/drafts/2026-06-08-thread-plug-your-agent-into-a-basket.md` | seeded |  |
 | 2026-06-09 | Tue | 16:30 | standalone | C | Engineers | P3 | Data | `growth/drafts/2026-06-09-tweet-run-log-as-receipt.md` | seeded |  |
 | 2026-06-10 | Wed | 15:00 | thread | B | Curators | P4 | Personal Story | `growth/drafts/2026-06-10-thread-operator-of-the-week-curator-2.md` | seeded |  |
