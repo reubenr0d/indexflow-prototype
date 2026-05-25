@@ -1,526 +1,543 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T16:05:24.014Z",
+  "updatedAt": "2026-05-25T17:58:27.375Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
-      "headlines": [
-        {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
-          ]
-        },
-        {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LSS.PA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
-      "headlines": [
-        {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
-          ]
-        },
-        {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CUU.V": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FFM.TO": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
+      "headlines": [
+        {
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ELEK",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "USA.TO": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FFM.TO": {
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
+      "headlines": [
+        {
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ELEK",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SURG.V": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SXGC.TO": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
-      "headlines": [
-        {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
-          ]
-        },
-        {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "LUN.TO": {
-      "fetchedAt": "2026-05-25T16:05:23.836Z",
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-05-25T16:05:24.014Z",
+    "SXGC.TO": {
+      "fetchedAt": "2026-05-25T17:58:26.140Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-25T17:58:27.375Z",
+      "headlines": [
+        {
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ELEK",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "fetchedAt": "2026-05-25T17:58:27.375Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-25T16:05:24.014Z",
-      "headlines": [
-        {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
-          ]
-        },
-        {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "0KXS.L": {
-      "fetchedAt": "2026-05-25T16:05:24.014Z",
+      "fetchedAt": "2026-05-25T17:58:27.375Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "LECTRA: Share buyback program - Aggregated disclosure of transactions in own shares carried out from May 18 to May 22, 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lectra-share-buyback-program-aggregated-160000143.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LSS.PA"
+            "HPQ",
+            "0992.HK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-05-25T16:05:24.014Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-25T17:58:27.375Z",
       "headlines": [
         {
-          "title": "40% of People Earning Over $500,000 Live Paycheck to Paycheck",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/775086da-1031-3674-ab49-030ac1ffa909/40%25-of-people-earning-over.html",
-          "publishedAt": "2026-05-25T16:01:33.000Z",
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "GENFIT Highlights Broad Scientific and Strategic Presence at EASL Congress 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/genfit-highlights-broad-scientific-strategic-160000241.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IPN.PA",
-            "GNFT.PA"
+            "ELEK",
+            "TSLA"
           ]
         },
         {
-          "title": "United States Mint Releases Declaration of Independence Quarters into Circulation",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/united-states-mint-releases-declaration-160000672.html",
-          "publishedAt": "2026-05-25T16:00:00.000Z",
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPQ",
+            "0992.HK"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-25T17:58:27.375Z",
+      "headlines": [
+        {
+          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
+          "publisher": "TMX Newsfile",
+          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
+          "publishedAt": "2026-05-25T17:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
+          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ELEK",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
+          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPQ",
+            "0992.HK"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

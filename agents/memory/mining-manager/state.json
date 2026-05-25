@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:15:21.593Z",
-  "lastRunAt": "2026-05-25T16:05:56.719Z",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include Empire Metals Limited (EEE.L), which shows a high ML score and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.",
-  "lastThesisUpdate": "2026-05-25T16:05:56.719Z"
+  "lastRunAt": "2026-05-25T17:59:42.259Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO) and Copper Fox Metals Inc. (CUU.V), both of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside the top-N, so no shorts were opened this run.",
+  "lastThesisUpdate": "2026-05-25T17:59:42.259Z"
 }

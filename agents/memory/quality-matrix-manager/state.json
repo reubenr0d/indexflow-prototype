@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-25T16:08:53.932Z",
+  "lastRunAt": "2026-05-25T18:02:48.446Z",
   "thesis": "This run focused on leveraging the Quality Matrix's top picks, emphasizing exceptional and strong composite scores driven by drilling results. The positions opened are:\n\n1. **Scorpio Gold Corporation (SGN.V)**: Exceptional gold grade at 470 g/t.\n2. **Bunker Hill Mining Corp. (BNKR.V)**: Strong drilling results.\n3. **PMETRES CDI 10:1 (PMT.AX)**: Strong drilling results.\n\nNo shorts were opened due to the absence of Red-Flag signals and confirming bearish news. The strategy remains focused on high-quality long positions with strong empirical support.",
   "lastThesisUpdate": "2026-05-25T09:12:42.687Z"
 }

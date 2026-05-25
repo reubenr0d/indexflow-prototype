@@ -4,14 +4,86 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include Empire Metals Limited (EEE.L), which shows a high ML score and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.",
-  "lastRunAt": "2026-05-25T16:05:56.719Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO) and Copper Fox Metals Inc. (CUU.V), both of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside the top-N, so no shorts were opened this run.",
+  "lastRunAt": "2026-05-25T17:59:42.259Z",
   "latestRun": {
-    "runId": "2026-05-25T16:05:56.719Z",
-    "finishedAt": "2026-05-25T16:05:56.719Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include Empire Metals Limited (EEE.L), which shows a high ML score and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.\n\n#### Vault Address\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n#### Actions Taken\n- **Tracked Assets Up"
+    "runId": "2026-05-25T17:59:42.259Z",
+    "finishedAt": "2026-05-25T17:59:42.259Z",
+    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO) and Copper Fox Metals Inc. (CUU.V), both of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside t"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 EEE.L (pnl 0.00%) to free room for #1 ABRA.TO",
+      "timestamp": "2026-05-25T17:59:42.259Z",
+      "txHash": "0x41296cd41fbfcf873de3e78f87941d2a4f9ee13c9ba41ce2fa753e982776abcb",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T17:59:42.259Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+        "isLong": true,
+        "sizeDelta": "12202112790000000000000000000000000",
+        "collateralDelta": "1220211279"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) due to strong ML signal and model preference for top picks.",
+      "timestamp": "2026-05-25T17:59:42.259Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T17:59:42.259Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "1000000000000000000000000000000",
+        "collateral": "305135000"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new positions is 915,405,000, which is 25% of available collateral (3,661,621,381); within acceptable limits."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) due to strong ML signal and model preference for top picks.",
+      "timestamp": "2026-05-25T17:59:42.259Z",
+      "txHash": "0x1298e3aeddce862f8f20648bc74756286218224605b304e15395d21e09dd6df1",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T17:59:42.259Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "12205404600000000000000000000000000",
+        "collateral": "1220540460"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (1220.54 USDC of 3661.62 USDC), within limits and aligned with metals_risk_on regime."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Copper Fox Metals Inc. (CUU.V) due to strong ML signal and model preference for top picks.",
+      "timestamp": "2026-05-25T17:59:42.259Z",
+      "txHash": "0xe31c61e27b4083c455d57a87e054cf22cfb46445e28ccc8f26d15cf154b927c1",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T17:59:42.259Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x792d36d7169db72bf3dbfd4767c4ccfc2d7c4631289f824556373106a32652de",
+        "isLong": true,
+        "size": "12205404600000000000000000000000000",
+        "collateral": "1220540460"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (1220.54 USDC of 3661.62 USDC), within limits and aligned with metals_risk_on regime."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #4 BIG.V (pnl 0.00%) to free room for #1 ABRA.TO",
@@ -1772,70 +1844,6 @@
       "riskOfficer": {
         "verdict": "approve",
         "reason": "Each position's collateral (917.28) is within availableCollateral (2751.83) and recent post-mortems show no significant losses."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
-      "timestamp": "2026-05-23T22:12:22.104Z",
-      "txHash": "0xb2dc84be890ef4279d4816dc48713805be05ed113740882f8fc36d9bd37e12c1",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T22:12:22.104Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
-      "timestamp": "2026-05-23T22:12:22.104Z",
-      "txHash": "0x90d271838e6bc6e1f2d9d1e7114882e7f3ad96de236483ef36445f9769ad2e5b",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T22:12:22.104Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
-      "timestamp": "2026-05-23T22:12:22.104Z",
-      "txHash": "0xecfcc8778287f7101ca30c35d2a44c1c5907eeedfb3a01d255ecd9b935445ab8",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T22:12:22.104Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Re-entering top ML picks after cooldown for AHR.V.",
-      "timestamp": "2026-05-23T22:12:22.104Z",
-      "txHash": "0x6a8c03441d49f7bd0dca7c9325185b75e2051bed06f5f3397a295bf5a652b566",
-      "agentName": "mining-manager",
-      "runId": "2026-05-23T22:12:22.104Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "size": "9172776510000000000000000000000000",
-        "collateral": "917277651"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 33.3% of available collateral each (917.28/2751.83), within limits and consistent with regime's neutral longBonus."
       }
     }
   ]
