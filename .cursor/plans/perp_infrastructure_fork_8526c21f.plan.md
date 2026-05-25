@@ -153,7 +153,7 @@ Rewritten from hackmoney2026 BasketVault. **All NAV/DCF logic, fundraising mecha
 
 - `**BasketShareToken.sol`** -- ERC20 with vault-only mint/burn, 6 decimals. Carried over as-is.
 - `**MockUSDC.sol`** -- Carried over as-is for testing.
-- `**BasketVault.sol**` -- **Rewritten:**
+- `**BasketVault.sol`** -- **Rewritten:**
   - Each basket has a list of assets (bytes32 IDs) with weights (bps, sum to 10000)
   - **Basket price** = `sum(weight_i * OracleAdapter.getPrice(asset_i)) / 10000`
   - **Deposit:** user sends USDC, receives shares = `depositAmount / basketPrice`. Continuous, no deadlines.

@@ -40,7 +40,7 @@ Several list views mount **one hook instance per row**, causing N parallel subgr
 
 - `**BasketCard`** ([apps/web/src/components/baskets/basket-card.tsx](apps/web/src/components/baskets/basket-card.tsx)) -- each card calls `useBasketTrendSnapshots(vault)`, producing N separate subgraph/RPC trend queries on the baskets grid.
 - `**HoldingCard`** in [apps/web/src/app/portfolio/page.tsx](apps/web/src/app/portfolio/page.tsx) -- same pattern, one trend query per holding.
-- `**AssetPriceRow**` in [apps/web/src/app/prices/page.tsx](apps/web/src/app/prices/page.tsx) -- each row runs `useReadContract` for `assetList`, `useOracleAssetPrice`, `useOracleIsStale`, `useOracleAssetConfig`, and `usePricingExecutionQuoteBothSides`. Cost grows linearly with oracle asset count.
+- `**AssetPriceRow`** in [apps/web/src/app/prices/page.tsx](apps/web/src/app/prices/page.tsx) -- each row runs `useReadContract` for `assetList`, `useOracleAssetPrice`, `useOracleIsStale`, `useOracleAssetConfig`, and `usePricingExecutionQuoteBothSides`. Cost grows linearly with oracle asset count.
 - `**OracleAssetCard**` in [apps/web/src/app/admin/oracle/page.tsx](apps/web/src/app/admin/oracle/page.tsx) -- same per-index hook explosion.
 
 **Fix:** Lift data fetching to the parent list component using batched `useReadContracts` (multicall) or a single subgraph query that returns all trend snapshots at once, then pass data down as props. Create:

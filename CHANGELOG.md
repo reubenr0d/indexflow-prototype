@@ -35,6 +35,10 @@ Legacy entries that predate this rule may remain without timestamps.
 
 - [2026-05-26] **Vault History Asset column shows the oracle ticker with a Yahoo Finance outlink** instead of a truncated bytes32 address ([`apps/web/src/components/baskets/vault-history-table.tsx`](apps/web/src/components/baskets/vault-history-table.tsx)).
 
+### Removed
+
+- [2026-05-26] **Dropped the "Powered by Atlas ML" badge from the basket detail header.** The `AtlasMlBadge` component, its render in [`apps/web/src/app/baskets/[address]/page.tsx`](apps/web/src/app/baskets/[address]/page.tsx) (gated on `agentMeta?.signalSource === "atlas-ml"`), the unused `Brain` lucide import, and the `atlasMl` entry in [`apps/web/src/lib/tooltip-copy.ts`](apps/web/src/lib/tooltip-copy.ts) are removed. The `AiOperatorBadge` and the Atlas ML signal-source chip inside the Vault Thesis card remain.
+
 ### Fixed
 
 - [2026-05-26] **Basket Asset Prices "Both" view shows window % change and Yahoo-only chart when on-chain history is sparse.** The per-asset mini-chart now derives the `+/- xx.xx%` badge from Yahoo Finance when fewer than two on-chain oracle points exist, and renders only series that have enough data ([`apps/web/src/components/baskets/asset-price-panel.tsx`](apps/web/src/components/baskets/asset-price-panel.tsx)).

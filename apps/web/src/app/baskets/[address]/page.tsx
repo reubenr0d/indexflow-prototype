@@ -24,7 +24,6 @@ import { VaultHistoryTable } from "@/components/baskets/vault-history-table";
 import { VaultThesisCard } from "@/components/baskets/vault-thesis-card";
 import {
   AiOperatorBadge,
-  AtlasMlBadge,
   StatusChip,
   getBasketActivityMeta,
 } from "@/components/baskets/basket-detail-ui";
@@ -239,9 +238,6 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {agentMeta?.isAiManaged && <AiOperatorBadge tooltipKey="aiOperator" />}
-              {agentMeta?.signalSource === "atlas-ml" && (
-                <AtlasMlBadge tooltipKey="atlasMl" />
-              )}
               <StatusChip
                 icon={reserveHealthy ? ShieldCheck : ShieldAlert}
                 label={reserveHealthy ? "Healthy" : "Below target"}

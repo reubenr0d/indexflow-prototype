@@ -7,7 +7,6 @@ import {
   ArrowDownToLine,
   ArrowUpFromLine,
   Bot,
-  Brain,
   Coins,
   Gauge,
   Layers3,
@@ -194,24 +193,6 @@ export function AiOperatorBadge({
       <StatusChip icon={Bot} label="AI Operator" tone="accent" className={className} />
       {tooltipContent && (
         <InfoTooltip content={tooltipContent} ariaLabel="About AI Operator" />
-      )}
-    </span>
-  );
-}
-
-export function AtlasMlBadge({
-  className,
-  tooltipKey,
-}: {
-  className?: string;
-  tooltipKey?: TooltipKey;
-}) {
-  const tooltipContent = tooltipKey ? getTooltipCopy(tooltipKey) : null;
-  return (
-    <span className="inline-flex items-center gap-1.5">
-      <StatusChip icon={Brain} label="Powered by Atlas ML" tone="accent" className={className} />
-      {tooltipContent && (
-        <InfoTooltip content={tooltipContent} ariaLabel="About Atlas ML signal source" />
       )}
     </span>
   );
