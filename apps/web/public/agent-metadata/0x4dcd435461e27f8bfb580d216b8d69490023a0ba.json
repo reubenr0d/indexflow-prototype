@@ -4,14 +4,118 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include Americas Gold and Silver Corporation (USA.TO) and FireFly Metals Ltd. (FFM.TO), both of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside the top-N, so no shorts were opened this run.",
-  "lastRunAt": "2026-05-25T20:02:16.911Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside the top-N, so no shorts were opened this run.",
+  "lastRunAt": "2026-05-25T21:38:37.952Z",
   "latestRun": {
-    "runId": "2026-05-25T20:02:16.911Z",
-    "finishedAt": "2026-05-25T20:02:16.911Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include Americas Gold and Silver Corporation (USA.TO) and FireFly Metals Ltd. (FFM.TO), both of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle assets outside the top"
+    "runId": "2026-05-25T21:38:37.952Z",
+    "finishedAt": "2026-05-25T21:38:37.952Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No concrete bearish headlines were found for any wired oracle asset"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #6 FFM.TO (pnl 0.00%) to free room for #1 ABRA.TO",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": "0xb0742db2e4d1a5f664246059f8856fb7fe3848abb36fd18fffcf5d6ac15d711b",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x4f7dc1174b04b7aa540255775c625276b3514de95da12c4598c526f214872dc5",
+        "isLong": true,
+        "sizeDelta": "28687980980000000000000000000000000",
+        "collateralDelta": "2868798098"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #5 USA.TO (pnl 0.00%) to free room for #2 EEE.L",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": "0x79e52f9acd9f15f752eb07c45a64082a3c6a7116feb5cc27aadc63ec94323c32",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
+        "isLong": true,
+        "sizeDelta": "28687980980000000000000000000000000",
+        "collateralDelta": "2868798098"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Surge Copper Corp. (SURG.V) as it is a new entrant in the Atlas ML top picks with a high score and predicted return.",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "SURG.V",
+        "seedPriceUsd": 0.5724
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed wiring of SURG.V aligns with the available collateral of $8853.99 and the neutral market regime with no penalties or bonuses."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on ABRA.TO due to strong ML signals and no recent negative news. Churn guard bypassed for strategic entry.",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": "0xe6a77a6fdee36499ceaea7698143c52d02d258637facb3423386121c76a77340",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "29513288850000000000000000000000000",
+        "collateral": "2951328885"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new positions is 8853.99, matching available collateral of 8853.99; regime is neutral with no penalties or bonuses."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on EEE.L due to strong ML signals and no recent negative news. Churn guard bypassed for strategic entry.",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": "0x6e9bb34e852e9dae65a8d3f5f5f731404758e1b60f87440639568e7957b55f18",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+        "isLong": true,
+        "size": "29513288850000000000000000000000000",
+        "collateral": "2951328885"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new positions is 8853.99, matching available collateral of 8853.99; regime is neutral with no penalties or bonuses."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on CUU.V due to strong ML signals and no recent negative news. Churn guard bypassed for strategic entry.",
+      "timestamp": "2026-05-25T21:38:37.952Z",
+      "txHash": "0xcedcfd0c08573b67e7037ce459b1ef1063a4d58085081c3e0f734bf2ec426072",
+      "agentName": "mining-manager",
+      "runId": "2026-05-25T21:38:37.952Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x792d36d7169db72bf3dbfd4767c4ccfc2d7c4631289f824556373106a32652de",
+        "isLong": true,
+        "size": "29513288850000000000000000000000000",
+        "collateral": "2951328885"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new positions is 8853.99, matching available collateral of 8853.99; regime is neutral with no penalties or bonuses."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 CUU.V (pnl 0.00%) to free room for #2 EEE.L",
@@ -1740,105 +1844,6 @@
       "riskOfficer": {
         "verdict": "approve",
         "reason": "Both positions use 33.3% of available collateral each (917.09/2751.28), within limits and consistent with regime's neutral longBonus."
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) due to strong ML signal and model preference for re-entry.",
-      "timestamp": "2026-05-24T04:41:05.486Z",
-      "txHash": "0xc49936f00ddc34a8b4a6ab8746dd977eb5416f5bd76d0eb0bc3a772a4abc67c4",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T04:41:05.486Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "size": "9170941950000000000000000000000000",
-        "collateral": "917094195"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 33.3% of available collateral each (917.09/2751.28), within limits and consistent with regime's neutral longBonus."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
-      "timestamp": "2026-05-24T00:14:16.521Z",
-      "txHash": "0xb32e68257ad3cbc9604e5907d1e37c4ad995b341b7047f20d7cba1d368e27f75",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T00:14:16.521Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
-      "timestamp": "2026-05-24T00:14:16.521Z",
-      "txHash": "0x14719e6d1c29bd183dd7c8356c54a0374ba03631fa6ab085e5fd47d4e994fc96",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T00:14:16.521Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
-      "timestamp": "2026-05-24T00:14:16.521Z",
-      "txHash": "0x24baf3b312e040860491505f40cb7aa84b4c1ada6ca95b41b0a1bc6270035355",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T00:14:16.521Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "9172776510000000000000000000000000",
-        "collateralDelta": "917277651"
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Critical Metals Corp. (CRML) as a new entrant in the top-N picks.",
-      "timestamp": "2026-05-24T00:14:16.521Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T00:14:16.521Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "CRML"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets and wires a new asset, with no immediate capital allocation or risk exposure changes."
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Critical Metals Corp. (CRML) due to strong ML signals and high predicted returns.",
-      "timestamp": "2026-05-24T00:14:16.521Z",
-      "txHash": "0xfdf24a04d000b7d17eb4277a06fe4fb480c55bc33601731f4f6a0aed959b9be8",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T00:14:16.521Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x1a3a155cd907f30cc1c6c5c4905e1cb13e9dee01b8f7d9ca3e5e6401cd71775f",
-        "isLong": true,
-        "size": "10000000000000000000000000000000000",
-        "collateral": "1000000000"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 36.4% of available collateral each, totaling 72.8%, which is within the 90% limit for a single name."
       }
     }
   ]

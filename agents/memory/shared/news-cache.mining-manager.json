@@ -1,114 +1,183 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T20:02:03.240Z",
+  "updatedAt": "2026-05-25T21:36:43.740Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-05-25T20:02:03.240Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-25T21:36:43.586Z",
       "headlines": [
         {
-          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
-          "publishedAt": "2026-05-25T19:55:22.000Z",
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "JD",
-            "2618.HK"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
-          "publishedAt": "2026-05-25T19:55:14.000Z",
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "KMB"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
-          "publishedAt": "2026-05-25T19:55:07.000Z",
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ROP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-05-25T20:02:03.240Z",
+    "CUU.V": {
+      "fetchedAt": "2026-05-25T21:36:43.586Z",
       "headlines": [
         {
-          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
-          "publishedAt": "2026-05-25T19:55:22.000Z",
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "JD",
-            "2618.HK"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
-          "publishedAt": "2026-05-25T19:55:14.000Z",
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "KMB"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
-          "publishedAt": "2026-05-25T19:55:07.000Z",
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ROP"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-25T21:36:43.586Z",
+      "headlines": [
+        {
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-25T21:36:43.586Z",
+      "headlines": [
+        {
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "USA.TO": {
+      "fetchedAt": "2026-05-25T21:36:43.586Z",
+      "headlines": [
+        {
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-25T20:02:03.240Z",
+      "fetchedAt": "2026-05-25T21:36:43.740Z",
       "headlines": [
         {
-          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
-          "publishedAt": "2026-05-25T19:55:22.000Z",
+          "title": "How to maximize space in a small closet",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/7deca01c-1187-3826-9541-980be28f5e0c/how-to-maximize-space-in-a.html",
+          "publishedAt": "2026-05-25T21:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "JD",
-            "2618.HK"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
-          "publishedAt": "2026-05-25T19:55:14.000Z",
+          "title": "Giant 'Big Boy' train begins a rare trip East. Here's where to see it",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/be8b7274-6c1c-351d-867a-65f9085637e7/giant-%27big-boy%27-train-begins.html",
+          "publishedAt": "2026-05-25T21:25:07.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "KMB"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
-          "publishedAt": "2026-05-25T19:55:07.000Z",
+          "title": "Paderborn strike late to relegate Wolfsburg from Bundesliga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/bb816c0e-a712-3788-8463-f51c3e150e91/paderborn-strike-late-to.html",
+          "publishedAt": "2026-05-25T21:24:19.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ROP"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

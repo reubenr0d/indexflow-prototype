@@ -1,13 +1,7 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-05-25T20:00:24.815Z",
+  "updatedAt": "2026-05-25T21:35:48.653Z",
   "closures": {
-    "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932": {
-      "ticker": "BIG.V",
-      "isLong": true,
-      "closedAt": "2026-05-25T16:04:12.540Z",
-      "closedReason": "auto-rebalance: rank rotation: closing #4 BIG.V (pnl 0.00%) to free room for #1 ABRA.TO"
-    },
     "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf": {
       "ticker": "EEE.L",
       "isLong": true,
@@ -25,6 +19,18 @@
       "isLong": true,
       "closedAt": "2026-05-25T20:00:24.815Z",
       "closedReason": "auto-rebalance: rank rotation: closing #1 ABRA.TO (pnl 0.00%) to free room for #4 BIG.V"
+    },
+    "0x4f7dc1174b04b7aa540255775c625276b3514de95da12c4598c526f214872dc5": {
+      "ticker": "FFM.TO",
+      "isLong": true,
+      "closedAt": "2026-05-25T21:35:37.740Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #6 FFM.TO (pnl 0.00%) to free room for #1 ABRA.TO"
+    },
+    "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81": {
+      "ticker": "USA.TO",
+      "isLong": true,
+      "closedAt": "2026-05-25T21:35:48.653Z",
+      "closedReason": "auto-rebalance: rank rotation: closing #5 USA.TO (pnl 0.00%) to free room for #2 EEE.L"
     }
   }
 }
