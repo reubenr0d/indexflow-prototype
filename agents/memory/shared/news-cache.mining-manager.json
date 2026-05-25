@@ -1,542 +1,113 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T17:58:27.375Z",
+  "updatedAt": "2026-05-25T20:02:03.240Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-25T20:02:03.240Z",
       "headlines": [
         {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
+          "publishedAt": "2026-05-25T19:55:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ELEK",
-            "TSLA"
+            "JD",
+            "2618.HK"
           ]
         },
         {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
+          "publishedAt": "2026-05-25T19:55:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPQ",
-            "0992.HK"
+            "KMB"
+          ]
+        },
+        {
+          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
+          "publishedAt": "2026-05-25T19:55:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ROP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CUU.V": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-25T20:02:03.240Z",
       "headlines": [
         {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
+          "publishedAt": "2026-05-25T19:55:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ELEK",
-            "TSLA"
+            "JD",
+            "2618.HK"
           ]
         },
         {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
+          "publishedAt": "2026-05-25T19:55:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
+            "KMB"
           ]
         },
         {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
+          "publishedAt": "2026-05-25T19:55:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "USA.TO": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FFM.TO": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SURG.V": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LUN.TO": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SXGC.TO": {
-      "fetchedAt": "2026-05-25T17:58:26.140Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-25T17:58:27.375Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
+            "ROP"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PWM.V": {
-      "fetchedAt": "2026-05-25T17:58:27.375Z",
+      "fetchedAt": "2026-05-25T20:02:03.240Z",
       "headlines": [
         {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
+          "title": "Here is Why JD.com (JD) is One of the Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-jd-com-jd-one-195522497.html",
+          "publishedAt": "2026-05-25T19:55:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ELEK",
-            "TSLA"
+            "JD",
+            "2618.HK"
           ]
         },
         {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "title": "Is Kimberly-Clark (KMB) One of the Cheap NASDAQ Stocks to Buy Right Now?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/kimberly-clark-kmb-one-cheap-195514837.html",
+          "publishedAt": "2026-05-25T19:55:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-25T17:58:27.375Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
+            "KMB"
           ]
         },
         {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
+          "title": "Roper Technologies (ROP): 10 Cheap NASDAQ Stocks to Buy Right Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/roper-technologies-rop-10-cheap-195507017.html",
+          "publishedAt": "2026-05-25T19:55:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-25T17:58:27.375Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-25T17:58:27.375Z",
-      "headlines": [
-        {
-          "title": "MyFlyYatra Expanding San Francisco to India Flight Route for Travelers with Economy, Premium, Business and First-Class Travel",
-          "publisher": "TMX Newsfile",
-          "link": "https://finance.yahoo.com/markets/currencies/articles/myflyyatra-expanding-san-francisco-india-175100344.html",
-          "publishedAt": "2026-05-25T17:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "As America's Financial Markets Continue Rallying Higher, ELEKTROS Inc. Wishes All Penny Stock and Microcap Investors Around the World a Happy and Wonderful Memorial Day Holiday While Celebrating Strong Friday Momentum, Expanding Global Awareness, and the Company’s Vision for Hard Rock Lithium Mining",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/americas-financial-markets-continue-rallying-175000539.html",
-          "publishedAt": "2026-05-25T17:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "JPMorgan resets HPQ stock price target ahead of earnings",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/9bb1b08c-2022-3864-8bf1-c8f378b5141e/jpmorgan-resets-hpq-stock.html",
-          "publishedAt": "2026-05-25T17:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HPQ",
-            "0992.HK"
+            "ROP"
           ]
         }
       ],
