@@ -1,421 +1,303 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T00:15:17.110Z",
+  "updatedAt": "2026-05-25T09:08:38.889Z",
   "entries": {
-    "PWM.V": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
+    "CUU.V": {
+      "fetchedAt": "2026-05-25T09:08:37.835Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
-      "headlines": [
-        {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
-        },
-        {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
-      "headlines": [
-        {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
-        },
-        {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
-      "headlines": [
-        {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
-        },
-        {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CRML": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
-      "headlines": [
-        {
-          "title": "CRML Executes a 15-Year Binding Definitive Off-Take Agreement for Tanbreez with REalloys Inc. Which Supports US Defense & National Security Industrial Base Supply Chains",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/crml-executes-15-binding-definitive-114000090.html",
-          "publishedAt": "2026-05-21T11:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALOY",
-            "CRML"
-          ]
-        },
-        {
-          "title": "Assessing Critical Metals (CRML) Valuation After Strong Share Price And P/B Premium",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/assessing-critical-metals-crml-valuation-002731399.html",
-          "publishedAt": "2026-05-22T00:27:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRML"
-          ]
-        },
-        {
-          "title": "Critical Metals Signs Offtake Agreement With REalloys for Rare Earth Concentrate",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/critical-metals-signs-offtake-agreement-123655525.html",
-          "publishedAt": "2026-05-21T12:36:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALOY",
-            "CRML"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "EEE.L": {
-      "fetchedAt": "2026-05-25T00:15:16.854Z",
+      "fetchedAt": "2026-05-25T09:08:37.835Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "LGC.V": {
-      "fetchedAt": "2026-05-25T00:15:17.110Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-25T09:08:37.835Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-25T00:15:17.110Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-25T09:08:37.835Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "USA.TO": {
+      "fetchedAt": "2026-05-25T09:08:37.835Z",
+      "headlines": [
+        {
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-25T09:08:38.889Z",
+      "headlines": [
+        {
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-25T09:08:38.889Z",
+      "headlines": [
+        {
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-25T09:08:38.889Z",
+      "headlines": [
+        {
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BHP.AX": {
-      "fetchedAt": "2026-05-25T00:15:17.110Z",
+      "fetchedAt": "2026-05-25T09:08:38.889Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-25T00:15:17.110Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-25T09:08:38.889Z",
       "headlines": [
         {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
+          "title": "Memphis defined American music. How did it miss out on the money? | The Excerpt",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/ab6d6847-1bc5-3ae0-9278-22a644796f5e/memphis-defined-american.html",
+          "publishedAt": "2026-05-25T09:05:26.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "title": "Puzzle solutions for Monday, May. 25, 2026",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/06c90966-44bb-3d8d-9299-51a167d57f49/puzzle-solutions-for-monday%2C.html",
+          "publishedAt": "2026-05-25T09:02:31.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
+          "title": "VT Markets Adds 39 US Stocks and ETFs Spanning AI, Space, and Energy",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/vt-markets-adds-39-us-090000967.html",
+          "publishedAt": "2026-05-25T09:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-25T00:15:17.110Z",
-      "headlines": [
-        {
-          "title": "Why You Might Be Interested In Aeon Co. (M) Bhd. (KLSE:AEON) For Its Upcoming Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-might-interested-aeon-co-000220655.html",
-          "publishedAt": "2026-05-25T00:02:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "6599.KL",
-            "AEON"
-          ]
-        },
-        {
-          "title": "Market Crash? My Favorite Growth Stock to Buy Right Now.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5fb6fa52-b0c3-3853-94a9-656e79de8986/market-crash%3F-my-favorite.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "SM Group raises renewable energy sourcing to 31% in 2025",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/sm-group-raises-renewable-energy-000100045.html",
-          "publishedAt": "2026-05-25T00:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SM.XPHS"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
