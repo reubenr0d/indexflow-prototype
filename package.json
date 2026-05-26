@@ -49,6 +49,8 @@
     "paperclip:configure-adapters": "node scripts/paperclip-configure-adapters.mjs",
     "mcp:vault-manager": "node apps/mcps/vault-manager/index.js",
     "mcp:yfinance": "node apps/mcps/yfinance/index.js",
+    "mcp:envio-graphql": "node apps/mcps/envio-graphql/index.js",
+    "mcp:envio-graphql:smoke": "node apps/mcps/envio-graphql/index.js --smoke",
     "seed:fetch-prices": "node scripts/fetch-historical-prices.js BHP.AX XAU XAG GLEN.L",
     "seed:sepolia": "npm run seed:fetch-prices && CHAIN=sepolia forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url sepolia --broadcast -vvv && npm run keeper:once",
     "seed:local": "npm run seed:fetch-prices && CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/SeedTestnet.s.sol:SeedTestnet --rpc-url local --broadcast -vvv"

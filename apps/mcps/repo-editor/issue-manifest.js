@@ -54,6 +54,19 @@ export const CATEGORY_ENUM = [
   "data_gap",
   "refactor",
   "investigation",
+  // Partnership pipeline blocker surfaced by `partnership-tracker`. The
+  // softer rubric in `agents/risk-officer-self-improvement-issues.md`
+  // (no vault-address gate, conviction floor 0.5) lets BD-ops findings
+  // reuse the same manifest + opener + dedupe pipeline as engineering
+  // findings.
+  "partnership-blocker",
+  // New-vault theme proposal surfaced by `basket-ideator` as the
+  // handoff issue that accompanies the `growth/basket-concepts/queue/`
+  // markdown draft. Distinct from `new_mcp_or_skill` (which targets
+  // engineering surface) because vault-concept proposals route to a
+  // different human reviewer (founder + curator persona owner, not the
+  // engineering triage queue).
+  "vault-concept",
 ];
 export const ISSUE_ID_MARKER_PREFIX = "self-improver-issue-id:";
 

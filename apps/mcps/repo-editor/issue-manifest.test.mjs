@@ -244,9 +244,17 @@ test("extractIssueIdMarker returns null when no marker is present", () => {
 // CATEGORY_ENUM contract
 // ---------------------------------------------------------------------------
 
-test("CATEGORY_ENUM contains exactly the five planned categories", () => {
+test("CATEGORY_ENUM contains exactly the seven shipped categories", () => {
   assert.deepEqual(
     [...CATEGORY_ENUM].sort(),
-    ["data_gap", "investigation", "new_mcp_or_skill", "refactor", "strategy_idea"],
+    [
+      "data_gap",
+      "investigation",
+      "new_mcp_or_skill",
+      "partnership-blocker",
+      "refactor",
+      "strategy_idea",
+      "vault-concept",
+    ],
   );
 });

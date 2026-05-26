@@ -4,7 +4,7 @@ Read-only query patterns against the live IndexFlow Envio HyperIndex endpoint. S
 
 ## Endpoint
 
-Canonical URL lives in [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) — `Envio HyperIndex deployment` row, `Current URL` field. As of 2026-05-26: `https://indexer.dev.hyperindex.xyz/dbe3f66/v1/graphql`. Do NOT hard-code the URL in agent prompts; read it from the deployment memory file so URL rotations land automatically.
+Canonical URL lives in [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) — `HyperIndex deployment` row, `Current URL` field. As of 2026-05-26: `https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql`. **Do NOT hard-code the URL** in agent prompts; read it from the deployment memory file (the `envio-graphql-mcp` server already does this for you).
 
 The indexer serves both Sepolia and Fuji from one Hasura GraphQL endpoint. Filter by `chainId` (`11155111` for Sepolia hub, `43113` for Fuji spoke) when a query is chain-specific.
 
@@ -14,76 +14,93 @@ None. The dev-tier indexer is public; no header required. Do NOT attempt to auth
 
 ## Hard constraints
 
-- **Read-only**. The `envio-graphql-mcp` server exposes only GraphQL queries, never mutations. If you see a `mutation` keyword in any output, treat it as a bug and refuse to execute.
-- **No PII**. Don't query for fields that might leak depositor addresses with off-chain identity links. Stick to vault-level aggregates and event metadata.
-- **Cache 60s minimum**. The indexer rate-limits at a low single-digit RPS for unauthenticated clients. The MCP server enforces a 60s cache per query signature; don't try to bust it.
-- **Errors**: on a 5xx response, retry **once** with a 5s delay. After that, surface a `propose_ticket` and stop — don't loop.
+- **Read-only**. The `envio-graphql-mcp` server refuses any `mutation` or `subscription` at the tool boundary; the underlying Hasura role is also read-only. If you see a `mutation` keyword in any output, treat it as a bug and refuse to execute.
+- **No PII**. Don't query `BasketActivity.user` or `UserBasketPosition.user_id` joined to off-chain identity sources. Stick to vault-level aggregates and event metadata.
+- **Cache 60s minimum**. The dev-tier indexer rate-limits at low single-digit RPS for unauthenticated clients. The MCP enforces a 60s cache per `(query + variables)` signature; don't try to bust it.
+- **Errors**: on a 5xx response, the MCP fails closed (no retry loop). Surface a ticket and stop — don't try to power through.
+
+## Schema essentials (verified live 2026-05-26)
+
+The schema is denormalised per-event into a small set of root entities. Field names below are the canonical ones — `BasketFactory_BasketCreated` from older docs is **gone**; use `Basket` instead.
+
+| Entity | When to use | Key fields |
+| --- | --- | --- |
+| `Basket` | "What baskets exist?" — one row per BasketCreated, deduped. | `id` (`chainId-vault`), `name`, `creator` (NOT `curator`), `chainId`, `createdAt` (Unix-seconds string), `assetCount`, `vault`, `shareToken`, `basketPrice`, `tvlBookUsdc`, `usdcBalanceUsdc`, `totalDepositCount`, `totalRedeemCount`. |
+| `BasketActivity` | "What happened against a basket?" — per-event log (deposits, redeems, fee accrual, perp moves). | `id`, `activityType`, `amountUsdc`, `basket_id`, `chainId`, `blockNumber`, `timestamp`, `txHash`, `user_id`, `recipient`, `pnl`, `shares`. |
+| `BasketAsset` / `BasketExposure` / `BasketSnapshot` | Sub-entities per Basket — composition + intra-block exposure snapshots. | Use only when a query specifically needs constituent assets or time-series exposure. |
+| `UserBasketPosition` | Per-user holding ledger. | Joined to `User` and `Basket`. **Avoid for public posting — see PII constraint above.** |
+
+`Basket.createdAt` is a stringified Unix-seconds value (Hasura numeric type). Compare as numbers in `_gte` filters; cast with `Number(row.createdAt) * 1000` to get JS milliseconds.
 
 ## Standard queries
 
-### Recent `BasketCreated` events (broadcast-bot input)
+### Recent baskets (broadcast-bot input, ideator dedupe)
+
+Use the `recent_basket_created` MCP tool — it wraps this query and applies the read-only + cache rules:
 
 ```graphql
-query RecentBaskets($chainId: Int!, $first: Int = 20) {
-  BasketFactory_BasketCreated(
+query RecentBaskets($first: Int!, $chainId: Int) {
+  Basket(
     where: { chainId: { _eq: $chainId } }
-    order_by: { db_write_timestamp: desc }
+    order_by: { createdAt: desc }
     limit: $first
   ) {
-    vaultAddress: vault
-    vaultName: name
-    curator
+    id
+    name
+    creator
+    chainId
+    createdAt
     assetCount
-    blockTimestamp
-    txHash
+    vault
   }
 }
 ```
+
+Drop the `where` clause when you want both chains. The MCP wrapper handles both shapes — pass `chainId` or leave it unset.
 
 ### Cumulative basket inventory (basket-ideator dedupe)
 
 ```graphql
 query AllBaskets {
-  BasketFactory_BasketCreated(order_by: { blockTimestamp: asc }) {
-    vaultAddress: vault
-    vaultName: name
+  Basket(order_by: { createdAt: asc }) {
+    id
+    name
     chainId
-    blockTimestamp
+    createdAt
+    vault
   }
 }
 ```
 
-Filter the result client-side by name overlap (≥ 2 shared tokens → likely duplicate). Cache the full list per tick.
+For theme overlap checks, prefer the `count_baskets_by_theme` MCP tool — it runs this query, applies a token-overlap filter against a candidate slug, and returns the match list with shared-token counts.
 
-### Per-vault deposit + redemption events (future: leaderboard-worker)
+### Per-vault activity (future: leaderboard-worker)
 
 ```graphql
-query VaultEvents($vault: String!) {
-  BasketVault_DepositCompleted(where: { vault: { _eq: $vault } }, limit: 100) {
-    user
-    sharesMinted
-    usdcDeposited
-    blockTimestamp
+query VaultActivity($vault: String!) {
+  BasketActivity(
+    where: { basket_id: { _eq: $vault }, activityType: { _in: ["Deposit", "Redeem"] } }
+    order_by: { timestamp: desc }
+    limit: 100
+  ) {
+    activityType
+    amountUsdc
+    shares
+    timestamp
     txHash
-  }
-  BasketVault_RedeemCompleted(where: { vault: { _eq: $vault } }, limit: 100) {
-    user
-    sharesBurned
-    usdcRedeemed
-    blockTimestamp
-    txHash
+    recipient
   }
 }
 ```
 
-Per `growth/X_GROWTH_PLAN.md` UTM contract, the leaderboard worker matches `user` against `utm_source=x&utm_campaign=season-1`-tagged session events from the push-worker analytics pipe.
+Per `growth/X_GROWTH_PLAN.md` UTM contract, the leaderboard worker matches `recipient` against `utm_source=x&utm_campaign=season-1`-tagged session events from the push-worker analytics pipe.
 
 ## Schema discovery
 
-If a query fails with `field not found`, run the Hasura introspection query (`__schema { types { name } }`) ONCE per agent run, cache the result in `agents/memory/<agent>/schema-cache.json`, and re-derive the query. Do NOT spam introspection across turns.
+If a query fails with `field not found in type`, call the `discover_schema` MCP tool — it runs Hasura introspection ONCE per MCP server lifetime and caches the result. Don't author a raw introspection query unless you specifically need a sub-field shape the cached summary doesn't include.
 
 ## Failure modes you must handle
 
-- **Indexer behind on a fresh deploy** — `BasketCreated` shows up minutes later. If `last_seen_event_block < current_block - 100`, surface a ticket and stop; do not draft tweets against stale data.
-- **Indexer URL rotation** — when `AGENT_DEPLOYMENT_MEMORY.md` is updated with a new URL (signal: `propose_ticket` from the founder + a re-read of the memory file shows a different URL), invalidate every cache key and re-bootstrap.
-- **Hasura 504 / 502** — single retry then `propose_ticket`; do not retry-loop.
+- **Indexer behind on a fresh deploy** — `Basket` rows show up minutes after the on-chain event. If the most recent `createdAt` is older than the current block timestamp by more than ~5 minutes, surface a ticket and stop; do not draft tweets against stale data.
+- **Indexer URL rotation** — when `AGENT_DEPLOYMENT_MEMORY.md` is updated with a new URL, the next MCP server start picks it up automatically. There's no in-process rotation; if a `cached: true` response references an old endpoint, kill and restart the MCP.
+- **Hasura 502/504** — the MCP fails closed (no retry loop). Surface a ticket; do not retry-loop in the agent.

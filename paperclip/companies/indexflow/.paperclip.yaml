@@ -64,3 +64,93 @@ agents:
         LLM_MODEL_ISSUE_IMPLEMENTER:
           kind: secret
           requirement: optional
+  partnership-tracker:
+    adapter:
+      type: process
+      config:
+        command: npm
+        args: ["run","agent:run","--","partnership-tracker"]
+    inputs:
+      env:
+        LLM_API_KEY:
+          kind: secret
+          requirement: required
+        LLM_BASE_URL:
+          kind: secret
+          requirement: required
+        LLM_MODEL:
+          kind: secret
+          requirement: required
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AGENT_NETWORK:
+          kind: secret
+          requirement: required
+        AGENT_NON_INTERACTIVE_WRITE_EXECUTE:
+          kind: secret
+          requirement: required
+        AGENT_MAX_TURNS:
+          kind: secret
+          requirement: required
+  basket-ideator:
+    adapter:
+      type: process
+      config:
+        command: npm
+        args: ["run","agent:run","--","basket-ideator"]
+    inputs:
+      env:
+        LLM_API_KEY:
+          kind: secret
+          requirement: required
+        LLM_BASE_URL:
+          kind: secret
+          requirement: required
+        LLM_MODEL:
+          kind: secret
+          requirement: required
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AGENT_NETWORK:
+          kind: secret
+          requirement: required
+        AGENT_NON_INTERACTIVE_WRITE_EXECUTE:
+          kind: secret
+          requirement: required
+        AGENT_MAX_TURNS:
+          kind: secret
+          requirement: required
+        ENVIO_URL:
+          kind: secret
+          requirement: optional
+  content-publisher:
+    adapter:
+      type: process
+      config:
+        command: npm
+        args: ["run","agent:run","--","content-publisher"]
+    inputs:
+      env:
+        LLM_API_KEY:
+          kind: secret
+          requirement: required
+        LLM_BASE_URL:
+          kind: secret
+          requirement: required
+        LLM_MODEL:
+          kind: secret
+          requirement: required
+        GH_TOKEN:
+          kind: secret
+          requirement: required
+        AGENT_NETWORK:
+          kind: secret
+          requirement: required
+        AGENT_NON_INTERACTIVE_WRITE_EXECUTE:
+          kind: secret
+          requirement: required
+        AGENT_MAX_TURNS:
+          kind: secret
+          requirement: required

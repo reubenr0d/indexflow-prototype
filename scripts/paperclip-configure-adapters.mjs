@@ -104,6 +104,54 @@ const ACTIVE_EMPLOYEES = [
     ],
     optionalEnv: ["LLM_MODEL_ISSUE_IMPLEMENTER"],
   },
+  {
+    // partnership-tracker shares the engineering secret bag because it
+    // reuses repo-editor-mcp + the shared proposed-issues manifest.
+    slug: "partnership-tracker",
+    requiredEnv: [
+      "LLM_API_KEY",
+      "LLM_BASE_URL",
+      "LLM_MODEL",
+      "GH_TOKEN",
+      "AGENT_NETWORK",
+      "AGENT_NON_INTERACTIVE_WRITE_EXECUTE",
+      "AGENT_MAX_TURNS",
+    ],
+    optionalEnv: [],
+  },
+  {
+    // basket-ideator: same engineering secret bag, plus optional
+    // ENVIO_URL as a fallback for the envio-graphql-mcp URL resolver
+    // (canonical source is AGENT_DEPLOYMENT_MEMORY.md).
+    slug: "basket-ideator",
+    requiredEnv: [
+      "LLM_API_KEY",
+      "LLM_BASE_URL",
+      "LLM_MODEL",
+      "GH_TOKEN",
+      "AGENT_NETWORK",
+      "AGENT_NON_INTERACTIVE_WRITE_EXECUTE",
+      "AGENT_MAX_TURNS",
+    ],
+    optionalEnv: ["ENVIO_URL"],
+  },
+  {
+    // content-publisher: local-only adapter, no CI. Founder triggers via
+    // Paperclip "Run now" per slot. Same engineering secret bag for the
+    // LLM + GH read access (no Twitter creds in v1 — public-channel
+    // posting stays human-only).
+    slug: "content-publisher",
+    requiredEnv: [
+      "LLM_API_KEY",
+      "LLM_BASE_URL",
+      "LLM_MODEL",
+      "GH_TOKEN",
+      "AGENT_NETWORK",
+      "AGENT_NON_INTERACTIVE_WRITE_EXECUTE",
+      "AGENT_MAX_TURNS",
+    ],
+    optionalEnv: [],
+  },
 ];
 
 async function call(path, init = {}) {

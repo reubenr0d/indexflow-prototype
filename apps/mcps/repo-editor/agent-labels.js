@@ -66,6 +66,16 @@ export const ISSUE_LABELS = [
     color: "5319e7",
     description: "Agent-finding category: needs investigation.",
   },
+  {
+    name: "category:partnership-blocker",
+    color: "e99695",
+    description: "Agent-finding category: partnership / BD-ops blocker.",
+  },
+  {
+    name: "category:vault-concept",
+    color: "c2e0c6",
+    description: "Agent-finding category: new-vault theme proposal from basket-ideator.",
+  },
 ];
 
 // PR-channel labels. Mirror the constants in

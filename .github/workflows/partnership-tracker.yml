@@ -1,0 +1,129 @@
+name: Partnership Tracker
+
+# Weekly BD-ops sweep across `growth/partnerships/`. Surfaces blockers as
+# GitHub issues (category: partnership-blocker) and proposes mechanical
+# frontmatter refreshes (status / next_milestone_date). Shares the
+# `.agent-self-improvement/proposed-issues.json` manifest, the
+# `agent-self-improver` concurrency slot, and the
+# `apply-self-improvement-issues.mjs` opener with the hourly
+# `self-improve` job in vault-agent.yml — see the per-agent block in
+# COMPANY.md for the manifest/cap rationale.
+
+on:
+  schedule:
+    # Monday 09:00 UTC. The hourly vault-agent self-improve job at :18
+    # runs in the same concurrency group, so whoever starts first wins
+    # the manifest write window; the other queues. cancel-in-progress=false
+    # below preserves both runs.
+    - cron: "0 9 * * 1"
+  # Founder-triggered runs for ad-hoc sweeps (e.g. immediately after a
+  # partner-file edit lands and the next scheduled tick is still days away).
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Skip the apply step (no issues opened)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write   # runner persists agents/memory/partnership-tracker/**
+  issues: write     # for `gh issue create` in the apply step
+
+# Shared with vault-agent.yml `self-improve` so two ticks can't race on
+# the `.agent-self-improvement/proposed-issues.json` manifest. The
+# `agent-self-improver` group already serialises the engineering
+# meta-agents; partnership-tracker joins it for the same reason.
+concurrency:
+  group: agent-self-improver
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: Run partnership-tracker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: Layer F — run partnership-tracker meta-agent
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # `list_open_issues` shells out to `gh issue list`. Read-only —
+          # this token never sees `gh issue create` (that happens later
+          # in the apply step under a fresh shell-out).
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
+          AGENT_MAX_TURNS: "10"
+          AGENT_NETWORK: "sepolia"
+        run: node scripts/agent-runner.mjs partnership-tracker
+
+      - name: Layer F' — issue risk-officer review
+        if: always()
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/run-self-improvement-issue-risk-officer.mjs
+
+      - name: Inspect issue risk-officer verdict
+        id: issue_verdict
+        if: always()
+        run: |
+          if [ ! -f .agent-self-improvement/issue-risk-officer-verdict.json ]; then
+            echo "verdict_kind=missing" >> "$GITHUB_OUTPUT"
+            echo "proposal_count=0" >> "$GITHUB_OUTPUT"
+            echo "::notice::no issue risk-officer verdict file — issues channel skipped (likely empty manifest)"
+            exit 0
+          fi
+          kind=$(jq -r '.verdict' .agent-self-improvement/issue-risk-officer-verdict.json)
+          count=$(jq -r '.proposalCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          dropped=$(jq -r '.droppedCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          echo "verdict_kind=${kind}" >> "$GITHUB_OUTPUT"
+          echo "proposal_count=${count}" >> "$GITHUB_OUTPUT"
+          echo "dropped_count=${dropped}" >> "$GITHUB_OUTPUT"
+          echo "::notice::issue risk-officer verdict=${kind} (${dropped}/${count} issues dropped)"
+
+      - name: Layer F'' — open issues
+        if: >-
+          always() &&
+          github.event.inputs.dry_run != 'true' &&
+          steps.issue_verdict.outputs.verdict_kind != 'veto' &&
+          steps.issue_verdict.outputs.verdict_kind != 'missing' &&
+          steps.issue_verdict.outputs.proposal_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/apply-self-improvement-issues.mjs --open-issues
+
+      - name: Commit partnership-tracker memory
+        if: always()
+        run: |
+          git config user.name "vault-agent[bot]"
+          git config user.email "vault-agent[bot]@users.noreply.github.com"
+          # --ignore-removal: never let a missing memory dir wipe tracked
+          # state on main (see vault-agent.yml for the failure mode this
+          # guards against). Only adds/modifications get staged.
+          git add --ignore-removal agents/memory/partnership-tracker/
+          if git diff --cached --quiet; then
+            echo "::notice::no memory changes to commit"
+            exit 0
+          fi
+          git commit -m "memory(agent): partnership-tracker sweep"
+          # Allow concurrent ticks (e.g. self-improve at :18 vs this
+          # job at 09:00) to land without deadlock. Files under
+          # agents/memory/<agent>/ are write-once-per-run so "theirs"
+          # is safe.
+          git pull --rebase --strategy-option=theirs
+          git push

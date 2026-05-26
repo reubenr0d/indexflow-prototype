@@ -47,5 +47,14 @@
     "envPassthrough": [
       "AGENT_NAME"
     ]
+  },
+  "envio-graphql-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/envio-graphql/index.js"],
+    "envPassthrough": [
+      "AGENT_NAME",
+      "PROJECT_ROOT",
+      "ENVIO_URL"
+    ]
   }
 }

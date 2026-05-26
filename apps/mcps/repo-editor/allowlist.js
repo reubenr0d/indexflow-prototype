@@ -136,6 +136,60 @@ const RULES = [
     requiresReviewKind: "shared",
     match: (p) => /^apps\/shared\/.*\.(mjs|js)$/.test(p),
   },
+
+  // -------------------------------------------------------- GROWTH SURFACE --
+  // The CMO agents (content-publisher, partnership-tracker,
+  // basket-ideator) write into the `growth/` tree. These are markdown +
+  // (small) JSON artefacts that humans triage on every change — the
+  // `requiresReviewKind: "growth"` flag surfaces edits prominently in
+  // the PR description so the founder can scan them at a glance.
+  //
+  // SCOPE GUARDS:
+  //   - content-publisher edits ONLY status + posted_url in the
+  //     calendar, and polish-pass diffs in `growth/drafts/`. The
+  //     per-agent risk-officer rubric enforces the field-level scope.
+  //   - partnership-tracker edits ONLY frontmatter (status,
+  //     next_milestone_date) in `growth/partnerships/*.md`. Narrative
+  //     body sections stay founder-owned.
+  //   - basket-ideator creates new files under
+  //     `growth/basket-concepts/queue/` and appends to REGISTRY.md.
+  //     Never edits launched/retired entries.
+  {
+    effect: "allow",
+    id: "growth_calendar",
+    requiresReviewKind: "growth",
+    match: (p) => p === "growth/X_CONTENT_CALENDAR.md",
+  },
+  {
+    effect: "allow",
+    id: "growth_drafts",
+    requiresReviewKind: "growth",
+    match: (p) => /^growth\/drafts\/[^/]+\.md$/.test(p),
+  },
+  {
+    effect: "allow",
+    id: "growth_partnerships",
+    requiresReviewKind: "growth",
+    match: (p) => /^growth\/partnerships\/[^/]+\.md$/.test(p),
+  },
+  {
+    effect: "allow",
+    id: "growth_partnerships_chains",
+    requiresReviewKind: "growth",
+    match: (p) => /^growth\/partnerships\/chains\/[^/]+\.md$/.test(p),
+  },
+  {
+    effect: "allow",
+    id: "growth_basket_concepts_queue",
+    requiresReviewKind: "growth",
+    match: (p) => /^growth\/basket-concepts\/queue\/[^/]+\.md$/.test(p),
+  },
+  {
+    effect: "allow",
+    id: "growth_basket_concepts_registry",
+    requiresReviewKind: "growth",
+    match: (p) => p === "growth/basket-concepts/REGISTRY.md",
+  },
 ];
 
 // Public: normalise any user-supplied path to a repo-relative POSIX string.

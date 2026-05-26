@@ -2784,12 +2784,56 @@ function publishPaperclipHeartbeat({ config, state, runSummary, network, status 
 
   const writeActions = (runSummary.writeActions || [])
     .filter((a) => !a.skipped)
-    .map((a) => ({
-      tool: a.tool,
-      txHash: a.txHash || null,
-      justification: a.justification || null,
-      ...(a.riskOfficer ? { riskOfficer: a.riskOfficer } : {}),
-    }));
+    .map((a) => {
+      // Compute the WriteActionKind so `/ops`'s agent-card.tsx can
+      // branch render (vault tx vs issue proposal vs file diff vs
+      // calendar update) without re-deriving from the tool name.
+      // Defaults to `vault-tx` when a `txHash` is present so existing
+      // mining-manager / quality-matrix-manager heartbeats keep their
+      // current behaviour. See apps/web/src/lib/ops-types.ts → WriteActionKind.
+      const base = {
+        tool: a.tool,
+        txHash: a.txHash || null,
+        justification: a.justification || null,
+        ...(a.riskOfficer ? { riskOfficer: a.riskOfficer } : {}),
+      };
+      const args = a.args || {};
+      let kind = "vault-tx";
+      let extra = {};
+      if (a.tool === "propose_issue") {
+        kind = "issue-proposal";
+        extra = {
+          issueTitle: typeof args.title === "string" ? args.title : undefined,
+          issueCategory:
+            typeof args.category === "string" ? args.category : undefined,
+        };
+      } else if (
+        a.tool === "propose_file_edit" ||
+        a.tool === "propose_file_create" ||
+        a.tool === "propose_file_rename"
+      ) {
+        const path = typeof args.path === "string" ? args.path : undefined;
+        if (path === "growth/X_CONTENT_CALENDAR.md") {
+          kind = "calendar-update";
+        } else {
+          kind = "file-diff";
+        }
+        extra = path ? { path } : {};
+      } else if (a.txHash) {
+        kind = "vault-tx";
+      } else {
+        // Fall back to `file-diff` for unknown non-tx write tools so
+        // the UI doesn't render an empty vault-tx card.
+        kind = "file-diff";
+      }
+      return {
+        ...base,
+        kind,
+        ...Object.fromEntries(
+          Object.entries(extra).filter(([, v]) => v != null && v !== ""),
+        ),
+      };
+    });
 
   const errors = (runSummary.errors || []).map((e) => ({
     tool: e.tool,

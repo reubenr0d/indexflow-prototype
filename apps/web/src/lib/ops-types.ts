@@ -72,11 +72,45 @@ export interface RiskOfficerVerdict {
   reason: string;
 }
 
+// The kind of write the agent performed. Drives the agent-card.tsx
+// render branch. Inferred at runner-persist time from tool name + args
+// (see `kindFromWriteAction` in scripts/agent-runner.mjs), and round-
+// tripped through `paperclip-heartbeat.json` so the UI doesn't have to
+// re-derive it from the tool string. Heartbeats produced before this
+// field was added (trading agents pre-2026-05-26) have `kind` absent;
+// the loader falls back to "vault-tx" for those.
+export type WriteActionKind =
+  | "vault-tx"          // a real on-chain tx — links to /baskets/<vault>
+  | "issue-proposal"    // propose_issue — links to the GitHub issue when filed
+  | "file-diff"         // propose_file_edit / create / rename — shows path + summary
+  | "calendar-update";  // propose_file_edit against growth/X_CONTENT_CALENDAR.md — shows date + status transition
+
 export interface WriteActionSummary {
   tool: string;
   txHash: string | null;
   justification: string;
   riskOfficer?: RiskOfficerVerdict;
+  // Non-trading write metadata. All fields optional for back-compat with
+  // pre-2026-05-26 heartbeats (mining-manager + quality-matrix-manager
+  // never wrote these because their only write tool was vault-manager-mcp).
+  kind?: WriteActionKind;
+  // For `file-diff` and `calendar-update`: the repo-relative path the
+  // edit targets (e.g. `growth/partnerships/nox.md`).
+  path?: string;
+  // For `issue-proposal`: the GitHub issue URL once the applier files it
+  // (the agent itself only writes the manifest entry; this field is
+  // populated only when `apply-self-improvement-issues.mjs --open-issues`
+  // has run AND can be resolved from the open-issue list). Otherwise
+  // a stable manifest id the founder can grep for.
+  issueUrl?: string;
+  issueTitle?: string;
+  issueCategory?: string;
+  manifestId?: string;
+  // For `calendar-update`: the parsed (slotDate, statusTransition)
+  // pair extracted from the diff justification. Render-only — the
+  // canonical source is the calendar row itself.
+  slotDate?: string;
+  statusTransition?: string;
 }
 
 export interface Heartbeat {

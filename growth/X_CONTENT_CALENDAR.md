@@ -42,6 +42,7 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 | 2026-05-28 | Thu | 15:00 | thread | A | none | P3 | Contrarian | `growth/drafts/2026-05-28-thread-six-contracts-zero-chain-pickers.md` | seeded |  |
 | 2026-05-29 | Fri | 16:30 | standalone | A | none | P1 | Curiosity Gap | `growth/drafts/2026-05-29-tweet-reserve-depth-is-product-quality.md` | seeded |  |
 | 2026-05-30 | Sat | 15:00 | thread | cross | none | P4 | Insider Knowledge | `growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md` | seeded |  |
+| 2026-05-30 | Sat | 21:00 | thread | cross | none | P3 | Insider Knowledge | `growth/drafts/2026-05-30-thread-agent-company-launch.md` | seeded |  |
 | 2026-05-31 | Sun | 16:30 | standalone | cross | none | P4 | Curiosity Gap | `growth/drafts/2026-05-31-tweet-season-1-launch-quote.md` | seeded |  |
 | 2026-06-01 | Mon | 15:00 | thread | B | Curators | P1 | Curiosity Gap | `growth/drafts/2026-06-01-thread-build-a-basket-in-10-minutes.md` | seeded |  |
 | 2026-06-02 | Tue | 16:30 | standalone | B | Curators | P3 | Personal Story | `growth/drafts/2026-06-02-tweet-auto-broadcast-pattern.md` | seeded |  |

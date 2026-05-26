@@ -52,6 +52,16 @@ export function redactSecrets(text: string): string {
   return out;
 }
 
+// YAML date scalars (e.g. `proposedDate: 2026-05-26`) deserialize to JS
+// Date objects. We always want ISO-yyyy-mm-dd strings on the snapshot so
+// the React renderer never sees a raw Date (which throws "Objects are
+// not valid as a React child").
+function normalizeYamlDate(value: unknown): string {
+  if (value == null) return "";
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value);
+}
+
 // ---------------------------------------------------------------------------
 // Parse helpers — COMPANY.md uses YAML frontmatter for top-level metadata,
 // then fenced ```yaml blocks under each heading for structured payloads.
@@ -346,13 +356,37 @@ async function hydrateWithMemory(card: EmployeeCard, network = "sepolia"): Promi
         thesis: heartbeat.thesis ? redactSecrets(heartbeat.thesis) : heartbeat.thesis,
         summary: heartbeat.summary ? redactSecrets(heartbeat.summary) : heartbeat.summary,
         errors: heartbeat.errors?.map((e) => redactSecrets(e)) ?? [],
-        writeActions: (heartbeat.writeActions ?? []).map((w) => ({
-          ...w,
-          justification: w.justification ? redactSecrets(w.justification) : "",
-          riskOfficer: w.riskOfficer
-            ? { ...w.riskOfficer, reason: redactSecrets(w.riskOfficer.reason) }
-            : undefined,
-        })),
+        writeActions: (heartbeat.writeActions ?? []).map((w) => {
+          // Back-compat kind inference for pre-2026-05-26 heartbeats
+          // (the runner now stamps `kind` directly; older heartbeats
+          // never had it). Mirrors the runner's stamping rules so /ops
+          // renders consistently regardless of which side wrote them.
+          let kind = w.kind;
+          if (!kind) {
+            if (w.tool === "propose_issue") kind = "issue-proposal";
+            else if (
+              w.tool === "propose_file_edit" ||
+              w.tool === "propose_file_create" ||
+              w.tool === "propose_file_rename"
+            ) {
+              kind = w.path === "growth/X_CONTENT_CALENDAR.md"
+                ? "calendar-update"
+                : "file-diff";
+            } else if (w.txHash) {
+              kind = "vault-tx";
+            } else {
+              kind = "vault-tx"; // legacy default
+            }
+          }
+          return {
+            ...w,
+            kind,
+            justification: w.justification ? redactSecrets(w.justification) : "",
+            riskOfficer: w.riskOfficer
+              ? { ...w.riskOfficer, reason: redactSecrets(w.riskOfficer.reason) }
+              : undefined,
+          };
+        }),
       }
     : null;
 
@@ -465,7 +499,7 @@ async function loadBasketConcepts(): Promise<BasketConcept[]> {
       slug: (data.slug as string) ?? file.replace(/\.md$/, ""),
       theme: (data.theme as string) ?? "",
       status: (data.status as string) ?? "proposed",
-      proposedDate: (data.proposedDate as string) ?? "",
+      proposedDate: normalizeYamlDate(data.proposedDate),
       proposedBy: (data.proposedBy as string) ?? "",
       filePath: `growth/basket-concepts/queue/${file}`,
       rationale: ((data.rationale as string) ?? "").trim().slice(0, 280),
@@ -536,7 +570,7 @@ async function loadRecentBlogPosts(limit = 5): Promise<BlogPostMetaLite[]> {
     posts.push({
       slug: file.replace(/\.md$/, ""),
       title: data.title as string,
-      date: data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date),
+      date: normalizeYamlDate(data.date),
       tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
     });
   }

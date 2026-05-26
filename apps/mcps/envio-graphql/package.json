@@ -1,0 +1,17 @@
+{
+  "name": "envio-graphql-mcp",
+  "version": "1.0.0",
+  "description": "Read-only MCP server over the IndexFlow Envio HyperIndex Hasura GraphQL endpoint. Resolves the canonical URL from AGENT_DEPLOYMENT_MEMORY.md at runtime so URL rotations land automatically. Mutations are refused. 60s in-memory cache per query signature.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "smoke": "node index.js --smoke",
+    "test": "node --test url-resolver.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

@@ -49,7 +49,7 @@ See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integrati
 | Telegram | https://t.me/+gNSBM_gBQ1NkNTY1 |
 | GitHub | https://github.com/reubenr0d/indexflow-prototype |
 | Ops contact | mailto:ops@indexflow.app |
-| Envio (live indexer) | `https://indexer.dev.hyperindex.xyz/dbe3f66/v1/graphql` |
+| Envio (live indexer) | `https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql` |
 
 #### X account architecture (two accounts, one CMO rhythm)
 
@@ -312,8 +312,160 @@ employees:
       verdicts: [approve, downsize, veto]
     notes: >
       Vets every issue-proposal manifest emitted by self-improver-issues
-      before `gh issue create` is called. Softer rubric than the PR-side
-      reviewer; the issues channel is the speculative-ideas surface. No heartbeat.
+      AND partnership-tracker before `gh issue create` is called. Both
+      meta-agents share the same `.agent-self-improvement/proposed-issues.json`
+      manifest and the same applier; the rubric covers the engineering
+      categories (`new_mcp_or_skill`, `strategy_idea`, `data_gap`,
+      `refactor`, `investigation`) and the BD-ops category
+      (`partnership-blocker`). No heartbeat.
+
+  - id: partnership-tracker
+    state: active
+    title: Partnership Tracker
+    role: growth-ops
+    team: growth
+    reportsTo: founder
+    promptFile: agents/partnership-tracker.md
+    adapter:
+      type: shell
+      command: npm
+      args: ["run", "agent:run", "--", "partnership-tracker"]
+      cwd: ${REPO_ROOT}
+      envPassthrough:
+        - LLM_API_KEY
+        - LLM_BASE_URL
+        - LLM_MODEL
+        - GH_TOKEN
+        - AGENT_NETWORK
+        - AGENT_NON_INTERACTIVE_WRITE_EXECUTE
+        - AGENT_MAX_TURNS
+    skills: [partnerships]
+    budget:
+      monthlyCapUsd: 15
+      softWarnPct: 80
+    governance:
+      writeApprovalKind: risk-officer-second-pass
+      writeApprovalAgent: risk-officer-self-improvement-issues
+      mayOpenGitHubIssues: true
+      mayOpenGitHubPRs: true
+      mayCommitToMain: false
+      mayPostPublicChannel: false
+    schedule: "0 9 * * 1"   # weekly Mon 09:00 UTC via .github/workflows/partnership-tracker.yml
+    notes: >
+      Sweeps `growth/partnerships/` weekly. Surfaces blockers
+      (handle-TBD, stale `next_milestone_date`, aging
+      `awaiting_response` 0xLabs intros, `pending_deploy`
+      co-marketing without a date) via `propose_issue` with
+      `category: partnership-blocker`. Shares the
+      `.agent-self-improvement/proposed-issues.json` manifest and
+      the `agent-self-improver` CI concurrency group with
+      `self-improver-issues`, so they can't race on the manifest.
+      Also issues `propose_file_edit` against partner frontmatter
+      (`status`, `next_milestone_date`) for mechanical refreshes.
+
+  - id: basket-ideator
+    state: active
+    title: Basket Concept Ideator
+    role: growth-product
+    team: growth
+    reportsTo: founder
+    promptFile: agents/basket-ideator.md
+    activatingPriority: season-1-operator-trials
+    adapter:
+      type: shell
+      command: npm
+      args: ["run", "agent:run", "--", "basket-ideator"]
+      cwd: ${REPO_ROOT}
+      envPassthrough:
+        - LLM_API_KEY
+        - LLM_BASE_URL
+        - LLM_MODEL
+        - GH_TOKEN
+        - AGENT_NETWORK
+        - AGENT_NON_INTERACTIVE_WRITE_EXECUTE
+        - AGENT_MAX_TURNS
+        - ENVIO_URL          # fallback only; real read goes through envio-graphql-mcp
+    skills: [vault-themes, growth-content, envio-graphql]
+    budget:
+      monthlyCapUsd: 15
+      softWarnPct: 80
+    governance:
+      writeApprovalKind: risk-officer-second-pass
+      writeApprovalAgent: risk-officer-self-improvement-issues
+      mayOpenGitHubIssues: true        # one per approved concept (category: vault-concept)
+      mayOpenGitHubPRs: true           # growth/basket-concepts/queue/ drafts
+      mayCommitToMain: false
+      mayPostPublicChannel: false
+      mayDeployContracts: false        # CRITICAL boundary
+    schedule: "0 9 * * 2"   # weekly Tue 09:00 UTC via .github/workflows/basket-ideator.yml (one day after partnership-tracker so cron load stays light)
+    cadenceTarget:
+      seasonOne: 1_new_basket_proposal_per_week
+      postSeasonOne: 1_per_two_weeks
+    notes: >
+      Reads oracle coverage, existing vault inventory, X content
+      calendar, partner files, and Envio `Basket` history; proposes
+      ONE new basket theme per tick as a
+      `growth/basket-concepts/queue/<date>-<slug>.md` draft + a
+      `vault-concept` handoff issue. Shares the
+      `.agent-self-improvement/proposed-issues.json` manifest and
+      the `agent-self-improver` CI concurrency group with
+      `self-improver-issues` + `partnership-tracker`. Pure
+      suggest-only: NEVER deploys, NEVER authors new trading-agent
+      prompts, NEVER posts publicly.
+    handoff:
+      # Pure suggest-only — execution lives in the existing repo flow:
+      # 1. basket-ideator proposes growth/basket-concepts/queue/<date>-<slug>.md + a vault-concept issue
+      # 2. Founder reviews; flips queue/ status: proposed → approved
+      # 3. Founder (or issue-implementer) creates/updates agents/<vault-name>-manager.md
+      #    OR binds an existing trading agent's vault override to the new basket
+      # 4. scripts/agent-runner.mjs + .github/workflows/vault-agent.yml deploys + runs it
+      # 5. Once on-chain, broadcast-bot picks up the BasketCreated event (Phase: broadcast-bot activation)
+      # 6. content-publisher slots the launch into the X calendar
+      downstreamAgentTouchpoints: [broadcast-bot, content-publisher]
+      downstreamRepoFlow: scripts/agent-runner.mjs + .github/workflows/vault-agent.yml
+
+  - id: content-publisher
+    state: active
+    title: X Content Publisher
+    role: growth-content
+    team: growth
+    reportsTo: founder
+    promptFile: agents/content-publisher.md
+    adapter:
+      type: shell
+      command: npm
+      args: ["run", "agent:run", "--", "content-publisher"]
+      cwd: ${REPO_ROOT}
+      envPassthrough:
+        - LLM_API_KEY
+        - LLM_BASE_URL
+        - LLM_MODEL
+        - GH_TOKEN
+        - AGENT_NETWORK
+        - AGENT_NON_INTERACTIVE_WRITE_EXECUTE
+        - AGENT_MAX_TURNS
+    skills: [growth-content]
+    budget:
+      monthlyCapUsd: 25
+      softWarnPct: 80
+    governance:
+      writeApprovalKind: human-per-post
+      mayOpenGitHubIssues: false
+      mayOpenGitHubPRs: true        # calendar status + posted_url updates
+      mayCommitToMain: false
+      mayPostPublicChannel: false   # human-in-the-loop for every X post in v1
+    schedule: local-paperclip-only   # NO CI cron. Founder triggers via local "Run now" per slot.
+    notes: >
+      Reads the next `seeded` slot in `growth/X_CONTENT_CALENDAR.md`,
+      polishes the draft under `growth/drafts/`, flips the calendar
+      row's `status: seeded → polished`, and renders a posting brief
+      in the final summary (Paperclip captures it as a local ticket).
+      NEVER auto-posts; the public-channel human gate is
+      non-negotiable. Posting stays human-only in v1; the founder
+      pastes the posted URL into the next-tick run context, at which
+      point the agent proposes the `polished → posted` calendar edit
+      with `posted_url` filled. No CI workflow ships — schedule is
+      `local-paperclip-only` per the deferred `twitter-mcp` decision.
 ```
 
 ### Brainstorm (proposed for review)
@@ -323,89 +475,26 @@ Four growth/ops agents grounded in concrete repo artefacts they would unblock. E
 ```yaml
 brainstorm:
 
-  - id: content-publisher
-    state: brainstorm
-    title: X Content Publisher
-    role: growth-content
-    team: growth
-    reportsTo: founder
-    proposedPromptFile: agents/content-publisher.md
-    rationale: >
-      32 drafts seeded under growth/drafts/ for the Mon May 25 → Sun Jun 21
-      Season 1 calendar. Posting cadence is manual today; one missed slot
-      breaks the week's narrative arc. The "edit + post" workflow in
-      growth/X_CONTENT_CALENDAR.md is a perfect agent surface: read the
-      next slot, surface the polished draft to the founder as a ticket,
-      after human posts capture the URL, mark `status: posted` + fill
-      `posted_url` in the calendar. NEVER auto-posts.
-    proposedScope:
-      reads:
-        - growth/X_CONTENT_CALENDAR.md
-        - growth/drafts/**/*.md
-        - growth/templates/**/*.md
-        - growth/X_GROWTH_PLAN.md
-      writes:
-        - growth/X_CONTENT_CALENDAR.md (status + posted_url updates only)
-        - growth/drafts/<date>-<type>-<topic>.md (polish-pass diffs, gated by approval)
-      ticketsTo: founder
-      heartbeat: "0 8 * * *"      # 08:00 UTC, well before the 15:00 / 16:30 UTC posting windows
-    proposedSkills: [growth-content]
-    proposedMcps:
-      - id: repo-editor-mcp
-        rationale: read + diff draft files; same allowlist guard as issue-implementer
-      - id: twitter-mcp (NEW)
-        rationale: optional, read-only at first (fetch posted URL after the fact); writing only after explicit founder opt-in per post
-    governance:
-      mayCommitToMain: false
-      mayOpenGitHubIssues: false
-      mayOpenGitHubPRs: true        # for calendar status updates
-      mayPostPublicChannel: false   # human-in-the-loop for every X post in v1
-      writeApprovalKind: human-per-post
-    proposedBudgetUsd: 25
-    blockers:
-      - Author agents/content-publisher.md prompt file
-      - Author agents/skills/growth-content.md
-      - Decide whether twitter-mcp ships in v1 or stays human-only
+  # `content-publisher` was promoted to `employees:` (state: active,
+  # local-paperclip-only) on 2026-05-26 — see the employee block above.
+  # Activation diff: `agents/content-publisher.md` + `agents/skills/growth-content.md`
+  # authored; `growth/X_CONTENT_CALENDAR.md`, `growth/drafts/`,
+  # `growth/partnerships/`, and basket-concept paths added to the
+  # `repo-editor-mcp` allowlist (`requiresReviewKind: "growth"`);
+  # `propose_ticket` dropped from tool list (posting brief renders into
+  # the final summary which Paperclip captures); slug added to both
+  # Paperclip ACTIVE_* lists. NO CI cron — the founder triggers via
+  # local Paperclip "Run now" per slot, preserving the human posting
+  # gate. `twitter-mcp` decision deferred to a follow-up batch.
 
-  - id: partnership-tracker
-    state: brainstorm
-    title: Partnership Tracker
-    role: growth-ops
-    team: growth
-    reportsTo: founder
-    proposedPromptFile: agents/partnership-tracker.md
-    rationale: >
-      115+ partner rows in growth/partnerships/ (5 active per-partner
-      files + the 110-row 0xLabs intros pipeline). The `next_milestone_date`
-      column in growth/partnerships/README.md silently goes stale; the
-      `awaiting_response` status has no automated nudge. Live blockers
-      (e.g. "Nox handle TBD blocking Sun Jun 14 co-tweet") need to surface
-      faster than the founder's manual review cadence.
-    proposedScope:
-      reads:
-        - growth/partnerships/**/*.md
-        - growth/X_CONTENT_CALENDAR.md      # cross-ref partnership slots
-        - AGENT_DEPLOYMENT_MEMORY.md        # cross-ref planned chain spokes
-      writes:
-        - growth/partnerships/<partner>.md (status + next_milestone_date updates only)
-      ticketsTo: founder
-      heartbeat: "0 9 * * 1"    # weekly Monday 09:00 UTC
-    proposedSkills: [partnerships]
-    proposedMcps:
-      - id: repo-editor-mcp
-      - id: gh-cli (via existing GH_TOKEN passthrough)
-        rationale: file outreach-tracking issues for blockers
-    governance:
-      mayCommitToMain: false
-      mayOpenGitHubIssues: true     # blocker / stale-followup tickets
-      mayOpenGitHubPRs: true        # partner-file frontmatter updates
-      mayPostPublicChannel: false
-      writeApprovalKind: risk-officer-second-pass
-      writeApprovalAgent: risk-officer-self-improvement-issues
-    proposedBudgetUsd: 15
-    blockers:
-      - Author agents/partnership-tracker.md prompt file
-      - Author agents/skills/partnerships.md
+  # `partnership-tracker` was promoted to `employees:` (state: active) on
+  # 2026-05-26 — see the employee block above. Activation diff:
+  # `agents/partnership-tracker.md` + `agents/skills/partnerships.md`
+  # authored, risk-officer rubric extended to cover
+  # `category: partnership-blocker`, CI cron added at
+  # `.github/workflows/partnership-tracker.yml`, slug added to both
+  # Paperclip ACTIVE_* lists in `scripts/sync-paperclip-mirror.mjs` and
+  # `scripts/paperclip-configure-adapters.mjs`.
 
   - id: broadcast-bot
     state: brainstorm
@@ -447,86 +536,20 @@ brainstorm:
       - Build apps/mcps/twitter/ + obtain @IndexFlowBots credentials
       - Re-key the @IndexFlowBots AGENT_DEPLOYMENT_MEMORY.md row from planned → live with concrete handle
 
-  - id: basket-ideator
-    state: brainstorm
-    title: Basket Concept Ideator
-    role: growth-product
-    team: growth
-    reportsTo: founder
-    proposedPromptFile: agents/basket-ideator.md
-    activatingPriority: season-1-operator-trials   # the Season 1 success metric *is* new basket creations; this agent is the front of that flywheel
-    rationale: >
-      The Season 1 metric is "new testnet baskets created from
-      utm_source=x per week" — without a steady cadence of NEW basket
-      themes hitting the testnet there's no event for broadcast-bot
-      to announce, no curator story for content-publisher to feature,
-      and no fresh deep-link for the X content calendar to drive
-      traffic to. The two trading agents we ship today (mining-manager,
-      quality-matrix-manager) cover one product line (Minestarters).
-      We need a structured idea pipeline that proposes new basket
-      THEMES — the trading agents and curator humans still own
-      execution. Pure suggest-only surface; never deploys, never
-      curates a vault directly.
-    proposedScope:
-      reads:
-        - docs/ORACLE_SUPPORTED_ASSETS.md   # candidate asset must have an oracle (or flag what's needed)
-        - apps/web/src/config/*-deployment.json    # avoid proposing themes already covered
-        - agents/*.md                        # know which trading agents already exist + their vault bindings
-        - growth/X_CONTENT_CALENDAR.md       # cross-ref upcoming slots to align launch timing
-        - growth/X_GROWTH_PLAN.md            # narrative arcs that a new basket can anchor
-        - growth/GALXE_CAMPAIGN_PLAN.md      # Track A/B/C personas a new basket should serve
-        - growth/partnerships/**/*.md        # partner-aligned basket themes (e.g. an Avalanche-native basket post-spoke deploy)
-        - Envio HyperIndex (BasketCreated event history → don't re-propose themes already live)
-      writes:
-        - growth/basket-concepts/queue/<date>-<theme-slug>.md (one markdown per proposal, frontmatter: status, theme, target_curator_persona, season_1_slot_alignment, oracle_gap_flag, estimated_launch_eta)
-        - growth/basket-concepts/REGISTRY.md (append-only roll-up of all proposals + status)
-      ticketsTo: founder
-      heartbeat: "0 9 * * 1"   # weekly Monday 09:00 UTC — gives the founder Tue/Wed to review for a Thu/Fri launch
-      cadenceTarget:
-        seasonOne: 1_new_basket_proposal_per_week
-        postSeasonOne: 1_per_two_weeks
-      neverDoes:
-        - Deploying or creating BasketVault contracts (handoff to existing repo trading-agent flow)
-        - Authoring agents/*.md prompts for new trading agents (founder or issue-implementer's job)
-        - Posting to any public channel (broadcast-bot owns external announcements)
-        - Proposing themes that lack oracle coverage without an explicit oracle_gap_flag + remediation note
-    proposedSkills: [growth-content, vault-themes, envio-graphql]
-    proposedMcps:
-      - id: repo-editor-mcp
-        rationale: read deployment configs, existing agent prompts, oracle docs; write basket concept files under growth/basket-concepts/queue/
-      - id: envio-graphql-mcp (NEW)
-        rationale: query live BasketCreated event history to de-dupe themes (shared dependency with broadcast-bot)
-      - id: gh-cli
-        rationale: file one issue per approved concept with category:vault-concept routing to the trading-agent author workflow
-      - id: web-search-mcp (NEW, optional)
-        rationale: market signal input (sector rotations, trending tickers, ETF flows); fallback is founder context injection
-    governance:
-      mayCommitToMain: false
-      mayOpenGitHubIssues: true        # one issue per approved basket concept → handoff to repo flow
-      mayOpenGitHubPRs: true           # for growth/basket-concepts/queue/<date>-<slug>.md drafts
-      mayPostPublicChannel: false
-      mayDeployContracts: false        # CRITICAL: this is the boundary; trading agents and human operators deploy
-      writeApprovalKind: risk-officer-second-pass
-      writeApprovalAgent: risk-officer-self-improvement-issues
-    proposedBudgetUsd: 15
-    handoff:
-      # Pure suggest-only — execution lives in the existing repo flow:
-      # 1. basket-ideator proposes growth/basket-concepts/queue/<date>-<slug>.md
-      # 2. Founder reviews; if approved, flips status: proposed → status: approved
-      # 3. Founder (or issue-implementer) creates/updates agents/<vault-name>-manager.md
-      #    OR binds an existing trading agent's vault override to the new basket
-      # 4. Existing scripts/agent-runner.mjs + .github/workflows/vault-agent.yml deploys + runs it
-      # 5. Once on-chain, broadcast-bot picks up the BasketCreated event
-      # 6. content-publisher slots the launch into the X calendar
-      downstreamAgentTouchpoints: [broadcast-bot, content-publisher]
-      downstreamRepoFlow: scripts/agent-runner.mjs + .github/workflows/vault-agent.yml
-    blockers:
-      - Author agents/basket-ideator.md prompt file
-      - Author agents/skills/vault-themes.md (oracle-coverage matrix, existing-vault inventory rules, target curator persona taxonomy, season-narrative alignment heuristics)
-      - Decide whether the optional web-search MCP ships in v1 or whether market signal stays a founder context injection
-      - Confirm envio-graphql-mcp build is shared with broadcast-bot (don't build twice)
-    unblocked:
-      - "[2026-05-26] growth/basket-concepts/ scaffold landed: README.md (frontmatter schema + lifecycle proposed→approved→launched→retired + handoff diagram), REGISTRY.md (append-only roll-up), queue/2026-05-26-ai-infrastructure-basket.md (first worked example, manually seeded to validate the workflow before basket-ideator is authored)"
+  # `basket-ideator` was promoted to `employees:` (state: active) on
+  # 2026-05-26 — see the employee block above. Activation diff:
+  # `agents/basket-ideator.md` + `agents/skills/vault-themes.md` +
+  # `agents/skills/envio-graphql.md` (rewritten against the live
+  # `Basket` schema) authored, `apps/mcps/envio-graphql/` built
+  # (`recent_basket_created` / `count_baskets_by_theme` /
+  # `discover_schema` / `query_graphql`, smoke-tested live), risk-officer
+  # rubric extended to cover `category: vault-concept`, CI cron added at
+  # `.github/workflows/basket-ideator.yml`, slug added to both Paperclip
+  # ACTIVE_* lists. Scaffold history preserved: the
+  # `growth/basket-concepts/` workflow (README, REGISTRY,
+  # `queue/2026-05-26-ai-infrastructure-basket.md` worked example)
+  # landed 2026-05-26 to validate the queue + lifecycle BEFORE
+  # the agent itself was activated.
 
   - id: docs-syncer
     state: brainstorm

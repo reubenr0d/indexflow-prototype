@@ -1,0 +1,136 @@
+name: Basket Ideator
+
+# Weekly basket-concept proposer. Reads oracle coverage, the existing
+# vault inventory, the X content calendar, growth partnerships, and the
+# live Envio HyperIndex `Basket` history to draft ONE new basket-theme
+# proposal per week into `growth/basket-concepts/queue/<date>-<slug>.md`
+# plus a `vault-concept` handoff issue. Pure suggest-only — NEVER
+# deploys, NEVER posts publicly, NEVER authors new trading-agent
+# prompts.
+#
+# Shares the `.agent-self-improvement/proposed-issues.json` manifest,
+# the `agent-self-improver` concurrency slot, and the
+# `apply-self-improvement-issues.mjs` opener with the hourly
+# `self-improve` job in vault-agent.yml and the weekly
+# `partnership-tracker.yml` sweep — see the per-agent block in
+# COMPANY.md for the manifest/cap rationale.
+
+on:
+  schedule:
+    # Tuesday 09:00 UTC — one day after partnership-tracker (Mon 09:00)
+    # so the weekly cron load stays light. Vault-agent at :18 hourly
+    # also shares the agent-self-improver concurrency group, so we
+    # never race on the shared manifest.
+    - cron: "0 9 * * 2"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Skip the apply step (no issues opened)"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write   # runner persists agents/memory/basket-ideator/** + queue/<date>-<slug>.md drafts
+  issues: write     # for `gh issue create` (vault-concept handoff)
+
+concurrency:
+  group: agent-self-improver
+  cancel-in-progress: false
+
+jobs:
+  ideate:
+    name: Run basket-ideator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: Layer F — run basket-ideator meta-agent
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          # GH_TOKEN gates `list_open_issues` (dedup pass against
+          # already-open vault-concept issues). Read-only; the apply
+          # step below gets a separate shell-out for `gh issue create`.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_NON_INTERACTIVE_WRITE_EXECUTE: "1"
+          AGENT_MAX_TURNS: "14"
+          AGENT_NETWORK: "sepolia"
+          # The envio-graphql-mcp resolves its URL from
+          # AGENT_DEPLOYMENT_MEMORY.md at server startup; ENVIO_URL is
+          # only used as a fallback (and lets us override in CI for a
+          # smoke run against a staging endpoint without editing the
+          # memory file).
+        run: node scripts/agent-runner.mjs basket-ideator
+
+      - name: Layer F' — issue risk-officer review
+        if: always()
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/run-self-improvement-issue-risk-officer.mjs
+
+      - name: Inspect issue risk-officer verdict
+        id: issue_verdict
+        if: always()
+        run: |
+          if [ ! -f .agent-self-improvement/issue-risk-officer-verdict.json ]; then
+            echo "verdict_kind=missing" >> "$GITHUB_OUTPUT"
+            echo "proposal_count=0" >> "$GITHUB_OUTPUT"
+            echo "::notice::no issue risk-officer verdict file — issues channel skipped (likely empty manifest)"
+            exit 0
+          fi
+          kind=$(jq -r '.verdict' .agent-self-improvement/issue-risk-officer-verdict.json)
+          count=$(jq -r '.proposalCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          dropped=$(jq -r '.droppedCount' .agent-self-improvement/issue-risk-officer-verdict.json)
+          echo "verdict_kind=${kind}" >> "$GITHUB_OUTPUT"
+          echo "proposal_count=${count}" >> "$GITHUB_OUTPUT"
+          echo "dropped_count=${dropped}" >> "$GITHUB_OUTPUT"
+          echo "::notice::issue risk-officer verdict=${kind} (${dropped}/${count} issues dropped)"
+
+      - name: Layer F'' — open vault-concept handoff issue
+        if: >-
+          always() &&
+          github.event.inputs.dry_run != 'true' &&
+          steps.issue_verdict.outputs.verdict_kind != 'veto' &&
+          steps.issue_verdict.outputs.verdict_kind != 'missing' &&
+          steps.issue_verdict.outputs.proposal_count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          MAX_OPEN_SELF_IMPROVER_ISSUES: "10"
+        run: node scripts/apply-self-improvement-issues.mjs --open-issues
+
+      - name: Commit basket-ideator memory and queue draft
+        if: always()
+        run: |
+          git config user.name "vault-agent[bot]"
+          git config user.email "vault-agent[bot]@users.noreply.github.com"
+          # --ignore-removal: never let a missing memory dir wipe tracked
+          # state. Stages BOTH the heartbeat memory AND the queue draft
+          # (the actual deliverable) plus the REGISTRY.md append.
+          git add --ignore-removal \
+            agents/memory/basket-ideator/ \
+            growth/basket-concepts/queue/ \
+            growth/basket-concepts/REGISTRY.md
+          if git diff --cached --quiet; then
+            echo "::notice::no changes to commit"
+            exit 0
+          fi
+          git commit -m "memory(agent): basket-ideator weekly proposal"
+          # Theirs-strategy rebase: the basket-ideator file set is
+          # fresh-per-tick (memory + a new dated draft), so concurrent
+          # self-improve runs can't conflict semantically.
+          git pull --rebase --strategy-option=theirs
+          git push

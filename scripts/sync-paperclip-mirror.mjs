@@ -72,6 +72,38 @@ const ACTIVE_RUNNABLE_EMPLOYEES = [
     requiredEnv: COMMON_REQUIRED_ENV,
     optionalEnv: ["LLM_MODEL_ISSUE_IMPLEMENTER"],
   },
+  {
+    // Partnership-tracker shares the engineering envPassthrough since it
+    // reuses the same `repo-editor-mcp` + `.agent-self-improvement/proposed-issues.json`
+    // pipeline. The CI cron lives at .github/workflows/partnership-tracker.yml
+    // (weekly Mon 09:00 UTC). Local Paperclip can also "Run now" for ad-hoc sweeps.
+    slug: "partnership-tracker",
+    sourcePath: "agents/partnership-tracker.md",
+    requiredEnv: COMMON_REQUIRED_ENV,
+    optionalEnv: [],
+  },
+  {
+    // basket-ideator reuses repo-editor-mcp + envio-graphql-mcp (read-only
+    // GraphQL pass-through over the live HyperIndex endpoint). CI cron at
+    // .github/workflows/basket-ideator.yml runs weekly Tue 09:00 UTC.
+    // ENVIO_URL is an optional fallback — the MCP resolves the canonical
+    // URL from AGENT_DEPLOYMENT_MEMORY.md at server startup.
+    slug: "basket-ideator",
+    sourcePath: "agents/basket-ideator.md",
+    requiredEnv: COMMON_REQUIRED_ENV,
+    optionalEnv: ["ENVIO_URL"],
+  },
+  {
+    // content-publisher runs LOCAL-ONLY (no CI cron). The founder
+    // triggers a tick via local Paperclip "Run now" when polishing
+    // the next calendar slot, preserving the human posting gate.
+    // Heartbeats still git-commit through the agent runner so /ops
+    // shows the run history.
+    slug: "content-publisher",
+    sourcePath: "agents/content-publisher.md",
+    requiredEnv: COMMON_REQUIRED_ENV,
+    optionalEnv: [],
+  },
 ];
 
 async function copyCompanyManifest() {

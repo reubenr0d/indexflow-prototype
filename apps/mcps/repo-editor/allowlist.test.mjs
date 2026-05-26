@@ -101,6 +101,39 @@ test("classifyPath ALLOWS shared JS with requiresReviewKind=shared", () => {
   assert.equal(r.requiresReviewKind, "shared");
 });
 
+test("classifyPath ALLOWS the X content calendar (content-publisher target)", () => {
+  const r = classifyPath("growth/X_CONTENT_CALENDAR.md");
+  assert.equal(r.allowed, true);
+  assert.equal(r.requiresReviewKind, "growth");
+});
+
+test("classifyPath ALLOWS per-slot drafts under growth/drafts/", () => {
+  const r = classifyPath("growth/drafts/2026-05-27-tweet-testnet-agents-live.md");
+  assert.equal(r.allowed, true);
+  assert.equal(r.requiresReviewKind, "growth");
+});
+
+test("classifyPath ALLOWS partner files under growth/partnerships/", () => {
+  const r = classifyPath("growth/partnerships/nox.md");
+  assert.equal(r.allowed, true);
+  assert.equal(r.requiresReviewKind, "growth");
+});
+
+test("classifyPath ALLOWS partner chain files under growth/partnerships/chains/", () => {
+  const r = classifyPath("growth/partnerships/chains/avalanche.md");
+  assert.equal(r.allowed, true);
+  assert.equal(r.requiresReviewKind, "growth");
+});
+
+test("classifyPath ALLOWS basket-concept queue + registry (basket-ideator targets)", () => {
+  const queue = classifyPath("growth/basket-concepts/queue/2026-06-02-ai-infrastructure-basket.md");
+  assert.equal(queue.allowed, true);
+  assert.equal(queue.requiresReviewKind, "growth");
+  const registry = classifyPath("growth/basket-concepts/REGISTRY.md");
+  assert.equal(registry.allowed, true);
+  assert.equal(registry.requiresReviewKind, "growth");
+});
+
 // ---------------------------------------------------------------------------
 // Deny rules
 // ---------------------------------------------------------------------------

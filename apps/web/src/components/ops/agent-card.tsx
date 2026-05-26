@@ -1,7 +1,17 @@
 import Link from "next/link";
-import { ExternalLink, ShieldCheck, ShieldAlert, ShieldX, Activity } from "lucide-react";
+import {
+  ExternalLink,
+  ShieldCheck,
+  ShieldAlert,
+  ShieldX,
+  Activity,
+  FileDiff,
+  Calendar,
+  Bug,
+  Receipt,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { EmployeeCard } from "@/lib/ops-types";
+import type { EmployeeCard, WriteActionSummary, WriteActionKind } from "@/lib/ops-types";
 
 interface AgentCardProps {
   agent: EmployeeCard;
@@ -125,16 +135,7 @@ export function AgentCard({ agent, repoUrl }: AgentCardProps) {
             <ul className="mt-3 space-y-1.5">
               {heartbeat.writeActions.slice(0, 4).map((action, idx) => (
                 <li key={idx} className="text-app-text">
-                  <span className="font-mono text-app-muted">{action.tool}</span>{" "}
-                  {action.txHash && (
-                    <span className="font-mono text-app-muted">
-                      tx {shortenHash(action.txHash)}
-                    </span>
-                  )}
-                  {action.riskOfficer && (
-                    <RiskBadge verdict={action.riskOfficer.verdict} />
-                  )}
-                  <div className="text-app-muted">{action.justification}</div>
+                  <WriteActionRow action={action} repoUrl={repoUrl} />
                 </li>
               ))}
             </ul>
@@ -160,6 +161,95 @@ export function AgentCard({ agent, repoUrl }: AgentCardProps) {
         </p>
       )}
     </article>
+  );
+}
+
+const KIND_ICON: Record<WriteActionKind, typeof Receipt> = {
+  "vault-tx": Receipt,
+  "issue-proposal": Bug,
+  "file-diff": FileDiff,
+  "calendar-update": Calendar,
+};
+
+const KIND_LABEL_WRITE: Record<WriteActionKind, string> = {
+  "vault-tx": "vault tx",
+  "issue-proposal": "issue",
+  "file-diff": "file edit",
+  "calendar-update": "calendar",
+};
+
+function WriteActionRow({
+  action,
+  repoUrl,
+}: {
+  action: WriteActionSummary;
+  repoUrl: string;
+}) {
+  const kind: WriteActionKind = action.kind ?? "vault-tx";
+  const Icon = KIND_ICON[kind] ?? Receipt;
+
+  return (
+    <div>
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-wider text-app-muted">
+          <Icon className="h-3 w-3" />
+          {KIND_LABEL_WRITE[kind]}
+        </span>
+        {kind === "vault-tx" && action.txHash && (
+          <span className="font-mono text-app-muted">tx {shortenHash(action.txHash)}</span>
+        )}
+        {kind === "issue-proposal" && action.issueCategory && (
+          <span className="rounded border border-app-border bg-app-bg-subtle px-1.5 py-0.5 font-mono text-[10px] text-app-muted">
+            {action.issueCategory}
+          </span>
+        )}
+        {kind === "calendar-update" && action.slotDate && (
+          <span className="font-mono text-app-muted">{action.slotDate}</span>
+        )}
+        {kind === "calendar-update" && action.statusTransition && (
+          <span className="rounded border border-app-border bg-app-bg-subtle px-1.5 py-0.5 font-mono text-[10px] text-app-muted">
+            {action.statusTransition}
+          </span>
+        )}
+        {action.riskOfficer && <RiskBadge verdict={action.riskOfficer.verdict} />}
+      </div>
+
+      {kind === "issue-proposal" && action.issueTitle && (
+        <div className="mt-0.5 text-app-text">
+          {action.issueUrl ? (
+            <a
+              href={action.issueUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 hover:underline"
+            >
+              {action.issueTitle}
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          ) : (
+            action.issueTitle
+          )}
+        </div>
+      )}
+
+      {(kind === "file-diff" || kind === "calendar-update") && action.path && (
+        <div className="mt-0.5">
+          <a
+            href={`${repoUrl}/blob/main/${action.path}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 font-mono text-[11px] text-app-muted hover:text-app-text hover:underline"
+          >
+            {action.path}
+            <ExternalLink className="h-3 w-3" />
+          </a>
+        </div>
+      )}
+
+      {action.justification && (
+        <div className="mt-0.5 text-app-muted">{action.justification}</div>
+      )}
+    </div>
   );
 }
 
