@@ -8,6 +8,7 @@ import GithubSlugger from "github-slugger";
 export interface BlogPostMeta {
   slug: string;
   title: string;
+  seoTitle?: string;
   description: string;
   date: string;
   author: string;
@@ -80,6 +81,7 @@ async function readPost(filePath: string): Promise<BlogPost | null> {
   return {
     slug,
     title: data.title,
+    seoTitle: typeof data.seoTitle === "string" && data.seoTitle.length > 0 ? data.seoTitle : undefined,
     description: data.description ?? "",
     date: data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date),
     author: data.author ?? "IndexFlow Team",
@@ -126,4 +128,27 @@ export function getPostNeighbors(
     prev: idx > 0 ? posts[idx - 1] : null,
     next: idx >= 0 && idx < posts.length - 1 ? posts[idx + 1] : null,
   };
+}
+
+export function getRelatedPosts(
+  posts: BlogPost[],
+  current: BlogPostMeta,
+  limit = 3,
+): BlogPostMeta[] {
+  const currentTags = new Set(current.tags);
+  if (currentTags.size === 0) return [];
+
+  return posts
+    .filter((p) => p.slug !== current.slug)
+    .map((p) => ({
+      post: p,
+      overlap: p.tags.filter((t) => currentTags.has(t)).length,
+    }))
+    .filter((entry) => entry.overlap > 0)
+    .sort((a, b) => {
+      if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+      return b.post.date.localeCompare(a.post.date);
+    })
+    .slice(0, limit)
+    .map((entry) => entry.post);
 }

@@ -1,6 +1,7 @@
 ---
 title: "Cross-Chain Liquidity Routing: Hub-and-Spoke Deposit Splitting with On-Chain Guards"
-description: "How IndexFlow's hub-and-spoke architecture uses keeper-posted routing weights, a per-chain on-chain deposit eligibility guard, and a Privy-backed UI stepper to recommend deposit splits across 100+ spoke chains."
+seoTitle: "Cross-Chain Liquidity Routing with Hub-and-Spoke Guards"
+description: "Hub-and-spoke routing: keeper-posted weights, on-chain deposit guards, and a Privy stepper that splits deposits across spokes without a chain picker."
 date: "2026-04-15"
 author: "Reuben Rodrigues"
 tags: ["cross-chain", "CCIP", "liquidity", "hub-and-spoke"]
@@ -10,7 +11,7 @@ image: "/blog/cross-chain-liquidity-routing.png"
 
 Every multi-chain DeFi app makes you pick the chain. Arbitrum or Optimism? Base or Avalanche? You pick wrong, you get worse execution, higher slippage, or an illiquid pool. And nobody tells you which chain was the right one until after you've committed.
 
-We deleted the chain picker. IndexFlow's hub-and-spoke coordination layer posts routing weights from a keeper, enforces eligibility with an on-chain deposit guard on each `BasketVault`, and **computes** the recommended split in the web app from that weight table. Users walk a stepper of one transaction per chain; **Privy** (embedded smart wallet) handles chain switching and signing so the same address can execute each leg without a manual wallet dance.
+We deleted the chain picker. IndexFlow's hub-and-spoke coordination layer posts routing weights from a keeper, enforces eligibility with an on-chain deposit guard on each `BasketVault`, and **computes** the recommended split in the web app from that weight table. Users walk a stepper of one transaction per chain; **[Privy](https://docs.privy.io/)** (embedded smart wallet) handles chain switching and signing so the same address can execute each leg without a manual wallet dance.
 
 ## Why Hub-and-Spoke
 
@@ -74,7 +75,7 @@ Users can also deposit to a single chain if they prefer. The split view is a rec
 
 Deposits are straightforward -- USDC goes into the spoke vault and shares are minted locally. Redemptions are harder because the spoke vault may not hold enough idle USDC to fill the full redemption.
 
-When a user redeems on a spoke chain and the vault's idle reserves are insufficient, the redemption enters a **pending** state. The keeper detects pending redemptions, sources USDC from the hub (where perp positions can be unwound), and fills them via CCIP using the `RedemptionReceiver` contract on the spoke chain.
+When a user redeems on a spoke chain and the vault's idle reserves are insufficient, the redemption enters a **pending** state. The keeper detects pending redemptions, sources USDC from the hub (where perp positions can be unwound), and fills them via [Chainlink CCIP](https://docs.chain.link/ccip) using the `RedemptionReceiver` contract on the spoke chain.
 
 ```mermaid
 flowchart LR
@@ -118,6 +119,12 @@ Hub-and-spoke scales cleanly. Adding a new spoke chain requires deploying a `Bas
 For spoke chains, the value proposition is pure: deposit infrastructure with routing discipline and share price consistency, backed by the hub's perp execution engine. For users, it means deposits split intelligently across chains without manual chain selection. For the protocol, it means scaling to 100+ chains without coordination overhead growing faster than TVL.
 
 The trust model is explicit: keeper liveness for state posting and redemption fills, CCIP message delivery for cross-chain redemptions, and Privy wallet custody are the external dependencies. Whether a chain accepts deposits at all is enforced on-chain via the weight threshold; how users **allocate** size across chains is enforced by UX plus economics, not by a second on-chain router.
+
+## Further reading
+
+- [Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature](/blog/cross-chain-coordination-infrastructure-not-marketing) -- why coordinated state matters more than chain count.
+- [100 Chains, 100 Grant Programs, One Outcome: Temporary TVL](/blog/fragmented-chains-broken-grants) -- what attributable, depth-routed infrastructure replaces.
+- [Cross-Chain Coordination docs](/docs/cross-chain-coordination) -- the canonical technical spec for hub, spokes, and `StateRelay`.
 
 ## Get Started
 

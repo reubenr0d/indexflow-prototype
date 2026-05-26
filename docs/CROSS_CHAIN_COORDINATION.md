@@ -341,3 +341,8 @@ Delta-triggered CCIP broadcaster that synced `PoolReserveRegistry` snapshots bet
 ### OracleConfigQuorum
 
 N-of-M quorum contract for cross-chain oracle configuration consensus. Proposals were broadcast via CCIP and auto-applied when threshold votes matched. No longer needed: oracle configuration is hub-only since spokes do not run oracles.
+
+## Related reading
+
+- [Cross-Chain Liquidity Routing: Hub-and-Spoke Deposit Splitting with On-Chain Guards](/blog/cross-chain-liquidity-routing) — how routing weights, deposit guards, and the Privy stepper work in practice.
+- [Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature](/blog/cross-chain-coordination-infrastructure-not-marketing) — why multi-chain expansion is an operations problem, not a logo slide.

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/admin/", "/api/", "/settings"],
       },
     ],
-    sitemap: "https://indexflow.app/sitemap.xml",
+    sitemap: "https://indexflow.org/sitemap.xml",
   };
 }

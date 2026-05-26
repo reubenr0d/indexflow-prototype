@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Engineering meta-agents",
     description: "Meta-agents that propose and draft repo improvements without ever auto-committing.",
-    url: "https://indexflow.app/ops/engineering",
+    url: "https://indexflow.org/ops/engineering",
   },
 };
 

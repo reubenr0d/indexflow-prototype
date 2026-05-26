@@ -1,6 +1,7 @@
 ---
 title: "If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked"
-description: "If you run money traditionally, someone will ask you about crypto or tokenized sleeves. The hard part is not the idea—it is whether marks turn into cash when investors redeem."
+seoTitle: "The Crypto Question Traditional Asset Managers Get Asked"
+description: "For traditional asset managers: the crypto question is not whether to own Bitcoin — it is whether marks turn into cash when investors redeem."
 date: "2026-04-16"
 author: "Reuben Rodrigues"
 tags: ["tradfi", "asset-managers", "structured-products", "liquidity"]
@@ -55,9 +56,9 @@ None of this requires you to become a protocol engineer. It does require you to 
 
 IndexFlow is structured **basket vault** infrastructure: investors deposit stable collateral, receive shares tied to basket NAV, and redeem through the same accounting surface. The protocol is designed around a constraint traditional PMs already respect in practice: **portfolio value and exit liquidity are not the same thing.** A sleeve needs both a credible mark and a credible path to cash when investors want out.
 
-IndexFlow also treats **where execution and pool liquidity live** as a protocol problem, not a retail UX problem. In multi-chain environments, asking every end user to pick the "right" chain is a hidden operational risk for the product layer. IndexFlow routes flow using **reserve and routing signals** so exposure products can aim at deeper execution liquidity without turning chain selection into a manual step for each depositor. (If you want the technical version of that story, it is written up in plain language alongside the rest of the system in the project documentation.)
+IndexFlow also treats **where execution and pool liquidity live** as a protocol problem, not a retail UX problem. In multi-chain environments, asking every end user to pick the "right" chain is a hidden operational risk for the product layer. IndexFlow routes flow using **reserve and routing signals** so exposure products can aim at deeper execution liquidity without turning chain selection into a manual step for each depositor. (If you want the technical version of that story, it is written up in plain language in [Cross-Chain Liquidity Routing](/blog/cross-chain-liquidity-routing) and the [Cross-Chain Coordination docs](/docs/cross-chain-coordination).)
 
-Because the entire on-chain flow is **USDC-in / shares-out** with synthetic-only exposure, there are no underlying equities or commodities to custody -- only USDC and basket share tokens. A licensed manager can wrap IndexFlow inside a standard fund vehicle with an institutional custodian (Fireblocks, Anchorage, or equivalent) and handle KYC, reporting, and investor qualification under their own license. The protocol is the execution layer; your fund is the compliance layer.
+Because the entire on-chain flow is **USDC-in / shares-out** with synthetic-only exposure, there are no underlying equities or commodities to custody -- only USDC and basket share tokens. A licensed manager can wrap IndexFlow inside a standard fund vehicle with an institutional custodian ([Fireblocks](https://www.fireblocks.com/), [Anchorage Digital](https://www.anchorage.com/), or equivalent) and handle KYC, reporting, and investor qualification under their own license. The protocol is the execution layer; your fund is the compliance layer.
 
 If your job is to evaluate whether that design pattern fits your governance model, the next step is not conviction about tokens. It is **diligence**: read the architecture, run the testnet flow, and map the failure modes to the same risk framework you already use.
 
@@ -65,4 +66,10 @@ If your job is to evaluate whether that design pattern fits your governance mode
 
 IndexFlow is **open-source, permissionless protocol software**, not a fund, not a bank, and not personalized investment advice. Anything you do with it sits inside **your** legal, compliance, and fiduciary stack. The point of this post is to give you the question to ask early—before a board meeting turns into a rushed "yes" based on a slide deck.
 
-If you want to go deeper on mechanics and operator flows, start with the [IndexFlow documentation](https://indexflow.app/docs), then explore Baskets, Assets, and Chains from the public app navigation.
+If you want to go deeper on mechanics and operator flows, start with the [IndexFlow documentation](https://indexflow.org/docs), then explore Baskets, Assets, and Chains from the public app navigation.
+
+## Further reading
+
+- [Five Waves of On-Chain Exposure](/blog/five-waves-on-chain-exposure) -- the competitive landscape for on-chain exposure products, mapped wave by wave.
+- [Investor flow documentation](/docs/investor-flow) -- the end-to-end view of how a depositor interacts with a basket vault, NAV, and redemption.
+- [Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature](/blog/cross-chain-coordination-infrastructure-not-marketing) -- why operational risk in multi-chain products sits at the protocol layer, not the user.

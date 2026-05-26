@@ -1,5 +1,6 @@
 ---
 title: "Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature"
+seoTitle: "Cross-Chain Coordination Is an Infrastructure Problem"
 description: "Multi-chain deployment is easy. Coordinating liquidity, pricing, redemptions, and attribution across chains is the real infrastructure problem."
 date: "2026-04-23"
 author: "Reuben Rodrigues"
@@ -8,7 +9,7 @@ published: true
 image: "/blog/cross-chain-coordination-infrastructure-not-marketing.svg"
 ---
 
-Most cross-chain messaging in crypto is marketing dressed up as architecture. A protocol deploys to five chains, adds five logos to the homepage, and calls that distribution. The implication is that more chains automatically means more reach, more users, and more growth.
+Most cross-chain messaging in crypto is marketing dressed up as architecture. A protocol wires up [Chainlink CCIP](https://docs.chain.link/ccip) or [LayerZero](https://docs.layerzero.network/), deploys to five chains, adds five logos to the homepage, and calls that distribution. The implication is that more chains automatically means more reach, more users, and more growth.
 
 That framing is backwards. Multi-chain expansion is the easy part. The hard part is making multiple chains behave like one product. If liquidity lives in different places, if pricing updates arrive at different times, if redemption quality depends on which chain a user happened to pick, then cross-chain is not a growth feature. It is an infrastructure problem.
 
@@ -88,6 +89,11 @@ For investors, it changes what counts as technical credibility. A team that talk
 
 That distinction will matter more as structured products, RWA wrappers, and capital-managed on-chain products mature. Distribution still matters. But distribution without coordination is just fragmentation with better branding.
 
+## Further reading
+
+- [100 Chains, 100 Grant Programs, One Outcome: Temporary TVL](/blog/fragmented-chains-broken-grants) -- why TVL without attribution is the wrong KPI and what replaces it.
+- [Five Waves of On-Chain Exposure](/blog/five-waves-on-chain-exposure) -- where structured-exposure infrastructure sits relative to prior generations.
+
 ## Learn More
 
-Read the [technical architecture and roadmap](/docs/technical-architecture-roadmap), explore how [hub-and-spoke deposit routing works](/blog/cross-chain-liquidity-routing), or try the [live testnet](https://indexflow.app) to see how structured exposure infrastructure behaves in practice.
+Read the [technical architecture and roadmap](/docs/technical-architecture-roadmap), explore how [hub-and-spoke deposit routing works](/blog/cross-chain-liquidity-routing), or try the [live testnet](https://indexflow.org) to see how structured exposure infrastructure behaves in practice.

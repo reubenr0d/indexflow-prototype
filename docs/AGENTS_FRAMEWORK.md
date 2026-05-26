@@ -703,4 +703,10 @@ The plan adopted is **"config + lightweight memory"** scope (see the original pl
 - The GitHub-Issues-driven self-improvement flow (`self-improver-issues` → `/agent implement` → `issue-implementer`) keeps using GitHub Issues as the ticket backend. Paperclip tickets are for *new* operator-directed work created from the dashboard.
 - [`apps/web/public/agent-metadata/<vault>.json`](../apps/web/public/agent-metadata) keeps powering the web app's AI Operator badge — Paperclip is a second, parallel consumer of runner output, not a replacement.
 
+## Related reading
+
+- [Your Vault Manager Is a Markdown File](/blog/autonomous-ai-agents-managing-vaults) — how agents are defined, how they run on testnet, and what 0G + KeeperHub add.
+- [The IndexFlow Agent Company](/blog/indexflow-agent-company) — the public ops mirror, governance constraints, and the distributed CMO function.
+- [Two AI Agents Are Live on Our Testnet](/blog/two-ai-agents-live-on-testnet) — live `mining-manager` and `quality-matrix-manager` vaults with real oracle prices.
+
 

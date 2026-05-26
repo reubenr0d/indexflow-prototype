@@ -46,7 +46,7 @@ The vault sits on top of a `RWAReserveAdapter` deployed on the Mantle hub. The a
 
 - `adapter.deposit(usdcAmount)` — pulls USDC from the vault, subscribes for reserve token via the underlying primitive (`USDY_InstantManager.subscribe` for USDY on mainnet, `MockUSDYInstantManager` on testnet).
 - `adapter.withdraw(usdcAmount)` — redeems reserve token back to USDC and returns it to the vault.
-- `adapter.getReserveValueUsdc()` — view that values current reserve-token holdings against the dynamic oracle (`RWADynamicOracle.getPrice()` on mainnet, `MockRWADynamicOracle` on testnet, ~5% APR linear curve in mocks).
+- `adapter.getReserveValueUsdc()` — view that values current reserve-token holdings against the existing IndexFlow `OracleAdapter` (CustomRelayer-fed by the keeper from Ondo mainnet's real `RWADynamicOracle.getPrice()` for USDY, and from Mantle mainnet's real mETH state for mETH). mUSD is valued 1:1 USDC because it is $1-pegged by design. No prices are mocked anywhere.
 
 `BasketVault` exposes thin wrappers `allocate_to_rwa(amount)` and `withdraw_from_rwa(amount)` that proxy to the adapter, plus `harvest_rwa_yield()` (no-arg permissionless) that triggers a NAV refresh and emits an event. These are your only write tools.
 

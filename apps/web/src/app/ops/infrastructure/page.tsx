@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Infrastructure",
     description: "The deployment allowlist agents must check before touching any resource.",
-    url: "https://indexflow.app/ops/infrastructure",
+    url: "https://indexflow.org/ops/infrastructure",
   },
 };
 

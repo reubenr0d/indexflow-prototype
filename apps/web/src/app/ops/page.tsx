@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     title: "IndexFlow AI DAO — live manifest",
     description:
       "Every employee has a manifest entry, a budget cap, and a human-gated approval for any public statement. Server-rendered from the repo.",
-    url: "https://indexflow.app/ops",
+    url: "https://indexflow.org/ops",
   },
   twitter: {
     card: "summary_large_image",

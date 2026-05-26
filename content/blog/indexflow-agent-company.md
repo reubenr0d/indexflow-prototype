@@ -1,6 +1,6 @@
 ---
 title: "The IndexFlow Agent Company"
-description: "Most 'AI in crypto' is theater. We publish the operating company: manifest, budgets, governance, heartbeats — all auditable in git, all surfaced on indexflow.app/ops."
+description: "The IndexFlow operating company is auditable in git: manifest, budgets, governance, and agent heartbeats — all public at indexflow.org/ops."
 date: "2026-05-26"
 author: "Reuben Rodrigues"
 tags: ["AI-agents", "DAO", "governance", "transparency", "agent-company"]
@@ -14,11 +14,11 @@ We're doing the opposite.
 
 The contracts that mint and redeem IndexFlow basket shares are permissionless: anyone can deploy a basket, anyone can deposit, anyone can read the on-chain state. That part has always been on-chain. What's new is that the **operating company that runs around those contracts is also auditable** — manifest, employees, budgets, governance constraints, per-run heartbeats, deployment ledger, partnership pipeline, content calendar. All of it in git, all of it surfaced on a single public page.
 
-That page is [indexflow.app/ops](https://indexflow.app/ops). The data source is `git pull`.
+That page is [indexflow.org/ops](https://indexflow.org/ops). The data source is `git pull`.
 
 ## The Manifest
 
-The canonical company file is [`COMPANY.md`](https://github.com/reubenr0d/indexflow-prototype/blob/main/COMPANY.md). It declares itself as `schema: agentcompanies/v1` — the schema the [`paperclip-agent-companies-plugin`](https://github.com/alvarosanchez/paperclip-agent-companies-plugin) imports — so the same file that lets a local Paperclip dashboard surface tickets and budgets also serves as the public manifest.
+The canonical company file is [`COMPANY.md`](https://github.com/reubenr0d/indexflow-prototype/blob/main/COMPANY.md). It declares itself as `schema: agentcompanies/v1` — the schema the [`paperclip-agent-companies-plugin`](https://github.com/alvarosanchez/paperclip-agent-companies-plugin) imports — so the same file that lets a local [Paperclip](https://paperclip.ing) dashboard surface tickets and budgets also serves as the public manifest.
 
 The shape, in plain English:
 
@@ -67,7 +67,7 @@ The template shapes both bots can use are pre-approved at the shape level (not c
 
 ## The Public Mirror
 
-[`indexflow.app/ops`](https://indexflow.app/ops) is a Next.js route at [`apps/web/src/app/ops/page.tsx`](https://github.com/reubenr0d/indexflow-prototype/blob/main/apps/web/src/app/ops/page.tsx). It runs as a server component with ISR every 60 seconds. It does no extra work to keep itself fresh — the `commit-results` job in `.github/workflows/vault-agent.yml` already pushes updated heartbeats, state files, and run-logs back to `main` on every trading-agent cron tick. The page reads those files at revalidate time and renders:
+[`indexflow.org/ops`](https://indexflow.org/ops) is a Next.js route at [`apps/web/src/app/ops/page.tsx`](https://github.com/reubenr0d/indexflow-prototype/blob/main/apps/web/src/app/ops/page.tsx). It runs as a server component with ISR every 60 seconds. It does no extra work to keep itself fresh — the `commit-results` job in `.github/workflows/vault-agent.yml` already pushes updated heartbeats, state files, and run-logs back to `main` on every trading-agent cron tick. The page reads those files at revalidate time and renders:
 
 1. **Hero + stats** — employee count, live vaults, last-heartbeat freshness, source-file link.
 2. **Governance strip** — the four hard constraints, rendered as badges. Approvals required, listed as tokens.
@@ -114,4 +114,10 @@ Three calls to action, none of them buy:
 - **Open a basket** — go to [`/baskets`](/baskets), pick a theme, mint shares. The vault's AI Activity panel is fed by the same data the `/ops` page renders.
 - **Pitch a basket theme** — open an issue tagged `vault-concept` with a proposed asset list and a curator persona. If it clears the four-question gate, `basket-ideator` will queue it once that agent is live.
 
-The repo is at [`reubenr0d/indexflow-prototype`](https://github.com/reubenr0d/indexflow-prototype). The manifest is at [`COMPANY.md`](https://github.com/reubenr0d/indexflow-prototype/blob/main/COMPANY.md). The public ops mirror is at [`indexflow.app/ops`](https://indexflow.app/ops). Pull requests welcome.
+The repo is at [`reubenr0d/indexflow-prototype`](https://github.com/reubenr0d/indexflow-prototype). The manifest is at [`COMPANY.md`](https://github.com/reubenr0d/indexflow-prototype/blob/main/COMPANY.md). The public ops mirror is at [`indexflow.org/ops`](https://indexflow.org/ops). Pull requests welcome.
+
+## Further reading
+
+- [Autonomous AI Agents Managing Vaults](/blog/autonomous-ai-agents-managing-vaults) -- the framework underneath the company: agents as markdown files, with skills, MCP tools, and run-logs.
+- [Two AI Agents Are Live on Our Testnet](/blog/two-ai-agents-live-on-testnet) -- the trading agents this company runs, watched live on testnet.
+- [Five Waves of On-Chain Exposure](/blog/five-waves-on-chain-exposure) -- the thesis the operating company is built to advance.

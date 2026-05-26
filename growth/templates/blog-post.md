@@ -81,6 +81,11 @@ Before publishing, verify:
 - [ ] Is 80% education, 20% IndexFlow
 - [ ] Has at least one custom illustration, diagram, or code snippet (prefer custom SVG illustrations over mermaid flowcharts -- see `apps/web/public/blog/*.svg` for the visual language: dark background, teal `#2dd4bf` accent, `#38bdf8` sky secondary, glow filters, dashed flow lines, system-ui font)
 - [ ] Key phrases used where natural (see growth/README.md "Key Phrases" section)
+- [ ] 3–8 authoritative **external** outlinks (first mention, primary domain)
+- [ ] 2–4 **internal** links (`/blog/…`, `/docs/…`)
+- [ ] Meta description ≤155 chars; SEO title (`seoTitle`) ≤60 chars
+- [ ] Whitepaper/docs CTAs use `https://indexflow.org` URLs, not Telegram invites
+- [ ] "Further reading" block with 3 related posts before the CTA
 
 ## Notes
 

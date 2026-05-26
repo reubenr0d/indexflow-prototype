@@ -1,6 +1,6 @@
 ---
 title: "100 Chains, 100 Grant Programs, One Outcome: Temporary TVL"
-description: "Chain proliferation has fragmented liquidity and turned grant programs into mercenary capital subsidies. The industry needs attributable infrastructure, not more incentives."
+description: "100+ chains and grant programs produce temporary TVL, not durable outcomes. Why attributable infrastructure beats more incentives."
 date: "2026-04-16"
 author: "Reuben Rodrigues"
 tags: ["liquidity", "grants", "fragmentation", "infrastructure"]
@@ -57,7 +57,7 @@ The metrics that matter for chain ecosystems are:
 - **Retention**: does capital stay after incentives end?
 - **Attribution**: can the chain prove that its support produced these outcomes?
 
-These are harder to measure than TVL. They require instrumentation at the protocol level, not just a Dune dashboard. And they require protocols that are architecturally designed to produce and report these metrics -- not protocols that were copy-pasted across chains with no structural difference.
+These are harder to measure than TVL. They require instrumentation at the protocol level, not just a [Dune](https://dune.com/) dashboard. And they require protocols that are architecturally designed to produce and report these metrics -- not protocols that were copy-pasted across chains with no structural difference.
 
 ## Fragmented Liquidity Is the User Tax
 
@@ -108,7 +108,7 @@ IndexFlow is built around this architectural thesis. Each chain deployment runs 
 
 The protocol's reserve-backed redemption model creates structural capital retention. Portfolio value and exit liquidity are not the same thing -- IndexFlow makes that distinction explicit by separating full NAV from redeemable liquidity. Reserve depth is a product-quality parameter, not a treasury setting. Deeper reserves mean better redemption reliability, which means more confidence, which means more deposits. The flywheel is built into the product architecture, not bolted on through incentives.
 
-Cross-chain coordination via the [hub-and-spoke architecture](/blog/cross-chain-liquidity-routing) enables proportional routing -- a keeper service reads reserves across all deployed chains, computes inverse-proportional routing weights, and posts them to each chain's `StateRelay` contract. An on-chain deposit guard enforces those weights, so capital flows to chains with the deepest available execution liquidity automatically. Users never pick a chain. The protocol routes by depth, not by default. When a spoke chain lacks idle USDC for a redemption, the keeper fills it cross-chain via CCIP from the hub. But attribution stays per-chain: deposits and activity are ring-fenced to the destination chain's metrics.
+Cross-chain coordination via the [hub-and-spoke architecture](/blog/cross-chain-liquidity-routing) enables proportional routing -- a keeper service reads reserves across all deployed chains, computes inverse-proportional routing weights, and posts them to each chain's `StateRelay` contract. An on-chain deposit guard enforces those weights, so capital flows to chains with the deepest available execution liquidity automatically. Users never pick a chain. The protocol routes by depth, not by default. When a spoke chain lacks idle USDC for a redemption, the keeper fills it cross-chain via [Chainlink CCIP](https://docs.chain.link/ccip) from the hub. But attribution stays per-chain: deposits and activity are ring-fenced to the destination chain's metrics.
 
 This creates a different operating model for chain ecosystem partnerships. Instead of subsidising protocol deployments with tokens and hoping for the best, a chain can deploy measurable infrastructure with a clear KPI surface: TVL shows whether the product base is growing, volume shows whether the shared liquidity layer is being used, and fees show whether supported activity is becoming economically meaningful. All per-chain, all auditable, all attributable.
 
@@ -120,6 +120,11 @@ What changes this is not better incentive design. It is better infrastructure: p
 
 The chains that figure this out first -- that shift from funding deployments to funding infrastructure with attributable returns -- will have a durable competitive advantage. The rest will keep running the same grant program playbook and getting the same temporary results.
 
+## Further reading
+
+- [Five Waves of On-Chain Exposure](/blog/five-waves-on-chain-exposure) -- the design genealogy that explains why structured exposure infrastructure is the next category.
+- [Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature](/blog/cross-chain-coordination-infrastructure-not-marketing) -- what attribution-preserving multi-chain coordination actually requires.
+
 ## Learn More
 
-Read the [IndexFlow whitepaper](https://t.me/+vAT7osyaJCVmMDY1) for the full protocol thesis, explore the [technical documentation](/docs/technical-architecture-roadmap), or try a deposit on the [live testnet](https://indexflow.app) to see how structured exposure infrastructure works in practice.
+Read the [IndexFlow whitepaper](/docs/whitepaper) for the full protocol thesis, explore the [technical documentation](/docs/technical-architecture-roadmap), or try a deposit on the [live testnet](https://indexflow.org) to see how structured exposure infrastructure works in practice.

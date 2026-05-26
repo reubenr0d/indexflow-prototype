@@ -142,7 +142,7 @@ const components: Components = {
         href={resolved}
         className="text-app-accent underline decoration-app-accent/50 underline-offset-2 transition-colors hover:decoration-app-accent"
         target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noreferrer" : undefined}
+        rel={isExternal ? "noopener noreferrer" : undefined}
         {...props}
       >
         {children}

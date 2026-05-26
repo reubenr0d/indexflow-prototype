@@ -50,7 +50,7 @@ const siteDescription =
   "Deposit USDC into weighted baskets priced by oracles, backed by a shared GMX-style perpetual pool. Permissionless protocol on-chain. Transparent AI DAO manifest in git — see /ops.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://indexflow.app"),
+  metadataBase: new URL("https://indexflow.org"),
   title: siteTitle,
   description: siteDescription,
   manifest: "/manifest.webmanifest",
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteTitle,
     description: siteDescription,
-    url: "https://indexflow.app",
+    url: "https://indexflow.org",
     siteName: "IndexFlow",
     locale: "en_US",
     type: "website",

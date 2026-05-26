@@ -1,6 +1,6 @@
 ---
 title: "Your Vault Manager Is a Markdown File"
-description: "IndexFlow agents are defined as markdown -- system prompt, strategy rules, risk limits -- and they deploy and manage basket vaults autonomously on testnet using real asset prices. Now with 0G Network integration for decentralized AI inference and storage, plus KeeperHub for reliable transaction execution."
+description: "IndexFlow agents are markdown files that autonomously deploy and manage basket vaults on testnet -- with risk limits, 0G storage, and KeeperHub execution."
 date: "2026-04-16"
 author: "Reuben Rodrigues"
 tags: ["AI-agents", "vaults", "testnet", "autonomous", "0G", "KeeperHub"]
@@ -63,12 +63,12 @@ That is the entire agent. Strategy lives in the prompt. Tool access is declared 
 Each run follows a five-step loop:
 
 1. **Check vault state.** The agent calls `get_vault_state` to read its current positions, allocations, reserves, and oracle prices.
-2. **Research markets.** It uses `yfinance_search` and `yfinance_quote` to pull live prices, day changes, and volume for tracked assets. These are real Yahoo Finance quotes -- AAPL, BHP.AX, GC=F, whatever the strategy calls for.
+2. **Research markets.** It uses `yfinance_search` and `yfinance_quote` to pull live prices, day changes, and volume for tracked assets. These are real [Yahoo Finance](https://finance.yahoo.com/) quotes -- AAPL, BHP.AX, GC=F, whatever the strategy calls for.
 3. **Compare and decide.** The agent compares on-chain oracle prices against live market prices, evaluates position P&L against its rules, and decides what to do.
 4. **Execute.** It calls on-chain write tools -- `open_position`, `close_position`, `allocate_to_perp`, `withdraw_from_perp` -- to act on its decisions.
 5. **Summarize.** It outputs a structured summary: vault state, market observations, actions taken, and recommendations for the next run.
 
-The agent connects to two **MCP servers** (Model Context Protocol). The vault-manager server exposes on-chain read and write operations: deploying vaults, wiring assets, managing positions, reading state. The yfinance server provides market data lookups. The agent treats these as tools it can call -- the same way a human operator would use a dashboard, except the agent reasons about when and why to call each tool.
+The agent connects to two **MCP servers** ([Model Context Protocol](https://modelcontextprotocol.io/)). The vault-manager server exposes on-chain read and write operations: deploying vaults, wiring assets, managing positions, reading state. The yfinance server provides market data lookups. The agent treats these as tools it can call -- the same way a human operator would use a dashboard, except the agent reasons about when and why to call each tool.
 
 On the first run, the agent has no vault. The runner instructs it to call `create_vault`, which deploys a new basket vault on-chain. The deploying wallet becomes the vault owner. On subsequent runs, the runner loads the saved vault address from **0G Storage** -- specifically, from a shared 0G KV stream where every key is namespaced under `<wallet>:<agent>:` -- and injects it into the system prompt. Nothing is committed back to the repo: the local `agents/memory/` folder is now a gitignored warm-restart cache only, and the source of truth lives on 0G. We dig into the storage layout below.
 
@@ -84,7 +84,7 @@ This means strategy logic developed and tested on testnet transfers directly to 
 
 The vault contracts have no concept of an "agent." There is no agent role, no agent registry, no special permissions. The vault owner is an ordinary Ethereum account with `onlyOwner` rights. Whether that account is controlled by a human using the web interface or by an LLM sending transactions through an MCP server, the contract does not know or care.
 
-A human asset manager can do everything an agent does: create a vault, wire assets, set allocations, open and close perp positions, manage reserves. The web app at [indexflow.app](https://indexflow.app) exposes these operations through a standard UI. The [operator documentation](/docs/asset-manager-flow) walks through the full curator flow -- from vault creation to position management to fee collection.
+A human asset manager can do everything an agent does: create a vault, wire assets, set allocations, open and close perp positions, manage reserves. The web app at [indexflow.org](https://indexflow.org) exposes these operations through a standard UI. The [operator documentation](/docs/asset-manager-flow) walks through the full curator flow -- from vault creation to position management to fee collection.
 
 AI agents are an **automation layer**, not a replacement for human judgment. A manager who wants to run a gold-focused vault can do it manually through the UI. Or they can write a markdown file that encodes their strategy and let it run on a schedule. Or they can start manual and gradually encode proven rules into an agent. The infrastructure supports all three modes because the underlying contract surface is the same.
 
@@ -114,7 +114,7 @@ This is not live yet. When it is, the same markdown file that defines your agent
 
 The agent framework runs on decentralized infrastructure for production-grade autonomous operation.
 
-**0G Compute** provides decentralized LLM inference. Instead of routing requests to OpenAI, agents can use 0G's Compute Network for TEE-verified AI responses. The inference happens on decentralized nodes, and responses include cryptographic attestation that the model ran unmodified. This matters for agents managing real capital -- you want verifiable reasoning, not a black box.
+**0G Compute** provides decentralized LLM inference. Instead of routing requests to [OpenAI](https://openai.com/), agents can use 0G's Compute Network for TEE-verified AI responses. The inference happens on decentralized nodes, and responses include cryptographic attestation that the model ran unmodified. This matters for agents managing real capital -- you want verifiable reasoning, not a black box.
 
 **KeeperHub** provides reliable transaction execution. Direct on-chain writes can fail for many reasons: gas spikes, network congestion, nonce conflicts, MEV extraction. KeeperHub wraps transactions with automatic retries, smart gas estimation, and private routing. Every transaction gets an audit trail. When an agent opens a position or closes a loser, the write goes through KeeperHub's execution layer instead of a raw `sendTransaction`.
 
@@ -165,7 +165,13 @@ The protocol is live on Sepolia testnet with real asset prices.
 The `ZG_PRIVATE_KEY` wallet pays for 0G storage fees -- faucet it at [faucet.0g.ai](https://faucet.0g.ai). Both `ZG_KV_CLIENT_URL` and `ZG_STREAM_ID` default to the agentio shared stream, so you don't need to set them unless you want to point at a self-hosted node.
 
 **Manual operation:**
-- [Launch the testnet app](https://indexflow.app/baskets) -- the same vaults the agent manages are visible to anyone, with the AI-managed panel populated server-side from 0G KV.
+- [Launch the testnet app](https://indexflow.org/baskets) -- the same vaults the agent manages are visible to anyone, with the AI-managed panel populated server-side from 0G KV.
 - [Multi-Agent Framework docs](/docs/agents-framework) -- agent creation, skills, the new memory layout, MCP tools (`runlog_recent`, `vault_metadata_set`, `vault_metadata_get`), full tool reference.
 
 Create a markdown file. Define your strategy. Let it run -- on OpenAI or 0G Compute, with state on a shared 0G stream and audit history on the Log layer, with writes routed through KeeperHub. The contracts do not care who is on the other end or how the infrastructure is wired.
+
+## Further reading
+
+- [Two AI Agents Are Live on Our Testnet](/blog/two-ai-agents-live-on-testnet) -- the framework in production: two agents managing mining-equity baskets side by side.
+- [The IndexFlow Agent Company](/blog/indexflow-agent-company) -- how the operating company around the agents stays auditable in git.
+- [Multi-Agent Framework docs](/docs/agents-framework) -- the canonical reference for skills, MCP tools, and runtime behaviour.

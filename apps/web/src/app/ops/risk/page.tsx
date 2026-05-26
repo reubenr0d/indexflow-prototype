@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Risk & Policy",
     description: "How the agent fleet stays inside the rails — constraints, gates, reviewers.",
-    url: "https://indexflow.app/ops/risk",
+    url: "https://indexflow.org/ops/risk",
   },
 };
 

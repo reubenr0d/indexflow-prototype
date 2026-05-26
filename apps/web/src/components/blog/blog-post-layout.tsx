@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight, Calendar, Clock, User } from "lucide-react";
 import { DocsMarkdownContent } from "@/components/docs/docs-markdown-content";
 import { DocsToc } from "@/components/docs/docs-toc";
+import { BlogPostCard } from "@/components/blog/blog-post-card";
 import type { BlogPost, BlogPostMeta } from "@/lib/blog.server";
 
 function Breadcrumbs({ post }: { post: BlogPost }) {
@@ -67,14 +68,32 @@ function PrevNextNav({
   );
 }
 
+function RelatedPosts({ posts }: { posts: BlogPostMeta[] }) {
+  if (posts.length === 0) return null;
+  return (
+    <section className="mt-12 border-t border-app-border/60 pt-8">
+      <h2 className="text-sm font-semibold uppercase tracking-wider text-app-muted">
+        Related posts
+      </h2>
+      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((p) => (
+          <BlogPostCard key={p.slug} post={p} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function BlogPostLayout({
   post,
   prev,
   next,
+  related = [],
 }: {
   post: BlogPost;
   prev: BlogPostMeta | null;
   next: BlogPostMeta | null;
+  related?: BlogPostMeta[];
 }) {
   const formattedDate = new Date(post.date + "T00:00:00").toLocaleDateString(
     "en-US",
@@ -157,6 +176,8 @@ export function BlogPostLayout({
           </footer>
 
           <PrevNextNav prev={prev} next={next} />
+
+          <RelatedPosts posts={related} />
         </article>
 
         {/* Desktop TOC sidebar */}

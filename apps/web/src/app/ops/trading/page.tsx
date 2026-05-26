@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Trading Desk",
     description: "Vault-bound agents with frozen mandates and live heartbeats.",
-    url: "https://indexflow.app/ops/trading",
+    url: "https://indexflow.org/ops/trading",
   },
 };
 

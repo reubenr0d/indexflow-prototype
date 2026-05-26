@@ -1,67 +1,118 @@
-const fs = require('fs');
-const matter = require('gray-matter');
-const path = require('path');
+#!/usr/bin/env node
+/**
+ * Blog post SEO sanity checks for content/blog/*.md
+ * Usage: node verify-blog.cjs [slug]
+ *   slug optional — defaults to all published posts
+ */
+const fs = require("fs");
+const path = require("path");
 
-const blogPath = '/Users/reuben/Desktop/minestarters/code/snx-prototype/content/blog/look-through-rwa-lending.md';
-const svgPath = '/Users/reuben/Desktop/minestarters/code/snx-prototype/apps/web/public/blog/look-through-rwa-lending.svg';
+const ROOT = path.resolve(__dirname);
 
-const raw = fs.readFileSync(blogPath, 'utf8');
-const { data, content } = matter(raw);
+function parseFrontmatter(raw) {
+  if (!raw.startsWith("---\n")) return { data: {}, content: raw };
+  const end = raw.indexOf("\n---\n", 4);
+  if (end === -1) return { data: {}, content: raw };
+  const fm = raw.slice(4, end);
+  const content = raw.slice(end + 5);
+  const data = {};
+  for (const line of fm.split("\n")) {
+    const m = /^(\w+):\s*(.+)$/.exec(line.trim());
+    if (!m) continue;
+    let val = m[2].trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    data[m[1]] = val;
+  }
+  return { data, content };
+}
+const BLOG_DIR = path.join(ROOT, "content", "blog");
+const MAX_DESCRIPTION = 155;
+const MAX_SEO_TITLE = 60;
 
-console.log('=== Frontmatter ===');
-console.log(JSON.stringify(data, null, 2));
+function checkPost(filePath) {
+  const slug = path.basename(filePath, ".md");
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data, content } = parseFrontmatter(raw);
+  const issues = [];
 
-console.log('\n=== Required fields check ===');
-const required = ['title', 'description', 'date', 'author', 'tags', 'published', 'image'];
-required.forEach((f) => {
-  const present = data[f] !== undefined && data[f] !== null && data[f] !== '';
-  console.log(`  ${present ? 'OK ' : 'MISSING'} ${f}: ${JSON.stringify(data[f])}`);
-});
+  if (data.published === "false" || data.published === false) {
+    return { slug, issues: [], skipped: true };
+  }
 
-console.log('\n=== Content stats ===');
-const words = content.trim().split(/\s+/).length;
-console.log(`  body words: ${words}`);
+  const required = ["title", "description", "date", "author", "tags", "published", "image"];
+  for (const f of required) {
+    if (data[f] === undefined || data[f] === null || data[f] === "") {
+      issues.push(`missing frontmatter: ${f}`);
+    }
+  }
 
-const lines = content.split('\n');
-const headings = lines.filter((l) => /^#{1,6}\s/.test(l));
-console.log('  headings:');
-headings.forEach((h) => console.log(`    ${h}`));
+  const desc = String(data.description ?? "");
+  if (desc.length > MAX_DESCRIPTION) {
+    issues.push(`description too long: ${desc.length} chars (max ${MAX_DESCRIPTION})`);
+  }
 
-console.log('\n=== Concession + crypto-native sentinel checks ===');
-const sentinels = [
-  { label: 'perp pool concession', re: /perp pool/i },
-  { label: 'tbill / treasury sleeve concession', re: /TBill cash sleeve|tokenized treasury wrapper/i },
-  { label: 'smart-contract risk named', re: /smart-?contract risk/i },
-  { label: 'oracle risk named', re: /oracle risk|oracle integrity/i },
-  { label: 'OracleAdapter cited', re: /OracleAdapter/ },
-  { label: 'PriceSync cited', re: /PriceSync/ },
-];
-sentinels.forEach((s) => {
-  console.log(`  ${s.re.test(content) ? 'OK ' : 'MISSING'} ${s.label}`);
-});
+  const seoTitle = data.seoTitle ?? data.title ?? "";
+  const serpTitle = data.seoTitle ? String(data.seoTitle) : String(data.title ?? "");
+  if (serpTitle.length > MAX_SEO_TITLE) {
+    issues.push(`SERP title too long: ${serpTitle.length} chars (max ${MAX_SEO_TITLE}) — add or shorten seoTitle`);
+  }
 
-console.log('\n=== SVG check ===');
-const svg = fs.readFileSync(svgPath, 'utf8');
-console.log(`  bytes: ${svg.length}`);
-console.log(`  starts: ${svg.slice(0, 60)}`);
-console.log(`  has #080c14: ${svg.includes('#080c14')}`);
-console.log(`  has #2dd4bf: ${svg.includes('#2dd4bf')}`);
-console.log(`  has #38bdf8: ${svg.includes('#38bdf8')}`);
-console.log(`  has system-ui font: ${svg.includes('system-ui')}`);
-console.log(`  has feGaussianBlur glow: ${svg.includes('feGaussianBlur')}`);
-console.log(`  has IndexFlow basket: ${svg.includes('IndexFlow basket')}`);
-console.log(`  has all 4 row labels:`);
-['Obligor', 'Failure mode', 'Recovery', 'Time-to-cash'].forEach((r) => {
-  console.log(`    ${svg.includes(`>${r}<`) ? 'OK ' : 'MISSING'} ${r}`);
-});
+  if (/t\.me\/\+/.test(content)) {
+    issues.push("Telegram invite link in body — use /docs/whitepaper instead");
+  }
 
-console.log('\n=== Hero image path matches frontmatter ===');
-const expected = data.image;
-const expectedFsPath = path.resolve(
-  '/Users/reuben/Desktop/minestarters/code/snx-prototype/apps/web/public',
-  expected.replace(/^\//, ''),
-);
-console.log(`  frontmatter image: ${expected}`);
-console.log(`  expected fs path:  ${expectedFsPath}`);
-console.log(`  matches SVG path:  ${expectedFsPath === svgPath ? 'OK' : 'MISMATCH'}`);
-console.log(`  file exists:       ${fs.existsSync(expectedFsPath) ? 'OK' : 'MISSING'}`);
+  if (!/## Further reading/i.test(content)) {
+    issues.push('missing "## Further reading" section');
+  }
+
+  const internalBlogLinks = (content.match(/\]\(\/blog\//g) ?? []).length;
+  if (internalBlogLinks < 2) {
+    issues.push(`few internal blog links: ${internalBlogLinks} (aim for 2+)`);
+  }
+
+  const externalLinks = (content.match(/\]\(https?:\/\//g) ?? []).length;
+  if (externalLinks < 3) {
+    issues.push(`few external outlinks: ${externalLinks} (aim for 3+)`);
+  }
+
+  if (data.image) {
+    const imagePath = path.join(ROOT, "apps/web/public", data.image.replace(/^\//, ""));
+    if (!fs.existsSync(imagePath)) {
+      issues.push(`hero image missing: ${data.image}`);
+    }
+  }
+
+  return { slug, issues, skipped: false };
+}
+
+const targetSlug = process.argv[2];
+const files = fs
+  .readdirSync(BLOG_DIR)
+  .filter((f) => f.endsWith(".md"))
+  .filter((f) => !targetSlug || f === `${targetSlug}.md`)
+  .map((f) => path.join(BLOG_DIR, f));
+
+if (files.length === 0) {
+  console.error(targetSlug ? `No post: ${targetSlug}` : "No blog posts found");
+  process.exit(1);
+}
+
+let failed = 0;
+for (const file of files) {
+  const { slug, issues, skipped } = checkPost(file);
+  if (skipped) {
+    console.log(`SKIP ${slug} (unpublished)`);
+    continue;
+  }
+  if (issues.length === 0) {
+    console.log(`OK  ${slug}`);
+  } else {
+    failed += 1;
+    console.log(`FAIL ${slug}`);
+    issues.forEach((i) => console.log(`     - ${i}`));
+  }
+}
+
+process.exit(failed > 0 ? 1 : 0);

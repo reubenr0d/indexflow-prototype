@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Growth / CMO",
     description: "Four agents covering the CMO role with founder-gated public posting.",
-    url: "https://indexflow.app/ops/growth",
+    url: "https://indexflow.org/ops/growth",
   },
 };
 

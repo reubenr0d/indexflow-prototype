@@ -15,7 +15,7 @@ todos:
 content: Add Mantle Sepolia (chainId 5003, CCIP router/selector) to config/chains.json + foundry.toml + .env.example, run Deploy.s.sol against Mantle, verify every contract on Mantlescan, write apps/web/src/config/mantle-sepolia-deployment.json
 status: pending
 - id: rwa-adapter-contract
-content: Build multi-asset RWAReserveAdapter.sol supporting USDY, mUSD, and mETH as interchangeable reserve tokens (per-basket setReserveToken admin call). Includes MockUSDYInstantManager + MockRWADynamicOracle + MockMETH (ERC4626 linear-yield) + MockMUSD for testnet, with Foundry tests for each subscribe/redeem round-trip, NAV accrual, and reserve-token rotation
+content: Build multi-asset RWAReserveAdapter.sol supporting USDY, mUSD, and mETH as interchangeable reserve tokens (per-basket setReserveToken admin call). All pricing flows through the existing IndexFlow OracleAdapter via two new CustomRelayer asset ids (USDY-USDC, METH-USDC) that the keeper sources from real Ondo and Mantle mainnet contracts via mainnet RPC. Testnet mocks (MockUSDY/MockMUSD/MockMETH, plus MockUSDYInstantManager + MockMUSDWrapper) are plain mintable ERC20s with NO mock prices and NO mock yield curves — only the token contracts themselves are mocked, prices always come from real off-chain data. Foundry tests cover each subscribe/redeem round-trip, NAV accrual, and reserve-token rotation
 status: pending
 - id: meth-adapter-contract
 content: Build MethAdapter.sol — thin wrapper exposing deposit(usdc) -> mETH (internal USDC->WETH swap + mETH wrap) and withdraw(usdc) (mETH unwrap -> WETH -> USDC swap) with slippage guard. Testnet wires to MockMETH; mainnet wires to Mantle's mETH contract. Used by meth-carry-manager vault and as a rotation target for rwa-yield-router
@@ -193,9 +193,9 @@ This is the highest-leverage new contract work. It directly addresses the track'
 
 - New contract `src/rwa/RWAReserveAdapter.sol` (~200 LOC) implementing:
   - `deposit(uint256 usdcAmount)` -> approve USDC to `USDY_InstantManager`, call `subscribe(usdc, usdcAmount)`, hold USDY balance.
-  - `withdraw(uint256 usdcAmount)` -> compute USDY needed via `RWADynamicOracle.getPrice()`, approve, call `redeem(usdy, usdyAmount, usdc)`.
-  - `getReserveValueUsdc()` view -> USDC balance + USDY balance valued at `RWADynamicOracle.getPrice()`. Used by `BasketVault` NAV.
-  - On testnet: ship a `MockUSDYInstantManager` + `MockRWADynamicOracle` (linear yield curve, e.g. 5% APR) so the demo runs without Ondo's mainnet whitelist.
+  - `withdraw(uint256 usdcAmount)` -> compute USDY needed by reading the USDY-USDC price from the existing IndexFlow `OracleAdapter`, approve, call `redeem(usdy, usdyAmount, usdc)`.
+  - `getReserveValueUsdc()` view -> USDC balance + USDY balance valued at the OracleAdapter's USDY-USDC price (CustomRelayer-fed by the keeper from Ondo mainnet `RWADynamicOracle.getPrice()` via mainnet RPC). Used by `BasketVault` NAV.
+  - On testnet: ship a `MockUSDYInstantManager` + `MockUSDY` (plain mintable ERC20) so the demo runs without Ondo's mainnet whitelist. The MockUSDYInstantManager reads the USDY-USDC price from the same `OracleAdapter` the rest of the system uses — there are NO mocked prices anywhere. Yield surfaces only through the keeper-posted price growth, which mirrors Ondo's real mainnet accrual.
 - Modify [src/vault/BasketVault.sol](src/vault/BasketVault.sol):
   - Add `setRWAAdapter(address)` admin call and `rwaTargetBps` (e.g. 7000 = 70% of idle USDC into USDY).
   - Extend `topUpReserve` and existing reserve accounting to call `RWAReserveAdapter.deposit/withdraw` to maintain `rwaTargetBps`.
@@ -326,7 +326,7 @@ Judges will spend less than two minutes on the landing page. Optimize specifical
 
 ## Files we're touching (high-level)
 
-- New contracts: `src/rwa/RWAReserveAdapter.sol` (multi-asset USDY/mUSD/mETH), `src/rwa/MethAdapter.sol`, `src/rwa/MockUSDYInstantManager.sol`, `src/rwa/MockRWADynamicOracle.sol`, `src/rwa/MockMETH.sol`, `src/rwa/MockMUSD.sol`, `src/agents/AgentIdentity8004.sol`, `src/agents/AgentDecisionLog.sol`, `src/compliance/ComplianceGate.sol`.
+- New contracts: `src/rwa/RWAReserveAdapter.sol` (multi-asset USDY/mUSD/mETH), `src/rwa/MethAdapter.sol`, `src/rwa/IRWAReserveAdapter.sol`, `src/rwa/IRWAPrimitives.sol`, `src/rwa/mocks/MockUSDY.sol`, `src/rwa/mocks/MockUSDYInstantManager.sol`, `src/rwa/mocks/MockMUSD.sol`, `src/rwa/mocks/MockMUSDWrapper.sol`, `src/rwa/mocks/MockMETH.sol`, `src/agents/AgentIdentity8004.sol`, `src/agents/AgentDecisionLog.sol`, `src/compliance/ComplianceGate.sol`. All RWA pricing is read from the existing `src/perp/oracle/OracleAdapter.sol` via two new CustomRelayer asset ids — there is no separate RWA-specific oracle.
 - New agents (markdown): `agents/rwa-treasurer.md`, `agents/meth-carry-manager.md`, `agents/rwa-yield-router.md`, `agents/funding-rate-harvester.md`, `agents/smart-money-mirror-manager.md`.
 - New web pages: `apps/web/src/app/rwa/page.tsx`, `apps/web/src/app/fleet/page.tsx`, `apps/web/src/app/compliance/page.tsx`, `apps/web/src/app/mantle/page.tsx`, `apps/web/middleware.ts`.
 - New services: `apps/mcps/bybit/`, `apps/mcps/nansen/`, `apps/telegram-bot/`.

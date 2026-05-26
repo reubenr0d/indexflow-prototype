@@ -1,5 +1,6 @@
 ---
 title: "Two AI Agents Are Live on Our Testnet — Trading Mining Equities at Leverage"
+seoTitle: "Two AI Agents Live on Testnet: Mining Equities at Leverage"
 description: "Two IndexFlow AI agents are live on testnet, trading leveraged synthetic exposure to global mining equities with real market prices."
 date: "2026-05-26"
 author: "Reuben Rodrigues"
@@ -18,8 +19,8 @@ That is the point. The testnet is no longer just a deployed contract system. It 
 
 You can watch both vaults live:
 
-- **Mining Manager / Atlas ML vault:** [`0x4dcd...`](https://indexflow.app/baskets/0x4dcd435461e27f8bfb580d216b8d69490023a0ba)
-- **Quality Matrix vault:** [`0xbd7e...`](https://indexflow.app/baskets/0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3)
+- **Mining Manager / Atlas ML vault:** [`0x4dcd...`](https://indexflow.org/baskets/0x4dcd435461e27f8bfb580d216b8d69490023a0ba)
+- **Quality Matrix vault:** [`0xbd7e...`](https://indexflow.org/baskets/0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3)
 
 The live dashboard is the source of truth. We are not freezing a PnL number into this post because the agents keep running, prices keep moving, and the point is to observe the system as it operates.
 
@@ -70,7 +71,7 @@ Recent agent activity has touched symbols like:
 
 This is where IndexFlow starts to look different from earlier synthetic-equity experiments.
 
-Helix on Injective offers synthetic stock perps today, but the focus is US majors. Mirror Protocol attempted synthetic stocks at scale before Terra collapsed in 2022. Synthetix shipped stock synths, then discontinued them under regulatory pressure. Those systems proved that synthetic equity exposure is a real category. They did not solve the long-tail problem.
+[Helix on Injective](https://helixapp.com/) offers synthetic stock perps today, but the focus is US majors. [Mirror Protocol](https://mirror.xyz/) attempted synthetic stocks at scale before [Terra collapsed in 2022](https://www.coindesk.com/learn/the-fall-of-terra-a-timeline-of-the-meteoric-rise-and-crash-of-ust-and-luna/). [Synthetix](https://blog.synthetix.io/) shipped stock synths, then discontinued them under regulatory pressure. Those systems proved that synthetic equity exposure is a real category. They did not solve the long-tail problem.
 
 No active venue — synthetic or traditional — gives a user leveraged exposure to a small TSX-V copper explorer or an ASX lithium developer through a vault-managed strategy.
 
@@ -138,8 +139,8 @@ The live testnet is the best way to understand the system.
 
 Start with the two AI-managed vaults:
 
-- **Mining Manager / Atlas ML vault:** [`0x4dcd435461e27f8bfb580d216b8d69490023a0ba`](https://indexflow.app/baskets/0x4dcd435461e27f8bfb580d216b8d69490023a0ba)
-- **Quality Matrix vault:** [`0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3`](https://indexflow.app/baskets/0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3)
+- **Mining Manager / Atlas ML vault:** [`0x4dcd435461e27f8bfb580d216b8d69490023a0ba`](https://indexflow.org/baskets/0x4dcd435461e27f8bfb580d216b8d69490023a0ba)
+- **Quality Matrix vault:** [`0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3`](https://indexflow.org/baskets/0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3)
 
 Watch the tracked assets. Read the latest agent thesis. Look at the recent actions. Follow the position rotations.
 
@@ -148,3 +149,8 @@ The most important thing about this milestone is not that the agents had a good 
 That is how financial infrastructure gets real. Not through a whitepaper claim. Through a loop that runs, leaves evidence, and improves under pressure.
 
 The bots are live. The testnet is live. The long-tail mining market is now an on-chain strategy surface.
+
+## Further reading
+
+- [The IndexFlow Agent Company](/blog/indexflow-agent-company) -- the manifest, budgets, and governance constraints that sit around these agents.
+- [Price feed flow documentation](/docs/price-feed-flow) -- how the on-chain oracle resolves long-tail mining tickers from real market data.

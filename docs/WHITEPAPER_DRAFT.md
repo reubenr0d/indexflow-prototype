@@ -356,3 +356,8 @@ For managers, issuers, and chain partners, that creates a clearer operating mode
 24. Hyperliquid documentation. https://hyperliquid.gitbook.io/hyperliquid-docs
 25. dYdX Integration Documentation. https://docs.dydx.xyz/
 26. Chainlink CCIP Documentation. https://docs.chain.link/ccip
+
+## Related reading
+
+- [Five Waves of On-Chain Exposure: From Set Protocol to Structured Infrastructure](/blog/five-waves-on-chain-exposure) — competitive landscape mapped wave by wave.
+- [If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked](/blog/if-you-run-money-the-old-way-crypto-question) — the liquidity and redemption question for traditional asset managers.

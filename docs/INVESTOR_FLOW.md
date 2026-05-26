@@ -120,6 +120,8 @@ in the Regulatory Roadmap.
 
 ## Related reading
 
+- [If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked](/blog/if-you-run-money-the-old-way-crypto-question) — portfolio value vs exit liquidity, framed for traditional PMs.
+- [Five Waves of On-Chain Exposure](/blog/five-waves-on-chain-exposure) — where IndexFlow sits in the evolution of on-chain exposure products.
 - [README.md](./README.md) — Architecture diagram, **Operations** (PriceSync vs OracleAdapter, Chainlink vs custom relayer, funding).
 - [ASSET_MANAGER_FLOW.md](./ASSET_MANAGER_FLOW.md) — Curator and asset manager runbook: setup, allocation, position operations, risk controls, and caveats.
 - [MODIFICATIONS.md](../MODIFICATIONS.md) — Changes versus upstream GMX (repo root, not in-app docs).

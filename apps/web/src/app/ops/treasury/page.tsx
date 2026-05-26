@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "IndexFlow Treasury",
     description: "Budget caps per employee — committed in git, enforced by Paperclip.",
-    url: "https://indexflow.app/ops/treasury",
+    url: "https://indexflow.org/ops/treasury",
   },
 };
 

@@ -1,6 +1,7 @@
 ---
 title: "Five Waves of On-Chain Exposure: From Set Protocol to Structured Infrastructure"
-description: "The market for on-chain exposure products has evolved through five distinct waves. Each solved a real problem. Each left an architectural gap. Here's the full progression -- and what comes next."
+seoTitle: "Five Waves of On-Chain Exposure: From Set Protocol to Now"
+description: "Five waves of on-chain exposure — from Set Protocol to shared perps to structured infrastructure. What each generation solved and what it left behind."
 date: "2026-04-16"
 author: "Reuben Rodrigues"
 tags: ["thesis", "competitive-landscape", "structured-products", "DeFi"]
@@ -8,7 +9,7 @@ published: true
 image: "/blog/five-waves-transition.png"
 ---
 
-We studied every on-chain basket and index protocol we could find. Set Protocol, Index Coop, Enzyme, Sommelier, GMX, Synthetix, Gains, Drift, Hyperliquid, dYdX, Jupiter. Every one of them got something important right. Every one of them left an architectural gap that the next generation tried to close.
+We studied every on-chain basket and index protocol we could find. [Set Protocol](https://docs.setprotocol.com/), [Index Coop](https://indexcoop.com/), [Enzyme](https://enzyme.finance/), [Sommelier](https://sommelier.finance/), [GMX](https://gmx.io/), [Synthetix](https://synthetix.io/), [Gains](https://gains.trade/), [Drift](https://www.drift.trade/), [Hyperliquid](https://hyperliquid.xyz/), [dYdX](https://dydx.exchange/), [Jupiter](https://jup.ag/). Every one of them got something important right. Every one of them left an architectural gap that the next generation tried to close.
 
 The market for on-chain exposure products is not a flat competitive landscape. It is an evolution. Understanding that evolution explains why a new category -- structured exposure infrastructure -- can emerge now rather than three years ago, and why earlier approaches, despite being technically sound, were never going to converge on this design by iteration alone.
 
@@ -80,6 +81,12 @@ If you are evaluating on-chain infrastructure for basket products, here is the l
 
 Each wave solved one of these. The question for any new infrastructure is whether it addresses all five.
 
+## Further reading
+
+- [100 Chains, 100 Grant Programs, One Outcome: Temporary TVL](/blog/fragmented-chains-broken-grants) -- why incentive-driven growth fails the attribution test and what infrastructure-driven growth replaces it with.
+- [Cross-Chain Coordination Is an Infrastructure Problem, Not a Marketing Feature](/blog/cross-chain-coordination-infrastructure-not-marketing) -- how Wave 5 actually behaves across multiple chains.
+- [If You Run Money the Old Way, Here's the Crypto Question You'll Eventually Get Asked](/blog/if-you-run-money-the-old-way-crypto-question) -- the same thesis told to traditional asset managers.
+
 ## Get Started
 
-Read the full competitive landscape analysis in our [whitepaper](/docs/whitepaper), explore the protocol architecture in the [technical docs](/docs/technical-architecture), or try creating a basket vault on [testnet](https://indexflow.app) to see structured exposure infrastructure in action.
+Read the full competitive landscape analysis in our [whitepaper](/docs/whitepaper), explore the protocol architecture in the [technical docs](/docs/technical-architecture-roadmap), or try creating a basket vault on [testnet](https://indexflow.org) to see structured exposure infrastructure in action.
