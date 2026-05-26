@@ -67,7 +67,7 @@ If `plan_open_position` returns `error_code: "CHURN_GUARD_COOLDOWN"`, the runner
 
 1. Search for the asset by name or ticker
 2. Get a live USD price quote for the ticker
-3. `wire_asset({ symbol: "<TICKER>", seedPriceUsd: <price> })` — register on-chain
+3. `wire_asset({ symbol: "<TICKER>", seedPriceUsd: <price> })` — register on-chain (`seedPriceUsd` must match `yfinance_quote.priceUsd` within 20%; crypto may use Bybit index when `source` is `bybit-index`)
 4. `get_oracle_assets()` — verify it appears with `active: true`
 5. `set_vault_assets({ vault: "<vault>", assetIds: [...existing, ...new] })` — add to your vault
 

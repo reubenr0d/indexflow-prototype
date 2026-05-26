@@ -1,27 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import YahooFinance from "yahoo-finance2";
 import { classifySymbolWithSearch } from "../../../../../../shared/yahoo-symbol-policy.mjs";
+import { fetchOracleSeedPriceUsd } from "../../../../../../shared/oracle-seed-price.mjs";
 
 const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
-
-const fxCache = new Map<string, { rate: number; ts: number }>();
-const FX_TTL_MS = 60_000;
-
-async function getUsdRate(currency: string): Promise<number | null> {
-  if (currency === "USD") return 1;
-  const cached = fxCache.get(currency);
-  if (cached && Date.now() - cached.ts < FX_TTL_MS) return cached.rate;
-  try {
-    const pair = `${currency}USD=X`;
-    const q = await yf.quote(pair);
-    const rate = q.regularMarketPrice;
-    if (!rate || rate <= 0) return null;
-    fxCache.set(currency, { rate, ts: Date.now() });
-    return rate;
-  } catch {
-    return null;
-  }
-}
 
 async function getSearchRows(symbol: string) {
   try {
@@ -58,47 +40,46 @@ export async function GET(request: NextRequest) {
 
   try {
     const quotes = await Promise.all(
-      symbols.map(async (symbol) => {
-        const searchRows = await getSearchRows(symbol);
-        const classification = classifySymbolWithSearch(symbol, searchRows);
+      symbols.map(async (requestedSymbol) => {
+        const searchRows = await getSearchRows(requestedSymbol);
+        const classification = classifySymbolWithSearch(requestedSymbol, searchRows);
         try {
-          const q = await yf.quote(symbol);
-          const price = q.regularMarketPrice ?? null;
-          const currency = q.currency ?? "USD";
-          let priceUsd: number | null = null;
-          if (price != null) {
-            const fxRate = await getUsdRate(currency);
-            priceUsd = fxRate != null ? price * fxRate : null;
-          }
+          const seed = await fetchOracleSeedPriceUsd(requestedSymbol);
           return {
-            requestedSymbol: symbol,
-            resolvedSymbol: q.symbol ?? null,
-            symbol: q.symbol,
-            name: (q as Record<string, unknown>).longName ?? (q as Record<string, unknown>).shortName ?? "",
-            price,
-            priceUsd,
-            currency,
-            exchange: q.fullExchangeName ?? "",
-            marketState: q.marketState ?? "CLOSED",
+            requestedSymbol,
+            resolvedSymbol: seed.resolvedSymbol,
+            yahooTicker: seed.yahooTicker,
+            symbol: seed.resolvedSymbol ?? requestedSymbol,
+            name: seed.name,
+            price: seed.price,
+            priceUsd: seed.priceUsd,
+            currency: seed.currency,
+            exchange: seed.exchange,
+            marketState: seed.marketState,
+            source: seed.source,
+            bybitSymbol: seed.bybitSymbol,
             isAmbiguous: classification.isAmbiguous,
             candidates: classification.candidates,
           };
         } catch {
           return {
-            requestedSymbol: symbol,
+            requestedSymbol,
             resolvedSymbol: null,
-            symbol,
+            yahooTicker: requestedSymbol,
+            symbol: requestedSymbol,
             name: "",
             price: null,
             priceUsd: null,
             currency: "USD",
             exchange: "",
             marketState: "ERROR",
+            source: null,
+            bybitSymbol: null,
             isAmbiguous: classification.isAmbiguous,
             candidates: classification.candidates,
           };
         }
-      })
+      }),
     );
 
     return NextResponse.json({ quotes });

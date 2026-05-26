@@ -19,7 +19,7 @@ Get live price quotes with USD conversion, day change, and volume.
 
 - `symbols`: Array of ticker strings (e.g. `["AAPL", "BHP.AX", "GC=F"]`)
 
-Returns per-symbol: current price, currency, USD-converted price, day change (absolute and percent), volume, market cap, plus symbol-resolution fields (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates`).
+Returns per-symbol: current price, currency, USD-converted price (`priceUsd`), `source` (`yahoo` or `bybit-index` for allowlisted crypto when Yahoo misses), `yahooTicker`, `bybitSymbol`, plus symbol-resolution fields (`requestedSymbol`, `resolvedSymbol`, `isAmbiguous`, `candidates`). For crypto `BASE-USD` symbols, pass the exact `priceUsd` to `wire_asset` — including Bybit index fallbacks.
 
 ### yfinance_news(symbols, limitPerSymbol?)
 

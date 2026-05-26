@@ -121,20 +121,30 @@ async function enumerateOnChainAssets(oracleAdapter, rpcUrl) {
   return assets;
 }
 
-async function fetchYahooQuotes(symbols) {
-  const YahooFinance = require("yahoo-finance2").default;
-  const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
+async function fetchSeedQuotes(symbols) {
+  const { fetchOracleSeedPriceUsd } = await import("../apps/shared/oracle-seed-price.mjs");
   const quotes = {};
   for (const symbol of symbols) {
     try {
-      const q = await yf.quote(symbol);
+      const seed = await fetchOracleSeedPriceUsd(symbol);
       quotes[symbol] = {
-        price: q.regularMarketPrice,
-        currency: q.currency ?? "USD",
-        marketState: q.marketState ?? "CLOSED",
+        price: seed.price,
+        priceUsd: seed.priceUsd,
+        currency: seed.currency,
+        marketState: seed.marketState,
+        source: seed.source,
+        yahooTicker: seed.yahooTicker,
+        bybitSymbol: seed.bybitSymbol,
       };
+      if (seed.source === "bybit-index") {
+        console.log(
+          `  Bybit index fallback for ${symbol} (${seed.bybitSymbol}): $${seed.priceUsd}`,
+        );
+      }
     } catch (err) {
-      console.warn(`  WARNING: could not fetch quote for ${symbol}: ${err.message}`);
+      console.warn(
+        `  WARNING: seed price unavailable for ${symbol}: ${err.message}`,
+      );
     }
   }
   return quotes;
@@ -199,8 +209,8 @@ async function main() {
   console.log(`Found ${assets.length} active CustomRelayer asset(s):\n`);
 
   const symbols = assets.map((a) => a.symbol);
-  console.log("Fetching Yahoo Finance quotes...");
-  const quotes = await fetchYahooQuotes(symbols);
+  console.log("Fetching oracle seed prices (Yahoo, then Bybit index for allowlisted crypto)...");
+  const quotes = await fetchSeedQuotes(symbols);
 
   const currencies = assets.map((a) => quotes[a.symbol]?.currency ?? "USD");
   console.log("\nFetching FX rates...");
@@ -225,16 +235,20 @@ async function main() {
       continue;
     }
 
-    const usdPrice = quote.price * fxRate;
+    const usdPrice =
+      quote.priceUsd != null && quote.priceUsd > 0
+        ? quote.priceUsd
+        : quote.price * fxRate;
     const rawPrice = toRawPrice(usdPrice);
 
     assetIds.push(asset.assetId);
     rawPrices.push(rawPrice.toString());
 
+    const sourceTag = quote.source ? ` [${quote.source}]` : "";
     console.log(
       `${asset.symbol.padEnd(12)} ` +
       `local=${quote.price.toFixed(4)} ${currency}  fx=${fxRate.toFixed(4)}  ` +
-      `usd=${usdPrice.toFixed(4)}  raw=${rawPrice}  id=${asset.assetId.slice(0, 18)}...`
+      `usd=${usdPrice.toFixed(4)}  raw=${rawPrice}${sourceTag}  id=${asset.assetId.slice(0, 18)}...`
     );
   }
 

@@ -17,7 +17,8 @@ import { getTooltipCopy, type TooltipKey } from "@/lib/tooltip-copy";
 import { cn } from "@/lib/utils";
 import { formatAssetId, formatRelativeTime } from "@/lib/format";
 import { getToneChipClass } from "@/lib/agent-action-meta";
-import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
+import { resolveMarketOutlink } from "@/lib/market-outlink";
+import { useOracleSeedQuote } from "@/hooks/useOracleSeedQuote";
 import type { AgentAction, AgentRun } from "@/hooks/useAgentMetadata";
 
 const SIGNAL_SOURCE_LABEL: Record<string, string> = {
@@ -72,14 +73,15 @@ export function highlightTickers(text: string, keyPrefix = "tk"): React.ReactNod
       out.push(text.slice(lastIndex, match.index));
     }
     const symbol = tickerToYfinanceSymbol(token);
+    const outlink = symbol ? resolveMarketOutlink({ oracleSymbol: symbol }) : null;
     out.push(
-      symbol ? (
+      outlink ? (
         <a
           key={`${keyPrefix}-${chipCount++}`}
-          href={yahooFinanceQuoteUrl(symbol)}
+          href={outlink.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`View ${symbol} on Yahoo Finance`}
+          aria-label={outlink.ariaLabel}
           className="mx-0.5 inline-flex items-center gap-0.5 rounded-sm border border-app-accent/30 bg-app-accent/10 px-1 font-mono text-[11px] text-app-accent transition-colors hover:border-app-accent/60 hover:bg-app-accent/20"
         >
           {token}
@@ -319,12 +321,39 @@ function PickChip({ pick }: { pick: TopPick }) {
   if (!pick.yfinanceSymbol) {
     return <span className={baseClass}>{inner}</span>;
   }
+  return <PickChipLink pick={pick} baseClass={baseClass} inner={inner} />;
+}
+
+function PickChipLink({
+  pick,
+  baseClass,
+  inner,
+}: {
+  pick: TopPick;
+  baseClass: string;
+  inner: React.ReactNode;
+}) {
+  const sym = pick.yfinanceSymbol!;
+  const { data: seedQuote } = useOracleSeedQuote(sym);
+  const outlink = useMemo(
+    () =>
+      resolveMarketOutlink({
+        oracleSymbol: sym,
+        seedSource: seedQuote?.source ?? null,
+        bybitSymbol: seedQuote?.bybitSymbol,
+        yahooTicker: seedQuote?.yahooTicker,
+      }),
+    [sym, seedQuote?.source, seedQuote?.bybitSymbol, seedQuote?.yahooTicker],
+  );
+  if (!outlink) {
+    return <span className={baseClass}>{inner}</span>;
+  }
   return (
     <a
-      href={yahooFinanceQuoteUrl(pick.yfinanceSymbol)}
+      href={outlink.href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`View ${pick.yfinanceSymbol} on Yahoo Finance`}
+      aria-label={outlink.ariaLabel}
       className={cn(baseClass, "transition-colors hover:underline")}
     >
       {inner}

@@ -79,6 +79,7 @@ From `bybit-mcp`:
 
 - `bybit_perp_quote({ symbol })` — returns `{ markPrice, indexPrice, openInterestUsd, fundingRateBps8h, fundingRateAnnualizedBps, nextFundingAt }`. Read-only.
 - `bybit_funding_history({ symbol, lookbackHours: 168 })` — array of historical 8h funding payments. For sanity-checking that the spread isn't a one-off blip.
+- `bybit_kline({ symbol, lookbackHours: 168 })` — trailing kline stats (`sevenDayVolBps`, `returnBps`). Use as a **cross-check** when internal funding vol looks thin; primary vol signal remains `get_internal_funding_rate(...).historicalVolBps`.
 
 From `envio-graphql-mcp`:
 
@@ -91,7 +92,7 @@ For each candidate symbol in `candidateSymbols`:
 1. Read `internalFundingAnnualized = get_internal_funding_rate({ symbol }).latest`.
 2. Read `bybitFundingAnnualized = bybit_perp_quote({ symbol }).fundingRateAnnualizedBps`.
 3. Compute `spreadBps = abs(internalFundingAnnualized - bybitFundingAnnualized)`.
-4. Compute `sevenDayVolBps = get_internal_funding_rate({ symbol, lookbackHours: 168 }).historicalVolBps` (proxy for symbol vol via funding-rate volatility; cross-check against `bybit_funding_history.stdev`).
+4. Compute `sevenDayVolBps = get_internal_funding_rate({ symbol, lookbackHours: 168 }).historicalVolBps` (proxy for symbol vol via funding-rate volatility; cross-check against `bybit_funding_history.stdev`). If internal vol is zero or implausibly low, call `bybit_kline({ symbol, lookbackHours: 168 })` and use `sevenDayVolBps` from that response instead.
 5. If `spreadBps >= minAnnualizedSpreadBps` (800) AND `sevenDayVolBps < spreadBps * 0.5` (vol must not eat the edge in a few days) — this is a valid harvest candidate.
 
 You harvest the top-N candidates ranked by `spreadBps - sevenDayVolBps * 0.5`, up to `maxSimultaneousPairs` (3) total open at any time, and `maxNewPositionsPerRun` (2) new per run.
@@ -100,7 +101,7 @@ You harvest the top-N candidates ranked by `spreadBps - sevenDayVolBps * 0.5`, u
 
 1. **Check Vault**: standard pattern. If no vault yet, `create_vault`.
 
-2. **Read Oracle**: `get_oracle_assets()`. Wire any candidate symbols not yet on-chain via the standard wire pattern (`yfinance_quote` for seed price, then `wire_asset` with the exact `priceUsd`).
+2. **Read Oracle**: `get_oracle_assets()`. Wire any candidate symbols not yet on-chain via the standard wire pattern (`yfinance_quote` for seed price, then `wire_asset` with the exact `priceUsd`). `yfinance_quote` returns `source: "bybit-index"` with `priceUsd` when Yahoo misses allowlisted crypto — pass that value unchanged. The keeper uses the same path via `fetchOracleSeedPriceUsd`.
 
 3. **Set tracked assets**: `set_vault_assets` with the union of candidate symbols you intend to consider this run, capped at `maxTrackedAssets: 8`.
 

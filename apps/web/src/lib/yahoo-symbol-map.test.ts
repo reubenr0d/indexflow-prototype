@@ -21,6 +21,15 @@ describe("oracleSymbolToYahooSymbol", () => {
     expect(oracleSymbolToYahooSymbol("AAPL")).toBe("AAPL");
   });
 
+  it("passes through crypto BASE-USD symbols", () => {
+    expect(oracleSymbolToYahooSymbol("ETH-USD")).toBe("ETH-USD");
+    expect(oracleSymbolToYahooSymbol("BTC-USD")).toBe("BTC-USD");
+  });
+
+  it("maps MATIC-USD to POL-USD on Yahoo", () => {
+    expect(oracleSymbolToYahooSymbol("MATIC-USD")).toBe("POL-USD");
+  });
+
   it("trims surrounding whitespace before mapping", () => {
     expect(oracleSymbolToYahooSymbol("  XAU  ")).toBe("GC=F");
     expect(oracleSymbolToYahooSymbol("  AAPL  ")).toBe("AAPL");

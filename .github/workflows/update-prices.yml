@@ -21,6 +21,7 @@ on:
         options:
           - all
           - sepolia
+          - mantle-sepolia
 
 env:
   FOUNDRY_VERSION: v1.5.1
@@ -47,11 +48,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        network: [sepolia]
+        network: [sepolia, mantle-sepolia]
         include:
           - network: sepolia
             deployment_config: apps/web/src/config/sepolia-deployment.json
             rpc_url_secret: SEPOLIA_RPC_URL
+          - network: mantle-sepolia
+            deployment_config: apps/web/src/config/mantle-sepolia-deployment.json
+            rpc_url_secret: MANTLE_SEPOLIA_RPC_URL
 
     steps:
       # No submodules: scripts/update-yahoo-finance-prices.js shells to `cast`
@@ -74,4 +78,5 @@ jobs:
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
           PRIVATE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.KEEPER_PRIVATE_KEY }}
           DRY_RUN: ${{ github.event_name == 'pull_request' && '1' || '' }}
+          BYBIT_TESTNET: "0"
         run: node scripts/update-yahoo-finance-prices.js

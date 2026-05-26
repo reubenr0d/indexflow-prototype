@@ -65,6 +65,7 @@ export function useYahooFinanceSearch(query: string, debounceMs = 300) {
 export interface YFQuote {
   requestedSymbol: string;
   resolvedSymbol: string | null;
+  yahooTicker?: string;
   symbol: string;
   name: string;
   price: number | null;
@@ -73,6 +74,9 @@ export interface YFQuote {
   currency: string;
   exchange: string;
   marketState: string;
+  /** Yahoo spot quote, or Bybit index when Yahoo misses allowlisted crypto. */
+  source?: "yahoo" | "bybit-index" | null;
+  bybitSymbol?: string | null;
   isAmbiguous: boolean;
   candidates: string[];
 }

@@ -20,6 +20,7 @@ import {
 } from "@/hooks/useOracle";
 import { useOraclePriceHistory } from "@/hooks/useOraclePriceHistory";
 import { useYahooPriceHistory } from "@/hooks/useYahooPriceHistory";
+import { useBybitPriceHistory } from "@/hooks/useBybitPriceHistory";
 import { formatAssetId, formatPrice, formatPriceFull, formatRelativeTime } from "@/lib/format";
 import {
   historyChartPoints,
@@ -29,6 +30,11 @@ import {
   getTxHref,
 } from "@/lib/oracle-price-history";
 import { oracleSymbolToYahooSymbol } from "@/lib/yahoo-finance";
+import { MarketOutlink } from "@/components/market-outlink";
+import {
+  shouldFetchBybitKlineFallback,
+  windowLabelWithSources,
+} from "@/lib/offchain-price-chart";
 
 const WINDOW_OPTIONS: { value: PriceHistoryWindow; label: string }[] = [
   { value: "24H", label: "24H" },
@@ -40,11 +46,13 @@ interface MergedChartPoint {
   timestamp: number;
   onchainUsd?: number;
   yahooUsd?: number;
+  bybitUsd?: number;
 }
 
 function mergeSeries(
   onchain: { timestamp: number; priceUsd: number }[],
   yahoo: { timestamp: number; priceUsd: number }[],
+  bybit: { timestamp: number; priceUsd: number }[] = [],
 ): MergedChartPoint[] {
   const map = new Map<number, MergedChartPoint>();
   for (const p of onchain) {
@@ -54,6 +62,11 @@ function mergeSeries(
     const existing = map.get(p.timestamp);
     if (existing) existing.yahooUsd = p.priceUsd;
     else map.set(p.timestamp, { timestamp: p.timestamp, yahooUsd: p.priceUsd });
+  }
+  for (const p of bybit) {
+    const existing = map.get(p.timestamp);
+    if (existing) existing.bybitUsd = p.priceUsd;
+    else map.set(p.timestamp, { timestamp: p.timestamp, bybitUsd: p.priceUsd });
   }
   return Array.from(map.values()).sort((a, b) => a.timestamp - b.timestamp);
 }
@@ -77,24 +90,35 @@ export default function AssetPriceDetailPage() {
   const yahooSymbol = oracleSymbolToYahooSymbol(assetName);
   const wantsYahoo = source !== "onchain" && Boolean(yahooSymbol);
   const yahooQuery = useYahooPriceHistory(wantsYahoo ? yahooSymbol : undefined, window);
+  const wantsBybit = shouldFetchBybitKlineFallback(
+    assetName,
+    yahooQuery.data.length,
+    wantsYahoo,
+  );
+  const bybitQuery = useBybitPriceHistory(assetName, window, wantsBybit);
 
   const wagmiConfig = useConfig();
   const explorer = wagmiConfig.chains.find((chain) => chain.id === chainId)?.blockExplorers?.default?.url;
 
   const onchainPoints = useMemo(() => historyChartPoints(history), [history]);
   const showOnchain = source !== "yahoo" || !yahooSymbol;
-  const showYahoo = wantsYahoo && yahooQuery.error == null;
+  const showYahoo = wantsYahoo && yahooQuery.error == null && yahooQuery.data.length >= 2;
+  const showBybit = wantsBybit && bybitQuery.error == null && bybitQuery.data.length >= 2;
 
   const chartData = useMemo(
     () =>
       mergeSeries(
         showOnchain ? onchainPoints : [],
         showYahoo ? yahooQuery.data : [],
+        showBybit ? bybitQuery.data : [],
       ),
-    [onchainPoints, yahooQuery.data, showOnchain, showYahoo],
+    [onchainPoints, yahooQuery.data, bybitQuery.data, showOnchain, showYahoo, showBybit],
   );
 
-  const isLoading = (showOnchain && isOnchainLoading) || (showYahoo && yahooQuery.isLoading);
+  const isLoading =
+    (showOnchain && isOnchainLoading) ||
+    (wantsYahoo && yahooQuery.isLoading) ||
+    (wantsBybit && bybitQuery.isLoading);
 
   if (!assetId) {
     return (
@@ -120,15 +144,15 @@ export default function AssetPriceDetailPage() {
     source === "onchain"
       ? `On-chain (${onchainSource})`
       : source === "yahoo"
-        ? yahooSymbol
-          ? `Yahoo: ${yahooSymbol}`
-          : "Yahoo unavailable"
+        ? windowLabelWithSources(yahooSymbol, showBybit)
         : yahooSymbol
-          ? `On-chain + Yahoo (${yahooSymbol})`
+          ? showBybit
+            ? `On-chain + Yahoo (${yahooSymbol}) + Bybit`
+            : `On-chain + Yahoo (${yahooSymbol})`
           : `On-chain (${onchainSource})`;
 
   const yahooUnavailable = source !== "onchain" && !yahooSymbol;
-  const yahooError = wantsYahoo && yahooQuery.error != null;
+  const yahooError = wantsYahoo && yahooQuery.error != null && !showBybit;
 
   return (
     <PageWrapper className="max-w-7xl">
@@ -139,9 +163,17 @@ export default function AssetPriceDetailPage() {
         </Link>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <div className="mb-2 flex items-center gap-2">
+            <div className="mb-2 flex flex-wrap items-center gap-2">
               <StatusDot status={status} />
               <h1 className="text-3xl font-semibold tracking-tight text-app-text">{label}</h1>
+              {assetName && (
+                <MarketOutlink
+                  oracleSymbol={assetName}
+                  chartUsesBybit={showBybit}
+                  className="text-sm font-medium"
+                  iconClassName="h-3.5 w-3.5"
+                />
+              )}
               <span className="rounded-md bg-app-bg-subtle px-2 py-0.5 text-[10px] font-semibold tracking-wide text-app-muted">
                 {sourceLabel}
               </span>
@@ -170,11 +202,13 @@ export default function AssetPriceDetailPage() {
             </span>
           </div>
         </div>
-        {(yahooUnavailable || yahooError) && (
+        {(yahooUnavailable || yahooError || showBybit) && (
           <p className="mt-2 text-xs text-app-muted">
-            {yahooUnavailable
-              ? "No Yahoo Finance ticker is mapped for this asset; falling back to on-chain prices."
-              : `Yahoo Finance request failed: ${yahooQuery.error?.message ?? "unknown error"}`}
+            {showBybit
+              ? "Yahoo history is sparse for this crypto symbol; chart includes Bybit perp klines for comparison."
+              : yahooUnavailable
+                ? "No Yahoo Finance ticker is mapped for this asset; falling back to on-chain prices."
+                : `Yahoo Finance request failed: ${yahooQuery.error?.message ?? "unknown error"}`}
           </p>
         )}
       </div>
@@ -236,6 +270,18 @@ export default function AssetPriceDetailPage() {
                       stroke="var(--success)"
                       strokeWidth={2}
                       strokeDasharray={source === "both" ? "5 4" : undefined}
+                      dot={false}
+                      connectNulls
+                    />
+                  )}
+                  {showBybit && (
+                    <Line
+                      type="monotone"
+                      dataKey="bybitUsd"
+                      name="Bybit"
+                      stroke="var(--warning)"
+                      strokeWidth={2}
+                      strokeDasharray="4 3"
                       dot={false}
                       connectNulls
                     />

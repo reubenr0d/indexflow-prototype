@@ -90,7 +90,11 @@ export const TOOLTIP_COPY = {
     "Upper bound on any individual position size for a vault, shown in USD notional (full-dollar display from 1e30 precision).",
   createNewBasket: "Create a new basket vault with configured name and entry/exit fees.",
   setAssets:
-    "Define which supported oracle assets this basket can trade. For ambiguous equity tickers, use exchange-suffixed symbols (for example: BHP.AX).",
+    "Define which supported oracle assets this basket can trade. For ambiguous equity tickers, use exchange-suffixed symbols (for example: BHP.AX). Crypto perps use BASE-USD (for example: ETH-USD, BTC-USD).",
+  registerOracleAsset:
+    "Register a CustomRelayer asset from Yahoo Finance (equities, ETFs, crypto) or type a crypto BASE-USD symbol directly. Seed price uses Yahoo first; allowlisted crypto can fall back to Bybit index when Yahoo has no quote. Ticker overrides (e.g. MATIC-USD → POL-USD) apply automatically.",
+  assetPriceChartSource:
+    "Compare on-chain oracle updates with Yahoo Finance and, for crypto, Bybit perp klines when Yahoo history is sparse. Live NAV and perp PnL always use on-chain prices.",
   perpAllocation: "Move capital between idle vault liquidity and the perp sleeve.",
   maxPerpAllocation: "Cap the maximum capital that can be allocated to perps for this basket.",
   collectFees: "Transfer accumulated basket fees to a designated recipient address.",

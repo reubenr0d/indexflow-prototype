@@ -4,7 +4,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { classifySymbolWithSearch } from "../../shared/yahoo-symbol-policy.mjs";
-import { fetchLivePriceUsd } from "../../shared/yahoo-usd-quote.mjs";
+import { fetchOracleSeedPriceUsd } from "../../shared/oracle-seed-price.mjs";
 import {
   getCachedNews,
   writeNewsCache,
@@ -117,9 +117,10 @@ server.registerTool(
     title: "Yahoo Finance Quote",
     description:
       "Get current price quotes for one or more Yahoo Finance symbols. " +
-      "Returns [{symbol, name, price, priceUsd, currency, exchange, marketState, dayChange, dayChangePct, volume, marketCap, requestedSymbol, resolvedSymbol, isAmbiguous, candidates}]. " +
+      "Returns [{symbol, name, price, priceUsd, currency, exchange, marketState, source, yahooTicker, bybitSymbol, dayChange, dayChangePct, volume, marketCap, requestedSymbol, resolvedSymbol, isAmbiguous, candidates}]. " +
       "Automatically converts non-USD prices via FX rates. " +
-      "Works for any stock, ETF, index, commodity, or forex pair on Yahoo Finance.",
+      "For allowlisted crypto (BASE-USD), falls back to Bybit index when Yahoo has no quote. " +
+      "Works for stocks, ETFs, commodities, forex, and crypto oracle symbols.",
     inputSchema: {
       symbols: z.array(z.string()).describe("Ticker symbols (e.g. ['BHP.AX', 'AAPL', 'GLEN.L', 'GC=F'])"),
     },
@@ -131,7 +132,7 @@ server.registerTool(
           const searchRows = await getSearchRows(symbol);
           const classification = classifySymbolWithSearch(symbol, searchRows);
           try {
-            const live = await fetchLivePriceUsd(symbol);
+            const live = await fetchOracleSeedPriceUsd(symbol);
             return {
               requestedSymbol: symbol,
               resolvedSymbol: live.resolvedSymbol,
@@ -142,10 +143,9 @@ server.registerTool(
               currency: live.currency,
               exchange: live.exchange,
               marketState: live.marketState,
-              dayChange: live.dayChange,
-              dayChangePct: live.dayChangePct,
-              volume: live.volume,
-              marketCap: live.marketCap,
+              source: live.source,
+              yahooTicker: live.yahooTicker,
+              bybitSymbol: live.bybitSymbol,
               isAmbiguous: classification.isAmbiguous,
               candidates: classification.candidates,
             };

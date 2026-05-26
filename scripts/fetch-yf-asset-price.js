@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * Fetches a Yahoo Finance quote and writes a single 8-decimal USD raw integer to
+ * Fetches an oracle seed quote and writes a single 8-decimal USD raw integer to
  * `cache/yf-seed-price.txt` (UTF-8 digits only, no stdout).
  *
- * Used by DeployLocal / DeploySepolia via `vm.ffi` + `vm.readFile`. We avoid piping
- * the price on stdout: some Forge versions treat `ffi` stdout in ways that corrupt
- * pure decimal ASCII (e.g. digit pairs decoded as bytes).
+ * Yahoo first; allowlisted crypto falls back to Bybit index (same as keeper).
+ * Used by DeployLocal / DeploySepolia via `vm.ffi` + `vm.readFile`.
  *
  * Usage: node scripts/fetch-yf-asset-price.js BHP.AX
+ *        node scripts/fetch-yf-asset-price.js ETH-USD
  */
 
 const fs = require("fs");
@@ -23,26 +23,19 @@ const PRICE_DECIMALS = 8;
 const outPath = path.join(__dirname, "..", "cache", "yf-seed-price.txt");
 
 async function main() {
-  const YahooFinance = require("yahoo-finance2").default;
-  const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
-  const q = await yf.quote(symbol);
-  if (q.regularMarketPrice == null || q.regularMarketPrice <= 0) {
-    throw new Error(`invalid quote for ${symbol}`);
+  const { fetchOracleSeedPriceUsd } = await import("../apps/shared/oracle-seed-price.mjs");
+  const seed = await fetchOracleSeedPriceUsd(symbol);
+  if (seed.priceUsd == null || seed.priceUsd <= 0) {
+    throw new Error(`invalid seed price for ${symbol}`);
   }
-  const currency = q.currency ?? "USD";
-  let usd = q.regularMarketPrice;
-  if (currency !== "USD") {
-    const pair = `${currency}USD=X`;
-    const fx = await yf.quote(pair);
-    const rate = fx.regularMarketPrice;
-    if (!rate || rate <= 0) throw new Error(`missing FX for ${currency}`);
-    usd = q.regularMarketPrice * rate;
-  }
-  const raw = Math.round(usd * 10 ** PRICE_DECIMALS);
+  const raw = Math.round(seed.priceUsd * 10 ** PRICE_DECIMALS);
   if (raw <= 0 || !Number.isFinite(raw)) throw new Error("invalid raw price");
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, String(raw), "utf8");
+  if (seed.source === "bybit-index") {
+    console.error(`  seed via Bybit index (${seed.bybitSymbol}): $${seed.priceUsd}`);
+  }
 }
 
 main().catch((e) => {
