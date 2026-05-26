@@ -32,13 +32,13 @@ export function OpsCompactHeader({ snapshot }: OpsCompactHeaderProps) {
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
             <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-app-accent">
-              Agent Company · v0.3
+              Live Manifest · v0.3
             </p>
             <h1 className="mt-1.5 text-2xl font-bold leading-tight tracking-tight text-app-text sm:text-3xl">
-              {company.name} Operations
+              IndexFlow AI DAO
             </h1>
             <p className="mt-1 max-w-2xl text-sm text-app-muted">
-              Permissionless protocol on-chain. Transparent operating company in git.
+              Permissionless protocol on-chain. Live manifest, budgets, and heartbeats — all in git.
             </p>
           </div>
           <a

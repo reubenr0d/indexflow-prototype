@@ -1,6 +1,6 @@
 import { Calendar, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { ContentCalendarRow } from "@/lib/ops-types";
+import { contentCalendarRowKey, type ContentCalendarRow } from "@/lib/ops-types";
 
 interface ContentCalendarStripProps {
   rows: ContentCalendarRow[];
@@ -66,7 +66,7 @@ export function ContentCalendarStrip({ rows, repoUrl }: ContentCalendarStripProp
           </thead>
           <tbody>
             {window.map((row) => (
-              <tr key={row.date} className="border-t border-app-border odd:bg-app-surface">
+              <tr key={contentCalendarRowKey(row)} className="border-t border-app-border odd:bg-app-surface">
                 <td className="px-3 py-2 whitespace-nowrap font-mono text-xs text-app-text">
                   {row.day} {row.date.slice(5)}{" "}
                   <span className="text-app-muted">{row.timeUtc}</span>

@@ -6,13 +6,15 @@ slug: indexflow
 scope: meta_and_growth_agents
 tagline: Oracle-priced basket vaults backed by shared perp infrastructure.
 mission: >
-  IndexFlow is a protocol architecture for launching structured exposure
-  products on top of a shared perpetual liquidity layer. We close three
-  gaps in onchain finance: short-lived grant-driven TVL with no
-  attribution, product structures that obscure portfolio value vs
-  redeemable liquidity, and capital efficiency fragmented across isolated
-  venues. Design truth: portfolio value and exit liquidity are not the
-  same thing.
+  IndexFlow is the protocol layer for structured exposure products
+
+  Basket vaults backed by a shared perpetual liquidity layer,
+
+  with attributable per-chain growth and redemption discipline built in. We
+  close three gaps in onchain finance: mercenary capital with no
+  attribution, product structures that hide the gap between portfolio
+  value and redeemable liquidity, and capital efficiency fragmented
+  across isolated venues.
 sourceRepo: https://github.com/reubenr0d/indexflow-prototype
 canonicalBranch: main
 syncMode: overwrite

@@ -23,9 +23,17 @@ export const metadata: Metadata = {
 export default async function GrowthPage() {
   const snapshot = await getOpsSnapshot();
   const repoUrl = snapshot.company.sourceRepo;
-  const growthAgents = snapshot.brainstormEmployees.filter(
-    (a) => a.team === "growth" || a.kind === "growth",
-  );
+  const isGrowth = (a: { team?: string; kind?: string }) =>
+    a.team === "growth" || a.kind === "growth";
+  // Several CMO agents have been promoted from `Brainstorm` to `Active` in
+  // COMPANY.md (partnership-tracker, basket-ideator, content-publisher as of
+  // 2026-05). Pull from both buckets so the page reflects the full CMO surface
+  // rather than just the brainstorm column. Active first so the page leads
+  // with what's currently shipping.
+  const growthAgents = [
+    ...snapshot.activeEmployees.filter(isGrowth),
+    ...snapshot.brainstormEmployees.filter(isGrowth),
+  ];
 
   return (
     <div>

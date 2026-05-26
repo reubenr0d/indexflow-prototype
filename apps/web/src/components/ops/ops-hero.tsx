@@ -30,13 +30,13 @@ export function OpsHero({ snapshot }: OpsHeroProps) {
     <section className="border-b border-app-border bg-gradient-to-b from-app-accent/5 to-transparent">
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.24em] text-app-accent">
-          Agent Company · v{company.budgets.cycle ? "0.3" : "0.3"}
+          Live Manifest · v{company.budgets.cycle ? "0.3" : "0.3"}
         </p>
         <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight text-app-text sm:text-4xl lg:text-5xl">
-          How we run the Agent Company in public.
+          IndexFlow AI DAO
         </h1>
         <p className="mt-5 max-w-3xl text-base leading-relaxed text-app-muted sm:text-lg">
-          Permissionless protocol on-chain. Transparent operating company in git.
+          Permissionless protocol on-chain. Live manifest, budgets, and heartbeats — all in git.
           Every employee — human or AI — has a manifest entry, a budget cap, and
           a human-gated approval for any public statement. This page is
           server-rendered from the repo files listed at the bottom.

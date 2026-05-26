@@ -10,7 +10,7 @@ const X_URL = "https://x.com/indexflowDAO";
 const productLinks = [
   { href: "/baskets", label: "Baskets", Icon: BarChart3 },
   { href: "/docs", label: "Docs", Icon: BookOpen },
-  { href: "/ops", label: "Agent Company", Icon: Users },
+  { href: "/ops", label: "Agent Ops", Icon: Users },
   { href: "/", label: "Home", Icon: FileText },
   { href: "/terms", label: "Terms", Icon: Scale },
   { href: "/privacy", label: "Privacy", Icon: Shield },

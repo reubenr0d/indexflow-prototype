@@ -1,27 +1,39 @@
 import type { Metadata } from "next";
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { ExternalLink, Shield } from "lucide-react";
+import {
+  Activity,
+  Calendar,
+  ExternalLink,
+  FileText,
+  Gauge,
+  Globe,
+  LayoutGrid,
+  Shield,
+  Target,
+} from "lucide-react";
 import { getOpsSnapshot } from "@/lib/ops.server";
 import { DepartmentSummaryGrid } from "@/components/ops/department-summary-grid";
 import { ActivityFeed } from "@/components/ops/activity-feed";
+import { OpsMission } from "@/components/ops/ops-mission";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Ops · Overview | IndexFlow",
   description:
-    "Public mirror of the IndexFlow Agent Company — manifest, employees, governance, budgets, heartbeats. Permissionless protocol on-chain. Transparent operating company in git.",
+    "Live manifest of the IndexFlow AI DAO — employees, governance, budgets, and agent heartbeats. Permissionless protocol on-chain. Server-rendered from git.",
   openGraph: {
-    title: "IndexFlow Agent Company — built in public",
+    title: "IndexFlow AI DAO — live manifest",
     description:
       "Every employee has a manifest entry, a budget cap, and a human-gated approval for any public statement. Server-rendered from the repo.",
     url: "https://indexflow.app/ops",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IndexFlow Agent Company — built in public",
+    title: "IndexFlow AI DAO — live manifest",
     description:
-      "Permissionless protocol on-chain. Transparent operating company in git.",
+      "Permissionless protocol on-chain. Live manifest, budgets, and heartbeats — all in git.",
   },
 };
 
@@ -31,24 +43,67 @@ export default async function OpsOverviewPage() {
   const allAgents = [...snapshot.activeEmployees, ...snapshot.outOfScopeAgents];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-      {company.mission && (
-        <section className="mb-10 max-w-3xl">
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.24em] text-app-muted">
-            Mission
-          </p>
-          <p className="mt-2 text-base leading-relaxed text-app-text">{company.mission}</p>
+    <>
+      {company.mission && <OpsMission mission={company.mission} />}
+
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+      {company.strategicPriorities.length > 0 && (
+        <section className="mb-10">
+          <SectionHeader
+            icon={Target}
+            title="Strategic priorities"
+            subtitle="Frozen goals the company is optimizing for this cycle."
+          />
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {company.strategicPriorities.map((p) => (
+              <li
+                key={p.id}
+                className="flex flex-col rounded-lg border border-app-border bg-app-surface p-4"
+              >
+                <div className="flex items-start gap-2">
+                  <Target className="mt-0.5 h-4 w-4 shrink-0 text-app-accent" />
+                  <h3 className="text-sm font-semibold leading-snug text-app-text">{p.name}</h3>
+                </div>
+
+                {p.horizon && (
+                  <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-snug text-app-muted">
+                    <Calendar className="mt-0.5 h-3 w-3 shrink-0" />
+                    <span className="font-mono">{p.horizon}</span>
+                  </p>
+                )}
+
+                {p.metric && (
+                  <p className="mt-2 flex items-start gap-1.5 text-xs leading-relaxed text-app-muted">
+                    <Gauge className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                    <span>{p.metric}</span>
+                  </p>
+                )}
+
+                {p.sourceDoc && (
+                  <div className="mt-auto flex items-center gap-1.5 border-t border-app-border pt-2 font-mono text-[10px] text-app-muted">
+                    <FileText className="h-3 w-3 shrink-0" />
+                    <span className="truncate">{p.sourceDoc}</span>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
       <section className="mb-10">
-        <SectionHeader title="Departments" subtitle="Click into any tab for the full surface." />
+        <SectionHeader
+          icon={LayoutGrid}
+          title="Departments"
+          subtitle="Click into any tab for the full surface."
+        />
         <DepartmentSummaryGrid snapshot={snapshot} />
       </section>
 
       <section className="mb-10 grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <SectionHeader
+            icon={Activity}
             title="Latest activity"
             subtitle="Most recent agent heartbeats across every department, with risk-officer verdicts."
           />
@@ -73,39 +128,14 @@ export default async function OpsOverviewPage() {
             </Link>
           </div>
 
-          {company.strategicPriorities.length > 0 && (
-            <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-app-muted">
-                Strategic priorities
-              </h3>
-              <ul className="mt-3 space-y-2">
-                {company.strategicPriorities.map((p) => (
-                  <li
-                    key={p.id}
-                    className="rounded-md border border-app-border bg-app-surface px-3 py-2"
-                  >
-                    <div className="flex items-baseline justify-between gap-2">
-                      <span className="text-sm font-medium text-app-text">{p.name}</span>
-                      {p.horizon && (
-                        <span className="font-mono text-[10px] uppercase tracking-wider text-app-muted">
-                          {p.horizon}
-                        </span>
-                      )}
-                    </div>
-                    {p.metric && (
-                      <div className="mt-0.5 text-[11px] text-app-muted">{p.metric}</div>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {company.publicSurfaces.length > 0 && (
             <div>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-app-muted">
-                Public surfaces
-              </h3>
+              <div className="flex items-center gap-2 text-app-muted">
+                <Globe className="h-4 w-4" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider">
+                  Public surfaces
+                </h3>
+              </div>
               <ul className="mt-3 space-y-1">
                 {company.publicSurfaces.map((s) => (
                   <li key={s.surface} className="flex items-baseline justify-between gap-2 text-xs">
@@ -130,48 +160,26 @@ export default async function OpsOverviewPage() {
           )}
         </aside>
       </section>
-
-      {company.board.length > 0 && (
-        <section>
-          <SectionHeader
-            title="Board"
-            subtitle="Roles held simultaneously while the company is one founder + a fleet of agents."
-          />
-          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {company.board.map((member) => (
-              <li
-                key={`${member.role}-${member.name}`}
-                className="rounded-lg border border-app-border bg-app-surface p-4"
-              >
-                <div className="font-mono text-[10px] font-semibold uppercase tracking-wider text-app-accent">
-                  {member.role}
-                </div>
-                <div className="mt-1 text-sm font-semibold text-app-text">{member.name}</div>
-                {member.titles && member.titles.length > 0 && (
-                  <ul className="mt-2 flex flex-wrap gap-1">
-                    {member.titles.map((title) => (
-                      <li
-                        key={title}
-                        className="rounded-full border border-app-border bg-app-bg px-1.5 py-0.5 font-mono text-[10px] text-app-muted"
-                      >
-                        {title}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
-    </div>
+      </div>
+    </>
   );
 }
 
-function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+function SectionHeader({
+  title,
+  subtitle,
+  icon: Icon,
+}: {
+  title: string;
+  subtitle?: string;
+  icon?: LucideIcon;
+}) {
   return (
     <header className="mb-4">
-      <h2 className="text-lg font-semibold tracking-tight text-app-text">{title}</h2>
+      <div className="flex items-center gap-2">
+        {Icon && <Icon className="h-4 w-4 text-app-accent" />}
+        <h2 className="text-lg font-semibold tracking-tight text-app-text">{title}</h2>
+      </div>
       {subtitle && <p className="mt-0.5 text-sm text-app-muted">{subtitle}</p>}
     </header>
   );

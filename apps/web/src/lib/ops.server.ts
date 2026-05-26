@@ -198,10 +198,6 @@ interface BrainstormYaml {
   brainstorm: RawEmployeeYaml[];
 }
 
-interface BoardYaml {
-  board: Array<{ role: string; name: string; titles: string[] }>;
-}
-
 interface GovernanceYaml {
   governance: {
     hardConstraints: Array<{ id: string; description: string }>;
@@ -220,6 +216,7 @@ interface GoalsYaml {
     horizon?: string;
     metric?: string;
     sourceDoc?: string;
+    sourceDocs?: string[];
   }>;
 }
 
@@ -262,7 +259,6 @@ export async function loadCompany(): Promise<CompanyParseResult> {
   const outOfScopeBlock = blocks.find((b) => b.heading.startsWith("Out of Scope"));
   const governanceBlock = blocks.find((b) => b.heading === "Governance");
   const budgetsBlock = blocks.find((b) => b.heading === "Budgets");
-  const boardBlock = blocks.find((b) => b.heading === "Board");
   const goalsBlock = blocks.find((b) => b.heading === "Strategic priorities");
 
   const parsedEmployees = parseYamlSafe<EmployeesYaml>(employeesBlock?.body ?? "");
@@ -270,7 +266,6 @@ export async function loadCompany(): Promise<CompanyParseResult> {
   const parsedOutOfScope = parseYamlSafe<OutOfScopeYaml>(outOfScopeBlock?.body ?? "");
   const parsedGovernance = parseYamlSafe<GovernanceYaml>(governanceBlock?.body ?? "");
   const parsedBudgets = parseYamlSafe<BudgetsYaml>(budgetsBlock?.body ?? "");
-  const parsedBoard = parseYamlSafe<BoardYaml>(boardBlock?.body ?? "");
   const parsedGoals = parseYamlSafe<GoalsYaml>(goalsBlock?.body ?? "");
 
   const employees = (parsedEmployees?.employees ?? []).map((e) => toEmployeeCard(e, "active"));
@@ -284,7 +279,6 @@ export async function loadCompany(): Promise<CompanyParseResult> {
     mission: ((data.mission as string) ?? "").trim(),
     sourceRepo: (data.sourceRepo as string) ?? "https://github.com/reubenr0d/indexflow-prototype",
     publicSurfaces: parsePublicSurfaces(content),
-    board: parsedBoard?.board ?? [],
     hardConstraints: parsedGovernance?.governance?.hardConstraints ?? [],
     approvalsRequired: parsedGovernance?.governance?.approvalsRequired ?? [],
     budgets:
@@ -296,13 +290,15 @@ export async function loadCompany(): Promise<CompanyParseResult> {
         totalActive: 0,
         totalIfAllPromoted: 0,
       },
-    strategicPriorities: (parsedGoals?.goals ?? []).map((g) => ({
-      id: g.id,
-      name: g.name,
-      horizon: g.horizon,
-      metric: g.metric,
-      sourceDoc: g.sourceDoc,
-    })),
+    strategicPriorities: (parsedGoals?.goals ?? [])
+      .filter((g) => g.id !== "partnership-pipeline")
+      .map((g) => ({
+        id: g.id,
+        name: g.name,
+        horizon: g.horizon,
+        metric: g.metric,
+        sourceDoc: g.sourceDoc ?? g.sourceDocs?.[0],
+      })),
   };
 
   return { manifest, employees, brainstorm, outOfScope };

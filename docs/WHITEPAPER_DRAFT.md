@@ -17,7 +17,19 @@ Perpetual venues are strong at execution, leverage, and price discovery. Strateg
 
 Three gaps remain.
 
-First, most community grant programs create short-lived TVL spikes without durable attribution. Capital arrives for incentives, leaves when incentives fade, and produces weak evidence that the chain or ecosystem actually bought lasting usage.
+```mermaid
+flowchart LR
+    onchain[Onchain finance today]
+    g1[Mercenary capital, no attribution]
+    g2[Portfolio value vs redeemable liquidity]
+    g3[Capital fragmented across venues]
+    indexflow[IndexFlow]
+    onchain --> g1 --> indexflow
+    onchain --> g2 --> indexflow
+    onchain --> g3 --> indexflow
+```
+
+First, ecosystem liquidity programs attract mercenary capital. Capital arrives for incentives, exits when incentives fade, and produces no durable evidence that the chain or ecosystem actually bought lasting usage.
 
 Second, product structures often obscure the difference between portfolio value and redeemability. Investors may own a claim on a strategy, but the system does not always make clear how quickly that claim can be turned back into cash under real operating conditions.
 
@@ -66,6 +78,24 @@ Product value is determined by idle reserves, capital allocated into the shared 
 ### 4. Reserve and Redemption Layer
 
 The reserve layer determines whether a share is redeemable with confidence. It is the part of the architecture that governs redemption quality.
+
+```mermaid
+flowchart LR
+    subgraph nav [Full NAV]
+        reserves[Idle reserves]
+        allocated[Allocated to shared perp]
+        pnl[Accumulated PnL]
+    end
+    subgraph redeem [Redeemable liquidity]
+        cash[Cash immediately available to exit]
+    end
+    gap[The gap: portfolio value that is not exit liquidity]
+    reserves --> cash
+    allocated -.-> gap
+    pnl -.-> gap
+    cash --> exits[Confident redemptions]
+    gap --> constraint[Architectural constraint, made explicit]
+```
 
 ### 5. Attribution and Governance Layer
 

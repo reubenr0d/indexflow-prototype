@@ -34,7 +34,7 @@ const navItems = [
   { href: "/chains", label: "Chains" },
   { href: "/blog", label: "Blog" },
   { href: "/docs", label: "Docs" },
-  { href: "/ops", label: "Agents" },
+  { href: "/ops", label: "Agent Ops" },
   { href: "/admin", label: "Admin" },
 ];
 

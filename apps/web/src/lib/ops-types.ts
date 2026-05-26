@@ -33,12 +33,6 @@ export interface Governance {
   approvalsRequired: string[];
 }
 
-export interface BoardMember {
-  role: string;
-  name: string;
-  titles: string[];
-}
-
 export interface StrategicPriority {
   id: string;
   name: string;
@@ -59,7 +53,6 @@ export interface CompanyManifest {
   tagline: string;
   mission: string;
   publicSurfaces: PublicSurface[];
-  board: BoardMember[];
   hardConstraints: HardConstraint[];
   approvalsRequired: string[];
   budgets: Budgets;
@@ -193,6 +186,11 @@ export interface ContentCalendarRow {
   draftPath: string;
   status: "seeded" | "polished" | "scheduled" | "posted" | string;
   postedUrl?: string;
+}
+
+/** Stable list key — multiple slots can share the same calendar date. */
+export function contentCalendarRowKey(row: ContentCalendarRow): string {
+  return `${row.date}T${row.timeUtc}:${row.slotType}`;
 }
 
 export interface PartnerRow {

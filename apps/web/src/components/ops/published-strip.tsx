@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { CheckCircle2, ExternalLink, Megaphone } from "lucide-react";
-import type { BlogPostMetaLite, ContentCalendarRow } from "@/lib/ops-types";
+import {
+  contentCalendarRowKey,
+  type BlogPostMetaLite,
+  type ContentCalendarRow,
+} from "@/lib/ops-types";
 
 interface PublishedStripProps {
   postedRows: ContentCalendarRow[];
@@ -31,7 +35,7 @@ export function PublishedStrip({ postedRows, recentBlogPosts }: PublishedStripPr
           <ul className="mt-3 space-y-2">
             {posted.slice(-6).reverse().map((row) => (
               <li
-                key={row.date}
+                key={contentCalendarRowKey(row)}
                 className="flex items-start gap-2 rounded-md border border-app-border bg-app-surface px-3 py-2"
               >
                 <CheckCircle2 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-app-success" />
