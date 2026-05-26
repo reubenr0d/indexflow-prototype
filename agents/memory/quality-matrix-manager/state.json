@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-26T04:43:34.306Z",
+  "lastRunAt": "2026-05-26T08:50:28.508Z",
   "thesis": "This run focused on reinforcing our long positions based on the Quality Matrix's top picks, emphasizing exceptional and strong composite scores driven by drilling results. We successfully opened long positions on Scorpio Gold Corporation (SGN.V) and PMETRES CDI 10:1 (PMT.AX), leveraging their exceptional and strong drilling results.",
   "lastThesisUpdate": "2026-05-25T23:30:22.648Z"
 }
