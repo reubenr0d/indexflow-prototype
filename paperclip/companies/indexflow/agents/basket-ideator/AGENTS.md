@@ -102,7 +102,7 @@ You have at most 14 turns.
 
 - [x] `agents/skills/vault-themes.md` authored (oracle-coverage matrix, registry-lookup rules, curator-persona taxonomy, Season-narrative alignment heuristics).
 - [x] `agents/skills/envio-graphql.md` rewritten against the live schema (entity is `Basket`, not `BasketFactory_BasketCreated`).
-- [x] `apps/mcps/envio-graphql/` built (`recent_basket_created`, `count_baskets_by_theme`, `discover_schema`, `query_graphql`). Smoke-tested live 2026-05-26 against `https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql`.
+- [x] `apps/mcps/envio-graphql/` built (`recent_basket_created`, `count_baskets_by_theme`, `discover_schema`, `query_graphql`). Smoke-tested live 2026-05-26 against `https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql`.
 - [x] `vault-concept` added to `apps/mcps/repo-editor/issue-manifest.js` `CATEGORY_ENUM` and the matching label spec; risk-officer rubric extended to require a paired `growth/basket-concepts/queue/` link + Galxe persona citation.
 - [x] CI cron: `.github/workflows/basket-ideator.yml` (weekly Tue 09:00 UTC), in the `agent-self-improver` concurrency group.
 - [ ] Optional: `web-search-mcp` for external market signal — default in this prompt remains founder context injection (founder pastes a 2-line "what's trending in mining/AI/RWAs this week" into the run context).

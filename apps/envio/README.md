@@ -21,6 +21,7 @@ Copy `.env.example` to `.env` and set the RPC URLs used by event-handler
 - `SEPOLIA_RPC_URL` (default `https://ethereum-sepolia-rpc.publicnode.com`)
 - `FUJI_RPC_URL` (default `https://avalanche-fuji-c-chain-rpc.publicnode.com`)
 - `ARBITRUM_SEPOLIA_RPC_URL` (default `https://arbitrum-sepolia-rpc.publicnode.com`)
+- `MANTLE_SEPOLIA_RPC_URL` (default `https://rpc.sepolia.mantle.xyz`)
 - `HUB_RPC_URL` / `SPOKE_RPC_URL` (defaults `http://127.0.0.1:8545` / `:8546`)
 - `ENVIO_API_TOKEN` — only required if any of the URLs above points at
   `https://*.rpc.hypersync.xyz`; those endpoints reject anonymous calls.

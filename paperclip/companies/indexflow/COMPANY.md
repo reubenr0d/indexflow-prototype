@@ -51,7 +51,7 @@ See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integrati
 | Telegram | https://t.me/+gNSBM_gBQ1NkNTY1 |
 | GitHub | https://github.com/reubenr0d/indexflow-prototype |
 | Ops contact | mailto:ops@indexflow.app |
-| Envio (live indexer) | `https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql` |
+| Envio (live indexer) | `https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql` |
 
 #### X account architecture (two accounts, one CMO rhythm)
 

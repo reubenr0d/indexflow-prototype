@@ -4,7 +4,7 @@ Read-only query patterns against the live IndexFlow Envio HyperIndex endpoint. S
 
 ## Endpoint
 
-Canonical URL lives in [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) — `HyperIndex deployment` row, `Current URL` field. As of 2026-05-26: `https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql`. **Do NOT hard-code the URL** in agent prompts; read it from the deployment memory file (the `envio-graphql-mcp` server already does this for you).
+Canonical URL lives in [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) — `HyperIndex deployment` row, `Current URL` field. As of 2026-05-26: `https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql`. **Do NOT hard-code the URL** in agent prompts; read it from the deployment memory file (the `envio-graphql-mcp` server already does this for you).
 
 The indexer serves both Sepolia and Fuji from one Hasura GraphQL endpoint. Filter by `chainId` (`11155111` for Sepolia hub, `43113` for Fuji spoke) when a query is chain-specific.
 

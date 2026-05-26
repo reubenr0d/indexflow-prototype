@@ -81,7 +81,15 @@ networks:
         start_block: 55607589
       - name: BasketVault
 
-  - id: 5003 # Mantle Sepolia (hub)
+  - id: 5003 # Mantle Sepolia (hub) — NOT in HyperSync (only Mantle mainnet 5000 is),
+    # so we MUST use RPC as the primary sync data-source. Without this `rpc:` block
+    # the Envio Cloud build fails closed (404 endpoint, no build/runtime logs).
+    rpc:
+      - url: https://rpc.sepolia.mantle.xyz
+        for: sync
+        initial_block_interval: 1000
+        interval_ceiling: 2000
+        query_timeout_millis: 20000
     start_block: 39077789
     contracts:
       - name: BasketFactory

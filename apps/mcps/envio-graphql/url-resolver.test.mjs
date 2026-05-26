@@ -8,18 +8,18 @@ import {
 
 // Fixture mirrors the actual `Envio HyperIndex deployment` row format
 // (verbatim shape from AGENT_DEPLOYMENT_MEMORY.md on 2026-05-26 after the
-// URL rotation from `dbe3f66` → `822ce13`).
-const FIXTURE_ROW_PRIMARY = `| Envio | Envio Cloud org \`reubenr0d\` | HyperIndex deployment | \`indexflow-prototype-3\` (...) | production | agent | \`read\`, \`deploy\`, \`update-config\` | Single Hasura GraphQL endpoint serving every chain. Auto-deploys on push to \`main\`. **Current URL** \`https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql\` (deployment slug \`822ce13\`, verified live 2026-05-26). Previous URLs (history): \`dbe3f66\` (rotated 2026-05-22), \`caee388\` (pre-rename). | 2026-05-26 |`;
+// URL rotation from `822ce13` → `115a80f`).
+const FIXTURE_ROW_PRIMARY = `| Envio | Envio Cloud org \`reubenr0d\` | HyperIndex deployment | \`indexflow-prototype-3\` (...) | production | agent | \`read\`, \`deploy\`, \`update-config\` | Single Hasura GraphQL endpoint serving every chain. Auto-deploys on push to \`main\`. **Current URL** \`https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql\` (deployment slug \`115a80f\`, verified live 2026-05-26). Previous URLs (history): \`822ce13\` (rotated 2026-05-26), \`dbe3f66\` (rotated 2026-05-22), \`caee388\` (pre-rename). | 2026-05-26 |`;
 
 test("extractEnvioUrlFromMemory pulls the Current URL out of the HyperIndex row", () => {
   const url = extractEnvioUrlFromMemory(`# memory\n\n${FIXTURE_ROW_PRIMARY}\n`);
-  assert.equal(url, "https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql");
+  assert.equal(url, "https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql");
 });
 
 test("extractEnvioUrlFromMemory does NOT pick up a Previous URL on the same row", () => {
-  const fixtureWithPrev = `| Envio | x | HyperIndex deployment | y | production | agent | read | **Current URL** \`https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql\` blah. Previous URL \`https://indexer.dev.hyperindex.xyz/caee388/v1/graphql\` more | 2026-05-26 |`;
+  const fixtureWithPrev = `| Envio | x | HyperIndex deployment | y | production | agent | read | **Current URL** \`https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql\` blah. Previous URL \`https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql\` more | 2026-05-26 |`;
   const url = extractEnvioUrlFromMemory(fixtureWithPrev);
-  assert.equal(url, "https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql");
+  assert.equal(url, "https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql");
 });
 
 test("extractEnvioUrlFromMemory ignores rows missing the HyperIndex marker", () => {
@@ -54,7 +54,7 @@ test("resolveEnvioUrl falls back to the memory file when ENVIO_URL is empty / mi
     env: {},
     readMemoryFile: () => FIXTURE_ROW_PRIMARY,
   });
-  assert.equal(result.url, "https://indexer.dev.hyperindex.xyz/822ce13/v1/graphql");
+  assert.equal(result.url, "https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql");
   assert.equal(result.source, "AGENT_DEPLOYMENT_MEMORY.md");
 });
 

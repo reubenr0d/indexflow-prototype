@@ -7,6 +7,15 @@ import vaultAccountingAbi from "../../abis/VaultAccounting.json";
 import erc20Abi from "../../abis/ERC20.json";
 import stateRelayAbi from "../../abis/StateRelay.json";
 
+const mantleSepolia: Chain = {
+  id: 5003,
+  name: "Mantle Sepolia",
+  nativeCurrency: { name: "Mantle", symbol: "MNT", decimals: 18 },
+  rpcUrls: {
+    default: { http: ["https://rpc.sepolia.mantle.xyz"] },
+  },
+};
+
 const localHub: Chain = {
   id: 31337,
   name: "Local Hub",
@@ -41,6 +50,7 @@ const DEFAULT_RPC_URLS: Record<number, string> = {
   11155111: "https://ethereum-sepolia-rpc.publicnode.com",
   43113: "https://avalanche-fuji-c-chain-rpc.publicnode.com",
   421614: "https://arbitrum-sepolia-rpc.publicnode.com",
+  5003: "https://rpc.sepolia.mantle.xyz",
   31337: "http://127.0.0.1:8545",
   31338: "http://127.0.0.1:8546",
 };
@@ -49,6 +59,7 @@ const CHAIN_CONFIG: Record<number, ChainConfig> = {
   11155111: { chain: sepolia, rpcUrl: resolveRpcUrl(11155111, "SEPOLIA_RPC_URL") },
   43113: { chain: avalancheFuji, rpcUrl: resolveRpcUrl(43113, "FUJI_RPC_URL") },
   421614: { chain: arbitrumSepolia, rpcUrl: resolveRpcUrl(421614, "ARBITRUM_SEPOLIA_RPC_URL") },
+  5003: { chain: mantleSepolia, rpcUrl: resolveRpcUrl(5003, "MANTLE_SEPOLIA_RPC_URL") },
   31337: { chain: localHub, rpcUrl: resolveRpcUrl(31337, "HUB_RPC_URL") },
   31338: { chain: localSpoke, rpcUrl: resolveRpcUrl(31338, "SPOKE_RPC_URL") },
 };
