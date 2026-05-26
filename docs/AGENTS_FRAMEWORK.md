@@ -592,27 +592,43 @@ The boundary holds even for **new vaults**: `basket-ideator` *proposes* themes (
 ### Architecture
 
 ```
-┌──────────────────────┐    daily auto-sync     ┌────────────────────────────────┐
-│ Repo (canonical)     │  ───────────────────▶  │ Paperclip server + Postgres    │
-│  COMPANY.md          │       overwrite        │  - org chart, employees        │
-│  agents/*.md         │                        │  - skills, routines, budgets   │
-│  agents/skills/*.md  │                        │  - issues, approvals           │
-│  AGENTS.md           │                        │  - heartbeat_runs, cost_events │
-│  AGENT_DEPLOYMENT…   │                        │  - activity_log                │
-└──────────────────────┘                        └────────────────────────────────┘
-            ▲                                                  │
+┌──────────────────────┐                        ┌──────────────────────────────────┐
+│ Repo (canonical)     │  npm run sync:paperclip│ Repo (mirror — git-tracked)      │
+│  COMPANY.md          │  ─────────────────────▶│  paperclip/companies/indexflow/  │
+│  agents/*.md         │                        │   COMPANY.md                     │
+│  agents/skills/*.md  │       overwrite        │   agents/<slug>/AGENTS.md  ◀──┐  │
+│  AGENTS.md           │                        │  (only the active runnable    │  │
+│  AGENT_DEPLOYMENT…   │                        │   employees — 2 today)        │  │
+└──────────────────────┘                        └──────────────────────────────────┘
+            ▲                                                  │           │
+            │                                                  │ Paperclip │ daily
+            │                                                  │ discovers │ auto-sync
+            │                                                  ▼           │
+            │                                  ┌────────────────────────────────┐
+            │                                  │ Paperclip server + Postgres    │
+            │                                  │  - org chart, employees        │
+            │                                  │  - skills, routines, budgets   │
+            │                                  │  - issues, approvals           │
+            │                                  │  - heartbeat_runs, cost_events │
+            │                                  │  - activity_log                │
+            │                                  └────────────────────────────────┘
+            │                                                  │
             │                                       heartbeat  │  shell adapter
             │                                                  ▼
             │                                  ┌────────────────────────────────┐
             │                                  │ npm run agent:run -- <name>    │
             │                                  │  scripts/agent-runner.mjs      │
-            │                                  │  (UNCHANGED)                   │
+            │                                  │  reads canonical agents/*.md   │
+            │                                  │  (UNCHANGED — mirror is for    │
+            │                                  │   Paperclip's eyes only)       │
             │                                  └────────────────────────────────┘
             │                                                  │
             │ commit-results CI job pushes back               │ writes
             │ paperclip-heartbeat.json + state.json + run-log │
             └──────────────────────────────────────────────────┘
 ```
+
+The mirror exists because the `paperclip-agent-companies-plugin` v0.9.x classifier requires `agents/<slug>/AGENTS.md` per-slug subfolders (plural, capital S), but our canonical layout is flat `agents/<slug>.md`. The runtime (`scripts/agent-runner.mjs`) reads the canonical flat files; Paperclip reads the mirror subdir; `npm run sync:paperclip` keeps them in lockstep. See [`paperclip/README.md`](../paperclip/README.md).
 
 ### Files involved
 
@@ -669,11 +685,17 @@ The plan adopted is **"config + lightweight memory"** scope (see the original pl
    # Verify: curl -s http://127.0.0.1:3100/api/plugins
    #   → expect "pluginKey": "paperclip-agent-companies-plugin", "status": "ready"
    ```
-3. In the Paperclip UI: **Settings → Secrets** → add the `envPassthrough` values listed on every employee in [`COMPANY.md`](../COMPANY.md) (`LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL`, `GH_TOKEN`, `AGENT_NETWORK=sepolia`, `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1`, `AGENT_MAX_TURNS=20`). Then **Settings → Repository Catalog → Add source** → paste the bare absolute path `/Users/reuben/Desktop/minestarters/code/snx-prototype` (NOT `file:///…` — the plugin's `looksLikeLocalPath` only matches `/`, `./`, `../`, `~/`, or `C:\` prefixes; `file:///` routes through the git-clone path and fails at Import with `"Company not found."`) or use the GitHub URL `https://github.com/reubenr0d/indexflow-prototype` (which shallow-clones and only sees commits — push before sync). → **Discover** → **Import as new company** → enable daily auto-sync (overwrite mode is the plugin default). (The settings page is registered by the plugin under the display name "Repository Catalog" in v0.9.x; older docs may call it "Agent Companies" — same thing.)
-4. For each ACTIVE employee, confirm the shell-adapter `cwd` resolves to this repo root. The 4 active employees today are `issue-implementer` (callback-only), `self-improver-issues` (routine paused — CI cron canonical), and the two `kind: prompt-only` reviewers (`risk-officer-self-improvement`, `risk-officer-self-improvement-issues`) which don't heartbeat. Trading agents and the Minestarters brand should NOT appear — they're enumerated in `COMPANY.md` §Out of Scope.
-5. Routines in `COMPANY.md` start as `paused`. Leave them paused while `.github/workflows/vault-agent.yml` is the canonical scheduler; flip to `enabled` if/when you cut that cron over to Paperclip (don't run both — they'll race on the same proposal manifest).
-6. Smoke test: UI → Employees → **`self-improver-issues`** → **Run now**. Confirm a `heartbeat_runs` row appears in Paperclip and that `agents/memory/self-improver-issues/paperclip-heartbeat.json` is written. (Use `self-improver-issues` not the trading agents for the first test — lowest blast radius; the worst case is a draft proposal lands in `.agent-self-improvement/proposed-issues.json` that the risk-officer vets before any `gh issue create` runs.)
-7. After successful first heartbeat: re-key the Paperclip row in [`AGENT_DEPLOYMENT_MEMORY.md`](../AGENT_DEPLOYMENT_MEMORY.md) from `planned` → `live`. The exact diff is pre-staged in [`docs/PAPERCLIP_RUNBOOK.md`](PAPERCLIP_RUNBOOK.md) §After Successful Install — copy-paste, replace placeholders, done.
+3. **Generate the Paperclip-native mirror.** The plugin v0.9.x classifier requires `agents/<slug>/AGENTS.md` per-slug subfolders, but our canonical layout is flat `agents/<slug>.md` files (read that way by `scripts/agent-runner.mjs`). The repo-side bridge is the generated mirror at `paperclip/companies/indexflow/`:
+   ```bash
+   npm run sync:paperclip
+   # Re-run after any edit to COMPANY.md or to a mirrored agent prompt.
+   ```
+   The mirror is git-tracked so GitHub-URL sources work too. See [`paperclip/README.md`](../paperclip/README.md) for the rationale and the procedure for adding a new agent to the mirror.
+4. In the Paperclip UI: **Settings → Secrets** → add the `envPassthrough` values listed on every employee in [`COMPANY.md`](../COMPANY.md) (`LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL`, `GH_TOKEN`, `AGENT_NETWORK=sepolia`, `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1`, `AGENT_MAX_TURNS=20`). Then **Settings → Repository Catalog → Add source** → paste the bare absolute path to the **mirror subdirectory** `/Users/reuben/Desktop/minestarters/code/snx-prototype/paperclip/companies/indexflow` (NOT the repo root — pointing at the repo root makes the plugin discover the canonical `COMPANY.md` with **"No structured contents detected"** because the flat `agents/*.md` files don't match the classifier; NOT `file:///…` — the plugin's `looksLikeLocalPath` only matches `/`, `./`, `../`, `~/`, or `C:\` prefixes and `file:///` routes through the git-clone path) or use the GitHub URL `https://github.com/reubenr0d/indexflow-prototype` (which shallow-clones and reads the tracked mirror; commit + push first). → **Discover** → **Import as new company** → enable daily auto-sync (overwrite mode is the plugin default). (The settings page is registered by the plugin under the display name "Repository Catalog" in v0.9.x; older docs may call it "Agent Companies" — same thing.)
+5. For each ACTIVE mirrored employee, confirm the shell-adapter `cwd` resolves to this repo root. The 2 mirrored runnable employees today are `issue-implementer` (callback-only) and `self-improver-issues` (routine paused — CI cron canonical). The two `kind: prompt-only` reviewers (`risk-officer-self-improvement`, `risk-officer-self-improvement-issues`) are documented in `COMPANY.md` `employees:` but NOT mirrored — they're invoked inline by `scripts/run-self-improvement-{risk-officer,issue-risk-officer}.mjs` and have no heartbeat. Trading agents and the Minestarters brand should NOT appear — they're enumerated in `COMPANY.md` §Out of Scope and intentionally absent from the mirror.
+6. Routines in `COMPANY.md` start as `paused`. Leave them paused while `.github/workflows/vault-agent.yml` is the canonical scheduler; flip to `enabled` if/when you cut that cron over to Paperclip (don't run both — they'll race on the same proposal manifest).
+7. Smoke test: UI → Employees → **`self-improver-issues`** → **Run now**. Confirm a `heartbeat_runs` row appears in Paperclip and that `agents/memory/self-improver-issues/paperclip-heartbeat.json` is written. (Use `self-improver-issues` not the trading agents for the first test — lowest blast radius; the worst case is a draft proposal lands in `.agent-self-improvement/proposed-issues.json` that the risk-officer vets before any `gh issue create` runs.)
+8. After successful first heartbeat: re-key the Paperclip row in [`AGENT_DEPLOYMENT_MEMORY.md`](../AGENT_DEPLOYMENT_MEMORY.md) from `planned` → `live`. The exact diff is pre-staged in [`docs/PAPERCLIP_RUNBOOK.md`](PAPERCLIP_RUNBOOK.md) §After Successful Install — copy-paste, replace placeholders, done.
 
 ### What does NOT change
 

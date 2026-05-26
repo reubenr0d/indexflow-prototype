@@ -47,7 +47,7 @@ const mono = IBM_Plex_Mono({
 
 const siteTitle = "IndexFlow | Oracle-priced basket vaults";
 const siteDescription =
-  "Deposit USDC into weighted baskets priced by oracles, backed by a shared GMX-style perpetual pool. For operators and liquidity providers.";
+  "Deposit USDC into weighted baskets priced by oracles, backed by a shared GMX-style perpetual pool. Permissionless protocol on-chain. Transparent Agent Company in git — see /ops.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://indexflow.app"),

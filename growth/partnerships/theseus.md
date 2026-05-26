@@ -47,3 +47,4 @@ Theseus is a non-chain partner where the strategic fit is curator-facing: IndexF
 ## Historical thread / contact log
 
 - 2026-05-26 — partnership tracker row opened; founders engaged, vault deploy unlocks co-marketing (co_marketing=pending_deploy, funding_intros=none). Canonical handle and named counterpart still TBD.
+- 2026-05-26 — scaffolding for the pilot deploy landed in-repo: [`agents/mining-manager-theseus.md`](../../agents/mining-manager-theseus.md) (sovereign-class variant of `mining-manager`, `state: planned`) and [`agents/skills/proof-of-lobster.md`](../../agents/skills/proof-of-lobster.md) (receipt-emitting skill convention mirrored from [Theseus upstream](https://github.com/Theseuschain/proof-of-lobster)). Mandate-check wiring declared (`agents/risk-officer.md` ports inline). Blockers documented in the agent file; nothing on-chain yet. Co-marketing remains `pending_deploy` — flips `→ active` only after a live testnet pilot ships.

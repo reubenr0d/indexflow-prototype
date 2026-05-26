@@ -156,6 +156,24 @@ Product-viability gate, not a growth nice-to-have: without LP capital in the sha
 - [ ] First basket-vault deposit > $100k live onchain
 - [ ] Monthly pool-update email cadence established
 
+## Building in Public
+
+IndexFlow runs as an **Agent Company**: every employee — human or AI — has a manifest entry in [`COMPANY.md`](COMPANY.md), a monthly USD budget cap, and a human-gated approval for any public statement. The contracts are permissionless; the company that operates around them is auditable.
+
+What is public, today, in git:
+
+- **Manifest + governance** — [`COMPANY.md`](COMPANY.md) (`schema: agentcompanies/v1`) declares active employees, brainstorm slate, board, budgets, sync contract, and four `governance.hardConstraints` enforced on every heartbeat (no auto-commit, deployment-memory allowlist, public-channel human gate, scope boundary).
+- **Trading agent state** — `agents/memory/<agent>/paperclip-heartbeat.json` (per-run thesis, write actions, risk-officer verdicts), `state.json` (vault binding, fingerprint), and `run-log.<network>.jsonl` (full turn-by-turn audit trail) for every vault-managing agent. Pushed by the `commit-results` job in [`.github/workflows/vault-agent.yml`](.github/workflows/vault-agent.yml).
+- **Per-vault AI Operator panel** — [`apps/web/public/agent-metadata/<vault>.json`](apps/web/public/agent-metadata/) feeds the "AI Activity" card on each `/baskets/<vault>` page (thesis + decisions + tx justifications).
+- **Deployment ledger** — [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md) is the allowlist for every cloud / on-chain resource an agent may touch. Resources not listed there are read-only.
+- **Growth pipeline** — date-slotted Season 1 schedule in [`growth/X_CONTENT_CALENDAR.md`](growth/X_CONTENT_CALENDAR.md), per-partner files in [`growth/partnerships/`](growth/partnerships/), and the basket concepts queue at [`growth/basket-concepts/queue/`](growth/basket-concepts/queue/).
+
+**The public surface** is [`indexflow.app/ops`](https://indexflow.app/ops) (`apps/web/src/app/ops/page.tsx`) — a server-rendered mirror that reads every file above and renders an org chart, live heartbeats, governance constraints, budgets, the CMO surface (calendar + partnerships + concepts), and a deployment ledger. The data source is `git pull`; no extra DB, no hosted control plane.
+
+> Permissionless protocol on-chain. Transparent operating company in git. No black boxes.
+
+The local [Paperclip](https://paperclip.ing) dashboard ([`docs/PAPERCLIP_RUNBOOK.md`](docs/PAPERCLIP_RUNBOOK.md)) is an optional founder-only UI for tickets, budgets, and manual re-runs — **not** part of the public mirror. See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integration for the architecture.
+
 ## Growth
 
 Progress tracker for the IndexFlow growth engine. Strategy, templates, and playbooks live in [`growth/`](growth/).
@@ -180,6 +198,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] X / Twitter account live ([@indexflowDAO](https://x.com/indexflowDAO))
 - [ ] Set up Discord server
 - [x] Telegram community live
+- [x] Public Agent Company mirror live at [`/ops`](https://indexflow.app/ops) (`apps/web/src/app/ops/page.tsx`) — server-rendered from `COMPANY.md`, `agents/memory/`, `growth/`, `AGENT_DEPLOYMENT_MEMORY.md`. Surfaces hard constraints, budgets, content calendar, partnerships, basket concepts.
 
 ### Content Production
 
@@ -265,6 +284,7 @@ Strategic priority: [`COMPANY.md`](COMPANY.md) §`vc-outreach`. Playbook: [`grow
 
 Strategic priority: [`COMPANY.md`](COMPANY.md) §`lp-seed-liquidity`. Playbook: [`growth/LP_OUTREACH_PLAYBOOK.md`](growth/LP_OUTREACH_PLAYBOOK.md). Two-track audience — perp-layer LPs (market makers) and basket-vault depositors (DAO treasuries + family offices).
 
+- [x] Minestarters strategic audit + liquidity seed board proposal drafted ([growth/MINESTARTERS_INDEXFLOW_AUDIT_LIQUIDITY_PROPOSAL.md](growth/MINESTARTERS_INDEXFLOW_AUDIT_LIQUIDITY_PROPOSAL.md))
 - [ ] Clay workspace configured with `outreach_track: lp_perp | lp_basket` tagging (shared with VC pipeline)
 - [ ] Track A list build: 10–20 Tier 1 market-maker contacts enriched (Wintermute, GSR, Amber, Selini, Auros, Cumberland, etc.)
 - [ ] Track B list build: 30–50 Tier 1 DAO treasury / fintech contacts enriched (via Defillama + Dune)

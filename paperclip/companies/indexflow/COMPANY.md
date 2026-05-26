@@ -42,7 +42,6 @@ See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integrati
 | Surface | Value |
 |---|---|
 | Web app | https://indexflow.app |
-| Public Agent Company mirror | https://indexflow.app/ops (renders this manifest + agent heartbeats + governance + CMO calendar from `apps/web/src/app/ops/page.tsx`; ISR ~60s) |
 | Hosted frontend (planned) | https://app.indexflow.xyz |
 | X (primary) | [@indexflowDAO](https://x.com/indexflowDAO) |
 | X (auto-broadcast bot, planned) | `@IndexFlowBots` (handle TBD — tracked in [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md)) |
@@ -50,15 +49,6 @@ See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integrati
 | GitHub | https://github.com/reubenr0d/indexflow-prototype |
 | Ops contact | mailto:ops@indexflow.app |
 | Envio (live indexer) | `https://indexer.dev.hyperindex.xyz/dbe3f66/v1/graphql` |
-
-#### X account architecture (two accounts, one CMO rhythm)
-
-| Account | Voice | Cadence | Who posts | Templates |
-|---|---|---|---|---|
-| `@indexflowDAO` | CMO voice — thesis, narrative, weekly run-log threads, ops updates, partner co-tweets | Daily-ish, per `growth/X_CONTENT_CALENDAR.md` | **Human only**. `content-publisher` drafts and surfaces tickets; founder posts. | `weekly_runlog_thread`, `post_mortem_thread`, `partner_co_tweet` (see `governance.preApprovedTemplates`) |
-| `@IndexFlowBots` | Mechanical — `BasketCreated` events from Envio HyperIndex on the hub testnet | Event-driven (15-min polling until subscription-MCP ships) | `broadcast-bot` (v1: human-per-post; v2: cap+rate under `governance.broadcastBotAutoPost: true` after 20 approved posts) | `basket_launch_tweet` only |
-
-`broadcast-bot` is the **only** employee with `mayPostPublicChannel: true`, and the `twitter-mcp` server is configured to fail closed if it sees the `@indexflowDAO` handle on the auth path. No third "Paperclip" or "ops" bot — duplicates Track C on the main account and dilutes the CMO voice.
 
 ### Charter docs (authority order)
 
@@ -948,38 +938,6 @@ governance:
     - budget_increase_above_25pct
     - deployment_resource_creation
     - post_to_public_channel
-  preApprovedTemplates:
-    # Template *shapes* an agent may propose without per-shape founder
-    # approval. The CONTENT of every post still goes through the
-    # public-channel human gate; this list only removes per-shape
-    # friction so content-publisher/broadcast-bot don't have to ask
-    # "may I use this template?" every tick.
-    - id: weekly_runlog_thread
-      owner: content-publisher
-      target: "@indexflowDAO"
-      shape: agent name + run count + thesis + 1 standout decision with txHash
-      gating: human-per-post
-      source: agents/memory/<agent>/paperclip-heartbeat.json + run-log tail
-    - id: basket_launch_tweet
-      owner: broadcast-bot
-      target: "@IndexFlowBots"
-      shape: basket name + curator handle (if resolvable) + asset count + hub deep-link
-      gating: human-per-post (v1) → cap+rate (v2 after 20 approved posts)
-      source: Envio BasketCreated event
-      autoPostUnlockCondition: governance.broadcastBotAutoPost == true
-    - id: post_mortem_thread
-      owner: content-publisher
-      target: "@indexflowDAO"
-      shape: failed-run summary + root cause + the fix being shipped + link to run-log entry
-      gating: human-per-post
-      source: paperclip-heartbeat.json where status == failed
-    - id: partner_co_tweet
-      owner: content-publisher
-      target: "@indexflowDAO"
-      shape: partner handle + co-marketing surface + joint deep-link
-      gating: human-per-post + partner-side confirmation
-      source: growth/partnerships/<partner>.md (co_marketing == agreed)
-  broadcastBotAutoPost: false
 ```
 
 ## Sync Contract

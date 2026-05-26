@@ -1,14 +1,16 @@
 import Link from "next/link";
-import { Code, Send, BookOpen, FileText, BarChart3, Scale, Shield } from "lucide-react";
+import { Code, Send, BookOpen, FileText, BarChart3, Scale, Shield, Users } from "lucide-react";
 import { XLogo } from "@/components/icons/x-logo";
 
 const TELEGRAM_URL = "https://t.me/+gNSBM_gBQ1NkNTY1";
 const GITHUB_URL = "https://github.com/reubenr0d/indexflow-prototype";
+const COMPANY_MANIFEST_URL = `${GITHUB_URL}/blob/main/COMPANY.md`;
 const X_URL = "https://x.com/indexflowDAO";
 
 const productLinks = [
   { href: "/baskets", label: "Baskets", Icon: BarChart3 },
   { href: "/docs", label: "Docs", Icon: BookOpen },
+  { href: "/ops", label: "Agent Company", Icon: Users },
   { href: "/", label: "Home", Icon: FileText },
   { href: "/terms", label: "Terms", Icon: Scale },
   { href: "/privacy", label: "Privacy", Icon: Shield },
@@ -16,6 +18,7 @@ const productLinks = [
 
 const developerLinks = [
   { href: GITHUB_URL, label: "GitHub", Icon: Code, external: true },
+  { href: COMPANY_MANIFEST_URL, label: "COMPANY.md manifest", Icon: FileText, external: true },
   { href: TELEGRAM_URL, label: "Whitepaper", Icon: FileText, external: true },
 ];
 
