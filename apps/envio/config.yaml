@@ -53,7 +53,19 @@ contracts:
       - event: StateUpdated
 
 networks:
-  - id: 11155111 # Sepolia
+  - id: 11155111 # Sepolia (hub) — HyperSync silently returns 0 events for this
+    # contract set on slug 31d1482 (deployment a9bfc32) despite RPC eth_getLogs
+    # proving 2,433+ matching logs exist between blocks 10,891,752 → head. Fuji
+    # on the same indexer works, so handlers / ABIs are fine. RPC fallback only
+    # activates on primary errors, not on silent-empty responses, so we make RPC
+    # the primary sync source (mirrors the Mantle Sepolia hack at id 5003) until
+    # Envio confirms the HyperSync data gap is fixed. Trade speed for correctness.
+    rpc:
+      - url: https://ethereum-sepolia-rpc.publicnode.com
+        for: sync
+        initial_block_interval: 500
+        interval_ceiling: 2000
+        query_timeout_millis: 20000
     start_block: 10891752
     contracts:
       - name: BasketFactory

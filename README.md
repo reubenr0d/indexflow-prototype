@@ -245,6 +245,7 @@ Active partner relationships are tracked in [`growth/partnerships/`](growth/part
 - [x] Mantle — Spoke demo, Week 2 ([growth/partnerships/chains/mantle.md](growth/partnerships/chains/mantle.md))
 - [x] iExec — Confidential Compute leg, Week 3 trinity ([growth/partnerships/iexec.md](growth/partnerships/iexec.md))
 - [ ] Nox — MPC Signing leg, Week 3 trinity (canonical X handle TBD) ([growth/partnerships/nox.md](growth/partnerships/nox.md))
+- [x] Envio — data plane for IndexFlow (`/operators`, UTM attribution, multichain Hasura endpoint); co-marketing agreed, Thu Jun 18 16:30 UTC standalone slot anchored ([growth/partnerships/envio.md](growth/partnerships/envio.md), [growth/partnerships/envio-proposal.md](growth/partnerships/envio-proposal.md))
 - [x] Chain partnerships tracker (chains/ subfolder + per-chain files + deployment-status legend) ([growth/partnerships/chains/README.md](growth/partnerships/chains/README.md))
 - [x] Avalanche chain partnership — Fuji spoke live; mainnet C-Chain in discussion ([growth/partnerships/chains/avalanche.md](growth/partnerships/chains/avalanche.md))
 - [ ] Mantle chain partnership — Mantle Sepolia spoke deploy pending (hackathon target) ([growth/partnerships/chains/mantle.md](growth/partnerships/chains/mantle.md))

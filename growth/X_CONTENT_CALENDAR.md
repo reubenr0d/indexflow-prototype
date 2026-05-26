@@ -26,7 +26,7 @@ Status transitions: `seeded` → `polished` → `scheduled` → `posted`. A row 
 
 ## Cadence and mix
 
-Six posts/week baseline. Week 2 and Week 3 are seven — Week 2 carries an extra Sun Jun 7 reinforcement beat (the canonical "route by depth, not by default." standalone, bumped from Wed May 27 when the testnet-agents-live teaser took that slot); Week 3 is seven due to the confidential-infra trinity. 60% educational/thought leadership, 30% project updates, 10% promotional across the season. One thread per week is the Operator-of-the-Week spotlight from Week 2 onward.
+Six posts/week baseline. Week 2 and Week 3 are seven — Week 2 carries an extra Sun Jun 7 reinforcement beat (the canonical "route by depth, not by default." standalone, bumped from Wed May 27 when the testnet-agents-live teaser took that slot); Week 3 is seven due to the confidential-infra trinity. Week 4 is also seven after the Thu Jun 18 16:30 Envio data-plane standalone was added on 2026-05-27 to anchor the agreed Envio co-marketing surface (per [`growth/partnerships/envio.md`](./partnerships/envio.md)). 60% educational/thought leadership, 30% project updates, 10% promotional across the season. One thread per week is the Operator-of-the-Week spotlight from Week 2 onward.
 
 Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces start at **21:00 UTC** on Sun Jun 21. All deep-links carry `utm_source=x&utm_campaign=season-1` so Envio can attribute `BasketCreated` events back to the source post.
 
@@ -62,6 +62,7 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 | 2026-06-16 | Tue | 16:30 | standalone | A | none | P5 | Insider Knowledge | `growth/drafts/2026-06-16-tweet-licensed-managers-already-do-this.md` | seeded |  |
 | 2026-06-17 | Wed | 15:00 | thread | B | Curators | P4 | Personal Story | `growth/drafts/2026-06-17-thread-operator-of-the-week-curator-3.md` | seeded |  |
 | 2026-06-18 | Thu | 15:00 | thread | cross | none | P4 | Data | `growth/drafts/2026-06-18-thread-season-1-recap.md` | seeded |  |
+| 2026-06-18 | Thu | 16:30 | standalone | cross | none | P3 | Data | `growth/drafts/2026-06-18-tweet-envio-data-plane.md` | seeded |  |
 | 2026-06-19 | Fri | 16:30 | standalone | cross | none | P4 | Stakes | `growth/drafts/2026-06-19-tweet-season-1-72h-warning.md` | seeded |  |
 | 2026-06-20 | Sat | 16:30 | standalone | cross | none | P4 | Stakes | `growth/drafts/2026-06-20-tweet-spaces-season-close.md` | seeded |  |
 | 2026-06-21 | Sun | 21:00 | spaces | cross | none | P4 | Stakes | `growth/drafts/2026-06-21-spaces-season-close.md` | seeded |  |

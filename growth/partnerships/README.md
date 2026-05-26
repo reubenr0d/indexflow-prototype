@@ -10,6 +10,7 @@ Partnerships are tracked here as a first-class growth workstream alongside [`gro
 | [Secret Network](secret-network.md) | non-chain | `@SecretNetwork` | active | agreed | none | Confirm @SecretNetwork co-tweet timing for Sat Jun 13 | 2026-06-10 | [secret-network.md](secret-network.md) |
 | [iExec](iexec.md) | non-chain | `@iEx_ec` | active | agreed | none | Confirm @iEx_ec co-tweet for Fri Jun 12; scope iApp confidential-compute PoC for an IndexFlow agent | 2026-06-09 | [iexec.md](iexec.md) |
 | [Nox](nox.md) | non-chain | `@nox_TBD` (pending) | active | agreed | none | Confirm Nox canonical X handle + co-tweet timing for Sun Jun 14 | 2026-06-11 | [nox.md](nox.md) |
+| [Envio](envio.md) | non-chain | `@envio_indexer` | active | agreed | none | Confirm `@envio_indexer` co-tweet timing for new Thu Jun 18 16:30 UTC Envio data-flex standalone; scope ecosystem grant track | 2026-06-15 | [envio.md](envio.md) |
 | [Mantle](chains/mantle.md) | chain | `@Mantle_Official` | active | pending_deploy | none | Land first Mantle Sepolia spoke deploy via `script/DeploySpoke.s.sol` for the hackathon demo; confirm @Mantle_Official co-tweet timing for Thu Jun 4; flag potential ecosystem grant track to user | 2026-06-01 | [chains/mantle.md](chains/mantle.md) |
 | [BNB Chain](chains/bnb.md) | chain | `@BNBCHAIN` | in_discussion | pending_deploy | none | Verify CCIP testnet lane Sepolia <-> BNB Smart Chain Testnet, then run `script/DeploySpoke.s.sol` for the hackathon submission | TBD | [chains/bnb.md](chains/bnb.md) |
 | [Theseus](theseus.md) | non-chain | `@theseus_TBD` (pending) | signed_mou | pending_deploy | none | Deploy an IndexFlow vault on Theseus to unlock the agreed co-marketing surface; confirm canonical X handle and founder counterpart | TBD | [theseus.md](theseus.md) |
@@ -200,6 +201,7 @@ Which platform surface each partner co-funds or co-tweets on. All four Season 1 
 | Mantle | Co-tweet 2026-06-04 | Onboarding task: "Follow @Mantle_Official" | Co-funded action on first N Mantle-spoke basket creations | Candidate (warm intro requested, not yet applied) |
 | iExec | Co-tweet 2026-06-12 | Engineers Guild quiz on confidential compute | Co-funded action on first N agents shipped inside an iApp | Not yet scoped |
 | Nox | Co-tweet 2026-06-14 | Engineers Guild quiz on MPC threshold signing | Co-funded action on keeper-signing PoC participation | Not yet scoped |
+| Envio | Co-tweet 2026-06-18 (data-plane anchor) | Engineers Guild quiz: "What does HyperIndex actually index?" | Co-funded action: first N agents that read `apps/mcps/envio-graphql/` | Build Bigger. Ship Faster — PR to `enviodev/grant-program` pending |
 
 ## File layout
 
@@ -211,6 +213,8 @@ growth/partnerships/
   secret-network.md     # State leg of the Week 3 confidential-infra trinity
   iexec.md              # Compute leg of the Week 3 confidential-infra trinity
   nox.md                # Signing leg of the Week 3 confidential-infra trinity
+  envio.md              # Data plane for IndexFlow — @IndexFlowBots, /operators, UTM attribution
+  envio-proposal.md     # External-facing co-marketing proposal doc (paste into DM/email to Envio)
   chains/               # chain partnerships (separate lifecycle: testnet -> mainnet)
     README.md           # chain-partners index + deployment-status legend + workflow
     _TEMPLATE.md        # per-chain schema (extends the generic shape with a chain: block)
