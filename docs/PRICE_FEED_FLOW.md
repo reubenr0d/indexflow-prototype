@@ -367,6 +367,19 @@ For **Avalanche Fuji**, the same pattern applies:
 2. Add `fuji` to the `workflow_dispatch` network choice list.
 3. Add the `FUJI_RPC_URL` GitHub secret.
 
+For **Mantle Sepolia** (crypto + RWA testnet hub):
+
+1. Matrix entry (already in `update-prices.yml`):
+
+   ```yaml
+   - network: mantle-sepolia
+     deployment_config: apps/web/src/config/mantle-sepolia-deployment.json
+     rpc_url_secret: MANTLE_SEPOLIA_RPC_URL
+   ```
+
+2. The workflow sets `BYBIT_TESTNET=0` so crypto symbols that miss Yahoo use **mainnet** Bybit index prices as fallback (see [CRYPTO_ORACLE_COVERAGE.md](./CRYPTO_ORACLE_COVERAGE.md)).
+3. Ensure `MANTLE_SEPOLIA_RPC_URL` and keeper authorization on the Mantle `OracleAdapter` are configured.
+
 ### Manual trigger
 
 From the GitHub Actions tab, select **Update Prices**, click **Run workflow**, and optionally pick a specific network (default: `all`).

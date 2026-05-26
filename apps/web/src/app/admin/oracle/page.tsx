@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type AnchorHTMLAttributes } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -28,11 +28,11 @@ import { REFETCH_INTERVAL } from "@/lib/constants";
 import { useContractErrorToast, getContractErrorMessage } from "@/hooks/useContractErrorToast";
 import { showToast } from "@/components/ui/toast";
 import { motion } from "framer-motion";
-import { ExternalLink, Radio } from "lucide-react";
+import { Radio } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { YahooFinanceSearch, type YFSearchSelection } from "@/components/yahoo-finance-search";
 import { fetchYahooFinanceQuote, type YFQuote } from "@/hooks/useYahooFinanceSearch";
-import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
+import { MarketOutlinkDeep } from "@/components/market-outlink";
 import { keccak256, stringToHex } from "viem";
 
 const PRICE_SYNC_ABI = [
@@ -44,33 +44,6 @@ const PRICE_SYNC_ABI = [
     outputs: [],
   },
 ] as const;
-
-function YahooFinanceDeepLink({
-  symbol,
-  label = "View on Yahoo Finance",
-  className,
-  ...anchorProps
-}: {
-  symbol: string;
-  label?: string;
-  className?: string;
-} & AnchorHTMLAttributes<HTMLAnchorElement>) {
-  return (
-    <a
-      href={yahooFinanceQuoteUrl(symbol)}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex items-center gap-1.5 text-sm font-medium text-app-accent underline underline-offset-2 hover:text-app-accent/80",
-        className
-      )}
-      {...anchorProps}
-    >
-      <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden />
-      {label}
-    </a>
-  );
-}
 
 export default function AdminOraclePage() {
   const { chainId } = useDeploymentTarget();
@@ -242,7 +215,7 @@ export default function AdminOraclePage() {
         </div>
         {writeControlsYahooSymbol && (
           <div className="mt-2" data-testid="oracle-write-yahoo-link">
-            <YahooFinanceDeepLink symbol={writeControlsYahooSymbol} />
+            <MarketOutlinkDeep oracleSymbol={writeControlsYahooSymbol} />
           </div>
         )}
       </Card>
@@ -299,13 +272,12 @@ function RegisterAssetCard() {
   return (
     <Card className="mb-6 p-6">
       <h2 className="mb-2 text-base font-semibold text-app-text">
-        <InfoLabel
-          label="Register New Asset"
-          tooltip="Search for any publicly-traded equity and register it as a tradeable oracle asset in a single transaction."
-        />
+        <InfoLabel label="Register New Asset" tooltipKey="registerOracleAsset" />
       </h2>
       <p className="mb-4 text-sm text-app-muted">
-        Search any exchange (ASX, LSE, TSX, NYSE, etc.) and wire the asset for trading on-chain.
+        Search any exchange (ASX, LSE, TSX, NYSE, etc.) or enter a crypto symbol in BASE-USD form (e.g. ETH-USD).
+        Seed prices use Yahoo first; allowlisted crypto falls back to Bybit index when Yahoo has no quote.
+        Ticker overrides (e.g. MATIC-USD → POL-USD) apply automatically.
       </p>
 
       <YahooFinanceSearch
@@ -341,7 +313,20 @@ function RegisterAssetCard() {
                     ({quote.priceUsd.toFixed(2)} USD)
                   </span>
                 )}
+                {quote.source === "bybit-index" && quote.priceUsd != null && (
+                  <span className="ml-2 text-xs text-app-warning">
+                    (Bybit index{quote.bybitSymbol ? ` ${quote.bybitSymbol}` : ""})
+                  </span>
+                )}
               </p>
+              {quote.source && (
+                <p className="text-xs text-app-muted">
+                  Seed source: {quote.source === "bybit-index" ? "Bybit index (Yahoo miss)" : "Yahoo Finance"}
+                  {quote.yahooTicker && quote.yahooTicker !== selected.symbol && (
+                    <span> · Yahoo ticker: {quote.yahooTicker}</span>
+                  )}
+                </p>
+              )}
               {quote.price != null && quote.currency !== "USD" && quote.priceUsd == null && (
                 <p className="text-xs text-app-warning">FX rate unavailable; cannot convert to USD for on-chain seed.</p>
               )}
@@ -357,7 +342,13 @@ function RegisterAssetCard() {
             <p className="text-sm text-app-danger">Could not fetch quote.</p>
           )}
           <div className="mt-3 border-t border-app-border pt-3" data-testid="register-asset-yahoo-link">
-            <YahooFinanceDeepLink symbol={selected.symbol} />
+            <MarketOutlinkDeep
+              oracleSymbol={selected.symbol}
+              seedSource={quote?.source ?? null}
+              bybitSymbol={quote?.bybitSymbol}
+              yahooTicker={quote?.yahooTicker}
+              skipSeedProbe
+            />
           </div>
         </div>
       )}
@@ -485,7 +476,7 @@ function OracleAssetCard({
           )}
           {yahooSymbol && (
             <p className="pt-1">
-              <YahooFinanceDeepLink symbol={yahooSymbol} label="Yahoo Finance" className="text-xs" />
+              <MarketOutlinkDeep oracleSymbol={yahooSymbol} className="text-xs" />
             </p>
           )}
         </div>

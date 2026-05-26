@@ -41,6 +41,8 @@ Initial `submitPrices` uses a **live Yahoo quote** at deploy time: `vm.ffi` runs
 
 Additional tickers from any Yahoo Finance-supported exchange (ASX, LSE, TSX, etc.) use the same relayer path once registered.
 
+For **crypto** `BASE-USD` symbols (funding harvester, mETH carry hedge), see [CRYPTO_ORACLE_COVERAGE.md](./CRYPTO_ORACLE_COVERAGE.md) — Yahoo is primary; Bybit index is a keeper fallback only for allowlisted bases when Yahoo has no quote.
+
 ## Operator note
 
 To update all registered CustomRelayer asset prices:

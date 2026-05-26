@@ -24,7 +24,7 @@ import { useOracleAssetMetaMap } from "@/hooks/useOracle";
 import { humanizeToolName } from "@/lib/agent-action-meta";
 import { formatAssetId, formatSignedUsdcAmount } from "@/lib/format";
 import { cn } from "@/lib/utils";
-import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
+import { MarketOutlink } from "@/components/market-outlink";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import {
   Bot,
@@ -69,19 +69,11 @@ function AssetLabel({
     return <span className={cn("text-app-text", className)}>{label}</span>;
   }
   return (
-    <a
-      href={yahooFinanceQuoteUrl(yfinanceSymbol)}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex items-center gap-1 text-app-text hover:text-app-accent",
-        className,
-      )}
-      aria-label={`View ${label} on Yahoo Finance`}
-    >
-      {label}
-      <ExternalLink className="h-3 w-3 opacity-60" aria-hidden />
-    </a>
+    <MarketOutlink
+      oracleSymbol={yfinanceSymbol}
+      label={label}
+      className={className}
+    />
   );
 }
 

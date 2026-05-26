@@ -94,14 +94,38 @@ async function main() {
         interval: "1d",
       });
     } catch (err) {
-      console.warn(`  WARNING: could not fetch history for ${yahooSymbol}: ${err.message}`);
-      continue;
+      console.warn(`  WARNING: could not fetch Yahoo history for ${yahooSymbol}: ${err.message}`);
+      rows = null;
     }
 
-    const quotes = rows?.quotes;
+    let quotes = rows?.quotes;
     if (!quotes || quotes.length === 0) {
-      console.warn(`  WARNING: no data returned for ${yahooSymbol}`);
-      continue;
+      const { isCryptoAgentSymbol } = await import("../apps/shared/crypto-oracle-symbols.mjs");
+      const { normaliseAgentSymbolToBybit } = await import("../apps/mcps/bybit/symbol-mapping.mjs");
+      const { fetchBybitKlineChartPoints } = await import("../apps/shared/bybit-price-history.mjs");
+      if (isCryptoAgentSymbol(oracleSymbol)) {
+        const bybitSymbol = normaliseAgentSymbolToBybit(oracleSymbol);
+        if (bybitSymbol) {
+          const lookbackHours = seedDays * 24;
+          console.log(`  Yahoo sparse — trying Bybit kline (${bybitSymbol}, ${lookbackHours}h)...`);
+          try {
+            const chart = await fetchBybitKlineChartPoints(bybitSymbol, { lookbackHours });
+            if (chart.ok && chart.points.length > 0) {
+              quotes = chart.points.map((p) => ({
+                date: new Date(p.timestamp * 1000),
+                close: p.priceUsd,
+              }));
+              console.log(`  Using ${quotes.length} Bybit kline bars as seed history`);
+            }
+          } catch (bbErr) {
+            console.warn(`  WARNING: Bybit kline fallback failed: ${bbErr.message}`);
+          }
+        }
+      }
+      if (!quotes || quotes.length === 0) {
+        console.warn(`  WARNING: no history for ${oracleSymbol}`);
+        continue;
+      }
     }
 
     // Determine currency from chart metadata or a live quote

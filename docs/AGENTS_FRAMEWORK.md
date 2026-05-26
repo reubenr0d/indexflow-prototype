@@ -571,7 +571,7 @@ Required for the round-robin matrix:
 
 Optional sponsor-stack keys (each agent declares its degraded-fallback mode in its frontmatter):
 
-- `BYBIT_API_KEY`, `BYBIT_API_SECRET`, `BYBIT_TESTNET` (default `1`) — `funding-rate-harvester` uses Bybit public market endpoints; without keys the agent still runs (the V5 market endpoints don't need auth) but the v2 execution stretch is gated until both are set.
+- `BYBIT_API_KEY`, `BYBIT_API_SECRET`, `BYBIT_TESTNET` (default `1`) — configured on `reubenr0d/indexflow-prototype` and in local `.env`. v1 `funding-rate-harvester` still uses read-only V5 market endpoints (auth not required for quotes/funding history); the keys are passthrough for the v2 Byreal execution stretch.
 - `NANSEN_API_KEY` — `smart-money-mirror-manager` falls back to an Envio-derived Mantle-DEX swap heuristic when this is unset (`nansen_mode: "envio_only"` in every response).
 
 Legacy fallbacks: `SEPOLIA_RPC_URL`, `FUJI_RPC_URL` are still read by `vault-manager-mcp.multichain-create` so the retired `vault-manager` agent and any local Sepolia / Fuji invocations keep working; unset values mark the corresponding spoke as `skipped` rather than failing the run.

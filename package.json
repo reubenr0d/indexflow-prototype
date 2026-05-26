@@ -37,6 +37,7 @@
     "update-prices:fuji:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/fuji-deployment.json RPC_URL=fuji node scripts/update-yahoo-finance-prices.js",
     "update-prices:local": "PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 DEPLOYMENT_CONFIG=apps/web/src/config/local-deployment.json RPC_URL=http://127.0.0.1:8545 node scripts/update-yahoo-finance-prices.js",
     "update-prices:local:dry": "DRY_RUN=1 DEPLOYMENT_CONFIG=apps/web/src/config/local-deployment.json RPC_URL=http://127.0.0.1:8545 node scripts/update-yahoo-finance-prices.js",
+    "probe:crypto-symbols": "node scripts/probe-crypto-symbols.mjs",
     "local:up": "docker compose -f docker-compose.local.yml up -d && sh scripts/local/redeploy.sh",
     "local:down": "docker compose -f docker-compose.local.yml down -v",
     "local:logs": "docker compose -f docker-compose.local.yml logs -f",

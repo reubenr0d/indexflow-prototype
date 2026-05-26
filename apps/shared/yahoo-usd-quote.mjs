@@ -1,13 +1,9 @@
 /**
  * Shared Yahoo USD quote helper.
  *
- * Consumed by:
- * - apps/mcps/yfinance/index.js (yfinance_quote tool)
- * - apps/mcps/vault-manager/index.js (wire_asset live-price guard)
- *
- * Both need the same FX conversion semantics so an agent that reads
- * `priceUsd` from yfinance_quote and passes it to wire_asset cannot trip the
- * deviation guard purely because of FX drift between the two calls.
+ * Low-level Yahoo quote + FX. Prefer apps/shared/oracle-seed-price.mjs for
+ * seed prices (Yahoo + Bybit index fallback) — used by yfinance_quote, wire_asset,
+ * keeper, and /api/yahoo-finance/quote.
  */
 
 let _yf = null;

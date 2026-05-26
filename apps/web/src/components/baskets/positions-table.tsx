@@ -13,8 +13,7 @@ import { type Address, encodePacked, keccak256 } from "viem";
 import { formatUSDC, formatPrice, formatAssetId, formatSignedUsd1e30 } from "@/lib/format";
 import { PRICE_PRECISION, USDC_PRECISION, REFETCH_INTERVAL } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { yahooFinanceQuoteUrl } from "@/lib/yahoo-finance";
-import { ExternalLink } from "lucide-react";
+import { MarketOutlink } from "@/components/market-outlink";
 
 export type PositionWithPnL = {
   assetId: `0x${string}`;
@@ -34,20 +33,12 @@ function AssetLabel({ label, yfinanceSymbol, className }: { label: string; yfina
     return <span className={cn("font-medium text-app-text", className)}>{label}</span>;
   }
   return (
-    <a
-      href={yahooFinanceQuoteUrl(yfinanceSymbol)}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex items-center gap-1 font-medium text-app-text hover:text-app-accent",
-        className,
-      )}
-      aria-label={`View ${label} on Yahoo Finance`}
+    <MarketOutlink
+      oracleSymbol={yfinanceSymbol}
+      label={label}
+      className={cn("font-medium", className)}
       onClick={(e) => e.stopPropagation()}
-    >
-      {label}
-      <ExternalLink className="h-3 w-3 opacity-60" aria-hidden />
-    </a>
+    />
   );
 }
 

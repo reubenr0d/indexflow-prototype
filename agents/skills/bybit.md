@@ -4,12 +4,13 @@ Read-only access to Bybit V5 linear-perp data via the `bybit-mcp` server. Used e
 
 ## What you can read
 
-The MCP exposes exactly two tools:
+The MCP exposes three read-only tools:
 
 | Tool | Returns | When to call |
 | --- | --- | --- |
 | `bybit_perp_quote({ symbol })` | mark price, index price, open interest (USD), latest 8h funding rate (bps + annualised bps), next funding timestamp | once per candidate symbol per run |
 | `bybit_funding_history({ symbol, lookbackHours? })` | last N 8h funding payments + mean + stdev (annualised bps) | only after `bybit_perp_quote` shows a spread > 800 bps annualised against the internal perp |
+| `bybit_kline({ symbol, lookbackHours? })` | `returnBps`, `sevenDayVolBps`, `maxPeriodMoveBps` from V5 klines | optional vol cross-check when Yahoo `get_price_history` is missing or thin |
 
 Funding is annualised by multiplying the 8h rate by `(365 * 24) / 8 = 1095`. The MCP does this for you — read `fundingRateAnnualizedBps` directly; do not re-derive it.
 

@@ -1,50 +1,30 @@
 #!/usr/bin/env node
 
 // Read-only MCP server over Bybit's V5 public market endpoints.
-// Implements the two tools agents/funding-rate-harvester.md requires:
 //
 //   - bybit_perp_quote({ symbol })
-//       Returns mark price, index price, open interest (USD), the latest
-//       8h funding rate (bps and annualised bps) and the next funding
-//       timestamp. Sourced from `/v5/market/tickers?category=linear` —
-//       a single fully-public endpoint, no auth required.
-//
 //   - bybit_funding_history({ symbol, lookbackHours? })
-//       Returns the last N funding payments from
-//       `/v5/market/funding/history?category=linear`. We compute the
-//       mean / stdev annualised in bps so the agent can sanity-check
-//       that the live spread isn't a one-off blip.
+//   - bybit_kline({ symbol, lookbackHours? })
 //
-// Auth is **not required** for these endpoints — the V5 docs explicitly
-// classify market endpoints as public. `BYBIT_API_KEY` / `BYBIT_API_SECRET`
-// are accepted via env passthrough so the v2 stretch (Byreal Perps CLI
-// execution) can reuse the same server, but v1 ignores them. The
-// `BYBIT_TESTNET=1` default routes to `api-testnet.bybit.com` so a CI run
-// without operator action never touches mainnet pricing.
-//
-// Smoke mode: `node index.js --smoke` makes a single `bybit_perp_quote`
-// call for BTC-USD and exits 0/1.
+// Auth is **not required** for these endpoints. CI defaults to testnet when
+// BYBIT_TESTNET is unset (see entrypoint below). Production keepers should
+// set BYBIT_TESTNET=0 for mainnet index/kline data.
+
+if (process.env.BYBIT_TESTNET === undefined) {
+  process.env.BYBIT_TESTNET = "1";
+}
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
 import { normaliseAgentSymbolToBybit } from "./symbol-mapping.mjs";
+import { bybitPublicFetch, getBybitBaseUrl } from "../../shared/bybit-public-market.mjs";
+import { fetchBybitPriceHistory } from "../../shared/bybit-price-history.mjs";
 
-const FETCH_TIMEOUT_MS = 10_000;
 const MAX_HISTORY_LIMIT = 200;
 const FUNDING_INTERVAL_HOURS = 8;
 const FUNDINGS_PER_YEAR = (365 * 24) / FUNDING_INTERVAL_HOURS;
-
-// Bybit's testnet host serves identical V5 market endpoints to mainnet
-// against testnet liquidity (which is itself a mirror of mainnet for
-// market-data purposes). Default to testnet so a no-secret CI run can't
-// accidentally pull mainnet OI into a vault's run log.
-function getBaseUrl() {
-  const useMainnet = String(process.env.BYBIT_TESTNET || "1").toLowerCase();
-  const isTestnet = ["1", "true", "yes"].includes(useMainnet);
-  return isTestnet ? "https://api-testnet.bybit.com" : "https://api.bybit.com";
-}
 
 function toolText(payload) {
   return {
@@ -68,39 +48,9 @@ function toolError(error_code, message, extra = {}) {
   };
 }
 
-async function bybitFetch(path, searchParams) {
-  const base = getBaseUrl();
-  const qs = new URLSearchParams(searchParams).toString();
-  const url = `${base}${path}?${qs}`;
-  const controller = new AbortController();
-  const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-  try {
-    const resp = await fetch(url, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-      signal: controller.signal,
-    });
-    if (!resp.ok) {
-      const text = await resp.text().catch(() => "");
-      throw new Error(`HTTP ${resp.status} ${resp.statusText}: ${text.slice(0, 200)}`);
-    }
-    const body = await resp.json();
-    if (body?.retCode !== 0) {
-      throw new Error(
-        `Bybit retCode=${body?.retCode} retMsg=${String(body?.retMsg || "unknown")}`,
-      );
-    }
-    return { body, url };
-  } finally {
-    clearTimeout(t);
-  }
-}
-
 function annualiseFundingBps(fundingRateDecimal) {
-  // Bybit returns funding as a decimal (e.g. 0.0001 = 0.01% per 8h).
-  // bps per 8h = decimal * 10_000; annualised bps = bps per 8h * (365*24/8).
   const bps8h = fundingRateDecimal * 10_000;
-  return { bps8h, bpsAnnualised: bps8h * (FUNDINGS_PER_YEAR / 1) };
+  return { bps8h, bpsAnnualised: bps8h * FUNDINGS_PER_YEAR };
 }
 
 function stdev(values) {
@@ -126,7 +76,7 @@ async function bybitPerpQuote({ symbol }) {
     );
   }
   try {
-    const { body, url } = await bybitFetch("/v5/market/tickers", {
+    const { body, url } = await bybitPublicFetch("/v5/market/tickers", {
       category: "linear",
       symbol: bybitSymbol,
     });
@@ -150,7 +100,7 @@ async function bybitPerpQuote({ symbol }) {
       fundingRateBps8h: bps8h,
       fundingRateAnnualizedBps: bpsAnnualised,
       nextFundingAtMs: Number(row.nextFundingTime ?? 0),
-      venue: getBaseUrl().includes("testnet") ? "bybit-testnet" : "bybit-mainnet",
+      venue: getBybitBaseUrl().includes("testnet") ? "bybit-testnet" : "bybit-mainnet",
       asOfMs: Date.now(),
     });
   } catch (err) {
@@ -169,7 +119,7 @@ async function bybitFundingHistory({ symbol, lookbackHours = 168 }) {
   const requestedSamples = Math.ceil(lookbackHours / FUNDING_INTERVAL_HOURS);
   const limit = Math.max(1, Math.min(MAX_HISTORY_LIMIT, requestedSamples));
   try {
-    const { body, url } = await bybitFetch("/v5/market/funding/history", {
+    const { body, url } = await bybitPublicFetch("/v5/market/funding/history", {
       category: "linear",
       symbol: bybitSymbol,
       limit: String(limit),
@@ -209,18 +159,48 @@ async function bybitFundingHistory({ symbol, lookbackHours = 168 }) {
       stdevAnnualizedBps: stdev(annualised),
       lookbackHours,
       sampleCount: samples.length,
-      venue: getBaseUrl().includes("testnet") ? "bybit-testnet" : "bybit-mainnet",
+      venue: getBybitBaseUrl().includes("testnet") ? "bybit-testnet" : "bybit-mainnet",
     });
   } catch (err) {
     return toolError("BYBIT_FETCH_FAILED", String(err?.message || err));
   }
 }
 
+async function bybitKline({ symbol, lookbackHours = 168 }) {
+  const bybitSymbol = normaliseAgentSymbolToBybit(symbol);
+  if (!bybitSymbol) {
+    return toolError(
+      "UNKNOWN_SYMBOL",
+      `Symbol ${JSON.stringify(symbol)} is not a recognised Bybit perp.`,
+    );
+  }
+  const history = await fetchBybitPriceHistory(bybitSymbol, { lookbackHours });
+  if (!history.ok) {
+    return toolError("BYBIT_KLINE_FAILED", history.error || "insufficient_history", {
+      symbol,
+      bybitSymbol,
+      lookbackHours,
+    });
+  }
+  return toolText({
+    success: true,
+    symbol,
+    bybitSymbol,
+    lookbackHours: history.lookbackHours,
+    interval: history.interval,
+    returnBps: history.returnBps,
+    sevenDayVolBps: history.sevenDayVolBps,
+    maxPeriodMoveBps: history.maxPeriodMoveBps,
+    barCount: history.barCount,
+    venue: getBybitBaseUrl().includes("testnet") ? "bybit-testnet" : "bybit-mainnet",
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Server
 // ---------------------------------------------------------------------------
 
-const server = new McpServer({ name: "bybit", version: "1.0.0" });
+const server = new McpServer({ name: "bybit", version: "1.1.0" });
 
 server.registerTool(
   "bybit_perp_quote",
@@ -254,6 +234,25 @@ server.registerTool(
     },
   },
   bybitFundingHistory,
+);
+
+server.registerTool(
+  "bybit_kline",
+  {
+    description:
+      "Return trailing price stats from Bybit V5 klines for a linear perp: return over lookback (bps), sevenDayVolBps (stdev of period returns), maxPeriodMoveBps. Read-only; use to cross-check vol when Yahoo history is missing.",
+    inputSchema: {
+      symbol: z.string().min(1).describe('Canonical agent symbol (e.g. "SOL-USD").'),
+      lookbackHours: z
+        .number()
+        .int()
+        .min(8)
+        .max(24 * 90)
+        .optional()
+        .describe("Hours of kline history (default 168 = 7d)."),
+    },
+  },
+  bybitKline,
 );
 
 // ---------------------------------------------------------------------------
