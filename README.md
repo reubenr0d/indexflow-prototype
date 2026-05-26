@@ -126,6 +126,36 @@ Vault, VaultUtils, Router, ShortsTracker, BasePositionManager.
 - [ ] Publish audit report
 - [ ] Update regulatory roadmap post-foundation setup ([docs/REGULATORY_ROADMAP_DRAFT.md](docs/REGULATORY_ROADMAP_DRAFT.md))
 
+## Capital Formation
+
+Two parallel raises feeding mainnet readiness. Strategic priorities are tracked in [`COMPANY.md`](COMPANY.md) §Strategic priorities (`vc-outreach` and `lp-seed-liquidity`); operational playbooks live in `growth/`.
+
+### VC Fundraise (Seed → Series A) — `vc-outreach`
+
+Equity / token-warrant round for IndexFlow Labs. Gated on Foundation + Labs incorporation (see §Legal/Entity above). Playbook: [`growth/VC_OUTREACH_PLAYBOOK.md`](growth/VC_OUTREACH_PLAYBOOK.md). Detailed checklist below under [`Growth › VC Pipeline`](#vc-pipeline).
+
+- [ ] Foundation + Labs incorporated (prerequisite — see §Legal/Entity)
+- [ ] Trackable deck hosted (Docsend / Notion) and risk-disclosure section reviewed
+- [ ] Tier 1 list validated against current portfolio activity (see playbook §Stage 1)
+- [ ] First Tier 1 outreach batch sent
+- [ ] First monthly investor update sent
+- [ ] First term sheet received
+- [ ] Round closed
+
+### LP Seed Liquidity (perp pool + basket vaults) — `lp-seed-liquidity`
+
+Product-viability gate, not a growth nice-to-have: without LP capital in the shared perp OI pool, baskets cannot run their long/short hedge legs and the redeemable-NAV guarantee weakens. Playbook: [`growth/LP_OUTREACH_PLAYBOOK.md`](growth/LP_OUTREACH_PLAYBOOK.md). Detailed checklist below under [`Growth › LP Outreach`](#lp-outreach).
+
+- [ ] Per-LP risk-parameter envelope finalised in [`docs/PERP_RISK_MATH.md`](docs/PERP_RISK_MATH.md) + [`docs/GLOBAL_POOL_MANAGEMENT_FLOW.md`](docs/GLOBAL_POOL_MANAGEMENT_FLOW.md)
+- [ ] Anchor-LP first-look terms decided (revshare % vs equity warrant vs service-fee credit — pick one primary mechanism)
+- [ ] Risk memo hosted (Docsend / Notion) — separate from the VC deck
+- [ ] Track A (perp-layer LPs) Tier 1 list of 10–20 MM/desk contacts built
+- [ ] Track B (basket-vault depositors) Tier 1 list of 30–50 DAO/treasury contacts built
+- [ ] First Tier 1 risk-walkthrough call scheduled
+- [ ] First perp-pool USDC deposit live onchain
+- [ ] First basket-vault deposit > $100k live onchain
+- [ ] Monthly pool-update email cadence established
+
 ## Growth
 
 Progress tracker for the IndexFlow growth engine. Strategy, templates, and playbooks live in [`growth/`](growth/).
@@ -221,6 +251,8 @@ Active partner relationships are tracked in [`growth/partnerships/`](growth/part
 
 ### VC Pipeline
 
+Strategic priority: [`COMPANY.md`](COMPANY.md) §`vc-outreach`. Playbook: [`growth/VC_OUTREACH_PLAYBOOK.md`](growth/VC_OUTREACH_PLAYBOOK.md).
+
 - [ ] Clay workspace set up with enriched VC list
 - [ ] Sending domains configured and warmed (Instantly.ai)
 - [ ] LinkedIn automation configured (Expandi / HeyReach)
@@ -228,6 +260,23 @@ Active partner relationships are tracked in [`growth/partnerships/`](growth/part
 - [ ] Trackable deck hosted (Docsend / Notion)
 - [ ] First Tier 1 outreach batch sent
 - [ ] First monthly investor update sent
+
+### LP Outreach
+
+Strategic priority: [`COMPANY.md`](COMPANY.md) §`lp-seed-liquidity`. Playbook: [`growth/LP_OUTREACH_PLAYBOOK.md`](growth/LP_OUTREACH_PLAYBOOK.md). Two-track audience — perp-layer LPs (market makers) and basket-vault depositors (DAO treasuries + family offices).
+
+- [ ] Clay workspace configured with `outreach_track: lp_perp | lp_basket` tagging (shared with VC pipeline)
+- [ ] Track A list build: 10–20 Tier 1 market-maker contacts enriched (Wintermute, GSR, Amber, Selini, Auros, Cumberland, etc.)
+- [ ] Track B list build: 30–50 Tier 1 DAO treasury / fintech contacts enriched (via Defillama + Dune)
+- [ ] Onchain enrichment pipeline live (idle USDC balances per target wallet)
+- [ ] Risk memo hosted (Docsend / Notion) — counterparty-class variant for MM teams + DAOs
+- [ ] Live perp-pool stats dashboard ready to embed in outreach (Envio query → public URL)
+- [ ] Anchor-LP negotiation envelope documented (deposit caps, funding-rate floor, withdrawal queue, term mechanism)
+- [ ] Telegram/Discord outreach tracker (DAO treasuries — separate from LinkedIn rail)
+- [ ] First Tier 1 risk-walkthrough call scheduled
+- [ ] Monthly pool-update email cadence established
+- [ ] First perp-pool USDC deposit live onchain
+- [ ] First basket-vault deposit > $100k live onchain
 
 ### Grants
 
@@ -565,6 +614,8 @@ Agent run history is network-scoped to avoid cross-network context bleed: each a
 Agent memory is deployment-aware: the runner fingerprints the active deployment context (network key + `DEPLOYMENT_CONFIG` content + `RPC_URL`). When that fingerprint changes (for example after redeploying contracts), it automatically invalidates stale memory for that network by rotating `state.json` and `run-log.<network>.jsonl` into `agents/memory/<agent>/archive/`, then starts from a fresh vault context.
 
 Editing an agent markdown file does not, by itself, force a new vault. The runner updates the stored agent file hash for bookkeeping, but if the remembered vault address is still present and the deployment fingerprint is unchanged, subsequent runs keep managing the same vault.
+
+**Paperclip operator dashboard (optional, narrow scope).** This repo is the canonical source of truth for the IndexFlow agent fleet. [`COMPANY.md`](COMPANY.md) (schema `agentcompanies/v1`, `name: IndexFlow`, `scope: meta_and_growth_agents`) declares the IndexFlow company identity, the engineering meta-agents Paperclip manages today (`issue-implementer`, `self-improver-issues`, plus their two prompt-only risk officers), and a brainstorm slate of growth/ops agents (`content-publisher`, `partnership-tracker`, `broadcast-bot`, `docs-syncer`, `basket-ideator`) that activate once their `agents/<id>.md` prompt files are authored. **Trading agents (`vault-manager`, `mining-manager`, `quality-matrix-manager` + their risk-officer) and the Minestarters vault family stay repo-managed via this very `vault-agent.yml` CI flow** — Paperclip does not schedule or budget them. The boundary holds even for new vaults: `basket-ideator` *proposes* themes (`growth/basket-concepts/queue/`); the repo-managed trading-agent flow *deploys* them. A self-hosted [Paperclip](https://paperclip.ing) install plus the [`paperclip-agent-companies-plugin`](https://github.com/alvarosanchez/paperclip-agent-companies-plugin) discovers and daily-auto-syncs `COMPANY.md`, schedules active employees via a shell adapter that invokes `npm run agent:run -- <agent>`, enforces per-employee monthly budgets, and surfaces tickets / approvals from a web UI. The runner writes `agents/memory/<agent>/paperclip-heartbeat.json` (schema `paperclip.heartbeat/v1`) on every run; the existing `commit-results` job in `.github/workflows/vault-agent.yml` pushes it back to `main` automatically. See [`docs/AGENTS_FRAMEWORK.md`](docs/AGENTS_FRAMEWORK.md) §Paperclip Integration for the architecture diagram and setup runbook.
 
 ### Agent Infrastructure
 

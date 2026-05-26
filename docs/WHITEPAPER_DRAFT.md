@@ -1,13 +1,13 @@
 # IndexFlow Whitepaper
 
 Status: draft whitepaper  
-Date: 2026-04-14
+Date: 2026-05-26
 
 ## Abstract
 
 IndexFlow is a protocol architecture for launching structured exposure products on top of a shared perpetual liquidity layer. It is designed for asset managers, issuers, fintech platforms, real-world asset operators, and ecosystem partners that need more than a token wrapper. The system combines basket-style product packaging, shared execution liquidity, reserve-backed redemptions, and chain-specific deployment attribution into a single operating model.
 
-The core design truth is simple: portfolio value and exit liquidity are not the same thing. IndexFlow defines that difference as the gap between `full NAV` and `redeemable liquidity`, and treats it as the primary architectural constraint. The result is a product model built around redemption quality, manager flexibility, and chain-attributable growth rather than raw TVL alone.
+The core design truth is simple: portfolio value and exit liquidity are not the same thing. IndexFlow defines that difference as the gap between `full NAV` and `redeemable liquidity`, and treats it as the primary architectural constraint. The result is a product model built around redemption quality, manager flexibility, and chain-attributable growth rather than raw TVL alone. The architecture is currently operating across a hub-and-spoke testnet deployment (Sepolia hub plus an Avalanche Fuji spoke), with a public event indexer and a live web application.
 
 ## The Problem: Fragmented Structured Exposure and Unattributable Liquidity Support
 
@@ -91,7 +91,7 @@ This structure avoids two common failure modes. The first is isolated fragmentat
 
 IndexFlow takes a middle path. Execution capacity is shared, while reserve discipline remains product-aware. That separation is what allows the protocol to benefit from capital efficiency while preserving the redemption-quality flywheel.
 
-GMX execution depth exists only on the hub chain. Spoke vaults hold idle USDC as redemption reserves; perp capital allocation and GMX pool seeding (`VaultAccounting.seedPool()`) are hub-only operations. USDC deposited on spoke chains never bridges for perp capital — perps use only hub-local USDC. The full cross-chain architecture and its implications for reserve design are described in the Cross-Chain Architecture section below.
+On the live testnet, GMX execution depth is concentrated on the Sepolia hub; spoke vaults hold idle USDC as redemption reserves, while perp capital allocation and GMX pool seeding (`VaultAccounting.seedPool()`) remain hub-only operations. USDC deposited on spoke chains never bridges for perp capital — perps use only hub-local USDC. The full cross-chain architecture and its implications for reserve design are described in the Cross-Chain Architecture section below.
 
 ## Chain-Specific Deployment and Attribution Model
 
@@ -142,7 +142,7 @@ Each spoke chain is a deposit-only surface with minimal infrastructure:
 - **BasketFactory** — creates new basket vaults on the spoke.
 - **MockUSDC / USDC** — the deposit collateral token.
 
-No oracles, no GMX pools, no `VaultAccounting`, and no `PricingEngine` are deployed on spokes. This minimal footprint is what enables scaling to a large number of chains without proportional infrastructure cost.
+No oracles, no GMX pools, no `VaultAccounting`, and no `PricingEngine` are deployed on spokes. This minimal footprint is what enables scaling to a large number of chains without proportional infrastructure cost. Avalanche Fuji is the first live spoke; Mantle Sepolia and BNB Smart Chain Testnet are planned next, per the chain partnership rollout in [growth/partnerships/chains/README.md](../growth/partnerships/chains/README.md).
 
 ### StateRelay Contract
 
@@ -225,7 +225,7 @@ IndexFlow therefore depends on auditable reference data, transparent pricing pol
 
 Market integrity in IndexFlow is not only about fair pricing at entry and exit. It is also about confidence that reported NAV reflects a coherent valuation framework and that the shared liquidity layer is operating against aligned market data.
 
-Because `getSharePrice()` is a public view function computed entirely from on-chain state, it creates an independently verifiable valuation surface. Audit partners, fund administrators, and regulators operating regulated vehicles on top of IndexFlow can query the chain at any block height to verify basket NAV without depending on off-chain administrator calculations or manager-reported values. This on-chain verifiability is a structural compliance advantage over traditional fund structures where NAV is an opaque off-chain output.
+Because `getSharePrice()` is a public view function computed entirely from on-chain state, it creates an independently verifiable valuation surface. Audit partners, fund administrators, and regulators operating regulated vehicles on top of IndexFlow can query the chain at any block height to verify basket NAV without depending on off-chain administrator calculations or manager-reported values. This on-chain verifiability is a structural compliance advantage over traditional fund structures where NAV is an opaque off-chain output. Historical basket NAV and activity are also queryable through the live Envio HyperIndex deployment at `https://indexer.dev.hyperindex.xyz/dbe3f66/v1/graphql`, so partners can verify valuation trajectory over time rather than only at the current block.
 
 This design supports two important outcomes.
 
@@ -251,7 +251,15 @@ Capital formation follows the same logic. The first uses of capital are developm
 
 The protocol launches permissionless, and the architecture is designed so that licensed operators can use it as infrastructure today. Operators that hold their own financial-services licenses (AIFM, MiFID, SEC RIA, or equivalent) can build on IndexFlow immediately, using the permissionless contracts as execution and settlement infrastructure beneath their own compliance wrapper -- a regulated fund vehicle, an institutional custodian, and the operator's own investor qualification and reporting obligations. Because the entire on-chain flow is USDC-in / basket-shares-out with synthetic-only exposure, custody requirements are simplified: no underlying equities or commodities are held in the contracts, so only USDC and basket share tokens need to be custodied. On-chain NAV verification via `getSharePrice()` further simplifies the fund administrator's valuation workflow: the chain itself is the calculation engine, and audit firms can verify basket NAV at any block without relying on off-chain administrator outputs. This is the same pattern used by crypto hedge funds that already route through Uniswap, Aave, and GMX under their own fund structures.
 
-A separately licensed entity that provides KYC/KYB onboarding, compliant product issuance, NAV governance, and regulatory reporting on top of the same protocol remains an optional future business decision, not a committed roadmap step. Whether to pursue it depends on market demand and whether third-party service providers fill the gap independently. See the [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) for details on both the operator-license path and the optional regulated access tier.
+A separately licensed entity that provides KYC/KYB onboarding, compliant product issuance, NAV governance, and regulatory reporting on top of the same protocol remains an optional future business decision, not a committed roadmap step. Whether to pursue it depends on market demand and whether third-party service providers fill the gap independently. Track A of the live Season 1 Operator Trials campaign ([growth/X_GROWTH_PLAN.md](../growth/X_GROWTH_PLAN.md), May 25 → June 21, 2026) is the testnet surface where institutional managers are validating the BYO-license path. See the [Regulatory Roadmap](./REGULATORY_ROADMAP_DRAFT.md) for details on both the operator-license path and the optional regulated access tier.
+
+### Current Implementation Status
+
+IndexFlow is operating on testnet today, not only on paper. The hub-and-spoke deployment is live: Ethereum Sepolia hosts the full perp stack and Avalanche Fuji hosts the first spoke (deposit-only vaults, `StateRelay`, and `RedemptionReceiver`). Contract addresses and deployment history are recorded in [AGENT_DEPLOYMENT_MEMORY.md](../AGENT_DEPLOYMENT_MEMORY.md). The public web application is at [indexflow.app](https://indexflow.app); basket events and NAV history are indexed on Envio HyperIndex. Basket NAV is verifiable on-chain via `getSharePrice()` on every chain and historically via the public GraphQL endpoint cited above.
+
+The permissionless manager-infrastructure thesis is already being exercised on testnet. A first-party mining-equity vault family operates under its own brand on IndexFlow without protocol changes, demonstrating how independent operators can package structured exposure, ring-fence reserve policy, and present a distinct product surface while drawing on the same shared liquidity layer. A time-boxed testnet activation campaign — Season 1 Operator Trials — is recruiting curators across three tracks: institutional managers (BYO-license), crypto builders, and AI-agent builders. That campaign is where chain-attributable growth and the BYO-license model receive their first measurable validation.
+
+Production launch remains gated on items documented in the repository's mainnet-readiness checklist: smart contract audit, IndexFlow Foundation and IndexFlow Labs incorporation, production oracle redundancy, keeper redundancy, and regulatory positioning per [REGULATORY_ROADMAP_DRAFT.md](./REGULATORY_ROADMAP_DRAFT.md). Token sequencing and wider market formation follow liquidity credibility, as described above.
 
 ## Competitive Landscape
 

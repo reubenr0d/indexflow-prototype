@@ -578,3 +578,105 @@ apps/
   web/
     public/agent-metadata/  # Static <vault>.json files consumed by useAgentMetadata
 ```
+
+---
+
+## Paperclip Integration
+
+The repo is the **source of truth** for the IndexFlow agent fleet. [Paperclip](https://paperclip.ing) is an optional self-hosted operator dashboard layered on top — it imports the manifest, schedules heartbeats, and surfaces tickets / approvals / cost budgets. The agent runner and every `agents/*.md` file stay exactly the same.
+
+**Scope (`scope: meta_and_growth_agents` in [`COMPANY.md`](../COMPANY.md))**: Paperclip manages the engineering meta-agents (`issue-implementer`, `self-improver-issues`, + their two prompt-only risk officers) and a brainstorm slate of growth/ops agents (`content-publisher`, `partnership-tracker`, `broadcast-bot`, `docs-syncer`, `basket-ideator`). **Trading agents (`vault-manager`, `mining-manager`, `quality-matrix-manager` + their `risk-officer`) stay repo-managed** via this framework's existing `scripts/agent-runner.mjs` + `.github/workflows/vault-agent.yml` flow. They may be promoted into Paperclip later — the cutover is adding them to the manifest's active employees list and disabling their CI cron.
+
+The boundary holds even for **new vaults**: `basket-ideator` *proposes* themes (writes to `growth/basket-concepts/queue/<date>-<slug>.md`); the founder approves; a repo-managed trading agent (existing or newly authored) *deploys* and *runs* the vault via this framework. The Season 1 metric ("new testnet baskets created from `utm_source=x` per week") only moves when the chain `basket-ideator → repo-trading-agent → broadcast-bot → content-publisher` works end-to-end.
+
+### Architecture
+
+```
+┌──────────────────────┐    daily auto-sync     ┌────────────────────────────────┐
+│ Repo (canonical)     │  ───────────────────▶  │ Paperclip server + Postgres    │
+│  COMPANY.md          │       overwrite        │  - org chart, employees        │
+│  agents/*.md         │                        │  - skills, routines, budgets   │
+│  agents/skills/*.md  │                        │  - issues, approvals           │
+│  AGENTS.md           │                        │  - heartbeat_runs, cost_events │
+│  AGENT_DEPLOYMENT…   │                        │  - activity_log                │
+└──────────────────────┘                        └────────────────────────────────┘
+            ▲                                                  │
+            │                                       heartbeat  │  shell adapter
+            │                                                  ▼
+            │                                  ┌────────────────────────────────┐
+            │                                  │ npm run agent:run -- <name>    │
+            │                                  │  scripts/agent-runner.mjs      │
+            │                                  │  (UNCHANGED)                   │
+            │                                  └────────────────────────────────┘
+            │                                                  │
+            │ commit-results CI job pushes back               │ writes
+            │ paperclip-heartbeat.json + state.json + run-log │
+            └──────────────────────────────────────────────────┘
+```
+
+### Files involved
+
+- [`COMPANY.md`](../COMPANY.md) — the manifest the [`paperclip-agent-companies-plugin`](https://github.com/alvarosanchez/paperclip-agent-companies-plugin) discovers (`schema: agentcompanies/v1`, `name: IndexFlow`, `scope: meta_and_growth_agents`). Declares company (mission lifted from the whitepaper), `outOfScope:` (trading agents + Minestarters vault family + trading skills, managed via this framework's CI flow), public surfaces (indexflow.app, @indexflowDAO, ops@indexflow.app), charter docs, board, roles & vocabulary, active employees (4 meta-agents), brainstorm slate (4 growth/ops agents with rationale + scope + blockers per proposal), routines (paused — CI cron stays canonical), strategic goals (Season 1 Operator Trials, hub-and-spoke expansion, mainnet readiness, $FLOW launch, partnership pipeline), active + on-promotion budgets, governance rules (including a `scope_boundary` hard constraint that gates trading-agent promotion on founder approval), and a Lifecycle diagram showing how brainstormed agents become active.
+- [`agents/memory/<agent>/paperclip-heartbeat.json`](../agents/memory) — slim per-run snapshot (`schema: paperclip.heartbeat/v1`) written by `scripts/agent-runner.mjs` after every successful and failed run. Schema:
+  ```json
+  {
+    "schema": "paperclip.heartbeat/v1",
+    "agentName": "mining-manager",
+    "signalSource": "atlas-ml" | "atlas-quality" | null,
+    "entryMode": "ml_score",
+    "network": "sepolia",
+    "vaultAddress": "0x..." | null,
+    "vaultName": "Minestarters ML Picks" | null,
+    "runId": "2026-05-26T12:21:43.000Z",
+    "startedAt": "2026-05-26T12:18:00.000Z",
+    "finishedAt": "2026-05-26T12:21:43.000Z",
+    "status": "succeeded" | "succeeded_with_errors" | "failed",
+    "usage": { "turns": 8, "toolCalls": 12, "errors": 0, "softFailures": 0, "writeActions": 2 },
+    "thesis": "..." | null,
+    "summary": "Opened GSR.V long after Atlas refresh.",
+    "writeActions": [{ "tool": "open_position", "txHash": "0x...", "justification": "...", "riskOfficer": { ... } }],
+    "errors": []
+  }
+  ```
+  Same gating as `run-log.<network>.jsonl`: skipped on dry runs and one-off `AGENT_VAULT_OVERRIDE` runs. Deep-secret-redacted before write. Picked up by the `commit-results` job in `.github/workflows/vault-agent.yml` exactly the same way `state.json` is — no CI changes required.
+
+### Sync contract (what lives where)
+
+| Item | Source of truth | Why |
+|---|---|---|
+| Org chart, employees, skills, prompts | Repo (`COMPANY.md`, `agents/`) | Already in git, code-reviewable, runner-readable |
+| Routines (heartbeat schedules) | Repo (`COMPANY.md`) — currently `paused` by default | Real scheduler is `.github/workflows/vault-agent.yml` cron |
+| Budgets | Repo (`COMPANY.md`) — enforced in Paperclip's `cost_events` ledger | Easy to PR-review; UI can override per cycle |
+| Governance rules | Repo (`AGENTS.md`, `AGENT_DEPLOYMENT_MEMORY.md`) | Paperclip surfaces them, never overrides |
+| Run history per heartbeat | Paperclip's `heartbeat_runs` table | Append-only; full stdout/stderr/log refs |
+| Cost ledger | Paperclip's `cost_events` table | Real-time budget enforcement |
+| Ticket threads, comments, approvals | Paperclip's Postgres | Mutable conversation surface |
+| Lightweight per-run summary | Repo bridge file `paperclip-heartbeat.json` | Lets Paperclip re-import via daily sync; gives git history a slim audit trail |
+
+### Trade-off
+
+The plan adopted is **"config + lightweight memory"** scope (see the original plan in `.cursor/plans/paperclip_repo_source_of_truth_*.plan.md`). Ticket threads, full `activity_log`, and `cost_events` line items only live in Paperclip's Postgres. To upgrade to "everything in git", add a periodic export script that dumps those tables into JSONL under `agents/memory/<agent>/paperclip/` and include the path in the `commit-results` job's `git add` line — the bridge file pattern is the prototype.
+
+### Setup (operator-side, one-time)
+
+1. Install Paperclip outside this repo so embedded Postgres and `.env` don't collide:
+   ```bash
+   mkdir -p ~/paperclip && cd ~/paperclip
+   npx paperclipai onboard --yes
+   ```
+2. Install the agent-companies plugin and restart Paperclip:
+   ```bash
+   pnpm add paperclip-agent-companies-plugin
+   ```
+3. In the Paperclip UI: **Settings → Agent Companies → Add source** → enter `file:///Users/reuben/Desktop/minestarters/code/snx-prototype` (or the GitHub URL) → **Import as new company** → enable daily auto-sync (overwrite mode is the plugin default).
+4. For each employee, confirm the shell-adapter `cwd` resolves to this repo root and the `envPassthrough` list in [`COMPANY.md`](../COMPANY.md) is satisfied by your shell or Paperclip secrets (`LLM_API_KEY`, `PRIVATE_KEY`, `RPC_URL`, etc.).
+5. Routines in `COMPANY.md` start as `paused`. Leave them paused while `.github/workflows/vault-agent.yml` is the canonical scheduler; flip to `enabled` if/when you cut that cron over to Paperclip.
+6. Smoke test: trigger a manual `vault-manager` heartbeat in dry-run mode, confirm a `heartbeat_runs` row in Paperclip and `agents/memory/vault-manager/paperclip-heartbeat.json` on disk (dry runs gate the write — use a real run for the round-trip).
+
+### What does NOT change
+
+- `scripts/agent-runner.mjs`, `agents/*.md` frontmatter, [`agents/mcp-servers.json`](../agents/mcp-servers.json), and `agents/skills/*.md` are untouched.
+- The GitHub-Issues-driven self-improvement flow (`self-improver-issues` → `/agent implement` → `issue-implementer`) keeps using GitHub Issues as the ticket backend. Paperclip tickets are for *new* operator-directed work created from the dashboard.
+- [`apps/web/public/agent-metadata/<vault>.json`](../apps/web/public/agent-metadata) keeps powering the web app's AI Operator badge — Paperclip is a second, parallel consumer of runner output, not a replacement.
+
+

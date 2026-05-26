@@ -787,6 +787,9 @@ function createFileMemoryAdapter({ agentName, networkKey }) {
     async publishAgentMetadata({ config, state, runSummary }) {
       publishAgentMetadata(config, state, runSummary);
     },
+    async publishPaperclipHeartbeat({ config, state, runSummary, network, status }) {
+      publishPaperclipHeartbeat({ config, state, runSummary, network, status });
+    },
   };
 }
 
@@ -2626,6 +2629,86 @@ function publishAgentMetadata(config, currentState, runSummary) {
   console.log(`Metadata: published to ${metaPath}`);
 }
 
+// Paperclip bridge: write a per-agent `paperclip-heartbeat.json` snapshot
+// into `agents/memory/<agent>/` so the operator's Paperclip install can
+// ingest it on its daily sync as the `resultJson` mirror for the latest
+// heartbeat run. See `COMPANY.md` and `docs/AGENTS_FRAMEWORK.md`
+// §Paperclip Integration. Written unconditionally per run (not vault-
+// scoped) so non-trading agents like `self-improver-issues` and
+// `issue-implementer` are visible to Paperclip too.
+function publishPaperclipHeartbeat({ config, state, runSummary, network, status }) {
+  const dir = agentMemoryDir(config.name);
+  mkdirSync(dir, { recursive: true });
+  const heartbeatPath = resolve(dir, "paperclip-heartbeat.json");
+
+  const usesAtlasMl = Array.isArray(config.mcpServers)
+    && config.mcpServers.some((s) => s?.name === "atlas-ml-mcp");
+  const usesAtlasQuality = Array.isArray(config.mcpServers)
+    && config.mcpServers.some((s) => s?.name === "atlas-quality-mcp");
+  const signalSource = usesAtlasQuality
+    ? "atlas-quality"
+    : usesAtlasMl
+      ? "atlas-ml"
+      : null;
+
+  const writeActions = (runSummary.writeActions || [])
+    .filter((a) => !a.skipped)
+    .map((a) => ({
+      tool: a.tool,
+      txHash: a.txHash || null,
+      justification: a.justification || null,
+      ...(a.riskOfficer ? { riskOfficer: a.riskOfficer } : {}),
+    }));
+
+  const errors = (runSummary.errors || []).map((e) => ({
+    tool: e.tool,
+    error:
+      typeof e.error === "string"
+        ? e.error.slice(0, 500)
+        : String(e.error || "").slice(0, 500),
+  }));
+
+  const payload = {
+    schema: "paperclip.heartbeat/v1",
+    agentName: config.name,
+    agentDescription: config.description || "",
+    signalSource,
+    entryMode: config.policy?.entryMode || null,
+    network: network || null,
+    vaultAddress: state?.vaultAddress || null,
+    vaultName: state?.vaultName || config.vaultName || null,
+    runId: runSummary.finishedAt,
+    startedAt: runSummary.startedAt || null,
+    finishedAt: runSummary.finishedAt || null,
+    status: status || (errors.length > 0 ? "failed" : "succeeded"),
+    usage: {
+      turns: runSummary.turns || 0,
+      toolCalls: Array.isArray(runSummary.toolCalls)
+        ? runSummary.toolCalls.length
+        : 0,
+      errors: errors.length,
+      softFailures: Array.isArray(runSummary.softFailures)
+        ? runSummary.softFailures.length
+        : 0,
+      writeActions: writeActions.length,
+    },
+    thesis: state?.thesis || null,
+    summary: runSummary.summary || "",
+    writeActions,
+    errors,
+  };
+
+  // SECURITY: this file is committed back to the default branch via the
+  // `commit-results` job in vault-agent.yml, so we deep-redact the entire
+  // payload before persisting — secrets may have slipped into the
+  // LLM-authored thesis/summary or a write-action justification.
+  writeFileSync(
+    heartbeatPath,
+    JSON.stringify(redactSecretsDeep(payload), null, 2) + "\n",
+  );
+  console.log(`Paperclip: heartbeat published to ${heartbeatPath}`);
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
@@ -4401,6 +4484,31 @@ export async function runAgent(agentName) {
       }
     }
 
+    // Paperclip bridge: write `paperclip-heartbeat.json` so the operator's
+    // Paperclip install (see COMPANY.md) can ingest a summary of this run
+    // on its next sync. Match the run-log gating so dry runs and one-off
+    // vault-override runs don't overwrite the last real heartbeat.
+    if (!vaultOverrideActive && !DRY_RUN) {
+      try {
+        await memory.publishPaperclipHeartbeat({
+          config,
+          state: persistedState,
+          runSummary,
+          network: runNetwork,
+          status: runSummary.errors.length > 0 ? "succeeded_with_errors" : "succeeded",
+        });
+      } catch (err) {
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(
+          `Memory: publishPaperclipHeartbeat failed via ${memory.mode} adapter: ${safeErr}`,
+        );
+        runSummary.errors.push({
+          tool: "_memory_publish_paperclip_heartbeat",
+          error: safeErr,
+        });
+      }
+    }
+
     void persistedState;
     console.log("\n=== Run Summary (JSON) ===");
     console.log(JSON.stringify(redactSecretsDeep(runSummary), null, 2));
@@ -4436,6 +4544,25 @@ export async function runAgent(agentName) {
       } catch (logErr) {
         const safeLogErr = redactSecrets(logErr.message || String(logErr));
         console.error(`Memory: failed to record failure log via ${memory.mode} adapter: ${safeLogErr}`);
+      }
+      // Paperclip bridge: surface the failure heartbeat too so the
+      // operator's dashboard reflects red status on the next sync.
+      try {
+        await memory.publishPaperclipHeartbeat({
+          config,
+          state: state ?? null,
+          runSummary: {
+            ...runSummary,
+            summary: "FAILED: " + safeAgentErr,
+          },
+          network: runNetwork,
+          status: "failed",
+        });
+      } catch (heartbeatErr) {
+        const safeHbErr = redactSecrets(heartbeatErr.message || String(heartbeatErr));
+        console.error(
+          `Memory: publishPaperclipHeartbeat failed via ${memory.mode} adapter: ${safeHbErr}`,
+        );
       }
     } else {
       console.log("Memory: dry run active — failure not written to run log.");
@@ -4499,6 +4626,7 @@ export const __agentRunnerInternals = {
   MCP_ERROR_MAX_CHARS,
   verifyVaultNameMatch,
   publishAgentMetadata,
+  publishPaperclipHeartbeat,
   summarizeActionParams,
   parseRetryAfterHeader,
   parseRetryHintFromBody,

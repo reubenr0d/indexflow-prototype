@@ -2,7 +2,14 @@
 
 Growth engine for IndexFlow, structured around a 4-layer funnel targeting a single ICP: **asset managers, fintech firms, institutional issuers, and RWA operators** -- people who will create and operate basket vaults on IndexFlow.
 
-Chain partner outreach (grant committees, ecosystem funds, infrastructure pilots) is handled by **0xlabs** and is out of scope for this growth strategy. VC fundraise outreach runs as a parallel automated pipeline documented in [VC_OUTREACH_PLAYBOOK.md](VC_OUTREACH_PLAYBOOK.md).
+Chain partner outreach (grant committees, ecosystem funds, infrastructure pilots) is handled by **0xlabs** and is out of scope for this growth strategy.
+
+Two **capital formation** workstreams run as parallel automated pipelines alongside this 4-layer framework and are tracked as standalone strategic priorities in [`COMPANY.md`](../COMPANY.md) §Strategic priorities:
+
+- **VC fundraise** (`vc-outreach`) — equity / token-warrant round for IndexFlow Labs. Playbook: [`VC_OUTREACH_PLAYBOOK.md`](VC_OUTREACH_PLAYBOOK.md).
+- **LP seed liquidity** (`lp-seed-liquidity`) — bootstrap the shared perp OI pool and basket TVL. Without this, the redeemable-NAV guarantee at the heart of IndexFlow doesn't hold. Playbook: [`LP_OUTREACH_PLAYBOOK.md`](LP_OUTREACH_PLAYBOOK.md).
+
+Some funds wear both hats (Pantera, Galaxy, etc.); the LP playbook §Boundary with VC Outreach documents how the two pipelines avoid double-tagging.
 
 ## Folder Structure
 
@@ -10,7 +17,14 @@ Chain partner outreach (grant committees, ecosystem funds, infrastructure pilots
 growth/
   README.md                 <- you are here (strategy overview + 4-layer framework)
   CONTENT_CALENDAR.md       # Rolling content calendar tagged by layer/pillar/channel
+  X_CONTENT_CALENDAR.md     # X-only Season 1 schedule (date-slotted)
+  X_GROWTH_PLAN.md          # X-specific framework + voice
   VC_OUTREACH_PLAYBOOK.md   # Automated VC pipeline (parallel fundraise track)
+  LP_OUTREACH_PLAYBOOK.md   # Automated LP pipeline (perp-pool + basket-vault depositors)
+  GALXE_CAMPAIGN_PLAN.md    # Operator Trials guilds + Hall of Fame
+  basket-concepts/          # New-vault idea pipeline (README + REGISTRY + queue/*.md per proposal)
+  partnerships/             # Per-partner files + chain-deployment tracker
+  grants/                   # Grant blurbs + submitted applications
   templates/
     blog-post.md            # Blog post outline (1500-2500 words)
     tweet-thread.md         # X thread (5-7 tweet slots, hook/body/CTA)
