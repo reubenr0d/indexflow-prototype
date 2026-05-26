@@ -1,188 +1,183 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-25T23:24:00.310Z",
+  "updatedAt": "2026-05-26T04:37:28.472Z",
   "entries": {
-    "SURG.V": {
-      "fetchedAt": "2026-05-25T23:24:00.310Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-26T04:37:28.324Z",
       "headlines": [
         {
-          "title": "Bayer’s KERENDIA Priority Review Highlights Cardiorenal Opportunity And Pipeline Execution Risk",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bayer-kerendia-priority-review-highlights-231208871.html",
-          "publishedAt": "2026-05-25T23:12:08.000Z",
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BAYN.DE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Walmart (WMT) Valuation Check After Strong Quarter And Sharp Pullback On Cost And Guidance Concerns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/walmart-wmt-valuation-check-strong-231139203.html",
-          "publishedAt": "2026-05-25T23:11:39.000Z",
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "WMT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "ABB Leans Into Efficiency And AI As Valuation Stretches Above Targets",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/abb-leans-efficiency-ai-valuation-231132986.html",
-          "publishedAt": "2026-05-25T23:11:32.000Z",
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBN.SW",
-            "ABBN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SXGC.TO": {
-      "fetchedAt": "2026-05-25T23:24:00.310Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-26T04:37:28.324Z",
       "headlines": [
         {
-          "title": "Bayer’s KERENDIA Priority Review Highlights Cardiorenal Opportunity And Pipeline Execution Risk",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bayer-kerendia-priority-review-highlights-231208871.html",
-          "publishedAt": "2026-05-25T23:12:08.000Z",
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BAYN.DE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Walmart (WMT) Valuation Check After Strong Quarter And Sharp Pullback On Cost And Guidance Concerns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/walmart-wmt-valuation-check-strong-231139203.html",
-          "publishedAt": "2026-05-25T23:11:39.000Z",
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "WMT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "ABB Leans Into Efficiency And AI As Valuation Stretches Above Targets",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/abb-leans-efficiency-ai-valuation-231132986.html",
-          "publishedAt": "2026-05-25T23:11:32.000Z",
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBN.SW",
-            "ABBN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TEX.CN": {
-      "fetchedAt": "2026-05-25T23:24:00.310Z",
+    "CUU.V": {
+      "fetchedAt": "2026-05-26T04:37:28.324Z",
       "headlines": [
         {
-          "title": "Bayer’s KERENDIA Priority Review Highlights Cardiorenal Opportunity And Pipeline Execution Risk",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bayer-kerendia-priority-review-highlights-231208871.html",
-          "publishedAt": "2026-05-25T23:12:08.000Z",
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BAYN.DE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Walmart (WMT) Valuation Check After Strong Quarter And Sharp Pullback On Cost And Guidance Concerns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/walmart-wmt-valuation-check-strong-231139203.html",
-          "publishedAt": "2026-05-25T23:11:39.000Z",
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "WMT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "ABB Leans Into Efficiency And AI As Valuation Stretches Above Targets",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/abb-leans-efficiency-ai-valuation-231132986.html",
-          "publishedAt": "2026-05-25T23:11:32.000Z",
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBN.SW",
-            "ABBN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "LUN.TO": {
-      "fetchedAt": "2026-05-25T23:24:00.310Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-26T04:37:28.324Z",
       "headlines": [
         {
-          "title": "Bayer’s KERENDIA Priority Review Highlights Cardiorenal Opportunity And Pipeline Execution Risk",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bayer-kerendia-priority-review-highlights-231208871.html",
-          "publishedAt": "2026-05-25T23:12:08.000Z",
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BAYN.DE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Walmart (WMT) Valuation Check After Strong Quarter And Sharp Pullback On Cost And Guidance Concerns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/walmart-wmt-valuation-check-strong-231139203.html",
-          "publishedAt": "2026-05-25T23:11:39.000Z",
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "WMT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "ABB Leans Into Efficiency And AI As Valuation Stretches Above Targets",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/abb-leans-efficiency-ai-valuation-231132986.html",
-          "publishedAt": "2026-05-25T23:11:32.000Z",
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBN.SW",
-            "ABBN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AEM.TO": {
-      "fetchedAt": "2026-05-25T23:24:00.310Z",
+    "USA.TO": {
+      "fetchedAt": "2026-05-26T04:37:28.324Z",
       "headlines": [
         {
-          "title": "Bayer’s KERENDIA Priority Review Highlights Cardiorenal Opportunity And Pipeline Execution Risk",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bayer-kerendia-priority-review-highlights-231208871.html",
-          "publishedAt": "2026-05-25T23:12:08.000Z",
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BAYN.DE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Walmart (WMT) Valuation Check After Strong Quarter And Sharp Pullback On Cost And Guidance Concerns",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/walmart-wmt-valuation-check-strong-231139203.html",
-          "publishedAt": "2026-05-25T23:11:39.000Z",
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "WMT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "ABB Leans Into Efficiency And AI As Valuation Stretches Above Targets",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/abb-leans-efficiency-ai-valuation-231132986.html",
-          "publishedAt": "2026-05-25T23:11:32.000Z",
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBN.SW",
-            "ABBN"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-26T04:37:28.472Z",
+      "headlines": [
+        {
+          "title": "Securonix and GRAMAX Cybertech Partner to Scale Managed Cyber Defense Across India's Critical and Regulated Industries",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/securonix-gramax-cybertech-partner-scale-043000883.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Manipal Hospital EM Bypass Achieves a Significant Milestone in India's Maternal Cardiac Care with Rare Twin Pregnancy Heart Procedure",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/manipal-hospital-em-bypass-achieves-043000153.html",
+          "publishedAt": "2026-05-26T04:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Glasner seeks 'perfect ending' to Palace mini golden age with European glory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/1c558c77-bf7c-35c3-a464-443b240452a5/glasner-seeks-%27perfect.html",
+          "publishedAt": "2026-05-26T04:25:30.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
