@@ -1,25 +1,48 @@
 # Partnerships
 
-Active partnerships are tracked here as a first-class growth workstream alongside [`growth/CONTENT_CALENDAR.md`](../CONTENT_CALENDAR.md) and the date-slotted Season 1 schedule in `growth/X_CONTENT_CALENDAR.md`. Each partner has a markdown file with YAML frontmatter so the active-partner table below can be regenerated programmatically from the files. New partners use [`_TEMPLATE.md`](_TEMPLATE.md) as a starting point.
+Partnerships are tracked here as a first-class growth workstream alongside [`growth/CONTENT_CALENDAR.md`](../CONTENT_CALENDAR.md) and the date-slotted Season 1 schedule in `growth/X_CONTENT_CALENDAR.md`. Each partner has a markdown file with YAML frontmatter so the comparison table below can be regenerated programmatically from the files. New partners use [`_TEMPLATE.md`](_TEMPLATE.md) (non-chain) or [`chains/_TEMPLATE.md`](chains/_TEMPLATE.md) (chain) as a starting point.
 
-## Active partners
+## All partners
 
-| partner | handle | status | guilds | next_milestone | next_milestone_date | x_calendar slot |
-| ------- | ------ | ------ | ------ | -------------- | ------------------- | --------------- |
-| [Secret Network](secret-network.md) | `@SecretNetwork` | active | Curators | Confirm @SecretNetwork co-tweet timing for Sat Jun 13 | 2026-06-10 | 2026-06-13 |
-| [Mantle](chains/mantle.md) | `@Mantle_Official` | active | Cross-Chain Couriers, Curators | Land first Mantle Sepolia spoke deploy via `script/DeploySpoke.s.sol` for the hackathon demo; confirm @Mantle_Official co-tweet timing for Thu Jun 4; flag potential ecosystem grant track to user | 2026-06-01 | 2026-06-04 |
-| [iExec](iexec.md) | `@iEx_ec` | active | Engineers | Confirm @iEx_ec co-tweet for Fri Jun 12; scope iApp confidential-compute PoC for an IndexFlow agent | 2026-06-09 | 2026-06-12 |
-| [Nox](nox.md) | `@nox_TBD` (pending) | active | Engineers, Cross-Chain Couriers | Confirm Nox canonical X handle + co-tweet timing for Sun Jun 14 | 2026-06-11 | 2026-06-14 |
+| partner | type | handle | status | co_marketing | funding | next_milestone | next_milestone_date | file |
+| ------- | ---- | ------ | ------ | ------------ | ------- | -------------- | ------------------- | ---- |
+| [Avalanche](chains/avalanche.md) | chain | `@avax` | active | agreed | intros_made | Hand back a target-fund profile to Ava Labs so the next round of investor intros can be routed; scope co-marketing surface around the live Fuji spoke and the multi-chain deposit demo | 2026-06-01 | [chains/avalanche.md](chains/avalanche.md) |
+| [Secret Network](secret-network.md) | non-chain | `@SecretNetwork` | active | agreed | none | Confirm @SecretNetwork co-tweet timing for Sat Jun 13 | 2026-06-10 | [secret-network.md](secret-network.md) |
+| [iExec](iexec.md) | non-chain | `@iEx_ec` | active | agreed | none | Confirm @iEx_ec co-tweet for Fri Jun 12; scope iApp confidential-compute PoC for an IndexFlow agent | 2026-06-09 | [iexec.md](iexec.md) |
+| [Nox](nox.md) | non-chain | `@nox_TBD` (pending) | active | agreed | none | Confirm Nox canonical X handle + co-tweet timing for Sun Jun 14 | 2026-06-11 | [nox.md](nox.md) |
+| [Mantle](chains/mantle.md) | chain | `@Mantle_Official` | active | pending_deploy | none | Land first Mantle Sepolia spoke deploy via `script/DeploySpoke.s.sol` for the hackathon demo; confirm @Mantle_Official co-tweet timing for Thu Jun 4; flag potential ecosystem grant track to user | 2026-06-01 | [chains/mantle.md](chains/mantle.md) |
+| [BNB Chain](chains/bnb.md) | chain | `@BNBCHAIN` | in_discussion | pending_deploy | none | Verify CCIP testnet lane Sepolia <-> BNB Smart Chain Testnet, then run `script/DeploySpoke.s.sol` for the hackathon submission | TBD | [chains/bnb.md](chains/bnb.md) |
+| [Theseus](theseus.md) | non-chain | `@theseus_TBD` (pending) | signed_mou | pending_deploy | none | Deploy an IndexFlow vault on Theseus to unlock the agreed co-marketing surface; confirm canonical X handle and founder counterpart | TBD | [theseus.md](theseus.md) |
+| [Alephium](chains/alephium.md) | chain | `@alephium` | in_discussion | not_confirmed | none | Decide whether the hackathon scope is a real Ralph spoke implementation or a co-marketing/grant relationship without a code deployment | TBD | [chains/alephium.md](chains/alephium.md) |
+| [Sui](chains/sui.md) | chain | `@SuiNetwork` | in_discussion | not_confirmed | none | Confirm Sui counterpart + scope (real Move spoke implementation vs. co-marketing/grant relationship); nothing has been agreed yet | TBD | [chains/sui.md](chains/sui.md) |
+
+### Co-marketing confirmation legend
+
+| value | meaning |
+| ----- | ------- |
+| `agreed` | Partner has confirmed co-marketing; only execution (slot, tweet, asset hand-off) is outstanding. |
+| `pending_deploy` | Co-marketing gated on an upcoming IndexFlow deploy on the partner's chain or platform. |
+| `not_confirmed` | No confirmation from counterpart yet. |
+| `active` | Co-marketing surface already running (none today). |
+
+### Funding-intros legend
+
+| value | meaning |
+| ----- | ------- |
+| `intros_made` | Partner has actually introduced IndexFlow to one or more funds/investors. Today: Ava Labs only. |
+| `offered` | Partner has offered or discussed funding intros but no concrete intro yet. |
+| `none` | No funding/investor intros made or offered by the partner. |
 
 ## Workflow
 
 To add a new partner:
 
-1. Copy [`_TEMPLATE.md`](_TEMPLATE.md) to `growth/partnerships/<partner-slug>.md`.
+1. Copy [`_TEMPLATE.md`](_TEMPLATE.md) to `growth/partnerships/<partner-slug>.md` (or [`chains/_TEMPLATE.md`](chains/_TEMPLATE.md) for a chain partner).
 2. Fill in every `<placeholder>` value in the YAML frontmatter and the markdown sections.
-3. Append a row to the **Active partners** table above, reading values directly from the new file's frontmatter (`partner`, `canonical_handle`, `status`, `guilds_touched`, `next_milestone`, `next_milestone_date`, `co_branded_surfaces.x_calendar`).
+3. Append a row to the **All partners** table above, reading values directly from the new file's frontmatter (`partner`, `canonical_handle`, `status`, `co_marketing`, `funding_intros`, `next_milestone`, `next_milestone_date`, plus `type` = `chain` or `non-chain`).
 4. Wire the partner into any matching slot in `growth/X_CONTENT_CALENDAR.md` (and add a draft file under `growth/drafts/` if the slot does not have one yet).
-5. Commit the new partner file, the updated `README.md` row, and any calendar wiring together so the index, the per-partner file, and the date-slotted schedule stay in lockstep.
+5. For chain partners with on-chain deployments, also append a row to [`chains/README.md`](chains/README.md) and update [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) when contracts land.
+6. Commit the new partner file, the updated `README.md` row, and any calendar wiring together so the index, the per-partner file, and the date-slotted schedule stay in lockstep.
 
 When a partnership moves to dormant: ~~strikethrough~~ the row in the table but keep the file. Update the file's frontmatter `status` to `dormant` and append a final entry to the contact log explaining why the relationship is no longer active.
 
@@ -27,12 +50,13 @@ When a partnership moves to dormant: ~~strikethrough~~ the row in the table but 
 
 Chain partnerships (counterparts that IndexFlow may deploy a hub or spoke onto) are tracked separately in [`chains/`](chains/) because each row has a deployment lifecycle (testnet → mainnet) on top of the usual co-tweet / Galxe / Boost surfaces. One chain partnership typically maps to many rows in [`AGENT_DEPLOYMENT_MEMORY.md`](../../AGENT_DEPLOYMENT_MEMORY.md) (one per deployed contract), so the chain-partners table doubles as the index into that deployment ledger.
 
-See [`chains/README.md`](chains/README.md) for the full chain-partners table and deployment-status legend. Currently tracked:
+See [`chains/README.md`](chains/README.md) for the full chain-partners table (with testnet/mainnet deployment columns) and deployment-status legend. Currently tracked:
 
-- [Mantle](chains/mantle.md) — EVM spoke; Mantle Sepolia hackathon target; also the Season 1 X co-tweet partner in the **Active partners** table above.
-- [Avalanche](chains/avalanche.md) — EVM spoke; Fuji testnet live (full stack + twin baskets in `apps/web/src/config/fuji-deployment.json`); mainnet C-Chain in discussion.
-- [BNB](chains/bnb.md) — EVM spoke; BNB Smart Chain Testnet hackathon target; CCIP lane verification flagged as a prerequisite.
-- [Alephium](chains/alephium.md) — non-EVM (UTXO + Ralph); hackathon target; deployment shape (real Ralph spoke vs. wrapped/co-marketing-only) TBD.
+- [Avalanche](chains/avalanche.md) — EVM spoke; Fuji testnet live (full stack + twin baskets in `apps/web/src/config/fuji-deployment.json`); mainnet C-Chain in discussion; Ava Labs co-marketing agreed; only partner with funding intros so far.
+- [Mantle](chains/mantle.md) — EVM spoke; Mantle Sepolia hackathon target; co-marketing gated on spoke deploy; also the Season 1 X co-tweet partner (Thu Jun 4).
+- [BNB](chains/bnb.md) — EVM spoke; BNB Smart Chain Testnet hackathon target; co-marketing gated on spoke deploy; CCIP lane verification flagged as a prerequisite.
+- [Alephium](chains/alephium.md) — non-EVM (UTXO + Ralph); hackathon target; no confirmation from counterpart yet; deployment shape (real Ralph spoke vs. wrapped/co-marketing-only) TBD.
+- [Sui](chains/sui.md) — non-EVM (Move); communications opened 2026-05-26, no agreement yet; scope decision pending (real Move spoke vs. wrapped/co-marketing-only).
 
 ## Partnership × platform
 
@@ -49,8 +73,9 @@ Which platform surface each partner co-funds or co-tweets on. All four Season 1 
 
 ```
 growth/partnerships/
-  README.md             # this file (index + status table + workflow)
+  README.md             # this file (master comparison table + workflow)
   _TEMPLATE.md          # per-partner schema with placeholders (generic partner)
+  theseus.md            # vault-deploy-gated co-marketing; founders engaged
   secret-network.md     # State leg of the Week 3 confidential-infra trinity
   iexec.md              # Compute leg of the Week 3 confidential-infra trinity
   nox.md                # Signing leg of the Week 3 confidential-infra trinity
@@ -58,7 +83,8 @@ growth/partnerships/
     README.md           # chain-partners index + deployment-status legend + workflow
     _TEMPLATE.md        # per-chain schema (extends the generic shape with a chain: block)
     mantle.md           # Cross-Chain Couriers spoke demo (Week 2) + Mantle Sepolia hackathon target
-    avalanche.md        # Fuji spoke live; mainnet C-Chain in discussion
+    avalanche.md        # Fuji spoke live; mainnet C-Chain in discussion; Ava Labs funding intros
     bnb.md              # BNB Smart Chain Testnet hackathon target
     alephium.md         # Non-EVM (UTXO + Ralph) hackathon target; scope TBD
+    sui.md              # Non-EVM (Move); communications opened; no agreement yet
 ```

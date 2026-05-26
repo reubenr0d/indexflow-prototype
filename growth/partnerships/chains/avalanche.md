@@ -2,11 +2,13 @@
 partner: Avalanche
 canonical_handle: "@avax"
 status: active
-counterpart: TBD (TBD)
+co_marketing: agreed
+funding_intros: intros_made
+counterpart: Ava Labs (Ecosystem)
 indexflow_lead: Reuben
-last_touch: 2026-05-23
-next_milestone: "Confirm Avalanche counterpart + scope co-marketing around the live Fuji spoke and the multi-chain deposit demo"
-next_milestone_date: TBD
+last_touch: 2026-05-26
+next_milestone: "Hand back a target-fund profile to Ava Labs so the next round of investor intros can be routed; scope co-marketing surface around the live Fuji spoke and the multi-chain deposit demo"
+next_milestone_date: 2026-06-01
 co_branded_surfaces:
   x_calendar: N/A
   galxe_quest: TBD (Season 2 candidate)
@@ -62,15 +64,26 @@ Avalanche is IndexFlow's first live spoke chain. The Fuji testnet stack was depl
 
 - No date-slotted X campaign yet. Avalanche is currently the implicit hero of any multi-chain deposit / spoke-topology content (the Fuji spoke is what makes those demos real); a dedicated `@avax` co-tweet slot is a candidate once a counterpart is confirmed.
 
+## Funding intros
+
+- TBD (Reuben to fill in fund names + intro dates). Ava Labs is currently the only partner who has made any funding intros.
+
 ## Open requests on both sides
 
-**From them:**
+**From them — Funding intros:**
 
-- TBD — first confirmed touch needs to surface what Avalanche wants from IndexFlow (logo placement, ecosystem fund pre-introduction, joint Spaces, technical deep-dive on the Fuji spoke as a reference implementation).
+- Ava Labs has already connected IndexFlow to one or more funds (specific fund names TBD — Reuben to fill in). Continued routing depends on us passing back a tightened target-fund profile.
 
-**From us:**
+**From them — Co-marketing:**
 
-- Confirm canonical counterpart at Ava Labs (DeFi BD / ecosystem) and align on a co-marketing surface that leverages the existing Fuji deployment rather than treating Avalanche as a greenfield chain.
+- Confirm co-marketing surface (logo placement on the spoke-chain matrix, joint Spaces, Fuji-spoke-as-reference-implementation deep-dive) and the specific Ava Labs counterpart name.
+
+**From us — Funding:**
+
+- Hand back a 1-pager + target-fund profile (stage, check size, thesis fit, geographic preference) so Ava Labs can keep routing introductions.
+
+**From us — Co-marketing:**
+
 - Scope ecosystem-grant fit for a mainnet C-Chain spoke once the counterpart is confirmed.
 
 ## Future surfaces (Season 2+)
@@ -83,6 +96,7 @@ Avalanche is IndexFlow's first live spoke chain. The Fuji testnet stack was depl
 
 ## Historical thread / contact log
 
+- 2026-05-26 — Ava Labs counterpart confirmed (Ecosystem; specific name TBD). Co-marketing agreed in principle. Ava Labs has connected IndexFlow to one or more funds (names TBD) — the only partner with funding intros today.
 - 2026-05-23 — chain-partnerships subfolder introduced; Avalanche file created referencing the existing Fuji spoke + twin baskets recorded in `AGENT_DEPLOYMENT_MEMORY.md`.
 - 2026-05-22 — `Minestarters ML Picks` and `Minestarters Quality Matrix` Fuji twin baskets created and pre-seeded with 1,000 mUSDC each so the multi-chain deposit drawer can route name-matched splits.
 - 2026-05-21 — Fuji spoke stack clean-redeploy via `CHAIN=fuji forge script DeploySpoke.s.sol --slow` (12 receipts); StateRelay keeper rotated to deployer wallet.

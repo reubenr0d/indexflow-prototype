@@ -2,6 +2,8 @@
 partner: BNB Chain
 canonical_handle: "@BNBCHAIN"
 status: in_discussion
+co_marketing: pending_deploy
+funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
 last_touch: 2026-05-23
@@ -36,7 +38,7 @@ hackathon_track: TBD (BNB Chain hackathon track — user to confirm exact progra
 
 ## Why this partnership exists
 
-BNB Smart Chain is a candidate spoke for IndexFlow's hub-and-spoke topology. As an EVM chain it can reuse the existing `script/DeploySpoke.s.sol` flow with no code changes — only a new `config/chains.json` entry (CCIP router + LINK + chain selector) and a per-chain deployment JSON. The audience is large and DeFi-native, which makes BNB a strong Cross-Chain Couriers spoke in parallel with Mantle. The hackathon track is the immediate forcing function: a submission deliverable is what gets the spoke deployed against a hard deadline rather than slipping into a "next quarter" item.
+BNB Smart Chain is a candidate spoke for IndexFlow's hub-and-spoke topology. As an EVM chain it can reuse the existing `script/DeploySpoke.s.sol` flow with no code changes — only a new `config/chains.json` entry (CCIP router + LINK + chain selector) and a per-chain deployment JSON. The audience is large and DeFi-native, which makes BNB a strong Cross-Chain Couriers spoke in parallel with Mantle. The hackathon track is the immediate forcing function: a submission deliverable is what gets the spoke deployed against a hard deadline rather than slipping into a "next quarter" item. Co-marketing is agreed in principle but explicitly gated on the BNB Smart Chain Testnet spoke deploy landing first; no funding intros have been offered through this channel yet.
 
 ## Deployment status
 
@@ -83,4 +85,5 @@ BNB Smart Chain is a candidate spoke for IndexFlow's hub-and-spoke topology. As 
 
 ## Historical thread / contact log
 
+- 2026-05-26 — confirmed co-marketing is gated on the BNB Smart Chain Testnet spoke deploy (co_marketing=pending_deploy). No funding intros offered yet (funding_intros=none).
 - 2026-05-23 — chain-partnerships subfolder introduced; BNB Chain file created with hackathon track flagged as the immediate forcing function for testnet spoke deploy.

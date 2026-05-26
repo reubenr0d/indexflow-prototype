@@ -1,29 +1,12 @@
-# Two AI Agents Are Live on Our Testnet — Trading Mining Equities at Leverage
-
-## Metadata
-
-- **Title:** Two AI Agents Are Live on Our Testnet — Trading Mining Equities at Leverage
-- **SEO title:** Two AI Trading Agents Are Live on IndexFlow Testnet
-- **Meta description:** Two IndexFlow AI agents are live on testnet, trading leveraged synthetic exposure to global mining equities with real market prices.
-- **Pillar:** P3 Technical Credibility + P4 Operator Stories
-- **Target audience:** Asset managers, fintech/fund managers, RWA operators, institutional issuers
-- **Funnel layer:** L1 Generate
-- **Temperature:** Cold
-- **Hook type:** Data / Curiosity Gap
-- **Target word count:** 1500
-- **Source docs:** `README.md`, `docs/ASSET_MANAGER_FLOW.md`, `docs/PERP_RISK_MATH.md`, `docs/ORACLE_SUPPORTED_ASSETS.md`, `docs/PRICE_FEED_FLOW.md`, `content/blog/autonomous-ai-agents-managing-vaults.md`, `agents/memory/*/run-log.sepolia.jsonl`, `apps/web/public/agent-metadata/*.json`
-- **Publish to:** Blog
-- **Published:** `content/blog/two-ai-agents-live-on-testnet.md` (2026-05-26)
-- **Cross-post atomization:**
-  - [ ] X thread drafted
-  - [ ] Standalone tweets extracted
-  - [ ] LinkedIn post drafted
-  - [ ] Substack mention planned
-  - [ ] Telegram pin scheduled
-
 ---
-
-[IMAGE: Hero SVG showing two agent engines — Atlas ML and Quality Matrix — feeding into a shared vault/perp engine, then into a global mining-equity universe of gold, copper, lithium, and uranium names. Use dark background, teal/sky accent, glow filters, dashed signal lines.]
+title: "Two AI Agents Are Live on Our Testnet — Trading Mining Equities at Leverage"
+description: "Two IndexFlow AI agents are live on testnet, trading leveraged synthetic exposure to global mining equities with real market prices."
+date: "2026-05-26"
+author: "Reuben Rodrigues"
+tags: ["AI-agents", "testnet", "mining", "vaults", "leverage"]
+published: true
+image: "/blog/two-ai-agents-live-on-testnet.svg"
+---
 
 Two AI agents have been managing live testnet vaults on IndexFlow since May 21. They are selecting mining equities, opening leveraged long positions, rotating between tickers as their signals change, and using the same contracts a human vault operator would use through the web app.
 

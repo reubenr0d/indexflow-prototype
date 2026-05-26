@@ -9,6 +9,7 @@
 - **Calendar week:** Week 1 (Season 1) — Tue May 26 launch thread
 - **Source:** `docs/WHITEPAPER_DRAFT.md` (NAV vs redeemable section), `docs/SHARE_PRICE_AND_OPERATIONS.md` (NAV mechanics, pending redemption queue)
 - **Hook type:** Contrarian
+- **Posted:** https://x.com/indexflowDAO/status/2059141832618205409
 
 ---
 

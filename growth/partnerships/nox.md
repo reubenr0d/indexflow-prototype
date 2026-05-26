@@ -2,6 +2,8 @@
 partner: Nox
 canonical_handle: "@nox_TBD"
 status: active
+co_marketing: agreed
+funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
 last_touch: 2026-05-23
@@ -46,4 +48,5 @@ Nox provides MPC / threshold-signing infrastructure — the missing piece in Ind
 
 ## Historical thread / contact log
 
+- 2026-05-26 — co-marketing agreed in principle (co_marketing=agreed); execution (slot, draft hand-off, counterpart confirmation) still pending. No funding intros offered (funding_intros=none).
 - 2026-05-23 — partnership tracking system created in repo; Season 1 placement confirmed (Sun Jun 14 standalone closing the Week 3 confidential-infra trinity; canonical X handle still pending Reuben confirmation).

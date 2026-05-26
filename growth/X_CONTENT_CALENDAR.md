@@ -37,7 +37,7 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 | date | day | time_utc | slot_type | track | guild | pillar | hook_type | draft_path | status | posted_url |
 | ---- | --- | -------- | --------- | ----- | ----- | ------ | --------- | ---------- | ------ | ---------- |
 | 2026-05-25 | Mon | 16:30 | standalone | A | none | P1 | Contrarian | `growth/drafts/2026-05-25-tweet-portfolio-value-vs-exit-liquidity.md` | posted | https://x.com/indexflowDAO/status/2059033907975295163 |
-| 2026-05-26 | Tue | 15:00 | thread | A | none | P1 | Contrarian | `growth/drafts/2026-05-26-thread-nav-is-not-exit-liquidity.md` | seeded |  |
+| 2026-05-26 | Tue | 15:00 | thread | A | none | P1 | Contrarian | `growth/drafts/2026-05-26-thread-nav-is-not-exit-liquidity.md` | posted | https://x.com/indexflowDAO/status/2059141832618205409 |
 | 2026-05-27 | Wed | 16:30 | standalone | cross | none | P3 | Data | `growth/drafts/2026-05-27-tweet-testnet-agents-live.md` | seeded |  |
 | 2026-05-28 | Thu | 15:00 | thread | A | none | P3 | Contrarian | `growth/drafts/2026-05-28-thread-six-contracts-zero-chain-pickers.md` | seeded |  |
 | 2026-05-29 | Fri | 16:30 | standalone | A | none | P1 | Curiosity Gap | `growth/drafts/2026-05-29-tweet-reserve-depth-is-product-quality.md` | seeded |  |

@@ -14,6 +14,11 @@ as below so the active-partner table can be regenerated from the files.
 partner: <Partner Name>
 canonical_handle: "@<x_handle>"
 status: <active | signed_mou | in_discussion | dormant>
+# co_marketing: active = running; agreed = confirmed, execution pending;
+#   pending_deploy = gated on deploy; not_confirmed = no counterpart confirmation yet
+# funding_intros: none | offered (discussed, no intro yet) | intros_made
+co_marketing: <active | agreed | pending_deploy | not_confirmed>
+funding_intros: <none | offered | intros_made>
 counterpart: <Name or "TBD"> (<Role or "TBD">)
 indexflow_lead: <Name>
 last_touch: <YYYY-MM-DD>

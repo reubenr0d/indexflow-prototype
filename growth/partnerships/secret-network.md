@@ -2,6 +2,8 @@
 partner: Secret Network
 canonical_handle: "@SecretNetwork"
 status: active
+co_marketing: agreed
+funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
 last_touch: 2026-05-23
@@ -45,4 +47,5 @@ Secret Network's confidential computing primitives map directly onto a long-runn
 
 ## Historical thread / contact log
 
+- 2026-05-26 — co-marketing agreed in principle (co_marketing=agreed); execution (slot, draft hand-off, counterpart confirmation) still pending. No funding intros offered (funding_intros=none).
 - 2026-05-23 — partnership tracking system created in repo; Season 1 placement confirmed (Sat Jun 13 standalone anchoring the *State* leg of the Week 3 confidential-infra trinity).

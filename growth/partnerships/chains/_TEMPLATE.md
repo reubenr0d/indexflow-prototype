@@ -18,6 +18,11 @@ as below so the chain-partners table can be regenerated from the files.
 partner: <Chain Name>
 canonical_handle: "@<x_handle>"
 status: <active | signed_mou | in_discussion | dormant>
+# co_marketing: active = running; agreed = confirmed, execution pending;
+#   pending_deploy = gated on deploy; not_confirmed = no counterpart confirmation yet
+# funding_intros: none | offered (discussed, no intro yet) | intros_made
+co_marketing: <active | agreed | pending_deploy | not_confirmed>
+funding_intros: <none | offered | intros_made>
 counterpart: <Name or "TBD"> (<Role or "TBD">)
 indexflow_lead: Reuben
 last_touch: <YYYY-MM-DD>

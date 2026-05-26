@@ -168,6 +168,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] X thread draft: cross-chain coordination layer (`growth/drafts/2026-04-15-thread-cross-chain-coordination.md`)
 - [x] Autonomous-AI-agents-managing-vaults blog refreshed for OpenAI-powered agents with git-committed memory and static `/agent-metadata/<vault>.json` (`content/blog/autonomous-ai-agents-managing-vaults.md`)
 - [x] Testnet live agents blog draft seeded (`growth/drafts/2026-05-26-blog-two-ai-agents-live-on-testnet.md`)
+- [x] Testnet live agents blog published (`/blog/two-ai-agents-live-on-testnet`)
 
 ### Season 1 Operator Trials (Activation Campaign)
 
@@ -188,7 +189,7 @@ Hybrid Galxe + Boost.xyz testnet activation campaign, Mon May 25 → Sun Jun 21,
 
 ### Partnerships
 
-Active partner relationships are tracked in [`growth/partnerships/`](growth/partnerships/) with YAML-frontmatter per-partner files (counterpart, status, next milestone, co-branded surfaces, guilds touched). The Season 1 partner slots concentrate in Week 2 (Mantle spoke demo) and Week 3 (the confidential-infra trinity: iExec compute, Secret state, Nox signing). Chain partnerships (counterparts IndexFlow may deploy a hub or spoke onto — currently Mantle, Avalanche, BNB, Alephium) are tracked separately under [`growth/partnerships/chains/`](growth/partnerships/chains/) because they have a deployment lifecycle (testnet → mainnet) on top of the usual co-tweet / Galxe / Boost surfaces; the chain-partner rows double as the index into [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md).
+Active partner relationships are tracked in [`growth/partnerships/`](growth/partnerships/) with YAML-frontmatter per-partner files (counterpart, status, co-marketing confirmation, funding intros, next milestone, co-branded surfaces, guilds touched). The master comparison table in [`growth/partnerships/README.md`](growth/partnerships/README.md) lists all partners in one view. The Season 1 partner slots concentrate in Week 2 (Mantle spoke demo) and Week 3 (the confidential-infra trinity: iExec compute, Secret state, Nox signing). Non-chain partners also include Theseus (vault-deploy-gated co-marketing; founders engaged). Chain partnerships (counterparts IndexFlow may deploy a hub or spoke onto — currently Mantle, Avalanche, BNB, Alephium, Sui) are tracked separately under [`growth/partnerships/chains/`](growth/partnerships/chains/) because they have a deployment lifecycle (testnet → mainnet) on top of the usual co-tweet / Galxe / Boost surfaces; the chain-partner rows double as the index into [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md).
 
 - [x] Partnerships index + per-partner files ([growth/partnerships/README.md](growth/partnerships/README.md))
 - [x] Secret Network — Confidential State leg, Week 3 trinity ([growth/partnerships/secret-network.md](growth/partnerships/secret-network.md))
@@ -200,6 +201,8 @@ Active partner relationships are tracked in [`growth/partnerships/`](growth/part
 - [ ] Mantle chain partnership — Mantle Sepolia spoke deploy pending (hackathon target) ([growth/partnerships/chains/mantle.md](growth/partnerships/chains/mantle.md))
 - [ ] BNB chain partnership — BNB Smart Chain Testnet spoke deploy pending (hackathon target; CCIP lane verification prerequisite) ([growth/partnerships/chains/bnb.md](growth/partnerships/chains/bnb.md))
 - [ ] Alephium chain partnership — non-EVM (UTXO + Ralph); hackathon target; scope decision pending (real Ralph spoke vs. wrapped/co-marketing-only) ([growth/partnerships/chains/alephium.md](growth/partnerships/chains/alephium.md))
+- [ ] Theseus — vault-deploy-gated co-marketing partner (founders engaged) ([growth/partnerships/theseus.md](growth/partnerships/theseus.md))
+- [ ] Sui chain partnership — non-EVM (Move); communications opened, no agreement yet ([growth/partnerships/chains/sui.md](growth/partnerships/chains/sui.md))
 
 ### Lead Capture (Layer 2)
 

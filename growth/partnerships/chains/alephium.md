@@ -2,6 +2,8 @@
 partner: Alephium
 canonical_handle: "@alephium"
 status: in_discussion
+co_marketing: not_confirmed
+funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
 last_touch: 2026-05-23
@@ -70,6 +72,7 @@ Alephium is the first non-EVM chain in the IndexFlow chain-partnership pipeline.
 
 **From us:**
 
+- Nothing has been confirmed from the Alephium side yet — the first ask is counterpart confirmation and whether there is any concrete engagement in mind before scoping engineering work.
 - Confirmation of the Alephium hackathon track name, submission deadline, and judging criteria so the scope decision (real Ralph spoke vs. wrapped/co-marketing-only) can be made against a deadline.
 - Pointer to any reference Ralph implementations of vault/escrow patterns we can crib from for a `BasketVault`-equivalent.
 - Cross-chain messaging guidance: which bridge or relayer pattern Alephium's ecosystem recommends today, given CCIP is not available.
@@ -83,4 +86,5 @@ Alephium is the first non-EVM chain in the IndexFlow chain-partnership pipeline.
 
 ## Historical thread / contact log
 
+- 2026-05-26 — no confirmation from Alephium counterpart yet; co_marketing=not_confirmed, funding_intros=none.
 - 2026-05-23 — chain-partnerships subfolder introduced; Alephium file created with non-EVM scope and hackathon track flagged. Scope decision (real Ralph spoke vs. wrapped/co-marketing-only) recorded as the next milestone.

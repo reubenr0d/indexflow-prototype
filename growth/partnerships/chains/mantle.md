@@ -2,6 +2,8 @@
 partner: Mantle
 canonical_handle: "@Mantle_Official"
 status: active
+co_marketing: pending_deploy
+funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
 last_touch: 2026-05-23
@@ -36,7 +38,7 @@ hackathon_track: TBD (Mantle hackathon track — user to confirm exact program n
 
 ## Why this partnership exists
 
-Mantle is a strong candidate spoke chain for IndexFlow's hub-and-spoke topology. Today the hub stack lives on Sepolia with Fuji as the first deposit-only spoke; a Mantle spoke would pair naturally with the existing `script/DeploySpoke.s.sol` flow — a deposit-only spoke vault on Mantle that mirrors basket state from the Sepolia hub via `StateRelay`, with no curator surface duplicated on the spoke. The reach is also material: `@Mantle_Official` has a deep DeFi audience that overlaps directly with the curator and cross-chain courier personas Season 1 is built for. The hackathon track adds a hard deadline to actually land the testnet spoke instead of leaving it as a "next quarter" item.
+Mantle is a strong candidate spoke chain for IndexFlow's hub-and-spoke topology. Today the hub stack lives on Sepolia with Fuji as the first deposit-only spoke; a Mantle spoke would pair naturally with the existing `script/DeploySpoke.s.sol` flow — a deposit-only spoke vault on Mantle that mirrors basket state from the Sepolia hub via `StateRelay`, with no curator surface duplicated on the spoke. The reach is also material: `@Mantle_Official` has a deep DeFi audience that overlaps directly with the curator and cross-chain courier personas Season 1 is built for. The hackathon track adds a hard deadline to actually land the testnet spoke instead of leaving it as a "next quarter" item. Co-marketing is agreed in principle but explicitly gated on the Mantle Sepolia spoke deploy landing first; no funding intros have been offered through this channel yet.
 
 ## Deployment status
 
@@ -83,5 +85,6 @@ Mantle is a strong candidate spoke chain for IndexFlow's hub-and-spoke topology.
 
 ## Historical thread / contact log
 
+- 2026-05-26 — confirmed co-marketing is gated on the Mantle Sepolia spoke deploy (co_marketing=pending_deploy). No funding intros offered yet (funding_intros=none).
 - 2026-05-23 — chain-partnerships subfolder introduced; Mantle partnership file moved into `growth/partnerships/chains/` and `chain:` block added; Mantle Sepolia spoke flagged as the hackathon deploy target.
 - 2026-05-23 — partnership tracking system created in repo; Season 1 placement confirmed (Thu Jun 4 standalone anchoring the Cross-Chain Couriers spoke demo).
