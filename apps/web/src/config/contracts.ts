@@ -6,6 +6,7 @@ import {
 } from "@/lib/deployment";
 import sepoliaDeployment from "./sepolia-deployment.json";
 import fujiDeployment from "./fuji-deployment.json";
+import mantleSepoliaDeployment from "./mantle-sepolia-deployment.json";
 
 const ZERO = "0x0000000000000000000000000000000000000000" as Address;
 
@@ -60,6 +61,7 @@ try {
 
 const DEPLOYMENT_FILES: Record<string, DeploymentConfig> = {
   sepolia: sepoliaDeployment as DeploymentConfig,
+  "mantle-sepolia": mantleSepoliaDeployment as DeploymentConfig,
   fuji: fujiDeployment as DeploymentConfig,
   ...(localDeployment ? { local: localDeployment } : {}),
   ...(localSpokeDeployment ? { "local-spoke": localSpokeDeployment } : {}),

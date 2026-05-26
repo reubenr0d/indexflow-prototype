@@ -67,6 +67,7 @@ function getRpcUrl(chain: ChainConfig): string {
     sepolia: "SEPOLIA_RPC_URL",
     fuji: "FUJI_RPC_URL",
     arbitrum_sepolia: "ARBITRUM_SEPOLIA_RPC_URL",
+    mantle_sepolia: "MANTLE_SEPOLIA_RPC_URL",
     local: "LOCAL_RPC_URL",
   };
   const envKey = aliasMap[chain.rpcAlias];

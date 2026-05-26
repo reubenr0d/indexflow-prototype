@@ -11,6 +11,10 @@ Timestamp format for new entries in this section: `[YYYY-MM-DD HH:MM UTC±HH:MM]
 Within each category, add newest entries at the top.
 Legacy entries that predate this rule may remain without timestamps.
 
+### Added
+
+- [2026-05-26] **Mantle Sepolia hub deployed (hackathon item 1).** Added `mantle-sepolia` to [`config/chains.json`](config/chains.json) (chain `5003`, CCIP selector `8236463271206331221`, `role: hub`), Foundry/web/keeper wiring, [`apps/web/src/config/mantle-sepolia-deployment.json`](apps/web/src/config/mantle-sepolia-deployment.json) at block `39077789` (`BasketFactory` `0xa07a1820…f318C`, full perp stack + `StateRelay` `0xf4aFB676…2AB5`), Envio network `5003` in [`apps/envio/config.yaml`](apps/envio/config.yaml), and default web target `mantle-sepolia`. Test MNT was sourced by `mint(uint256)` on Sepolia MNT `0x65e37B558F64E2Be5768DB46DF22F93d85741A9E` and `depositMNTTo` via Mantle L1 bridge `0x21F308067241B2028503c07bd7cB3751FFab0Fb2` (not the generic OP `0x61525…` bridge).
+
 ### Changed
 
 - [2026-05-26 23:00 UTC+05:30] **Navbar "Mint 10,000 Test USDC" only on protocol app routes.** The testnet faucet in [`apps/web/src/components/layout/header.tsx`](apps/web/src/components/layout/header.tsx) was visible on every page except `/` (`isTestnet && !onHome`), so it appeared on `/blog`, `/docs`, `/ops`, etc. It now uses `isAppRoute()` and only renders under `/baskets`, `/prices`, `/chains`, `/portfolio`, `/settings`, `/admin`, and `/dashboard` (desktop + mobile nav).

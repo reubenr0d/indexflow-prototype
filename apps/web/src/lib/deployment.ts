@@ -29,10 +29,11 @@ export type DeploymentConfig = {
 
 export const DEPLOYMENT_TARGET_STORAGE_KEY = "indexflow:deployment-target";
 export const VIEW_MODE_STORAGE_KEY = "indexflow:view-mode";
-export const DEFAULT_DEPLOYMENT_TARGET: DeploymentTarget = "sepolia";
+export const DEFAULT_DEPLOYMENT_TARGET: DeploymentTarget = "mantle-sepolia";
 
 // Built from config/chains.json – add entries here when new chains are onboarded.
 const CHAINS_JSON: Record<string, ChainConfig> = {
+  "mantle-sepolia": { chainId: 5003, ccipChainSelector: "8236463271206331221", role: "hub", rpcAlias: "mantle_sepolia", mockUsdc: true },
   sepolia: { chainId: 11155111, ccipChainSelector: "16015286601757825753", role: "hub", rpcAlias: "sepolia", mockUsdc: true },
   fuji: { chainId: 43113, ccipChainSelector: "14767482510784806043", role: "spoke", rpcAlias: "fuji", mockUsdc: true },
   "arbitrum-sepolia": { chainId: 421614, ccipChainSelector: "3478487238524512106", role: "spoke", rpcAlias: "arbitrum_sepolia", mockUsdc: true },
@@ -46,6 +47,7 @@ export const CHAIN_REGISTRY: Record<string, ChainConfig> = {
 };
 
 const CHAIN_LABELS: Record<string, string> = {
+  "mantle-sepolia": "Mantle Sepolia",
   sepolia: "Sepolia",
   fuji: "Avalanche Fuji",
   "arbitrum-sepolia": "Arbitrum Sepolia",

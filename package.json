@@ -22,6 +22,7 @@
     "deploy:local": "CHAIN=local PRIVATE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 forge script script/Deploy.s.sol:Deploy --rpc-url local --broadcast -vvv",
     "keeper:once": "sh scripts/run-keeper-once.sh",
     "deploy:sepolia": "CHAIN=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url sepolia --broadcast -vvv && npm run keeper:once",
+    "deploy:mantle-sepolia": "CHAIN=mantle-sepolia forge script script/Deploy.s.sol:Deploy --rpc-url mantle_sepolia --broadcast --slow -vvv && CHAIN=mantle-sepolia forge script script/WireStateRelay.s.sol:WireStateRelay --rpc-url mantle_sepolia --broadcast --slow -vvv && KEEPER_CHAINS=mantle-sepolia npm run keeper:once",
     "deploy:fuji": "CHAIN=fuji forge script script/Deploy.s.sol:Deploy --rpc-url fuji --broadcast -vvv && npm run keeper:once",
     "deploy:chain": "sh scripts/deploy-chain.sh",
     "sync:local": "forge script script/SyncAllOraclePrices.s.sol:SyncAllOraclePrices --rpc-url local --broadcast",

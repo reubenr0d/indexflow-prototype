@@ -81,6 +81,23 @@ networks:
         start_block: 55607589
       - name: BasketVault
 
+  - id: 5003 # Mantle Sepolia (hub)
+    start_block: 39077789
+    contracts:
+      - name: BasketFactory
+        address: 0xa07a182040a9eb2a398b7853c2af3bd2de5f318c
+        start_block: 39077789
+      - name: VaultAccounting
+        address: 0x7c00248d9b1435b82acf2f44d1e9634d0876ea49
+        start_block: 39077789
+      - name: OracleAdapter
+        address: 0x02879fae6f2d884768f269ac4d350544352e9264
+        start_block: 39077789
+      - name: StateRelay
+        address: 0xf4afb6769b71c06f70a6d717ccf69e5ded962ab5
+        start_block: 39077789
+      - name: BasketVault
+
 unordered_multichain_mode: true
 preload_handlers: false
 address_format: lowercase

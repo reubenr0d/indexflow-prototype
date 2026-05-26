@@ -80,5 +80,16 @@
       "redeemFeeBps": "0",
       "minReserveBps": "1000"
     }
+  },
+  "mantle-sepolia": {
+    "chainId": 5003,
+    "ccipChainSelector": "8236463271206331221",
+    "ccipRouter": "0xFd33fd627017fEf041445FC19a2B6521C9778f86",
+    "linkToken": "0x22bdEdEa0beBdD7CfFC95bA53826E55afFE9DE04",
+    "usdc": "0x0000000000000000000000000000000000000000",
+    "gmxVault": "0x0000000000000000000000000000000000000000",
+    "rpcAlias": "mantle_sepolia",
+    "mockUsdc": true,
+    "role": "hub"
   }
 }

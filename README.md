@@ -678,6 +678,7 @@ LLM_MODEL=gpt-4o
 
 ## Documentation
 
+- [Pitch deck (Google Slides)](https://docs.google.com/presentation/d/1HuxICMigQ_ELL3MLMNnF2yI5ghONdipNQjUcu6rtruc/edit?usp=sharing) — investor and partner overview.
 - `/primer` — visual long-scroll explainer page distilling the whitepaper and pitch deck into animated sections with inline SVG diagrams.
 - In-app wiki (web app):
   - `/docs` — searchable index sourced directly from repository markdown under `docs/*.md`.

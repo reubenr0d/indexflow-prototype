@@ -58,6 +58,29 @@ Spoke deployment configs (`apps/web/src/config/<chain>-deployment.json`) contain
 | Avalanche Fuji | `43113` | **Spoke** | Deployed (2026-04-16) | `apps/web/src/config/fuji-deployment.json` |
 | Arbitrum One | `42161` | — | Not deployed in this repo snapshot | N/A |
 | Arbitrum Sepolia | `421614` | Spoke (planned) | Not deployed in this repo snapshot | N/A |
+| Mantle Sepolia | `5003` | **Hub** (hackathon) | Deployed (2026-05-26) | `apps/web/src/config/mantle-sepolia-deployment.json` |
+
+### Mantle Sepolia hub (deployed 2026-05-26)
+
+- **Chain ID:** `5003`
+- **Deployer:** `0x36716C8C5D1ae680C78bD0ECc230896556399713`
+- **Deploy block:** `39077789`
+- **CCIP:** selector `8236463271206331221`, router `0xFd33fd627017fEf041445FC19a2B6521C9778f86`, LINK `0x22bdEdEa0beBdD7CfFC95bA53826E55afFE9DE04`
+- **Mantle L1 bridge (Sepolia → Mantle Sepolia MNT):** `0x21F308067241B2028503c07bd7cB3751FFab0Fb2` (`depositMNTTo`); Sepolia test MNT `0x65e37B558F64E2Be5768DB46DF22F93d85741A9E` (`mint(uint256)` on implementation)
+
+| Contract | Address |
+| --- | --- |
+| `basketFactory` | `0xa07a182040a9EB2a398b7853c2af3Bd2dE5f318C` |
+| `vaultAccounting` | `0x7c00248d9b1435b82ACf2F44D1E9634D0876ea49` |
+| `oracleAdapter` | `0x02879FaE6F2d884768f269Ac4D350544352e9264` |
+| `perpReader` | `0x280f20caED817C678893f8838Cb867f542337F1A` |
+| `pricingEngine` | `0x2C3BdC8977B52c4Abfe26b32f6DF3B025A08fb93` |
+| `fundingRateManager` | `0x743194BAAe87A8A518739a1eB71f04773b46d42e` |
+| `priceSync` | `0xB3c318f338d3b9734bD495407ac33Fa79a9a6eA3` |
+| `usdc` (MockUSDC) | `0xF982aA442612CCC52270828446A21E85bB12bd3F` |
+| `gmxVault` | `0xe5Cb69dB42cA2a8F9A98C1d8d47780e402Bd2D2d` |
+| `assetWiring` | `0x2272f91c0dA0CE718F3253A6C1738c771E1AAe68` |
+| `stateRelay` | `0xf4aFB6769b71C06f70a6d717CCf69e5deD962AB5` |
 
 ## Sepolia contracts (hub chain deployment)
 
