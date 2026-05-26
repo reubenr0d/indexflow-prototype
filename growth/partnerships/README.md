@@ -33,6 +33,138 @@ Partnerships are tracked here as a first-class growth workstream alongside [`gro
 | `offered` | Partner has offered or discussed funding intros but no concrete intro yet. |
 | `none` | No funding/investor intros made or offered by the partner. |
 
+## 0xLabs introductions pipeline
+
+[0xLabs](https://0xlabs.network) has submitted IndexFlow's application to a broad set of L1 / L2 / protocol ecosystems and is tracking progress on our behalf. The table below is the canonical list of intros submitted through that channel. Most are `awaiting_response`; the few that have already responded are linked to their per-partner file in the **All partners** table above. As more protocols respond, append a row to **All partners** (with a `co_marketing` / `funding_intros` value) and flip the status here to `responded`.
+
+| status | meaning |
+| ------ | ------- |
+| `awaiting_response` | Intro submitted by 0xLabs; no reply yet. |
+| `responded` | Protocol has engaged; tracked in the **All partners** table. |
+| `declined` | Protocol explicitly passed; keep row for history. |
+
+| protocol | status | notes |
+| -------- | ------ | ----- |
+| 0G Foundation | awaiting_response | |
+| 5ire | awaiting_response | |
+| Abey Foundation | awaiting_response | |
+| Abstract | awaiting_response | |
+| Aethir | awaiting_response | |
+| Alchemy | awaiting_response | |
+| Alephium | responded | tracked in [chains/alephium.md](chains/alephium.md) (status: in_discussion, co_marketing: not_confirmed) |
+| Algorand | awaiting_response | |
+| Analog One | awaiting_response | |
+| Anoma | awaiting_response | |
+| Anryton | awaiting_response | |
+| Aptos | awaiting_response | |
+| Arbitrum Alchemy | awaiting_response | |
+| Aurora | awaiting_response | |
+| Autonomys/Subspace | awaiting_response | |
+| Avalanche | responded | tracked in [chains/avalanche.md](chains/avalanche.md) (status: active, co_marketing: agreed, funding_intros: intros_made) |
+| Bahamut | awaiting_response | |
+| Base | awaiting_response | |
+| BNB | responded | tracked in [chains/bnb.md](chains/bnb.md) (status: in_discussion, co_marketing: pending_deploy) |
+| Camino Network | awaiting_response | |
+| Canton Network | awaiting_response | |
+| Casper | awaiting_response | |
+| Cedra Network | awaiting_response | |
+| Centrifuge Network Foundation | awaiting_response | |
+| ChainGPT | awaiting_response | |
+| Chainlink | awaiting_response | |
+| Chiliz | awaiting_response | |
+| Concordium | awaiting_response | |
+| Cosmos | awaiting_response | |
+| Coti | awaiting_response | |
+| Creata Chain | awaiting_response | |
+| Dfinity | awaiting_response | |
+| DIA Oracle | awaiting_response | |
+| Doma Forge | awaiting_response | |
+| dYdX | awaiting_response | |
+| Eigenlayer | awaiting_response | |
+| Elysium Network | awaiting_response | |
+| Ethernity | awaiting_response | |
+| Gitcoin | awaiting_response | |
+| Gnosis VC | awaiting_response | |
+| GoodDollar | awaiting_response | |
+| Gravity Ecosystem VC Alliance | awaiting_response | |
+| Hedera | awaiting_response | |
+| Hedera Boost | awaiting_response | |
+| Hedera Launch | awaiting_response | |
+| Horizen Genesis | awaiting_response | |
+| iExec | responded | tracked in [iexec.md](iexec.md) (status: active, co_marketing: agreed) |
+| Immutable | awaiting_response | |
+| IOTA | awaiting_response | |
+| Iron Fish | awaiting_response | |
+| Kaia | awaiting_response | possible duplicate of Line (Kaia) below |
+| Kaspa | awaiting_response | |
+| Kleros | awaiting_response | |
+| Kub Chain | awaiting_response | |
+| Lamina1 | awaiting_response | |
+| Line (Kaia) | awaiting_response | possible duplicate of Kaia above |
+| Linea | awaiting_response | |
+| Lisk | awaiting_response | |
+| Manta | awaiting_response | |
+| Miden | awaiting_response | |
+| Minima | awaiting_response | |
+| Monad | awaiting_response | |
+| Moonbeam | awaiting_response | |
+| MultiversX | awaiting_response | |
+| Oasis Protocol | awaiting_response | |
+| Open Ledger | awaiting_response | |
+| Optimism | awaiting_response | |
+| Osmosis | awaiting_response | |
+| Peaq | awaiting_response | |
+| Pharos | awaiting_response | |
+| Plume | awaiting_response | |
+| Polkadot | awaiting_response | |
+| Polymesh | awaiting_response | |
+| Prezenti | awaiting_response | |
+| PWR Labs | awaiting_response | |
+| Quranium | awaiting_response | |
+| Reactive Network | awaiting_response | |
+| Render | awaiting_response | |
+| Skale | awaiting_response | |
+| Somnia | awaiting_response | |
+| Soneium | awaiting_response | |
+| Sonic Labs | awaiting_response | |
+| Starknet | awaiting_response | |
+| Ston.fi | awaiting_response | |
+| Storm Partners | awaiting_response | |
+| Taiko | awaiting_response | |
+| Tanssi | awaiting_response | |
+| Taraxa | awaiting_response | |
+| Tezos | awaiting_response | |
+| Thrive zkVerify | awaiting_response | |
+| TON | awaiting_response | |
+| Tonomy | awaiting_response | |
+| Trust Wallet | awaiting_response | |
+| Unichain | awaiting_response | |
+| VeChain | awaiting_response | |
+| VGX Foundation | awaiting_response | |
+| Virtuals | awaiting_response | |
+| Voi Network | awaiting_response | |
+| Web3 Foundation | awaiting_response | |
+| Web3 Public Goods Glo Dollar | awaiting_response | |
+| WhiteChain | awaiting_response | |
+| Wire | awaiting_response | |
+| World Foundation | awaiting_response | |
+| Wormhole Ecosystem Fund | awaiting_response | |
+| X1 Ecochain | awaiting_response | |
+| Xion Investment Program | awaiting_response | |
+| XRPL | awaiting_response | |
+| XRPL Global | awaiting_response | |
+| Zetachain | awaiting_response | |
+| Zircuit | awaiting_response | |
+
+**Summary:** 110 protocols introduced via 0xLabs · 4 responded (Avalanche, Alephium, BNB, iExec) · 106 awaiting response · 0 declined.
+
+When a protocol from this pipeline responds:
+
+1. Create a per-partner file under [`growth/partnerships/`](.) or [`growth/partnerships/chains/`](chains/) (chain partners use the `chains/_TEMPLATE.md`).
+2. Append a row to the **All partners** table above (with `co_marketing` / `funding_intros` set to reflect the response).
+3. Flip the row in this table to `responded` and add a notes-cell link to the new per-partner file.
+4. Append a contact-log entry to the new per-partner file noting the 0xLabs origin of the intro.
+
 ## Workflow
 
 To add a new partner:
