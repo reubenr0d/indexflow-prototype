@@ -774,9 +774,12 @@ Paperclip should surface these as the active company goals so every employee's `
 goals:
   - id: season-1-operator-trials
     name: Season 1 — Operator Trials
+    description: >
+      Ship one new testnet basket theme per week and drive operator sign-ups
+      through Galxe, Boost, and X — proving the curator flywheel before mainnet.
     horizon: "2026-05-25 → 2026-06-21"
     sourceDoc: growth/X_GROWTH_PLAN.md
-    metric: New testnet baskets created from `utm_source=x` per week.
+    metric: New testnet baskets from `utm_source=x` per week (target 1).
     cadenceTarget:
       newBasketsLaunchedPerWeek: 1   # the metric only moves if we keep shipping new themes; basket-ideator owns the pipeline
     surfaces:
@@ -801,14 +804,21 @@ goals:
 
   - id: hub-and-spoke-expansion
     name: Hub-and-spoke chain expansion
+    description: >
+      Deploy basket vault spokes on partner chains so curators launch where
+      their LPs and liquidity programs already live.
     horizon: 2026-Q2 → 2026-Q3
     sourceDoc: growth/partnerships/chains/README.md
-    metric: Live spoke deployments (Sepolia hub + Fuji spoke live; planned Mantle Sepolia, BNB Smart Chain Testnet, Alephium testnet).
+    metric: Live spokes (hub Sepolia + Fuji live; Mantle Sepolia, BNB testnet, Alephium testnet planned).
 
   - id: mainnet-readiness
     name: Mainnet readiness
+    description: >
+      Close audit, entity formation, oracle and keeper redundancy, and
+      regulatory positioning so a production launch is defensible.
     horizon: 2026-Q3 → 2027-Q1
     sourceDoc: README.md
+    metric: Launch blockers cleared (audit, Foundation + Labs, oracles, keepers, regulatory roadmap).
     blockers:
       - Smart contract audit
       - IndexFlow Foundation + IndexFlow Labs incorporation
@@ -818,8 +828,12 @@ goals:
 
   - id: flow-token-launch
     name: $FLOW token + governance
+    description: >
+      Execute TGE and stand up onchain governance per the utility-token
+      design — after mainnet gates and runway from the fundraise are in place.
     horizon: 2027-Q1 → 2027-Q2 (TGE target)
     sourceDoc: docs/UTILITY_TOKEN_TOKENOMICS.md
+    metric: TGE live with governance enabled per docs/UTILITY_TOKEN_TOKENOMICS.md.
 
   - id: partnership-pipeline
     name: Active partnerships
@@ -835,12 +849,15 @@ goals:
 
   - id: vc-outreach
     name: VC fundraise (Seed → Series A)
+    description: >
+      Run Seed → Series A outreach to crypto-native funds and strategic angels;
+      Tier 1 via warm intros (partners, 0xLabs), Tier 2–3 via automated sequences.
     horizon: 2026-Q3 → 2027-Q1 (gated on Foundation/Labs incorporation)
     sourceDocs:
       - growth/VC_OUTREACH_PLAYBOOK.md
       - docs/REGULATORY_ROADMAP_DRAFT.md   # entity structure that closes the round
       - docs/UTILITY_TOKEN_TOKENOMICS.md   # informs equity/token-warrant terms
-    metric: Term sheets received → firms in active diligence → capital committed (USD)
+    metric: Term sheets → active diligence → capital committed (USD).
     targets:
       - tier1_contacts: 50–80 (warm intro OR strong portfolio overlap)
       - tier2_contacts: 150–250 (thesis-aligned, no warm path)
@@ -862,18 +879,16 @@ goals:
 
   - id: lp-seed-liquidity
     name: LP seeding (perp pool + basket vaults)
+    description: >
+      Seed USDC into the shared perp OI pool and basket vaults so baskets can
+      hedge and holders can redeem — exit liquidity is a product gate, not a
+      growth perk.
     horizon: 2026-Q3 testnet stress → 2027-Q1 mainnet launch
     sourceDocs:
       - growth/LP_OUTREACH_PLAYBOOK.md
       - docs/PERP_RISK_MATH.md                 # parametrised LP risk envelope
       - docs/GLOBAL_POOL_MANAGEMENT_FLOW.md    # shared OI pool the perp-layer LPs deposit into
       - docs/TECHNICAL_ARCHITECTURE_AND_ROADMAP.md
-    rationale: >
-      Portfolio value and exit liquidity are not the same thing — and exit
-      liquidity is bounded by perp-pool depth. Without LP capital in the
-      shared OI pool, baskets cannot run their long/short hedge legs and
-      the redeemable-NAV guarantee weakens. LP seeding is therefore a
-      product-viability gate, not a growth nice-to-have.
     tracks:
       - id: perp-layer-lps
         priority: 1
@@ -891,10 +906,7 @@ goals:
         priority: 3
         what: USDC into the protocol insurance fund (deferred — design TBD)
         targets: Same pool as perp-layer LPs but with risk-on tranche appetite.
-    metric:
-      - perpPoolUsdcDeposited
-      - basketTvlUsd
-      - perpPoolUtilizationCeilingHit_count  # signal that LPs are tapped out → expand or raise rates
+    metric: Perp-pool USDC deposited · basket TVL (USD) · utilization-ceiling events (expand pool signal).
     blockers:
       - growth/LP_OUTREACH_PLAYBOOK.md authored (initial stub committed; needs target-list build-out)
       - Mainnet audit cleared (LPs won't deposit pre-audit)

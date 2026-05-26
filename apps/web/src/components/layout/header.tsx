@@ -43,6 +43,23 @@ const mobileOnlyItems = [
   { href: "/settings", label: "Settings" },
 ];
 
+/** Protocol UI routes where the testnet USDC faucet belongs (not marketing/docs/ops). */
+const appRoutePrefixes = [
+  "/baskets",
+  "/prices",
+  "/chains",
+  "/portfolio",
+  "/settings",
+  "/admin",
+  "/dashboard",
+] as const;
+
+export function isAppRoute(pathname: string) {
+  return appRoutePrefixes.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export const TEST_USDC_MINT_AMOUNT = 10_000n * 1_000_000n;
 
 export function buildMintTestUsdcCall(address: Address, usdc: Address) {
@@ -251,6 +268,7 @@ export function Header() {
   const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
   const onHome = pathname === "/";
+  const inApp = isAppRoute(pathname);
   const canMint = Boolean(address) && !isPending;
 
   useEffect(() => {
@@ -365,7 +383,7 @@ export function Header() {
             </nav>
           </div>
           <div className="flex items-center gap-2">
-            {isTestnet && !onHome && (
+            {isTestnet && inApp && (
               <button
                 type="button"
                 onClick={handleMint}
@@ -427,7 +445,7 @@ export function Header() {
         )}
       >
         <nav className="space-y-0.5 p-3">
-          {isTestnet && !onHome && (
+          {isTestnet && inApp && (
             <button
               type="button"
               onClick={handleMint}

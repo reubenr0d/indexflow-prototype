@@ -6,7 +6,6 @@ import {
   Calendar,
   ExternalLink,
   FileText,
-  Gauge,
   Globe,
   LayoutGrid,
   Shield,
@@ -65,17 +64,14 @@ export default async function OpsOverviewPage() {
                   <h3 className="text-sm font-semibold leading-snug text-app-text">{p.name}</h3>
                 </div>
 
+                {p.description && (
+                  <p className="mt-2 text-xs leading-relaxed text-app-muted">{p.description}</p>
+                )}
+
                 {p.horizon && (
                   <p className="mt-2 flex items-start gap-1.5 text-[11px] leading-snug text-app-muted">
                     <Calendar className="mt-0.5 h-3 w-3 shrink-0" />
                     <span className="font-mono">{p.horizon}</span>
-                  </p>
-                )}
-
-                {p.metric && (
-                  <p className="mt-2 flex items-start gap-1.5 text-xs leading-relaxed text-app-muted">
-                    <Gauge className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                    <span>{p.metric}</span>
                   </p>
                 )}
 

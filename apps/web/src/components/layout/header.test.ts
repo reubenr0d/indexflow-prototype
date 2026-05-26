@@ -67,7 +67,34 @@ import {
   TEST_USDC_MINT_AMOUNT,
   buildMintTestUsdcCall,
   getMintSponsorshipErrorMessage,
+  isAppRoute,
 } from "./header";
+
+describe("isAppRoute", () => {
+  it("matches protocol UI routes and subpaths", () => {
+    expect(isAppRoute("/baskets")).toBe(true);
+    expect(isAppRoute("/baskets/0xabc")).toBe(true);
+    expect(isAppRoute("/prices")).toBe(true);
+    expect(isAppRoute("/prices/BTC")).toBe(true);
+    expect(isAppRoute("/chains")).toBe(true);
+    expect(isAppRoute("/portfolio")).toBe(true);
+    expect(isAppRoute("/settings")).toBe(true);
+    expect(isAppRoute("/admin/baskets")).toBe(true);
+    expect(isAppRoute("/dashboard")).toBe(true);
+  });
+
+  it("excludes marketing, docs, and ops surfaces", () => {
+    expect(isAppRoute("/")).toBe(false);
+    expect(isAppRoute("/blog")).toBe(false);
+    expect(isAppRoute("/blog/some-post")).toBe(false);
+    expect(isAppRoute("/docs")).toBe(false);
+    expect(isAppRoute("/docs/deposits")).toBe(false);
+    expect(isAppRoute("/ops")).toBe(false);
+    expect(isAppRoute("/ops/growth")).toBe(false);
+    expect(isAppRoute("/terms")).toBe(false);
+    expect(isAppRoute("/privacy")).toBe(false);
+  });
+});
 
 describe("Header mint helpers", () => {
   it("builds the mint tx call with 10,000 USDC (6 decimals)", () => {

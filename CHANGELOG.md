@@ -13,6 +13,12 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-05-26 23:00 UTC+05:30] **Navbar "Mint 10,000 Test USDC" only on protocol app routes.** The testnet faucet in [`apps/web/src/components/layout/header.tsx`](apps/web/src/components/layout/header.tsx) was visible on every page except `/` (`isTestnet && !onHome`), so it appeared on `/blog`, `/docs`, `/ops`, etc. It now uses `isAppRoute()` and only renders under `/baskets`, `/prices`, `/chains`, `/portfolio`, `/settings`, `/admin`, and `/dashboard` (desktop + mobile nav).
+
+- [2026-05-26 22:30 UTC+05:30] **`/ops` Strategic priorities: hide metric line on cards.** Success metrics stay in [`COMPANY.md`](COMPANY.md) for manifest completeness; [`apps/web/src/app/ops/page.tsx`](apps/web/src/app/ops/page.tsx) no longer renders the Gauge row.
+
+- [2026-05-26 22:15 UTC+05:30] **`/ops` Strategic priorities: consistent goal descriptions.** Each goal in [`COMPANY.md`](COMPANY.md) §Strategic priorities now has a `description` (what we are optimizing for) and a normalized `metric` (how we measure it). [`apps/web/src/lib/ops.server.ts`](apps/web/src/lib/ops.server.ts) maps `description` / legacy `rationale` and coerces list metrics to a single string; [`apps/web/src/app/ops/page.tsx`](apps/web/src/app/ops/page.tsx) renders the description under the card title.
+
 - [2026-05-26 21:45 UTC+05:30] **`/ops` Overview: drop the Active partnerships card from Strategic priorities.** The `partnership-pipeline` goal stays in [`COMPANY.md`](COMPANY.md) for manifest completeness, but [`apps/web/src/lib/ops.server.ts`](apps/web/src/lib/ops.server.ts) now filters it out of `strategicPriorities` — partnerships already have a dedicated pipeline strip on [`/ops/growth`](apps/web/src/app/ops/growth/page.tsx).
 
 - [2026-05-26 21:30 UTC+05:30] **`/ops` public surface renamed for clearer positioning.** Eyebrow is now **Live Manifest · v0.3**, H1 **IndexFlow AI DAO**, subtitle echoes manifest/heartbeats in git. Header and footer nav both link to `/ops` as **Agent Ops** (was "Agents" / "Agent Company"). SEO metadata on [`apps/web/src/app/ops/page.tsx`](apps/web/src/app/ops/page.tsx) and site-wide description in [`apps/web/src/app/layout.tsx`](apps/web/src/app/layout.tsx) updated to match. [`ops-hero.tsx`](apps/web/src/components/ops/ops-hero.tsx) synced for consistency (component unused in layout). Internal docs (`COMPANY.md`, blog, agent prompts) still use "Agent Company" as the canonical term.

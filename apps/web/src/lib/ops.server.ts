@@ -213,11 +213,21 @@ interface GoalsYaml {
   goals: Array<{
     id: string;
     name: string;
+    description?: string;
+    rationale?: string;
     horizon?: string;
-    metric?: string;
+    metric?: string | string[];
     sourceDoc?: string;
     sourceDocs?: string[];
   }>;
+}
+
+function formatGoalMetric(metric: string | string[] | undefined): string | undefined {
+  if (!metric) return undefined;
+  if (Array.isArray(metric)) {
+    return metric.map((m) => String(m).trim()).join(" · ");
+  }
+  return metric.trim() || undefined;
 }
 
 function toEmployeeCard(raw: RawEmployeeYaml, fallbackState: "active" | "brainstorm" | "out-of-scope"): EmployeeCard {
@@ -295,8 +305,9 @@ export async function loadCompany(): Promise<CompanyParseResult> {
       .map((g) => ({
         id: g.id,
         name: g.name,
+        description: (g.description ?? g.rationale ?? "").trim() || undefined,
         horizon: g.horizon,
-        metric: g.metric,
+        metric: formatGoalMetric(g.metric),
         sourceDoc: g.sourceDoc ?? g.sourceDocs?.[0],
       })),
   };

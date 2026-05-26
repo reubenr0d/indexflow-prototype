@@ -36,6 +36,7 @@ export interface Governance {
 export interface StrategicPriority {
   id: string;
   name: string;
+  description?: string;
   horizon?: string;
   metric?: string;
   sourceDoc?: string;

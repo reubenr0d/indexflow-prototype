@@ -56,7 +56,7 @@ export function OpsMission({ mission }: OpsMissionProps) {
             Mission
           </p>
           <blockquote className="mt-4 w-full border-l-4 border-app-accent pl-5 sm:pl-6">
-            <p className="whitespace-pre-line text-lg font-medium leading-relaxed text-app-text sm:text-xl lg:text-2xl lg:leading-snug">
+            <p className="whitespace-pre-line text-base font-medium leading-relaxed text-app-text sm:text-lg lg:text-xl">
               {lead}
             </p>
           </blockquote>
