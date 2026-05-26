@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "source": "initial_defaults_pending_empirical_fit",
+  "freshInterceptWindowDays": 90,
+  "freshInterceptFallbackDays": 180,
+  "recencyHalfLifeDays": 90,
+  "freshnessMultiplierFloor": 0.4,
+  "maxStaleMaterialEventDays": 180,
+  "maxRecent5dReturnPct": 20,
+  "maxRecent20dReturnPct": 50,
+  "maxRecent60dReturnPct": 80,
+  "spike1dMovePct": 15,
+  "spikeNearDrillDays": 7,
+  "minPopulatedCategories": 3,
+  "thinDataMultiplier": 0.85,
+  "maxSingleCategoryShare": 0.7,
+  "longNewsMaxAgeDays": 90
+}

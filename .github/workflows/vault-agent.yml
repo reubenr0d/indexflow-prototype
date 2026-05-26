@@ -90,7 +90,14 @@ jobs:
           # scheduled tick. The `vault-manager` agent is retired from CI; passing
           # it here will fall through to the "Unknown agent input" branch.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
-            include="[${mining_entry},${quality_entry}]"
+            # mining-manager: hourly. quality-matrix-manager: every 4h at :18 UTC
+            # (18 % 4 == 2) so slow fundamentals get room to play out.
+            HOUR_UTC=$(date -u +%H)
+            if [ "${EVENT_NAME}" = "schedule" ] && [ $((10#${HOUR_UTC} % 4)) -ne 2 ]; then
+              include="[${mining_entry}]"
+            else
+              include="[${mining_entry},${quality_entry}]"
+            fi
           elif [ "${AGENT_INPUT}" = "mining-manager" ]; then
             include="[${mining_entry}]"
           elif [ "${AGENT_INPUT}" = "quality-matrix-manager" ]; then

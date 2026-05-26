@@ -31,6 +31,7 @@ import { resolve, dirname } from "node:path";
 
 const NEWS_CACHE_TTL_MS_DEFAULT = 30 * 60 * 1000; // 30 minutes
 export const CHURN_GUARD_WINDOW_MS = 4 * 60 * 60 * 1000; // 4 hours
+const POSITION_OPEN_RETENTION_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
 function safeFilenameFragment(value) {
   return String(value || "")
@@ -287,4 +288,86 @@ export function recordRecentlyClosed({
 
   writeJsonAtomic(filePath, updated);
   return { closedAt, path: filePath };
+}
+
+// ---------------------------------------------------------------------------
+// Recently-opened positions (per-vault JSON file) — min-holding guard
+// ---------------------------------------------------------------------------
+
+function recentlyOpenedPath(projectRoot, vault) {
+  const slug = safeFilenameFragment(vault) || "unknown-vault";
+  return resolve(sharedMemoryDir(projectRoot), `recently-opened.${slug}.json`);
+}
+
+export function readRecentlyOpened({ vault, projectRoot, retentionMs, now } = {}) {
+  if (!vault) return new Map();
+  const retain = Number.isFinite(retentionMs) ? retentionMs : POSITION_OPEN_RETENTION_MS;
+  const nowMs = Number.isFinite(now) ? now : Date.now();
+  const filePath = recentlyOpenedPath(projectRoot, vault);
+  const data = readJsonSafe(filePath);
+  const map = new Map();
+  if (!data || typeof data !== "object") return map;
+  const opens = data.opens && typeof data.opens === "object" ? data.opens : {};
+  for (const [key, entry] of Object.entries(opens)) {
+    if (!entry || typeof entry !== "object") continue;
+    const openedAtMs = Date.parse(entry.openedAt || "");
+    if (!Number.isFinite(openedAtMs)) continue;
+    if (nowMs - openedAtMs > retain) continue;
+    map.set(String(key).toLowerCase(), {
+      ticker: entry.ticker || null,
+      isLong: typeof entry.isLong === "boolean" ? entry.isLong : null,
+      openedAt: entry.openedAt,
+      openedAtMs,
+    });
+  }
+  return map;
+}
+
+export function recordRecentlyOpened({
+  vault,
+  assetId,
+  isLong,
+  ticker,
+  projectRoot,
+  now,
+  retentionMs,
+} = {}) {
+  if (!vault || !assetId) return null;
+  const retain = Number.isFinite(retentionMs) ? retentionMs : POSITION_OPEN_RETENTION_MS;
+  const nowMs = Number.isFinite(now) ? now : Date.now();
+  const openedAt = new Date(nowMs).toISOString();
+  const legKey = `${String(assetId).toLowerCase()}:${isLong === false ? "short" : "long"}`;
+  const filePath = recentlyOpenedPath(projectRoot, vault);
+  const existing = readJsonSafe(filePath) || { vault, opens: {} };
+  const updated = { vault, updatedAt: openedAt, opens: {} };
+
+  if (existing.opens && typeof existing.opens === "object") {
+    for (const [oldKey, entry] of Object.entries(existing.opens)) {
+      if (!entry) continue;
+      const openedAtMs = Date.parse(entry.openedAt || "");
+      if (!Number.isFinite(openedAtMs)) continue;
+      if (nowMs - openedAtMs > retain) continue;
+      updated.opens[oldKey] = entry;
+    }
+  }
+
+  updated.opens[legKey] = {
+    assetId: String(assetId).toLowerCase(),
+    ticker: ticker || null,
+    isLong: typeof isLong === "boolean" ? isLong : true,
+    openedAt,
+  };
+
+  writeJsonAtomic(filePath, updated);
+  return { openedAt, path: filePath, legKey };
+}
+
+export function getPositionOpenAgeMs({ vault, assetId, isLong, projectRoot, now } = {}) {
+  if (!vault || !assetId) return null;
+  const legKey = `${String(assetId).toLowerCase()}:${isLong === false ? "short" : "long"}`;
+  const map = readRecentlyOpened({ vault, projectRoot, now });
+  const hit = map.get(legKey);
+  if (!hit) return null;
+  const nowMs = Number.isFinite(now) ? now : Date.now();
+  return nowMs - hit.openedAtMs;
 }

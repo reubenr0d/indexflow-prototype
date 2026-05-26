@@ -998,31 +998,49 @@ Trading agents follow the same lifecycle in reverse if/when promoted: they're al
 
 **Quickstart for the operator (Reuben, in a separate shell, outside this repo):**
 
+> **Full runbook**: see [`docs/PAPERCLIP_RUNBOOK.md`](docs/PAPERCLIP_RUNBOOK.md) for the step-by-step install + first-heartbeat test + post-install housekeeping. The block below is the at-a-glance version.
+
 ```bash
-# 1. Install Paperclip locally
-mkdir -p ~/paperclip && cd ~/paperclip
+# 1. Pre-flight (Node 20+, pnpm 9.15+)
+node --version && pnpm --version
+
+# 2. Install Paperclip locally (config + embedded Postgres land at ~/.paperclip/instances/default/)
 npx paperclipai onboard --yes
+# → server runs at http://localhost:3100 in local_trusted mode
 
-# 2. Install the agent-companies plugin
-pnpm add paperclip-agent-companies-plugin
-# (restart Paperclip to load the plugin)
+# 3. Install the agent-companies plugin (via Paperclip's own plugin CLI, NOT pnpm add).
+#    Use `npx` because step 2 caches the binary inside ~/.npm/_npx/<hash>/node_modules/.bin/,
+#    NOT on global PATH; bare `paperclipai` will fail with `zsh: command not found`.
+npx paperclipai plugin install paperclip-agent-companies-plugin
+# Plugin hot-loads on install — no server restart needed.
+# Verify with: curl -s http://127.0.0.1:3100/api/plugins | python3 -m json.tool
+# Expect: "pluginKey": "paperclip-agent-companies-plugin", "status": "ready", "lastError": null
 
-# 3. In the Paperclip UI:
-#    - Settings -> Agent Companies -> Add source
-#    - URL: file:///Users/reuben/Desktop/minestarters/code/snx-prototype
-#      (or https://github.com/reubenr0d/indexflow-prototype)
-#    - Click "Discover", then "Import as new company" (creates the IndexFlow company)
+# 4. In the Paperclip UI:
+#    - Settings → Secrets: add LLM_API_KEY, LLM_BASE_URL, LLM_MODEL, GH_TOKEN,
+#      AGENT_NETWORK=sepolia, AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1, AGENT_MAX_TURNS=20
+#    - Settings → Repository Catalog → Add source:
+#      (older docs may call this "Agent Companies" — same thing; v0.9.x plugin renamed the page)
+#        /Users/reuben/Desktop/minestarters/code/snx-prototype
+#          (BARE absolute path — NOT file:///... Plugin's looksLikeLocalPath only
+#           matches /, ./, ../, ~/, or C:\ prefixes; file:/// routes through the
+#           git-clone path and fails at Import with "Company not found.")
+#        OR https://github.com/reubenr0d/indexflow-prototype
+#          (GitHub URL → shallow git clone; only sees commits, push first)
+#    - Discover → Import as new company (creates the IndexFlow company)
 #    - Enable daily auto-sync (overwrite mode is the plugin default)
 
-# 4. Confirm every ACTIVE employee's adapter cwd resolves to this repo root
-#    and the listed env vars are set in your shell / Paperclip secrets.
+# 5. Confirm every ACTIVE employee's adapter cwd resolves to this repo root.
 #    Active employees today: issue-implementer (callback-only),
-#    self-improver-issues (paused), plus two prompt-only risk officers.
+#    self-improver-issues (paused — CI cron canonical), plus two prompt-only risk officers.
+#    Trading agents + Minestarters family are explicitly out-of-scope and should NOT appear.
 
-# 5. Review the brainstorm/ section in COMPANY.md and pick which growth
-#    agents to promote first. For each one approved:
+# 6. First smoke test: UI → Employees → self-improver-issues → Run now.
+#    Watch agents/memory/self-improver-issues/paperclip-heartbeat.json get written.
+
+# 7. Promote brainstorm agents one at a time as needed:
 #      a. Author agents/<id>.md (use issue-implementer if you want)
 #      b. Author agents/skills/<skill>.md if it needs one
 #      c. Flip state: brainstorm → state: active in COMPANY.md
-#      d. Push to main; Paperclip will pick it up on next sync
+#      d. Push to main; Paperclip picks it up on next sync
 ```

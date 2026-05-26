@@ -1593,6 +1593,162 @@ test("computePnlBandClosures closes long legs above_take_profit and below_stop_l
   assert.deepEqual(assetIds, ["0xBAD", "0xWIN"]);
 });
 
+test("parseAgentPolicy parses quality timing and band overrides", () => {
+  const policy = parseAgentPolicy({
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryMaxSignalAgeDays: 180,
+    entryRecencyHalfLifeDays: 90,
+    entryRequireLongNews: true,
+    minHoldingHours: 48,
+    takeProfitPct: 0.15,
+    stopLossPct: 0.1,
+    autoAllocateTargetBps: 5000,
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "conviction_weighted",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "rank_swap+pnl_band",
+  });
+  assert.equal(policy.entryMaxSignalAgeDays, 180);
+  assert.equal(policy.entryRequireLongNews, true);
+  assert.equal(policy.minHoldingHours, 48);
+  assert.equal(policy.takeProfitPct, 0.15);
+  assert.equal(policy.stopLossPct, 0.1);
+});
+
+test("getEligibleQualityScoreAssets prefers tradeReadinessScore over compositeScore", () => {
+  const policy = parseAgentPolicy({
+    entryMode: "quality_score",
+    entryQualityScoreMin: 80,
+    autoAllocateTargetBps: 5000,
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "conviction_weighted",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  const eligible = getEligibleQualityScoreAssets({
+    policy,
+    vaultState: { assets: ["0xa"] },
+    oracleAssets: { assets: [{ assetId: "0xa", symbol: "LOW.V" }] },
+    qualityPicks: [
+      { yahooSymbol: "LOW.V", compositeScore: 90, tradeReadinessScore: 70 },
+      { yahooSymbol: "HIGH.V", compositeScore: 70, tradeReadinessScore: 85 },
+    ],
+  });
+  assert.equal(eligible.length, 1);
+  assert.equal(eligible[0].symbol, "HIGH.V");
+  assert.equal(eligible[0].compositeScore, 85);
+});
+
+test("computePnlBandClosures uses policy takeProfitPct/stopLossPct overrides", () => {
+  const policy = parseAgentPolicy({
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    takeProfitPct: 0.15,
+    stopLossPct: 0.1,
+    autoAllocateTargetBps: 5000,
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "conviction_weighted",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  const closures = computePnlBandClosures({
+    policy,
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "EDGE.V",
+        assetId: "0xedge",
+        pnlBandOutcome: "within",
+        unrealisedPnlPctOfCollateral: 0.12,
+      },
+    ],
+  });
+  assert.equal(closures.length, 0);
+  const closuresTp = computePnlBandClosures({
+    policy,
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "EDGE.V",
+        assetId: "0xedge",
+        pnlBandOutcome: "within",
+        unrealisedPnlPctOfCollateral: 0.16,
+      },
+    ],
+  });
+  assert.equal(closuresTp.length, 1);
+});
+
+test("computeRankSwapClosures respects minHoldingHours via positionOpenAgeMs", () => {
+  const policy = parseAgentPolicy({
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    minHoldingHours: 48,
+    autoAllocateTargetBps: 5000,
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "conviction_weighted",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "rank_swap",
+  });
+  const youngMs = 2 * 60 * 60 * 1000;
+  const closures = computeRankSwapClosures({
+    policy,
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "OLD.V",
+        assetId: "0xold",
+        unrealisedPnlPctOfCollateral: 0,
+      },
+    ],
+    rankedPicks: [{ yahooSymbol: "NEW.V" }],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "10000000",
+    positionOpenAgeMs: () => youngMs,
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("validatePolicyWriteBatch rejects quality long without confirming news", () => {
+  const policy = parseAgentPolicy({
+    entryMode: "quality_score",
+    entryQualityScoreMin: 75,
+    entryRequireLongNews: true,
+    autoAllocateTargetBps: 5000,
+    maxNewPositionsPerRun: 3,
+    maxTrackedAssets: 12,
+    positionSizingMode: "conviction_weighted",
+    rebalanceMode: "track_top_n",
+    autoExitMode: "pnl_band",
+  });
+  const news = new Map([["GSR.V", { qualifies: false }]]);
+  const violation = validatePolicyWriteBatch({
+    classified: {
+      hasWriteCalls: true,
+      writeCalls: [
+        {
+          originalName: "open_position",
+          args: { assetId: "0xgsr", isLong: true },
+        },
+      ],
+    },
+    policy,
+    opensExecutedSoFar: 0,
+    eligibleAssets: [{ assetId: "0xgsr", symbol: "GSR.V" }],
+    longNewsBySymbol: news,
+    assetIdToSymbol: () => "GSR.V",
+  });
+  assert.match(violation, /bullish or factual headline/);
+});
+
 test("computePnlBandClosures skips shorts in long_short (LLM owns short exits)", () => {
   const policy = parseAgentPolicy({
     autoAllocateTargetBps: 5000,

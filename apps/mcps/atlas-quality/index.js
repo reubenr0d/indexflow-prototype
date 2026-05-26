@@ -12,6 +12,8 @@ import {
   scoreDrillProgramType,
   pickShortRedFlags,
 } from "./scoring/matrix.js";
+import { computeSignalFreshness } from "./timing/freshness.js";
+import { buildTradeReadyPicks, loadTimingCalibration } from "./timing/trade-ready.js";
 
 // ---------------------------------------------------------------------------
 // Config from env (mirrors atlas-ml)
@@ -456,7 +458,174 @@ server.registerTool(
 );
 
 // ---------------------------------------------------------------------------
-// Tool 4: get_quality_short_candidates
+// Tool 4: get_signal_freshness
+// ---------------------------------------------------------------------------
+
+server.registerTool(
+  "get_signal_freshness",
+  {
+    title: "Signal Freshness (Trade Timing)",
+    description:
+      "Trade-timing layer: recency of drill releases and material events, fresh vs stale intercept comparison, and freshnessMultiplier. Does not change the analyst matrix composite — use with get_quality_trade_ready_picks before opening positions.",
+    inputSchema: {
+      ticker: z.string().describe("Atlas ticker (e.g. 'GSR')."),
+      exchange: z.string().optional().describe("Optional exchange code for profile lookup."),
+      entryRecencyHalfLifeDays: z.number().optional().describe("Half-life for freshness decay (default from timing-calibration.json)."),
+      entryMaxSignalAgeDays: z.number().optional().describe("Alias used when building trade-ready picks; freshness tool ignores filter."),
+    },
+  },
+  async ({ ticker, exchange, entryRecencyHalfLifeDays }) => {
+    try {
+      const ctx = await buildCompanyContext({ ticker, exchange });
+      const config = loadTimingCalibration();
+      if (entryRecencyHalfLifeDays !== undefined) {
+        config.recencyHalfLifeDays = entryRecencyHalfLifeDays;
+      }
+      const freshness = computeSignalFreshness(ctx, config);
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                ticker: ctx.ticker,
+                yahooSymbol: ctx.yahooSymbol,
+                ...freshness,
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool 5: get_quality_trade_ready_picks
+// ---------------------------------------------------------------------------
+
+async function scoreTopPicksUniverse({ limit, minCompositeScore, commodity, exchange, watchlistOnly }) {
+  const universe = await fetchBasketUniverse({
+    commodity,
+    exchange,
+    vaultFitTier: watchlistOnly ? "A" : "B+",
+  });
+  const candidates = universe.slice(0, 30);
+  const picks = [];
+  const errors = [];
+  const contexts = new Map();
+  for (const raw of candidates) {
+    try {
+      const ctx = await buildCompanyContext(raw);
+      if (!ctx.ticker || !ctx.yahooSymbol) continue;
+      contexts.set(ctx.ticker, ctx);
+      const scored = scoreCompany(MATRIX, ctx);
+      const compositeScoreValue = scored.composite.composite;
+      if (compositeScoreValue === null) continue;
+      if (compositeScoreValue < (minCompositeScore ?? 0)) continue;
+      picks.push(buildPickPayload(ctx, scored));
+    } catch (err) {
+      errors.push({ ticker: raw.ticker, error: err.message });
+    }
+  }
+  picks.sort((a, b) => (b.compositeScore ?? 0) - (a.compositeScore ?? 0));
+  return { picks: picks.slice(0, limit ?? 10), errors, contexts };
+}
+
+server.registerTool(
+  "get_quality_trade_ready_picks",
+  {
+    title: "Quality Matrix Trade-Ready Picks",
+    description:
+      "Top quality-matrix picks after the trade-timing layer: filters stale / priced-in names, applies freshness and data-completeness multipliers, and returns tradeReadinessScore for conviction-weighted sizing. Prefer this over get_quality_top_picks when opening longs.",
+    inputSchema: {
+      limit: z.number().int().min(1).max(30).optional().default(10),
+      minCompositeScore: z.number().min(0).max(100).optional().default(0),
+      minTradeReadinessScore: z.number().min(0).max(100).optional().describe("Minimum tradeReadinessScore after timing adjustments (default: same as minCompositeScore)."),
+      commodity: z.string().optional(),
+      exchange: z.string().optional(),
+      watchlistOnly: z.boolean().optional().default(false),
+      entryMaxSignalAgeDays: z.number().optional(),
+      entryMaxRecent5dReturnPct: z.number().optional(),
+      entryMaxRecent20dReturnPct: z.number().optional(),
+      entryRecencyHalfLifeDays: z.number().optional(),
+    },
+  },
+  async ({
+    limit,
+    minCompositeScore,
+    minTradeReadinessScore,
+    commodity,
+    exchange,
+    watchlistOnly,
+    entryMaxSignalAgeDays,
+    entryMaxRecent5dReturnPct,
+    entryMaxRecent20dReturnPct,
+    entryRecencyHalfLifeDays,
+  }) => {
+    try {
+      const { picks, errors, contexts } = await scoreTopPicksUniverse({
+        limit: 30,
+        minCompositeScore,
+        commodity,
+        exchange,
+        watchlistOnly,
+      });
+      const config = loadTimingCalibration();
+      if (entryMaxSignalAgeDays !== undefined) config.maxStaleMaterialEventDays = entryMaxSignalAgeDays;
+      if (entryMaxRecent5dReturnPct !== undefined) config.maxRecent5dReturnPct = entryMaxRecent5dReturnPct;
+      if (entryMaxRecent20dReturnPct !== undefined) config.maxRecent20dReturnPct = entryMaxRecent20dReturnPct;
+      if (entryRecencyHalfLifeDays !== undefined) config.recencyHalfLifeDays = entryRecencyHalfLifeDays;
+
+      const result = await buildTradeReadyPicks(picks, {
+        config,
+        buildContext: async (pick) => contexts.get(pick.ticker) || buildCompanyContext({ ticker: pick.ticker, exchange: pick.exchange }),
+      });
+
+      const minReady = Number.isFinite(minTradeReadinessScore)
+        ? minTradeReadinessScore
+        : minCompositeScore ?? 0;
+      const trimmed = result.picks
+        .filter((p) => (p.tradeReadinessScore ?? 0) >= minReady)
+        .slice(0, limit ?? 10);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(
+              {
+                asOfDate: result.asOfDate,
+                count: trimmed.length,
+                picks: trimmed,
+                filteredCount: result.filteredCount,
+                filtered: result.filtered,
+                minTradeReadinessScore: minReady,
+                errorCount: errors.length,
+                errors: errors.slice(0, 5),
+                _explain: {
+                  note: "tradeReadinessScore = composite × freshness × (1 - pricedInPenalty) × dataCompleteness × categoryBalance",
+                  timingConfig: result.timingConfig,
+                },
+              },
+              null,
+              2,
+            ),
+          },
+        ],
+      };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// Tool 6: get_quality_short_candidates
 // ---------------------------------------------------------------------------
 
 server.registerTool(

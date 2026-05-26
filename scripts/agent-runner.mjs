@@ -61,8 +61,12 @@ import {
 import { redactSecrets, redactSecretsDeep } from "./lib/redact-secrets.mjs";
 import {
   recordRecentlyClosed,
+  recordRecentlyOpened,
+  getPositionOpenAgeMs,
+  readNewsCacheUnion,
   CHURN_GUARD_WINDOW_MS,
 } from "../apps/shared/agent-shared-memory.mjs";
+import { pickQualifyingLongHeadline } from "../apps/shared/mining-news-sentiment.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = resolve(__dirname, "..");
@@ -209,7 +213,12 @@ function parseAgentPolicy(frontmatter) {
     frontmatter.maxTrackedAssets !== undefined ||
     frontmatter.positionSizingMode !== undefined ||
     frontmatter.rebalanceMode !== undefined ||
-    frontmatter.autoExitMode !== undefined;
+    frontmatter.autoExitMode !== undefined ||
+    frontmatter.entryMaxSignalAgeDays !== undefined ||
+    frontmatter.entryRecencyHalfLifeDays !== undefined ||
+    frontmatter.minHoldingHours !== undefined ||
+    frontmatter.takeProfitPct !== undefined ||
+    frontmatter.stopLossPct !== undefined;
 
   if (!hasPolicyFields) {
     return {
@@ -227,6 +236,15 @@ function parseAgentPolicy(frontmatter) {
       positionSizingMode: "model_decides",
       rebalanceMode: "none",
       autoExitMode: "none",
+      entryMaxSignalAgeDays: 180,
+      entryMaxRecent5dReturnPct: 20,
+      entryMaxRecent20dReturnPct: 50,
+      entryRecencyHalfLifeDays: 90,
+      entryRequireLongNews: false,
+      entryLongNewsMaxAgeDays: 90,
+      minHoldingHours: 0,
+      takeProfitPct: null,
+      stopLossPct: null,
     };
   }
 
@@ -243,6 +261,23 @@ function parseAgentPolicy(frontmatter) {
   const positionSizingMode = String(frontmatter.positionSizingMode ?? "model_decides");
   const rebalanceMode = String(frontmatter.rebalanceMode ?? "none");
   const autoExitMode = String(frontmatter.autoExitMode ?? "none");
+  const entryMaxSignalAgeDays = Number(frontmatter.entryMaxSignalAgeDays ?? 180);
+  const entryMaxRecent5dReturnPct = Number(frontmatter.entryMaxRecent5dReturnPct ?? 20);
+  const entryMaxRecent20dReturnPct = Number(frontmatter.entryMaxRecent20dReturnPct ?? 50);
+  const entryRecencyHalfLifeDays = Number(frontmatter.entryRecencyHalfLifeDays ?? 90);
+  const entryRequireLongNews = Boolean(frontmatter.entryRequireLongNews);
+  const entryLongNewsMaxAgeDays = Number(frontmatter.entryLongNewsMaxAgeDays ?? 90);
+  const minHoldingHours = Number(frontmatter.minHoldingHours ?? 0);
+  const takeProfitPctRaw = frontmatter.takeProfitPct;
+  const stopLossPctRaw = frontmatter.stopLossPct;
+  const takeProfitPct =
+    takeProfitPctRaw === undefined || takeProfitPctRaw === null
+      ? null
+      : Number(takeProfitPctRaw);
+  const stopLossPct =
+    stopLossPctRaw === undefined || stopLossPctRaw === null
+      ? null
+      : Number(stopLossPctRaw);
 
   if (!Number.isFinite(autoAllocateTargetBps) || autoAllocateTargetBps < 0 || autoAllocateTargetBps > 10_000) {
     throw new Error("Invalid autoAllocateTargetBps; expected 0..10000");
@@ -315,6 +350,21 @@ function parseAgentPolicy(frontmatter) {
       "Invalid autoExitMode; 'rank_swap' requires rebalanceMode='track_top_n' (it rotates by top-N rank)",
     );
   }
+  if (!Number.isFinite(entryMaxSignalAgeDays) || entryMaxSignalAgeDays < 1) {
+    throw new Error("Invalid entryMaxSignalAgeDays; expected >= 1");
+  }
+  if (!Number.isFinite(entryRecencyHalfLifeDays) || entryRecencyHalfLifeDays < 1) {
+    throw new Error("Invalid entryRecencyHalfLifeDays; expected >= 1");
+  }
+  if (!Number.isFinite(minHoldingHours) || minHoldingHours < 0) {
+    throw new Error("Invalid minHoldingHours; expected >= 0");
+  }
+  if (takeProfitPct !== null && (!Number.isFinite(takeProfitPct) || takeProfitPct <= 0 || takeProfitPct > 1)) {
+    throw new Error("Invalid takeProfitPct; expected (0, 1] or omit");
+  }
+  if (stopLossPct !== null && (!Number.isFinite(stopLossPct) || stopLossPct <= 0 || stopLossPct > 1)) {
+    throw new Error("Invalid stopLossPct; expected (0, 1] or omit");
+  }
 
   // Normalise to the canonical token form so downstream code can use
   // `policy.autoExitMode.includes("rank_swap")` without re-parsing.
@@ -337,7 +387,23 @@ function parseAgentPolicy(frontmatter) {
     positionSizingMode,
     rebalanceMode,
     autoExitMode: normalisedAutoExit,
+    entryMaxSignalAgeDays,
+    entryMaxRecent5dReturnPct,
+    entryMaxRecent20dReturnPct,
+    entryRecencyHalfLifeDays,
+    entryRequireLongNews,
+    entryLongNewsMaxAgeDays,
+    minHoldingHours,
+    takeProfitPct,
+    stopLossPct,
   };
+}
+
+function pickQualityEntryScore(pick) {
+  if (!pick) return 0;
+  const readiness = Number(pick.tradeReadinessScore);
+  if (Number.isFinite(readiness)) return readiness;
+  return Number(pick.compositeScore ?? pick.composite ?? 0);
 }
 
 // ---------------------------------------------------------------------------
@@ -1547,7 +1613,7 @@ function getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, quali
   const eligible = [];
   for (const pick of qualityPicks) {
     if (!pick) continue;
-    const compositeScore = Number(pick.compositeScore ?? pick.composite ?? 0);
+    const compositeScore = pickQualityEntryScore(pick);
     if (!Number.isFinite(compositeScore) || compositeScore < minScore) continue;
     const yahooSymbol = String(pick.yahooSymbol || "").toUpperCase();
     if (!yahooSymbol) continue;
@@ -1557,8 +1623,10 @@ function getEligibleQualityScoreAssets({ policy, vaultState, oracleAssets, quali
       assetId: oracleAsset.assetId,
       symbol: oracleAsset.symbol,
       compositeScore,
+      tradeReadinessScore: pick.tradeReadinessScore ?? null,
       tier: pick.tier ?? null,
       primaryCommodity: pick.primaryCommodity ?? null,
+      daysSinceLastDrillRelease: pick.timing?.freshness?.daysSinceLastDrillRelease ?? null,
     });
   }
 
@@ -1654,7 +1722,7 @@ function getActionablePicks({ policy, picks }) {
     if (!pick) continue;
     const score = Number(
       isQuality
-        ? pick.compositeScore ?? pick.composite ?? 0
+        ? pickQualityEntryScore(pick)
         : pick.mlScore ?? 0,
     );
     if (!Number.isFinite(score) || score < minScore) continue;
@@ -1744,6 +1812,7 @@ function computeRankSwapClosures({
   rankedPicks,
   availableCollateralUsdc,
   minSlotCollateralUsdc,
+  positionOpenAgeMs,
 }) {
   if (!policy?.enabled) return [];
   const autoExitMode = String(policy.autoExitMode || "none");
@@ -1814,16 +1883,30 @@ function computeRankSwapClosures({
     return a.pnlPct - b.pnlPct; // tiebreaker: worst PnL first
   });
 
+  const minHoldMs = Math.max(0, Number(policy.minHoldingHours ?? 0)) * 60 * 60 * 1000;
+  const ageLookup = positionOpenAgeMs && typeof positionOpenAgeMs === "function"
+    ? positionOpenAgeMs
+    : null;
+
   const closures = [];
-  for (let i = 0; i < slotsToFree && i < candidates.length; i++) {
-    const { pos, symbol, rank, pnlPct } = candidates[i];
-    const newcomer = picksWanted[i];
+  let freed = 0;
+  for (const candidate of candidates) {
+    if (freed >= slotsToFree) break;
+    const { pos, symbol, rank, pnlPct } = candidate;
+    if (minHoldMs > 0 && ageLookup) {
+      const ageMs = ageLookup(pos);
+      if (ageMs !== null && ageMs < minHoldMs) {
+        continue;
+      }
+    }
+    const newcomer = picksWanted[freed];
     const rankLabel = Number.isFinite(rank) ? `#${rank}` : "off-top-N";
     const pnlLabel = `${(pnlPct * 100).toFixed(2)}%`;
     const reason = newcomer
       ? `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel}) to free room for #${newcomer.rank} ${newcomer.yahooSymbol}`
       : `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel})`;
     closures.push({ pos, reason });
+    freed += 1;
   }
   return closures;
 }
@@ -1840,6 +1923,8 @@ function computePnlBandClosures({ policy, positions }) {
   if (!autoExitMode.includes("pnl_band")) return [];
 
   const direction = policy.entryDirection || "long_only";
+  const tp = Number.isFinite(policy.takeProfitPct) ? policy.takeProfitPct : 0.08;
+  const sl = Number.isFinite(policy.stopLossPct) ? policy.stopLossPct : 0.06;
   const closures = [];
   for (const pos of positions || []) {
     if (!pos?.exists) continue;
@@ -1847,12 +1932,16 @@ function computePnlBandClosures({ policy, positions }) {
     if (direction === "long_only" && pos.isLong !== true) continue;
     if (direction === "short_only" && pos.isLong !== false) continue;
 
-    const outcome = String(pos.pnlBandOutcome || "");
+    const pnlFrac = Number(pos.unrealisedPnlPctOfCollateral);
+    let outcome = String(pos.pnlBandOutcome || "");
+    if (Number.isFinite(pnlFrac)) {
+      if (pnlFrac >= tp) outcome = "above_take_profit";
+      else if (pnlFrac <= -sl) outcome = "below_stop_loss";
+    }
     if (outcome === "above_take_profit" || outcome === "below_stop_loss") {
-      const pnlPct =
-        Number.isFinite(pos.unrealisedPnlPctOfCollateral)
-          ? `${(Number(pos.unrealisedPnlPctOfCollateral) * 100).toFixed(2)}%`
-          : "unknown";
+      const pnlPct = Number.isFinite(pnlFrac)
+        ? `${(pnlFrac * 100).toFixed(2)}%`
+        : "unknown";
       closures.push({
         pos,
         reason: `pnl band ${outcome}: ${pos.symbol || pos.assetId} pnl ${pnlPct}`,
@@ -1869,6 +1958,8 @@ function validatePolicyWriteBatch({
   shortOpensExecutedSoFar = 0,
   eligibleAssets,
   marketRegime = null,
+  longNewsBySymbol = null,
+  assetIdToSymbol = null,
 }) {
   if (!policy?.enabled || !classified?.hasWriteCalls) return null;
 
@@ -1937,7 +2028,7 @@ function validatePolicyWriteBatch({
     policy.entryMode === "ml_score"
       ? "Atlas ML score"
       : policy.entryMode === "quality_score"
-        ? "Quality Matrix composite score"
+        ? "Quality Matrix tradeReadinessScore"
         : "momentum+volume";
 
   const eligibleIds = new Set((eligibleAssets || []).map((a) => String(a.assetId).toLowerCase()));
@@ -1948,6 +2039,32 @@ function validatePolicyWriteBatch({
     const assetId = String(call.args?.assetId || "").toLowerCase();
     if (!eligibleIds.has(assetId)) {
       return `Policy violation: long open_position assetId is not in the current eligible set from ${filterLabel} filtering.`;
+    }
+  }
+
+  if (
+    policy.entryMode === "quality_score" &&
+    policy.entryRequireLongNews &&
+    longNewsBySymbol &&
+    typeof longNewsBySymbol.get === "function"
+  ) {
+    for (const call of longOpenCalls) {
+      const assetId = call.args?.assetId;
+      let symbol = null;
+      if (typeof assetIdToSymbol === "function") {
+        symbol = assetIdToSymbol(assetId);
+      }
+      symbol = String(symbol || "").toUpperCase();
+      if (!symbol) {
+        return "Policy violation: cannot verify long news confirmation — symbol unknown for assetId.";
+      }
+      const news = longNewsBySymbol.get(symbol);
+      if (!news?.qualifies) {
+        return (
+          `Policy violation: long open on ${symbol} requires a recent (<${policy.entryLongNewsMaxAgeDays}d) ` +
+          "bullish or factual headline from yfinance_news. Scan news and quote the headline in justification, or skip this name."
+        );
+      }
     }
   }
 
@@ -2088,7 +2205,21 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault, marketRegim
         prompt += `\n- Max tracked assets in the basket: ${config.policy.maxTrackedAssets}`;
         prompt += `\n- Rebalance mode: ${config.policy.rebalanceMode}`;
       } else if (config.policy.entryMode === "quality_score") {
-        prompt += `\n- Entry trigger: Quality Matrix composite score >= ${config.policy.entryQualityScoreMin}`;
+        prompt += `\n- Entry trigger: tradeReadinessScore >= ${config.policy.entryQualityScoreMin} (from get_quality_trade_ready_picks — includes freshness / priced-in filters)`;
+        prompt += `\n- Max material signal age: ${config.policy.entryMaxSignalAgeDays} days`;
+        prompt += `\n- Recency half-life: ${config.policy.entryRecencyHalfLifeDays} days`;
+        prompt += `\n- Priced-in guard: skip when 5d return > ${config.policy.entryMaxRecent5dReturnPct}% or 20d > ${config.policy.entryMaxRecent20dReturnPct}%`;
+        if (config.policy.entryRequireLongNews) {
+          prompt += `\n- Long news: require bullish/factual headline within ${config.policy.entryLongNewsMaxAgeDays} days (quote in justification)`;
+        }
+        if (config.policy.minHoldingHours > 0) {
+          prompt += `\n- Min holding before rank-swap exit: ${config.policy.minHoldingHours}h (dropout/PnL band still apply)`;
+        }
+        const tp = config.policy.takeProfitPct;
+        const sl = config.policy.stopLossPct;
+        if (tp !== null && sl !== null) {
+          prompt += `\n- PnL bands: take profit +${(tp * 100).toFixed(0)}% / stop loss -${(sl * 100).toFixed(0)}% of collateral`;
+        }
         prompt += `\n- Max tracked assets in the basket: ${config.policy.maxTrackedAssets}`;
         prompt += `\n- Rebalance mode: ${config.policy.rebalanceMode}`;
       } else if (config.policy.entryMode === "momentum_volume") {
@@ -2795,6 +2926,7 @@ export async function runAgent(agentName) {
     latestQuotes: null,
     latestMlPicks: null,
     latestQualityPicks: null,
+    longNewsBySymbol: new Map(),
     opensExecuted: 0,
     shortOpensExecuted: 0,
     allocationWritesExecuted: 0,
@@ -3305,11 +3437,30 @@ export async function runAgent(agentName) {
           policyRuntime.latestMlPicks = parsed.companies;
         }
         if (
-          originalName === "get_quality_top_picks" &&
+          (originalName === "get_quality_top_picks" ||
+            originalName === "get_quality_trade_ready_picks") &&
           parsed &&
           Array.isArray(parsed.picks)
         ) {
           policyRuntime.latestQualityPicks = parsed.picks;
+        }
+        if (originalName === "yfinance_news" && parsed && Array.isArray(parsed)) {
+          for (const row of parsed) {
+            const sym = String(row?.symbol || "").toUpperCase();
+            if (!sym) continue;
+            const { qualifies, bestHeadline, sentiment } = pickQualifyingLongHeadline(
+              row.headlines,
+              {
+                maxAgeDays: config.policy?.entryLongNewsMaxAgeDays ?? 90,
+              },
+            );
+            policyRuntime.longNewsBySymbol.set(sym, {
+              qualifies,
+              sentiment,
+              headline: bestHeadline?.title ?? null,
+              publishedAt: bestHeadline?.publishedAt ?? null,
+            });
+          }
         }
         if (originalName === "allocate_to_perp" && parsed?.success === true) {
           policyRuntime.allocationWritesExecuted += 1;
@@ -3318,6 +3469,22 @@ export async function runAgent(agentName) {
           policyRuntime.opensExecuted += 1;
           if (call.args?.isLong === false) {
             policyRuntime.shortOpensExecuted += 1;
+          }
+          const vaultArg = args?.vault || capturedVaultAddress;
+          const assetIdArg = args?.assetId;
+          const isLongArg = typeof args?.isLong === "boolean" ? args.isLong : true;
+          if (vaultArg && assetIdArg && isLongArg === true) {
+            try {
+              recordRecentlyOpened({
+                vault: vaultArg,
+                assetId: assetIdArg,
+                isLong: true,
+                ticker: lookupSymbolForAssetId(assetIdArg),
+                projectRoot: PROJECT_ROOT,
+              });
+            } catch {
+              // non-fatal
+            }
           }
         }
         // LLM-driven closes also feed the churn-guard. The reason string is
@@ -3730,9 +3897,19 @@ export async function runAgent(agentName) {
           isQuality ? policy.entryQualityScoreMin ?? 0 : policy.entryMlScoreMin ?? 0,
         );
         const cap = Math.max(0, Number(policy.maxTrackedAssets ?? 0)) || 10;
-        const picksToolName = isQuality ? "get_quality_top_picks" : "get_ml_top_picks";
+        const picksToolName = isQuality
+          ? "get_quality_trade_ready_picks"
+          : "get_ml_top_picks";
         const picksArgs = isQuality
-          ? { limit: cap, minCompositeScore: minScore }
+          ? {
+              limit: cap,
+              minCompositeScore: minScore,
+              minTradeReadinessScore: minScore,
+              entryMaxSignalAgeDays: policy.entryMaxSignalAgeDays,
+              entryMaxRecent5dReturnPct: policy.entryMaxRecent5dReturnPct,
+              entryMaxRecent20dReturnPct: policy.entryMaxRecent20dReturnPct,
+              entryRecencyHalfLifeDays: policy.entryRecencyHalfLifeDays,
+            }
           : { limit: cap, minScore };
         const picksRes = await runMcpTool(picksToolName, picksArgs);
         const picksParsed = picksRes.parsed;
@@ -3828,6 +4005,13 @@ export async function runAgent(agentName) {
           rankedPicks: picks,
           availableCollateralUsdc,
           minSlotCollateralUsdc,
+          positionOpenAgeMs: (pos) =>
+            getPositionOpenAgeMs({
+              vault,
+              assetId: pos?.assetId,
+              isLong: pos?.isLong !== false,
+              projectRoot: PROJECT_ROOT,
+            }),
         });
         if (rankSwapClosures.length === 0) {
           if (!executedAny) {
@@ -3922,6 +4106,23 @@ export async function runAgent(agentName) {
 
     if (config.policy?.rebalanceMode === "track_top_n" && !needsNewVault) {
       await enforceAutoRebalance();
+    }
+
+    if (config.policy?.entryRequireLongNews) {
+      const union = readNewsCacheUnion({ projectRoot: PROJECT_ROOT });
+      for (const [sym, entry] of union.entries()) {
+        const { qualifies, bestHeadline, sentiment } = pickQualifyingLongHeadline(
+          entry.headlines,
+          { maxAgeDays: config.policy.entryLongNewsMaxAgeDays ?? 90 },
+        );
+        policyRuntime.longNewsBySymbol.set(sym, {
+          qualifies,
+          sentiment,
+          headline: bestHeadline?.title ?? null,
+          publishedAt: bestHeadline?.publishedAt ?? null,
+          fromCache: true,
+        });
+      }
     }
 
     for (let turn = 0; turn < maxTurns; turn++) {
@@ -4058,6 +4259,8 @@ export async function runAgent(agentName) {
           shortOpensExecutedSoFar: policyRuntime.shortOpensExecuted,
           eligibleAssets,
           marketRegime: policyRuntime.marketRegime,
+          longNewsBySymbol: policyRuntime.longNewsBySymbol,
+          assetIdToSymbol: lookupSymbolForAssetId,
         });
         if (violation) {
           policyRuntime.enforcementRounds += 1;
@@ -4239,7 +4442,7 @@ export async function runAgent(agentName) {
               const filterLabel =
                 config.policy.entryMode === "ml_score"
                   ? "Atlas ML score"
-                  : "Quality Matrix composite score";
+                  : "Quality Matrix tradeReadinessScore";
               const scoreLabel =
                 config.policy.entryMode === "ml_score"
                   ? `mlScore >= ${config.policy.entryMlScoreMin ?? 0}`

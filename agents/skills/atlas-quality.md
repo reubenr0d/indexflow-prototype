@@ -51,9 +51,24 @@ Returns the analyst's matrix verbatim from `matrix.json`. Call this **once** at 
 
 Includes every signal's `tiers`, `whatDrivesTheBadge`, `caveatDepositTypeNuance`, `sourceLinks[]`, `workbookAnchors[]`, `provenance`, and `dataQualityWarnings[]`. When `section: 'drilling'` is requested the response also includes the `depositTypeAdjustments` table from `depositTypes.json`.
 
+### get_quality_trade_ready_picks({ limit?, minCompositeScore?, minTradeReadinessScore?, ... })
+
+**Primary tool for opening longs.** Wraps `get_quality_top_picks` with the trade-timing layer:
+
+- Filters stale material events (`entryMaxSignalAgeDays`, default 180)
+- Applies `freshnessMultiplier` from days since last drill / material event
+- Skips names that are already priced in (5d/20d return spikes, post-drill gap-up)
+- Penalizes thin data (<3 populated categories) and drilling-dominated ranks
+
+Each pick includes `tradeReadinessScore`, `timing.freshness.daysSinceLastDrillRelease`, and `filterReasons` when excluded.
+
+### get_signal_freshness({ ticker, exchange? })
+
+Per-ticker recency: `daysSinceLastDrillRelease`, `freshIntercept` vs `staleIntercept`, `freshnessGap`, `freshnessMultiplier`.
+
 ### get_quality_top_picks({ limit?, minCompositeScore?, commodity?, exchange?, watchlistOnly? })
 
-Ranked composite top-N. Filters the universe via Atlas baskets, enriches the top ~30 with `/dashboard/company/{ticker}/profile` + `/dashboard/stocks/events`, scores each via `matrix.js`, returns the top-N by composite score.
+Raw ranked composite top-N (no timing layer). Use for diagnostics; prefer `get_quality_trade_ready_picks` for trading.
 
 - `limit` (default 10, max 30) — number of picks to return.
 - `minCompositeScore` (default 0) — minimum composite score filter.
@@ -157,7 +172,8 @@ Debug helper. Pass a drill release headline + summary; returns the matched 58-si
 
 ```
 get_quality_matrix_definition()           // once at start of run
-get_quality_top_picks({ limit: 12, minCompositeScore: 75 })
+get_quality_trade_ready_picks({ limit: 12, minCompositeScore: 75, minTradeReadinessScore: 75 })
+get_signal_freshness({ ticker: "GSR" })
 get_quality_company_card({ ticker: "GSR" })
 get_quality_short_candidates({ limit: 5, excludeTickers: ["GSR", "PWM", "AHR"] })
 classify_drill_release_text({ text: "Madsen resource conversion drilling intersects 5.2 g/t..." })

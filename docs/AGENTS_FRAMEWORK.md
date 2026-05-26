@@ -659,19 +659,21 @@ The plan adopted is **"config + lightweight memory"** scope (see the original pl
 
 ### Setup (operator-side, one-time)
 
-1. Install Paperclip outside this repo so embedded Postgres and `.env` don't collide:
+> **Full step-by-step runbook with phase-by-phase verification: [`docs/PAPERCLIP_RUNBOOK.md`](PAPERCLIP_RUNBOOK.md).** The block below is the short version.
+
+1. Install Paperclip — `npx paperclipai onboard --yes` writes config + embedded Postgres to `~/.paperclip/instances/default/` and starts the server at `http://localhost:3100` in `local_trusted` mode (Node 20+, pnpm 9.15+ required). The Paperclip data lives entirely under `~/.paperclip/` and is fully separate from this repo's `.env` and working tree.
+2. Install the agent-companies plugin via Paperclip's plugin CLI (**not** `pnpm add` — that's the wrong installer). Use `npx` because step 1 caches the binary inside `~/.npm/_npx/<hash>/node_modules/.bin/`, **not** on global PATH (bare `paperclipai` fails with `zsh: command not found: paperclipai`):
    ```bash
-   mkdir -p ~/paperclip && cd ~/paperclip
-   npx paperclipai onboard --yes
+   npx paperclipai plugin install paperclip-agent-companies-plugin
+   # Plugin hot-loads on install — no server restart needed.
+   # Verify: curl -s http://127.0.0.1:3100/api/plugins
+   #   → expect "pluginKey": "paperclip-agent-companies-plugin", "status": "ready"
    ```
-2. Install the agent-companies plugin and restart Paperclip:
-   ```bash
-   pnpm add paperclip-agent-companies-plugin
-   ```
-3. In the Paperclip UI: **Settings → Agent Companies → Add source** → enter `file:///Users/reuben/Desktop/minestarters/code/snx-prototype` (or the GitHub URL) → **Import as new company** → enable daily auto-sync (overwrite mode is the plugin default).
-4. For each employee, confirm the shell-adapter `cwd` resolves to this repo root and the `envPassthrough` list in [`COMPANY.md`](../COMPANY.md) is satisfied by your shell or Paperclip secrets (`LLM_API_KEY`, `PRIVATE_KEY`, `RPC_URL`, etc.).
-5. Routines in `COMPANY.md` start as `paused`. Leave them paused while `.github/workflows/vault-agent.yml` is the canonical scheduler; flip to `enabled` if/when you cut that cron over to Paperclip.
-6. Smoke test: trigger a manual `vault-manager` heartbeat in dry-run mode, confirm a `heartbeat_runs` row in Paperclip and `agents/memory/vault-manager/paperclip-heartbeat.json` on disk (dry runs gate the write — use a real run for the round-trip).
+3. In the Paperclip UI: **Settings → Secrets** → add the `envPassthrough` values listed on every employee in [`COMPANY.md`](../COMPANY.md) (`LLM_API_KEY`, `LLM_BASE_URL`, `LLM_MODEL`, `GH_TOKEN`, `AGENT_NETWORK=sepolia`, `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1`, `AGENT_MAX_TURNS=20`). Then **Settings → Repository Catalog → Add source** → paste the bare absolute path `/Users/reuben/Desktop/minestarters/code/snx-prototype` (NOT `file:///…` — the plugin's `looksLikeLocalPath` only matches `/`, `./`, `../`, `~/`, or `C:\` prefixes; `file:///` routes through the git-clone path and fails at Import with `"Company not found."`) or use the GitHub URL `https://github.com/reubenr0d/indexflow-prototype` (which shallow-clones and only sees commits — push before sync). → **Discover** → **Import as new company** → enable daily auto-sync (overwrite mode is the plugin default). (The settings page is registered by the plugin under the display name "Repository Catalog" in v0.9.x; older docs may call it "Agent Companies" — same thing.)
+4. For each ACTIVE employee, confirm the shell-adapter `cwd` resolves to this repo root. The 4 active employees today are `issue-implementer` (callback-only), `self-improver-issues` (routine paused — CI cron canonical), and the two `kind: prompt-only` reviewers (`risk-officer-self-improvement`, `risk-officer-self-improvement-issues`) which don't heartbeat. Trading agents and the Minestarters brand should NOT appear — they're enumerated in `COMPANY.md` §Out of Scope.
+5. Routines in `COMPANY.md` start as `paused`. Leave them paused while `.github/workflows/vault-agent.yml` is the canonical scheduler; flip to `enabled` if/when you cut that cron over to Paperclip (don't run both — they'll race on the same proposal manifest).
+6. Smoke test: UI → Employees → **`self-improver-issues`** → **Run now**. Confirm a `heartbeat_runs` row appears in Paperclip and that `agents/memory/self-improver-issues/paperclip-heartbeat.json` is written. (Use `self-improver-issues` not the trading agents for the first test — lowest blast radius; the worst case is a draft proposal lands in `.agent-self-improvement/proposed-issues.json` that the risk-officer vets before any `gh issue create` runs.)
+7. After successful first heartbeat: re-key the Paperclip row in [`AGENT_DEPLOYMENT_MEMORY.md`](../AGENT_DEPLOYMENT_MEMORY.md) from `planned` → `live`. The exact diff is pre-staged in [`docs/PAPERCLIP_RUNBOOK.md`](PAPERCLIP_RUNBOOK.md) §After Successful Install — copy-paste, replace placeholders, done.
 
 ### What does NOT change
 

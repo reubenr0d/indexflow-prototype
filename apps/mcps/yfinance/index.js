@@ -13,6 +13,7 @@ import {
   classifyMarketRegime,
   REGIME_COMPONENT_SYMBOLS,
 } from "../../shared/market-regime.mjs";
+import { fetchPriceHistory } from "../../shared/yahoo-price-history.mjs";
 
 const AGENT_NAME = process.env.AGENT_NAME || "";
 const NEWS_CACHE_DISABLED = ["1", "true", "yes"].includes(
@@ -280,6 +281,37 @@ server.registerTool(
         err.message,
         "Yahoo Finance search may be temporarily unavailable — retry after a few seconds. " +
           "Per-symbol errors are returned inline, so a full-call failure usually indicates a transient outage.",
+      );
+    }
+  },
+);
+
+server.registerTool(
+  "get_price_history",
+  {
+    title: "Yahoo Finance Price History",
+    description:
+      "Trailing price returns for trade-timing / priced-in checks. Returns return5dPct, return20dPct, return60dPct, and the largest single-day move in the last 30 sessions. On failure, ok=false — callers should skip the priced-in filter rather than blocking the pick.",
+    inputSchema: {
+      symbols: z
+        .array(z.string())
+        .min(1)
+        .max(10)
+        .describe("Yahoo Finance symbols (e.g. ['GSR.V', 'NEM'])."),
+    },
+  },
+  async ({ symbols }) => {
+    try {
+      const client = await yf();
+      const results = await Promise.all(
+        symbols.map((symbol) => fetchPriceHistory(symbol, { yfClient: client })),
+      );
+      return { content: [{ type: "text", text: JSON.stringify(results, null, 2) }] };
+    } catch (err) {
+      return toolError(
+        "YAHOO_HISTORY_FAILED",
+        err.message,
+        "Verify symbol format; TSXV/ASX tickers may have sparse history. On failure, skip priced-in filtering for that symbol.",
       );
     }
   },
