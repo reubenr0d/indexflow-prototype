@@ -12,8 +12,10 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # The default agent matrix (mining-manager + quality-matrix-manager) runs by default;
-  # to dispatch a single agent, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
+  # On a scheduled / empty-payload tick the matrix runs ONE agent picked by
+  # `HOUR_UTC % 7` (see setup-matrix below) so a single hourly slot can't
+  # exceed the keeper-key concurrency window. To dispatch a single agent
+  # explicitly, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
   # The `vault-manager` agent is retired from CI (run locally via
   # `node scripts/agent-runner.mjs vault-manager` when needed).
   repository_dispatch:
@@ -34,6 +36,11 @@ on:
           - all
           - mining-manager
           - quality-matrix-manager
+          - rwa-treasurer
+          - meth-carry-manager
+          - rwa-yield-router
+          - funding-rate-harvester
+          - smart-money-mirror-manager
       vault_address:
         description: "Override vault address for this run (empty = use agent's stored vault). Commit step is skipped when set."
         required: false
@@ -42,9 +49,10 @@ on:
       network:
         description: "Target network"
         required: false
-        default: "sepolia"
+        default: "mantle-sepolia"
         type: choice
         options:
+          - mantle-sepolia
           - sepolia
 
 env:
@@ -58,8 +66,9 @@ permissions:
 
 # Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
 # (update-prices.yml, keeper.yml) so they can't race on the same nonce. The
-# matrix max-parallel: 1 below still serialises mining-manager vs
-# quality-matrix-manager within a single run.
+# matrix `max-parallel: 1` below also serialises the trading agents inside
+# a single run when more than one matrix entry is produced (an `agent: all`
+# style dispatch). The scheduled round-robin only emits one entry per tick.
 concurrency:
   group: keeper-key-serialized
   cancel-in-progress: false
@@ -81,30 +90,55 @@ jobs:
         run: |
           set -euo pipefail
 
-          mining_entry='{"agent":"mining-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
-          quality_entry='{"agent":"quality-matrix-manager","network":"sepolia","deployment_config":"apps/web/src/config/sepolia-deployment.json","rpc_url_secret":"SEPOLIA_RPC_URL"}'
+          # All seven trading agents share the Mantle Sepolia hub deployment.
+          # `mantle-sepolia-deployment.json` is the canonical address book
+          # (`apps/web/src/config/mantle-sepolia-deployment.json`); the
+          # `MANTLE_SEPOLIA_RPC_URL` secret must be set on the repo (see
+          # docs/KEEPER_OPERATIONS.md). Agent slugs map 1:1 to `agents/<slug>.md`.
+          mantle_dep="apps/web/src/config/mantle-sepolia-deployment.json"
+          mantle_rpc="MANTLE_SEPOLIA_RPC_URL"
+
+          mining_entry='{"agent":"mining-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          quality_entry='{"agent":"quality-matrix-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          treasurer_entry='{"agent":"rwa-treasurer","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          meth_entry='{"agent":"meth-carry-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          yield_entry='{"agent":"rwa-yield-router","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          funding_entry='{"agent":"funding-rate-harvester","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          smart_entry='{"agent":"smart-money-mirror-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
 
           # repository_dispatch may pass a single agent via client_payload.agent
           # (e.g. "mining-manager"); an empty payload falls through to the
-          # existing -z check below and runs the default matrix exactly like a
-          # scheduled tick. The `vault-manager` agent is retired from CI; passing
-          # it here will fall through to the "Unknown agent input" branch.
+          # round-robin schedule branch and runs ONE agent picked by `HOUR_UTC % 7`.
+          # The `vault-manager` agent is retired from CI; passing it here will
+          # fall through to the "Unknown agent input" branch.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
-            # mining-manager: hourly. quality-matrix-manager: every 4h at :18 UTC
-            # (18 % 4 == 2) so slow fundamentals get room to play out.
+            # Round-robin: one trading agent per :18 tick, indexed by UTC hour
+            # mod 7. Each agent therefore runs every 7h (~3.4x/day). This keeps
+            # a single hourly slot well inside the keeper-key concurrency window
+            # so vault-agent never queues out keeper.yml / update-prices.yml.
             HOUR_UTC=$(date -u +%H)
-            if [ "${EVENT_NAME}" = "schedule" ] && [ $((10#${HOUR_UTC} % 4)) -ne 2 ]; then
-              include="[${mining_entry}]"
-            else
-              include="[${mining_entry},${quality_entry}]"
-            fi
-          elif [ "${AGENT_INPUT}" = "mining-manager" ]; then
-            include="[${mining_entry}]"
-          elif [ "${AGENT_INPUT}" = "quality-matrix-manager" ]; then
-            include="[${quality_entry}]"
+            SLOT=$((10#${HOUR_UTC} % 7))
+            case "${SLOT}" in
+              0) include="[${mining_entry}]" ;;
+              1) include="[${quality_entry}]" ;;
+              2) include="[${treasurer_entry}]" ;;
+              3) include="[${meth_entry}]" ;;
+              4) include="[${yield_entry}]" ;;
+              5) include="[${funding_entry}]" ;;
+              6) include="[${smart_entry}]" ;;
+              *) echo "Unreachable slot ${SLOT}" >&2; exit 1 ;;
+            esac
           else
-            echo "Unknown agent input: ${AGENT_INPUT}" >&2
-            exit 1
+            case "${AGENT_INPUT}" in
+              mining-manager)              include="[${mining_entry}]" ;;
+              quality-matrix-manager)      include="[${quality_entry}]" ;;
+              rwa-treasurer)               include="[${treasurer_entry}]" ;;
+              meth-carry-manager)          include="[${meth_entry}]" ;;
+              rwa-yield-router)            include="[${yield_entry}]" ;;
+              funding-rate-harvester)      include="[${funding_entry}]" ;;
+              smart-money-mirror-manager)  include="[${smart_entry}]" ;;
+              *) echo "Unknown agent input: ${AGENT_INPUT}" >&2; exit 1 ;;
+            esac
           fi
 
           matrix="{\"include\":${include}}"
@@ -116,9 +150,12 @@ jobs:
     needs: setup-matrix
     runs-on: ubuntu-latest
     strategy:
-      # Don't run mining-manager / quality-matrix-manager in parallel: they
-      # share the same keeper key, so concurrent cast send calls race on the
-      # same nonce.
+      # Never run trading agents in parallel: they share the same keeper key,
+      # so concurrent `cast send` calls race on the same nonce. The
+      # scheduled round-robin in setup-matrix only ever produces a single
+      # matrix entry per tick, but an `agent: all`-style dispatch could
+      # in theory hand back more — `max-parallel: 1` is the belt-and-braces
+      # guarantee that the keeper key only signs one batch at a time.
       max-parallel: 1
       fail-fast: false
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
@@ -146,6 +183,7 @@ jobs:
           # `apps/mcps/vault-manager/multichain-create.mjs::discoverSpokeContexts`.
           SEPOLIA_RPC_URL: ${{ secrets.SEPOLIA_RPC_URL }}
           FUJI_RPC_URL: ${{ secrets.FUJI_RPC_URL }}
+          MANTLE_SEPOLIA_RPC_URL: ${{ secrets.MANTLE_SEPOLIA_RPC_URL }}
           PRIVATE_KEY: ${{ secrets.KEEPER_PRIVATE_KEY }}
           PROJECT_ROOT: ${{ github.workspace }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
@@ -153,6 +191,19 @@ jobs:
           LLM_MODEL: ${{ secrets.LLM_MODEL || 'gpt-4o' }}
           ATLAS_API_URL: ${{ secrets.ATLAS_API_URL || 'https://atlas.minestarters.com' }}
           ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
+          # Envio HyperIndex GraphQL endpoint — read by envio-graphql-mcp
+          # (rwa-treasurer, rwa-yield-router, smart-money-mirror-manager).
+          # Falls back to the URL parsed from AGENT_DEPLOYMENT_MEMORY.md when
+          # the secret is unset, per agents/skills/envio-graphql.md.
+          ENVIO_URL: ${{ secrets.ENVIO_URL }}
+          # Optional sponsor-stack keys. funding-rate-harvester degrades to
+          # internal-perp-only when BYBIT_* is unset; smart-money-mirror-manager
+          # degrades to Envio-only when NANSEN_API_KEY is unset (per each
+          # agent's frontmatter `*Fallback` field).
+          BYBIT_API_KEY: ${{ secrets.BYBIT_API_KEY }}
+          BYBIT_API_SECRET: ${{ secrets.BYBIT_API_SECRET }}
+          BYBIT_TESTNET: ${{ secrets.BYBIT_TESTNET || '1' }}
+          NANSEN_API_KEY: ${{ secrets.NANSEN_API_KEY }}
           AGENT_DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '' }}
           # GitHub Actions has no TTY; without this, the runner skips all write tools
           # (create_vault, etc.) — see shouldSkipWritesForNonInteractiveSession

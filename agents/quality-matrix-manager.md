@@ -1,6 +1,7 @@
 ---
 name: quality-matrix-manager
 description: Mining long/short vault driven by the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction)
+network: mantle-sepolia
 mcpServers:
   - vault-manager-mcp
   - yfinance-mcp
@@ -23,7 +24,7 @@ depositFeeBps: 50
 redeemFeeBps: 50
 maxTurns: 35
 temperature: 0.25
-autoAllocateTargetBps: 5000
+autoAllocateTargetBps: 3000
 entryMode: quality_score
 entryQualityScoreMin: 75
 entryMaxSignalAgeDays: 180

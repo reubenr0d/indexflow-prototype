@@ -1,0 +1,17 @@
+{
+  "name": "rwa-adapter-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for the IndexFlow multi-asset RWAReserveAdapter on Mantle. Exposes read tools (reserve state, pending redemptions, yield landscape, simulate_*) and write tools (allocate_to_rwa, withdraw_from_rwa, harvest_rwa_yield, set_reserve_token, rebalance_reserve) backed by `cast` calls against the vault and adapter. Required by agents/rwa-treasurer.md, meth-carry-manager.md, and rwa-yield-router.md.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "smoke": "node index.js --smoke",
+    "test": "node --test simulate.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

@@ -489,14 +489,26 @@ git diff
 
 ### GitHub Actions
 
-The workflow at `.github/workflows/vault-agent.yml` runs the full agent matrix (`vault-manager`, `mining-manager`, `quality-matrix-manager`) against Sepolia.
+The workflow at `.github/workflows/vault-agent.yml` runs a 7-agent matrix on **Mantle Sepolia** (chain `5003`): `mining-manager`, `quality-matrix-manager`, `rwa-treasurer`, `meth-carry-manager`, `rwa-yield-router`, `funding-rate-harvester`, `smart-money-mirror-manager`. `vault-manager` is retired from CI and only runs locally via `node scripts/agent-runner.mjs vault-manager`.
 
 1. Go to Actions > "Vault Agent" > Run workflow
-2. Optionally toggle dry-run mode, choose a single agent (`vault-manager` | `mining-manager` | `quality-matrix-manager` | `all`), or pin a one-off vault address override
+2. Optionally toggle dry-run mode, choose a single agent (any of the seven slugs above, or `all`), or pin a one-off vault address override
 
-The cron schedule runs the agent matrix **hourly at minute :18** (`18 * * * *`), serialized via a shared `keeper-key-serialized` concurrency group that also covers `keeper.yml` and `update-prices.yml` so the three workflows can never race on the same `KEEPER_PRIVATE_KEY` nonce. The off-hour minute is intentional: `update-prices.yml` runs `*/5 * * * *` and `keeper.yml` runs `2-59/5 * * * *`, so firing vault-agent at `:18` keeps it from starting on the same minute as either 5-min cron, which would force one of the queued runs to be cancelled by the next tick. `max-parallel: 1` inside the strategy matrix means the three agents run sequentially within a tick on the same keeper wallet.
+The cron schedule fires **hourly at minute :18** (`18 * * * *`) and picks **one** trading agent per tick via `HOUR_UTC % 7`. Each agent therefore runs every seven hours (~3.4×/day). The round-robin is the explicit replacement for the prior "run every agent every tick" pattern — running all seven sequentially under `max-parallel: 1` would routinely exceed the hourly window and queue-block `keeper.yml` and `update-prices.yml` on the shared `keeper-key-serialized` concurrency group. The slot table:
 
-The workflow also accepts a `repository_dispatch` event of type `vault-agent-tick`, which is the **primary** cadence driver — GitHub's `schedule` trigger is unreliable for this repo (historically delivers only ~one tick per ~100 min instead of every hour), so the cadence is driven by either the in-CI tick pusher workflow at [.github/workflows/cron-tick-pusher.yml](../.github/workflows/cron-tick-pusher.yml) (no PAT needed; runs `gh api dispatches` on a self-rescheduling 5-min loop using `GITHUB_TOKEN`) or an external scheduler hitting `POST /repos/<owner>/<repo>/dispatches` directly. Optional `client_payload.agent` ("vault-manager" | "mining-manager" | "quality-matrix-manager" | "all") restricts the matrix; absent payload runs the full matrix like a scheduled tick. See [KEEPER_OPERATIONS.md § External cron dispatch](./KEEPER_OPERATIONS.md#external-cron-dispatch) for both setup paths and the exact HTTP request shape. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
+| `HOUR_UTC % 7` | Agent |
+| --- | --- |
+| 0 | `mining-manager` |
+| 1 | `quality-matrix-manager` |
+| 2 | `rwa-treasurer` |
+| 3 | `meth-carry-manager` |
+| 4 | `rwa-yield-router` |
+| 5 | `funding-rate-harvester` |
+| 6 | `smart-money-mirror-manager` |
+
+The off-hour minute is intentional: `update-prices.yml` runs `*/5 * * * *` and `keeper.yml` runs `2-59/5 * * * *`, so firing vault-agent at `:18` lands in the gap between both. `max-parallel: 1` inside the strategy matrix still serialises an `agent: all` style dispatch (which can produce more than one matrix entry) so the keeper key only signs one batch at a time.
+
+The workflow also accepts a `repository_dispatch` event of type `vault-agent-tick`, which is the **primary** cadence driver — GitHub's `schedule` trigger is unreliable for this repo (historically delivers only ~one tick per ~100 min instead of every hour), so the cadence is driven by either the in-CI tick pusher workflow at [.github/workflows/cron-tick-pusher.yml](../.github/workflows/cron-tick-pusher.yml) (no PAT needed; runs `gh api dispatches` on a self-rescheduling 5-min loop using `GITHUB_TOKEN`) or an external scheduler hitting `POST /repos/<owner>/<repo>/dispatches` directly. Optional `client_payload.agent` restricts the matrix to a single agent (one of the seven slugs above); absent payload runs the round-robin slot for the current hour. See [KEEPER_OPERATIONS.md § External cron dispatch](./KEEPER_OPERATIONS.md#external-cron-dispatch) for both setup paths and the exact HTTP request shape. The workflow sets `AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1` so the runner **executes** write tools in CI (no TTY; otherwise the confirmation layer would skip every on-chain call). The `commit-results` job in the same workflow pushes the updated `agents/memory/` and `apps/web/public/agent-metadata/` directories back to the default branch under the `vault-agent[bot]` identity using `permissions: contents: write`. Required secrets are documented in [§ GitHub Actions Secrets](#github-actions-secrets).
 
 > **Note on branch protection.** The commit-results job requires the default branch to accept pushes from the `GITHUB_TOKEN` identity. If the branch is protected, either add `vault-agent[bot]` to the bypass list, route through a PAT, or disable the commit job and accept that state will not survive across runs.
 
@@ -549,9 +561,22 @@ No env vars required. Works out of the box.
 
 ### GitHub Actions Secrets
 
-Required: `LLM_API_KEY`, `KEEPER_PRIVATE_KEY`, `SEPOLIA_RPC_URL`.
+Required for the round-robin matrix:
 
-Optional secrets: `LLM_BASE_URL`, `LLM_MODEL`, `LLM_MODEL_<AGENT>` (per-agent override; see Agent Runner table above).
+- `LLM_API_KEY`
+- `KEEPER_PRIVATE_KEY` — same wallet for all seven agents; serialised by the matrix's `max-parallel: 1` and the shared `keeper-key-serialized` concurrency group.
+- `MANTLE_SEPOLIA_RPC_URL` — every matrix entry resolves its RPC from this secret. The `rpc_url_secret` field in the matrix points at it explicitly so a future Sepolia fallback only needs a new branch in `setup-matrix`, not a per-agent env shuffle.
+- `ENVIO_URL` — Envio HyperIndex GraphQL endpoint. `rwa-treasurer`, `rwa-yield-router`, and `smart-money-mirror-manager` read it via `envio-graphql-mcp`; unset values fall back to the URL parsed from `AGENT_DEPLOYMENT_MEMORY.md`.
+- `ATLAS_API_KEY` — `mining-manager` and `quality-matrix-manager` read this via `atlas-ml-mcp` / `atlas-quality-mcp`.
+
+Optional sponsor-stack keys (each agent declares its degraded-fallback mode in its frontmatter):
+
+- `BYBIT_API_KEY`, `BYBIT_API_SECRET`, `BYBIT_TESTNET` (default `1`) — `funding-rate-harvester` uses Bybit public market endpoints; without keys the agent still runs (the V5 market endpoints don't need auth) but the v2 execution stretch is gated until both are set.
+- `NANSEN_API_KEY` — `smart-money-mirror-manager` falls back to an Envio-derived Mantle-DEX swap heuristic when this is unset (`nansen_mode: "envio_only"` in every response).
+
+Legacy fallbacks: `SEPOLIA_RPC_URL`, `FUJI_RPC_URL` are still read by `vault-manager-mcp.multichain-create` so the retired `vault-manager` agent and any local Sepolia / Fuji invocations keep working; unset values mark the corresponding spoke as `skipped` rather than failing the run.
+
+Optional core secrets: `LLM_BASE_URL`, `LLM_MODEL`, `LLM_MODEL_<AGENT>` (per-agent override; see Agent Runner table above).
 
 No repository variables are required for the vault agent.
 
@@ -575,6 +600,12 @@ apps/
   mcps/
     vault-manager/        # MCP server (on-chain vault reads + writes via cast)
     yfinance/             # MCP server (Yahoo Finance search + quotes)
+    atlas-ml/             # MCP server (mining ML rankings — mining-manager)
+    atlas-quality/        # MCP server (Quality Matrix scorer — quality-matrix-manager)
+    envio-graphql/        # MCP server (Envio HyperIndex GraphQL — basket-ideator, RWA agents)
+    rwa-adapter/          # MCP server (RWAReserveAdapter on Mantle — rwa-treasurer, meth-carry, rwa-yield-router)
+    bybit/                # MCP server (Bybit V5 public perp data — funding-rate-harvester)
+    nansen/               # MCP server (Nansen smart-money + Envio fallback — smart-money-mirror-manager)
   web/
     public/agent-metadata/  # Static <vault>.json files consumed by useAgentMetadata
 ```

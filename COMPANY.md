@@ -99,12 +99,34 @@ outOfScope:
       manageVia: scripts/agent-runner.mjs (manual; retired from CI matrix)
     - id: mining-manager
       promptFile: agents/mining-manager.md
-      manageVia: .github/workflows/vault-agent.yml (hourly cron)
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 0 of 7)
       vault: Minestarters ML Picks
+      network: mantle-sepolia
     - id: quality-matrix-manager
       promptFile: agents/quality-matrix-manager.md
-      manageVia: .github/workflows/vault-agent.yml (hourly cron)
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 1 of 7)
       vault: Minestarters Quality Matrix
+      network: mantle-sepolia
+    - id: rwa-treasurer
+      promptFile: agents/rwa-treasurer.md
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 2 of 7)
+      network: mantle-sepolia
+    - id: meth-carry-manager
+      promptFile: agents/meth-carry-manager.md
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 3 of 7)
+      network: mantle-sepolia
+    - id: rwa-yield-router
+      promptFile: agents/rwa-yield-router.md
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 4 of 7)
+      network: mantle-sepolia
+    - id: funding-rate-harvester
+      promptFile: agents/funding-rate-harvester.md
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 5 of 7)
+      network: mantle-sepolia
+    - id: smart-money-mirror-manager
+      promptFile: agents/smart-money-mirror-manager.md
+      manageVia: .github/workflows/vault-agent.yml (round-robin :18 cron; slot 6 of 7)
+      network: mantle-sepolia
     - id: risk-officer
       promptFile: agents/risk-officer.md
       manageVia: scripts/agent-runner-confirmation.mjs (synchronous per-batch LLM call)
@@ -113,12 +135,24 @@ outOfScope:
     - yfinance
     - atlas-quality
     - lessons
+    - rwa-adapter
+    - bybit
+    - nansen
+    - envio-graphql
   brand:
     - id: minestarters
       description: Mining-equity vault family on IndexFlow, powered by the Atlas analytics stack (atlas.minestarters.com).
       relevance: Trading-vault scope; out of Paperclip scope until trading agents are promoted.
   newTradingAgents:
-    pattern: Create agents/<name>.md with full frontmatter (entryMode, writeTools, MCP servers, vaultName) and add to .github/workflows/vault-agent.yml setup-matrix. No Paperclip changes required.
+    pattern: >
+      Create agents/<name>.md with full frontmatter (entryMode, writeTools, MCP
+      servers, vaultName, network), register any new MCP under apps/mcps/ and
+      agents/mcp-servers.json, drop required skills under agents/skills/, and
+      add a matrix entry + an `agent: <name>` workflow_dispatch option to
+      .github/workflows/vault-agent.yml setup-matrix. The scheduled round-robin
+      uses `HOUR_UTC % N` to pick one agent per :18 tick — bumping N requires
+      updating both the case-statement slot range and the rotation table in
+      docs/AGENTS_FRAMEWORK.md. No Paperclip changes required.
 ```
 
 ## Board

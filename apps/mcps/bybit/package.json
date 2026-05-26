@@ -1,0 +1,17 @@
+{
+  "name": "bybit-mcp",
+  "version": "1.0.0",
+  "description": "Read-only MCP server for Bybit V5 public perp market data (mark price, open interest, 8h funding rate, funding history). Required by agents/funding-rate-harvester.md. Defaults to testnet endpoint; falls back to empty payloads (success:false) when BYBIT_API_KEY is unset so the funding-rate harvester can degrade gracefully to internal-perp-only.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "smoke": "node index.js --smoke",
+    "test": "node --test symbol-mapping.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

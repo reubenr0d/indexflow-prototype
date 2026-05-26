@@ -1,0 +1,17 @@
+{
+  "name": "nansen-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Nansen smart-money holdings + token anomaly tools, scoped to Mantle. Required by agents/smart-money-mirror-manager.md. When NANSEN_API_KEY is unset the server returns a degraded `nansen_mode:\"envio_only\"` payload sourced from the IndexFlow Envio HyperIndex (Mantle DEX swap events), so the smart-money-mirror agent can still run with reduced confidence weights.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "smoke": "node index.js --smoke",
+    "test": "node --test confidence-tier.test.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.0"
+  }
+}

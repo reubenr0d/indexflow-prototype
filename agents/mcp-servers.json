@@ -9,6 +9,7 @@
       "SEPOLIA_RPC_URL",
       "FUJI_RPC_URL",
       "ARBITRUM_SEPOLIA_RPC_URL",
+      "MANTLE_SEPOLIA_RPC_URL",
       "AGENT_NAME",
       "AGENT_CHURN_GUARD_DISABLED",
       "AGENT_CHURN_GUARD_WINDOW_MS"
@@ -55,6 +56,39 @@
       "AGENT_NAME",
       "PROJECT_ROOT",
       "ENVIO_URL"
+    ]
+  },
+  "rwa-adapter-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/rwa-adapter/index.js"],
+    "envPassthrough": [
+      "DEPLOYMENT_CONFIG",
+      "RPC_URL",
+      "PRIVATE_KEY",
+      "MANTLE_SEPOLIA_RPC_URL",
+      "PROJECT_ROOT",
+      "AGENT_NAME"
+    ]
+  },
+  "bybit-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/bybit/index.js"],
+    "envPassthrough": [
+      "BYBIT_API_KEY",
+      "BYBIT_API_SECRET",
+      "BYBIT_TESTNET",
+      "AGENT_NAME"
+    ]
+  },
+  "nansen-mcp": {
+    "command": "node",
+    "args": ["apps/mcps/nansen/index.js"],
+    "envPassthrough": [
+      "NANSEN_API_KEY",
+      "NANSEN_BASE_URL",
+      "ENVIO_URL",
+      "PROJECT_ROOT",
+      "AGENT_NAME"
     ]
   }
 }

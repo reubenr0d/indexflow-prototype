@@ -17,6 +17,12 @@ import {MockUSDC} from "../src/vault/MockUSDC.sol";
 import {MockIndexToken} from "../src/mocks/MockIndexToken.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {StateRelay} from "../src/coordination/StateRelay.sol";
+import {MockUSDYInstantManager} from "../src/rwa/mocks/MockUSDYInstantManager.sol";
+import {MockUSDY} from "../src/rwa/mocks/MockUSDY.sol";
+import {MockMUSDWrapper} from "../src/rwa/mocks/MockMUSDWrapper.sol";
+import {MockMUSD} from "../src/rwa/mocks/MockMUSD.sol";
+import {MockMETH} from "../src/rwa/mocks/MockMETH.sol";
+import {MethAdapter} from "../src/rwa/MethAdapter.sol";
 
 interface ISimplePriceFeed {
     function setPrice(address token, uint256 price) external;
@@ -59,6 +65,19 @@ contract Deploy is Script {
         address gmxVault;
         address assetWiring;
         address stateRelay;
+        // ─── RWA reserve infrastructure (Mantle hub only) ─────────
+        // Zero on chains where RWA is not deployed. The per-vault
+        // RWAReserveAdapter is NOT deployed here — it's instantiated by
+        // BasketFactory or a follow-up script when a vault opts in (the
+        // adapter pins the vault address at construction).
+        address usdy;
+        address usdyManager;
+        address musd;
+        address musdWrapper;
+        address meth;
+        address methAdapter;
+        bytes32 usdyUsdcAssetId;
+        bytes32 methUsdcAssetId;
     }
 
     function run() external {
@@ -105,6 +124,14 @@ contract Deploy is Script {
         _deployBasketFactory(d, deployer);
 
         _deployStateRelay(d, deployer, ccipChainSelector);
+
+        // RWA infra is only deployed on the Mantle Sepolia hub. Other chains
+        // leave the RWA fields zero in the deployment JSON and the per-vault
+        // wiring path becomes a no-op (BasketVault.setRWAAdapter never gets
+        // called).
+        if (keccak256(bytes(chainName)) == keccak256("mantle-sepolia")) {
+            _deployRWA(d, deployer);
+        }
 
         vm.stopBroadcast();
 
@@ -205,6 +232,71 @@ contract Deploy is Script {
         d.stateRelay = address(relay);
     }
 
+    /// @dev Mantle Sepolia hub only. Deploys the testnet mocks for USDY /
+    ///      mUSD / mETH plus the InstantManager / Wrapper / MethAdapter, and
+    ///      registers USDY-USDC and METH-USDC as CustomRelayer oracle assets
+    ///      so the keeper can post real off-chain prices (no admin-set or
+    ///      hardcoded yield curves anywhere in this stack).
+    ///
+    ///      The per-vault `RWAReserveAdapter` is intentionally NOT deployed
+    ///      here — it pins `vault()` at construction and must be created
+    ///      after each BasketVault is minted. The agent's `create_vault`
+    ///      flow (or a follow-up wire-rwa script) deploys the per-vault
+    ///      adapter and calls `BasketVault.setRWAAdapter`.
+    function _deployRWA(Deployed memory d, address deployer) internal {
+        bytes32 usdyId = keccak256(bytes("USDY-USDC"));
+        bytes32 methId = keccak256(bytes("METH-USDC"));
+        d.usdyUsdcAssetId = usdyId;
+        d.methUsdcAssetId = methId;
+
+        // CustomRelayer assets: feedAddress = address(0); keeper posts via
+        // OracleAdapter.submitPrice. 1h staleness window matches the keeper's
+        // expected cadence (5min updates with 12x slack). 1000 bps deviation
+        // cap matches the existing equity feeds.
+        OracleAdapter oa = OracleAdapter(d.oracleAdapter);
+        oa.configureAsset("USDY-USDC", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 1000, 8);
+        oa.configureAsset("METH-USDC", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 1000, 8);
+
+        MockUSDYInstantManager usdyManager =
+            new MockUSDYInstantManager(d.usdc, d.oracleAdapter, usdyId);
+        MockUSDY usdy = new MockUSDY(address(usdyManager));
+        usdyManager.setUSDY(address(usdy));
+        d.usdyManager = address(usdyManager);
+        d.usdy = address(usdy);
+
+        MockMUSDWrapper musdWrapper = new MockMUSDWrapper(d.usdc);
+        MockMUSD musd = new MockMUSD(address(musdWrapper));
+        musdWrapper.setMUSD(address(musd));
+        d.musdWrapper = address(musdWrapper);
+        d.musd = address(musd);
+
+        // For mETH: deploy the MethAdapter FIRST with a placeholder mETH
+        // address would require post-hoc rewiring. Instead deploy a
+        // forwardable pair: MockMETH expects `adapter` immutable, so we
+        // deploy MethAdapter once we know the mETH address. We use a small
+        // bootstrap: predict the MethAdapter address via CREATE2? No — keep
+        // it simpler by deploying MockMETH against a precomputed adapter
+        // address. Instead, since MockMETH requires the adapter immutable,
+        // we deploy a holder pattern: deploy MethAdapter against the soon-
+        // to-be-MockMETH (placeholder zero) is forbidden by MethAdapter's
+        // zero-address guard. So we use the construction order:
+        //   1. Deploy a temporary mETH owner (use deployer)
+        //   2. Deploy MethAdapter pointing at (placeholder) — same problem.
+        //
+        // The cleanest path: have a separate post-deploy wiring step where
+        // MockMETH is configured AFTER MethAdapter. But MockMETH's `adapter`
+        // is immutable. Workaround: deploy MockMETH with `adapter = predicted
+        // MethAdapter address` using `vm.computeCreateAddress(deployer,
+        // vm.getNonce(deployer) + 1)` — adapter is the next contract the
+        // deployer will create, so the prediction is deterministic.
+        address predictedAdapter = vm.computeCreateAddress(deployer, vm.getNonce(deployer) + 1);
+        MockMETH meth = new MockMETH(predictedAdapter);
+        MethAdapter methAdapter = new MethAdapter(d.usdc, address(meth), d.oracleAdapter, methId, true, deployer);
+        require(address(methAdapter) == predictedAdapter, "Deploy: mETH adapter address mismatch");
+        d.meth = address(meth);
+        d.methAdapter = address(methAdapter);
+    }
+
     function _deployVaultWithLinkedVaultMath(address mathLib, string memory chainName) internal returns (address addr) {
         string memory json = vm.readFile("out/Vault.sol/Vault.json");
         string memory obj = vm.parseJsonString(json, ".bytecode.object");
@@ -266,10 +358,35 @@ contract Deploy is Script {
             '",\n',
             '  "stateRelay": "',
             vm.toString(d.stateRelay),
-            '"\n',
-            "}\n"
+            '",\n'
         );
-        return string.concat(p1, p2);
+        // RWA block: omit when not deployed on this chain so the rwa-adapter
+        // MCP can detect "not on this chain" by absent fields.
+        string memory p3;
+        if (d.usdy != address(0)) {
+            p3 = string.concat(
+                '  "rwa": {\n',
+                '    "usdy": "', vm.toString(d.usdy), '",\n',
+                '    "usdyManager": "', vm.toString(d.usdyManager), '",\n',
+                '    "musd": "', vm.toString(d.musd), '",\n',
+                '    "musdWrapper": "', vm.toString(d.musdWrapper), '",\n',
+                '    "meth": "', vm.toString(d.meth), '",\n',
+                '    "methAdapter": "', vm.toString(d.methAdapter), '"\n',
+                '  },\n',
+                '  "rwaAssetIds": {\n',
+                '    "USDY": "', vm.toString(d.usdyUsdcAssetId), '",\n',
+                '    "METH": "', vm.toString(d.methUsdcAssetId), '"\n',
+                '  }\n',
+                "}\n"
+            );
+        } else {
+            p3 = string.concat(
+                '  "rwa": null,\n',
+                '  "rwaAssetIds": null\n',
+                "}\n"
+            );
+        }
+        return string.concat(p1, p2, p3);
     }
 
     function _setVaultErrors(address errCtrl, address vault) internal {

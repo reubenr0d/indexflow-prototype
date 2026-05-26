@@ -59,7 +59,15 @@ contract DeployScriptsTest is Test {
             usdc: address(0x8888),
             gmxVault: address(0x9999),
             assetWiring: address(0xAAAA),
-            stateRelay: address(0xBBBB)
+            stateRelay: address(0xBBBB),
+            usdy: address(0),
+            usdyManager: address(0),
+            musd: address(0),
+            musdWrapper: address(0),
+            meth: address(0),
+            methAdapter: address(0),
+            usdyUsdcAssetId: bytes32(0),
+            methUsdcAssetId: bytes32(0)
         });
         string memory json = harness.exposeBuildJson(d);
         assertTrue(_contains(json, '"basketFactory"'));
@@ -68,6 +76,38 @@ contract DeployScriptsTest is Test {
         assertTrue(_contains(json, '"vaultAccounting"'));
         assertTrue(_contains(json, '"stateRelay"'));
         assertTrue(_contains(json, vm.toString(address(0xBBBB))));
+        assertTrue(_contains(json, '"rwa": null'));
+    }
+
+    function test_buildJson_emits_rwa_block_when_populated() public view {
+        Deploy.Deployed memory d = Deploy.Deployed({
+            basketFactory: address(0x1111),
+            vaultAccounting: address(0x2222),
+            oracleAdapter: address(0x3333),
+            perpReader: address(0x4444),
+            pricingEngine: address(0x5555),
+            fundingRateManager: address(0x6666),
+            priceSync: address(0x7777),
+            usdc: address(0x8888),
+            gmxVault: address(0x9999),
+            assetWiring: address(0xAAAA),
+            stateRelay: address(0xBBBB),
+            usdy: address(0xCCCC),
+            usdyManager: address(0xDDDD),
+            musd: address(0xEEEE),
+            musdWrapper: address(0xFFFF),
+            meth: address(0x1234),
+            methAdapter: address(0x5678),
+            usdyUsdcAssetId: keccak256("USDY-USDC"),
+            methUsdcAssetId: keccak256("METH-USDC")
+        });
+        string memory json = harness.exposeBuildJson(d);
+        assertTrue(_contains(json, '"rwa"'));
+        assertTrue(_contains(json, '"usdy"'));
+        assertTrue(_contains(json, '"methAdapter"'));
+        assertTrue(_contains(json, '"rwaAssetIds"'));
+        assertTrue(_contains(json, vm.toString(address(0xCCCC))));
+        assertTrue(_contains(json, vm.toString(keccak256("USDY-USDC"))));
     }
 
     function test_setVaultErrors_pushes_expected_array_shape() public {

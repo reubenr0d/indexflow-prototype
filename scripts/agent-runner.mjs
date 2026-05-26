@@ -2665,6 +2665,31 @@ function summarizeActionParams(tool, args) {
           ? args.collateralDelta
           : String(args.collateralDelta ?? ""),
       };
+    case "allocate_to_rwa":
+    case "withdraw_from_rwa":
+      if (typeof args.vault !== "string" || typeof args.amount !== "string") {
+        return undefined;
+      }
+      return {
+        kind: tool,
+        vault: args.vault,
+        amountUsdc: args.amount,
+      };
+    case "harvest_rwa_yield":
+      if (typeof args.vault !== "string") return undefined;
+      return { kind: "harvest_rwa_yield", vault: args.vault };
+    case "set_reserve_token":
+      if (typeof args.vault !== "string" || typeof args.newToken !== "string") {
+        return undefined;
+      }
+      return {
+        kind: "set_reserve_token",
+        vault: args.vault,
+        newToken: args.newToken,
+      };
+    case "rebalance_reserve":
+      if (typeof args.vault !== "string") return undefined;
+      return { kind: "rebalance_reserve", vault: args.vault };
     default:
       return undefined;
   }

@@ -1,6 +1,7 @@
 ---
 name: mining-manager
 description: Mining-focused long/short vault driven by the Atlas ML engine and live news context
+network: mantle-sepolia
 mcpServers:
   - vault-manager-mcp
   - yfinance-mcp

@@ -9,6 +9,7 @@ import {BasketShareToken} from "./BasketShareToken.sol";
 import {IOracleAdapter} from "../perp/interfaces/IOracleAdapter.sol";
 import {IPerp} from "../perp/interfaces/IPerp.sol";
 import {IStateRelay} from "../coordination/interfaces/IStateRelay.sol";
+import {IRWAReserveAdapter} from "../rwa/IRWAReserveAdapter.sol";
 
 /// @title BasketVault
 /// @notice Basket vault with perp-driven pricing: deposit USDC, mint shares priced from mark-to-market NAV.
@@ -66,6 +67,17 @@ contract BasketVault is ReentrancyGuard, Ownable {
     /// @notice Human-readable basket name.
     string public name;
 
+    // ─── RWA Reserve (Mantle multi-asset adapter) ───────────────
+    /// @notice Per-vault RWA reserve adapter (USDY / mUSD / mETH). Zero until
+    ///         `setRWAAdapter` is called; vaults without an adapter behave
+    ///         exactly like the pre-RWA contract.
+    IRWAReserveAdapter public rwaAdapter;
+    /// @notice Target RWA reserve allocation in bps of total vault value.
+    ///         The treasurer agent drives toward `rwaTargetBps ± rwaTargetBand`;
+    ///         the contract itself only enforces that idle USDC is sufficient
+    ///         before each allocate.
+    uint256 public rwaTargetBps;
+
     // ─── Pending Redemptions ────────────────────────────────────
     struct PendingRedemption {
         address user;
@@ -77,6 +89,10 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     mapping(uint256 => PendingRedemption) public pendingRedemptions;
     uint256 public pendingRedemptionCount;
+    /// @notice Outstanding USDC owed across all uncompleted pending redemptions.
+    ///         Updated on `RedemptionQueued` + `RedemptionProcessed`. Read by
+    ///         the rwa-treasurer agent to size the redemption-margin floor.
+    uint256 public pendingRedemptionsUsdc;
 
     event Deposited(address indexed user, uint256 usdcAmount, uint256 sharesMinted);
     event Redeemed(address indexed user, uint256 sharesBurned, uint256 usdcReturned);
@@ -84,6 +100,12 @@ contract BasketVault is ReentrancyGuard, Ownable {
     event RedemptionProcessed(uint256 indexed id, address indexed user, uint256 usdcPaid);
     event AllocatedToPerp(uint256 amount);
     event WithdrawnFromPerp(uint256 amount);
+    event AllocatedToRWA(uint256 usdcAmount, uint256 reserveOut);
+    event WithdrawnFromRWA(uint256 usdcAmount);
+    event RWAAdapterSet(address indexed adapter);
+    event RWATargetBpsUpdated(uint256 bps);
+    event ReserveTokenRotated(uint8 indexed oldToken, uint8 indexed newToken);
+    event RWAYieldHarvested(uint256 reserveValueUsdc);
     event AssetsUpdated(uint256 assetCount);
     event FeesCollected(address indexed to, uint256 amount);
     event ReservePolicyUpdated(uint256 minReserveBps);
@@ -186,6 +208,34 @@ contract BasketVault is ReentrancyGuard, Ownable {
         minDepositWeightBps = bps;
     }
 
+    // ─── RWA reserve configuration ───────────────────────────────
+
+    /// @notice Wire the multi-asset RWA reserve adapter. The adapter must have
+    ///         been deployed with `vault == address(this)` — the adapter's
+    ///         mutating functions revert otherwise.
+    /// @param  _rwaAdapter Adapter address (zero clears the wiring, leaving
+    ///         the vault behaving as if RWA is disabled).
+    function setRWAAdapter(address _rwaAdapter) external onlyOwner {
+        if (_rwaAdapter != address(0)) {
+            require(
+                IRWAReserveAdapter(_rwaAdapter).vault() == address(this),
+                "Adapter not bound to this vault"
+            );
+        }
+        rwaAdapter = IRWAReserveAdapter(_rwaAdapter);
+        emit RWAAdapterSet(_rwaAdapter);
+    }
+
+    /// @notice Set the policy target for the RWA reserve in bps of total vault
+    ///         value. Agents are responsible for driving toward the target; the
+    ///         contract only stores the number for off-chain consumers.
+    /// @param  bps Target in basis points (0..10000).
+    function setRWATargetBps(uint256 bps) external onlyOwner {
+        require(bps <= BPS_DENOMINATOR, "Invalid RWA target bps");
+        rwaTargetBps = bps;
+        emit RWATargetBpsUpdated(bps);
+    }
+
     // ─── Deposit / Redeem ────────────────────────────────────────
 
     /// @notice Deposit USDC and receive basket shares at current NAV-based share price.
@@ -272,6 +322,7 @@ contract BasketVault is ReentrancyGuard, Ownable {
             timestamp: uint48(block.timestamp),
             completed: false
         });
+        pendingRedemptionsUsdc += remainderUsdc;
         emit RedemptionQueued(id, msg.sender, remainderShares, remainderUsdc);
 
         return available;
@@ -285,6 +336,11 @@ contract BasketVault is ReentrancyGuard, Ownable {
         require(_idleUsdcExcludingFees() >= pr.usdcOwed, "Insufficient bridged USDC");
 
         pr.completed = true;
+        if (pendingRedemptionsUsdc >= pr.usdcOwed) {
+            pendingRedemptionsUsdc -= pr.usdcOwed;
+        } else {
+            pendingRedemptionsUsdc = 0;
+        }
         shareToken.burn(address(this), pr.sharesLocked);
         usdc.safeTransfer(pr.user, pr.usdcOwed);
 
@@ -332,6 +388,57 @@ contract BasketVault is ReentrancyGuard, Ownable {
         require(amount > 0, "Amount required");
         usdc.safeTransferFrom(msg.sender, address(this), amount);
         emit ReserveToppedUp(msg.sender, amount);
+    }
+
+    // ─── RWA reserve write tools ─────────────────────────────────
+
+    /// @notice Move `amount` idle USDC into the configured RWA reserve token
+    ///         via the wired adapter. The vault is the adapter's only
+    ///         authorised caller, so all RWA traffic flows through here.
+    /// @param  amount Raw USDC (6 decimals) to subscribe.
+    function allocateToRWA(uint256 amount) external onlyOwner nonReentrant {
+        require(address(rwaAdapter) != address(0), "RWA adapter not set");
+        require(amount > 0, "Amount required");
+        require(amount <= _idleUsdcExcludingFees(), "Insufficient idle USDC");
+
+        usdc.safeIncreaseAllowance(address(rwaAdapter), amount);
+        uint256 reserveOut = rwaAdapter.deposit(amount);
+
+        emit AllocatedToRWA(amount, reserveOut);
+    }
+
+    /// @notice Redeem at least `amount` USDC from the RWA reserve back into
+    ///         vault idle. The adapter reverts on shortfall — this wrapper
+    ///         never silently delivers less than requested.
+    /// @param  amount Raw USDC (6 decimals) to redeem.
+    function withdrawFromRWA(uint256 amount) external onlyOwner nonReentrant {
+        require(address(rwaAdapter) != address(0), "RWA adapter not set");
+        require(amount > 0, "Amount required");
+
+        uint256 usdcDelivered = rwaAdapter.withdraw(amount);
+        emit WithdrawnFromRWA(usdcDelivered);
+    }
+
+    /// @notice Rotate the configured reserve token via the adapter. NAV-neutral
+    ///         except for round-trip slippage; emits ReserveTokenRotated so the
+    ///         indexer can attribute the change to the rwa-yield-router agent.
+    /// @param  newToken Target reserve token (USDY=0, MUSD=1, METH=2).
+    function rotateReserveToken(uint8 newToken) external onlyOwner nonReentrant {
+        require(address(rwaAdapter) != address(0), "RWA adapter not set");
+        IRWAReserveAdapter.ReserveToken oldEnum = rwaAdapter.reserveToken();
+        IRWAReserveAdapter.ReserveToken newEnum = IRWAReserveAdapter.ReserveToken(newToken);
+        rwaAdapter.setReserveToken(newEnum);
+        emit ReserveTokenRotated(uint8(oldEnum), uint8(newEnum));
+    }
+
+    /// @notice Permissionless NAV refresh. Reads `getReserveValueUsdc()` on
+    ///         the adapter (which itself revalidates the on-chain oracle
+    ///         price) and emits an event for the indexer. Safe to call on
+    ///         every agent tick — no state mutation beyond the event.
+    function harvestRWAYield() external nonReentrant {
+        require(address(rwaAdapter) != address(0), "RWA adapter not set");
+        uint256 valueUsdc = rwaAdapter.getReserveValueUsdc();
+        emit RWAYieldHarvested(valueUsdc);
     }
 
     // ─── Fee Collection ──────────────────────────────────────────
@@ -391,9 +498,16 @@ contract BasketVault is ReentrancyGuard, Ownable {
         return _pricingNav();
     }
 
-    /// @dev USDC balance not reserved as fees plus book value sent to perp.
+    /// @dev USDC balance not reserved as fees, plus book value sent to perp,
+    ///      plus the current USDC value of the RWA reserve holdings (zero
+    ///      when no adapter is wired). Adapter valuation uses on-chain
+    ///      oracle prices, not invented yield curves.
     function _totalVaultValue() internal view returns (uint256) {
-        return _idleUsdcExcludingFees() + perpAllocated;
+        uint256 base = _idleUsdcExcludingFees() + perpAllocated;
+        if (address(rwaAdapter) != address(0)) {
+            base += rwaAdapter.getReserveValueUsdc();
+        }
+        return base;
     }
 
     /// @dev Mark-to-market NAV = on-vault value + local perp PnL + keeper-posted global adjustment.
