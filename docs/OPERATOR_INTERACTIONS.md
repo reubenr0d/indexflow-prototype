@@ -951,6 +951,8 @@ After deploying, add the chain's entry to `config/chains.json` (if not already p
 
 The keeper service (`services/keeper/`) runs as a long-lived Node.js process that posts `StateRelay.updateState()` to every chain each epoch.
 
+`vault-agent.yml` CI execution is hub-only (`sepolia`) for vault/position writes. Spoke chains are kept in sync by keeper-posted `StateRelay` updates and do not run spoke-side agent write batches in CI.
+
 `npm run deploy:sepolia`, `npm run deploy:fuji`, `npm run seed:sepolia`, `scripts/deploy-chain.sh` (except `local`), `scripts/deploy-all.sh`, and `scripts/deploy-coordination.sh` each run **one** keeper epoch at the end (`npm run keeper:once`) so the Envio indexer can pick up initial routing state. Set `SKIP_KEEPER_ONCE=1` in the environment to skip that step.
 
 ```bash

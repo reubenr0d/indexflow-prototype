@@ -83,6 +83,7 @@ import {
 } from "lucide-react";
 import { showToast } from "@/components/ui/toast";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
+import { formatPnlSinceSubtext } from "@/components/baskets/pnl-since";
 
 export default function BasketDetailPage({ params }: { params: Promise<{ address: string }> }) {
   const { address: vaultAddress } = use(params);
@@ -163,6 +164,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const pnlBps = subgraphSharePrice !== null ? computePnLPctBps(subgraphSharePrice) : 0n;
   const pnlSign = pnlBps > 0n ? 1 : pnlBps < 0n ? -1 : 0;
   const pnlValue = subgraphSharePrice !== null ? formatPnLPct(subgraphSharePrice) : "--";
+  const pnlSinceSubtext = formatPnlSinceSubtext(basketInfo?.createdAt);
 
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl), icon: Landmark, testId: "metric-tvl" },
@@ -172,7 +174,15 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     { label: "Total Shares", value: basketInfo?.totalSupply ? (Number(basketInfo.totalSupply) / 1e6).toLocaleString() : "0", icon: Layers, testId: "metric-total-shares" },
     ...(hasPnLData
       ? [
-          { label: "Net PnL", value: formatSignedUsdcAmount(netPnL), pnl: true, sign: netPnlSign, icon: Activity, testId: "metric-net-pnl" },
+          {
+            label: "Net PnL",
+            value: formatSignedUsdcAmount(netPnL),
+            subtext: pnlSinceSubtext,
+            pnl: true,
+            sign: netPnlSign,
+            icon: Activity,
+            testId: "metric-net-pnl",
+          },
           { label: "Unrealised", value: formatSignedUsdcAmount(unrealisedPnL), pnl: true, sign: unrealisedSign, icon: LineChart, testId: "metric-unrealised-pnl" },
         ]
       : []),

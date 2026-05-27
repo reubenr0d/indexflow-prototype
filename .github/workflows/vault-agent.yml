@@ -13,10 +13,10 @@ on:
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
   # On a scheduled / empty-payload tick the matrix runs ONE eligible
-  # agent+network pair picked by `HOUR_UTC % N` (see setup-matrix below),
-  # where N is the number of deployed pairs discovered from agent state.
+  # agent on the hub network picked by `HOUR_UTC % N` (see setup-matrix below),
+  # where N is the number of eligible agents.
   # slot can't exceed the keeper-key concurrency window. To dispatch a single agent
-  # (optionally pinned to a network),
+  # (optionally pinned to the hub network),
   # explicitly, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
   # The `vault-manager` agent is retired from CI (run locally via
   # `node scripts/agent-runner.mjs vault-manager` when needed).
@@ -49,13 +49,11 @@ on:
         default: ""
         type: string
       network:
-        description: "Target network"
+        description: "Target network (hub-only)"
         required: false
-        default: "both"
+        default: "sepolia"
         type: choice
         options:
-          - both
-          - mantle-sepolia
           - sepolia
 
 env:
@@ -142,6 +140,9 @@ jobs:
         env:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          # Trading/vault mutations are hub-only in CI (Sepolia). Spoke chains
+          # are synchronized via keeper + StateRelay rather than spoke-side
+          # agent execution.
           # Spoke RPC URLs (same set the keeper uses). The vault-manager MCP
           # reads `<RPC_ALIAS_UPPER>_RPC_URL` to fan `create_vault` out to
           # twin baskets on every configured spoke. Missing secrets cause the

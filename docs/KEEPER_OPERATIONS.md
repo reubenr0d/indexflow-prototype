@@ -45,7 +45,7 @@ Create a `.env` file in `services/keeper/` or set these in your environment:
 | `FUJI_RPC_URL` | Per chain | Avalanche Fuji RPC endpoint |
 | `ARBITRUM_SEPOLIA_RPC_URL` | Per chain | Arbitrum Sepolia RPC endpoint |
 | `EPOCH_INTERVAL_MS` | No | Epoch interval in milliseconds (default: `60000`) |
-| `KEEPER_CHAINS` | No | Comma-separated allowlist of chain names from `config/chains.json` to include each epoch (e.g. `sepolia,fuji`). Empty/unset means "every chain that has a deployment file and RPC URL". Production CI is currently scoped to `sepolia,fuji`. |
+| `KEEPER_CHAINS` | No | Comma-separated allowlist of chain names from `config/chains.json` to include each epoch (e.g. `sepolia,fuji`). Empty/unset means "every chain that has a deployment file and RPC URL". Production CI typically pins this to active chains only. |
 
 The keeper reads `config/chains.json` at startup and skips any chain that lacks an RPC URL or deployment config. Chains not in `KEEPER_CHAINS` (when set) are also skipped.
 
@@ -298,7 +298,7 @@ GitHub returns `204 No Content` on success. Any other status (most commonly `401
 
 ### Optional payloads
 
-Only `vault-agent-tick` accepts a payload. To dispatch a single agent instead of the full matrix:
+Only `vault-agent-tick` accepts a payload. `vault-agent.yml` is hub-only for writes (`sepolia`), so payloads should not target spoke networks. To dispatch a single agent instead of the full matrix:
 
 ```json
 {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}

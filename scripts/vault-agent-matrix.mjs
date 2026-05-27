@@ -14,14 +14,17 @@ const AGENTS = [
 
 const NETWORKS = {
   sepolia: {
+    role: "hub",
     deploymentConfig: "apps/web/src/config/sepolia-deployment.json",
     rpcSecret: "SEPOLIA_RPC_URL",
   },
   "mantle-sepolia": {
+    role: "spoke",
     deploymentConfig: "apps/web/src/config/mantle-sepolia-deployment.json",
     rpcSecret: "MANTLE_SEPOLIA_RPC_URL",
   },
 };
+const HUB_NETWORK = "sepolia";
 
 function parseArgs(argv) {
   const out = {
@@ -51,10 +54,17 @@ function parseArgs(argv) {
 }
 
 function resolveRequestedNetworks(input) {
-  if (!input || input === "both") return ["sepolia", "mantle-sepolia"];
-  if (input === "sepolia" || input === "mantle-sepolia") return [input];
+  if (!input || input === "sepolia") return [HUB_NETWORK];
+  if (input in NETWORKS) {
+    if (NETWORKS[input].role !== "hub") {
+      throw new Error(
+        `Network '${input}' is configured as a spoke. Vault-agent CI is hub-only; use '${HUB_NETWORK}'.`,
+      );
+    }
+    return [input];
+  }
   throw new Error(
-    `Unknown network input: ${input}. Expected one of: both, sepolia, mantle-sepolia`,
+    `Unknown network input: ${input}. Expected one of: ${HUB_NETWORK}`,
   );
 }
 

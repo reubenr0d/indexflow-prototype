@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 export interface MetricCell {
   label: string;
   value: string;
+  subtext?: string;
   pnl?: boolean;
   sign?: number;
   icon?: LucideIcon;
@@ -60,6 +61,15 @@ export function MetricsGrid({ metrics, className }: MetricsGridProps) {
             >
               {m.value}
             </span>
+            {m.subtext && (
+              <span
+                className="mt-0.5 truncate text-[11px] leading-tight text-app-muted"
+                title={m.subtext}
+                data-testid={m.testId ? `${m.testId}-subtext` : undefined}
+              >
+                {m.subtext}
+              </span>
+            )}
           </div>
         );
       })}

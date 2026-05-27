@@ -517,6 +517,10 @@ function resolveRunNetworkKey() {
   return inferNetworkKeyFromDeploymentConfig() || "default";
 }
 
+function isWriteAllowedOnNetwork(networkKey, hubNetworkKey = HUB_EXECUTION_NETWORK) {
+  return sanitizeNetworkKey(networkKey) === sanitizeNetworkKey(hubNetworkKey);
+}
+
 function runLogPath(agentName, networkKey) {
   return resolve(agentMemoryDir(agentName), `run-log.${networkKey}.jsonl`);
 }
@@ -1250,6 +1254,9 @@ const CONFIRM_WRITES = !["0", "false", "no"].includes(
 );
 const NON_INTERACTIVE_WRITE_EXECUTE = ["1", "true", "yes"].includes(
   (process.env.AGENT_NON_INTERACTIVE_WRITE_EXECUTE || "").toLowerCase().trim()
+);
+const HUB_EXECUTION_NETWORK = sanitizeNetworkKey(
+  process.env.AGENT_HUB_NETWORK || "sepolia"
 );
 const MAX_TOOL_RESPONSE = parseInt(
   process.env.AGENT_MAX_TOOL_RESPONSE || "6000",
@@ -2943,6 +2950,7 @@ export async function runAgent(agentName) {
 
   const config = loadAgentConfig(agentName);
   const runNetwork = resolveRunNetworkKey();
+  const isHubExecutionNetwork = isWriteAllowedOnNetwork(runNetwork, HUB_EXECUTION_NETWORK);
   const runLogFile = `run-log.${runNetwork}.jsonl`;
   const deploymentContext = buildDeploymentFingerprint(runNetwork);
   const maxTurns = parseInt(
@@ -3008,6 +3016,9 @@ export async function runAgent(agentName) {
     `Non-interactive write execute override: ${NON_INTERACTIVE_WRITE_EXECUTE}`
   );
   console.log(`Run network: ${runNetwork}`);
+  console.log(
+    `Hub execution network: ${HUB_EXECUTION_NETWORK} (${isHubExecutionNetwork ? "active" : "read-only guard active"})`
+  );
   console.log(`Run log file: ${runLogFile}`);
   console.log(`Tool response budget: ${MAX_TOOL_RESPONSE} chars`);
   console.log(
@@ -3384,6 +3395,27 @@ export async function runAgent(agentName) {
           role: "tool",
           tool_call_id: toolCall.id,
           content: errMsg,
+        });
+        return;
+      }
+
+      if (isWrite && !isHubExecutionNetwork) {
+        const skipMsg =
+          `[HUB_ONLY_GUARD] Skipped write tool on spoke network '${runNetwork}'. ` +
+          `Writes are allowed only on hub '${HUB_EXECUTION_NETWORK}'.`;
+        console.log(`  ${skipMsg}`);
+        runSummary.writeActions.push({
+          tool: toolName,
+          args,
+          skipped: true,
+          skipReason: "HUB_ONLY_GUARD",
+          justification: args.justification || null,
+          timestamp: new Date().toISOString(),
+        });
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: skipMsg,
         });
         return;
       }
@@ -4903,6 +4935,7 @@ export const __agentRunnerInternals = {
   applyVaultArgPin,
   VAULT_ARG_WRITE_TOOLS,
   sanitizeNetworkKey,
+  isWriteAllowedOnNetwork,
   buildDeploymentFingerprint,
   shortHash,
   shouldInvalidateDeploymentMemory,

@@ -29,7 +29,7 @@ jobs:
         env:
           EVENT_NAME: workflow_dispatch
           AGENT_INPUT: all
-          NETWORK_INPUT: both
+          NETWORK_INPUT: sepolia
         run: node scripts/vault-agent-matrix.mjs --strict-empty
 
   build:
