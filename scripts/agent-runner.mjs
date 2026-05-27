@@ -282,8 +282,20 @@ function parseAgentPolicy(frontmatter) {
   if (!Number.isFinite(autoAllocateTargetBps) || autoAllocateTargetBps < 0 || autoAllocateTargetBps > 10_000) {
     throw new Error("Invalid autoAllocateTargetBps; expected 0..10000");
   }
-  if (!["none", "momentum_volume", "ml_score", "quality_score"].includes(entryMode)) {
-    throw new Error("Invalid entryMode; expected 'none', 'momentum_volume', 'ml_score', or 'quality_score'");
+  // Supported by runner-side deterministic policy paths. Other modes are
+  // allowed for prompt-level agent behavior and safely degrade to no-op in
+  // runner policy enforcement.
+  const SUPPORTED_ENTRY_MODES = new Set([
+    "none",
+    "momentum_volume",
+    "ml_score",
+    "quality_score",
+  ]);
+  const isKnownUnsupportedEntryMode = /^[a-z0-9_]+$/i.test(entryMode);
+  if (!SUPPORTED_ENTRY_MODES.has(entryMode) && !isKnownUnsupportedEntryMode) {
+    throw new Error(
+      `Invalid entryMode "${entryMode}"; expected snake_case token (e.g. 'none', 'ml_score', 'rwa_target')`,
+    );
   }
   if (!Number.isFinite(entryMomentumPctMin) || entryMomentumPctMin < 0) {
     throw new Error("Invalid entryMomentumPctMin; expected >= 0");
@@ -321,8 +333,12 @@ function parseAgentPolicy(frontmatter) {
   if (!Number.isFinite(maxTrackedAssets) || maxTrackedAssets < 0) {
     throw new Error("Invalid maxTrackedAssets; expected >= 0");
   }
-  if (!["none", "track_top_n"].includes(rebalanceMode)) {
-    throw new Error("Invalid rebalanceMode; expected 'none' or 'track_top_n'");
+  const SUPPORTED_REBALANCE_MODES = new Set(["none", "track_top_n"]);
+  const isKnownUnsupportedRebalanceMode = /^[a-z0-9_]+$/i.test(rebalanceMode);
+  if (!SUPPORTED_REBALANCE_MODES.has(rebalanceMode) && !isKnownUnsupportedRebalanceMode) {
+    throw new Error(
+      `Invalid rebalanceMode "${rebalanceMode}"; expected snake_case token (e.g. 'none', 'track_top_n', 'rwa_band')`,
+    );
   }
   // autoExitMode is an additive flag set: comma- or plus-separated tokens
   // out of {rank_swap, pnl_band}. `none` (or unset) disables both. The
@@ -396,6 +412,8 @@ function parseAgentPolicy(frontmatter) {
     minHoldingHours,
     takeProfitPct,
     stopLossPct,
+    runnerSupportsEntryMode: SUPPORTED_ENTRY_MODES.has(entryMode),
+    runnerSupportsRebalanceMode: SUPPORTED_REBALANCE_MODES.has(rebalanceMode),
   };
 }
 
@@ -2956,6 +2974,18 @@ export async function runAgent(agentName) {
 
   console.log(`\n=== Agent: ${config.name} ===`);
   if (config.description) console.log(`Description: ${config.description}`);
+  if (config.policy?.enabled) {
+    if (config.policy.runnerSupportsEntryMode === false) {
+      console.warn(
+        `[POLICY] entryMode="${config.policy.entryMode}" is not implemented by runner-side deterministic enforcement; continuing with prompt/tool-level execution.`,
+      );
+    }
+    if (config.policy.runnerSupportsRebalanceMode === false) {
+      console.warn(
+        `[POLICY] rebalanceMode="${config.policy.rebalanceMode}" is not implemented by runner-side deterministic enforcement; continuing with prompt/tool-level execution.`,
+      );
+    }
+  }
   console.log(`Model: ${modelResolution.model} (source: ${modelResolution.source}${modelResolution.envKey ? ` via ${modelResolution.envKey}` : ""})`);
   // Surface the resolved OpenAI endpoint kind so CI logs make it obvious
   // when a model takes the responses-API code path (`gpt-5-codex` and
@@ -4861,7 +4891,11 @@ const isDirectCliEntry =
 if (isDirectCliEntry) {
   const agentName = process.argv[2];
   if (agentName) {
-    runAgent(agentName).catch(() => process.exit(1));
+    runAgent(agentName).catch((err) => {
+      const safeErr = redactSecrets(err?.message || String(err));
+      console.error(`[RUNNER STARTUP] agent="${agentName}" failed: ${safeErr}`);
+      process.exit(1);
+    });
   }
 }
 

@@ -12,9 +12,10 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # On a scheduled / empty-payload tick the matrix runs ONE agent picked by
-  # `HOUR_UTC % 7` (see setup-matrix below) so a single hourly slot can't
-  # exceed the keeper-key concurrency window. To dispatch a single agent
+  # On a scheduled / empty-payload tick the matrix runs ONE agent+network
+  # pair picked by `HOUR_UTC % 14` (see setup-matrix below) so a single hourly
+  # slot can't exceed the keeper-key concurrency window. To dispatch a single agent
+  # (optionally pinned to a network),
   # explicitly, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
   # The `vault-manager` agent is retired from CI (run locally via
   # `node scripts/agent-runner.mjs vault-manager` when needed).
@@ -49,9 +50,10 @@ on:
       network:
         description: "Target network"
         required: false
-        default: "mantle-sepolia"
+        default: "both"
         type: choice
         options:
+          - both
           - mantle-sepolia
           - sepolia
 
@@ -87,58 +89,137 @@ jobs:
           # workflow_dispatch passes via inputs; repository_dispatch via
           # client_payload. Whichever fires populates this; the other is empty.
           AGENT_INPUT: ${{ github.event.inputs.agent || github.event.client_payload.agent }}
+          NETWORK_INPUT: ${{ github.event.inputs.network || github.event.client_payload.network }}
         run: |
           set -euo pipefail
 
-          # All seven trading agents share the Mantle Sepolia hub deployment.
-          # `mantle-sepolia-deployment.json` is the canonical address book
-          # (`apps/web/src/config/mantle-sepolia-deployment.json`); the
-          # `MANTLE_SEPOLIA_RPC_URL` secret must be set on the repo (see
-          # docs/KEEPER_OPERATIONS.md). Agent slugs map 1:1 to `agents/<slug>.md`.
+          # Per-network deployment/RPC mapping used by matrix entries.
+          sepolia_dep="apps/web/src/config/sepolia-deployment.json"
+          sepolia_rpc="SEPOLIA_RPC_URL"
           mantle_dep="apps/web/src/config/mantle-sepolia-deployment.json"
           mantle_rpc="MANTLE_SEPOLIA_RPC_URL"
 
-          mining_entry='{"agent":"mining-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          quality_entry='{"agent":"quality-matrix-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          treasurer_entry='{"agent":"rwa-treasurer","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          meth_entry='{"agent":"meth-carry-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          yield_entry='{"agent":"rwa-yield-router","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          funding_entry='{"agent":"funding-rate-harvester","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
-          smart_entry='{"agent":"smart-money-mirror-manager","network":"mantle-sepolia","deployment_config":"'"${mantle_dep}"'","rpc_url_secret":"'"${mantle_rpc}"'"}'
+          make_entry() {
+            local agent="$1"
+            local network="$2"
+            local dep rpc
+            case "${network}" in
+              sepolia)
+                dep="${sepolia_dep}"
+                rpc="${sepolia_rpc}"
+                ;;
+              mantle-sepolia)
+                dep="${mantle_dep}"
+                rpc="${mantle_rpc}"
+                ;;
+              *)
+                echo "Unsupported network '${network}'" >&2
+                exit 1
+                ;;
+            esac
+
+            if [ ! -f "${dep}" ]; then
+              echo "Missing deployment config for ${network}: ${dep}" >&2
+              exit 1
+            fi
+            # We can't read secrets here, but we can fail-fast by rejecting
+            # unknown/empty secret identifiers in matrix construction.
+            if [ -z "${rpc}" ]; then
+              echo "Missing RPC secret mapping for ${network}" >&2
+              exit 1
+            fi
+
+            printf '{"agent":"%s","network":"%s","deployment_config":"%s","rpc_url_secret":"%s"}' \
+              "${agent}" "${network}" "${dep}" "${rpc}"
+          }
+
+          resolve_networks() {
+            local input="${1:-}"
+            case "${input}" in
+              ""|"both")
+                echo "sepolia mantle-sepolia"
+                ;;
+              "sepolia"|"mantle-sepolia")
+                echo "${input}"
+                ;;
+              *)
+                echo "Unknown network input: ${input}. Expected one of: both, sepolia, mantle-sepolia" >&2
+                exit 1
+                ;;
+            esac
+          }
+
+          AGENTS=(
+            "mining-manager"
+            "quality-matrix-manager"
+            "rwa-treasurer"
+            "meth-carry-manager"
+            "rwa-yield-router"
+            "funding-rate-harvester"
+            "smart-money-mirror-manager"
+          )
+
+          selected_networks=($(resolve_networks "${NETWORK_INPUT}"))
+          include=""
+          append_entry() {
+            local entry="$1"
+            if [ -z "${include}" ]; then
+              include="[${entry}]"
+            else
+              include="${include%]} , ${entry}]"
+            fi
+          }
 
           # repository_dispatch may pass a single agent via client_payload.agent
           # (e.g. "mining-manager"); an empty payload falls through to the
           # round-robin schedule branch and runs ONE agent picked by `HOUR_UTC % 7`.
           # The `vault-manager` agent is retired from CI; passing it here will
           # fall through to the "Unknown agent input" branch.
-          if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ] || [ "${AGENT_INPUT}" = "all" ]; then
-            # Round-robin: one trading agent per :18 tick, indexed by UTC hour
-            # mod 7. Each agent therefore runs every 7h (~3.4x/day). This keeps
-            # a single hourly slot well inside the keeper-key concurrency window
-            # so vault-agent never queues out keeper.yml / update-prices.yml.
+          if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ]; then
+            # Round-robin: one agent+network pair per tick, indexed by UTC hour
+            # mod 14. This keeps scheduling deterministic and explicitly logs
+            # the network selected on each tick.
             HOUR_UTC=$(date -u +%H)
-            SLOT=$((10#${HOUR_UTC} % 7))
+            SLOT=$((10#${HOUR_UTC} % 14))
             case "${SLOT}" in
-              0) include="[${mining_entry}]" ;;
-              1) include="[${quality_entry}]" ;;
-              2) include="[${treasurer_entry}]" ;;
-              3) include="[${meth_entry}]" ;;
-              4) include="[${yield_entry}]" ;;
-              5) include="[${funding_entry}]" ;;
-              6) include="[${smart_entry}]" ;;
+              0) entry=$(make_entry "mining-manager" "sepolia") ;;
+              1) entry=$(make_entry "quality-matrix-manager" "sepolia") ;;
+              2) entry=$(make_entry "rwa-treasurer" "sepolia") ;;
+              3) entry=$(make_entry "meth-carry-manager" "sepolia") ;;
+              4) entry=$(make_entry "rwa-yield-router" "sepolia") ;;
+              5) entry=$(make_entry "funding-rate-harvester" "sepolia") ;;
+              6) entry=$(make_entry "smart-money-mirror-manager" "sepolia") ;;
+              7) entry=$(make_entry "mining-manager" "mantle-sepolia") ;;
+              8) entry=$(make_entry "quality-matrix-manager" "mantle-sepolia") ;;
+              9) entry=$(make_entry "rwa-treasurer" "mantle-sepolia") ;;
+              10) entry=$(make_entry "meth-carry-manager" "mantle-sepolia") ;;
+              11) entry=$(make_entry "rwa-yield-router" "mantle-sepolia") ;;
+              12) entry=$(make_entry "funding-rate-harvester" "mantle-sepolia") ;;
+              13) entry=$(make_entry "smart-money-mirror-manager" "mantle-sepolia") ;;
               *) echo "Unreachable slot ${SLOT}" >&2; exit 1 ;;
             esac
+            include="[${entry}]"
+          elif [ "${AGENT_INPUT}" = "all" ]; then
+            for n in "${selected_networks[@]}"; do
+              for a in "${AGENTS[@]}"; do
+                append_entry "$(make_entry "${a}" "${n}")"
+              done
+            done
           else
-            case "${AGENT_INPUT}" in
-              mining-manager)              include="[${mining_entry}]" ;;
-              quality-matrix-manager)      include="[${quality_entry}]" ;;
-              rwa-treasurer)               include="[${treasurer_entry}]" ;;
-              meth-carry-manager)          include="[${meth_entry}]" ;;
-              rwa-yield-router)            include="[${yield_entry}]" ;;
-              funding-rate-harvester)      include="[${funding_entry}]" ;;
-              smart-money-mirror-manager)  include="[${smart_entry}]" ;;
-              *) echo "Unknown agent input: ${AGENT_INPUT}" >&2; exit 1 ;;
-            esac
+            valid="0"
+            for a in "${AGENTS[@]}"; do
+              if [ "${a}" = "${AGENT_INPUT}" ]; then
+                valid="1"
+                break
+              fi
+            done
+            if [ "${valid}" != "1" ]; then
+              echo "Unknown agent input: ${AGENT_INPUT}" >&2
+              exit 1
+            fi
+            for n in "${selected_networks[@]}"; do
+              append_entry "$(make_entry "${AGENT_INPUT}" "${n}")"
+            done
           fi
 
           matrix="{\"include\":${include}}"
@@ -170,6 +251,22 @@ jobs:
         uses: ./.github/actions/setup-snx
         with:
           foundry: "true"
+
+      - name: Validate network inputs for this matrix row
+        env:
+          DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
+          RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
+          RPC_SECRET_NAME: ${{ matrix.rpc_url_secret }}
+        run: |
+          set -euo pipefail
+          if [ ! -f "${DEPLOYMENT_CONFIG}" ]; then
+            echo "Missing deployment config: ${DEPLOYMENT_CONFIG}" >&2
+            exit 1
+          fi
+          if [ -z "${RPC_URL}" ]; then
+            echo "Missing required secret for matrix row: ${RPC_SECRET_NAME}" >&2
+            exit 1
+          fi
 
       - name: Run Agent
         env:
