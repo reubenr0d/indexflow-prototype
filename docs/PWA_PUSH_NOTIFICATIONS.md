@@ -10,6 +10,11 @@ This document explains the installable PWA flow and the background push architec
   - push payload rendering via `showNotification`,
   - notification deep-link navigation on click.
 - `PwaBootstrap` registers the service worker at app boot.
+- Service worker updates are **fresh-first**:
+  - navigations always use network (no cached HTML shell),
+  - static assets may use stale-while-revalidate,
+  - when a new SW is waiting, the app shows a persistent "New version available" reload banner.
+- If a chunk/version mismatch occurs during boot, the app shows a recovery screen with retry + refresh actions instead of a blank page.
 - `/settings` exposes user notification controls and install guidance:
   - master push toggle,
   - digest toggle,
@@ -96,4 +101,3 @@ Digest:
 4. Trigger representative investor/operator events.
 5. Close app and verify background push is delivered.
 6. Open notification and verify deep-link routing.
-

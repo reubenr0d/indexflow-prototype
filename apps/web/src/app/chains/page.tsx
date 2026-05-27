@@ -5,6 +5,7 @@ import { Activity, AlertTriangle, CheckCircle, Clock } from "lucide-react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { ChainDistributionChart } from "@/components/chains/chain-visualizations";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { StatCard } from "@/components/ui/stat-card";
 import { usePoolReserveRegistryState } from "@/hooks/usePoolReserveRegistry";
 
@@ -96,11 +97,16 @@ export default function ChainsPage() {
                 <Activity className="h-5 w-5 text-app-accent" />
               </div>
               <p className="text-base font-medium text-app-text">No relay state indexed yet</p>
-              <p className="max-w-md text-sm text-app-muted">
-                {registryLoading
-                  ? "Loading state relay updates..."
-                  : "Once subgraphs index StateRelay updates, this view will populate automatically."}
-              </p>
+              {registryLoading ? (
+                <div className="w-full max-w-md space-y-2">
+                  <Skeleton className="mx-auto h-3 w-56" />
+                  <Skeleton className="mx-auto h-3 w-44" />
+                </div>
+              ) : (
+                <p className="max-w-md text-sm text-app-muted">
+                  Once subgraphs index StateRelay updates, this view will populate automatically.
+                </p>
+              )}
             </div>
           </Card>
         </section>

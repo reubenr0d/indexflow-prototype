@@ -68,6 +68,13 @@ NEXT_PUBLIC_PUSH_SERVICE_URL=https://<your-cloud-run-service-url>
 
 If unset or unavailable, the settings page falls back to wallet-scoped local storage.
 
+## App Updates and Loading UX
+
+- Production builds use a fresh-first service-worker strategy to avoid stale HTML/chunk mismatches after deploys.
+- When a new version is available, the app shows a persistent top banner with a one-click reload action.
+- If a boot-time chunk mismatch happens, a recovery UI is shown with retry/refresh controls (instead of a blank screen).
+- Core user routes use route-level structured loading states for smoother transitions.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

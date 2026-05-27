@@ -117,6 +117,10 @@ export const TOOLTIP_COPY = {
     "Embedded wallet signs silently in the background — no popup. Progress shows here in the card and in the floating transaction dock at the bottom right.",
   transactionDock:
     "Floating list of recent transactions. Open it any time to follow active signs, submitted txs, and on-chain confirmations across pages.",
+  appUpdateBanner:
+    "Appears when a newer deployed version is ready. Reloading applies the latest bundle and prevents stale-client errors.",
+  appRecoveryMode:
+    "Fallback screen shown when app boot fails due to chunk/version mismatch. Retry or refresh to recover.",
 
   // Multi-chain deposit flow
   multiChainDeposit:

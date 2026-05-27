@@ -8,6 +8,7 @@ import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YA
 import { ArrowLeft, Clock3 } from "lucide-react";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { StatusDot, getOracleStatus } from "@/components/ui/status-dot";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import {
@@ -183,7 +184,10 @@ export default function AssetPriceDetailPage() {
         <Card className="lg:col-span-2 p-5">
           <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-app-muted">Price Chart</h2>
           {isLoading ? (
-            <div className="flex h-[320px] items-center justify-center text-sm text-app-muted">Loading price history…</div>
+            <div className="space-y-3 py-2">
+              <Skeleton className="h-[240px] w-full" />
+              <Skeleton className="h-3 w-40" />
+            </div>
           ) : chartData.length === 0 ? (
             <div className="flex h-[320px] items-center justify-center text-sm text-app-muted">
               No price data in selected window.
@@ -251,7 +255,14 @@ export default function AssetPriceDetailPage() {
           <p className="mb-2 text-[11px] text-app-muted">On-chain oracle updates only.</p>
           <div className="max-h-[320px] overflow-auto">
             {isOnchainLoading ? (
-              <p className="text-sm text-app-muted">Loading updates…</p>
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="rounded-md border border-app-border bg-app-bg-subtle px-3 py-2">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="mt-2 h-3 w-44" />
+                  </div>
+                ))}
+              </div>
             ) : history.length === 0 ? (
               <p className="text-sm text-app-muted">No price updates in selected window.</p>
             ) : (

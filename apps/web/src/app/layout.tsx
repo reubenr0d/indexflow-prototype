@@ -7,6 +7,8 @@ import { PriceTickerHydrated } from "@/components/layout/price-ticker";
 import { fetchTickerData, type TickerAsset } from "@/lib/ticker.server";
 import { LogRocketBootstrap } from "@/components/analytics/logrocket-bootstrap";
 import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
+import { BootRecoveryGuard } from "@/components/pwa/boot-recovery-guard";
+import { RouteProgress } from "@/components/layout/route-progress";
 import { TourProvider } from "@/components/onboarding/tour-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -99,6 +101,8 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}` }} />
       </head>
       <body className="min-h-full bg-app-bg text-app-text">
+        <RouteProgress />
+        <BootRecoveryGuard />
         <LogRocketBootstrap />
         <PwaBootstrap />
         <Web3Provider>

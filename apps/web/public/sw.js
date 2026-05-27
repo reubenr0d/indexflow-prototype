@@ -1,13 +1,13 @@
-// e99a3f4 is replaced at build time by scripts/stamp-sw-version.mjs.
+// __SW_BUILD_STAMP__ is replaced at build time by scripts/stamp-sw-version.mjs.
 // Changing CACHE_VERSION causes the activate handler to purge stale caches.
-const CACHE_VERSION = "indexflow-shell-e99a3f4";
-const SHELL_ASSETS = ["/", "/dashboard", "/baskets", "/portfolio", "/settings"];
+const CACHE_VERSION = "indexflow-shell-__SW_BUILD_STAMP__";
+const STATIC_ASSETS = ["/manifest.webmanifest", "/icon.svg", "/favicon.ico"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_VERSION)
-      .then((cache) => cache.addAll(SHELL_ASSETS))
+      .then((cache) => cache.addAll(STATIC_ASSETS))
       .catch(() => undefined)
   );
   self.skipWaiting();
@@ -29,10 +29,22 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (url.pathname.startsWith("/_next/") || url.pathname.startsWith("/api/")) return;
+  if (url.pathname.startsWith("/api/")) return;
+  if (request.mode === "navigate") return;
+  if (url.pathname.startsWith("/_next/")) return;
 
-  // Stale-while-revalidate: serve cached response immediately for fast paint,
-  // then update the cache in the background so the next load is fresh.
+  const isStaticAsset =
+    request.destination === "image" ||
+    request.destination === "font" ||
+    request.destination === "style" ||
+    request.destination === "script" ||
+    url.pathname === "/manifest.webmanifest" ||
+    url.pathname.endsWith(".ico") ||
+    url.pathname.endsWith(".svg") ||
+    url.pathname.endsWith(".png");
+
+  if (!isStaticAsset) return;
+
   event.respondWith(
     caches.match(request).then((cached) => {
       const networkFetch = fetch(request)
@@ -45,12 +57,17 @@ self.addEventListener("fetch", (event) => {
               .catch(() => undefined);
           }
           return response;
-        })
-        .catch(() => caches.match("/"));
+        });
 
       return cached || networkFetch;
     })
   );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener("push", (event) => {

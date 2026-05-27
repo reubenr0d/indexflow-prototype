@@ -17,6 +17,10 @@ function resolveRelease(): string {
   );
 }
 
+export function getLogRocketRelease(): string {
+  return resolveRelease();
+}
+
 function resolveRootHostname(): string | undefined {
   const configured = process.env.NEXT_PUBLIC_LOGROCKET_ROOT_HOSTNAME?.trim();
   return configured && configured.length > 0 ? configured : undefined;

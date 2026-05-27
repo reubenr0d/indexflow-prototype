@@ -13,6 +13,7 @@ export const LEGACY_DOCS_SLUG_ALIASES: Record<string, string> = {
   "cross-chain": "cross-chain-coordination",
   "cross-chain-coordination": "cross-chain-coordination",
   "pwa-notifications": "pwa-push-notifications",
+  "app-updates": "pwa-push-notifications",
   "contracts-reference": "readme",
   troubleshooting: "readme",
   "security-risk": "readme",

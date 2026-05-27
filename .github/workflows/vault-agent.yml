@@ -12,8 +12,9 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # On a scheduled / empty-payload tick the matrix runs ONE agent+network
-  # pair picked by `HOUR_UTC % 14` (see setup-matrix below) so a single hourly
+  # On a scheduled / empty-payload tick the matrix runs ONE eligible
+  # agent+network pair picked by `HOUR_UTC % N` (see setup-matrix below),
+  # where N is the number of deployed pairs discovered from agent state.
   # slot can't exceed the keeper-key concurrency window. To dispatch a single agent
   # (optionally pinned to a network),
   # explicitly, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
@@ -82,6 +83,7 @@ jobs:
     outputs:
       matrix: ${{ steps.build.outputs.matrix }}
     steps:
+      - uses: actions/checkout@v4
       - name: Build matrix from trigger + inputs
         id: build
         env:
@@ -159,6 +161,46 @@ jobs:
             "smart-money-mirror-manager"
           )
 
+          state_path_for_agent() {
+            local agent="$1"
+            echo "agents/memory/${agent}/state.json"
+          }
+
+          state_deployment_path() {
+            local state_path="$1"
+            node -e 'const fs=require("fs"); const p=process.argv[1]; const s=JSON.parse(fs.readFileSync(p,"utf8")); process.stdout.write(String(s.deploymentConfigPath || ""));' "${state_path}"
+          }
+
+          is_agent_network_ready() {
+            local agent="$1"
+            local network="$2"
+            local expected_dep
+            case "${network}" in
+              sepolia) expected_dep="${sepolia_dep}" ;;
+              mantle-sepolia) expected_dep="${mantle_dep}" ;;
+              *) return 1 ;;
+            esac
+
+            local state_path
+            state_path="$(state_path_for_agent "${agent}")"
+            if [ ! -f "${state_path}" ]; then
+              return 1
+            fi
+
+            local state_dep
+            state_dep="$(state_deployment_path "${state_path}")"
+            if [ -z "${state_dep}" ]; then
+              return 1
+            fi
+
+            # state.json may contain absolute CI paths; compare filename only.
+            if [ "$(basename "${state_dep}")" != "$(basename "${expected_dep}")" ]; then
+              return 1
+            fi
+
+            return 0
+          }
+
           selected_networks=($(resolve_networks "${NETWORK_INPUT}"))
           include=""
           append_entry() {
@@ -172,37 +214,38 @@ jobs:
 
           # repository_dispatch may pass a single agent via client_payload.agent
           # (e.g. "mining-manager"); an empty payload falls through to the
-          # round-robin schedule branch and runs ONE agent picked by `HOUR_UTC % 7`.
+          # round-robin schedule branch and runs ONE eligible pair.
           # The `vault-manager` agent is retired from CI; passing it here will
           # fall through to the "Unknown agent input" branch.
           if [ "${EVENT_NAME}" = "schedule" ] || [ -z "${AGENT_INPUT}" ]; then
-            # Round-robin: one agent+network pair per tick, indexed by UTC hour
-            # mod 14. This keeps scheduling deterministic and explicitly logs
-            # the network selected on each tick.
+            # Round-robin: one eligible agent+network pair per tick, indexed by
+            # UTC hour modulo the number of deployed pairs discovered from
+            # state.json files.
+            eligible_entries=()
+            for n in "sepolia" "mantle-sepolia"; do
+              for a in "${AGENTS[@]}"; do
+                if is_agent_network_ready "${a}" "${n}"; then
+                  entry="$(make_entry "${a}" "${n}")"
+                  eligible_entries+=("${entry}")
+                fi
+              done
+            done
+            if [ "${#eligible_entries[@]}" -eq 0 ]; then
+              echo "No deployed agent-network pairs discovered in agents/memory/*/state.json" >&2
+              exit 1
+            fi
             HOUR_UTC=$(date -u +%H)
-            SLOT=$((10#${HOUR_UTC} % 14))
-            case "${SLOT}" in
-              0) entry=$(make_entry "mining-manager" "sepolia") ;;
-              1) entry=$(make_entry "quality-matrix-manager" "sepolia") ;;
-              2) entry=$(make_entry "rwa-treasurer" "sepolia") ;;
-              3) entry=$(make_entry "meth-carry-manager" "sepolia") ;;
-              4) entry=$(make_entry "rwa-yield-router" "sepolia") ;;
-              5) entry=$(make_entry "funding-rate-harvester" "sepolia") ;;
-              6) entry=$(make_entry "smart-money-mirror-manager" "sepolia") ;;
-              7) entry=$(make_entry "mining-manager" "mantle-sepolia") ;;
-              8) entry=$(make_entry "quality-matrix-manager" "mantle-sepolia") ;;
-              9) entry=$(make_entry "rwa-treasurer" "mantle-sepolia") ;;
-              10) entry=$(make_entry "meth-carry-manager" "mantle-sepolia") ;;
-              11) entry=$(make_entry "rwa-yield-router" "mantle-sepolia") ;;
-              12) entry=$(make_entry "funding-rate-harvester" "mantle-sepolia") ;;
-              13) entry=$(make_entry "smart-money-mirror-manager" "mantle-sepolia") ;;
-              *) echo "Unreachable slot ${SLOT}" >&2; exit 1 ;;
-            esac
+            SLOT=$((10#${HOUR_UTC} % ${#eligible_entries[@]}))
+            entry="${eligible_entries[${SLOT}]}"
             include="[${entry}]"
           elif [ "${AGENT_INPUT}" = "all" ]; then
             for n in "${selected_networks[@]}"; do
               for a in "${AGENTS[@]}"; do
-                append_entry "$(make_entry "${a}" "${n}")"
+                if ! is_agent_network_ready "${a}" "${n}"; then
+                  continue
+                fi
+                entry="$(make_entry "${a}" "${n}")"
+                append_entry "${entry}"
               done
             done
           else
@@ -218,8 +261,18 @@ jobs:
               exit 1
             fi
             for n in "${selected_networks[@]}"; do
-              append_entry "$(make_entry "${AGENT_INPUT}" "${n}")"
+              if ! is_agent_network_ready "${AGENT_INPUT}" "${n}"; then
+                echo "Agent ${AGENT_INPUT} is not deployed on ${n} (missing or mismatched agents/memory/${AGENT_INPUT}/state.json)" >&2
+                exit 1
+              fi
+              entry="$(make_entry "${AGENT_INPUT}" "${n}")"
+              append_entry "${entry}"
             done
+          fi
+
+          if [ -z "${include}" ]; then
+            echo "No deployed agent-network pairs matched inputs: agent=${AGENT_INPUT:-<empty>}, network=${NETWORK_INPUT:-<empty>}" >&2
+            exit 1
           fi
 
           matrix="{\"include\":${include}}"
