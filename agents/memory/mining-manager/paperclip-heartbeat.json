@@ -7,71 +7,73 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-26T08:47:49.653Z",
-  "startedAt": "2026-05-26T08:44:01.038Z",
-  "finishedAt": "2026-05-26T08:47:49.653Z",
-  "status": "succeeded",
+  "runId": "2026-05-27T09:33:11.497Z",
+  "startedAt": "2026-05-27T09:30:20.680Z",
+  "finishedAt": "2026-05-27T09:33:11.497Z",
+  "status": "succeeded_with_errors",
   "usage": {
     "turns": 11,
-    "toolCalls": 19,
-    "errors": 0,
-    "softFailures": 4,
-    "writeActions": 7
+    "toolCalls": 18,
+    "errors": 1,
+    "softFailures": 3,
+    "writeActions": 6
   },
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.",
-  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.\n\n#### Vault Address and State\n- **Vault Address",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No short positions were opened due to the lack of bearish news and the current metals risk-on regime.",
+  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $10,381.00 USDC\n- **Perp Allocated**: $7,690.35 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 12\n\n#### Actions Taken\n- **Opened Long Positions**: Successfully opened long positions on the following assets:\n  - **AbraSilver Resource (ABRA.TO)**: $34,603.33 notional, $3,460.33 collateral\n  - **Empire Metals Limited (EEE.L)**: $34,603.33 notional, $3,460.33 collateral\n  -",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0x790a7d5b935581f2fc52f6df86e58adfff9b2737f570597ac208e84352c4bf7f",
-      "justification": "auto-rebalance: rank rotation: closing #3 CUU.V (pnl 0.00%) to free room for #4 BIG.V"
+      "txHash": "0x515ed74973a0d234a9bbb498995aa626ee08d2c1454626ca6574c9fb90c67f4d",
+      "justification": "auto-rebalance: rank rotation: closing #3 CUU.V (pnl 0.00%) to free room for #4 BIG.V",
+      "kind": "vault-tx"
     },
     {
       "tool": "close_position",
-      "txHash": "0x4cbe3e10849f2b6dd65b9d109be197bbd2990ee0c09da6ef21d7cac4ca295996",
-      "justification": "auto-rebalance: rank rotation: closing #2 EEE.L (pnl 0.00%) to free room for #5 USA.TO"
+      "txHash": "0xafa6527f253b94d9037d146d8a011fb3c8415544c8a5b5c185e3eee337bf2f76",
+      "justification": "auto-rebalance: rank rotation: closing #2 EEE.L (pnl 0.00%) to free room for #5 USA.TO",
+      "kind": "vault-tx"
     },
     {
       "tool": "close_position",
-      "txHash": "0x436e03382b9c7fded169885a58de9568713c94a9db64c38f3dea7a3daf6bfbc1",
-      "justification": "auto-rebalance: rank rotation: closing #1 ABRA.TO (pnl 0.00%) to free room for #6 FFM.TO"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Surge Copper Corp. (SURG.V) as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The wiring of SURG.V aligns with the metals_risk_on regime and does not conflict with recent post-mortems or available collateral constraints."
-      }
+      "txHash": "0xffed75fcd922af73983f2d6d749f63372d2bb4dcf01bd185b616e5475cb31377",
+      "justification": "auto-rebalance: rank rotation: closing #1 ABRA.TO (pnl 0.00%) to free room for #6 FFM.TO",
+      "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x74743c8b28d0ac88bc6bad708d33a1949bae39f7358a28540c7311fdf8356cc0",
-      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) due to strong ML signal and alignment with current top picks. Churn-guard bypass active for re-entry.",
+      "txHash": "0x66e9c225b63c86df2e65afa4180aae9b375b86a2feb17e1e65ef6313cc40ec6b",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new positions is 33.4% of available collateral ($8487.79), within safe limits and aligned with metals_risk_on regime."
-      }
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      },
+      "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x5cded012fb65945e5f99b7884252b6b69062f43884f47204b35a90e24fbf170a",
-      "justification": "Opening long position on Empire Metals Limited (EEE.L) due to strong ML signal and alignment with current top picks. Churn-guard bypass active for re-entry.",
+      "txHash": "0x808c77887682391aabf4b732022442cfd2e4f00fe57cfea434183dff71cfa57a",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new positions is 33.4% of available collateral ($8487.79), within safe limits and aligned with metals_risk_on regime."
-      }
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      },
+      "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x31f80422832bc18d4c25266e04d5058f9b88374e16c0017814950adc25f15949",
-      "justification": "Opening long position on Copper Fox Metals Inc. (CUU.V) due to strong ML signal and alignment with current top picks. Churn-guard bypass active for re-entry.",
+      "txHash": "0xe4cad6ab6061fa5f350b212dbcc13c7c49c82f3cb190fc127dc4542e6bc31751",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new positions is 33.4% of available collateral ($8487.79), within safe limits and aligned with metals_risk_on regime."
-      }
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      },
+      "kind": "vault-tx"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "yfinance_news",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool yfinance_news: [\n  {\n    \"code\": \"too_big\",\n    \"maximum\": 10,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at most 10 element(s)\",\n    \"path\": [\n      \"symbols\"\n    ]\n  }\n]"
+    }
+  ]
 }

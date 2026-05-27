@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:3a59303d1d6ec6c48baebcf8d42ccbf9eda082aea91a1e8d206bffff59f29692",
+  "agentFileHash": "sha256:3e9e6e5f742423887aeb6e4cf105de1edc52f8666367b6757371fd204c0ee30c",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:15:21.593Z",
-  "lastRunAt": "2026-05-26T08:47:49.653Z",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.",
-  "lastThesisUpdate": "2026-05-26T08:47:49.653Z"
+  "lastRunAt": "2026-05-27T09:33:11.497Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No short positions were opened due to the lack of bearish news and the current metals risk-on regime.",
+  "lastThesisUpdate": "2026-05-27T09:33:11.497Z"
 }

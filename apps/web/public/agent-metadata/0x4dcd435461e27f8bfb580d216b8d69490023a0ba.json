@@ -4,14 +4,116 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.",
-  "lastRunAt": "2026-05-26T08:47:49.653Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors. No short positions were opened due to the lack of bearish news and the current metals risk-on regime.",
+  "lastRunAt": "2026-05-27T09:33:11.497Z",
   "latestRun": {
-    "runId": "2026-05-26T08:47:49.653Z",
-    "finishedAt": "2026-05-26T08:47:49.653Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, copper, and gold. The top picks include AbraSilver Resource (ABRA.TO), Empire Metals Limited (EEE.L), and Copper Fox Metals Inc. (CUU.V), all of which show high ML scores and strong predicted returns. This aligns well with current market conditions that favor stability and growth potential in these sectors.\n\n#### Vault Address and State\n- **Vault Address"
+    "runId": "2026-05-27T09:33:11.497Z",
+    "finishedAt": "2026-05-27T09:33:11.497Z",
+    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $10,381.00 USDC\n- **Perp Allocated**: $7,690.35 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 12\n\n#### Actions Taken\n- **Opened Long Positions**: Successfully opened long positions on the following assets:\n  - **AbraSilver Resource (ABRA.TO)**: $34,603.33 notional, $3,460.33 collateral\n  - **Empire Metals Limited (EEE.L)**: $34,603.33 notional, $3,460.33 collateral\n  -"
   },
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #3 CUU.V (pnl 0.00%) to free room for #4 BIG.V",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0x515ed74973a0d234a9bbb498995aa626ee08d2c1454626ca6574c9fb90c67f4d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x792d36d7169db72bf3dbfd4767c4ccfc2d7c4631289f824556373106a32652de",
+        "isLong": true,
+        "sizeDelta": "29222361040000000000000000000000000",
+        "collateralDelta": "2922236104"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #2 EEE.L (pnl 0.00%) to free room for #5 USA.TO",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0xafa6527f253b94d9037d146d8a011fb3c8415544c8a5b5c185e3eee337bf2f76",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+        "isLong": true,
+        "sizeDelta": "29222361040000000000000000000000000",
+        "collateralDelta": "2922236104"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: rank rotation: closing #1 ABRA.TO (pnl 0.00%) to free room for #6 FFM.TO",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0xffed75fcd922af73983f2d6d749f63372d2bb4dcf01bd185b616e5475cb31377",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "sizeDelta": "29222361040000000000000000000000000",
+        "collateralDelta": "2922236104"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0x66e9c225b63c86df2e65afa4180aae9b375b86a2feb17e1e65ef6313cc40ec6b",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "34603328890000000000000000000000000",
+        "collateral": "3460332889"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0x808c77887682391aabf4b732022442cfd2e4f00fe57cfea434183dff71cfa57a",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+        "isLong": true,
+        "size": "34603328890000000000000000000000000",
+        "collateral": "3460332889"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Reopening due to strong ML signal and strategic alignment with current market conditions.",
+      "timestamp": "2026-05-27T09:33:11.497Z",
+      "txHash": "0xe4cad6ab6061fa5f350b212dbcc13c7c49c82f3cb190fc127dc4542e6bc31751",
+      "agentName": "mining-manager",
+      "runId": "2026-05-27T09:33:11.497Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x792d36d7169db72bf3dbfd4767c4ccfc2d7c4631289f824556373106a32652de",
+        "isLong": true,
+        "size": "34603328890000000000000000000000000",
+        "collateral": "3460332889"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All positions are long in a 'metals_risk_on' regime with 0 short penalty and 0 long bonus; collateral per position is 33.3% of available collateral."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: rank rotation: closing #3 CUU.V (pnl 0.00%) to free room for #4 BIG.V",
@@ -1715,100 +1817,6 @@
           "afterSize": "6646142782500000000000000000000000",
           "downsizeFactor": 0.75
         }
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #3 PWM.V (pnl 0.00%) to free room for #4 0KXS.L",
-      "timestamp": "2026-05-24T15:35:51.563Z",
-      "txHash": "0xec55742d78f53b9561bded12a21a9b1660711e619d30b8d41e85cb799cfa813e",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T15:35:51.563Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
-        "isLong": true,
-        "sizeDelta": "6877472782500000000000000000000000",
-        "collateralDelta": "687747278"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #5 CRML",
-      "timestamp": "2026-05-24T15:35:51.563Z",
-      "txHash": "0x5de3b579ea24a74e68a348b9611ef95a50ebd941b9168676d5f314e164d00308",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T15:35:51.563Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "6877472782500000000000000000000000",
-        "collateralDelta": "687747278"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #6 EEE.L",
-      "timestamp": "2026-05-24T15:35:51.563Z",
-      "txHash": "0x30cd5534c01707e24a5387255472e736c8850f280684edf45c1eaf868fdfc980",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T15:35:51.563Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "6877472782500000000000000000000000",
-        "collateralDelta": "687747278"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to strong ML signals and high predicted returns.",
-      "timestamp": "2026-05-24T15:35:51.563Z",
-      "txHash": "0xbba973a1decd24ab6ea6064dcb0dc45f2e5919d425ae021ae4803a91ca277d8f",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T15:35:51.563Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "size": "1000000000000000000000000000000000",
-        "collateral": "100000000"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed long position on AHR.V uses 3.6% of available collateral ($100,000 of $2,758,460), which is within acceptable limits."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #2 GSR.V (pnl 0.00%) to free room for #3 PWM.V",
-      "timestamp": "2026-05-24T14:03:37.249Z",
-      "txHash": "0x169bbd53e0524feddc458d0deec49236bf13fca447d5b940cf77f7f934b3c6ea",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T14:03:37.249Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
-        "isLong": true,
-        "sizeDelta": "9169963710000000000000000000000000",
-        "collateralDelta": "916996371"
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: rank rotation: closing #1 AHR.V (pnl 0.00%) to free room for #4 0KXS.L",
-      "timestamp": "2026-05-24T14:03:37.249Z",
-      "txHash": "0x2f241a48e6471e2c7b03db95aace5121e0e16298a17bd194ef7faed03f006447",
-      "agentName": "mining-manager",
-      "runId": "2026-05-24T14:03:37.249Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-        "isLong": true,
-        "sizeDelta": "9169963710000000000000000000000000",
-        "collateralDelta": "916996371"
       }
     }
   ]
