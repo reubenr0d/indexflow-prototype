@@ -22,6 +22,7 @@ import { SegmentedControl } from "@/components/ui/segmented-control";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBasketsOverviewQuery } from "@/hooks/subgraph/useBasketOverview";
 import { useMultiChainBaskets } from "@/hooks/useMultiChainBaskets";
+import { deploymentLabel } from "@/lib/deployment";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { type ComponentType } from "react";
 
@@ -44,7 +45,7 @@ export default function BasketsPage() {
   const [sort, setSort] = useState<SortKey>("tvl");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<Set<BasketListFilterKey>>(new Set());
-  const { viewMode } = useDeploymentTarget();
+  const { viewMode, target, isSubgraphEnabled } = useDeploymentTarget();
   const isAllChains = viewMode === "all";
 
   const multiChain = useMultiChainBaskets();
@@ -224,7 +225,11 @@ export default function BasketsPage() {
           <p className="max-w-md text-sm text-app-muted">
             {search || filters.size > 0
               ? "Try a different search term or clear filters to widen the results."
-              : "Create your first basket to get started."}
+              : isSubgraphEnabled && !isAllChains
+                ? `No baskets indexed on ${deploymentLabel(target)} yet. Use the network menu to switch to Sepolia, Fuji, or All Chains.`
+                : isSubgraphEnabled && isAllChains
+                  ? "No baskets are indexed yet. Create a basket on Sepolia or Fuji to get started."
+                  : "Create your first basket to get started."}
           </p>
         </div>
       )}

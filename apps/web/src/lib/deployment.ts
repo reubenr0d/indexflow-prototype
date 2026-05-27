@@ -29,7 +29,8 @@ export type DeploymentConfig = {
 
 export const DEPLOYMENT_TARGET_STORAGE_KEY = "indexflow:deployment-target";
 export const VIEW_MODE_STORAGE_KEY = "indexflow:view-mode";
-export const DEFAULT_DEPLOYMENT_TARGET: DeploymentTarget = "mantle-sepolia";
+/** Sepolia has live indexed baskets; Mantle Sepolia is indexed but has none yet. */
+export const DEFAULT_DEPLOYMENT_TARGET: DeploymentTarget = "sepolia";
 
 // Built from config/chains.json – add entries here when new chains are onboarded.
 const CHAINS_JSON: Record<string, ChainConfig> = {
