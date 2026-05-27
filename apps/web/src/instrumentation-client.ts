@@ -1,6 +1,9 @@
 import * as Sentry from "@sentry/nextjs";
+import { initLogRocket } from "@/lib/logrocket";
 
 const isDev = process.env.NODE_ENV === "development";
+
+initLogRocket();
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,

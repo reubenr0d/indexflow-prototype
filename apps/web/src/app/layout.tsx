@@ -5,6 +5,7 @@ import { Web3Provider } from "@/providers/Web3Provider";
 import { Footer } from "@/components/layout/footer";
 import { PriceTickerHydrated } from "@/components/layout/price-ticker";
 import { fetchTickerData, type TickerAsset } from "@/lib/ticker.server";
+import { LogRocketBootstrap } from "@/components/analytics/logrocket-bootstrap";
 import { PwaBootstrap } from "@/components/pwa/pwa-bootstrap";
 import { TourProvider } from "@/components/onboarding/tour-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -98,6 +99,7 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}` }} />
       </head>
       <body className="min-h-full bg-app-bg text-app-text">
+        <LogRocketBootstrap />
         <PwaBootstrap />
         <Web3Provider>
           <TourProvider>

@@ -3,6 +3,7 @@
 import * as Sentry from "@sentry/nextjs";
 import NextError from "next/error";
 import { useEffect } from "react";
+import { captureLogRocketException } from "@/lib/logrocket";
 
 export default function GlobalError({
   error,
@@ -13,6 +14,10 @@ export default function GlobalError({
 }) {
   useEffect(() => {
     Sentry.captureException(error);
+    captureLogRocketException(error, {
+      tags: { surface: "global-error" },
+      extra: { digest: error.digest ?? "" },
+    });
   }, [error]);
 
   return (

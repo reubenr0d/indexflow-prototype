@@ -12,6 +12,7 @@ import {
 } from "viem";
 import { useConfig } from "wagmi";
 import { getPublicClient } from "@wagmi/core";
+import { trackLogRocketEvent } from "@/lib/logrocket";
 
 import { BasketFactoryABI } from "@/abi/BasketFactory";
 import { BasketVaultABI } from "@/abi/BasketVault";
@@ -294,6 +295,11 @@ export function useCreateMultichainBasket() {
           status: "success",
           vaultAddress: hubVault,
           createTxHash: hubCreateTxHash,
+        });
+        trackLogRocketEvent("BasketCreated", {
+          hubTarget: opts.hubTarget,
+          vaultAddress: hubVault,
+          name: opts.name,
         });
         setState((prev) => ({ ...prev, hubVaultAddress: hubVault }));
       } catch (err) {

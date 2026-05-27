@@ -10,6 +10,7 @@ import { privyAppId } from "@/config/privy";
 import { DeploymentProvider } from "@/providers/DeploymentProvider";
 import { useAutoSwitchChain } from "@/hooks/useAutoSwitchChain";
 import { queryClient } from "@/providers/query-client";
+import { LogRocketIdentifyWallet } from "@/components/analytics/logrocket-identify";
 import { TransactionStatusProvider } from "@/providers/TransactionStatusProvider";
 import dynamic from "next/dynamic";
 
@@ -54,6 +55,7 @@ function FallbackWeb3ProviderInner({ children }: { children: React.ReactNode }) 
       <QueryClientProvider client={queryClient}>
         {isE2ETestMode && <AutoConnectE2EWallet />}
         <AutoSwitchFallbackChain />
+        <LogRocketIdentifyWallet />
         <TransactionStatusProvider>{children}</TransactionStatusProvider>
       </QueryClientProvider>
     </WagmiProviderNative>

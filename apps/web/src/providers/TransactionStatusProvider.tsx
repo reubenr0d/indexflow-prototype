@@ -11,6 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { useWaitForTransactionReceipt, useConfig } from "wagmi";
+import { trackLogRocketEvent } from "@/lib/logrocket";
 
 export type TxKind =
   | "approve"
@@ -254,8 +255,26 @@ function makeTxId(): string {
   return `tx_${Date.now().toString(36)}_${txIdCounter}`;
 }
 
+function trackTxOutcome(
+  record: TxRecord | undefined,
+  status: "confirmed" | "failed",
+  error?: string,
+) {
+  if (!record) return;
+  trackLogRocketEvent(
+    status === "confirmed" ? "TransactionConfirmed" : "TransactionFailed",
+    {
+      kind: record.kind,
+      ...(record.chainId != null ? { chainId: record.chainId } : {}),
+      ...(error ? { error } : {}),
+    },
+  );
+}
+
 export function TransactionStatusProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(txStoreReducer, initialTxStoreState);
+  const recordsRef = useRef(state.records);
+  recordsRef.current = state.records;
   const wagmiConfig = useConfig();
 
   const getExplorerUrl = useCallback(
@@ -308,6 +327,8 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
   const completeTx = useCallback<
     TransactionActionsContextValue["completeTx"]
   >((id, { hash }) => {
+    const record = recordsRef.current.find((r) => r.id === id);
+    trackTxOutcome(record, "confirmed");
     dispatch({
       type: "complete",
       payload: { id, status: "confirmed", hash },
@@ -316,6 +337,8 @@ export function TransactionStatusProvider({ children }: { children: ReactNode })
 
   const failTx = useCallback<TransactionActionsContextValue["failTx"]>(
     (id, error) => {
+      const record = recordsRef.current.find((r) => r.id === id);
+      trackTxOutcome(record, "failed", error);
       dispatch({
         type: "complete",
         payload: { id, status: "failed", error },
