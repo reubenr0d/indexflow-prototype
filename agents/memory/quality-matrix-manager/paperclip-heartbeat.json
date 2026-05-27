@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-05-27T10:17:52.524Z",
-  "startedAt": "2026-05-27T10:16:13.032Z",
-  "finishedAt": "2026-05-27T10:17:52.524Z",
+  "runId": "2026-05-27T10:41:22.954Z",
+  "startedAt": "2026-05-27T10:40:11.838Z",
+  "finishedAt": "2026-05-27T10:41:22.954Z",
   "status": "succeeded",
   "usage": {
     "turns": 4,
@@ -18,8 +18,8 @@
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "This run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The absence of new trade-ready picks suggests that the market conditions or data completeness may not be favorable for new entries at this moment. We will continue to monitor the quality matrix and market news for any changes that could provide new opportunities.",
-  "summary": "There are currently no open positions in the vault, so no closures are necessary at this time.\n\n## Thesis\nThis run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The absence of new trade-ready picks suggests that the market conditions or data completeness may not be favorable for new entries a",
+  "thesis": "This run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The current metals regime is \"metals_risk_on,\" which suggests a favorable environment for miners, but without fresh trade-ready picks, no new positions were opened.",
+  "summary": "## Thesis\n\nThis run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The current metals regime is \"metals_risk_on,\" which suggests a favorable environment for miners, but without fresh trade-ready picks, no new positions were opened. \n\n### Current Vault State\n\n- **Vault Name**: Minestarters Qual",
   "writeActions": [],
   "errors": []
 }

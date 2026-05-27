@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-21T13:21:34.028Z",
-  "lastRunAt": "2026-05-27T10:17:52.524Z",
-  "thesis": "This run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The absence of new trade-ready picks suggests that the market conditions or data completeness may not be favorable for new entries at this moment. We will continue to monitor the quality matrix and market news for any changes that could provide new opportunities.",
-  "lastThesisUpdate": "2026-05-27T10:17:52.524Z"
+  "lastRunAt": "2026-05-27T10:41:22.954Z",
+  "thesis": "This run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on future signals that meet the criteria for high trade readiness. The current metals regime is \"metals_risk_on,\" which suggests a favorable environment for miners, but without fresh trade-ready picks, no new positions were opened.",
+  "lastThesisUpdate": "2026-05-27T10:41:22.954Z"
 }
