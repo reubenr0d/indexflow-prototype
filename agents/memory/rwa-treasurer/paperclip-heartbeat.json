@@ -1,0 +1,86 @@
+{
+  "schema": "paperclip.heartbeat/v1",
+  "agentName": "rwa-treasurer",
+  "agentDescription": "Non-trading RWA reserve treasurer that keeps each Mantle BasketVault's idle USDC parked in the configured reserve token (USDY / mUSD / mETH) at the policy target bps, sized to clear the pending redemption queue",
+  "signalSource": null,
+  "entryMode": "rwa_target",
+  "network": "default",
+  "vaultAddress": "0xd95a7ea0d86810c9e8e6ec4b0d8c16fb38474fb0",
+  "vaultName": "IndexFlow USDY Treasurer",
+  "runId": "2026-05-27T11:13:22.647Z",
+  "startedAt": "2026-05-27T10:57:50.305Z",
+  "finishedAt": "2026-05-27T11:13:22.647Z",
+  "status": "succeeded_with_errors",
+  "usage": {
+    "turns": 18,
+    "toolCalls": 19,
+    "errors": 15,
+    "softFailures": 1,
+    "writeActions": 0
+  },
+  "thesis": null,
+  "summary": "",
+  "writeActions": [],
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xd95a7ea0d86810c9e8e6ec4b0d8c16fb38474fb0 rwaAdapter()(address) --rpc-url mantle_sepolia\\nError: contract 0xd95a7ea0d86810c9e8e6ec4b0d8c16fb38474fb0 does not have any code\\n\"\n}"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    }
+  ]
+}

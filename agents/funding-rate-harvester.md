@@ -39,7 +39,6 @@ candidateSymbols:
   - DOGE-USD
 rebalanceMode: spread_band
 minHoldingHours: 8
-takeProfitPct: null
 stopLossPct: 0.08
 v2BybitExecution: false
 network: mantle-sepolia

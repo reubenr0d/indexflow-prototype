@@ -1,0 +1,9 @@
+{
+  "vaultAddress": "0xd95a7ea0d86810c9e8e6ec4b0d8c16fb38474fb0",
+  "vaultName": "IndexFlow USDY Treasurer",
+  "agentFileHash": "sha256:98aeb826db5549786250ba8f38a163ae641704e4f099d6f692c363765af73ae0",
+  "deploymentFingerprint": "sha256:f30184c50f6e2a121d3cfe5ff5162ae1fbca54cb3005f54318f71ff87e34e047",
+  "deploymentConfigPath": null,
+  "deployedAt": "2026-05-27T10:57:50.305Z",
+  "lastRunAt": "2026-05-27T11:13:22.647Z"
+}

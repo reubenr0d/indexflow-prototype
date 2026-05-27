@@ -35,8 +35,6 @@ maxTrackedAssets: 1
 trackedSymbol: ETH-USD
 rebalanceMode: hedge_band
 minHoldingHours: 12
-takeProfitPct: null
-stopLossPct: null
 network: mantle-sepolia
 ---
 

@@ -1,0 +1,15 @@
+{
+  "isAiManaged": true,
+  "agentName": "rwa-treasurer",
+  "agentDescription": "Non-trading RWA reserve treasurer that keeps each Mantle BasketVault's idle USDC parked in the configured reserve token (USDY / mUSD / mETH) at the policy target bps, sized to clear the pending redemption queue",
+  "signalSource": null,
+  "entryMode": "rwa_target",
+  "thesis": null,
+  "lastRunAt": "2026-05-27T11:13:22.647Z",
+  "latestRun": {
+    "runId": "2026-05-27T11:13:22.647Z",
+    "finishedAt": "2026-05-27T11:13:22.647Z",
+    "summary": ""
+  },
+  "recentActions": []
+}
