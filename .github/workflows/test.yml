@@ -16,6 +16,22 @@ env:
 # npm ci requires package-lock.json in the repo root; keep it committed.
 
 jobs:
+  vault_agent_matrix_preflight:
+    name: Vault-Agent Matrix Preflight
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: Validate vault-agent matrix resolution
+        env:
+          EVENT_NAME: workflow_dispatch
+          AGENT_INPUT: all
+          NETWORK_INPUT: both
+        run: node scripts/vault-agent-matrix.mjs --strict-empty
+
   build:
     name: Build
     runs-on: ubuntu-latest

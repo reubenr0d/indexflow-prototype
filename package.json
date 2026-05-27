@@ -43,6 +43,7 @@
     "local:dev": "npm --prefix apps/web run dev",
     "redeploy:local": "sh scripts/local/redeploy.sh",
     "agent:run": "node scripts/agent-runner.mjs",
+    "agent:matrix:preflight": "EVENT_NAME=workflow_dispatch AGENT_INPUT=all NETWORK_INPUT=both node scripts/vault-agent-matrix.mjs --strict-empty",
     "agent:vault": "node scripts/agent-runner.mjs vault-manager",
     "agent:vault:dry": "AGENT_DRY_RUN=1 node scripts/agent-runner.mjs vault-manager",
     "sync:paperclip": "node scripts/sync-paperclip-mirror.mjs",
