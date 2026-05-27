@@ -17,15 +17,21 @@ function resolveRelease(): string {
   );
 }
 
+function resolveRootHostname(): string | undefined {
+  const configured = process.env.NEXT_PUBLIC_LOGROCKET_ROOT_HOSTNAME?.trim();
+  return configured && configured.length > 0 ? configured : undefined;
+}
+
 let initialized = false;
 
 /** Client-only. Safe to call multiple times. */
 export function initLogRocket(): void {
   if (typeof window === "undefined" || initialized || !isLogRocketEnabled()) return;
 
+  const rootHostname = resolveRootHostname();
   LogRocket.init(LOGROCKET_APP_ID, {
     release: resolveRelease(),
-    rootHostname: "indexflow.org",
+    ...(rootHostname ? { rootHostname } : {}),
   });
 
   initialized = true;
