@@ -1,398 +1,308 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-27T09:31:59.482Z",
+  "updatedAt": "2026-05-27T10:13:10.167Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "BHP.AX": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CUU.V": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "0KXS.L": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BIG.V": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "GSR.V": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FFM.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "USA.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "HHH.V": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SURG.V": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "PPP.V": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TEX.CN": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "TNR.V": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
+          ]
+        },
+        {
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DVN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "LUN.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-27T10:13:10.167Z",
       "headlines": [
         {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
+          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
+          "publishedAt": "2026-05-27T10:08:15.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
+            "OXY"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SXGC.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.366Z",
-      "headlines": [
-        {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         },
         {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
+          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
+          "publishedAt": "2026-05-27T10:07:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CDW",
-            "FDS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AEM.TO": {
-      "fetchedAt": "2026-05-27T09:31:59.482Z",
-      "headlines": [
-        {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDW",
-            "FDS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-27T09:31:59.482Z",
-      "headlines": [
-        {
-          "title": "Hyosung TNC highlights bio-spandex progress at 2026 Global Fashion Summit",
-          "publisher": "Just Style",
-          "link": "https://finance.yahoo.com/m/e8e789e4-59fe-3799-b528-b0b079c9f047/hyosung-tnc-highlights.html",
-          "publishedAt": "2026-05-27T09:31:12.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "MR MIKES enters Atlantic Canada with six-store franchise deal",
-          "publisher": "Verdict Food Service",
-          "link": "https://finance.yahoo.com/m/637703bc-7170-3b24-b2d7-6fbd5d3ab30b/mr-mikes-enters-atlantic.html",
-          "publishedAt": "2026-05-27T09:30:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JPMorgan Upgrades CDW to Overweight From Neutral, Price Target is $130",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jpmorgan-upgrades-cdw-overweight-neutral-092945161.html",
-          "publishedAt": "2026-05-27T09:29:45.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDW",
-            "FDS"
+            "DVN"
           ]
         }
       ],
