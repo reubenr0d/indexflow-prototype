@@ -497,6 +497,7 @@ Runtime note:
 
 - The web app and push-worker both read from one Envio endpoint. When `NEXT_PUBLIC_ENVIO_URL` is unset, indexer-backed UI views fall back to RPC data paths; the push-worker `/v1/push/dispatch` endpoint returns `500` until `ENVIO_URL` is configured.
 - The "All Chains" view aggregates data from all chains the indexer covers, served by the same endpoint.
+- If "All Chains" shows no indexed baskets while baskets exist onchain (for example on Mantle Sepolia), verify the active Envio deployment has that network enabled with correct addresses/start blocks and required RPC env vars.
 
 ## Operations
 

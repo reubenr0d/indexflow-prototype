@@ -228,7 +228,7 @@ export default function BasketsPage() {
               : isSubgraphEnabled && !isAllChains
                 ? `No baskets indexed on ${deploymentLabel(target)} yet. Use the network menu to switch to Sepolia, Fuji, or All Chains.`
                 : isSubgraphEnabled && isAllChains
-                  ? "No baskets are indexed yet. Create a basket on Sepolia or Fuji to get started."
+                  ? "No baskets are indexed yet. This can happen when a chain deploy is newer than indexer sync/config. Verify Envio deployment network coverage and start blocks."
                   : "Create your first basket to get started."}
           </p>
         </div>

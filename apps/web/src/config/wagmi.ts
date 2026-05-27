@@ -1,6 +1,6 @@
 import { createConfig, http, mock } from "wagmi";
 import { arbitrum, arbitrumSepolia, sepolia, anvil } from "wagmi/chains";
-import { avalancheFuji } from "viem/chains";
+import { avalancheFuji, mantleSepoliaTestnet } from "viem/chains";
 
 export { arbitrum, arbitrumSepolia, sepolia };
 export { avalancheFuji };
@@ -8,12 +8,13 @@ export { avalancheFuji };
 const isE2ETestMode = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
 export const defaultConfig = createConfig({
-  chains: [sepolia, arbitrumSepolia, arbitrum, avalancheFuji],
+  chains: [sepolia, arbitrumSepolia, arbitrum, avalancheFuji, mantleSepoliaTestnet],
   transports: {
     [sepolia.id]: http(),
     [arbitrumSepolia.id]: http(),
     [arbitrum.id]: http(),
     [avalancheFuji.id]: http(),
+    [mantleSepoliaTestnet.id]: http(),
   },
   multiInjectedProviderDiscovery: false,
   ssr: true,

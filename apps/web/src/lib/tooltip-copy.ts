@@ -176,7 +176,7 @@ export const TOOLTIP_COPY = {
   depositRoutingGuard:
     "On-chain guard in BasketVault that caps deposits per chain based on keeper-posted routing weights from StateRelay. Prevents any spoke from exceeding its weight allocation.",
   chainSelector:
-    "Network selector showing all deployed chains. 'All Chains' aggregates read-only data; transactions route to the wallet's current chain.",
+    "Network selector showing all deployed chains. 'All Chains' aggregates read-only data from the unified Envio endpoint; newly deployed chains may appear after indexer sync catches up. Transactions route to the wallet's current chain.",
   splitDepositView:
     "UI breakdown showing how a deposit will be distributed across chains based on current routing weights. Each leg is a separate on-chain transaction.",
   pendingRedemptions:

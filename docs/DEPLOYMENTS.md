@@ -233,6 +233,13 @@ After deploy:
 - set `NEXT_PUBLIC_ENVIO_URL` in Vercel (Production + Preview) to the Hasura endpoint URL.
 - set `ENVIO_URL` on the push-worker Cloud Run service (and on the GitHub Actions secret used by `.github/workflows/deploy-production.yml`).
 
+Operational guardrail:
+
+- If `/baskets` shows "No baskets are indexed yet" for **All Chains** while contracts exist onchain (for example Mantle Sepolia), treat this as an indexer deployment/sync issue first:
+  - confirm the active Envio deployment includes that network in `apps/envio/config.yaml`
+  - confirm contract addresses and `start_block` values match deployed contracts
+  - confirm required RPC env vars (for Mantle: `MANTLE_SEPOLIA_RPC_URL`) are set in Envio Cloud
+
 ## Google Cloud deployment (push notifications only)
 
 Runtime components:

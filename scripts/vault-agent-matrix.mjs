@@ -131,9 +131,9 @@ function main() {
     const eligibleEntries = [];
     for (const n of availableNetworks) {
       for (const a of AGENTS) {
-        if (isAgentNetworkReady(a, n)) {
-          eligibleEntries.push(buildEntry(a, n));
-        }
+        // Scheduled ticks should keep running even before per-network state is
+        // seeded. Bootstrap is handled by the runner itself.
+        eligibleEntries.push(buildEntry(a, n));
       }
     }
     if (eligibleEntries.length === 0) {
@@ -144,7 +144,6 @@ function main() {
   } else if (args.agent === "all") {
     for (const n of availableNetworks) {
       for (const a of AGENTS) {
-        if (!isAgentNetworkReady(a, n)) continue;
         include.push(buildEntry(a, n));
       }
     }
@@ -153,11 +152,6 @@ function main() {
       throw new Error(`Unknown agent input: ${args.agent}`);
     }
     for (const n of availableNetworks) {
-      if (!isAgentNetworkReady(args.agent, n)) {
-        throw new Error(
-          `Agent ${args.agent} is not deployed on ${n} (missing or mismatched agents/memory/${args.agent}/state.json)`,
-        );
-      }
       include.push(buildEntry(args.agent, n));
     }
   }
