@@ -44,8 +44,8 @@ const REDACT_PATTERNS: Array<[RegExp, string]> = [
   [/\bZG_PRIVATE_KEY\s*=\s*\S+/g, "ZG_PRIVATE_KEY=[redacted]"],
 ];
 
-export function redactSecrets(text: string): string {
-  let out = text;
+export function redactSecrets(text: unknown): string {
+  let out = typeof text === "string" ? text : String(text ?? "");
   for (const [pattern, replacement] of REDACT_PATTERNS) {
     out = out.replace(pattern, replacement);
   }

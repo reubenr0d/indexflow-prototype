@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Web3Provider } from "@/providers/Web3Provider";
 import { Footer } from "@/components/layout/footer";
@@ -101,7 +102,9 @@ export default async function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem('theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}` }} />
       </head>
       <body className="min-h-full bg-app-bg text-app-text">
-        <RouteProgress />
+        <Suspense fallback={null}>
+          <RouteProgress />
+        </Suspense>
         <BootRecoveryGuard />
         <LogRocketBootstrap />
         <PwaBootstrap />
