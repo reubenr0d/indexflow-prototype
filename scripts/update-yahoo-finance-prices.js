@@ -228,13 +228,13 @@ async function main() {
   const rpcUrl = process.env.RPC_URL ?? DEFAULT_RPC_URL;
   const dryRun = toBool(process.env.DRY_RUN);
   const privateKey = process.env.PRIVATE_KEY;
-  const adminPrivateKey = process.env.ADMIN_PRIVATE_KEY;
+  const adminPrivateKey = process.env.ADMIN_PRIVATE_KEY || process.env.PRIVATE_KEY;
 
   if (!dryRun && !privateKey) {
     throw new Error("PRIVATE_KEY is required unless DRY_RUN is set");
   }
   if (!dryRun && !adminPrivateKey) {
-    throw new Error("ADMIN_PRIVATE_KEY is required unless DRY_RUN is set");
+    throw new Error("ADMIN_PRIVATE_KEY (or PRIVATE_KEY fallback) is required unless DRY_RUN is set");
   }
 
   const deployment = JSON.parse(fs.readFileSync(deploymentConfigPath, "utf8"));
