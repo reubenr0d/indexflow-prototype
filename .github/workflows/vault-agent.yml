@@ -12,10 +12,9 @@ on:
   # External scheduler fallback (GitHub's `schedule` trigger drops ~95% of
   # intended ticks for this repo; see docs/KEEPER_OPERATIONS.md). POST to
   # /repos/<owner>/<repo>/dispatches with body {"event_type":"vault-agent-tick"}.
-  # On a scheduled / empty-payload tick the matrix runs ONE eligible
-  # agent on the hub network picked by `HOUR_UTC % N` (see setup-matrix below),
-  # where N is the number of eligible agents.
-  # slot can't exceed the keeper-key concurrency window. To dispatch a single agent
+  # On a scheduled / empty-payload tick the matrix runs ALL eligible
+  # agents on the hub network. They execute serially (`max-parallel: 1`)
+  # inside the keeper-key concurrency window. To dispatch a single agent
   # (optionally pinned to the hub network),
   # explicitly, send {"event_type":"vault-agent-tick","client_payload":{"agent":"mining-manager"}}.
   # The `vault-manager` agent is retired from CI (run locally via
@@ -68,8 +67,8 @@ permissions:
 # Serialize against every other workflow that signs with KEEPER_PRIVATE_KEY
 # (update-prices.yml, keeper.yml) so they can't race on the same nonce. The
 # matrix `max-parallel: 1` below also serialises the trading agents inside
-# a single run when more than one matrix entry is produced (an `agent: all`
-# style dispatch). The scheduled round-robin only emits one entry per tick.
+# a single run when more than one matrix entry is produced (including
+# scheduled and empty-payload ticks, which now emit all eligible agents).
 concurrency:
   group: keeper-key-serialized
   cancel-in-progress: false
@@ -101,9 +100,8 @@ jobs:
     strategy:
       # Never run trading agents in parallel: they share the same keeper key,
       # so concurrent `cast send` calls race on the same nonce. The
-      # scheduled round-robin in setup-matrix only ever produces a single
-      # matrix entry per tick, but an `agent: all`-style dispatch could
-      # in theory hand back more — `max-parallel: 1` is the belt-and-braces
+      # setup-matrix can produce multiple entries per tick (including
+      # scheduled / empty-payload runs) — `max-parallel: 1` is the belt-and-braces
       # guarantee that the keeper key only signs one batch at a time.
       max-parallel: 1
       fail-fast: false

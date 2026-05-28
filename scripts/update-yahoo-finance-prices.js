@@ -201,16 +201,19 @@ function parseAssetConfig(raw) {
 }
 
 function parsePriceTuple(raw) {
-  const cleaned = raw.trim().replace(/^\(|\)$/g, "");
-  const parts = cleaned.split(",").map((p) => p.trim());
-  if (parts.length !== 2) {
-    throw new Error(`Unexpected price tuple shape: ${raw}`);
-  }
   const parseUint = (value) => {
     const match = String(value).match(/^\d+/);
     if (!match) throw new Error(`Invalid uint value: ${value}`);
     return BigInt(match[0]);
   };
+  const trimmed = raw.trim();
+  const tupleLike = trimmed.startsWith("(") && trimmed.endsWith(")");
+  const parts = tupleLike
+    ? trimmed.replace(/^\(|\)$/g, "").split(",").map((p) => p.trim())
+    : trimmed.split(/\r?\n|\\n/).map((p) => p.trim()).filter(Boolean);
+  if (parts.length !== 2) {
+    throw new Error(`Unexpected price tuple shape: ${raw}`);
+  }
   return {
     price: parseUint(parts[0]),
     timestamp: parseUint(parts[1]),
@@ -352,7 +355,11 @@ async function main() {
         "--rpc-url", rpcUrl,
       ]).trim();
       existingPrice = parsePriceTuple(priceRaw).price;
-    } catch {
+    } catch (err) {
+      const msg = err?.message || String(err);
+      if (!msg.includes("AssetNotFound")) {
+        throw err;
+      }
       // No existing price for this asset yet.
     }
 

@@ -138,19 +138,13 @@ function main() {
   const isScheduledLike = args.event === "schedule" || !args.agent;
 
   if (isScheduledLike) {
-    const eligibleEntries = [];
     for (const n of availableNetworks) {
       for (const a of AGENTS) {
-        // Scheduled ticks should keep running even before per-network state is
-        // seeded. Bootstrap is handled by the runner itself.
-        eligibleEntries.push(buildEntry(a, n));
+        // Scheduled/empty-payload ticks run all hub-eligible agents.
+        // Bootstrap for first-time state is handled by the runner itself.
+        include.push(buildEntry(a, n));
       }
     }
-    if (eligibleEntries.length === 0) {
-      throw new Error("No deployed agent-network pairs discovered in agents/memory/*/state.json for available networks");
-    }
-    const slot = Number(args.hourUtc) % eligibleEntries.length;
-    include.push(eligibleEntries[slot]);
   } else if (args.agent === "all") {
     for (const n of availableNetworks) {
       for (const a of AGENTS) {

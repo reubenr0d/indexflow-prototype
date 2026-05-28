@@ -191,6 +191,7 @@ export function useBasketDashboardData(vault: Address) {
   // is still backfilling) would cause the detail-page PnL tile to disagree
   // with the list-card PnL chip on the very same vault.
   const subgraphSharePrice = basketDetail.data?.basket?.sharePrice ?? null;
+  const subgraphCreatedAt = basketDetail.data?.basket?.createdAt;
 
   return {
     basketInfo,
@@ -215,6 +216,7 @@ export function useBasketDashboardData(vault: Address) {
     assetMeta,
     apy7d,
     subgraphSharePrice,
+    subgraphCreatedAt,
     usdc,
     chainId,
   };

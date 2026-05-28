@@ -41,6 +41,13 @@ test('parsePriceTuple parses getPrice return shape', () => {
   assert.equal(out.timestamp, 1748420220n);
 });
 
+test('parsePriceTuple parses multiline cast output shape', () => {
+  const raw = '2152080000000000000000000000 [2.152e27]\\n1779840108 [1.779e9]';
+  const out = parsePriceTuple(raw);
+  assert.equal(out.price, 2152080000000000000000000000n);
+  assert.equal(out.timestamp, 1779840108n);
+});
+
 test('classifyPriceCandidate marks within/equal threshold as normal', () => {
   const oldP = 1000000000000000000000000000n;
   const within = classifyPriceCandidate(oldP, 1199900000000000000000000000n, 2000n);

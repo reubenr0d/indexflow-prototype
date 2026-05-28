@@ -111,6 +111,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
     assetMeta,
     apy7d,
     subgraphSharePrice,
+    subgraphCreatedAt,
   } = useBasketDashboardData(vault);
 
   const latestActivityQuery = useBasketActivitiesQuery(vault, 1, 0);
@@ -164,7 +165,7 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   const pnlBps = subgraphSharePrice !== null ? computePnLPctBps(subgraphSharePrice) : 0n;
   const pnlSign = pnlBps > 0n ? 1 : pnlBps < 0n ? -1 : 0;
   const pnlValue = subgraphSharePrice !== null ? formatPnLPct(subgraphSharePrice) : "--";
-  const pnlSinceSubtext = formatPnlSinceSubtext(basketInfo?.createdAt);
+  const pnlSinceSubtext = formatPnlSinceSubtext(subgraphCreatedAt);
 
   const metricsData = [
     { label: "TVL", value: formatUSDC(tvl), icon: Landmark, testId: "metric-tvl" },
