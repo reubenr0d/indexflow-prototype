@@ -1,0 +1,138 @@
+{
+  "isAiManaged": true,
+  "agentName": "mining-manager",
+  "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
+  "signalSource": "atlas-ml",
+  "entryMode": "ml_score",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
+  "lastRunAt": "2026-05-28T08:04:52.060Z",
+  "latestRun": {
+    "runId": "2026-05-28T08:04:52.060Z",
+    "finishedAt": "2026-05-28T08:04:52.060Z",
+    "summary": "I understand the need to open long positions on the eligible assets. However, the vault currently has no available USDC for allocation into perp capital, which means I cannot proceed with opening new positions at this time. The vault state indicates that both the NAV and available collateral are at $0.00 USDC. Without available capital, opening new positions is not feasible.\n\n### Final Summary\n\n## Thesis\n\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved i"
+  },
+  "recentActions": [
+    {
+      "tool": "create_vault",
+      "justification": "Creating the Minestarters ML Picks vault to manage mining-equity positions driven by Atlas ML signals.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": "0x2a3a498e9ae72c3fa933d4dfd25814eb1c7aae363cf51200db60ca151a02f9e3",
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "create_vault",
+        "name": "Minestarters ML Picks",
+        "depositFeeBps": 50,
+        "redeemFeeBps": 50
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch is for creating a new vault, which does not involve any trading actions or risk exposure."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring FXPO.L as it is a new top pick by the Atlas ML model with a high ML score.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FXPO.L",
+        "seedPriceUsd": 1.5
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are new top picks with no recent losses; regime longBonus=2 supports long positions."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring AEM as it is a new top pick by the Atlas ML model with a high ML score.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": "0x5a07864e3df09072476f32f23e1fa3b5bc3ee3a484910e0b74f5f30faeec10d7",
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "AEM",
+        "seedPriceUsd": 174.91
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All assets are new top picks with no recent losses; regime longBonus=2 supports long positions."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the top picks from the Atlas ML model.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": "0x92fdb9a810ea5c9cbc5db242a858f14f1c3c2757d584d9cc7cbb137d531bcc03",
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6",
+          "0xa6a463452d580deb8ec322d23a82cfeb4552da030bd3d4db8db762f3ded88a8f"
+        ],
+        "count": 9
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the top picks from the Atlas ML model.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": "0x91d5faef2b62fe4cf1cd20f844636ca6f259d4c1f80bf5cfae78b863b791878d",
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6",
+          "0x51f844520c350d934b7c2b3d0deda883c8fdabf9f8acef47bbcae084aac7b4d1"
+        ],
+        "count": 9
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available USDC to perp capital to open new long positions on eligible assets.",
+      "timestamp": "2026-05-28T08:04:52.060Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T08:04:52.060Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No idle USDC to allocate; batch is a no-op. Vault has $0 available collateral and no open positions."
+      }
+    }
+  ]
+}
