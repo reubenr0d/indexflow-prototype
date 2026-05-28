@@ -7,59 +7,29 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-28T12:48:40.540Z",
-  "startedAt": "2026-05-28T12:46:04.964Z",
-  "finishedAt": "2026-05-28T12:48:40.540Z",
+  "runId": "2026-05-28T17:10:04.750Z",
+  "startedAt": "2026-05-28T17:02:47.963Z",
+  "finishedAt": "2026-05-28T17:10:04.750Z",
   "status": "succeeded",
   "usage": {
-    "turns": 18,
-    "toolCalls": 12,
+    "turns": 20,
+    "toolCalls": 27,
     "errors": 0,
-    "softFailures": 3,
-    "writeActions": 4
+    "softFailures": 20,
+    "writeActions": 1
   },
   "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "I understand the policy requires opening long-only positions on eligible assets. However, given the current constraint of zero available collateral, it is not feasible to open new positions at this moment. Let's explore alternative actions:\n\n### Alternative Actions\n1. **Reallocate Existing Resources**: If there are any existing positions that can be closed or reallocated, this could free up collateral for new positions.\n   \n2. **Prepare for Future Allocations**: Once collateral becomes available",
+  "summary": "The attempts to plan opening positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) have all failed due to insufficient free collateral. Each attempt returned the same error indicating that the available collateral is zero, which is below the required minimum for opening any new positions.\n\n### Final Summary\n\n#### Vault State\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **NAV**: $0.00 USDC\n- **Perp Allocated**: $0.00 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked A",
   "writeActions": [
     {
-      "tool": "wire_asset",
+      "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Wiring new top pick FOX.CN with ML score 99.7 and predicted return of 76.56%.",
+      "justification": "Attempting to allocate available USDC into perp capital to enable opening long positions on eligible assets.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
+        "reason": "The batch only attempts to allocate USDC to perp capital, but with idle USDC at $0, no action will occur. No risk of over-leverage or regime conflict."
       },
       "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick FXPO.L with ML score 99.6 and predicted return of 75.71%.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick MI6.AX with ML score 99.5 and predicted return of 70.52%.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0x9a503f51523af1398d5ab2aeb3ee3b9b593d7384f07e803405137c7673e9c62a",
-      "justification": "Updating tracked assets to match the top-N picks from the Atlas ML model.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
-      },
-      "kind": "vault-tx"
     }
   ],
   "errors": []

@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-28T12:53:54.685Z",
-  "startedAt": "2026-05-28T12:52:57.830Z",
-  "finishedAt": "2026-05-28T12:53:54.685Z",
-  "status": "succeeded",
+  "runId": "2026-05-28T17:15:23.033Z",
+  "startedAt": "2026-05-28T17:14:01.776Z",
+  "finishedAt": "2026-05-28T17:15:23.033Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 3,
-    "toolCalls": 4,
-    "errors": 0,
+    "turns": 5,
+    "toolCalls": 6,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "The current hedge ratio is undefined due to the absence of any positions. The vault has realized no yield since it has not been funded. The funding rate context is irrelevant at this moment as there are no active positions to manage. \n\nNext steps should focus on securing funding for the vault to enable trading operations.",
-  "summary": "### Current Vault State\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Available Collateral**: $0.00\n- **Open Interest**: $0.00\n- **Position Count**: 0\n\n### On-Chain ETH-USD Price\n- **ETH-USD Price**: $1988.99\n\n### Hedge Ratio Calculation\n- **mETH Balance**: $0.00 (no mETH balance as the vault is empty)\n- **mETH/USD Price**: Not",
+  "thesis": "The hedge ratio is currently undefined due to the absence of any positions. The vault has realized no yield since it has not been funded. The funding rate context is irrelevant at this moment as there are no active positions to manage. Next steps should focus on securing funding for the vault to enable trading operations.",
+  "summary": "The current state of the vault indicates that it is entirely empty, with no assets or positions available. Here's a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Available Collateral**: $0.00\n- **Open Interest**: $0.00\n- **Position Count**: 0\n\n### Oracle Price for ETH-USD\n- **Current Price**: $2011.90\n\n### Hedge Ratio Calculation\nSince there are no ",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    }
+  ]
 }
