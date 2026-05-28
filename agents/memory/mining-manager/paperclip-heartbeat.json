@@ -7,64 +7,54 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-28T08:56:40.138Z",
-  "startedAt": "2026-05-28T08:54:01.777Z",
-  "finishedAt": "2026-05-28T08:56:40.138Z",
+  "runId": "2026-05-28T12:48:40.540Z",
+  "startedAt": "2026-05-28T12:46:04.964Z",
+  "finishedAt": "2026-05-28T12:48:40.540Z",
   "status": "succeeded",
   "usage": {
-    "turns": 17,
+    "turns": 18,
     "toolCalls": 12,
     "errors": 0,
-    "softFailures": 4,
-    "writeActions": 5
+    "softFailures": 3,
+    "writeActions": 4
   },
   "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "I understand the need to open long positions on the eligible assets. However, the vault currently has no available USDC for allocation into perp capital, which means I cannot proceed with opening new positions at this time. \n\n### Alternative Plan\n1. **Monitor for Inflows**: Keep an eye on any potential inflows of USDC that would allow us to allocate capital into perp trading.\n2. **Prepare for Future Opportunities**: Ensure that the vault's tracked assets are aligned with the top ML picks so that",
+  "summary": "I understand the policy requires opening long-only positions on eligible assets. However, given the current constraint of zero available collateral, it is not feasible to open new positions at this moment. Let's explore alternative actions:\n\n### Alternative Actions\n1. **Reallocate Existing Resources**: If there are any existing positions that can be closed or reallocated, this could free up collateral for new positions.\n   \n2. **Prepare for Future Allocations**: Once collateral becomes available",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation (FOX.CN) as a new entrant in the top ML picks with a high predicted return.",
+      "justification": "Wiring new top pick FOX.CN with ML score 99.7 and predicted return of 76.56%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new entrants with no recent losses; regime longBonus=2 supports long positions, and no collateral is currently allocated."
+        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Ferrexpo plc (FXPO.L) as a new entrant in the top ML picks with a high predicted return.",
+      "justification": "Wiring new top pick FXPO.L with ML score 99.6 and predicted return of 75.71%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new entrants with no recent losses; regime longBonus=2 supports long positions, and no collateral is currently allocated."
+        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Minerals 260 Limited (MI6.AX) as a new entrant in the top ML picks with a high predicted return.",
+      "justification": "Wiring new top pick MI6.AX with ML score 99.5 and predicted return of 70.52%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new entrants with no recent losses; regime longBonus=2 supports long positions, and no collateral is currently allocated."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring B2Gold Corp. (BTO.TO) as a new entrant in the top ML picks with a high predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new entrants with no recent losses; regime longBonus=2 supports long positions, and no collateral is currently allocated."
+        "reason": "All proposed assets are new top picks with high ML scores and predicted returns; no recent losses on these tickers and regime favors long positions."
       },
       "kind": "file-diff"
     },
     {
       "tool": "set_vault_assets",
-      "txHash": "0x1bb2d44a81f861581a6989f24014f1d88244098e504d5a44f6ebb7e6894b9145",
-      "justification": "Updating tracked assets to match the top ML picks that are already wired.",
+      "txHash": "0x9a503f51523af1398d5ab2aeb3ee3b9b593d7384f07e803405137c7673e9c62a",
+      "justification": "Updating tracked assets to match the top-N picks from the Atlas ML model.",
       "riskOfficer": {
         "verdict": "approve",
         "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."

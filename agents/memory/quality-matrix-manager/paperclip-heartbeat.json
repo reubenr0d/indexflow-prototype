@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-05-28T08:58:22.801Z",
-  "startedAt": "2026-05-28T08:57:11.795Z",
-  "finishedAt": "2026-05-28T08:58:22.801Z",
+  "runId": "2026-05-28T12:51:48.442Z",
+  "startedAt": "2026-05-28T12:49:22.728Z",
+  "finishedAt": "2026-05-28T12:51:48.442Z",
   "status": "succeeded",
   "usage": {
-    "turns": 3,
-    "toolCalls": 3,
+    "turns": 4,
+    "toolCalls": 5,
     "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "This run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on fresh signals as they emerge. The current metals regime is \"metals_risk_off,\" with a long bonus of 2, indicating that miners are deeply red on the day. This suggests potential opportunities for long positions if new trade-ready picks become available in the next run.",
-  "summary": "## Thesis\n\nThis run did not present any new opportunities for long positions based on the quality matrix's trade-ready picks. The focus remains on maintaining a balanced portfolio and being prepared to act on fresh signals as they emerge. The current metals regime is \"metals_risk_off,\" with a long bonus of 2, indicating that miners are deeply red on the day. This suggests potential opportunities for long positions if new trade-ready picks become available in the next run.\n\n### Current Vault Stat",
+  "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a long bonus of 2, indicating potential opportunities for long positions if new trade-ready picks become available in the next run.",
+  "summary": "The current state of the vault and the latest analysis reveal the following:\n\n1. **Vault State**: The \"Minestarters Quality Matrix\" vault is currently inactive with no assets or capital allocated.\n\n2. **Quality Matrix Definition**: The matrix is grounded in the analyst's definitions, with weights applied to each category and a provenance discount for categories not yet empirically calibrated.\n\n3. **Trade-Ready Picks**: No new trade-ready picks met the criteria for opening long positions. The onl",
   "writeActions": [],
   "errors": []
 }

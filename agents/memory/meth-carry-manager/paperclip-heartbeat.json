@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-28T09:09:14.450Z",
-  "startedAt": "2026-05-28T08:59:33.802Z",
-  "finishedAt": "2026-05-28T09:09:14.450Z",
+  "runId": "2026-05-28T12:53:54.685Z",
+  "startedAt": "2026-05-28T12:52:57.830Z",
+  "finishedAt": "2026-05-28T12:53:54.685Z",
   "status": "succeeded",
   "usage": {
-    "turns": 40,
-    "toolCalls": 42,
+    "turns": 3,
+    "toolCalls": 4,
     "errors": 0,
-    "softFailures": 23,
+    "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The current hedge ratio is undefined due to the absence of any positions. The vault has realized no yield since it has not been funded. The funding rate context is irrelevant at this moment as there are no active positions to manage. \n\nNext steps should focus on securing funding for the vault to enable trading operations.",
-  "summary": "",
+  "summary": "### Current Vault State\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Available Collateral**: $0.00\n- **Open Interest**: $0.00\n- **Position Count**: 0\n\n### On-Chain ETH-USD Price\n- **ETH-USD Price**: $1988.99\n\n### Hedge Ratio Calculation\n- **mETH Balance**: $0.00 (no mETH balance as the vault is empty)\n- **mETH/USD Price**: Not",
   "writeActions": [],
   "errors": []
 }
