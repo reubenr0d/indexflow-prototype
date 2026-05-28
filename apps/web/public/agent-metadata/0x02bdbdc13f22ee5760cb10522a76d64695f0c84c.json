@@ -4,14 +4,30 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastRunAt": "2026-05-28T08:04:52.060Z",
+  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No significant news has altered the outlook for these top picks.",
+  "lastRunAt": "2026-05-28T19:47:07.449Z",
   "latestRun": {
-    "runId": "2026-05-28T08:04:52.060Z",
-    "finishedAt": "2026-05-28T08:04:52.060Z",
-    "summary": "I understand the need to open long positions on the eligible assets. However, the vault currently has no available USDC for allocation into perp capital, which means I cannot proceed with opening new positions at this time. The vault state indicates that both the NAV and available collateral are at $0.00 USDC. Without available capital, opening new positions is not feasible.\n\n### Final Summary\n\n## Thesis\n\nThe Atlas ML model continues to strongly favor mining stocks, particularly those involved i"
+    "runId": "2026-05-28T19:47:07.449Z",
+    "finishedAt": "2026-05-28T19:47:07.449Z",
+    "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the current vault state indicates that there is no available collateral to open new positions. To proceed with opening positions, we need to ensure there is sufficient USDC allocated to perp capital. Here are the steps I would take if there were available collateral:\n\n1. **Allocate Capital**: Allocate available USDC to perp capital to enable opening new positions.\n2. **Open Positions**: Open long positions "
   },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available USDC to perp capital to enable opening new positions on eligible assets.",
+      "timestamp": "2026-05-28T19:47:07.449Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T19:47:07.449Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No available collateral to allocate; batch is a no-op with no risk impact."
+      }
+    },
     {
       "tool": "create_vault",
       "justification": "Creating the Minestarters ML Picks vault to manage mining-equity positions driven by Atlas ML signals.",

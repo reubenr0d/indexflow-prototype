@@ -1,308 +1,323 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-27T10:13:10.167Z",
+  "updatedAt": "2026-05-28T19:45:58.758Z",
   "entries": {
-    "BHP.AX": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-05-28T19:45:58.626Z",
       "headlines": [
         {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
           "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
+          ]
+        },
+        {
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OXY"
+            "RACE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "headlines": [
+        {
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
           ]
         },
         {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DVN"
+            "RACE"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "headlines": [
+        {
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
+          ]
+        },
+        {
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RACE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FXPO.L": {
+      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "headlines": [
+        {
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
+          ]
+        },
+        {
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RACE"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "headlines": [
+        {
+          "title": "Cabbacis to Participate in Noble Capital Markets’ Emerging Growth Equity Conference on June 3-4, 2026",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cabbacis-participate-noble-capital-markets-194400406.html",
+          "publishedAt": "2026-05-28T19:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CABI"
+          ]
+        },
+        {
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
+          ]
+        },
+        {
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
+      "fetchedAt": "2026-05-28T19:45:58.758Z",
       "headlines": [
         {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OXY"
+            "TSLA",
+            "SPAX.PVT"
           ]
         },
         {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DVN"
+            "RACE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
+    "AEM": {
+      "fetchedAt": "2026-05-28T19:45:58.758Z",
       "headlines": [
         {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
+          "publishedAt": "2026-05-28T13:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RUP.TO",
+            "RUP.NE",
+            "RUPRF",
+            "R05.F"
+          ]
+        },
+        {
+          "title": "Man steals ambulance in Bronx, crashes after joyride past cemetery",
+          "publisher": "NY Daily News",
+          "link": "https://finance.yahoo.com/m/b3fcbdec-184f-3184-ac56-76351985273c/man-steals-ambulance-in.html",
+          "publishedAt": "2026-05-28T15:48:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
+          "title": "White Gold Corp. Commences 2026 Exploration Program Designed to Further Increase Known Gold Resources and Make New Discoveries on its District Scale Land Package in Yukon, Canada",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/white-gold-corp-commences-2026-103000182.html",
+          "publishedAt": "2026-05-28T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
-      "headlines": [
-        {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
+            "WGO.V",
+            "GC=F",
+            "29W.F",
+            "WGO.NE",
+            "WHGOF"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GTWO.TO": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
+      "fetchedAt": "2026-05-28T19:45:58.758Z",
       "headlines": [
         {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OXY"
+            "TSLA",
+            "SPAX.PVT"
           ]
         },
         {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DVN"
+            "RACE"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HHH.V": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
+    "USA.TO": {
+      "fetchedAt": "2026-05-28T19:45:58.758Z",
       "headlines": [
         {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
+          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
+          "publishedAt": "2026-05-28T19:42:48.000Z",
           "type": "STORY",
+          "relatedTickers": [
+            "TSLA",
+            "SPAX.PVT"
+          ]
+        },
+        {
+          "title": "How the latest US–Iran updates moved oil prices on Thursday",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
+          "publishedAt": "2026-05-28T19:41:46.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
+          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
+          "publishedAt": "2026-05-28T19:41:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
-      "headlines": [
-        {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
-      "headlines": [
-        {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "VGZ.TO": {
-      "fetchedAt": "2026-05-27T10:13:10.167Z",
-      "headlines": [
-        {
-          "title": "Mizuho Securities Adjusts Price Target on APA to $36 From $32, Maintains Underperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100833483.html",
-          "publishedAt": "2026-05-27T10:08:33.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Mizuho Securities Adjusts PT on Occidental Petroleum to $75 From $72, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-pt-occidental-100815696.html",
-          "publishedAt": "2026-05-27T10:08:15.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OXY"
-          ]
-        },
-        {
-          "title": "Mizuho Securities Adjusts Price Target on Devon Energy to $68 From $62, Maintains Outperform Rating",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/mizuho-securities-adjusts-price-target-100757510.html",
-          "publishedAt": "2026-05-27T10:07:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DVN"
+            "RACE"
           ]
         }
       ],
