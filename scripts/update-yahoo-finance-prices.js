@@ -185,11 +185,16 @@ function parseAssetConfig(raw) {
   if (parts.length !== 6) {
     throw new Error(`Unexpected asset config shape: ${raw}`);
   }
+  const parseUint = (value) => {
+    const match = String(value).match(/^\d+/);
+    if (!match) throw new Error(`Invalid uint value: ${value}`);
+    return BigInt(match[0]);
+  };
   return {
     feedAddress: parts[0],
     feedType: Number(parts[1]),
-    stalenessThreshold: BigInt(parts[2]),
-    deviationBps: BigInt(parts[3]),
+    stalenessThreshold: parseUint(parts[2]),
+    deviationBps: parseUint(parts[3]),
     decimals: Number(parts[4]),
     active: parts[5] === "true",
   };
@@ -201,9 +206,14 @@ function parsePriceTuple(raw) {
   if (parts.length !== 2) {
     throw new Error(`Unexpected price tuple shape: ${raw}`);
   }
+  const parseUint = (value) => {
+    const match = String(value).match(/^\d+/);
+    if (!match) throw new Error(`Invalid uint value: ${value}`);
+    return BigInt(match[0]);
+  };
   return {
-    price: BigInt(parts[0]),
-    timestamp: BigInt(parts[1]),
+    price: parseUint(parts[0]),
+    timestamp: parseUint(parts[1]),
   };
 }
 
