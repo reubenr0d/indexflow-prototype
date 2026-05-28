@@ -73,5 +73,6 @@ jobs:
           DEPLOYMENT_CONFIG: ${{ matrix.deployment_config }}
           RPC_URL: ${{ secrets[matrix.rpc_url_secret] }}
           PRIVATE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.KEEPER_PRIVATE_KEY }}
+          ADMIN_PRIVATE_KEY: ${{ github.event_name == 'pull_request' && '' || secrets.PRIVATE_KEY }}
           DRY_RUN: ${{ github.event_name == 'pull_request' && '1' || '' }}
         run: node scripts/update-yahoo-finance-prices.js

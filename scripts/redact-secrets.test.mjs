@@ -85,6 +85,16 @@ test("redacts ETH_PRIVATE_KEY and KEEPER_PRIVATE_KEY env values", () => {
   assert.ok(!out.includes(keeperKey));
 });
 
+test("redacts ADMIN_PRIVATE_KEY env value", () => {
+  const adminKey = "0x" + "f".repeat(64);
+  const input = `admin=${adminKey}`;
+  const out = withEnv(
+    { PRIVATE_KEY: undefined, ADMIN_PRIVATE_KEY: adminKey, ETH_PRIVATE_KEY: undefined, KEEPER_PRIVATE_KEY: undefined },
+    () => redactSecrets(input),
+  );
+  assert.ok(!out.includes(adminKey));
+});
+
 test("does NOT redact non-secret 0x hex (vault addresses, tx hashes that aren't the key)", () => {
   const input = `Vault ${VAULT_ADDR} tx ${TX_HASH} other-hex ${OTHER_HEX_64}`;
   const out = withEnv({ PRIVATE_KEY: SAMPLE_KEY }, () => redactSecrets(input));

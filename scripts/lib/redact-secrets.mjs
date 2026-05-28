@@ -28,6 +28,7 @@ function escapeRegExp(value) {
 function collectEnvSecrets() {
   const candidates = [
     process.env.PRIVATE_KEY,
+    process.env.ADMIN_PRIVATE_KEY,
     process.env.ETH_PRIVATE_KEY,
     process.env.KEEPER_PRIVATE_KEY,
   ];

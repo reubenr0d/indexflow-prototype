@@ -7,6 +7,7 @@ const { execFileSync } = require("child_process");
 const DEFAULT_DEPLOYMENT_CONFIG = "apps/web/src/config/sepolia-deployment.json";
 const DEFAULT_RPC_URL = "sepolia";
 const PRICE_DECIMALS = 8;
+const ORACLE_BPS = 10_000n;
 
 function resolvePath(input, fallback) {
   const candidate = input ?? fallback;
@@ -164,6 +165,59 @@ function toRawPrice(usdPrice) {
   return BigInt(Math.round(usdPrice * 10 ** PRICE_DECIMALS));
 }
 
+function normalizePrice(rawPrice, feedDecimals) {
+  const decimals = BigInt(feedDecimals);
+  if (decimals < 30n) {
+    return rawPrice * (10n ** (30n - decimals));
+  }
+  return rawPrice;
+}
+
+function computeDeviationBps(oldPrice, newPrice) {
+  if (oldPrice === 0n) return 0n;
+  const diff = newPrice > oldPrice ? (newPrice - oldPrice) : (oldPrice - newPrice);
+  return (diff * ORACLE_BPS) / oldPrice;
+}
+
+function parseAssetConfig(raw) {
+  const cleaned = raw.trim().replace(/^\(|\)$/g, "");
+  const parts = cleaned.split(",").map((p) => p.trim());
+  if (parts.length !== 6) {
+    throw new Error(`Unexpected asset config shape: ${raw}`);
+  }
+  return {
+    feedAddress: parts[0],
+    feedType: Number(parts[1]),
+    stalenessThreshold: BigInt(parts[2]),
+    deviationBps: BigInt(parts[3]),
+    decimals: Number(parts[4]),
+    active: parts[5] === "true",
+  };
+}
+
+function parsePriceTuple(raw) {
+  const cleaned = raw.trim().replace(/^\(|\)$/g, "");
+  const parts = cleaned.split(",").map((p) => p.trim());
+  if (parts.length !== 2) {
+    throw new Error(`Unexpected price tuple shape: ${raw}`);
+  }
+  return {
+    price: BigInt(parts[0]),
+    timestamp: BigInt(parts[1]),
+  };
+}
+
+function classifyPriceCandidate(existingPrice, newPriceNormalized, maxDeviationBps) {
+  if (existingPrice === 0n) {
+    return { status: "normal", deviationBps: 0n };
+  }
+  const deviationBps = computeDeviationBps(existingPrice, newPriceNormalized);
+  if (deviationBps > maxDeviationBps) {
+    return { status: "override-required", deviationBps };
+  }
+  return { status: "normal", deviationBps };
+}
+
 async function main() {
   loadRootEnv();
 
@@ -174,9 +228,13 @@ async function main() {
   const rpcUrl = process.env.RPC_URL ?? DEFAULT_RPC_URL;
   const dryRun = toBool(process.env.DRY_RUN);
   const privateKey = process.env.PRIVATE_KEY;
+  const adminPrivateKey = process.env.ADMIN_PRIVATE_KEY;
 
   if (!dryRun && !privateKey) {
     throw new Error("PRIVATE_KEY is required unless DRY_RUN is set");
+  }
+  if (!dryRun && !adminPrivateKey) {
+    throw new Error("ADMIN_PRIVATE_KEY is required unless DRY_RUN is set");
   }
 
   const deployment = JSON.parse(fs.readFileSync(deploymentConfigPath, "utf8"));
@@ -208,13 +266,21 @@ async function main() {
 
   console.log("");
 
-  const assetIds = [];
-  const rawPrices = [];
+  const candidates = [];
+  const summary = {
+    totalCandidates: assets.length,
+    quoted: 0,
+    overriddenSuccess: 0,
+    overriddenFailed: 0,
+    keeperSubmitted: 0,
+    skipped: 0,
+  };
 
   for (const asset of assets) {
     const quote = quotes[asset.symbol];
     if (!quote || quote.price == null || quote.price <= 0) {
       console.warn(`  SKIP ${asset.symbol}: no valid quote`);
+      summary.skipped += 1;
       continue;
     }
 
@@ -222,66 +288,193 @@ async function main() {
     const fxRate = currency === "USD" ? 1 : fxRates.get(currency);
     if (fxRate == null) {
       console.warn(`  SKIP ${asset.symbol}: missing FX rate for ${currency}`);
+      summary.skipped += 1;
       continue;
     }
 
     const usdPrice = quote.price * fxRate;
     const rawPrice = toRawPrice(usdPrice);
-
-    assetIds.push(asset.assetId);
-    rawPrices.push(rawPrice.toString());
+    summary.quoted += 1;
 
     console.log(
       `${asset.symbol.padEnd(12)} ` +
       `local=${quote.price.toFixed(4)} ${currency}  fx=${fxRate.toFixed(4)}  ` +
       `usd=${usdPrice.toFixed(4)}  raw=${rawPrice}  id=${asset.assetId.slice(0, 18)}...`
     );
+
+    candidates.push({
+      ...asset,
+      currency,
+      fxRate,
+      usdPrice,
+      rawPrice,
+    });
   }
 
-  if (assetIds.length === 0) {
+  if (candidates.length === 0) {
     console.log("\nNo prices to submit.");
+    console.log("\nSummary:");
+    console.log(JSON.stringify(summary, null, 2));
     return;
   }
 
-  const assetIdArg = `[${assetIds.join(",")}]`;
-  const pricesArg = `[${rawPrices.join(",")}]`;
+  const keepersAssetIds = [];
+  const keepersRawPrices = [];
+  const overrideRequired = [];
+
+  console.log("\nPreflight deviation checks...");
+  for (const candidate of candidates) {
+    const configRaw = runCast([
+      "call", oracleAdapter,
+      "getAssetConfig(bytes32)((address,uint8,uint256,uint256,uint8,bool))",
+      candidate.assetId,
+      "--rpc-url", rpcUrl,
+    ]).trim();
+    const cfg = parseAssetConfig(configRaw);
+    const newPriceNormalized = normalizePrice(candidate.rawPrice, cfg.decimals);
+
+    let existingPrice = 0n;
+    try {
+      const priceRaw = runCast([
+        "call", oracleAdapter,
+        "getPrice(bytes32)(uint256,uint256)",
+        candidate.assetId,
+        "--rpc-url", rpcUrl,
+      ]).trim();
+      existingPrice = parsePriceTuple(priceRaw).price;
+    } catch {
+      // No existing price for this asset yet.
+    }
+
+    const classification = classifyPriceCandidate(existingPrice, newPriceNormalized, cfg.deviationBps);
+    if (classification.status === "override-required") {
+      console.warn(
+        `  OVERRIDE ${candidate.symbol}: deviation=${classification.deviationBps}bps max=${cfg.deviationBps}bps `
+        + `old=${existingPrice} new=${newPriceNormalized}`,
+      );
+      overrideRequired.push({
+        ...candidate,
+        cfg,
+        existingPrice,
+        newPriceNormalized,
+        deviationBps: classification.deviationBps,
+      });
+      continue;
+    }
+
+    console.log(
+      `  OK       ${candidate.symbol}: deviation=${classification.deviationBps}bps max=${cfg.deviationBps}bps`,
+    );
+    keepersAssetIds.push(candidate.assetId);
+    keepersRawPrices.push(candidate.rawPrice.toString());
+  }
 
   console.log("");
   console.log(`OracleAdapter: ${oracleAdapter}`);
   console.log(`PriceSync:     ${priceSync}`);
-  console.log(`submitPrices:  ${assetIds.length} asset(s)`);
+  console.log(`preflight:     ${candidates.length} candidate(s)`);
+  console.log(`overrides:     ${overrideRequired.length} required`);
+  console.log(`submitPrices:  ${keepersAssetIds.length} asset(s)`);
 
   if (dryRun) {
+    for (const ov of overrideRequired) {
+      console.log(
+        `DRY_RUN override ${ov.symbol}: old=${ov.existingPrice} new=${ov.newPriceNormalized} deviation=${ov.deviationBps}bps`,
+      );
+    }
     console.log("\nDRY_RUN enabled: skipping transactions.");
+    console.log("\nSummary:");
+    console.log(JSON.stringify(summary, null, 2));
     return;
   }
 
   console.log("\nExecuting transactions via cast...");
+  let wroteOnChain = false;
 
-  runCast(
-    [
-      "send", oracleAdapter,
-      "submitPrices(bytes32[],uint256[])",
-      assetIdArg, pricesArg,
-      "--private-key", privateKey,
-      "--rpc-url", rpcUrl,
-    ],
-    { echo: true },
-  );
+  for (const ov of overrideRequired) {
+    try {
+      const nowTs = Math.floor(Date.now() / 1000);
+      const out = runCast(
+        [
+          "send", oracleAdapter,
+          "seedHistoricalPrices(bytes32,uint256[],uint256[])",
+          ov.assetId,
+          `[${ov.rawPrice.toString()}]`,
+          `[${nowTs}]`,
+          "--private-key", adminPrivateKey,
+          "--rpc-url", rpcUrl,
+        ],
+        { echo: true },
+      );
+      const txHashMatch = out.match(/0x[a-fA-F0-9]{64}/);
+      const txHash = txHashMatch ? txHashMatch[0] : "unknown";
+      console.log(
+        `  OVERRIDE OK ${ov.symbol}: old=${ov.existingPrice} new=${ov.newPriceNormalized} `
+        + `deviation=${ov.deviationBps}bps tx=${txHash}`,
+      );
+      summary.overriddenSuccess += 1;
+      wroteOnChain = true;
+    } catch (err) {
+      console.warn(
+        `  OVERRIDE FAIL ${ov.symbol}: old=${ov.existingPrice} new=${ov.newPriceNormalized} `
+        + `deviation=${ov.deviationBps}bps error=${err.message}`,
+      );
+      summary.overriddenFailed += 1;
+      summary.skipped += 1;
+    }
+  }
 
-  runCast(
-    [
-      "send", priceSync,
-      "syncAll()",
-      "--private-key", privateKey,
-      "--rpc-url", rpcUrl,
-    ],
-    { echo: true },
-  );
+  if (keepersAssetIds.length > 0) {
+    const assetIdArg = `[${keepersAssetIds.join(",")}]`;
+    const pricesArg = `[${keepersRawPrices.join(",")}]`;
+    runCast(
+      [
+        "send", oracleAdapter,
+        "submitPrices(bytes32[],uint256[])",
+        assetIdArg, pricesArg,
+        "--private-key", privateKey,
+        "--rpc-url", rpcUrl,
+      ],
+      { echo: true },
+    );
+    summary.keeperSubmitted = keepersAssetIds.length;
+    wroteOnChain = true;
+  } else {
+    console.log("No keeper batch to submit after preflight.");
+  }
+
+  if (wroteOnChain) {
+    runCast(
+      [
+        "send", priceSync,
+        "syncAll()",
+        "--private-key", privateKey,
+        "--rpc-url", rpcUrl,
+      ],
+      { echo: true },
+    );
+  } else {
+    throw new Error("No successful on-chain writes (no keeper submit and no successful override)");
+  }
+
+  console.log("\nSummary:");
+  console.log(JSON.stringify(summary, null, 2));
 }
 
-main().catch((error) => {
-  const msg = error?.message || String(error);
-  console.error(_redactSecrets(msg));
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((error) => {
+    const msg = error?.message || String(error);
+    console.error(_redactSecrets(msg));
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  __testing: {
+    normalizePrice,
+    computeDeviationBps,
+    parseAssetConfig,
+    parsePriceTuple,
+    classifyPriceCandidate,
+  },
+};
