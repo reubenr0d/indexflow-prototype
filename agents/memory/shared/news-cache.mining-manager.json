@@ -1,323 +1,172 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-28T19:45:58.758Z",
+  "updatedAt": "2026-05-28T23:44:29.490Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-05-28T19:45:58.626Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-28T23:44:29.490Z",
       "headlines": [
         {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "title": "US labels two Brazilian crime groups as terrorist organizations",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
+          "publishedAt": "2026-05-28T23:37:06.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
+          "publishedAt": "2026-05-28T23:37:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE"
+            "JPM"
+          ]
+        },
+        {
+          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
+          "publishedAt": "2026-05-28T23:36:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-05-28T23:44:29.490Z",
+      "headlines": [
+        {
+          "title": "US labels two Brazilian crime groups as terrorist organizations",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
+          "publishedAt": "2026-05-28T23:37:06.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
+          "publishedAt": "2026-05-28T23:37:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "JPM"
+          ]
+        },
+        {
+          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
+          "publishedAt": "2026-05-28T23:36:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "fetchedAt": "2026-05-28T23:44:29.490Z",
       "headlines": [
         {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
+          "title": "US labels two Brazilian crime groups as terrorist organizations",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
+          "publishedAt": "2026-05-28T23:37:06.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
+          "publishedAt": "2026-05-28T23:37:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-28T19:45:58.626Z",
-      "headlines": [
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
+            "JPM"
           ]
         },
         {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
+          "publishedAt": "2026-05-28T23:36:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FXPO.L": {
-      "fetchedAt": "2026-05-28T19:45:58.626Z",
-      "headlines": [
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE"
+            "DIS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-28T19:45:58.626Z",
+      "fetchedAt": "2026-05-28T23:44:29.490Z",
       "headlines": [
         {
-          "title": "Cabbacis to Participate in Noble Capital Markets’ Emerging Growth Equity Conference on June 3-4, 2026",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cabbacis-participate-noble-capital-markets-194400406.html",
-          "publishedAt": "2026-05-28T19:44:00.000Z",
+          "title": "US labels two Brazilian crime groups as terrorist organizations",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
+          "publishedAt": "2026-05-28T23:37:06.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CABI"
-          ]
-        },
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-28T19:45:58.758Z",
-      "headlines": [
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
+          "publishedAt": "2026-05-28T23:37:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE"
+            "JPM"
+          ]
+        },
+        {
+          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
+          "publishedAt": "2026-05-28T23:36:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AEM": {
-      "fetchedAt": "2026-05-28T19:45:58.758Z",
+    "FXPO.L": {
+      "fetchedAt": "2026-05-28T23:44:29.490Z",
       "headlines": [
         {
-          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
-          "publishedAt": "2026-05-28T13:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RUP.TO",
-            "RUP.NE",
-            "RUPRF",
-            "R05.F"
-          ]
-        },
-        {
-          "title": "Man steals ambulance in Bronx, crashes after joyride past cemetery",
-          "publisher": "NY Daily News",
-          "link": "https://finance.yahoo.com/m/b3fcbdec-184f-3184-ac56-76351985273c/man-steals-ambulance-in.html",
-          "publishedAt": "2026-05-28T15:48:00.000Z",
+          "title": "US labels two Brazilian crime groups as terrorist organizations",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
+          "publishedAt": "2026-05-28T23:37:06.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "White Gold Corp. Commences 2026 Exploration Program Designed to Further Increase Known Gold Resources and Make New Discoveries on its District Scale Land Package in Yukon, Canada",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/white-gold-corp-commences-2026-103000182.html",
-          "publishedAt": "2026-05-28T10:30:00.000Z",
+          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
+          "publishedAt": "2026-05-28T23:37:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "WGO.V",
-            "GC=F",
-            "29W.F",
-            "WGO.NE",
-            "WHGOF"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-28T19:45:58.758Z",
-      "headlines": [
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
+            "JPM"
           ]
         },
         {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
+          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
+          "publishedAt": "2026-05-28T23:36:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "USA.TO": {
-      "fetchedAt": "2026-05-28T19:45:58.758Z",
-      "headlines": [
-        {
-          "title": "SpaceX Investor Says Tesla-SpaceX Merger Is Only A Matter Of Time",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/spacex-investor-says-tesla-spacex-194248210.html",
-          "publishedAt": "2026-05-28T19:42:48.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSLA",
-            "SPAX.PVT"
-          ]
-        },
-        {
-          "title": "How the latest US–Iran updates moved oil prices on Thursday",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/how-the-latest-usiran-updates-moved-oil-prices-on-thursday-194146343.html",
-          "publishedAt": "2026-05-28T19:41:46.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari EV Backlash Boosts Lamborghini's Hybrid Bet",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ferrari-ev-backlash-boosts-lamborghinis-194140541.html",
-          "publishedAt": "2026-05-28T19:41:40.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE"
+            "DIS"
           ]
         }
       ],

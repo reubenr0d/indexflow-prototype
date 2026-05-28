@@ -7,29 +7,69 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-28T22:09:12.473Z",
-  "startedAt": "2026-05-28T22:07:18.177Z",
-  "finishedAt": "2026-05-28T22:09:12.473Z",
+  "runId": "2026-05-28T23:46:08.414Z",
+  "startedAt": "2026-05-28T23:43:33.040Z",
+  "finishedAt": "2026-05-28T23:46:08.414Z",
   "status": "succeeded",
   "usage": {
-    "turns": 15,
-    "toolCalls": 8,
+    "turns": 18,
+    "toolCalls": 14,
     "errors": 0,
-    "softFailures": 2,
-    "writeActions": 1
+    "softFailures": 4,
+    "writeActions": 5
   },
   "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No significant news has altered the outlook for these top picks.",
-  "summary": "I understand the need to open long positions on the eligible assets. However, the vault currently has no available USDC for allocation into perp capital, which means I cannot proceed with opening new positions at this moment.\n\n### Summary\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Top Picks Acted On**: Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN)\n- **Positions Opened**: None due to lack of available collateral\n- **Recommendatio",
+  "summary": "Given the current state of zero available collateral, opening new long positions is not feasible. However, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n### Summary\n\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available USDC for allocation into perp capital, preventing new position openings.\n- **Tracked Assets**: Successfully updated to match the latest Atlas ML top pi",
   "writeActions": [
     {
-      "tool": "allocate_to_perp",
+      "tool": "wire_asset",
       "txHash": null,
-      "justification": "Attempting to allocate available USDC to open long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
+      "justification": "Wiring Fox River Resources Corporation as a new top pick from Atlas ML with a high score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "No idle USDC or available collateral to allocate; batch is a no-op with no risk impact."
+        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
       },
       "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Ferrexpo as a new top pick from Atlas ML with a high score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Minerals 260 Ltd as a new top pick from Atlas ML with a high score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Agnico Eagle Mines as a new top pick from Atlas ML with a high score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0xeaa0b992eecf9e4c5bb1408f921b044758e9331221119a5a0e62bd3c6b63fcef",
+      "justification": "Updating tracked assets to match the latest Atlas ML top picks.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
+      },
+      "kind": "vault-tx"
     }
   ],
   "errors": []

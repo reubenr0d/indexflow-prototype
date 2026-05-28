@@ -5,13 +5,56 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No significant news has altered the outlook for these top picks.",
-  "lastRunAt": "2026-05-28T19:47:07.449Z",
+  "lastRunAt": "2026-05-28T23:46:08.414Z",
   "latestRun": {
-    "runId": "2026-05-28T19:47:07.449Z",
-    "finishedAt": "2026-05-28T19:47:07.449Z",
-    "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the current vault state indicates that there is no available collateral to open new positions. To proceed with opening positions, we need to ensure there is sufficient USDC allocated to perp capital. Here are the steps I would take if there were available collateral:\n\n1. **Allocate Capital**: Allocate available USDC to perp capital to enable opening new positions.\n2. **Open Positions**: Open long positions "
+    "runId": "2026-05-28T23:46:08.414Z",
+    "finishedAt": "2026-05-28T23:46:08.414Z",
+    "summary": "Given the current state of zero available collateral, opening new long positions is not feasible. However, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n### Summary\n\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available USDC for allocation into perp capital, preventing new position openings.\n- **Tracked Assets**: Successfully updated to match the latest Atlas ML top pi"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as a new top pick from Atlas ML with a high score and predicted return.",
+      "timestamp": "2026-05-28T23:46:08.414Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T23:46:08.414Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7908
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to match the latest Atlas ML top picks.",
+      "timestamp": "2026-05-28T23:46:08.414Z",
+      "txHash": "0xeaa0b992eecf9e4c5bb1408f921b044758e9331221119a5a0e62bd3c6b63fcef",
+      "agentName": "mining-manager",
+      "runId": "2026-05-28T23:46:08.414Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
+          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6"
+        ],
+        "count": 8
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
+      }
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating available USDC to perp capital to enable opening new positions on eligible assets.",

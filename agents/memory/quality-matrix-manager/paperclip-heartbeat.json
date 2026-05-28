@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-05-28T22:11:59.853Z",
-  "startedAt": "2026-05-28T22:09:52.532Z",
-  "finishedAt": "2026-05-28T22:11:59.853Z",
+  "runId": "2026-05-28T23:47:31.122Z",
+  "startedAt": "2026-05-28T23:46:41.790Z",
+  "finishedAt": "2026-05-28T23:47:31.122Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
-    "toolCalls": 4,
+    "toolCalls": 3,
     "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.",
-  "summary": "The current state of the \"Minestarters Quality Matrix\" vault shows that it is inactive with no assets or capital allocated. The vault's NAV is $0.00 USDC, and there are no assets currently tracked. The quality matrix definitions have been loaded, confirming the analyst's tier structure and composite scoring methodology.\n\n### Trade-Ready Picks Analysis\nUpon reviewing the latest trade-ready picks, there are no candidates that meet the criteria for opening new long positions. The only filtered pick",
+  "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.\n\n### Summary of Actions\n- **Vault State**: The \"Minestarters Quality Matrix\" vault is currently inact",
   "writeActions": [],
   "errors": []
 }
