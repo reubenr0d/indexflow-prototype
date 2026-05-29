@@ -4,12 +4,12 @@
   "agentDescription": "Delta-neutral mETH carry vault on Mantle. Holds mETH as the reserve token via the multi-asset RWAReserveAdapter, opens a synthetic ETH short on the internal perp sized to a target hedge ratio, and rebalances when mETH/ETH price drifts or funding flips materially. The book earns mETH staking yield while staying flat ETH-price exposure.",
   "signalSource": null,
   "entryMode": "delta_neutral_hedge",
-  "thesis": "The current hedge ratio is undefined due to the absence of any positions. The vault has realized no yield since it has not been funded. The funding rate context is irrelevant at this moment as there are no active positions to manage. \n\nNext steps should focus on securing funding for the vault to enable trading operations.",
-  "lastRunAt": "2026-05-28T08:14:54.950Z",
+  "thesis": "The vault remains inactive with no available collateral or positions. The inability to open a short position is due to the lack of funds. The next steps will involve monitoring for any changes in the vault's status in future runs.",
+  "lastRunAt": "2026-05-29T08:58:13.616Z",
   "latestRun": {
-    "runId": "2026-05-28T08:14:54.950Z",
-    "finishedAt": "2026-05-28T08:14:54.950Z",
-    "summary": "The check for pending redemptions confirmed that there are no funds available in the vault, and no pending redemptions can be processed. \n\n### Next Steps\nSince the vault is entirely empty and I cannot perform any actions without available collateral, the only option left is to consider external funding or deposits from another source. However, as an autonomous manager, I do not have the capability to deposit funds directly into the vault.\n\n### Summary\n- The vault is currently at $0 available col"
+    "runId": "2026-05-29T08:58:13.616Z",
+    "finishedAt": "2026-05-29T08:58:13.616Z",
+    "summary": "The current state of the vault indicates that it is entirely empty, with no assets or positions available. Here's a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Available Collateral**: $0.00\n- **Open Interest**: $0.00\n- **Position Count**: 0\n- **Realised PnL**: $0.00\n\n### Reserve State\nThe attempt to read the reserve state has failed, confirming th"
   },
   "recentActions": [
     {

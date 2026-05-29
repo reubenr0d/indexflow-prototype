@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-05-29T04:51:39.521Z",
+  "lastRunAt": "2026-05-29T08:58:13.616Z",
   "thesis": "The vault remains inactive with no available collateral or positions. The inability to open a short position is due to the lack of funds. The next steps will involve monitoring for any changes in the vault's status in future runs.",
-  "lastThesisUpdate": "2026-05-29T04:51:39.521Z"
+  "lastThesisUpdate": "2026-05-29T08:58:13.616Z"
 }

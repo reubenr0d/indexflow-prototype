@@ -7,67 +7,77 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-29T04:44:32.272Z",
-  "startedAt": "2026-05-29T04:42:53.115Z",
-  "finishedAt": "2026-05-29T04:44:32.272Z",
+  "runId": "2026-05-29T08:54:40.414Z",
+  "startedAt": "2026-05-29T08:52:34.161Z",
+  "finishedAt": "2026-05-29T08:54:40.414Z",
   "status": "succeeded",
   "usage": {
-    "turns": 20,
-    "toolCalls": 14,
+    "turns": 19,
+    "toolCalls": 19,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 5
+    "softFailures": 6,
+    "writeActions": 6
   },
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No significant news has altered the outlook for these top picks.",
-  "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n## Revised Plan\n1. **Collateral Monitoring**: Continuously monitor the vault's collateral availability. Once collateral is available, prioritize opening long positions on the top ML picks: Hercules Metals (BIG.V), AbraS",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
+  "summary": "The current state of the vault indicates that there is no available collateral to open new positions. As a result, I am unable to proceed with opening long-only positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. Here's a summary of the current situation and recommendations for future actions:\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraS",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new Atlas ML top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7.",
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) to enable trading based on its high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new wires with high ML scores and no available collateral is currently allocated, fitting the metals_risk_on regime."
+        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new Atlas ML top pick Ferrexpo (FXPO.L) with a high ML score of 99.6.",
+      "justification": "Wiring new top pick Ferrexpo plc (FXPO.L) to enable trading based on its high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new wires with high ML scores and no available collateral is currently allocated, fitting the metals_risk_on regime."
+        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new Atlas ML top pick Minerals 260 Ltd (MI6.AX) with a high ML score of 99.5.",
+      "justification": "Wiring new top pick Minerals 260 Limited (MI6.AX) to enable trading based on its high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new wires with high ML scores and no available collateral is currently allocated, fitting the metals_risk_on regime."
+        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new Atlas ML top pick B2Gold Corp. (BTO.TO) with a high ML score of 99.2.",
+      "justification": "Wiring new top pick B2Gold Corp. (BTO.TO) to enable trading based on its high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are new wires with high ML scores and no available collateral is currently allocated, fitting the metals_risk_on regime."
+        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring new top pick Amarc Resources Ltd. (AHR.V) to enable trading based on its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Wiring AHR.V is a setup action with no immediate capital impact; aligns with metals_risk_on regime."
       },
       "kind": "file-diff"
     },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Attempting to allocate available idle USDC to perp capital to enable opening new positions.",
+      "justification": "Attempting to allocate available USDC to perp capital in preparation for opening long positions on eligible assets.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only attempts to allocate idle USDC, which is currently zero; no risk or impact on collateral."
+        "reason": "The batch only attempts to allocate USDC to perp capital, but with idle USDC at $0, no action will occur; no risk involved."
       },
       "kind": "file-diff"
     }
