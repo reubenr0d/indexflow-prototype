@@ -5,11 +5,11 @@
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
   "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.",
-  "lastRunAt": "2026-05-28T17:12:29.645Z",
+  "lastRunAt": "2026-05-29T16:59:42.961Z",
   "latestRun": {
-    "runId": "2026-05-28T17:12:29.645Z",
-    "finishedAt": "2026-05-28T17:12:29.645Z",
-    "summary": "The current state of the \"Minestarters Quality Matrix\" vault shows that it is inactive with no assets or capital allocated. The vault's NAV is $0.00 USDC, and there are no assets currently tracked. The quality matrix definition has been successfully retrieved, providing the necessary grounding for tier definitions.\n\n### Trade-Ready Picks\nThe latest trade-ready picks did not yield any candidates with a `tradeReadinessScore` above the threshold of 75. The only filtered pick was BFG.CN, which was s"
+    "runId": "2026-05-29T16:59:42.961Z",
+    "finishedAt": "2026-05-29T16:59:42.961Z",
+    "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.\n\n### Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: Inac"
   },
   "recentActions": [
     {

@@ -7,47 +7,57 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-29T12:30:52.339Z",
-  "startedAt": "2026-05-29T12:28:00.377Z",
-  "finishedAt": "2026-05-29T12:30:52.339Z",
+  "runId": "2026-05-29T16:57:15.845Z",
+  "startedAt": "2026-05-29T16:54:33.493Z",
+  "finishedAt": "2026-05-29T16:57:15.845Z",
   "status": "succeeded",
   "usage": {
-    "turns": 16,
-    "toolCalls": 11,
+    "turns": 23,
+    "toolCalls": 27,
     "errors": 0,
-    "softFailures": 3,
-    "writeActions": 3
+    "softFailures": 13,
+    "writeActions": 4
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "Given the persistent constraint of zero available collateral, I am unable to open new positions at this time. However, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n### Alternative Plan\n\n1. **Monitor Collateral**: Continuously check for any changes in the vault's collateral state to act promptly when funds become available.\n\n2. **Resolve Symbol Issues**: Investigate and resolve symbol resolution issues for Fox R",
+  "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. To comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions improve:\n\n1. **Monitor for Capital Inflows**: Stay alert for any potential capital inflows or changes in the vault's financial state that could free up collateral for future trades.\n\n2. **Prepare for Future Opportunities**: Once collateral becomes ",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick with a high ML score of 99.7 and predicted return of 76.56%.",
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
+        "reason": "All proposed wires are for new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no risk of over-leverage."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Ferrexpo plc as it is a new top pick with a high ML score of 99.6 and predicted return of 75.71%.",
+      "justification": "Wiring new top pick Ferrexpo (FXPO.L) with a high ML score of 99.6 and predicted return of 75.71%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
+        "reason": "All proposed wires are for new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no risk of over-leverage."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new top pick with a high ML score of 99.5 and predicted return of 70.52%.",
+      "justification": "Wiring new top pick Minerals 260 Ltd (MI6.AX) with a high ML score of 99.5 and predicted return of 70.52%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
+        "reason": "All proposed wires are for new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no risk of over-leverage."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "txHash": null,
+      "justification": "Allocating the auto-target into perp capital to prepare for opening new positions.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No funds are being allocated; the batch is a no-op with idleUsdc and availableCollateral both at $0."
       },
       "kind": "file-diff"
     }

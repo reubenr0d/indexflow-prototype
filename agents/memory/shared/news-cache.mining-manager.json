@@ -1,181 +1,402 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-29T04:43:22.321Z",
+  "updatedAt": "2026-05-29T16:55:57.253Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-29T04:43:22.321Z",
-      "headlines": [
-        {
-          "title": "Morning Bid: Another day, another Iran deal moment",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
-          "publishedAt": "2026-05-29T04:37:37.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DX-Y.NYB"
-          ]
-        },
-        {
-          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
-          "publishedAt": "2026-05-29T04:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRVY"
-          ]
-        },
-        {
-          "title": "Is Costco a Buy After Its Latest Earnings Report?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
-          "publishedAt": "2026-05-29T04:30:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "COST"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-05-29T04:43:22.321Z",
-      "headlines": [
-        {
-          "title": "Morning Bid: Another day, another Iran deal moment",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
-          "publishedAt": "2026-05-29T04:37:37.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DX-Y.NYB"
-          ]
-        },
-        {
-          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
-          "publishedAt": "2026-05-29T04:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRVY"
-          ]
-        },
-        {
-          "title": "Is Costco a Buy After Its Latest Earnings Report?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
-          "publishedAt": "2026-05-29T04:30:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "COST"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-29T04:43:22.321Z",
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
       "headlines": [
         {
-          "title": "Morning Bid: Another day, another Iran deal moment",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
-          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DX-Y.NYB"
+            "MNKD"
           ]
         },
         {
-          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
-          "publishedAt": "2026-05-29T04:35:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GRVY"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is Costco a Buy After Its Latest Earnings Report?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
-          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "COST"
+            "PVN.L",
+            "PGOO.L"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FXPO.L": {
-      "fetchedAt": "2026-05-29T04:43:22.321Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
       "headlines": [
         {
-          "title": "Morning Bid: Another day, another Iran deal moment",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
-          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DX-Y.NYB"
+            "MNKD"
           ]
         },
         {
-          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
-          "publishedAt": "2026-05-29T04:35:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GRVY"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is Costco a Buy After Its Latest Earnings Report?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
-          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "COST"
+            "PVN.L",
+            "PGOO.L"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-29T04:43:22.321Z",
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
       "headlines": [
         {
-          "title": "Morning Bid: Another day, another Iran deal moment",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
-          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DX-Y.NYB"
+            "MNKD"
           ]
         },
         {
-          "title": "Is Costco a Buy After Its Latest Earnings Report?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
-          "publishedAt": "2026-05-29T04:30:24.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "COST"
-          ]
-        },
-        {
-          "title": "Alibaug: The Rise of Mumbai's Premium Coastal Market",
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/alibaug-rise-mumbais-premium-coastal-043000273.html",
-          "publishedAt": "2026-05-29T04:30:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM": {
+      "fetchedAt": "2026-05-29T16:55:57.009Z",
+      "headlines": [
+        {
+          "title": "There's A Lot To Like About Agnico Eagle Mines' (NYSE:AEM) Upcoming US$0.45 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/theres-lot-agnico-eagle-mines-124600320.html",
+          "publishedAt": "2026-05-29T12:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AEM"
+          ]
+        },
+        {
+          "title": "ASX Growth Stocks With Insider Ownership Up To 37%",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/asx-growth-stocks-insider-ownership-193806447.html",
+          "publishedAt": "2026-05-28T19:38:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TOR.AX",
+            "SPL.AX",
+            "IPX",
+            "SKS.AX",
+            "PNI.AX",
+            "MAU.AX",
+            "FRS.AX",
+            "EIQ.AX",
+            "AR1.AX",
+            "AV1.AX",
+            "AYA.AX"
+          ]
+        },
+        {
+          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
+          "publishedAt": "2026-05-28T13:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RUP.TO",
+            "RUP.NE",
+            "RUPRF",
+            "R05.F"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "headlines": [
+        {
+          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
+          "publishedAt": "2026-05-29T16:51:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MNKD"
+          ]
+        },
+        {
+          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
+          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
+          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PVN.L",
+            "PGOO.L"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
