@@ -4,14 +4,31 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to strongly favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No significant news has altered the outlook for these top picks.",
-  "lastRunAt": "2026-05-29T04:44:32.272Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
+  "lastRunAt": "2026-05-29T12:30:52.339Z",
   "latestRun": {
-    "runId": "2026-05-29T04:44:32.272Z",
-    "finishedAt": "2026-05-29T04:44:32.272Z",
-    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n## Revised Plan\n1. **Collateral Monitoring**: Continuously monitor the vault's collateral availability. Once collateral is available, prioritize opening long positions on the top ML picks: Hercules Metals (BIG.V), AbraS"
+    "runId": "2026-05-29T12:30:52.339Z",
+    "finishedAt": "2026-05-29T12:30:52.339Z",
+    "summary": "Given the persistent constraint of zero available collateral, I am unable to open new positions at this time. However, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n### Alternative Plan\n\n1. **Monitor Collateral**: Continuously check for any changes in the vault's collateral state to act promptly when funds become available.\n\n2. **Resolve Symbol Issues**: Investigate and resolve symbol resolution issues for Fox R"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new top pick with a high ML score of 99.7 and predicted return of 76.56%.",
+      "timestamp": "2026-05-29T12:30:52.339Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-29T12:30:52.339Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7895
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring new Atlas ML top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7.",

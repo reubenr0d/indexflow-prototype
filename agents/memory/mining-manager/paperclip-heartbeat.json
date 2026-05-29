@@ -7,77 +7,47 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-29T08:54:40.414Z",
-  "startedAt": "2026-05-29T08:52:34.161Z",
-  "finishedAt": "2026-05-29T08:54:40.414Z",
+  "runId": "2026-05-29T12:30:52.339Z",
+  "startedAt": "2026-05-29T12:28:00.377Z",
+  "finishedAt": "2026-05-29T12:30:52.339Z",
   "status": "succeeded",
   "usage": {
-    "turns": 19,
-    "toolCalls": 19,
+    "turns": 16,
+    "toolCalls": 11,
     "errors": 0,
-    "softFailures": 6,
-    "writeActions": 6
+    "softFailures": 3,
+    "writeActions": 3
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "The current state of the vault indicates that there is no available collateral to open new positions. As a result, I am unable to proceed with opening long-only positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. Here's a summary of the current situation and recommendations for future actions:\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraS",
+  "summary": "Given the persistent constraint of zero available collateral, I am unable to open new positions at this time. However, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when collateral becomes available.\n\n### Alternative Plan\n\n1. **Monitor Collateral**: Continuously check for any changes in the vault's collateral state to act promptly when funds become available.\n\n2. **Resolve Symbol Issues**: Investigate and resolve symbol resolution issues for Fox R",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) to enable trading based on its high ML score and predicted return.",
+      "justification": "Wiring Fox River Resources Corporation as it is a new top pick with a high ML score of 99.7 and predicted return of 76.56%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
+        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new top pick Ferrexpo plc (FXPO.L) to enable trading based on its high ML score and predicted return.",
+      "justification": "Wiring Ferrexpo plc as it is a new top pick with a high ML score of 99.6 and predicted return of 75.71%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
+        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring new top pick Minerals 260 Limited (MI6.AX) to enable trading based on its high ML score and predicted return.",
+      "justification": "Wiring Minerals 260 Ltd as it is a new top pick with a high ML score of 99.5 and predicted return of 70.52%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick B2Gold Corp. (BTO.TO) to enable trading based on its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All actions are wiring new assets with no capital allocation; no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Amarc Resources Ltd. (AHR.V) to enable trading based on its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Wiring AHR.V is a setup action with no immediate capital impact; aligns with metals_risk_on regime."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "txHash": null,
-      "justification": "Attempting to allocate available USDC to perp capital in preparation for opening long positions on eligible assets.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only attempts to allocate USDC to perp capital, but with idle USDC at $0, no action will occur; no risk involved."
+        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
       },
       "kind": "file-diff"
     }
