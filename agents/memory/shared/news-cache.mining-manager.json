@@ -1,31 +1,33 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-29T19:43:23.637Z",
+  "updatedAt": "2026-05-29T22:06:50.784Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-29T19:43:23.293Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-29T22:06:50.784Z",
       "headlines": [
         {
-          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
+          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
-          "publishedAt": "2026-05-29T19:40:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
+          "publishedAt": "2026-05-29T22:03:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
+          "publishedAt": "2026-05-29T22:02:44.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "FROG"
+          ]
         },
         {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
+          "publishedAt": "2026-05-29T22:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -33,269 +35,127 @@
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-29T19:43:23.293Z",
+      "fetchedAt": "2026-05-29T22:06:50.784Z",
       "headlines": [
         {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
+          "publishedAt": "2026-05-29T22:03:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
+          "publishedAt": "2026-05-29T22:02:44.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "FROG"
+          ]
         },
         {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
+          "publishedAt": "2026-05-29T22:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-05-29T19:43:23.293Z",
+    "FOX.CN": {
+      "fetchedAt": "2026-05-29T22:06:50.784Z",
       "headlines": [
         {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
+          "publishedAt": "2026-05-29T22:02:44.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FROG"
+          ]
+        },
+        {
+          "title": "Amid data center protests, a billionaire and the Trump administration see a foreign plot",
+          "publisher": "Washington Post",
+          "link": "https://finance.yahoo.com/m/0cb7b79b-72fa-3961-8388-0bc3ee648c07/amid-data-center-protests%2C-a.html",
+          "publishedAt": "2026-05-29T21:59:46.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "title": "Syncora Guarantee Inc. Announces the Availability of Certain Financial Information",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/syncora-guarantee-inc-announces-availability-215800444.html",
+          "publishedAt": "2026-05-29T21:58:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BIG.V": {
-      "fetchedAt": "2026-05-29T19:43:23.293Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-29T22:06:50.784Z",
       "headlines": [
         {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
+          "publishedAt": "2026-05-29T22:02:44.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FROG"
+          ]
+        },
+        {
+          "title": "Amid data center protests, a billionaire and the Trump administration see a foreign plot",
+          "publisher": "Washington Post",
+          "link": "https://finance.yahoo.com/m/0cb7b79b-72fa-3961-8388-0bc3ee648c07/amid-data-center-protests%2C-a.html",
+          "publishedAt": "2026-05-29T21:59:46.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "title": "Syncora Guarantee Inc. Announces the Availability of Certain Financial Information",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/syncora-guarantee-inc-announces-availability-215800444.html",
+          "publishedAt": "2026-05-29T21:58:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "USA.TO": {
-      "fetchedAt": "2026-05-29T19:43:23.293Z",
+    "FXPO.L": {
+      "fetchedAt": "2026-05-29T22:06:50.784Z",
       "headlines": [
         {
-          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
+          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
-          "publishedAt": "2026-05-29T19:40:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
+          "publishedAt": "2026-05-29T22:03:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
+          "publishedAt": "2026-05-29T22:02:44.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FROG"
+          ]
+        },
+        {
+          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-29T19:43:23.637Z",
-      "headlines": [
-        {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-29T19:43:23.637Z",
-      "headlines": [
-        {
-          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
-          "publishedAt": "2026-05-29T19:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-29T19:43:23.637Z",
-      "headlines": [
-        {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-29T19:43:23.637Z",
-      "headlines": [
-        {
-          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
-          "publishedAt": "2026-05-29T19:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-29T19:43:23.637Z",
-      "headlines": [
-        {
-          "title": "New state investment fuels Florida Poly's continued momentum and growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
-          "publishedAt": "2026-05-29T19:38:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
-          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
+          "publishedAt": "2026-05-29T22:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }

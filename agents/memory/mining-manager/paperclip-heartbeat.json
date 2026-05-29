@@ -7,67 +7,47 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-29T19:45:48.148Z",
-  "startedAt": "2026-05-29T19:40:59.803Z",
-  "finishedAt": "2026-05-29T19:45:48.148Z",
+  "runId": "2026-05-29T22:08:41.112Z",
+  "startedAt": "2026-05-29T22:05:33.539Z",
+  "finishedAt": "2026-05-29T22:08:41.112Z",
   "status": "succeeded",
   "usage": {
-    "turns": 17,
-    "toolCalls": 18,
+    "turns": 15,
+    "toolCalls": 10,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 5
+    "softFailures": 3,
+    "writeActions": 3
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act once collateral becomes available.\n\n## Plan for Future Opportunities\n\n1. **Monitor Collateral Availability**: Regularly check the vault's collateral status to identify when funds become available for new positions.\n\n2. **Prioritize Top Picks**: Focus on t",
+  "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions allow.\n\n## Revised Plan\n\n1. **Monitor Collateral Availability**: Keep a close watch on the vault's collateral status. As soon as there is available collateral, prioritize opening long positions on the top picks: Hercules Metals (BIG.V), Ab",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model.",
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Ferrexpo plc as it is a new top pick by the Atlas ML model.",
+      "justification": "Wiring new top pick Ferrexpo (FXPO.L) with a high ML score of 99.6 and predicted return of 75.71%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Minerals 260 Limited as it is a new top pick by the Atlas ML model.",
+      "justification": "Wiring new top pick Minerals 260 Ltd (MI6.AX) with a high ML score of 99.5 and predicted return of 70.52%.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring B2Gold Corp. as it is a new top pick by the Atlas ML model.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Amarc Resources Ltd. as it is a new top pick by the Atlas ML model.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
       },
       "kind": "file-diff"
     }

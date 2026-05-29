@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-29T19:49:31.202Z",
-  "startedAt": "2026-05-29T19:48:46.007Z",
-  "finishedAt": "2026-05-29T19:49:31.202Z",
-  "status": "succeeded",
+  "runId": "2026-05-29T22:13:22.496Z",
+  "startedAt": "2026-05-29T22:12:04.325Z",
+  "finishedAt": "2026-05-29T22:13:22.496Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 3,
-    "toolCalls": 4,
-    "errors": 0,
+    "turns": 7,
+    "toolCalls": 7,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The vault remains inactive with no available collateral or positions. The hedge ratio is not applicable as there are no open positions. The next steps will involve monitoring for any changes in the vault's status in future runs.",
-  "summary": "The current state of the vault indicates that it is entirely empty, with no assets or positions available. Here’s a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n\n### Hedge Ratio Calculation\nSince there are no open positions, the hedge ratio is not applicable at this time. \n\n### Next Steps\nGiven that the vault is inactive and has no available collater",
+  "summary": "The check for pending redemptions confirmed that there are no funds available for allocation or withdrawal. The vault remains entirely inactive with no assets or positions.\n\n### Final Summary\n- **Current NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Pending Redemptions**: None available\n- **Open Positions**: None\n\n### ## Thesis\nThe hedge ratio is not applicable as there are no open positions. The vault remains inactive with no available collateral or positions. The next steps wil",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted, data: \\\"0x\\\"\\n\"\n}"
+    }
+  ]
 }

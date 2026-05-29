@@ -5,13 +5,30 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastRunAt": "2026-05-29T19:45:48.148Z",
+  "lastRunAt": "2026-05-29T22:08:41.112Z",
   "latestRun": {
-    "runId": "2026-05-29T19:45:48.148Z",
-    "finishedAt": "2026-05-29T19:45:48.148Z",
-    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act once collateral becomes available.\n\n## Plan for Future Opportunities\n\n1. **Monitor Collateral Availability**: Regularly check the vault's collateral status to identify when funds become available for new positions.\n\n2. **Prioritize Top Picks**: Focus on t"
+    "runId": "2026-05-29T22:08:41.112Z",
+    "finishedAt": "2026-05-29T22:08:41.112Z",
+    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions allow.\n\n## Revised Plan\n\n1. **Monitor Collateral Availability**: Keep a close watch on the vault's collateral status. As soon as there is available collateral, prioritize opening long positions on the top picks: Hercules Metals (BIG.V), Ab"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
+      "timestamp": "2026-05-29T22:08:41.112Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-29T22:08:41.112Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7903
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model.",
