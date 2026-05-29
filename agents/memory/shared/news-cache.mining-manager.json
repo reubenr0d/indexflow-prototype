@@ -1,173 +1,181 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-28T23:44:29.490Z",
+  "updatedAt": "2026-05-29T04:43:22.321Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-28T23:44:29.490Z",
-      "headlines": [
-        {
-          "title": "US labels two Brazilian crime groups as terrorist organizations",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
-          "publishedAt": "2026-05-28T23:37:06.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
-          "publishedAt": "2026-05-28T23:37:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "JPM"
-          ]
-        },
-        {
-          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
-          "publishedAt": "2026-05-28T23:36:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DIS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-05-28T23:44:29.490Z",
-      "headlines": [
-        {
-          "title": "US labels two Brazilian crime groups as terrorist organizations",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
-          "publishedAt": "2026-05-28T23:37:06.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
-          "publishedAt": "2026-05-28T23:37:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "JPM"
-          ]
-        },
-        {
-          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
-          "publishedAt": "2026-05-28T23:36:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DIS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "BIG.V": {
-      "fetchedAt": "2026-05-28T23:44:29.490Z",
+      "fetchedAt": "2026-05-29T04:43:22.321Z",
       "headlines": [
         {
-          "title": "US labels two Brazilian crime groups as terrorist organizations",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
-          "publishedAt": "2026-05-28T23:37:06.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
-          "publishedAt": "2026-05-28T23:37:00.000Z",
+          "title": "Morning Bid: Another day, another Iran deal moment",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
+          "publishedAt": "2026-05-29T04:37:37.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "JPM"
+            "DX-Y.NYB"
           ]
         },
         {
-          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
-          "publishedAt": "2026-05-28T23:36:03.000Z",
+          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
+          "publishedAt": "2026-05-29T04:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DIS"
+            "GRVY"
+          ]
+        },
+        {
+          "title": "Is Costco a Buy After Its Latest Earnings Report?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
+          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "COST"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-28T23:44:29.490Z",
+      "fetchedAt": "2026-05-29T04:43:22.321Z",
       "headlines": [
         {
-          "title": "US labels two Brazilian crime groups as terrorist organizations",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
-          "publishedAt": "2026-05-28T23:37:06.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
-          "publishedAt": "2026-05-28T23:37:00.000Z",
+          "title": "Morning Bid: Another day, another Iran deal moment",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
+          "publishedAt": "2026-05-29T04:37:37.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "JPM"
+            "DX-Y.NYB"
           ]
         },
         {
-          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
-          "publishedAt": "2026-05-28T23:36:03.000Z",
+          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
+          "publishedAt": "2026-05-29T04:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DIS"
+            "GRVY"
+          ]
+        },
+        {
+          "title": "Is Costco a Buy After Its Latest Earnings Report?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
+          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "COST"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-29T04:43:22.321Z",
+      "headlines": [
+        {
+          "title": "Morning Bid: Another day, another Iran deal moment",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
+          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DX-Y.NYB"
+          ]
+        },
+        {
+          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
+          "publishedAt": "2026-05-29T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GRVY"
+          ]
+        },
+        {
+          "title": "Is Costco a Buy After Its Latest Earnings Report?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
+          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "COST"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-28T23:44:29.490Z",
+      "fetchedAt": "2026-05-29T04:43:22.321Z",
       "headlines": [
         {
-          "title": "US labels two Brazilian crime groups as terrorist organizations",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/cb858195-5201-325f-9154-8ff496438e16/us-labels-two-brazilian-crime.html",
-          "publishedAt": "2026-05-28T23:37:06.000Z",
+          "title": "Morning Bid: Another day, another Iran deal moment",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
+          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DX-Y.NYB"
+          ]
+        },
+        {
+          "title": "Gravity Game Unite (GGU) Successfully Concludes OBT for PC MMORPG \"Ragnarok Zero: Global\"",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/gravity-game-unite-ggu-successfully-043500550.html",
+          "publishedAt": "2026-05-29T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GRVY"
+          ]
+        },
+        {
+          "title": "Is Costco a Buy After Its Latest Earnings Report?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
+          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "COST"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-05-29T04:43:22.321Z",
+      "headlines": [
+        {
+          "title": "Morning Bid: Another day, another Iran deal moment",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/articles/morning-bid-another-day-another-043737077.html",
+          "publishedAt": "2026-05-29T04:37:37.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DX-Y.NYB"
+          ]
+        },
+        {
+          "title": "Is Costco a Buy After Its Latest Earnings Report?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/43b8ef2b-a972-3429-bdfd-63e2830302ce/is-costco-a-buy-after-its.html",
+          "publishedAt": "2026-05-29T04:30:24.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "COST"
+          ]
+        },
+        {
+          "title": "Alibaug: The Rise of Mumbai's Premium Coastal Market",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/alibaug-rise-mumbais-premium-coastal-043000273.html",
+          "publishedAt": "2026-05-29T04:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Jamie Dimon spills beans on his next big JPMorgan deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6175e754-90ea-3083-8d63-aea6fba7a5f3/jamie-dimon-spills-beans-on.html",
-          "publishedAt": "2026-05-28T23:37:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "JPM"
-          ]
-        },
-        {
-          "title": "FCC Moves Up Expiration Dates for Disney's ABC Station Licenses",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/fcc-moves-expiration-dates-disney-233603934.html",
-          "publishedAt": "2026-05-28T23:36:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DIS"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
