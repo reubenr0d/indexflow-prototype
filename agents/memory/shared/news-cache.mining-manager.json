@@ -1,33 +1,36 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-29T22:06:50.784Z",
+  "updatedAt": "2026-05-29T23:43:27.193Z",
   "entries": {
     "BIG.V": {
-      "fetchedAt": "2026-05-29T22:06:50.784Z",
+      "fetchedAt": "2026-05-29T23:43:27.193Z",
       "headlines": [
         {
-          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
-          "publishedAt": "2026-05-29T22:03:00.000Z",
+          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
+          "publishedAt": "2026-05-29T23:32:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ATEX",
+            "SATS",
+            "NN",
+            "MRNA"
+          ]
+        },
+        {
+          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
+          "publishedAt": "2026-05-29T23:32:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
-          "publishedAt": "2026-05-29T22:02:44.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FROG"
-          ]
-        },
-        {
-          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
-          "publishedAt": "2026-05-29T22:00:00.000Z",
+          "title": "Lima refinery impact touted at Chamber event",
+          "publisher": "The Lima News, Ohio",
+          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
+          "publishedAt": "2026-05-29T23:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -35,63 +38,34 @@
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-29T22:06:50.784Z",
+      "fetchedAt": "2026-05-29T23:43:27.193Z",
       "headlines": [
         {
-          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
-          "publishedAt": "2026-05-29T22:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
-          "publishedAt": "2026-05-29T22:02:44.000Z",
+          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
+          "publishedAt": "2026-05-29T23:32:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FROG"
+            "ATEX",
+            "SATS",
+            "NN",
+            "MRNA"
           ]
         },
         {
-          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
-          "publishedAt": "2026-05-29T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-05-29T22:06:50.784Z",
-      "headlines": [
-        {
-          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
-          "publishedAt": "2026-05-29T22:02:44.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FROG"
-          ]
-        },
-        {
-          "title": "Amid data center protests, a billionaire and the Trump administration see a foreign plot",
-          "publisher": "Washington Post",
-          "link": "https://finance.yahoo.com/m/0cb7b79b-72fa-3961-8388-0bc3ee648c07/amid-data-center-protests%2C-a.html",
-          "publishedAt": "2026-05-29T21:59:46.000Z",
+          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
+          "publishedAt": "2026-05-29T23:32:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Syncora Guarantee Inc. Announces the Availability of Certain Financial Information",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/syncora-guarantee-inc-announces-availability-215800444.html",
-          "publishedAt": "2026-05-29T21:58:00.000Z",
+          "title": "Lima refinery impact touted at Chamber event",
+          "publisher": "The Lima News, Ohio",
+          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
+          "publishedAt": "2026-05-29T23:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -99,31 +73,69 @@
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-29T22:06:50.784Z",
+      "fetchedAt": "2026-05-29T23:43:27.193Z",
       "headlines": [
         {
-          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
-          "publishedAt": "2026-05-29T22:02:44.000Z",
+          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
+          "publishedAt": "2026-05-29T23:32:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FROG"
+            "ATEX",
+            "SATS",
+            "NN",
+            "MRNA"
           ]
         },
         {
-          "title": "Amid data center protests, a billionaire and the Trump administration see a foreign plot",
-          "publisher": "Washington Post",
-          "link": "https://finance.yahoo.com/m/0cb7b79b-72fa-3961-8388-0bc3ee648c07/amid-data-center-protests%2C-a.html",
-          "publishedAt": "2026-05-29T21:59:46.000Z",
+          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
+          "publishedAt": "2026-05-29T23:32:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Syncora Guarantee Inc. Announces the Availability of Certain Financial Information",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/syncora-guarantee-inc-announces-availability-215800444.html",
-          "publishedAt": "2026-05-29T21:58:00.000Z",
+          "title": "Lima refinery impact touted at Chamber event",
+          "publisher": "The Lima News, Ohio",
+          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
+          "publishedAt": "2026-05-29T23:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-05-29T23:43:27.193Z",
+      "headlines": [
+        {
+          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
+          "publishedAt": "2026-05-29T23:32:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ATEX",
+            "SATS",
+            "NN",
+            "MRNA"
+          ]
+        },
+        {
+          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
+          "publishedAt": "2026-05-29T23:32:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Lima refinery impact touted at Chamber event",
+          "publisher": "The Lima News, Ohio",
+          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
+          "publishedAt": "2026-05-29T23:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -131,31 +143,34 @@
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-29T22:06:50.784Z",
+      "fetchedAt": "2026-05-29T23:43:27.193Z",
       "headlines": [
         {
-          "title": "PHARMACISTS MUTUAL ANNOUNCES FELIX GALLAGHER AS NEW CHAIR OF THE BOARD OF DIRECTORS",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/pharmacists-mutual-announces-felix-gallagher-220300272.html",
-          "publishedAt": "2026-05-29T22:03:00.000Z",
+          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
+          "publishedAt": "2026-05-29T23:32:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ATEX",
+            "SATS",
+            "NN",
+            "MRNA"
+          ]
+        },
+        {
+          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
+          "publishedAt": "2026-05-29T23:32:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "JFrog Highlights AI-Driven Cloud Growth as Coding Agents Boost Usage",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/96e561ab-5ca0-3e07-8f0f-45da37a621c4/jfrog-highlights-ai-driven.html",
-          "publishedAt": "2026-05-29T22:02:44.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FROG"
-          ]
-        },
-        {
-          "title": "First Class Completes Vaughn's New Enhanced Air Traffic Collegiate Training Initiative with 100% Pass Rate",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/first-class-completes-vaughns-enhanced-220000628.html",
-          "publishedAt": "2026-05-29T22:00:00.000Z",
+          "title": "Lima refinery impact touted at Chamber event",
+          "publisher": "The Lima News, Ohio",
+          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
+          "publishedAt": "2026-05-29T23:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }

@@ -4,12 +4,12 @@
   "agentDescription": "Mining long/short vault driven by the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction)",
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
-  "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.",
-  "lastRunAt": "2026-05-29T16:59:42.961Z",
+  "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The only candidate, BFG, was filtered out due to being priced-in, resulting in a tradeReadinessScore of 0.",
+  "lastRunAt": "2026-05-29T23:46:09.260Z",
   "latestRun": {
-    "runId": "2026-05-29T16:59:42.961Z",
-    "finishedAt": "2026-05-29T16:59:42.961Z",
-    "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.\n\n### Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: Inac"
+    "runId": "2026-05-29T23:46:09.260Z",
+    "finishedAt": "2026-05-29T23:46:09.260Z",
+    "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The only candidate, BFG, was filtered out due to being priced-in, resulting in a tradeReadinessScore "
   },
   "recentActions": [
     {
