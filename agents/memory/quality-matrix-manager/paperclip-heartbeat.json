@@ -7,24 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-05-29T16:59:42.961Z",
-  "startedAt": "2026-05-29T16:57:53.806Z",
-  "finishedAt": "2026-05-29T16:59:42.961Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-05-29T19:47:42.817Z",
+  "startedAt": "2026-05-29T19:46:25.457Z",
+  "finishedAt": "2026-05-29T19:47:42.817Z",
+  "status": "succeeded",
   "usage": {
     "turns": 3,
     "toolCalls": 3,
-    "errors": 1,
+    "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.",
-  "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.\n\n### Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: Inac",
+  "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for shorts but no auto-block.\n\n### Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: No a",
   "writeActions": [],
-  "errors": [
-    {
-      "tool": "_auto_rebalance",
-      "error": "MCP error -32001: Request timed out"
-    }
-  ]
+  "errors": []
 }

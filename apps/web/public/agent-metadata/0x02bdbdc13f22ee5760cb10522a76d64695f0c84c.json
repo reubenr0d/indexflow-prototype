@@ -5,276 +5,28 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastRunAt": "2026-05-29T16:57:15.845Z",
+  "lastRunAt": "2026-05-29T19:45:48.148Z",
   "latestRun": {
-    "runId": "2026-05-29T16:57:15.845Z",
-    "finishedAt": "2026-05-29T16:57:15.845Z",
-    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. To comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions improve:\n\n1. **Monitor for Capital Inflows**: Stay alert for any potential capital inflows or changes in the vault's financial state that could free up collateral for future trades.\n\n2. **Prepare for Future Opportunities**: Once collateral becomes "
+    "runId": "2026-05-29T19:45:48.148Z",
+    "finishedAt": "2026-05-29T19:45:48.148Z",
+    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act once collateral becomes available.\n\n## Plan for Future Opportunities\n\n1. **Monitor Collateral Availability**: Regularly check the vault's collateral status to identify when funds become available for new positions.\n\n2. **Prioritize Top Picks**: Focus on t"
   },
   "recentActions": [
     {
       "tool": "wire_asset",
-      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
-      "timestamp": "2026-05-29T16:57:15.845Z",
+      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model.",
+      "timestamp": "2026-05-29T19:45:48.148Z",
       "txHash": null,
       "agentName": "mining-manager",
-      "runId": "2026-05-29T16:57:15.845Z",
+      "runId": "2026-05-29T19:45:48.148Z",
       "params": {
         "kind": "wire_asset",
         "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7898
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wires are for new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no risk of over-leverage."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating the auto-target into perp capital to prepare for opening new positions.",
-      "timestamp": "2026-05-29T16:57:15.845Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T16:57:15.845Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "No funds are being allocated; the batch is a no-op with idleUsdc and availableCollateral both at $0."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick with a high ML score of 99.7 and predicted return of 76.56%.",
-      "timestamp": "2026-05-29T12:30:52.339Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T12:30:52.339Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7895
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wires are new top picks with high ML scores and predicted returns; no collateral is currently allocated, so no conflicts with available collateral."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new Atlas ML top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7.",
-      "timestamp": "2026-05-29T04:44:32.272Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T04:44:32.272Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7905
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new wires with high ML scores and no available collateral is currently allocated, fitting the metals_risk_on regime."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Attempting to allocate available idle USDC to perp capital to enable opening new positions.",
-      "timestamp": "2026-05-29T04:44:32.272Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T04:44:32.272Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only attempts to allocate idle USDC, which is currently zero; no risk or impact on collateral."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as a new top pick from Atlas ML with a high score and predicted return.",
-      "timestamp": "2026-05-28T23:46:08.414Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T23:46:08.414Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7908
+        "seedPriceUsd": 0.7906
       },
       "riskOfficer": {
         "verdict": "approve",
         "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
-      }
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the latest Atlas ML top picks.",
-      "timestamp": "2026-05-28T23:46:08.414Z",
-      "txHash": "0xeaa0b992eecf9e4c5bb1408f921b044758e9331221119a5a0e62bd3c6b63fcef",
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T23:46:08.414Z",
-      "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
-          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
-          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
-          "0x7557d8b4b2347d33b4ebf35476c1a mining-equity positions driven by Atlas ML signals.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": "0x2a3a498e9ae72c3fa933d4dfd25814eb1c7aae363cf51200db60ca151a02f9e3",
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "create_vault",
-        "name": "Minestarters ML Picks",
-        "depositFeeBps": 50,
-        "redeemFeeBps": 50
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch is for creating a new vault, which does not involve any trading actions or risk exposure."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring FXPO.L as it is a new top pick by the Atlas ML model with a high ML score.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FXPO.L",
-        "seedPriceUsd": 1.5
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new top picks with no recent losses; regime longBonus=2 supports long positions."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring AEM as it is a new top pick by the Atlas ML model with a high ML score.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": "0x5a07864e3df09072476f32f23e1fa3b5bc3ee3a484910e0b74f5f30faeec10d7",
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "AEM",
-        "seedPriceUsd": 174.91
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All assets are new top picks with no recent losses; regime longBonus=2 supports long positions."
-      }
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the top picks from the Atlas ML model.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": "0x92fdb9a810ea5c9cbc5db242a858f14f1c3c2757d584d9cc7cbb137d531bcc03",
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
-          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
-          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
-          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6",
-          "0xa6a463452d580deb8ec322d23a82cfeb4552da030bd3d4db8db762f3ded88a8f"
-        ],
-        "count": 9
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
-      }
-    },
-    {
-      "tool": "set_vault_assets",
-      "justification": "Updating tracked assets to match the top picks from the Atlas ML model.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": "0x91d5faef2b62fe4cf1cd20f844636ca6f259d4c1f80bf5cfae78b863b791878d",
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "set_vault_assets",
-        "assetIds": [
-          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
-          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
-          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
-          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6",
-          "0x51f844520c350d934b7c2b3d0deda883c8fdabf9f8acef47bbcae084aac7b4d1"
-        ],
-        "count": 9
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp capital to open new long positions on eligible assets.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "No idle USDC to allocate; batch is a no-op. Vault has $0 available collateral and no open positions."
-      }
-    }
-  ]
-}
-6c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-          "0x958745b12649e65eb3f2d6ae47ad987dd390828afe1cfe2bb96f56c4cd13cb81",
-          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
-          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
-          "0xf343bea8cc355fefd8dbb61824755f1c70a57738868a4a06d200f6051ba06dd6",
-          "0x51f844520c350d934b7c2b3d0deda883c8fdabf9f8acef47bbcae084aac7b4d1"
-        ],
-        "count": 9
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available USDC to perp capital to open new long positions on eligible assets.",
-      "timestamp": "2026-05-28T08:04:52.060Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-28T08:04:52.060Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "No idle USDC to allocate; batch is a no-op. Vault has $0 available collateral and no open positions."
       }
     }
   ]

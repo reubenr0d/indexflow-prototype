@@ -1,402 +1,303 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-29T16:55:57.253Z",
+  "updatedAt": "2026-05-29T19:43:23.637Z",
   "entries": {
     "ABRA.TO": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
+      "fetchedAt": "2026-05-29T19:43:23.293Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
+          "publishedAt": "2026-05-29T19:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
-      "headlines": [
-        {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
+      "fetchedAt": "2026-05-29T19:43:23.293Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
-      "headlines": [
-        {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-29T19:43:23.293Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AEM": {
-      "fetchedAt": "2026-05-29T16:55:57.009Z",
-      "headlines": [
-        {
-          "title": "There's A Lot To Like About Agnico Eagle Mines' (NYSE:AEM) Upcoming US$0.45 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/theres-lot-agnico-eagle-mines-124600320.html",
-          "publishedAt": "2026-05-29T12:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AEM"
-          ]
-        },
-        {
-          "title": "ASX Growth Stocks With Insider Ownership Up To 37%",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/asx-growth-stocks-insider-ownership-193806447.html",
-          "publishedAt": "2026-05-28T19:38:06.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOR.AX",
-            "SPL.AX",
-            "IPX",
-            "SKS.AX",
-            "PNI.AX",
-            "MAU.AX",
-            "FRS.AX",
-            "EIQ.AX",
-            "AR1.AX",
-            "AV1.AX",
-            "AYA.AX"
-          ]
-        },
-        {
-          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
-          "publishedAt": "2026-05-28T13:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RUP.TO",
-            "RUP.NE",
-            "RUPRF",
-            "R05.F"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-29T16:55:57.253Z",
-      "headlines": [
-        {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-29T16:55:57.253Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-29T19:43:23.293Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PWM.V": {
-      "fetchedAt": "2026-05-29T16:55:57.253Z",
+    "USA.TO": {
+      "fetchedAt": "2026-05-29T19:43:23.293Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
+          "publishedAt": "2026-05-29T19:40:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HHH.V": {
-      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "fetchedAt": "2026-05-29T19:43:23.637Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-29T19:43:23.637Z",
+      "headlines": [
+        {
+          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
+          "publishedAt": "2026-05-29T19:40:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-29T19:43:23.637Z",
+      "headlines": [
+        {
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-29T19:43:23.637Z",
+      "headlines": [
+        {
+          "title": "Jake's Motorcars Highlights Used Bentley Continental GT with under 5,000 Miles",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/jakes-motorcars-highlights-used-bentley-194000318.html",
+          "publishedAt": "2026-05-29T19:40:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "PPP.V": {
-      "fetchedAt": "2026-05-29T16:55:57.253Z",
+      "fetchedAt": "2026-05-29T19:43:23.637Z",
       "headlines": [
         {
-          "title": "MannKind Says FDA Approves Afrezza for Children, Adolescents With Diabetes",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/mannkind-says-fda-approves-afrezza-165109768.html",
-          "publishedAt": "2026-05-29T16:51:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MNKD"
-          ]
-        },
-        {
-          "title": "Zenylitics Announces Leadership Transition to Continue Accelerated Growth",
+          "title": "New state investment fuels Florida Poly's continued momentum and growth",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/zenylitics-announces-leadership-transition-continue-165100001.html",
-          "publishedAt": "2026-05-29T16:51:00.000Z",
+          "link": "https://finance.yahoo.com/economy/policy/articles/state-investment-fuels-florida-polys-193800363.html",
+          "publishedAt": "2026-05-29T19:38:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ProVen VCT plc: Admission of Further Securities to Trading",
+          "title": "Local Trade Copier 3.0.0 Introduces Manual-Like Trade Execution and Advanced Trade Randomization for MT4 & MT5",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/proven-vct-plc-admission-further-165000901.html",
-          "publishedAt": "2026-05-29T16:50:00.000Z",
+          "link": "https://finance.yahoo.com/markets/options/articles/local-trade-copier-3-0-193200544.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "PVN.L",
-            "PGOO.L"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Judge Blocks Move to Add Trump’s Name to Kennedy Center",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/fe189964-54ae-336c-aff0-994b5d6a075a/judge-blocks-move-to-add.html",
+          "publishedAt": "2026-05-29T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
