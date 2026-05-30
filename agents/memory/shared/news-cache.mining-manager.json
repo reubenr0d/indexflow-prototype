@@ -1,327 +1,219 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T15:38:02.198Z",
+  "updatedAt": "2026-05-30T19:41:47.440Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-05-30T15:38:02.018Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-05-30T15:38:02.018Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "BIG.V": {
-      "fetchedAt": "2026-05-30T15:38:02.018Z",
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
       "headlines": [
         {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
+            "INFY"
           ]
         },
         {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
+          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
+          "publishedAt": "2026-05-30T19:34:20.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "PUMP",
+            "NG=F"
+          ]
         },
         {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
+          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
+          "publishedAt": "2026-05-30T19:33:07.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "SHAZ"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "headlines": [
+        {
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INFY"
+          ]
+        },
+        {
+          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
+          "publishedAt": "2026-05-30T19:34:20.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PUMP",
+            "NG=F"
+          ]
+        },
+        {
+          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
+          "publishedAt": "2026-05-30T19:33:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHAZ"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-30T15:38:02.018Z",
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
       "headlines": [
         {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
+            "INFY"
           ]
         },
         {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
+          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
+          "publishedAt": "2026-05-30T19:34:20.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PUMP",
+            "NG=F"
+          ]
+        },
+        {
+          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
+          "publishedAt": "2026-05-30T19:33:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHAZ"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MI6.AX": {
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "headlines": [
+        {
+          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
+          "publishedAt": "2026-05-30T19:36:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INFY"
+          ]
+        },
+        {
+          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
+          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
+          "publishedAt": "2026-05-30T19:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PFE",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "headlines": [
+        {
+          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
+          "publishedAt": "2026-05-30T19:36:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INFY"
+          ]
+        },
+        {
+          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
+          "publishedAt": "2026-05-30T19:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PFE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-30T15:38:02.018Z",
+      "fetchedAt": "2026-05-30T19:41:47.440Z",
       "headlines": [
         {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
+          "publishedAt": "2026-05-30T19:36:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
+          "publishedAt": "2026-05-30T19:35:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
+            "INFY"
           ]
         },
         {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-05-30T15:38:02.198Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
+          "publishedAt": "2026-05-30T19:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
+            "PFE",
+            "NVDA"
           ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-30T15:38:02.198Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "USA.TO": {
-      "fetchedAt": "2026-05-30T15:38:02.198Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-30T15:38:02.198Z",
-      "headlines": [
-        {
-          "title": "Could the Next Great Space Stock Come From Japan?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
-          "publishedAt": "2026-05-30T15:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SPAX.PVT",
-            "ASTS",
-            "RKLB",
-            "TSLA"
-          ]
-        },
-        {
-          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
-          "publishedAt": "2026-05-30T15:29:09.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
-          "publishedAt": "2026-05-30T15:28:25.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
