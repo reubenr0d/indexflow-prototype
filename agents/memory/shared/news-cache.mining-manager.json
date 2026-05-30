@@ -1,323 +1,213 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T10:17:50.969Z",
+  "updatedAt": "2026-05-30T14:05:52.835Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-30T10:17:50.806Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-30T10:17:50.806Z",
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
+      "headlines": [
+        {
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-05-30T10:17:50.806Z",
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-05-30T10:17:50.806Z",
-      "headlines": [
-        {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-30T10:17:50.806Z",
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "PWM.V": {
-      "fetchedAt": "2026-05-30T10:17:50.969Z",
+    "BTO.TO": {
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-30T10:17:50.969Z",
+    "MI6.AX": {
+      "fetchedAt": "2026-05-30T14:05:52.835Z",
       "headlines": [
         {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
+          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-30T10:17:50.969Z",
-      "headlines": [
-        {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
+          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
+          "publishedAt": "2026-05-30T14:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-30T10:17:50.969Z",
-      "headlines": [
-        {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-30T10:17:50.969Z",
-      "headlines": [
-        {
-          "title": "How to Check If You're Getting the Right Social Security Benefit Amount",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/692e8f85-3744-38f9-8892-c121ae19b4b6/how-to-check-if-you%27re.html",
-          "publishedAt": "2026-05-30T10:06:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Is Trump a convicted felon? He was convicted of this 2 years ago",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/1bfc111e-6ae5-3f96-933c-5680b91a2d12/is-trump-a-convicted-felon%3F.html",
-          "publishedAt": "2026-05-30T10:04:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "IAC Conference: Cost Cuts, People Inc. Rebrand Aim to Close Valuation Gap",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/d472c231-b43c-3dc3-8d5c-99824dd3f8e6/iac-conference%3A-cost-cuts%2C.html",
-          "publishedAt": "2026-05-30T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IAC"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
