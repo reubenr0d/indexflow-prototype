@@ -1,219 +1,561 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T19:41:47.440Z",
+  "updatedAt": "2026-05-30T21:15:53.999Z",
   "entries": {
     "BIG.V": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
-          "publishedAt": "2026-05-30T19:34:20.000Z",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PUMP",
-            "NG=F"
+            "NIO",
+            "NVDA",
+            "INTC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
-          "publishedAt": "2026-05-30T19:33:07.000Z",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SHAZ"
+            "NIO",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
-          "publishedAt": "2026-05-30T19:34:20.000Z",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PUMP",
-            "NG=F"
-          ]
-        },
-        {
-          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
-          "publishedAt": "2026-05-30T19:33:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHAZ"
+            "NIO",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "ProPetro Holding Corp. (PUMP): Leopold Aschenbrenner Remains Bullish",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/propetro-holding-corp-pump-leopold-193420035.html",
-          "publishedAt": "2026-05-30T19:34:20.000Z",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PUMP",
-            "NG=F"
-          ]
-        },
-        {
-          "title": "SharonAI Holdings Inc. (SHAZ): Leopold Aschenbrenner Declares New Position",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sharonai-holdings-inc-shaz-leopold-193307274.html",
-          "publishedAt": "2026-05-30T19:33:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHAZ"
+            "NIO",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MI6.AX": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
-          "publishedAt": "2026-05-30T19:36:00.000Z",
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
-          "publishedAt": "2026-05-30T19:35:00.000Z",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PFE",
-            "NVDA"
+            "NIO",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FOX.CN": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+    "AEM": {
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
-          "publishedAt": "2026-05-30T19:36:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "There's A Lot To Like About Agnico Eagle Mines' (NYSE:AEM) Upcoming US$0.45 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/theres-lot-agnico-eagle-mines-124600320.html",
+          "publishedAt": "2026-05-29T12:46:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "AEM"
           ]
         },
         {
-          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
-          "publishedAt": "2026-05-30T19:35:00.000Z",
+          "title": "ASX Growth Stocks With Insider Ownership Up To 37%",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/asx-growth-stocks-insider-ownership-193806447.html",
+          "publishedAt": "2026-05-28T19:38:06.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PFE",
-            "NVDA"
+            "TOR.AX",
+            "SPL.AX",
+            "IPX",
+            "SKS.AX",
+            "PNI.AX",
+            "MAU.AX",
+            "FRS.AX",
+            "EIQ.AX",
+            "AR1.AX",
+            "AV1.AX",
+            "AYA.AX"
+          ]
+        },
+        {
+          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
+          "publishedAt": "2026-05-28T13:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RUP.TO",
+            "RUP.NE",
+            "RUPRF",
+            "R05.F"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FXPO.L": {
-      "fetchedAt": "2026-05-30T19:41:47.440Z",
+    "USA.TO": {
+      "fetchedAt": "2026-05-30T21:15:50.296Z",
       "headlines": [
         {
-          "title": "TTW Unveils Top 50 Coolcation Travel Destinations in the World for 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/economy/articles/ttw-unveils-top-50-coolcation-193600168.html",
-          "publishedAt": "2026-05-30T19:36:00.000Z",
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Infosys Limited (INFY): Leopold Aschenbrenner Is Bearish on This Firm",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/infosys-limited-infy-leopold-aschenbrenner-193525731.html",
-          "publishedAt": "2026-05-30T19:35:25.000Z",
+          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INFY"
+            "SOUN",
+            "NVDA"
           ]
         },
         {
-          "title": "Why Wall Street Is Dead Wrong About This Popular Stock",
+          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/075ad4c0-e7c6-3cae-af61-3b165763a5cb/why-wall-street-is-dead-wrong.html",
-          "publishedAt": "2026-05-30T19:35:00.000Z",
+          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
+          "publishedAt": "2026-05-30T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PFE",
-            "NVDA"
+            "NIO",
+            "NVDA",
+            "INTC"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BHP.AX": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "VGZ.TO": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AYM.AX": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CGNT.V": {
+      "fetchedAt": "2026-05-30T21:15:53.678Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LGC.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GRSL.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "OOR.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CRML": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Stocks Supported by Middle East Peace Hopes and AI Spending",
+          "publisher": "Barchart",
+          "link": "https://finance.yahoo.com/m/386afdcb-8dc9-3152-bbfa-e19d63f04661/stocks-supported-by-middle.html",
+          "publishedAt": "2026-05-29T15:20:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "^NDX",
+            "^IXIC",
+            "CL=F",
+            "DELL",
+            "^DJI"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AUAU.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BGD.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BFG.CN": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GPAC.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "NCX.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FUU.V": {
+      "fetchedAt": "2026-05-30T21:15:53.999Z",
+      "headlines": [
+        {
+          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
+          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

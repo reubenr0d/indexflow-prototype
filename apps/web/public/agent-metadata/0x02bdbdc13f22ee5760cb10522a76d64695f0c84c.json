@@ -4,21 +4,21 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: \n- Resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Monitor news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.\n- Prepare for capital allocation once conditions permit, allowing for the opening of new positions on eligible top-N picks.",
-  "lastRunAt": "2026-05-30T19:42:35.768Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: \n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.",
+  "lastRunAt": "2026-05-30T21:16:29.058Z",
   "latestRun": {
-    "runId": "2026-05-30T19:42:35.768Z",
-    "finishedAt": "2026-05-30T19:42:35.768Z",
-    "summary": "Given the constraint of zero available collateral, I am unable to open new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. The policy enforcement requires opening these positions, but without available capital, it's not feasible. \n\n### Revised Plan\n1. **Monitor Collateral Status**: Continuously check for any changes in the vault's collateral status to act quickly when collateral becomes available.\n\n2. **Prepare for Position Openings**: Once collateral is available, o"
+    "runId": "2026-05-30T21:16:29.058Z",
+    "finishedAt": "2026-05-30T21:16:29.058Z",
+    "summary": "The vault's state confirms that there is zero available collateral, which means I am unable to open new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. The policy enforcement requires opening these positions, but without available collateral, it is not feasible to proceed with opening new positions.\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals"
   },
   "recentActions": [
     {
       "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as a new top pick with a high ML score.",
-      "timestamp": "2026-05-30T19:42:35.768Z",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the top-N Atlas ML picks with a high ML score.",
+      "timestamp": "2026-05-30T21:16:29.058Z",
       "txHash": null,
       "agentName": "mining-manager",
-      "runId": "2026-05-30T19:42:35.768Z",
+      "runId": "2026-05-30T21:16:29.058Z",
       "params": {
         "kind": "wire_asset",
         "symbol": "FOX.CN",
@@ -26,157 +26,23 @@
       },
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to consider."
+        "reason": "Batch only wires assets; no positions opened or closed. No collateral impact or regime conflict."
       }
     },
     {
       "tool": "allocate_to_perp",
-      "justification": "Allocating capital to enable opening positions on top-N picks.",
-      "timestamp": "2026-05-30T19:42:35.768Z",
+      "justification": "Allocating available capital to perp trading for opening new long positions on the top-N Atlas ML picks.",
+      "timestamp": "2026-05-30T21:16:29.058Z",
       "txHash": null,
       "agentName": "mining-manager",
-      "runId": "2026-05-30T19:42:35.768Z",
+      "runId": "2026-05-30T21:16:29.058Z",
       "params": {
         "kind": "allocate_to_perp",
         "amountUsdc": "0"
       },
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only updates tracked assets and allocates zero capital; no risk of over-leverage or regime conflict."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Allocating available collateral to enable opening new long positions on top Atlas ML picks.",
-      "timestamp": "2026-05-30T15:39:12.261Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-30T15:39:12.261Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only allocates zero USDC to perp, which is consistent with the vault's current available collateral of $0."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "timestamp": "2026-05-30T14:07:31.382Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-30T14:07:31.382Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7901
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
-      }
-    },
-    {
-      "tool": "allocate_to_perp",
-      "justification": "Attempting to allocate available collateral for opening new long positions on eligible assets.",
-      "timestamp": "2026-05-30T14:07:31.382Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-30T14:07:31.382Z",
-      "params": {
-        "kind": "allocate_to_perp",
-        "amountUsdc": "0"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only attempts to allocate collateral, which is currently zero; no risk of over-leverage or regime conflict."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by Atlas ML with a high score and predicted return.",
-      "timestamp": "2026-05-30T11:48:31.694Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-30T11:48:31.694Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7901
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to wire_asset",
-      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
-      "timestamp": "2026-05-29T22:08:41.112Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T22:08:41.112Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7903
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model.",
-      "timestamp": "2026-05-29T19:45:48.148Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T19:45:48.148Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7906
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
-      }
-    }
-  ]
-}
-  }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7 and predicted return of 76.56%.",
-      "timestamp": "2026-05-29T22:08:41.112Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T22:08:41.112Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7903
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are new with high ML scores and predicted returns; no collateral is currently allocated, and regime is metals_risk_on."
-      }
-    },
-    {
-      "tool": "wire_asset",
-      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model.",
-      "timestamp": "2026-05-29T19:45:48.148Z",
-      "txHash": null,
-      "agentName": "mining-manager",
-      "runId": "2026-05-29T19:45:48.148Z",
-      "params": {
-        "kind": "wire_asset",
-        "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7906
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the metals_risk_on regime and there is no available collateral to allocate, so no risk of over-leverage."
+        "reason": "No capital is being allocated or positions opened; batch is a no-op with zero impact on available collateral."
       }
     }
   ]

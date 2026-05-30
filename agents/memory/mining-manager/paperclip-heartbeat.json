@@ -7,60 +7,65 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-30T19:42:35.768Z",
-  "startedAt": "2026-05-30T19:41:19.210Z",
-  "finishedAt": "2026-05-30T19:42:35.768Z",
-  "status": "succeeded",
+  "runId": "2026-05-30T21:16:29.058Z",
+  "startedAt": "2026-05-30T21:15:00.681Z",
+  "finishedAt": "2026-05-30T21:16:29.058Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 15,
-    "toolCalls": 11,
-    "errors": 0,
-    "softFailures": 4,
+    "turns": 21,
+    "toolCalls": 24,
+    "errors": 1,
+    "softFailures": 8,
     "writeActions": 4
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: \n- Resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Monitor news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.\n- Prepare for capital allocation once conditions permit, allowing for the opening of new positions on eligible top-N picks.",
-  "summary": "Given the constraint of zero available collateral, I am unable to open new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. The policy enforcement requires opening these positions, but without available capital, it's not feasible. \n\n### Revised Plan\n1. **Monitor Collateral Status**: Continuously check for any changes in the vault's collateral status to act quickly when collateral becomes available.\n\n2. **Prepare for Position Openings**: Once collateral is available, o",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: \n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.",
+  "summary": "The vault's state confirms that there is zero available collateral, which means I am unable to open new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time. The policy enforcement requires opening these positions, but without available collateral, it is not feasible to proceed with opening new positions.\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals",
   "writeActions": [
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as a new top pick with a high ML score.",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the top-N Atlas ML picks with a high ML score.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to consider."
+        "reason": "Batch only wires assets; no positions opened or closed. No collateral impact or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Ferrexpo as a new top pick with a high ML score.",
+      "justification": "Wiring Ferrexpo as it is a new entrant in the top-N Atlas ML picks with a high ML score.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to consider."
+        "reason": "Batch only wires assets; no positions opened or closed. No collateral impact or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as a new top pick with a high ML score.",
+      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the top-N Atlas ML picks with a high ML score.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to consider."
+        "reason": "Batch only wires assets; no positions opened or closed. No collateral impact or regime conflict."
       },
       "kind": "file-diff"
     },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Allocating capital to enable opening positions on top-N picks.",
+      "justification": "Allocating available capital to perp trading for opening new long positions on the top-N Atlas ML picks.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only updates tracked assets and allocates zero capital; no risk of over-leverage or regime conflict."
+        "reason": "No capital is being allocated or positions opened; batch is a no-op with zero impact on available collateral."
       },
       "kind": "file-diff"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "yfinance_news",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool yfinance_news: [\n  {\n    \"code\": \"too_big\",\n    \"maximum\": 10,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at most 10 element(s)\",\n    \"path\": [\n      \"symbols\"\n    ]\n  }\n]"
+    }
+  ]
 }
