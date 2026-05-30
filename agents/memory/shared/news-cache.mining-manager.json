@@ -1,31 +1,37 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T14:05:52.835Z",
+  "updatedAt": "2026-05-30T15:38:02.198Z",
   "entries": {
     "TEX.CN": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+      "fetchedAt": "2026-05-30T15:38:02.018Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -33,59 +39,35 @@
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+      "fetchedAt": "2026-05-30T15:38:02.018Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
-      "headlines": [
-        {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,29 +75,71 @@
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+      "fetchedAt": "2026-05-30T15:38:02.018Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-30T15:38:02.018Z",
+      "headlines": [
+        {
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -123,89 +147,179 @@
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+      "fetchedAt": "2026-05-30T15:38:02.018Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BTO.TO": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+    "EEE.L": {
+      "fetchedAt": "2026-05-30T15:38:02.198Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MI6.AX": {
-      "fetchedAt": "2026-05-30T14:05:52.835Z",
+    "AHR.V": {
+      "fetchedAt": "2026-05-30T15:38:02.198Z",
       "headlines": [
         {
-          "title": "Minister MacDonald highlights $957.8 million investment from Spring Economic Update 2026: Canada Strong for All to Small Craft Harbours Program",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/economy/policy/articles/minister-macdonald-highlights-957-8-140000170.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "'Lucky scoops' trend has kids paying $70 for $16 worth cheap plastic trinkets. Is this gambling for children?",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/economy/policy/articles/lucky-scoops-trend-kids-paying-140000854.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "USA.TO": {
+      "fetchedAt": "2026-05-30T15:38:02.198Z",
+      "headlines": [
+        {
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ImPact Biotech Presents Updated Data from Phase 1 Trial of Padeliporfin VTP in LA-PDAC and Phase 3 ENLIGHTED Trial in LG-UTUC at ASCO 2026",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/impact-biotech-presents-updated-data-140000694.html",
-          "publishedAt": "2026-05-30T14:00:00.000Z",
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-30T15:38:02.198Z",
+      "headlines": [
+        {
+          "title": "Could the Next Great Space Stock Come From Japan?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/65518315-ac0b-3a71-9a20-13f61d886004/could-the-next-great-space.html",
+          "publishedAt": "2026-05-30T15:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SPAX.PVT",
+            "ASTS",
+            "RKLB",
+            "TSLA"
+          ]
+        },
+        {
+          "title": "Ancelotti says Neymar fit for 'first or second' World Cup match",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68fd9f0c-8b1d-35fa-aae8-8a338847d24a/ancelotti-says-neymar-fit-for.html",
+          "publishedAt": "2026-05-30T15:29:09.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Where Will Dogecoin Be When Crypto Goes Mainstream?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8d93e890-0494-316e-b428-7c3d5ca1fb49/where-will-dogecoin-be-when.html",
+          "publishedAt": "2026-05-30T15:28:25.000Z",
           "type": "STORY",
           "relatedTickers": []
         }

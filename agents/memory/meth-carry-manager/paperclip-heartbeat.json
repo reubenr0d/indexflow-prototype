@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-30T14:12:25.698Z",
-  "startedAt": "2026-05-30T14:10:35.318Z",
-  "finishedAt": "2026-05-30T14:12:25.698Z",
-  "status": "succeeded",
+  "runId": "2026-05-30T15:42:45.824Z",
+  "startedAt": "2026-05-30T15:41:33.862Z",
+  "finishedAt": "2026-05-30T15:42:45.824Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 11,
-    "toolCalls": 11,
-    "errors": 0,
-    "softFailures": 5,
+    "turns": 6,
+    "toolCalls": 7,
+    "errors": 1,
+    "softFailures": 2,
     "writeActions": 0
   },
-  "thesis": "The hedge ratio is not applicable as there are no open positions. The vault remains inactive with no available collateral or positions. The next steps will involve monitoring for any changes in the vault's status in future runs.\n\nI will now update the memory with this information and exit.",
-  "summary": "### Final Summary\n\n- **Current NAV**: $0.00\n- **Total Supply**: 0\n- **Available Collateral**: $0.00\n- **Action Taken**: No actions taken due to lack of collateral. The vault remains inactive.\n\n### Thesis\nThe hedge ratio is not applicable as there are no open positions. The vault remains inactive with no available collateral or positions. The next steps will involve monitoring for any changes in the vault's status in future runs.\n\nI will now update the memory with this information and exit.",
+  "thesis": "The hedge ratio is not applicable as there are no open positions. The vault remains inactive with no available collateral or positions. The next steps will involve monitoring for any changes in the vault's status in future runs.",
+  "summary": "It appears that there are issues with retrieving the necessary data from the blockchain due to RPC errors. The vault is currently inactive, with no assets or positions available. Here's a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Available Collateral**: $0.00\n- **Perp Allocated**: $0.00\n\nSince there are no assets or positions available, I cannot compute the hedge ratio or take any actions regarding opening or rebalancing positions. \n\n### Next Steps\nI wi",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    }
+  ]
 }

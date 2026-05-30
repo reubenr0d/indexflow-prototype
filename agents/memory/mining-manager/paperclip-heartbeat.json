@@ -7,67 +7,27 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-30T14:07:31.382Z",
-  "startedAt": "2026-05-30T14:04:53.247Z",
-  "finishedAt": "2026-05-30T14:07:31.382Z",
+  "runId": "2026-05-30T15:39:12.261Z",
+  "startedAt": "2026-05-30T15:36:26.444Z",
+  "finishedAt": "2026-05-30T15:39:12.261Z",
   "status": "succeeded",
   "usage": {
-    "turns": 20,
-    "toolCalls": 16,
+    "turns": 16,
+    "toolCalls": 9,
     "errors": 0,
-    "softFailures": 6,
-    "writeActions": 5
+    "softFailures": 1,
+    "writeActions": 1
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: Focus on resolving symbol issues for new entrants, monitoring news for actionable insights, and preparing for capital allocation once conditions permit.",
-  "summary": "The attempt to allocate collateral for opening new positions failed because there is no available collateral to allocate. The vault currently has zero available collateral, which means that no new positions can be opened at this time.\n\n### Current Actions and Recommendations:\n1. **Collateral Constraint**: The vault has zero available collateral, preventing any new position openings.\n2. **Symbol Verification**: Re-evaluate the symbols for new entrants to ensure they can be wired in future runs.\n3",
+  "summary": "Given the current constraint of zero available collateral, opening new positions is not feasible at this time. However, I will outline a plan to prepare for future opportunities when conditions permit.\n\n### Alternative Plan\n\n1. **Focus on Capital Management**: The primary focus should be on freeing up or allocating capital to enable new positions. This could involve closing any existing positions that are underperforming or reallocating existing resources.\n\n2. **Monitor News and Market Condition",
   "writeActions": [
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ferrexpo as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring B2Gold Corp. as it is a new entrant in the Atlas ML top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Attempting to allocate available collateral for opening new long positions on eligible assets.",
+      "justification": "Allocating available collateral to enable opening new long positions on top Atlas ML picks.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only attempts to allocate collateral, which is currently zero; no risk of over-leverage or regime conflict."
+        "reason": "The batch only allocates zero USDC to perp, which is consistent with the vault's current available collateral of $0."
       },
       "kind": "file-diff"
     }
