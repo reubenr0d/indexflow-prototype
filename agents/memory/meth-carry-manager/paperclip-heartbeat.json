@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-30T15:42:45.824Z",
-  "startedAt": "2026-05-30T15:41:33.862Z",
-  "finishedAt": "2026-05-30T15:42:45.824Z",
+  "runId": "2026-05-30T17:27:57.999Z",
+  "startedAt": "2026-05-30T17:25:22.908Z",
+  "finishedAt": "2026-05-30T17:27:57.999Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 6,
-    "toolCalls": 7,
+    "turns": 10,
+    "toolCalls": 11,
     "errors": 1,
-    "softFailures": 2,
+    "softFailures": 1,
     "writeActions": 0
   },
   "thesis": "The hedge ratio is not applicable as there are no open positions. The vault remains inactive with no available collateral or positions. The next steps will involve monitoring for any changes in the vault's status in future runs.",
-  "summary": "It appears that there are issues with retrieving the necessary data from the blockchain due to RPC errors. The vault is currently inactive, with no assets or positions available. Here's a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Available Collateral**: $0.00\n- **Perp Allocated**: $0.00\n\nSince there are no assets or positions available, I cannot compute the hedge ratio or take any actions regarding opening or rebalancing positions. \n\n### Next Steps\nI wi",
+  "summary": "The current state of the vault indicates that it is entirely inactive, with no assets or positions available. Here’s a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n\n### Current Analysis\n- **Hedge Ratio**: Not applicable as there are no open positions.\n- **Funding Rate**: Not applicable as there are no open positions.\n\nSince there are no open position",
   "writeActions": [],
   "errors": [
     {
