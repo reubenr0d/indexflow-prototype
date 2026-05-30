@@ -7,67 +7,27 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-29T23:44:43.529Z",
-  "startedAt": "2026-05-29T23:42:19.095Z",
-  "finishedAt": "2026-05-29T23:44:43.529Z",
+  "runId": "2026-05-30T04:19:04.808Z",
+  "startedAt": "2026-05-30T04:17:38.880Z",
+  "finishedAt": "2026-05-30T04:19:04.808Z",
   "status": "succeeded",
   "usage": {
-    "turns": 17,
-    "toolCalls": 12,
+    "turns": 15,
+    "toolCalls": 10,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 5
+    "softFailures": 2,
+    "writeActions": 1
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**: Focus on resolving symbol issues, monitoring news for actionable insights, and preparing for capital allocation once conditions permit.",
-  "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions permit.\n\n### Revised Plan\n1. **Monitor Collateral Availability**: Regularly check the vault's collateral status to identify when funds become available for new positions.\n2. **Prepare for Future Opportunities**: Ensure that the vault is re",
+  "summary": "The attempt to allocate collateral for opening new positions failed because there is no available collateral to allocate. The vault currently has zero available collateral, which means that no new positions can be opened at this time.\n\n### Summary\n\n## Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML sco",
   "writeActions": [
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_on regime."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ferrexpo as it is a new entrant in the top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_on regime."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_on regime."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring B2Gold Corp. as it is a new entrant in the top picks with a high ML score.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_on regime."
-      },
-      "kind": "file-diff"
-    },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Allocating available USDC to perp trading to enable opening of new long positions on eligible assets.",
+      "justification": "Allocating available collateral to enable opening of new long positions on eligible assets BIG.V, ABRA.TO, and TEX.CN.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only allocates 0 USDC to perp trading, which does not affect the vault's collateral or risk exposure."
+        "reason": "The batch only allocates collateral with no immediate position openings; availableCollateral is $0, so no risk of over-leverage or regime conflict."
       },
       "kind": "file-diff"
     }
