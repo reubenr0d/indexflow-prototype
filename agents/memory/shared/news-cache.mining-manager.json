@@ -1,559 +1,181 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T21:15:53.999Z",
+  "updatedAt": "2026-05-30T23:16:03.771Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SOUN",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NIO",
-            "NVDA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SOUN",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NIO",
-            "NVDA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "TEX.CN": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
+      "fetchedAt": "2026-05-30T23:16:03.771Z",
       "headlines": [
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
+          "publishedAt": "2026-05-30T23:09:58.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
+          "publishedAt": "2026-05-30T23:02:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOUN",
-            "NVDA"
+            "BTC-USD",
+            "MARA"
           ]
         },
         {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "title": "The Dividend ETF Built for Whatever the Market Does Next",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
+          "publishedAt": "2026-05-30T23:01:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO",
             "NVDA",
-            "INTC"
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
+      "fetchedAt": "2026-05-30T23:16:03.771Z",
       "headlines": [
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
+          "publishedAt": "2026-05-30T23:09:58.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
+          "publishedAt": "2026-05-30T23:02:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOUN",
-            "NVDA"
+            "BTC-USD",
+            "MARA"
           ]
         },
         {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "title": "The Dividend ETF Built for Whatever the Market Does Next",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
+          "publishedAt": "2026-05-30T23:01:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO",
             "NVDA",
-            "INTC"
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
+    "FOX.CN": {
+      "fetchedAt": "2026-05-30T23:16:03.771Z",
       "headlines": [
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
+          "publishedAt": "2026-05-30T23:02:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOUN",
-            "NVDA"
+            "BTC-USD",
+            "MARA"
           ]
         },
         {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "title": "The Dividend ETF Built for Whatever the Market Does Next",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
+          "publishedAt": "2026-05-30T23:01:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO",
             "NVDA",
-            "INTC"
+            "^GSPC"
           ]
+        },
+        {
+          "title": "‘Sewn in Coal Country’ marks contribution of women in the garment industry",
+          "publisher": "Republican & Herald, Pottsville, Pa.",
+          "link": "https://finance.yahoo.com/m/23e7346b-d2d9-3a02-bf79-0b25d3bce944/%E2%80%98sewn-in-coal-country%E2%80%99-marks.html",
+          "publishedAt": "2026-05-30T22:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AEM": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
+    "FXPO.L": {
+      "fetchedAt": "2026-05-30T23:16:03.771Z",
       "headlines": [
         {
-          "title": "There's A Lot To Like About Agnico Eagle Mines' (NYSE:AEM) Upcoming US$0.45 Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/theres-lot-agnico-eagle-mines-124600320.html",
-          "publishedAt": "2026-05-29T12:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AEM"
-          ]
-        },
-        {
-          "title": "ASX Growth Stocks With Insider Ownership Up To 37%",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/news/asx-growth-stocks-insider-ownership-193806447.html",
-          "publishedAt": "2026-05-28T19:38:06.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOR.AX",
-            "SPL.AX",
-            "IPX",
-            "SKS.AX",
-            "PNI.AX",
-            "MAU.AX",
-            "FRS.AX",
-            "EIQ.AX",
-            "AR1.AX",
-            "AV1.AX",
-            "AYA.AX"
-          ]
-        },
-        {
-          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
-          "publishedAt": "2026-05-28T13:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RUP.TO",
-            "RUP.NE",
-            "RUPRF",
-            "R05.F"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "USA.TO": {
-      "fetchedAt": "2026-05-30T21:15:50.296Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
+          "publishedAt": "2026-05-30T23:09:58.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Wall Street Analysts Think This AI Stock Could Soar Nearly 57% in a Year",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/169c3935-d958-3aa1-9f95-e3686d85ca5c/wall-street-analysts-think.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
+          "publishedAt": "2026-05-30T23:02:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SOUN",
-            "NVDA"
+            "BTC-USD",
+            "MARA"
           ]
         },
         {
-          "title": "Nio's Battery Swap Network Just Delivered 16% of All EV Energy in China in 5 Days. Is the Market Sleeping on This?",
+          "title": "The Dividend ETF Built for Whatever the Market Does Next",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/413eea66-2509-3fc5-ab28-85cfb9f97f64/nio%27s-battery-swap-network.html",
-          "publishedAt": "2026-05-30T21:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
+          "publishedAt": "2026-05-30T23:01:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO",
             "NVDA",
-            "INTC"
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-30T23:16:03.771Z",
       "headlines": [
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "VGZ.TO": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AYM.AX": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CGNT.V": {
-      "fetchedAt": "2026-05-30T21:15:53.678Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LGC.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GRSL.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "OOR.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CRML": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Stocks Supported by Middle East Peace Hopes and AI Spending",
-          "publisher": "Barchart",
-          "link": "https://finance.yahoo.com/m/386afdcb-8dc9-3152-bbfa-e19d63f04661/stocks-supported-by-middle.html",
-          "publishedAt": "2026-05-29T15:20:11.000Z",
+          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
+          "publishedAt": "2026-05-30T23:02:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "^NDX",
-            "^IXIC",
-            "CL=F",
-            "DELL",
-            "^DJI"
+            "BTC-USD",
+            "MARA"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AUAU.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
+        },
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "title": "The Dividend ETF Built for Whatever the Market Does Next",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
+          "publishedAt": "2026-05-30T23:01:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BGD.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
+          "relatedTickers": [
+            "NVDA",
+            "^GSPC"
+          ]
+        },
         {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BFG.CN": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GPAC.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "NCX.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FUU.V": {
-      "fetchedAt": "2026-05-30T21:15:53.999Z",
-      "headlines": [
-        {
-          "title": "Dozens arrested in Paris clashes on PSG victory night: police",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2654b0a9-f1f8-31f4-9844-8029602c799b/dozens-arrested-in-paris.html",
-          "publishedAt": "2026-05-30T21:06:16.000Z",
+          "title": "‘Sewn in Coal Country’ marks contribution of women in the garment industry",
+          "publisher": "Republican & Herald, Pottsville, Pa.",
+          "link": "https://finance.yahoo.com/m/23e7346b-d2d9-3a02-bf79-0b25d3bce944/%E2%80%98sewn-in-coal-country%E2%80%99-marks.html",
+          "publishedAt": "2026-05-30T22:46:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }

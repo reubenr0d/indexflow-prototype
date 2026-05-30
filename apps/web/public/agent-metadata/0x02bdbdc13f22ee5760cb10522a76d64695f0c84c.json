@@ -4,14 +4,30 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Top Picks Acted On**: Hercules Metals, AbraSilver Resource, Targa Exploration Corp.\n\n**Positions Opened, Closed, or Rebalanced**: None due to zero available collateral.\n\n**Recommendations for Next Run**: \n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.",
-  "lastRunAt": "2026-05-30T22:15:29.647Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Recommendations for Next Run**:\n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.",
+  "lastRunAt": "2026-05-30T23:17:05.981Z",
   "latestRun": {
-    "runId": "2026-05-30T22:15:29.647Z",
-    "finishedAt": "2026-05-30T22:15:29.647Z",
-    "summary": "Given the current constraint of zero available collateral, opening new positions is not feasible at this time. However, I will outline a plan to prepare for future opportunities when conditions permit:\n\n1. **Monitor Capital Availability**: Keep a close watch on the vault's capital status. As soon as there is available collateral, prioritize opening long positions on the top picks from the Atlas ML model.\n\n2. **Resolve Symbol Issues**: Continue efforts to resolve symbol issues for new entrants, e"
+    "runId": "2026-05-30T23:17:05.981Z",
+    "finishedAt": "2026-05-30T23:17:05.981Z",
+    "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the vault currently has zero available collateral, which means that opening new positions is not feasible at this time. The policy enforcement requires opening these positions, but without available collateral, I am unable to proceed with the required actions.\n\n### Recommendations\n\n1. **Monitor Available Collateral**: Keep a close watch on the vault's available collateral. Once there is sufficient collatera"
   },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available collateral to enable opening long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
+      "timestamp": "2026-05-30T23:17:05.981Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-30T23:17:05.981Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only allocates collateral with no immediate financial impact; availableCollateral is $0, so no risk of over-leverage."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Fox River Resources Corporation as it is a new top pick by the Atlas ML model with a high ML score and predicted return.",
