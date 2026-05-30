@@ -1,106 +1,33 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-29T23:43:27.193Z",
+  "updatedAt": "2026-05-30T07:23:03.149Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-29T23:43:27.193Z",
-      "headlines": [
-        {
-          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
-          "publishedAt": "2026-05-29T23:32:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ATEX",
-            "SATS",
-            "NN",
-            "MRNA"
-          ]
-        },
-        {
-          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
-          "publishedAt": "2026-05-29T23:32:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Lima refinery impact touted at Chamber event",
-          "publisher": "The Lima News, Ohio",
-          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
-          "publishedAt": "2026-05-29T23:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "TEX.CN": {
-      "fetchedAt": "2026-05-29T23:43:27.193Z",
+      "fetchedAt": "2026-05-30T07:23:02.926Z",
       "headlines": [
         {
-          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
-          "publishedAt": "2026-05-29T23:32:38.000Z",
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ATEX",
-            "SATS",
-            "NN",
-            "MRNA"
+            "HOOD"
           ]
         },
         {
-          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
-          "publishedAt": "2026-05-29T23:32:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Lima refinery impact touted at Chamber event",
-          "publisher": "The Lima News, Ohio",
-          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
-          "publishedAt": "2026-05-29T23:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-29T23:43:27.193Z",
-      "headlines": [
-        {
-          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
-          "publishedAt": "2026-05-29T23:32:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ATEX",
-            "SATS",
-            "NN",
-            "MRNA"
-          ]
-        },
-        {
-          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
-          "publishedAt": "2026-05-29T23:32:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Lima refinery impact touted at Chamber event",
-          "publisher": "The Lima News, Ohio",
-          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
-          "publishedAt": "2026-05-29T23:32:00.000Z",
+          "title": "You'll never guess what TV network Joe Biden watched. Ask Jill.",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/09b7e3ef-c2e2-30bc-ab7b-8b9159671e62/you%27ll-never-guess-what-tv.html",
+          "publishedAt": "2026-05-30T07:00:45.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -108,34 +35,95 @@
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-29T23:43:27.193Z",
+      "fetchedAt": "2026-05-30T07:23:02.926Z",
       "headlines": [
         {
-          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
-          "publishedAt": "2026-05-29T23:32:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ATEX",
-            "SATS",
-            "NN",
-            "MRNA"
-          ]
-        },
-        {
-          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
-          "publishedAt": "2026-05-29T23:32:07.000Z",
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Lima refinery impact touted at Chamber event",
-          "publisher": "The Lima News, Ohio",
-          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
-          "publishedAt": "2026-05-29T23:32:00.000Z",
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        },
+        {
+          "title": "You'll never guess what TV network Joe Biden watched. Ask Jill.",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/09b7e3ef-c2e2-30bc-ab7b-8b9159671e62/you%27ll-never-guess-what-tv.html",
+          "publishedAt": "2026-05-30T07:00:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-30T07:23:02.926Z",
+      "headlines": [
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        },
+        {
+          "title": "You'll never guess what TV network Joe Biden watched. Ask Jill.",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/09b7e3ef-c2e2-30bc-ab7b-8b9159671e62/you%27ll-never-guess-what-tv.html",
+          "publishedAt": "2026-05-30T07:00:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-30T07:23:02.926Z",
+      "headlines": [
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        },
+        {
+          "title": "You'll never guess what TV network Joe Biden watched. Ask Jill.",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/09b7e3ef-c2e2-30bc-ab7b-8b9159671e62/you%27ll-never-guess-what-tv.html",
+          "publishedAt": "2026-05-30T07:00:45.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -143,36 +131,210 @@
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-29T23:43:27.193Z",
+      "fetchedAt": "2026-05-30T07:23:02.926Z",
       "headlines": [
         {
-          "title": "Anterix Stock Is Up 140%. Here's Why One Investor Just Bought $15.8 Million",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c8924d48-9b31-35cb-a073-62992fe5bd47/anterix-stock-is-up-140%25..html",
-          "publishedAt": "2026-05-29T23:32:38.000Z",
+          "title": "Edgar Morin: France's intellectual 'grandfather' dies at 104",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fbf38838-352e-3f66-bd45-7d18af54fc77/edgar-morin%3A-france%27s.html",
+          "publishedAt": "2026-05-30T07:19:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ATEX",
-            "SATS",
-            "NN",
-            "MRNA"
+            "HOOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "USA.TO": {
+      "fetchedAt": "2026-05-30T07:23:03.149Z",
+      "headlines": [
+        {
+          "title": "Edgar Morin: France's intellectual 'grandfather' dies at 104",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fbf38838-352e-3f66-bd45-7d18af54fc77/edgar-morin%3A-france%27s.html",
+          "publishedAt": "2026-05-30T07:19:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-30T07:23:03.149Z",
+      "headlines": [
+        {
+          "title": "Edgar Morin: France's intellectual 'grandfather' dies at 104",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fbf38838-352e-3f66-bd45-7d18af54fc77/edgar-morin%3A-france%27s.html",
+          "publishedAt": "2026-05-30T07:19:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-30T07:23:03.149Z",
+      "headlines": [
+        {
+          "title": "Edgar Morin: France's intellectual 'grandfather' dies at 104",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fbf38838-352e-3f66-bd45-7d18af54fc77/edgar-morin%3A-france%27s.html",
+          "publishedAt": "2026-05-30T07:19:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-30T07:23:03.149Z",
+      "headlines": [
+        {
+          "title": "Edgar Morin: France's intellectual 'grandfather' dies at 104",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fbf38838-352e-3f66-bd45-7d18af54fc77/edgar-morin%3A-france%27s.html",
+          "publishedAt": "2026-05-30T07:19:45.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Trump remains in excellent health despite minor swelling and bruising",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/0b7889ba-e116-357a-b1d5-ff7d4655b346/trump-remains-in-excellent.html",
+          "publishedAt": "2026-05-30T07:10:44.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Robinhood Markets Bets on Agentic AI Trading as Assets Climb to $350 Billion",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/1e0760c8-6d2a-3b36-ba8e-7bd152843159/robinhood-markets-bets-on.html",
+          "publishedAt": "2026-05-30T07:06:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM": {
+      "fetchedAt": "2026-05-30T07:23:03.149Z",
+      "headlines": [
+        {
+          "title": "There's A Lot To Like About Agnico Eagle Mines' (NYSE:AEM) Upcoming US$0.45 Dividend",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/theres-lot-agnico-eagle-mines-124600320.html",
+          "publishedAt": "2026-05-29T12:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AEM"
           ]
         },
         {
-          "title": "Judge Blocks Trump From Renaming Kennedy Center, Closing Venue for Renovations",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/economy/policy/articles/judge-blocks-trump-renaming-kennedy-233207596.html",
-          "publishedAt": "2026-05-29T23:32:07.000Z",
+          "title": "ASX Growth Stocks With Insider Ownership Up To 37%",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/news/asx-growth-stocks-insider-ownership-193806447.html",
+          "publishedAt": "2026-05-28T19:38:06.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "TOR.AX",
+            "SPL.AX",
+            "IPX",
+            "SKS.AX",
+            "PNI.AX",
+            "MAU.AX",
+            "FRS.AX",
+            "EIQ.AX",
+            "AR1.AX",
+            "AV1.AX",
+            "AYA.AX"
+          ]
         },
         {
-          "title": "Lima refinery impact touted at Chamber event",
-          "publisher": "The Lima News, Ohio",
-          "link": "https://finance.yahoo.com/m/65838ee9-b97c-3359-a4b4-fc7009c02159/lima-refinery-impact-touted.html",
-          "publishedAt": "2026-05-29T23:32:00.000Z",
+          "title": "Rupert Resources Announces that Leading Proxy Advisors Recommend Rupert Resources Shareholders Vote \"FOR\" the Arrangement",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/rupert-resources-announces-leading-proxy-130000157.html",
+          "publishedAt": "2026-05-28T13:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RUP.TO",
+            "RUP.NE",
+            "RUPRF",
+            "R05.F"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

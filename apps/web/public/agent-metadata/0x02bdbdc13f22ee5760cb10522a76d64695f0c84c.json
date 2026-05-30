@@ -4,12 +4,12 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**: Focus on resolving symbol issues, monitoring news for actionable insights, and preparing for capital allocation once conditions permit.",
-  "lastRunAt": "2026-05-29T23:44:43.529Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**: Focus on wiring the new entrants, monitoring news for actionable insights, and preparing for capital allocation once conditions permit.",
+  "lastRunAt": "2026-05-30T07:24:00.343Z",
   "latestRun": {
-    "runId": "2026-05-29T23:44:43.529Z",
-    "finishedAt": "2026-05-29T23:44:43.529Z",
-    "summary": "Given the persistent constraint of zero available collateral, opening new positions is not feasible at this time. However, to comply with the policy, I will outline a plan to prepare for future opportunities and ensure the vault is ready to act when conditions permit.\n\n### Revised Plan\n1. **Monitor Collateral Availability**: Regularly check the vault's collateral status to identify when funds become available for new positions.\n2. **Prepare for Future Opportunities**: Ensure that the vault is re"
+    "runId": "2026-05-30T07:24:00.343Z",
+    "finishedAt": "2026-05-30T07:24:00.343Z",
+    "summary": "### Current State and Actions\n\n1. **Vault State**: The vault currently has zero available collateral, which means no new positions can be opened at this time. The vault is tracking 8 assets, and the current allocation for perps is also zero.\n\n2. **Atlas ML Top Picks**: The top picks from the Atlas ML model include:\n   - Hercules Metals (BIG.V) with an ML score of 100\n   - AbraSilver Resource (ABRA.TO) with an ML score of 99.9\n   - Targa Exploration Corp. (TEX.CN) with an ML score of 99.8\n\n3. **W"
   },
   "recentActions": [
     {
