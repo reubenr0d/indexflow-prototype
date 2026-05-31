@@ -1,213 +1,400 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T19:43:48.965Z",
+  "updatedAt": "2026-05-31T21:16:26.659Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-31T19:43:48.965Z",
-      "headlines": [
-        {
-          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
-          "publishedAt": "2026-05-31T19:35:43.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "HOOD",
-            "FIGR"
-          ]
-        },
-        {
-          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
-          "publishedAt": "2026-05-31T19:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "URI",
-            "^GSPC",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
-          "publishedAt": "2026-05-31T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "XOM",
-            "NEE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-05-31T19:43:48.965Z",
-      "headlines": [
-        {
-          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
-          "publishedAt": "2026-05-31T19:35:43.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MELI",
-            "HOOD",
-            "FIGR"
-          ]
-        },
-        {
-          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
-          "publishedAt": "2026-05-31T19:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "URI",
-            "^GSPC",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
-          "publishedAt": "2026-05-31T19:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "XOM",
-            "NEE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-31T19:43:48.965Z",
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
       "headlines": [
         {
-          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
-          "publishedAt": "2026-05-31T19:35:43.000Z",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MELI",
-            "HOOD",
-            "FIGR"
+            "QQQ"
           ]
         },
         {
-          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
-          "publishedAt": "2026-05-31T19:35:00.000Z",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "URI",
+            "IWM",
             "^GSPC",
+            "INTC",
             "NVDA"
           ]
         },
         {
-          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
-          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "XOM",
-            "NEE",
-            "NVDA"
+            "OCS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T19:43:48.965Z",
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
       "headlines": [
         {
-          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
-          "publishedAt": "2026-05-31T19:35:43.000Z",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MELI",
-            "HOOD",
-            "FIGR"
+            "QQQ"
           ]
         },
         {
-          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
-          "publishedAt": "2026-05-31T19:35:00.000Z",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "URI",
+            "IWM",
             "^GSPC",
+            "INTC",
             "NVDA"
           ]
         },
         {
-          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
-          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "XOM",
-            "NEE",
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
             "NVDA"
+          ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MI6.AX": {
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-31T19:43:48.965Z",
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
       "headlines": [
         {
-          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
-          "publishedAt": "2026-05-31T19:35:43.000Z",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MELI",
-            "HOOD",
-            "FIGR"
+            "QQQ"
           ]
         },
         {
-          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
-          "publishedAt": "2026-05-31T19:35:00.000Z",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "URI",
+            "IWM",
             "^GSPC",
+            "INTC",
             "NVDA"
           ]
         },
         {
-          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
-          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "XOM",
-            "NEE",
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
             "NVDA"
           ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "USA.TO": {
+      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "headlines": [
+        {
+          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
+          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QQQ"
+          ]
+        },
+        {
+          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
+          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IWM",
+            "^GSPC",
+            "INTC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
+          "publisher": "MarketBeat",
+          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
+          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "OCS"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM": {
+      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "headlines": [
+        {
+          "title": "Agnico Eagle Mines (AEM): The Best Natural Resources Stock to Buy Now",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/agnico-eagle-mines-aem-best-090027634.html",
+          "publishedAt": "2026-05-31T09:00:27.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GC=F",
+            "WM.TO",
+            "AEM"
+          ]
+        },
+        {
+          "title": "ASX Growth Companies With High Insider Ownership",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/asx-growth-companies-high-insider-193809514.html",
+          "publishedAt": "2026-05-31T19:38:09.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TOR.AX",
+            "SPL.AX",
+            "MESO",
+            "SKS.AX",
+            "PNI.AX",
+            "MAU.AX",
+            "FRS.AX",
+            "EIQ.AX",
+            "HMC.AX",
+            "AR1.AX",
+            "AV1.AX"
+          ]
+        },
+        {
+          "title": "Borderlands Mexico: Thousands of Mexican truckers lose US visas over cabotage violations",
+          "publisher": "FreightWaves",
+          "link": "https://finance.yahoo.com/economy/policy/articles/borderlands-mexico-thousands-mexican-truckers-110000002.html",
+          "publishedAt": "2026-05-31T11:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
