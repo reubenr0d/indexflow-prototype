@@ -5,13 +5,46 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to the absence of bearish news on out-of-basket names.",
-  "lastRunAt": "2026-05-31T14:57:23.649Z",
+  "lastRunAt": "2026-05-31T16:39:13.360Z",
   "latestRun": {
-    "runId": "2026-05-31T14:57:23.649Z",
-    "finishedAt": "2026-05-31T14:57:23.649Z",
-    "summary": "Given the current constraint of zero available collateral, it is not feasible to open new long positions at this time. However, I will ensure that the vault is prepared to act swiftly once capital becomes available.\n\n### Summary\nThe vault is currently unable to open new long positions due to a lack of available collateral. The top Atlas ML picks—Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN)—remain strong candidates for future investment, driven by t"
+    "runId": "2026-05-31T16:39:13.360Z",
+    "finishedAt": "2026-05-31T16:39:13.360Z",
+    "summary": "Given the risk officer's veto due to the lack of available collateral, we need to revise the plan. Here’s an alternative approach:\n\n### Revised Plan\n\n1. **Monitor for Available Capital**: Since the vault currently has zero available collateral, we need to wait for capital to become available before opening new positions.\n2. **Re-evaluate Position Sizes**: Once capital becomes available, consider opening smaller positions or fewer positions to fit within the available collateral.\n3. **Prioritize "
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a top pick by the Atlas ML model with a high predicted return.",
+      "timestamp": "2026-05-31T16:39:13.360Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T16:39:13.360Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7901
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_off regime with no short penalty or long bonus."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available capital for new long positions on top picks from the Atlas ML model.",
+      "timestamp": "2026-05-31T16:39:13.360Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T16:39:13.360Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No capital is being allocated; the batch is a no-op with idleUsdc and availableCollateral both at $0."
+      }
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating available collateral to enable opening long positions on eligible assets BIG.V, ABRA.TO, and TEX.CN.",
