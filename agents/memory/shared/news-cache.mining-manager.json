@@ -1,422 +1,182 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T08:23:45.313Z",
+  "updatedAt": "2026-05-31T12:21:24.484Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-05-31T08:23:45.138Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-31T12:21:24.484Z",
       "headlines": [
         {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
+          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
+          "publishedAt": "2026-05-31T12:17:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRM",
+            "FN"
+          ]
+        },
+        {
+          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
+          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
+          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
+          "publishedAt": "2026-05-31T12:06:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
+            "RVMD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T08:23:45.138Z",
+      "fetchedAt": "2026-05-31T12:21:24.484Z",
       "headlines": [
         {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
+          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
+          "publishedAt": "2026-05-31T12:17:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRM",
+            "FN"
+          ]
+        },
+        {
+          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
+          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
+          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
+          "publishedAt": "2026-05-31T12:06:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE",
+            "RVMD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-05-31T12:21:24.484Z",
+      "headlines": [
+        {
+          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
+          "publishedAt": "2026-05-31T12:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FN"
+          ]
+        },
+        {
+          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
+          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
+          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
+          "publishedAt": "2026-05-31T12:06:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
+            "RVMD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-31T08:23:45.138Z",
+      "fetchedAt": "2026-05-31T12:21:24.484Z",
       "headlines": [
         {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
+          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
+          "publishedAt": "2026-05-31T12:17:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRM",
+            "FN"
+          ]
+        },
+        {
+          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
+          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
+          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
+          "publishedAt": "2026-05-31T12:06:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-31T08:23:45.138Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
+            "RVMD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-31T08:23:45.138Z",
+      "fetchedAt": "2026-05-31T12:21:24.484Z",
       "headlines": [
         {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
+          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
+          "publishedAt": "2026-05-31T12:17:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CRM",
+            "FN"
+          ]
+        },
+        {
+          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
+          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
+          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
+          "publishedAt": "2026-05-31T12:06:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-05-31T08:23:45.313Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-05-31T08:23:45.313Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-05-31T08:23:45.313Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-05-31T08:23:45.313Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-05-31T08:23:45.313Z",
-      "headlines": [
-        {
-          "title": "Salesforce Stock Continues to Struggle to Gain Traction. Is It Time to Fish for the Stock or Cut Bait?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4a0a6722-0768-3269-b11c-958e57e1d330/salesforce-stock-continues-to.html",
-          "publishedAt": "2026-05-31T08:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "AI Energy Needs Are Sending Bloom Energy Stock Soaring. Is Now the Time to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e1f90ed-dc2c-3f0e-9c93-326128568895/ai-energy-needs-are-sending.html",
-          "publishedAt": "2026-05-31T08:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 Core AI Stocks to Buy With $1,000 and Hold for the Next Decade",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a1aedf1a-c80b-3abc-8025-ed058e216c67/3-core-ai-stocks-to-buy-with.html",
-          "publishedAt": "2026-05-31T08:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM",
-            "GOOG",
-            "AMZN",
-            "INTC",
-            "NVDA"
+            "RVMD"
           ]
         }
       ],

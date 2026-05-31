@@ -4,14 +4,30 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastRunAt": "2026-05-31T11:08:11.997Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to the absence of bearish news on out-of-basket names.",
+  "lastRunAt": "2026-05-31T12:21:53.819Z",
   "latestRun": {
-    "runId": "2026-05-31T11:08:11.997Z",
-    "finishedAt": "2026-05-31T11:08:11.997Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n## Summary\n\n- **Vault Address**: 0x02bdbdc13f"
+    "runId": "2026-05-31T12:21:53.819Z",
+    "finishedAt": "2026-05-31T12:21:53.819Z",
+    "summary": "The vault currently has zero available collateral, which prevents the opening of new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN). Without available USDC or allocated capital, it is not possible to proceed with opening new positions at this time.\n\n### Next Steps\n\n- **Monitor Collateral Availability**: As soon as collateral becomes available, proceed to open long positions on the eligible assets.\n- **Prepare for Future Opportunities**: Ensure that the vault is ready to act swift"
   },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available collateral to enable opening long positions on eligible assets BIG.V, ABRA.TO, and TEX.CN.",
+      "timestamp": "2026-05-31T12:21:53.819Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T12:21:53.819Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No collateral is being allocated; the batch is a no-op with zero impact on available collateral or positions."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks.",

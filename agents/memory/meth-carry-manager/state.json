@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-05-31T11:12:30.661Z",
+  "lastRunAt": "2026-05-31T12:26:40.040Z",
   "thesis": "The hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run, and the funding rate context is unavailable due to inactivity. The vault remains inactive, and no actions were taken this run.",
-  "lastThesisUpdate": "2026-05-31T08:27:54.460Z"
+  "lastThesisUpdate": "2026-05-31T12:26:40.040Z"
 }

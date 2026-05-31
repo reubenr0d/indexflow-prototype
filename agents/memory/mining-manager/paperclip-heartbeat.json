@@ -7,93 +7,30 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-31T11:08:11.997Z",
-  "startedAt": "2026-05-31T11:06:43.253Z",
-  "finishedAt": "2026-05-31T11:08:11.997Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-05-31T12:21:53.819Z",
+  "startedAt": "2026-05-31T12:20:54.697Z",
+  "finishedAt": "2026-05-31T12:21:53.819Z",
+  "status": "succeeded",
   "usage": {
-    "turns": 24,
-    "toolCalls": 21,
-    "errors": 3,
-    "softFailures": 3,
-    "writeActions": 6
+    "turns": 15,
+    "toolCalls": 8,
+    "errors": 0,
+    "softFailures": 1,
+    "writeActions": 1
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "## Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n## Summary\n\n- **Vault Address**: 0x02bdbdc13f",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to the absence of bearish news on out-of-basket names.",
+  "summary": "The vault currently has zero available collateral, which prevents the opening of new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN). Without available USDC or allocated capital, it is not possible to proceed with opening new positions at this time.\n\n### Next Steps\n\n- **Monitor Collateral Availability**: As soon as collateral becomes available, proceed to open long positions on the eligible assets.\n- **Prepare for Future Opportunities**: Ensure that the vault is ready to act swift",
   "writeActions": [
     {
-      "tool": "wire_asset",
+      "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks.",
+      "justification": "Allocating available collateral to enable opening long positions on eligible assets BIG.V, ABRA.TO, and TEX.CN.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch only wires new assets with no immediate capital allocation; no risk to available collateral or recent loss history."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ferrexpo as it is a new entrant in the Atlas ML top picks.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets with no immediate capital allocation; no risk to available collateral or recent loss history."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the Atlas ML top picks.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets with no immediate capital allocation; no risk to available collateral or recent loss history."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-allocation."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ferrexpo as it is a new entrant in the Atlas ML top picks.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-allocation."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the Atlas ML top picks.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All wire_asset actions are for new entrants with no collateral impact; availableCollateral is $0, so no risk of over-allocation."
+        "reason": "No collateral is being allocated; the batch is a no-op with zero impact on available collateral or positions."
       },
       "kind": "file-diff"
     }
   ],
-  "errors": [
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    },
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    },
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    }
-  ]
+  "errors": []
 }
