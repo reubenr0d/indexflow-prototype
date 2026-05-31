@@ -4,14 +4,47 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Recommendations for Next Run**:\n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N.",
-  "lastRunAt": "2026-05-30T23:17:05.981Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Recommendations for Next Run**:\n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N. \n\nThis plan ensures that the vault is strategically positioned to capitalize on opportunities as soon as the financial constraints are resolved.",
+  "lastRunAt": "2026-05-31T04:54:37.649Z",
   "latestRun": {
-    "runId": "2026-05-30T23:17:05.981Z",
-    "finishedAt": "2026-05-30T23:17:05.981Z",
-    "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the vault currently has zero available collateral, which means that opening new positions is not feasible at this time. The policy enforcement requires opening these positions, but without available collateral, I am unable to proceed with the required actions.\n\n### Recommendations\n\n1. **Monitor Available Collateral**: Keep a close watch on the vault's available collateral. Once there is sufficient collatera"
+    "runId": "2026-05-31T04:54:37.649Z",
+    "finishedAt": "2026-05-31T04:54:37.649Z",
+    "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the vault currently has zero available collateral, which means that opening new positions is not feasible at this time. The policy enforcement requires opening these positions, but without available collateral, this action cannot be executed.\n\n### Updated Summary\n\n#### Vault State and Actions\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Tracked Assets**: The tracked asset list is alig"
   },
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
+      "timestamp": "2026-05-31T04:54:37.649Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T04:54:37.649Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7901
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Wiring FOX.CN is a non-risk action; no collateral is currently allocated or available, and no open positions exist."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Attempting to allocate available collateral to open long positions on eligible assets.",
+      "timestamp": "2026-05-31T04:54:37.649Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T04:54:37.649Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only attempts to allocate collateral, but availableCollateral is $0, so no action will occur."
+      }
+    },
     {
       "tool": "allocate_to_perp",
       "justification": "Allocating available collateral to enable opening long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
@@ -38,11 +71,12 @@
       "params": {
         "kind": "wire_asset",
         "symbol": "FOX.CN",
-        "seedPriceUsd": 0.7901
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to evaluate against regime or past performance."
+        "seedPr batch is a no-op with zero impact on available collateral."
+      }
+    }
+  ]
+}
+     "reason": "Batch only wires assets; no positions opened. No collateral or open positions to evaluate against regime or past performance."
       }
     },
     {

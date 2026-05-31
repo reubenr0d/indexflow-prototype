@@ -1,109 +1,141 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-30T23:16:03.771Z",
+  "updatedAt": "2026-05-31T04:53:26.218Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-05-30T23:16:03.771Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-31T04:53:26.218Z",
       "headlines": [
         {
-          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
-          "publishedAt": "2026-05-30T23:09:58.000Z",
+          "title": "Chevron's Earnings Dropped Year Over Year, but Production Surged. Here's What Investors Need to Know.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bf6c0046-6132-3860-acf6-b2c43dc5568a/chevron%27s-earnings-dropped.html",
+          "publishedAt": "2026-05-31T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CVX",
+            "CL=F",
+            "NG=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Japan defence chief takes swipe at China at security meet",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b2b45098-8e40-3723-bca6-83097e97f7f5/japan-defence-chief-takes.html",
+          "publishedAt": "2026-05-31T04:29:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
-          "publishedAt": "2026-05-30T23:02:25.000Z",
+          "title": "Japan rejects China’s ’new militarism’ criticism, defense minister says",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/9d13c367-4b7d-30e9-b546-2ad817476fa0/japan-rejects-china%E2%80%99s-%E2%80%99new.html",
+          "publishedAt": "2026-05-31T04:27:06.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BTC-USD",
-            "MARA"
-          ]
-        },
-        {
-          "title": "The Dividend ETF Built for Whatever the Market Does Next",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
-          "publishedAt": "2026-05-30T23:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-30T23:16:03.771Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-31T04:53:26.218Z",
       "headlines": [
         {
-          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
-          "publishedAt": "2026-05-30T23:09:58.000Z",
+          "title": "Chevron's Earnings Dropped Year Over Year, but Production Surged. Here's What Investors Need to Know.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bf6c0046-6132-3860-acf6-b2c43dc5568a/chevron%27s-earnings-dropped.html",
+          "publishedAt": "2026-05-31T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CVX",
+            "CL=F",
+            "NG=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Japan defence chief takes swipe at China at security meet",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b2b45098-8e40-3723-bca6-83097e97f7f5/japan-defence-chief-takes.html",
+          "publishedAt": "2026-05-31T04:29:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
-          "publishedAt": "2026-05-30T23:02:25.000Z",
+          "title": "Japan rejects China’s ’new militarism’ criticism, defense minister says",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/9d13c367-4b7d-30e9-b546-2ad817476fa0/japan-rejects-china%E2%80%99s-%E2%80%99new.html",
+          "publishedAt": "2026-05-31T04:27:06.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "BTC-USD",
-            "MARA"
-          ]
-        },
-        {
-          "title": "The Dividend ETF Built for Whatever the Market Does Next",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
-          "publishedAt": "2026-05-30T23:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-30T23:16:03.771Z",
+      "fetchedAt": "2026-05-31T04:53:26.218Z",
       "headlines": [
         {
-          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
-          "publishedAt": "2026-05-30T23:02:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BTC-USD",
-            "MARA"
-          ]
-        },
-        {
-          "title": "The Dividend ETF Built for Whatever the Market Does Next",
+          "title": "Chevron's Earnings Dropped Year Over Year, but Production Surged. Here's What Investors Need to Know.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
-          "publishedAt": "2026-05-30T23:01:00.000Z",
+          "link": "https://finance.yahoo.com/m/bf6c0046-6132-3860-acf6-b2c43dc5568a/chevron%27s-earnings-dropped.html",
+          "publishedAt": "2026-05-31T04:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "^GSPC"
+            "CVX",
+            "CL=F",
+            "NG=F",
+            "NVDA"
           ]
         },
         {
-          "title": "‘Sewn in Coal Country’ marks contribution of women in the garment industry",
-          "publisher": "Republican & Herald, Pottsville, Pa.",
-          "link": "https://finance.yahoo.com/m/23e7346b-d2d9-3a02-bf79-0b25d3bce944/%E2%80%98sewn-in-coal-country%E2%80%99-marks.html",
-          "publishedAt": "2026-05-30T22:46:00.000Z",
+          "title": "Japan defence chief takes swipe at China at security meet",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b2b45098-8e40-3723-bca6-83097e97f7f5/japan-defence-chief-takes.html",
+          "publishedAt": "2026-05-31T04:29:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan rejects China’s ’new militarism’ criticism, defense minister says",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/9d13c367-4b7d-30e9-b546-2ad817476fa0/japan-rejects-china%E2%80%99s-%E2%80%99new.html",
+          "publishedAt": "2026-05-31T04:27:06.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-05-31T04:53:26.218Z",
+      "headlines": [
+        {
+          "title": "Chevron's Earnings Dropped Year Over Year, but Production Surged. Here's What Investors Need to Know.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bf6c0046-6132-3860-acf6-b2c43dc5568a/chevron%27s-earnings-dropped.html",
+          "publishedAt": "2026-05-31T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CVX",
+            "CL=F",
+            "NG=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Japan defence chief takes swipe at China at security meet",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b2b45098-8e40-3723-bca6-83097e97f7f5/japan-defence-chief-takes.html",
+          "publishedAt": "2026-05-31T04:29:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan rejects China’s ’new militarism’ criticism, defense minister says",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/9d13c367-4b7d-30e9-b546-2ad817476fa0/japan-rejects-china%E2%80%99s-%E2%80%99new.html",
+          "publishedAt": "2026-05-31T04:27:06.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -111,71 +143,34 @@
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-30T23:16:03.771Z",
+      "fetchedAt": "2026-05-31T04:53:26.218Z",
       "headlines": [
         {
-          "title": "DOJ sues 4 states in dispute over 'undercover plates' for ICE agents",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/4ba9e999-f18f-3ae8-8f1d-7107bcdeb263/doj-sues-4-states-in-dispute.html",
-          "publishedAt": "2026-05-30T23:09:58.000Z",
+          "title": "Chevron's Earnings Dropped Year Over Year, but Production Surged. Here's What Investors Need to Know.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bf6c0046-6132-3860-acf6-b2c43dc5568a/chevron%27s-earnings-dropped.html",
+          "publishedAt": "2026-05-31T04:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CVX",
+            "CL=F",
+            "NG=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Japan defence chief takes swipe at China at security meet",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b2b45098-8e40-3723-bca6-83097e97f7f5/japan-defence-chief-takes.html",
+          "publishedAt": "2026-05-31T04:29:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
-          "publishedAt": "2026-05-30T23:02:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BTC-USD",
-            "MARA"
-          ]
-        },
-        {
-          "title": "The Dividend ETF Built for Whatever the Market Does Next",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
-          "publishedAt": "2026-05-30T23:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "^GSPC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-30T23:16:03.771Z",
-      "headlines": [
-        {
-          "title": "Marathon Digital Bets Its Bitcoin Mining Power Assets Can Fuel AI Data Center Growth",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/e51ecb0f-b031-3c27-af66-9b2b11269589/marathon-digital-bets-its.html",
-          "publishedAt": "2026-05-30T23:02:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BTC-USD",
-            "MARA"
-          ]
-        },
-        {
-          "title": "The Dividend ETF Built for Whatever the Market Does Next",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/c9eb062b-f973-31db-9ae0-ee76c035979c/the-dividend-etf-built-for.html",
-          "publishedAt": "2026-05-30T23:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "‘Sewn in Coal Country’ marks contribution of women in the garment industry",
-          "publisher": "Republican & Herald, Pottsville, Pa.",
-          "link": "https://finance.yahoo.com/m/23e7346b-d2d9-3a02-bf79-0b25d3bce944/%E2%80%98sewn-in-coal-country%E2%80%99-marks.html",
-          "publishedAt": "2026-05-30T22:46:00.000Z",
+          "title": "Japan rejects China’s ’new militarism’ criticism, defense minister says",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/9d13c367-4b7d-30e9-b546-2ad817476fa0/japan-rejects-china%E2%80%99s-%E2%80%99new.html",
+          "publishedAt": "2026-05-31T04:27:06.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
