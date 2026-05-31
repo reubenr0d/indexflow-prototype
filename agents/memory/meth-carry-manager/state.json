@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-05-31T21:21:44.489Z",
+  "lastRunAt": "2026-05-31T23:24:17.078Z",
   "thesis": "The vault remains entirely inactive with no assets or positions. The current state shows:\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Available Collateral**: $0.00\n- **Funding Rate Context**: Not applicable due to inactivity.\n\nSince there are no funds available, no actions were taken this run, and the hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run.",
   "lastThesisUpdate": "2026-05-31T21:21:44.489Z"
 }

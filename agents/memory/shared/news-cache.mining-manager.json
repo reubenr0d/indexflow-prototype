@@ -1,360 +1,385 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T21:16:26.659Z",
+  "updatedAt": "2026-05-31T23:19:32.679Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
-      "headlines": [
-        {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
-        },
-        {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IWM",
-            "^GSPC",
-            "INTC",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OCS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "fetchedAt": "2026-05-31T23:19:32.463Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "fetchedAt": "2026-05-31T23:19:32.463Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MI6.AX": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-31T23:19:32.463Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FXPO.L": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
-      "headlines": [
-        {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
-        },
-        {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IWM",
-            "^GSPC",
-            "INTC",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OCS"
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-05-31T21:16:26.485Z",
+      "fetchedAt": "2026-05-31T23:19:32.463Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
+            "AVGO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FXPO.L": {
+      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "headlines": [
+        {
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
+            "^GSPC",
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
+          ]
+        },
+        {
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "USA.TO": {
-      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "fetchedAt": "2026-05-31T23:19:32.679Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-05-31T21:16:26.659Z",
-      "headlines": [
-        {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
-        },
-        {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IWM",
-            "^GSPC",
-            "INTC",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OCS"
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "fetchedAt": "2026-05-31T23:19:32.679Z",
       "headlines": [
         {
-          "title": "What to Know About This $8 Million Commodity ETF Buy Amid Inflation Concerns",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/50f10561-f875-31b8-b268-9497081d211c/what-to-know-about-this-%248.html",
-          "publishedAt": "2026-05-31T21:06:06.000Z",
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "QQQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Is the IWM ETF Still a Buy After Its Recent Run-Up?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4abe017b-5c03-3741-a66a-10de2fd513ed/is-the-iwm-etf-still-a-buy.html",
-          "publishedAt": "2026-05-31T21:05:00.000Z",
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IWM",
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
             "^GSPC",
-            "INTC",
-            "NVDA"
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
           ]
         },
         {
-          "title": "Oculis Shelves FDA Filing After Phase 3 DME Trials Miss Key Vision Goals",
-          "publisher": "MarketBeat",
-          "link": "https://finance.yahoo.com/m/8c0e74c5-50f6-333d-b4df-f3ab03dec3a6/oculis-shelves-fda-filing.html",
-          "publishedAt": "2026-05-31T21:03:56.000Z",
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OCS"
+            "AVGO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-05-31T23:19:32.679Z",
+      "headlines": [
+        {
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
+            "^GSPC",
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
+          ]
+        },
+        {
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AVGO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AEM": {
-      "fetchedAt": "2026-05-31T21:16:26.659Z",
+      "fetchedAt": "2026-05-31T23:19:32.679Z",
       "headlines": [
         {
           "title": "Agnico Eagle Mines (AEM): The Best Natural Resources Stock to Buy Now",
@@ -395,6 +420,53 @@
           "publishedAt": "2026-05-31T11:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-05-31T23:19:32.679Z",
+      "headlines": [
+        {
+          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
+          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
+          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "TSLA",
+            "^DJI",
+            "CL=F",
+            "CIEN",
+            "CRDO",
+            "^GSPC",
+            "^IXIC",
+            "AMD",
+            "GOOG",
+            "AMZN",
+            "CRWD",
+            "PANW",
+            "AVGO"
+          ]
+        },
+        {
+          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
+          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AVGO"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

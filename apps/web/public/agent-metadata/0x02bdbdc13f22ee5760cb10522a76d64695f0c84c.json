@@ -4,14 +4,30 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastRunAt": "2026-05-31T22:16:56.516Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
+  "lastRunAt": "2026-05-31T23:20:14.660Z",
   "latestRun": {
-    "runId": "2026-05-31T22:16:56.516Z",
-    "finishedAt": "2026-05-31T22:16:56.516Z",
-    "summary": "Since the vault currently has no available collateral, it is not feasible to allocate funds or open new positions at this time. Here's a summary of the current situation:\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and preciou"
+    "runId": "2026-05-31T23:20:14.660Z",
+    "finishedAt": "2026-05-31T23:20:14.660Z",
+    "summary": "The vault still has no available collateral, which prevents opening new positions. Without available USDC or allocated capital, it is not feasible to proceed with opening long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time.\n\n### Final Summary\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available collateral for new positions.\n- **Top Picks**: Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN)"
   },
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available collateral to enable opening of new long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
+      "timestamp": "2026-05-31T23:20:14.660Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T23:20:14.660Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No available collateral to allocate; batch is a no-op with zero impact."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring new top pick Fox River Resources Corporation to align with the latest Atlas ML recommendations.",

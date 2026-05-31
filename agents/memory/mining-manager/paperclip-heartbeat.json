@@ -7,94 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-31T22:16:56.516Z",
-  "startedAt": "2026-05-31T22:15:26.528Z",
-  "finishedAt": "2026-05-31T22:16:56.516Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-05-31T23:20:14.660Z",
+  "startedAt": "2026-05-31T23:19:00.848Z",
+  "finishedAt": "2026-05-31T23:20:14.660Z",
+  "status": "succeeded",
   "usage": {
-    "turns": 22,
-    "toolCalls": 23,
-    "errors": 3,
-    "softFailures": 9,
-    "writeActions": 8
+    "turns": 16,
+    "toolCalls": 11,
+    "errors": 0,
+    "softFailures": 1,
+    "writeActions": 1
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "Since the vault currently has no available collateral, it is not feasible to allocate funds or open new positions at this time. Here's a summary of the current situation:\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and preciou",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
+  "summary": "The vault still has no available collateral, which prevents opening new positions. Without available USDC or allocated capital, it is not feasible to proceed with opening long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time.\n\n### Final Summary\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available collateral for new positions.\n- **Top Picks**: Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN)",
   "writeActions": [
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Fox River Resources Corporation to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no capital allocation or position opening involved, consistent with available collateral of $0."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Ferrexpo to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no capital allocation or position opening involved, consistent with available collateral of $0."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Minerals 260 Ltd to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no capital allocation or position opening involved, consistent with available collateral of $0."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Fox River Resources Corporation to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no positions opened or collateral used. Consistent with available collateral of $0 and regime conditions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Ferrexpo to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no positions opened or collateral used. Consistent with available collateral of $0 and regime conditions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring new top pick Minerals 260 Ltd to align with the latest Atlas ML recommendations.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch only wires new assets; no positions opened or collateral used. Consistent with available collateral of $0 and regime conditions."
-      },
-      "kind": "file-diff"
-    },
-    {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Attempting to allocate any available collateral to enable opening of new positions on eligible assets.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only attempts to allocate available collateral, which is currently zero; no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "allocate_to_perp",
-      "txHash": null,
-      "justification": "Attempting to allocate any available collateral to enable opening of new positions on eligible assets.",
+      "justification": "Allocating available collateral to enable opening of new long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
       "riskOfficer": {
         "verdict": "approve",
         "reason": "No available collateral to allocate; batch is a no-op with zero impact."
@@ -102,18 +32,5 @@
       "kind": "file-diff"
     }
   ],
-  "errors": [
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    },
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    },
-    {
-      "tool": "wire_asset",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool wire_asset: [\n  {\n    \"code\": \"too_small\",\n    \"minimum\": 0,\n    \"type\": \"number\",\n    \"inclusive\": false,\n    \"exact\": false,\n    \"message\": \"Number must be greater than 0\",\n    \"path\": [\n      \"seedPriceUsd\"\n    ]\n  }\n]"
-    }
-  ]
+  "errors": []
 }
