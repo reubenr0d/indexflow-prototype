@@ -7,67 +7,27 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-05-31T04:54:37.649Z",
-  "startedAt": "2026-05-31T04:52:43.753Z",
-  "finishedAt": "2026-05-31T04:54:37.649Z",
+  "runId": "2026-05-31T08:24:29.578Z",
+  "startedAt": "2026-05-31T08:23:02.388Z",
+  "finishedAt": "2026-05-31T08:24:29.578Z",
   "status": "succeeded",
   "usage": {
-    "turns": 21,
-    "toolCalls": 14,
+    "turns": 16,
+    "toolCalls": 10,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 5
+    "softFailures": 1,
+    "writeActions": 1
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals, silver, and gold. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Recommendations for Next Run**:\n- Monitor the availability of capital for potential allocation to new positions.\n- Continue to resolve symbol issues for new entrants to ensure they can be onboarded in future runs.\n- Keep an eye on news for actionable insights, particularly for potential short opportunities on wired oracle assets that are outside the top-N. \n\nThis plan ensures that the vault is strategically positioned to capitalize on opportunities as soon as the financial constraints are resolved.",
-  "summary": "I understand the requirement to open long-only positions on the eligible assets. However, the vault currently has zero available collateral, which means that opening new positions is not feasible at this time. The policy enforcement requires opening these positions, but without available collateral, this action cannot be executed.\n\n### Updated Summary\n\n#### Vault State and Actions\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Tracked Assets**: The tracked asset list is alig",
+  "summary": "Currently, the vault has zero available collateral, which prevents the opening of new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN). Without available USDC or allocated capital, it is not feasible to proceed with opening new positions.\n\n### Next Steps\n- **Monitor for Available Capital**: As soon as there is available collateral, proceed to allocate it towards opening long positions on the eligible assets.\n- **Prepare for Future Opportunities**: Ensure that the vault is ready to ",
   "writeActions": [
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Wiring FOX.CN is a non-risk action; no collateral is currently allocated or available, and no open positions exist."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ferrexpo plc as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Wiring FXPO.L is sound as there are no open positions, no recent losses, and no collateral constraints."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Minerals 260 Ltd as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Wiring a new asset does not impact collateral or open positions; no risk of over-leverage or regime conflict."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring B2Gold Corp. as it is a new entrant in the Atlas ML top picks with a high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Wiring B2Gold Corp. is a setup action with no immediate capital impact; no collateral or position risks involved."
-      },
-      "kind": "file-diff"
-    },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Attempting to allocate available collateral to open long positions on eligible assets.",
+      "justification": "Allocating available USDC to open long positions on eligible assets BIG.V, ABRA.TO, TEX.CN as per policy enforcement.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only attempts to allocate collateral, but availableCollateral is $0, so no action will occur."
+        "reason": "No idle USDC available for allocation; batch is a no-op with zero impact on collateral or positions."
       },
       "kind": "file-diff"
     }

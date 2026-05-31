@@ -7,19 +7,28 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-05-31T04:58:42.441Z",
-  "startedAt": "2026-05-31T04:57:12.190Z",
-  "finishedAt": "2026-05-31T04:58:42.441Z",
-  "status": "succeeded",
+  "runId": "2026-05-31T08:27:54.460Z",
+  "startedAt": "2026-05-31T08:27:13.522Z",
+  "finishedAt": "2026-05-31T08:27:54.460Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 5,
-    "toolCalls": 6,
-    "errors": 0,
-    "softFailures": 1,
+    "turns": 6,
+    "toolCalls": 7,
+    "errors": 2,
+    "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run, and the funding rate context is unavailable due to inactivity. The vault remains inactive, and no actions were taken this run.",
-  "summary": "### Action Summary\nThe attempt to open a short position on `ETH-USD` has failed due to insufficient collateral. The available collateral in the vault is $0.00, which is below the minimum required collateral of $10.00 (10,000,000 raw USDC) for opening a new position.\n\n### Current Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n- **Funding Rate**: Not applicable (no positions).\n- **Current ETH-USD Price**: $2031.15\n\n### Thesis\nThe hed",
+  "summary": "The current state of the vault indicates that it is entirely inactive, with no assets or positions available. Here's a summary of the findings:\n\n### Vault State\n- **NAV**: $0.00\n- **Total Supply**: 0\n- **Idle USDC**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Perp Allocated**: $0.00\n- **Available Collateral**: $0.00\n- **Position Count**: 0\n\n### Current Market Data\n- **ETH-USD Price**: $2023.57\n\nSince there are no open positions and the ",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    }
+  ]
 }
