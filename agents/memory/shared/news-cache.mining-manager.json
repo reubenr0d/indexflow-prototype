@@ -1,182 +1,182 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T12:21:24.484Z",
+  "updatedAt": "2026-05-31T14:56:51.722Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-31T12:21:24.484Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-31T14:56:51.722Z",
       "headlines": [
         {
-          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
-          "publishedAt": "2026-05-31T12:17:02.000Z",
+          "title": "Xometry's (XMTR) CEO Recently Sold 50K Shares. Should You Follow?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9bad9648-73be-3709-bbe3-4974faf52604/xometry%27s-%28xmtr%29-ceo-recently.html",
+          "publishedAt": "2026-05-31T14:44:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FN"
+            "XMTR"
           ]
         },
         {
-          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
-          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "title": "Trump and Kevin Warsh Plan a Huge Giveaway to Retirees. There’s Only One Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/0c652da5-0e57-3f81-8a70-8b221e3b2538/trump-and-kevin-warsh-plan-a.html",
+          "publishedAt": "2026-05-31T14:43:28.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
-          "publishedAt": "2026-05-31T12:06:00.000Z",
+          "title": "Peleton's (PTON) Chief Commercial Officer Sold All Their Shares for $584,000",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/36c0290a-d1bc-3db8-8229-3d713b2325ec/peleton%27s-%28pton%29-chief.html",
+          "publishedAt": "2026-05-31T14:43:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RVMD"
+            "PTON"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T12:21:24.484Z",
+      "fetchedAt": "2026-05-31T14:56:51.722Z",
       "headlines": [
         {
-          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
-          "publishedAt": "2026-05-31T12:17:02.000Z",
+          "title": "Xometry's (XMTR) CEO Recently Sold 50K Shares. Should You Follow?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9bad9648-73be-3709-bbe3-4974faf52604/xometry%27s-%28xmtr%29-ceo-recently.html",
+          "publishedAt": "2026-05-31T14:44:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FN"
+            "XMTR"
           ]
         },
         {
-          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
-          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "title": "Trump and Kevin Warsh Plan a Huge Giveaway to Retirees. There’s Only One Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/0c652da5-0e57-3f81-8a70-8b221e3b2538/trump-and-kevin-warsh-plan-a.html",
+          "publishedAt": "2026-05-31T14:43:28.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
-          "publishedAt": "2026-05-31T12:06:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RVMD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-05-31T12:21:24.484Z",
-      "headlines": [
-        {
-          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
-          "publishedAt": "2026-05-31T12:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FN"
-          ]
-        },
-        {
-          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
+          "title": "Peleton's (PTON) Chief Commercial Officer Sold All Their Shares for $584,000",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
-          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "link": "https://finance.yahoo.com/m/36c0290a-d1bc-3db8-8229-3d713b2325ec/peleton%27s-%28pton%29-chief.html",
+          "publishedAt": "2026-05-31T14:43:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
-          "publishedAt": "2026-05-31T12:06:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RVMD"
+            "PTON"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-31T12:21:24.484Z",
+      "fetchedAt": "2026-05-31T14:56:51.722Z",
       "headlines": [
         {
-          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
-          "publishedAt": "2026-05-31T12:17:02.000Z",
+          "title": "Xometry's (XMTR) CEO Recently Sold 50K Shares. Should You Follow?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9bad9648-73be-3709-bbe3-4974faf52604/xometry%27s-%28xmtr%29-ceo-recently.html",
+          "publishedAt": "2026-05-31T14:44:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FN"
+            "XMTR"
           ]
         },
         {
-          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
-          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "title": "Trump and Kevin Warsh Plan a Huge Giveaway to Retirees. There’s Only One Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/0c652da5-0e57-3f81-8a70-8b221e3b2538/trump-and-kevin-warsh-plan-a.html",
+          "publishedAt": "2026-05-31T14:43:28.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
-          "publishedAt": "2026-05-31T12:06:00.000Z",
+          "title": "Peleton's (PTON) Chief Commercial Officer Sold All Their Shares for $584,000",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/36c0290a-d1bc-3db8-8229-3d713b2325ec/peleton%27s-%28pton%29-chief.html",
+          "publishedAt": "2026-05-31T14:43:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RVMD"
+            "PTON"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-31T14:56:51.722Z",
+      "headlines": [
+        {
+          "title": "Xometry's (XMTR) CEO Recently Sold 50K Shares. Should You Follow?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9bad9648-73be-3709-bbe3-4974faf52604/xometry%27s-%28xmtr%29-ceo-recently.html",
+          "publishedAt": "2026-05-31T14:44:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XMTR"
+          ]
+        },
+        {
+          "title": "Trump and Kevin Warsh Plan a Huge Giveaway to Retirees. There’s Only One Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/0c652da5-0e57-3f81-8a70-8b221e3b2538/trump-and-kevin-warsh-plan-a.html",
+          "publishedAt": "2026-05-31T14:43:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Peleton's (PTON) Chief Commercial Officer Sold All Their Shares for $584,000",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/36c0290a-d1bc-3db8-8229-3d713b2325ec/peleton%27s-%28pton%29-chief.html",
+          "publishedAt": "2026-05-31T14:43:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PTON"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-31T12:21:24.484Z",
+      "fetchedAt": "2026-05-31T14:56:51.722Z",
       "headlines": [
         {
-          "title": "Fabrinet (FN) Bets on Co-Packaged Optics With a Strategic Investment in Taiwan",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/fabrinet-fn-bets-co-packaged-121702218.html",
-          "publishedAt": "2026-05-31T12:17:02.000Z",
+          "title": "Xometry's (XMTR) CEO Recently Sold 50K Shares. Should You Follow?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9bad9648-73be-3709-bbe3-4974faf52604/xometry%27s-%28xmtr%29-ceo-recently.html",
+          "publishedAt": "2026-05-31T14:44:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FN"
+            "XMTR"
           ]
         },
         {
-          "title": "How Much Does the Typical Gen Xer Have Saved for Retirement?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a73dddbe-239e-318d-98e8-aa37c12a98a9/how-much-does-the-typical-gen.html",
-          "publishedAt": "2026-05-31T12:10:00.000Z",
+          "title": "Trump and Kevin Warsh Plan a Huge Giveaway to Retirees. There’s Only One Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/0c652da5-0e57-3f81-8a70-8b221e3b2538/trump-and-kevin-warsh-plan-a.html",
+          "publishedAt": "2026-05-31T14:43:28.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA"
           ]
         },
         {
-          "title": "Revolution Medicines Announces ASCO Plenary Presentation Highlighting Unprecedented Results from Pivotal Phase 3 RASolute 302 Clinical Trial of Daraxonrasib in Previously Treated Metastatic Pancreatic Cancer",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/revolution-medicines-announces-asco-plenary-120600057.html",
-          "publishedAt": "2026-05-31T12:06:00.000Z",
+          "title": "Peleton's (PTON) Chief Commercial Officer Sold All Their Shares for $584,000",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/36c0290a-d1bc-3db8-8229-3d713b2325ec/peleton%27s-%28pton%29-chief.html",
+          "publishedAt": "2026-05-31T14:43:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RVMD"
+            "PTON"
           ]
         }
       ],
