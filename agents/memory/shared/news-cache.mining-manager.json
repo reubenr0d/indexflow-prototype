@@ -1,163 +1,213 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T18:18:03.138Z",
+  "updatedAt": "2026-05-31T19:43:48.965Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-05-31T18:18:03.138Z",
+    "BIG.V": {
+      "fetchedAt": "2026-05-31T19:43:48.965Z",
       "headlines": [
         {
-          "title": "Melt Drops [URGENT REPORT 2026] MeltDrops Shocking Boom Why Everyone Is Talking About This Weight Loss Supplement",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/melt-drops-urgent-report-2026-180900782.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "EQT sets target fund size for EQT Infrastructure VII at EUR 21 billion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eqt-sets-target-fund-size-180900098.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
+          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
+          "publishedAt": "2026-05-31T19:35:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "EQT.ST"
+            "MELI",
+            "HOOD",
+            "FIGR"
           ]
         },
         {
-          "title": "What a $2 Million Dividend Portfolio Actually Pays a Retired Couple in Texas vs California After Every Tax",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/5898d3a1-b1ca-3301-b3c1-e3b0011b3c99/what-a-%242-million-dividend.html",
-          "publishedAt": "2026-05-31T18:05:16.000Z",
+          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
+          "publishedAt": "2026-05-31T19:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "URI",
+            "^GSPC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
+          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XOM",
+            "NEE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-31T18:18:03.138Z",
+      "fetchedAt": "2026-05-31T19:43:48.965Z",
       "headlines": [
         {
-          "title": "Melt Drops [URGENT REPORT 2026] MeltDrops Shocking Boom Why Everyone Is Talking About This Weight Loss Supplement",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/melt-drops-urgent-report-2026-180900782.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "EQT sets target fund size for EQT Infrastructure VII at EUR 21 billion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eqt-sets-target-fund-size-180900098.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
+          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
+          "publishedAt": "2026-05-31T19:35:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "EQT.ST"
+            "MELI",
+            "HOOD",
+            "FIGR"
           ]
         },
         {
-          "title": "What a $2 Million Dividend Portfolio Actually Pays a Retired Couple in Texas vs California After Every Tax",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/5898d3a1-b1ca-3301-b3c1-e3b0011b3c99/what-a-%242-million-dividend.html",
-          "publishedAt": "2026-05-31T18:05:16.000Z",
+          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
+          "publishedAt": "2026-05-31T19:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "URI",
+            "^GSPC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
+          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XOM",
+            "NEE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BIG.V": {
-      "fetchedAt": "2026-05-31T18:18:03.138Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-05-31T19:43:48.965Z",
       "headlines": [
         {
-          "title": "EQT sets target fund size for EQT Infrastructure VII at EUR 21 billion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eqt-sets-target-fund-size-180900098.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
+          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
+          "publishedAt": "2026-05-31T19:35:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "EQT.ST"
+            "MELI",
+            "HOOD",
+            "FIGR"
           ]
         },
         {
-          "title": "What a $2 Million Dividend Portfolio Actually Pays a Retired Couple in Texas vs California After Every Tax",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/5898d3a1-b1ca-3301-b3c1-e3b0011b3c99/what-a-%242-million-dividend.html",
-          "publishedAt": "2026-05-31T18:05:16.000Z",
+          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
+          "publishedAt": "2026-05-31T19:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "URI",
+            "^GSPC",
+            "NVDA"
+          ]
         },
         {
-          "title": "Claiming Social Security at 62? 4 Ways You Can Still Increase Your Future Benefits.",
+          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/274f2dc8-cbeb-389d-8d91-4171995194dc/claiming-social-security-at.html",
-          "publishedAt": "2026-05-31T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
+          "publishedAt": "2026-05-31T19:32:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "XOM",
+            "NEE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T18:18:03.138Z",
+      "fetchedAt": "2026-05-31T19:43:48.965Z",
       "headlines": [
         {
-          "title": "Melt Drops [URGENT REPORT 2026] MeltDrops Shocking Boom Why Everyone Is Talking About This Weight Loss Supplement",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/melt-drops-urgent-report-2026-180900782.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "EQT sets target fund size for EQT Infrastructure VII at EUR 21 billion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eqt-sets-target-fund-size-180900098.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
+          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
+          "publishedAt": "2026-05-31T19:35:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "EQT.ST"
+            "MELI",
+            "HOOD",
+            "FIGR"
           ]
         },
         {
-          "title": "What a $2 Million Dividend Portfolio Actually Pays a Retired Couple in Texas vs California After Every Tax",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/5898d3a1-b1ca-3301-b3c1-e3b0011b3c99/what-a-%242-million-dividend.html",
-          "publishedAt": "2026-05-31T18:05:16.000Z",
+          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
+          "publishedAt": "2026-05-31T19:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "URI",
+            "^GSPC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
+          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XOM",
+            "NEE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-31T18:18:03.138Z",
+      "fetchedAt": "2026-05-31T19:43:48.965Z",
       "headlines": [
         {
-          "title": "Melt Drops [URGENT REPORT 2026] MeltDrops Shocking Boom Why Everyone Is Talking About This Weight Loss Supplement",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/melt-drops-urgent-report-2026-180900782.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "EQT sets target fund size for EQT Infrastructure VII at EUR 21 billion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eqt-sets-target-fund-size-180900098.html",
-          "publishedAt": "2026-05-31T18:09:00.000Z",
+          "title": "Why a Fintech-Focused Fund Just Added $44 Million of MercadoLibre Stock",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/e8f89ff1-9b6a-392e-a1b5-0701cefde390/why-a-fintech-focused-fund.html",
+          "publishedAt": "2026-05-31T19:35:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "EQT.ST"
+            "MELI",
+            "HOOD",
+            "FIGR"
           ]
         },
         {
-          "title": "What a $2 Million Dividend Portfolio Actually Pays a Retired Couple in Texas vs California After Every Tax",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/5898d3a1-b1ca-3301-b3c1-e3b0011b3c99/what-a-%242-million-dividend.html",
-          "publishedAt": "2026-05-31T18:05:16.000Z",
+          "title": "United Rentals: The Industrial Stock Workhorse I'd Happily Hold Through Any Market Crash",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/70d3a21e-c681-3f54-a143-1c757f58973f/united-rentals%3A-the.html",
+          "publishedAt": "2026-05-31T19:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "URI",
+            "^GSPC",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "This Is the First Energy Stock I Plan to Buy in June (Hint: It's Not ExxonMobil)",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/63e476a0-57ca-389c-aa3c-1bf88041cf9a/this-is-the-first-energy.html",
+          "publishedAt": "2026-05-31T19:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XOM",
+            "NEE",
+            "NVDA"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
