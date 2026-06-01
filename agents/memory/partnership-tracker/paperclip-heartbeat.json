@@ -1,0 +1,25 @@
+{
+  "schema": "paperclip.heartbeat/v1",
+  "agentName": "partnership-tracker",
+  "agentDescription": "Weekly BD ops sweep across `growth/partnerships/`. Detects stale `next_milestone_date` rows, missing-handle blockers (e.g. \"Nox handle TBD\"), and `awaiting_response` 0xLabs intros that have gone quiet. Opens one GitHub issue per blocker via the existing self-improvement-issues pipeline (route through `risk-officer-self-improvement-issues`); never edits partner files except to refresh frontmatter status.",
+  "signalSource": null,
+  "entryMode": "none",
+  "network": "sepolia",
+  "vaultAddress": null,
+  "vaultName": null,
+  "runId": "2026-06-01T14:43:15.951Z",
+  "startedAt": "2026-06-01T14:42:46.420Z",
+  "finishedAt": "2026-06-01T14:43:15.951Z",
+  "status": "succeeded",
+  "usage": {
+    "turns": 10,
+    "toolCalls": 7,
+    "errors": 0,
+    "softFailures": 0,
+    "writeActions": 0
+  },
+  "thesis": null,
+  "summary": "",
+  "writeActions": [],
+  "errors": []
+}
