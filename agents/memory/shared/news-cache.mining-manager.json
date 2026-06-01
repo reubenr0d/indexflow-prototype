@@ -1,602 +1,182 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-01T05:17:06.357Z",
+  "updatedAt": "2026-06-01T10:32:37.356Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-06-01T05:17:05.951Z",
+    "FOX.CN": {
+      "fetchedAt": "2026-06-01T10:32:37.356Z",
       "headlines": [
         {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
+          "publishedAt": "2026-06-01T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
+          "publisher": "Just Auto",
+          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
+          "publishedAt": "2026-06-01T10:27:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
+            "600104.SS"
+          ]
+        },
+        {
+          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
+          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "LLY",
+            "NVO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-01T05:17:05.951Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-01T10:32:37.356Z",
       "headlines": [
         {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
+          "publishedAt": "2026-06-01T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
+          "publisher": "Just Auto",
+          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
+          "publishedAt": "2026-06-01T10:27:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
+            "600104.SS"
+          ]
+        },
+        {
+          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
+          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "LLY",
+            "NVO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-01T05:17:05.951Z",
+      "fetchedAt": "2026-06-01T10:32:37.356Z",
       "headlines": [
         {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
+          "publishedAt": "2026-06-01T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
+          "publisher": "Just Auto",
+          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
+          "publishedAt": "2026-06-01T10:27:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-01T05:17:05.951Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
+            "600104.SS"
           ]
         },
         {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
+          "publishedAt": "2026-06-01T10:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
+            "NVDA",
+            "LLY",
+            "NVO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-06-01T05:17:05.951Z",
+      "fetchedAt": "2026-06-01T10:32:37.356Z",
       "headlines": [
         {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
+          "publishedAt": "2026-06-01T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
+          "publisher": "Just Auto",
+          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
+          "publishedAt": "2026-06-01T10:27:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
+            "600104.SS"
+          ]
+        },
+        {
+          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
+          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "LLY",
+            "NVO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BHP.AX": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-01T10:32:37.356Z",
       "headlines": [
         {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
+          "publishedAt": "2026-06-01T10:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
+          "publisher": "Just Auto",
+          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
+          "publishedAt": "2026-06-01T10:27:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PWM.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
+            "600104.SS"
           ]
         },
         {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
+          "publishedAt": "2026-06-01T10:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "0KXS.L": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HHH.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "PPP.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-06-01T05:17:06.357Z",
-      "headlines": [
-        {
-          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
-          "publishedAt": "2026-06-01T05:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        },
-        {
-          "title": "Nvidia launches Windows laptop chip in consumer PC push",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
-          "publishedAt": "2026-06-01T05:06:08.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Short Report: Tempus AI short interest at record high",
-          "publisher": "TipRanks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
-          "publishedAt": "2026-06-01T05:05:57.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "RUM",
-            "TEM",
-            "BOBS",
-            "FIG",
-            "^IXIC",
-            "^RUT"
+            "NVDA",
+            "LLY",
+            "NVO"
           ]
         }
       ],

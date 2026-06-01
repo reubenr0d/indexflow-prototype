@@ -7,19 +7,70 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-01T05:17:43.030Z",
-  "startedAt": "2026-06-01T05:16:13.598Z",
-  "finishedAt": "2026-06-01T05:17:43.030Z",
+  "runId": "2026-06-01T10:33:51.055Z",
+  "startedAt": "2026-06-01T10:32:10.994Z",
+  "finishedAt": "2026-06-01T10:33:51.055Z",
   "status": "succeeded",
   "usage": {
-    "turns": 13,
-    "toolCalls": 6,
+    "turns": 20,
+    "toolCalls": 16,
     "errors": 0,
-    "softFailures": 0,
-    "writeActions": 0
+    "softFailures": 7,
+    "writeActions": 5
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "summary": "Given the persistent constraint of zero available collateral, it remains infeasible to open new long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN). Without available USDC or allocated capital, the vault cannot proceed with opening these positions.\n\n### Recommendations for Next Run\n- Monitor for any changes in available collateral to enable opening new positions.\n- Continue to track news for any actionable insights, particularly for short opportunities.\n- Re-evaluate the top picks in ",
-  "writeActions": [],
+  "summary": "The vault currently has no available collateral, which prevents the opening of new positions. Therefore, it is not feasible to proceed with opening long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN) at this time.\n\n### Final Summary\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available collateral, unable to allocate or open new positions.\n- **Top Picks**: Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN",
+  "writeActions": [
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets without opening positions; no collateral or position risks involved."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring new top pick Ferrexpo plc (FXPO.L) with a high ML score of 99.6.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets without opening positions; no collateral or position risks involved."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring new top pick Minerals 260 Ltd (MI6.AX) with a high ML score of 99.5.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets without opening positions; no collateral or position risks involved."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring new top pick B2Gold Corp. (BTO.TO) with a high ML score of 99.2.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets without opening positions; no collateral or position risks involved."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "txHash": null,
+      "justification": "Allocating the auto-target amount into perp capital for trading.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only includes allocation to perp capital with zero amount, which has no impact on available collateral or positions."
+      },
+      "kind": "file-diff"
+    }
+  ],
   "errors": []
 }
