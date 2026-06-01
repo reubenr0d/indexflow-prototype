@@ -1,471 +1,602 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-05-31T23:19:32.679Z",
+  "updatedAt": "2026-06-01T05:17:06.357Z",
   "entries": {
     "TEX.CN": {
-      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "fetchedAt": "2026-06-01T05:17:05.951Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
-          ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "fetchedAt": "2026-06-01T05:17:05.951Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
-          ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "fetchedAt": "2026-06-01T05:17:05.951Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
-          ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "fetchedAt": "2026-06-01T05:17:05.951Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
-          ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FXPO.L": {
-      "fetchedAt": "2026-05-31T23:19:32.463Z",
+      "fetchedAt": "2026-06-01T05:17:05.951Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
-          ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "USA.TO": {
-      "fetchedAt": "2026-05-31T23:19:32.679Z",
+    "BHP.AX": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PWM.V": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         },
         {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVGO"
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-05-31T23:19:32.679Z",
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "0KXS.L": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         },
         {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVGO"
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HHH.V": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "EEE.L": {
-      "fetchedAt": "2026-05-31T23:19:32.679Z",
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
+            "^RUT"
           ]
-        },
-        {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AEM": {
-      "fetchedAt": "2026-05-31T23:19:32.679Z",
-      "headlines": [
-        {
-          "title": "Agnico Eagle Mines (AEM): The Best Natural Resources Stock to Buy Now",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/agnico-eagle-mines-aem-best-090027634.html",
-          "publishedAt": "2026-05-31T09:00:27.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "WM.TO",
-            "AEM"
-          ]
-        },
-        {
-          "title": "ASX Growth Companies With High Insider Ownership",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/asx-growth-companies-high-insider-193809514.html",
-          "publishedAt": "2026-05-31T19:38:09.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOR.AX",
-            "SPL.AX",
-            "MESO",
-            "SKS.AX",
-            "PNI.AX",
-            "MAU.AX",
-            "FRS.AX",
-            "EIQ.AX",
-            "HMC.AX",
-            "AR1.AX",
-            "AV1.AX"
-          ]
-        },
-        {
-          "title": "Borderlands Mexico: Thousands of Mexican truckers lose US visas over cabotage violations",
-          "publisher": "FreightWaves",
-          "link": "https://finance.yahoo.com/economy/policy/articles/borderlands-mexico-thousands-mexican-truckers-110000002.html",
-          "publishedAt": "2026-05-31T11:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GTWO.TO": {
-      "fetchedAt": "2026-05-31T23:19:32.679Z",
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
       "headlines": [
         {
-          "title": "From lottery draws to fiscal spending, China broadens digital yuan footprint",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/exclusive-lottery-draws-fiscal-spending-050343922.html",
-          "publishedAt": "2026-05-31T23:09:46.000Z",
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures: Oil Prices Rise As Trump Makes This Iran Move; Nvidia, Tesla Lead 5 Titans Near Buy Points",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/fd63b97c-c320-3202-b483-76d551ec4785/dow-jones-futures%3A-oil-prices.html",
-          "publishedAt": "2026-05-31T23:08:38.000Z",
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "TSLA",
-            "^DJI",
-            "CL=F",
-            "CIEN",
-            "CRDO",
             "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
             "^IXIC",
-            "AMD",
-            "GOOG",
-            "AMZN",
-            "CRWD",
-            "PANW",
-            "AVGO"
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "PPP.V": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         },
         {
-          "title": "Broadcom Inc (AVGO) Launches Broadband Chip With AI Capabilities",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-inc-avgo-launches-broadband-230756753.html",
-          "publishedAt": "2026-05-31T23:07:56.000Z",
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVGO"
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-06-01T05:17:06.357Z",
+      "headlines": [
+        {
+          "title": "GOODYEAR BRINGS ROAD SAFETY INITIATIVE TO KUNSHAN",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/goodyear-brings-road-safety-initiative-050900067.html",
+          "publishedAt": "2026-06-01T05:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        },
+        {
+          "title": "Nvidia launches Windows laptop chip in consumer PC push",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/54043025-2de6-387d-abb3-eccf60297cb5/nvidia-launches-windows.html",
+          "publishedAt": "2026-06-01T05:06:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Short Report: Tempus AI short interest at record high",
+          "publisher": "TipRanks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/short-report-tempus-ai-short-050557014.html",
+          "publishedAt": "2026-06-01T05:05:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^GSPC",
+            "RUM",
+            "TEM",
+            "BOBS",
+            "FIG",
+            "^IXIC",
+            "^RUT"
           ]
         }
       ],

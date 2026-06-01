@@ -5,10 +5,10 @@
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
   "thesis": "The current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "lastRunAt": "2026-05-31T14:59:27.681Z",
+  "lastRunAt": "2026-06-01T05:19:06.133Z",
   "latestRun": {
-    "runId": "2026-05-31T14:59:27.681Z",
-    "finishedAt": "2026-05-31T14:59:27.681Z",
+    "runId": "2026-06-01T05:19:06.133Z",
+    "finishedAt": "2026-06-01T05:19:06.133Z",
     "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The vault's strategy will continue"
   },
   "recentActions": [
