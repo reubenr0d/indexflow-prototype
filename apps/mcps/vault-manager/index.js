@@ -26,6 +26,11 @@ import {
   checkChurnGuard,
   CHURN_GUARD_WINDOW_MS,
 } from "../../shared/agent-shared-memory.mjs";
+import {
+  basketBytecodeHasPerpWrappers,
+  buildClosePositionCast,
+  buildOpenPositionCast,
+} from "./perp-write-routing.mjs";
 
 // ---------------------------------------------------------------------------
 // Config from env
@@ -267,6 +272,15 @@ function castCall(contractAddr, sig, args = []) {
 
 function castSend(contractAddr, sig, args = []) {
   return castSendOnRpc(RPC_URL, contractAddr, sig, args);
+}
+
+function vaultSupportsPerpWrappers(vault) {
+  try {
+    const bytecode = runCast(["code", vault, "--rpc-url", RPC_URL]);
+    return basketBytecodeHasPerpWrappers(bytecode);
+  } catch {
+    return false;
+  }
 }
 
 // Per-RPC `cast send`, used by the multi-chain `create_vault` flow to deploy +
@@ -1817,7 +1831,7 @@ server.registerTool(
       "Collateral is in raw USDC (6 decimals: '1000000' = 1 USDC). " +
       `Effective leverage = size / (collateral * 1e24). On-chain caps: maxLeverage ${CHAIN_MAX_LEVERAGE}x and a ~$${Number(MIN_COLLATERAL_USDC_RAW) / 1e6} minimum collateral (the $${LIQUIDATION_FEE_USD} liquidationFeeUsd buffer). ` +
       "RECOMMENDED: call `plan_open_position` first — it converts your target leverage + available collateral into the exact raw `size`/`collateral` integers to pass here, so you don't have to do 1e30 math yourself or risk `Vault: maxLeverage exceeded` / `Vault: liquidation fees exceed collateral` reverts. " +
-      "Requires capital allocated via allocate_to_perp first. Caller must be vault owner. " +
+      "Requires capital allocated via allocate_to_perp first. Caller must be the basket owner (EOA) or use BasketVault.openPosition when the vault bytecode includes perp wrappers. " +
       "BEFORE calling, run `plan_open_position` (or at minimum `get_perp_capital_snapshot` / `get_vault_pnl`) so the requested `collateral` fits the vault's `availableCollateral`; the MCP will otherwise short-circuit with `INSUFFICIENT_COLLATERAL` and embed the open-position roster so you can pick a leg to close. " +
       "PRE-FLIGHT: the MCP also refuses below-1x positions with `LEVERAGE_BELOW_1X` (no tx, no gas) when `size <= collateral * 1e24` — catches the common scaling bug where the agent multiplies size by 1e30 but forgets that collateral is in 1e6 USDC. " +
       "Returns {success, transactionHash, next_steps}.",
@@ -1949,11 +1963,17 @@ server.registerTool(
     }
 
     try {
-      const rawReceipt = castSend(
+      const useWrapper = vaultSupportsPerpWrappers(vault);
+      const { target, sig, args } = buildOpenPositionCast(
+        vault,
         d.vaultAccounting,
-        "openPosition(address,bytes32,bool,uint256,uint256)",
-        [vault, assetId, String(isLong), size, collateral],
+        useWrapper,
+        assetId,
+        isLong,
+        size,
+        collateral,
       );
+      const rawReceipt = castSend(target, sig, args);
       return writeResult(rawReceipt, [
         { tool: "get_position_tracking", reason: "Verify the position was opened", params_hint: { vault, assetId, isLong } },
         { tool: "get_vault_pnl", reason: "Check updated PnL", params_hint: { vault } },
@@ -1969,11 +1989,11 @@ server.registerTool(
   {
     title: "Close Position",
     description:
-      "Reduce or fully close a perp position for a vault via VaultAccounting. " +
+      "Reduce or fully close a perp position for a vault via BasketVault (when wrappers exist) or VaultAccounting. " +
       "sizeDelta is the amount of size to reduce (GMX USD ~1e30 scale). " +
       "collateralDelta is the collateral to withdraw (GMX units). " +
       "To fully close, set sizeDelta to the position's full size. PnL is realised on close. " +
-      "Caller must be vault owner. Returns {success, transactionHash, next_steps}.",
+      "Caller must be the basket owner. Returns {success, transactionHash, next_steps}.",
     inputSchema: {
       vault: z.string().describe("BasketVault address (0x...)"),
       assetId: z.string().describe("bytes32 asset id from get_oracle_assets"),
@@ -2064,11 +2084,17 @@ server.registerTool(
     }
 
     try {
-      const rawReceipt = castSend(
+      const useWrapper = vaultSupportsPerpWrappers(vault);
+      const { target, sig, args } = buildClosePositionCast(
+        vault,
         d.vaultAccounting,
-        "closePosition(address,bytes32,bool,uint256,uint256)",
-        [vault, assetId, String(isLong), sizeDelta, collateralDelta],
+        useWrapper,
+        assetId,
+        isLong,
+        sizeDelta,
+        collateralDelta,
       );
+      const rawReceipt = castSend(target, sig, args);
       return writeResult(rawReceipt, [
         { tool: "get_vault_pnl", reason: "Check updated realised PnL", params_hint: { vault } },
         { tool: "withdraw_from_perp", reason: "Withdraw freed capital back to vault if desired", params_hint: { vault } },

@@ -24,10 +24,10 @@ For oracle and feed syncing operations, see [PRICE_FEED_FLOW.md](./PRICE_FEED_FL
 
 - **Investor** — Deposits USDC, receives basket shares, redeems shares for USDC. Cannot move capital between vault and perp, cannot open positions.
 - **Basket owner / curator (`BasketVault` owner)** — Controls basket composition, fee structure, reserve policy, and the capital bridge between vault and perp module:
-  `setAssets`, `setFees`, `setVaultAccounting`, `setOracleAdapter`, `setMaxPerpAllocation`, `setMinReserveBps`, `allocateToPerp`, `withdrawFromPerp`, `collectFees`.
+  `setAssets`, `setFees`, `setVaultAccounting`, `setOracleAdapter`, `setMaxPerpAllocation`, `setMinReserveBps`, `allocateToPerp`, `withdrawFromPerp`, `openPosition`, `closePosition` (on new basket bytecode), `collectFees`.
 - **VaultAccounting owner (protocol operator)** — Controls vault registration, asset-to-token mappings, and risk limits:
   `registerVault`, `deregisterVault`, `mapAssetToken`, `setMaxOpenInterest`, `setMaxPositionSize`, `setPaused`.
-- **Position caller** — `openPosition` / `closePosition` on VaultAccounting are restricted to `msg.sender == vault` or `msg.sender == owner()`.
+- **Position caller** — `openPosition` / `closePosition` on VaultAccounting accept `msg.sender == vault`, VA `owner()`, or the basket's `Ownable.owner()` (curator EOA). New baskets may also call `BasketVault.openPosition` / `closePosition`, which delegate to VA with `msg.sender == vault`.
 
 ---
 
@@ -106,8 +106,10 @@ This is where you actually trade. You open leveraged positions on assets tracked
 
 **When to close a position:** The position has hit your profit target, your stop-loss threshold, or your thesis has been invalidated. Also close when you need to free up collateral for other trades or to pull capital back to the vault.
 
-1. `Authorized caller -> VaultAccounting.openPosition(vault, asset, isLong, size, collateral)`
-   - Internal: `_checkCaller(vault)`, `onlyRegisteredVault`, `whenNotPaused`.
+1. `Basket owner -> BasketVault.openPosition(asset, isLong, size, collateral)` **or**
+   `Basket owner -> VaultAccounting.openPosition(vault, asset, isLong, size, collateral)` (legacy / migrated baskets)
+   - Internal: `_checkCaller(vault)` allows vault, VA owner, or basket owner; wrapper path calls VA as `msg.sender == vault`.
+   - Internal: `onlyRegisteredVault`, `whenNotPaused`.
    - Internal: resolves `indexToken = assetTokens[asset]` and validates mapping.
    - Internal: checks collateral against `_availableCapital(vault)`.
    - Internal: enforces `maxOpenInterest` / `maxPositionSize` if configured.
@@ -115,7 +117,8 @@ This is where you actually trade. You open leveraged positions on assets tracked
    - Internal: transfers collateral to GMX vault and calls `gmxVault.increasePosition(...)`.
    - Internal: reads GMX position and updates local tracking/open keys.
 
-2. `Authorized caller -> VaultAccounting.closePosition(vault, asset, isLong, sizeDelta, collateralDelta)`
+2. `Basket owner -> BasketVault.closePosition(...)` **or**
+   `Basket owner -> VaultAccounting.closePosition(vault, asset, isLong, sizeDelta, collateralDelta)`
    - Internal: `_checkCaller(vault)` and tracked-position checks.
    - Internal: calls `gmxVault.decreasePosition(..., receiver=address(this))`.
    - Internal: computes USDC returned and collateral at risk.
@@ -236,6 +239,16 @@ These controls are distinct from basket-level operations and affect the shared G
   - `setBufferAmount(token, amount)` (gov-only)
   - direct pool funding flow: token `transfer(gmxVault, amount)` followed by `directPoolDeposit(token)`
 - These controls affect GMX pool-level liquidity configuration and are distinct from basket-level `allocateToPerp` / `withdrawFromPerp`.
+
+---
+
+## Hub migration: rewire existing baskets to a new VaultAccounting
+
+When `VaultAccounting` bytecode changes (for example basket-owner auth), existing `BasketVault` addresses are preserved; each basket is pointed at a new VA via `setVaultAccounting`. Open legs on the old VA are closed first; capital is withdrawn back to the basket; `perpAllocated` resets when the VA pointer changes.
+
+Batch helper: [`script/MigrateAllHubVaultAccounting.s.sol`](../script/MigrateAllHubVaultAccounting.s.sol) (loops `BasketFactory.getAllBaskets()`). Single-basket variant: [`script/MigrateVaultAccounting.s.sol`](../script/MigrateVaultAccounting.s.sol). See [OPERATOR_INTERACTIONS.md](./OPERATOR_INTERACTIONS.md) for env vars and signer requirements.
+
+After migration, curators `allocateToPerp` again on the same basket address, then open positions on the new VA.
 
 ---
 

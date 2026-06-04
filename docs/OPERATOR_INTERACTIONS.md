@@ -52,6 +52,24 @@ reverts:
   - Insufficient available capital (collateral locked in open positions)
 ```
 
+### `openPosition` / `closePosition` (new basket bytecode)
+
+Curator-facing wrappers on `BasketVault` that delegate to `VaultAccounting` with `msg.sender == vault`. Baskets deployed before a factory redeploy lack these selectors; use the VaultAccounting paths below instead (basket owner is now authorized there too).
+
+```contract-call
+function: BasketVault.openPosition(asset, isLong, size, collateral)
+caller: Basket owner
+effects:
+  - Calls VaultAccounting.openPosition(address(this), ...)
+```
+
+```contract-call
+function: BasketVault.closePosition(asset, isLong, sizeDelta, collateralDelta)
+caller: Basket owner
+effects:
+  - Calls VaultAccounting.closePosition(address(this), ...)
+```
+
 ### `setAssets`
 
 Defines which assets this basket tracks. Asset IDs are `keccak256(symbol)` hashes that must already be registered and active in the OracleAdapter.
@@ -212,8 +230,19 @@ Runbook (executed by the basket + VA + factory owner; `script/MigrateVaultAccoun
 3. **Deploy NEW_VA** with the same `(usdc, gmxVault, oracleAdapter, owner)` constructor args. Skipped by the script if `NEW_VA` env is already set.
 4. **Map every asset** the basket uses via `NEW_VA.mapAssetToken(assetId, indexToken)`.
 5. **Register the basket** via `NEW_VA.registerVault(basket)`.
-6. **Rewire the basket** via `BasketVault.setVaultAccounting(NEW_VA)` (basket owner).
+6. **Rewire the basket** via `BasketVault.setVaultAccounting(NEW_VA)` (basket owner). Resets `perpAllocated` when the pointer changes.
 7. **(Optional) Point the factory at NEW_VA** via `BasketFactory.setVaultAccounting(NEW_VA)` so newly-created baskets wire the patched VA automatically.
+
+**Batch all factory baskets:** `script/MigrateAllHubVaultAccounting.s.sol` runs steps 1–6 for every address in `BasketFactory.getAllBaskets()` in one broadcast (same env as above plus `FACTORY`). Skips baskets already on `NEW_VA`. Logs a warning when the broadcaster is not the basket owner so step 6 can be completed manually.
+
+```bash
+PATH="/Users/reuben/.foundry/bin:$PATH" \
+FACTORY=0x9c80... OLD_VA=0xC7aA... USDC=0xf0e4... GMX_VAULT=0x6797... ORACLE_ADAPTER=0x6932... \
+ASSET_IDS=0xaaa...,0xbbb... INDEX_TOKENS=0xccc...,0xddd... \
+forge script script/MigrateAllHubVaultAccounting.s.sol:MigrateAllHubVaultAccounting \
+  --root /Users/reuben/Desktop/minestarters/code/snx-prototype \
+  --rpc-url $SEPOLIA_RPC_URL --broadcast -vvv
+```
 
 Post-migration off-chain updates (manual):
 
@@ -241,7 +270,7 @@ Opens or increases a leveraged perpetual position on a mapped asset. The positio
 
 ```contract-call
 function: VaultAccounting.openPosition(vault, asset, isLong, size, collateral)
-caller: Vault address or VaultAccounting owner
+caller: Basket vault contract, VaultAccounting owner, or basket owner (curator EOA)
 inputs:
   - vault: address of the basket vault
   - asset: bytes32 asset ID
@@ -253,7 +282,7 @@ effects:
   - Increases vault openInterest and collateralLocked
   - Creates or updates position tracking key
 reverts:
-  - Caller is not the vault or VA owner
+  - Caller is not the vault, VA owner, or basket owner
   - Vault not registered or system paused
   - Asset not mapped to a GMX index token
   - Insufficient available capital for collateral
@@ -268,7 +297,7 @@ Reduces or fully closes an existing leveraged position. Returns USDC to VaultAcc
 
 ```contract-call
 function: VaultAccounting.closePosition(vault, asset, isLong, sizeDelta, collateralDelta)
-caller: Vault address or VaultAccounting owner
+caller: Basket vault contract, VaultAccounting owner, or basket owner (curator EOA)
 inputs:
   - vault: address of the basket vault
   - asset: bytes32 asset ID
@@ -281,7 +310,7 @@ effects:
   - Updates or removes position tracking
   - Updates realisedPnL based on USDC returned vs collateral at risk
 reverts:
-  - Caller is not the vault or VA owner
+  - Caller is not the vault, VA owner, or basket owner
   - No tracked position for (vault, asset, side)
   - Vault not registered or system paused
 ```

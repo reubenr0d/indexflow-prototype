@@ -1,11 +1,17 @@
 "use client";
 
-import { useReadContract, useWaitForTransactionReceipt } from "wagmi";
+import { useCallback, useRef } from "react";
+import { useReadContract, useWaitForTransactionReceipt, usePublicClient } from "wagmi";
 import { useSponsoredWriteContract } from "@/hooks/useSponsoredWriteContract";
 import { VaultAccountingABI } from "@/abi/VaultAccounting";
 import { getContracts } from "@/config/contracts";
 import { useDeploymentTarget } from "@/providers/DeploymentProvider";
 import { REFETCH_INTERVAL } from "@/lib/constants";
+import {
+  basketBytecodeHasPerpWrappers,
+  buildClosePositionWrite,
+  buildOpenPositionWrite,
+} from "@/lib/basket-perp-writes";
 import { encodePacked, keccak256, type Address, type Hex } from "viem";
 
 export function useRegisteredVaults() {
@@ -23,23 +29,38 @@ export function useRegisteredVaults() {
 export function useOpenPosition() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
+  const publicClient = usePublicClient({ chainId });
   const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const wrapperCache = useRef(new Map<string, boolean>());
 
-  const openPosition = (
-    vault: Address,
-    asset: `0x${string}`,
-    isLong: boolean,
-    size: bigint,
-    collateral: bigint
-  ) => {
-    writeContract({
-      address: vaultAccounting,
-      abi: VaultAccountingABI,
-      functionName: "openPosition",
-      args: [vault, asset, isLong, size, collateral],
-    });
-  };
+  const openPosition = useCallback(
+    async (
+      vault: Address,
+      asset: `0x${string}`,
+      isLong: boolean,
+      size: bigint,
+      collateral: bigint
+    ) => {
+      let useVaultWrapper = wrapperCache.current.get(vault);
+      if (useVaultWrapper === undefined && publicClient) {
+        const bytecode = await publicClient.getBytecode({ address: vault });
+        useVaultWrapper = basketBytecodeHasPerpWrappers(bytecode);
+        wrapperCache.current.set(vault, useVaultWrapper);
+      }
+      const config = buildOpenPositionWrite(
+        vault,
+        vaultAccounting,
+        useVaultWrapper ?? false,
+        asset,
+        isLong,
+        size,
+        collateral
+      );
+      writeContract(config);
+    },
+    [publicClient, vaultAccounting, writeContract]
+  );
 
   return { openPosition, hash, receipt, ...rest };
 }
@@ -47,23 +68,38 @@ export function useOpenPosition() {
 export function useClosePosition() {
   const { chainId } = useDeploymentTarget();
   const { vaultAccounting } = getContracts(chainId);
+  const publicClient = usePublicClient({ chainId });
   const { writeContract, data: hash, ...rest } = useSponsoredWriteContract();
   const receipt = useWaitForTransactionReceipt({ hash });
+  const wrapperCache = useRef(new Map<string, boolean>());
 
-  const closePosition = (
-    vault: Address,
-    asset: `0x${string}`,
-    isLong: boolean,
-    sizeDelta: bigint,
-    collateralDelta: bigint
-  ) => {
-    writeContract({
-      address: vaultAccounting,
-      abi: VaultAccountingABI,
-      functionName: "closePosition",
-      args: [vault, asset, isLong, sizeDelta, collateralDelta],
-    });
-  };
+  const closePosition = useCallback(
+    async (
+      vault: Address,
+      asset: `0x${string}`,
+      isLong: boolean,
+      sizeDelta: bigint,
+      collateralDelta: bigint
+    ) => {
+      let useVaultWrapper = wrapperCache.current.get(vault);
+      if (useVaultWrapper === undefined && publicClient) {
+        const bytecode = await publicClient.getBytecode({ address: vault });
+        useVaultWrapper = basketBytecodeHasPerpWrappers(bytecode);
+        wrapperCache.current.set(vault, useVaultWrapper);
+      }
+      const config = buildClosePositionWrite(
+        vault,
+        vaultAccounting,
+        useVaultWrapper ?? false,
+        asset,
+        isLong,
+        sizeDelta,
+        collateralDelta
+      );
+      writeContract(config);
+    },
+    [publicClient, vaultAccounting, writeContract]
+  );
 
   return { closePosition, hash, receipt, ...rest };
 }

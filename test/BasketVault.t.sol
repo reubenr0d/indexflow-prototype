@@ -15,6 +15,8 @@ contract MockPerpForBasket is IPerp {
     int256 public mockUnrealised;
     int256 public mockRealised;
     VaultState internal _state;
+    address public lastOpenPositionVault;
+    address public lastClosePositionVault;
 
     function setPnL(int256 unrealised_, int256 realised_) external {
         mockUnrealised = unrealised_;
@@ -35,8 +37,14 @@ contract MockPerpForBasket is IPerp {
 
     function depositCapital(address, uint256) external {}
     function withdrawCapital(address, uint256) external {}
-    function openPosition(address, bytes32, bool, uint256, uint256) external {}
-    function closePosition(address, bytes32, bool, uint256, uint256) external {}
+
+    function openPosition(address vault, bytes32, bool, uint256, uint256) external {
+        lastOpenPositionVault = vault;
+    }
+
+    function closePosition(address vault, bytes32, bool, uint256, uint256) external {
+        lastClosePositionVault = vault;
+    }
     function registerVault(address) external {}
 
     function isVaultRegistered(address) external pure returns (bool) {
@@ -242,6 +250,40 @@ contract BasketVaultTest is Test {
         vm.expectRevert();
         vault.topUpReserve(1e6);
         vm.stopPrank();
+    }
+
+    function test_openPosition_delegatesToPerpAsVault() public {
+        MockPerpForBasket mockPerp = new MockPerpForBasket();
+        vault.setVaultAccounting(address(mockPerp));
+
+        vault.openPosition(XAU, true, 10_000e30, 5_000e6);
+        assertEq(mockPerp.lastOpenPositionVault(), address(vault));
+    }
+
+    function test_closePosition_delegatesToPerpAsVault() public {
+        MockPerpForBasket mockPerp = new MockPerpForBasket();
+        vault.setVaultAccounting(address(mockPerp));
+
+        vault.closePosition(XAU, true, 10_000e30, 5_000e6);
+        assertEq(mockPerp.lastClosePositionVault(), address(vault));
+    }
+
+    function test_setVaultAccounting_resetsPerpAllocatedOnRewire() public {
+        vault.setFees(0, 0);
+
+        vm.startPrank(alice);
+        usdc.approve(address(vault), 500e6);
+        vault.deposit(500e6);
+        vm.stopPrank();
+
+        MockPerpForBasket mockA = new MockPerpForBasket();
+        vault.setVaultAccounting(address(mockA));
+        vault.allocateToPerp(200e6);
+        assertEq(vault.perpAllocated(), 200e6);
+
+        MockPerpForBasket mockB = new MockPerpForBasket();
+        vault.setVaultAccounting(address(mockB));
+        assertEq(vault.perpAllocated(), 0);
     }
 
     function test_allocateToPerp_enforcesReserveFloor() public {

@@ -7,6 +7,12 @@ import "../src/perp/OracleAdapter.sol";
 import "../src/perp/interfaces/IOracleAdapter.sol";
 import "../src/perp/interfaces/IPerp.sol";
 import "../src/vault/MockUSDC.sol";
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+/// @dev Minimal Ownable stand-in for basket-owner auth tests on `VaultAccounting`.
+contract OwnableMockBasket is Ownable {
+    constructor(address owner_) Ownable(owner_) {}
+}
 
 contract MockGMXVault {
     mapping(bytes32 => uint256) internal _sizeByKey;
@@ -519,5 +525,43 @@ contract VaultAccountingTest is Test {
         vm.prank(vault1);
         vm.expectRevert("Size exceeds position");
         accounting.closePosition(vault1, xau, true, 100_000e30, 0);
+    }
+
+    function test_openPosition_basketOwnerAuthorized() public {
+        address curator = address(0xC0FFEE);
+        OwnableMockBasket basket = new OwnableMockBasket(curator);
+        address basketAddr = address(basket);
+
+        accounting.registerVault(basketAddr);
+        usdc.mint(basketAddr, 1_000_000e6);
+        _depositAndPrepare(basketAddr, 100_000e6);
+
+        bytes32 xau = keccak256("XAU");
+        address xauToken = address(0xAA);
+        gmxVault.setPrice(xauToken, 2000e30);
+
+        vm.prank(curator);
+        accounting.openPosition(basketAddr, xau, true, 10_000e30, 5_000e6);
+
+        IPerp.VaultState memory state = accounting.getVaultState(basketAddr);
+        assertGt(state.openInterest, 0);
+    }
+
+    function test_openPosition_randomEoaReverts() public {
+        address curator = address(0xC0FFEE);
+        OwnableMockBasket basket = new OwnableMockBasket(curator);
+        address basketAddr = address(basket);
+
+        accounting.registerVault(basketAddr);
+        usdc.mint(basketAddr, 1_000_000e6);
+        _depositAndPrepare(basketAddr, 100_000e6);
+
+        bytes32 xau = keccak256("XAU");
+        address xauToken = address(0xAA);
+        gmxVault.setPrice(xauToken, 2000e30);
+
+        vm.prank(address(0xDEAD));
+        vm.expectRevert("Not authorized");
+        accounting.openPosition(basketAddr, xau, true, 10_000e30, 5_000e6);
     }
 }

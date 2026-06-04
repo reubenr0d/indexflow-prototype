@@ -98,6 +98,34 @@
   },
   {
     "type": "function",
+    "name": "closePosition",
+    "inputs": [
+      {
+        "name": "asset",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "isLong",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "sizeDelta",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "collateralDelta",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
     "name": "collectFees",
     "inputs": [
       {
@@ -309,6 +337,34 @@
       }
     ],
     "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "openPosition",
+    "inputs": [
+      {
+        "name": "asset",
+        "type": "bytes32",
+        "internalType": "bytes32"
+      },
+      {
+        "name": "isLong",
+        "type": "bool",
+        "internalType": "bool"
+      },
+      {
+        "name": "size",
+        "type": "uint256",
+        "internalType": "uint256"
+      },
+      {
+        "name": "collateral",
+        "type": "uint256",
+        "internalType": "uint256"
+      }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   },
   {
     "type": "function",

@@ -42,6 +42,7 @@
     "local:logs": "docker compose -f docker-compose.local.yml logs -f",
     "local:dev": "npm --prefix apps/web run dev",
     "redeploy:local": "sh scripts/local/redeploy.sh",
+    "migrate:hub-va": "forge script script/MigrateAllHubVaultAccounting.s.sol:MigrateAllHubVaultAccounting --broadcast -vvv",
     "agent:run": "node scripts/agent-runner.mjs",
     "agent:matrix:preflight": "EVENT_NAME=workflow_dispatch AGENT_INPUT=all NETWORK_INPUT=both node scripts/vault-agent-matrix.mjs --strict-empty",
     "agent:vault": "node scripts/agent-runner.mjs vault-manager",

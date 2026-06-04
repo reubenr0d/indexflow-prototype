@@ -164,7 +164,11 @@ contract BasketVault is ReentrancyGuard, Ownable {
 
     /// @notice Wire `VaultAccounting` (`IPerp`) for perp allocation calls.
     /// @param _vaultAccounting Perp module address (may be zero to unset).
+    /// @dev Resets `perpAllocated` when switching modules so NAV does not double-count idle USDC.
     function setVaultAccounting(address _vaultAccounting) external onlyOwner {
+        if (address(vaultAccounting) != address(0) && address(vaultAccounting) != _vaultAccounting) {
+            perpAllocated = 0;
+        }
         vaultAccounting = IPerp(_vaultAccounting);
     }
 
@@ -380,6 +384,34 @@ contract BasketVault is ReentrancyGuard, Ownable {
         }
 
         emit WithdrawnFromPerp(amount);
+    }
+
+    /// @notice Open or add to a perp leg via the wired `VaultAccounting` module.
+    /// @param asset Logical asset id mapped on the perp module.
+    /// @param isLong True for long index token.
+    /// @param size GMX position size (USD ~1e30 scale).
+    /// @param collateral USDC collateral for the increase.
+    function openPosition(bytes32 asset, bool isLong, uint256 size, uint256 collateral)
+        external
+        onlyOwner
+        nonReentrant
+    {
+        require(address(vaultAccounting) != address(0), "VaultAccounting not set");
+        vaultAccounting.openPosition(address(this), asset, isLong, size, collateral);
+    }
+
+    /// @notice Reduce or close a perp leg via the wired `VaultAccounting` module.
+    /// @param asset Logical asset id.
+    /// @param isLong Side of the leg.
+    /// @param sizeDelta GMX size reduction.
+    /// @param collateralDelta Collateral to withdraw per GMX rules.
+    function closePosition(bytes32 asset, bool isLong, uint256 sizeDelta, uint256 collateralDelta)
+        external
+        onlyOwner
+        nonReentrant
+    {
+        require(address(vaultAccounting) != address(0), "VaultAccounting not set");
+        vaultAccounting.closePosition(address(this), asset, isLong, sizeDelta, collateralDelta);
     }
 
     /// @notice Add USDC to basket reserve without minting shares.

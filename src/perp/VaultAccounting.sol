@@ -586,9 +586,12 @@ contract VaultAccounting is IPerp, ReentrancyGuard, Ownable {
         _openKeyIndex[posKey] = 0;
     }
 
-    /// @dev Position-changing calls must come from the basket vault or the owner.
+    /// @dev Position-changing calls must come from the basket vault, VA owner, or basket owner.
     function _checkCaller(address vault) internal view {
-        require(msg.sender == vault || msg.sender == owner(), "Not authorized");
+        if (msg.sender == vault || msg.sender == owner()) {
+            return;
+        }
+        require(msg.sender == Ownable(vault).owner(), "Not authorized");
     }
 
     /// @dev Best-effort cumulative funding read; returns zero if GMX implementation does not expose the view.
