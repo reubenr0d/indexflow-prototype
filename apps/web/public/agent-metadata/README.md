@@ -2,13 +2,13 @@
 
 Each AI-managed vault has a static JSON file at
 `<vault_lowercase>.json` in this folder describing the agent operator,
-its current thesis, the latest run, and the most recent justified
-on-chain actions. The Next.js app fetches it from
+its current thesis, recent runs, and the most recent justified
+on-chain/off-chain actions. The Next.js app fetches it from
 `/agent-metadata/<vault>.json` via the `useAgentMetadata` hook and
 renders the "AI Operator" badge, the **AI Activity** section
-(thesis + collapsible run summary + collapsible "Show all decisions"
-panel listing every justified action), and per-row justifications in
-Vault History on the basket detail page.
+(thesis + run-first AI Decisions panel with no-action runs, reasoning
+summaries, tool-call traces, and action cards), and per-row
+justifications in Vault History on the basket detail page.
 
 Schema (all consumer-side fields are optional except `isAiManaged`):
 
@@ -22,8 +22,28 @@ Schema (all consumer-side fields are optional except `isAiManaged`):
   "latestRun": {
     "runId": "2026-05-21T04:06:04.334Z",
     "finishedAt": "2026-05-21T04:06:04.334Z",
-    "summary": "first 500 chars of the LLM's final message"
+    "summary": "full markdown final message from the LLM",
+    "model": "gpt-5",
+    "network": "sepolia",
+    "turns": 3,
+    "toolCalls": ["get_vault_state", "get_quality_top_picks"],
+    "reasoningSummaries": ["model-provided reasoning summary only"],
+    "errors": [],
+    "softFailures": [],
+    "riskOfficerVerdicts": [],
+    "confirmationBatches": []
   },
+  "recentRuns": [
+    {
+      "runId": "2026-05-21T04:06:04.334Z",
+      "startedAt": "2026-05-21T04:02:00.000Z",
+      "finishedAt": "2026-05-21T04:06:04.334Z",
+      "summary": "full markdown final message from the LLM",
+      "actionCount": 0,
+      "toolCalls": ["get_vault_state"],
+      "reasoningSummaries": ["model-provided reasoning summary only"]
+    }
+  ],
   "recentActions": [
     {
       "tool": "allocate_to_perp",
@@ -38,8 +58,16 @@ Schema (all consumer-side fields are optional except `isAiManaged`):
 }
 ```
 
+`recentRuns` is deduplicated by `runId` and capped at 25 entries
+(override with `AGENT_METADATA_RUN_LIMIT`). It is written even when a
+run produced zero write actions so the basket page can explain no-op
+decisions. `reasoningSummaries` contains only model-provided summary
+text from the Responses API; raw hidden chain-of-thought is not stored
+or rendered.
+
 `recentActions` is deduplicated by `txHash` and capped at 100 entries
-(override with `AGENT_METADATA_ACTION_LIMIT`).
+(override with `AGENT_METADATA_ACTION_LIMIT`). The UI joins actions
+back to runs by `runId`.
 
 ### `params` shape per tool
 

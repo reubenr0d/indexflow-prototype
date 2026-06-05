@@ -103,7 +103,7 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     slug: "pwa-push-notifications",
     title: "Push Notifications",
     category: "Operations",
-    aliases: ["pwa-notifications"],
+    aliases: ["pwa-notifications", "app-updates"],
   },
   {
     fileName: "UTILITY_TOKEN_TOKENOMICS.md",
@@ -122,6 +122,7 @@ const DOCS_FILE_CONFIG: DocsFileConfig[] = [
     slug: "agents-framework",
     title: "Agents Framework",
     category: "Protocol",
+    aliases: ["ai-operator", "ai-decisions"],
   },
   {
     fileName: "WHITEPAPER_DRAFT.md",

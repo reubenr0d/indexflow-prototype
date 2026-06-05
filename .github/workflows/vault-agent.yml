@@ -275,6 +275,11 @@ jobs:
             echo "::warning::build-agent-commit-message.mjs failed; falling back to static message"
             git commit -m "memory(agent): update agent memory and metadata"
           fi
+          # The pre-extraction scrub can leave intentionally unstaged tracked
+          # deletions because `git add --ignore-removal` skips them. Clear
+          # those worktree-only deletions before rebase, otherwise `git pull
+          # --rebase` aborts with "You have unstaged changes."
+          git restore --worktree agents/memory/ apps/web/public/agent-metadata/
           # `--strategy-option=theirs` resolves any residual content
           # conflict in favour of the commits being replayed (in rebase
           # terms "theirs" = the local agent's freshly produced state),

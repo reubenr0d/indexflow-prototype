@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { __agentRunnerInternals } from "./agent-runner.mjs";
 
-const { summarizeActionParams } = __agentRunnerInternals;
+const { buildRunDetail, summarizeActionParams } = __agentRunnerInternals;
 
 test("summarizeActionParams keeps symbol and seedPriceUsd for wire_asset", () => {
   const params = summarizeActionParams("wire_asset", {
@@ -15,6 +15,60 @@ test("summarizeActionParams keeps symbol and seedPriceUsd for wire_asset", () =>
     symbol: "BHP.AX",
     seedPriceUsd: 45.2,
   });
+});
+
+test("buildRunDetail persists no-action run details for web metadata", () => {
+  const detail = buildRunDetail({
+    config: { name: "no-op-agent" },
+    runId: "2026-06-01T00:00:00.000Z",
+    runSummary: {
+      startedAt: "2026-06-01T00:00:00.000Z",
+      finishedAt: "2026-06-01T00:01:00.000Z",
+      summary: "No qualifying trades this run.",
+      model: "gpt-5-codex",
+      modelSource: "frontmatter",
+      network: "sepolia",
+      dryRun: false,
+      confirmWrites: true,
+      turns: 2,
+      toolCalls: ["get_vault_state", "get_quality_top_picks"],
+      writeActions: [],
+      reasoningSummaries: ["Checked the inputs and found no eligible action."],
+      errors: [],
+      softFailures: [{ tool: "open_position", error: "INSUFFICIENT_COLLATERAL" }],
+      riskOfficerVerdicts: [],
+      confirmationBatches: [],
+    },
+  });
+
+  assert.equal(detail.runId, "2026-06-01T00:00:00.000Z");
+  assert.equal(detail.actionCount, 0);
+  assert.equal(detail.onChainActionCount, 0);
+  assert.deepEqual(detail.toolCalls, ["get_vault_state", "get_quality_top_picks"]);
+  assert.deepEqual(detail.reasoningSummaries, [
+    "Checked the inputs and found no eligible action.",
+  ]);
+  assert.deepEqual(detail.softFailures, [
+    { tool: "open_position", error: "INSUFFICIENT_COLLATERAL" },
+  ]);
+});
+
+test("buildRunDetail preserves full markdown summaries for expandable UI", () => {
+  const summary = "### Final Summary\n\n" + "- item\n".repeat(200);
+  const detail = buildRunDetail({
+    config: { name: "markdown-agent" },
+    runId: "2026-06-01T00:00:00.000Z",
+    runSummary: {
+      startedAt: "2026-06-01T00:00:00.000Z",
+      finishedAt: "2026-06-01T00:01:00.000Z",
+      summary,
+      writeActions: [],
+    },
+  });
+
+  assert.equal(detail.summary, summary);
+  assert.ok(detail.summary.length > 500);
+  assert.match(detail.summary, /^### Final Summary/);
 });
 
 test("summarizeActionParams omits seedPriceUsd when missing for wire_asset", () => {

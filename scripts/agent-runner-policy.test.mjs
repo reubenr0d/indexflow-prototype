@@ -10,6 +10,8 @@ const {
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
   getActionablePicks,
+  getActionableMlCandidates,
+  isZeroAmountAllocation,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   computeRankSwapClosures,
@@ -1392,6 +1394,47 @@ function rankSwapPolicy(overrides = {}) {
   });
 }
 
+test("getActionableMlCandidates ranks mixed long/short picks by model-implied return", () => {
+  const selected = getActionableMlCandidates({
+    policy: rankSwapPolicy(),
+    longPicks: [
+      { yahooSymbol: "TOP.V", mlScore: 99, mlPredictedReturn: 0.6 },
+      { yahooSymbol: "MID.V", mlScore: 96, mlPredictedReturn: 0.4 },
+      { yahooSymbol: "WEAK.V", mlScore: 90, mlPredictedReturn: 0.2 },
+      { yahooSymbol: "SHORTME.V", mlScore: 88, mlPredictedReturn: 0.1 },
+    ],
+    shortPicks: [
+      { yahooSymbol: "SHORTME.V", mlScore: 2, mlPredictedReturn: -0.9, absPredictedReturn: 0.9 },
+      { yahooSymbol: "BAD.V", mlScore: 3, mlPredictedReturn: -0.5, absPredictedReturn: 0.5 },
+      { yahooSymbol: "TOOLOW.V", mlScore: 4, mlPredictedReturn: -0.1, absPredictedReturn: 0.1 },
+    ],
+  });
+
+  assert.deepEqual(
+    selected.map((c) => `${c.yahooSymbol}:${c.side}`),
+    ["TOP.V:long", "BAD.V:short", "MID.V:long"],
+  );
+});
+
+test("getActionableMlCandidates can select a short when fewer than max long entrants exist", () => {
+  const selected = getActionableMlCandidates({
+    policy: rankSwapPolicy(),
+    longPicks: [{ yahooSymbol: "ONLY.V", mlScore: 95, mlPredictedReturn: 0.3 }],
+    shortPicks: [{ yahooSymbol: "SHORT.V", mlScore: 5, mlPredictedReturn: -0.1, absPredictedReturn: 0.1 }],
+  });
+
+  assert.deepEqual(
+    selected.map((c) => `${c.yahooSymbol}:${c.side}`),
+    ["ONLY.V:long", "SHORT.V:short"],
+  );
+});
+
+test("isZeroAmountAllocation detects zero raw USDC allocation no-ops", () => {
+  assert.equal(isZeroAmountAllocation({ amount: "0" }), true);
+  assert.equal(isZeroAmountAllocation({ amount: 0 }), true);
+  assert.equal(isZeroAmountAllocation({ amount: "1" }), false);
+});
+
 test("computeRankSwapClosures returns [] when autoExitMode does not include rank_swap", () => {
   const closures = computeRankSwapClosures({
     policy: parseAgentPolicy({
@@ -1461,7 +1504,7 @@ test("computeRankSwapClosures closes lowest-ranked held long to make room for to
   });
   assert.equal(closures.length, 1);
   assert.equal(closures[0].pos.assetId, "0xLOW");
-  assert.match(closures[0].reason, /rank rotation/);
+  assert.match(closures[0].reason, /profit rotation/);
   assert.match(closures[0].reason, /AHR\.V/);
 });
 
@@ -1497,7 +1540,53 @@ test("computeRankSwapClosures uses PnL tiebreaker when two held legs share the w
   assert.equal(closures[0].pos.assetId, "0xOFFB");
 });
 
-test("computeRankSwapClosures never closes shorts even in long_short", () => {
+test("computeRankSwapClosures closes a weaker held leg for a stronger unheld ML candidate", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "HELD.V",
+        assetId: "0xHELD",
+        unrealisedPnlPctOfCollateral: 0.01,
+      },
+    ],
+    rankedPicks: [
+      { yahooSymbol: "NEW.V", isLong: true, profitPotential: 0.55 },
+      { yahooSymbol: "HELD.V", isLong: true, profitPotential: 0.2 },
+    ],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xHELD");
+  assert.match(closures[0].reason, /NEW\.V/);
+});
+
+test("computeRankSwapClosures does not close when held leg has stronger model potential", () => {
+  const closures = computeRankSwapClosures({
+    policy: rankSwapPolicy(),
+    positions: [
+      {
+        exists: true,
+        isLong: true,
+        symbol: "HELD.V",
+        assetId: "0xHELD",
+        unrealisedPnlPctOfCollateral: -0.02,
+      },
+    ],
+    rankedPicks: [
+      { yahooSymbol: "HELD.V", isLong: true, profitPotential: 0.6 },
+      { yahooSymbol: "NEW.V", isLong: true, profitPotential: 0.4 },
+    ],
+    availableCollateralUsdc: "0",
+    minSlotCollateralUsdc: "100",
+  });
+  assert.equal(closures.length, 0);
+});
+
+test("computeRankSwapClosures can rotate a weaker held short in long_short", () => {
   const closures = computeRankSwapClosures({
     policy: rankSwapPolicy(),
     positions: [
@@ -1509,11 +1598,13 @@ test("computeRankSwapClosures never closes shorts even in long_short", () => {
         unrealisedPnlPctOfCollateral: -0.5,
       },
     ],
-    rankedPicks: [{ yahooSymbol: "AHR.V", mlScore: 100 }],
+    rankedPicks: [{ yahooSymbol: "AHR.V", isLong: true, profitPotential: 0.5 }],
     availableCollateralUsdc: "0",
     minSlotCollateralUsdc: "100",
   });
-  assert.equal(closures.length, 0);
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].pos.assetId, "0xSHORT");
+  assert.match(closures[0].reason, /short BADCO\.V/);
 });
 
 test("computeRankSwapClosures is a no-op in short_only direction", () => {

@@ -15,6 +15,8 @@ export const LEGACY_DOCS_SLUG_ALIASES: Record<string, string> = {
   "pwa-notifications": "pwa-push-notifications",
   "app-updates": "pwa-push-notifications",
   "contracts-reference": "readme",
+  "ai-operator": "agents-framework",
+  "ai-decisions": "agents-framework",
   troubleshooting: "readme",
   "security-risk": "readme",
 };

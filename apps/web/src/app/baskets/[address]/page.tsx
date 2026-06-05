@@ -1,6 +1,8 @@
 "use client";
 
 import { use, useMemo, useState } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { Card } from "@/components/ui/card";
 import { InfoTooltip } from "@/components/ui/info-tooltip";
@@ -56,6 +58,10 @@ import {
   computePnLPctBps,
 } from "@/lib/format";
 import { formatApy } from "@/lib/apy";
+import {
+  buildAgentRunGroups,
+  type AgentRunGroup,
+} from "@/lib/agent-runs";
 import { type Address } from "viem";
 import {
   Activity,
@@ -342,32 +348,6 @@ export default function BasketDetailPage({ params }: { params: Promise<{ address
   );
 }
 
-type RunGroup = {
-  runId: string;
-  finishedAtIso: string | null;
-  actions: AgentAction[];
-};
-
-function groupActionsByRun(actions: AgentAction[]): RunGroup[] {
-  const order: string[] = [];
-  const groups = new Map<string, RunGroup>();
-  for (const action of actions) {
-    const runId = action.runId ?? action.timestamp ?? "__unknown__";
-    let group = groups.get(runId);
-    if (!group) {
-      group = {
-        runId,
-        finishedAtIso: action.timestamp ?? null,
-        actions: [],
-      };
-      groups.set(runId, group);
-      order.push(runId);
-    }
-    group.actions.push(action);
-  }
-  return order.map((id) => groups.get(id)!).filter(Boolean);
-}
-
 const SIGNAL_SOURCE_LABEL: Record<string, string> = {
   "atlas-ml": "Atlas ML",
   "atlas-quality": "Atlas Quality",
@@ -380,6 +360,69 @@ const ENTRY_MODE_LABEL: Record<string, string> = {
   manual: "Manual",
 };
 
+const runMarkdownComponents: Components = {
+  p: ({ children }) => (
+    <p className="mt-2 text-xs leading-relaxed text-app-muted first:mt-0">
+      {children}
+    </p>
+  ),
+  h1: ({ children }) => (
+    <h4 className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-app-text first:mt-0">
+      {children}
+    </h4>
+  ),
+  h2: ({ children }) => (
+    <h4 className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-app-text first:mt-0">
+      {children}
+    </h4>
+  ),
+  h3: ({ children }) => (
+    <h5 className="mt-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-app-text first:mt-0">
+      {children}
+    </h5>
+  ),
+  h4: ({ children }) => (
+    <h6 className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-app-muted first:mt-0">
+      {children}
+    </h6>
+  ),
+  ul: ({ children }) => (
+    <ul className="mt-2 list-disc space-y-1 pl-5 text-xs leading-relaxed text-app-muted">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-relaxed text-app-muted">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => (
+    <li className="leading-relaxed">
+      {children}
+    </li>
+  ),
+  strong: ({ children }) => (
+    <strong className="font-semibold text-app-text">
+      {children}
+    </strong>
+  ),
+  code: ({ children }) => (
+    <code className="rounded-sm border border-app-border bg-app-bg-subtle px-1 font-mono text-[11px] text-app-text">
+      {children}
+    </code>
+  ),
+  a: ({ children, href }) => (
+    <a
+      href={href}
+      className="text-app-accent underline decoration-app-accent/40 underline-offset-2 hover:decoration-app-accent"
+      target={href?.startsWith("http") ? "_blank" : undefined}
+      rel={href?.startsWith("http") ? "noreferrer" : undefined}
+    >
+      {children}
+    </a>
+  ),
+};
+
 function AiActivitySection({
   vault,
   agentMeta,
@@ -389,7 +432,7 @@ function AiActivitySection({
   agentMeta: NonNullable<ReturnType<typeof useAgentMetadata>["data"]>;
   className?: string;
 }) {
-  const [decisionsOpen, setDecisionsOpen] = useState(false);
+  const [decisionsOpen, setDecisionsOpen] = useState(true);
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;
@@ -400,8 +443,13 @@ function AiActivitySection({
   const lastRunRelative = lastRunSeconds ? formatRelativeTime(lastRunSeconds) : null;
 
   const runs = useMemo(
-    () => groupActionsByRun(agentMeta.recentActions ?? []),
-    [agentMeta.recentActions],
+    () =>
+      buildAgentRunGroups({
+        recentRuns: agentMeta.recentRuns ?? [],
+        latestRun: agentMeta.latestRun ?? null,
+        recentActions: agentMeta.recentActions ?? [],
+      }),
+    [agentMeta.latestRun, agentMeta.recentActions, agentMeta.recentRuns],
   );
   const totalActions = runs.reduce((sum, run) => sum + run.actions.length, 0);
   const latestRunId = agentMeta.latestRun?.runId ?? null;
@@ -471,7 +519,7 @@ function AiActivitySection({
       />
 
 
-      {/* All decisions (collapsed by default) */}
+      {/* AI decisions */}
       {runs.length > 0 && (
         <div className="mt-3">
           <button
@@ -487,7 +535,7 @@ function AiActivitySection({
               <ChevronDown className="h-3.5 w-3.5" />
             )}
             <span>
-              {decisionsOpen ? "Hide all decisions" : "Show all decisions"}
+              {decisionsOpen ? "Hide AI decisions" : "Show AI decisions"}
             </span>
             <span className="font-mono text-[10px] text-app-muted">
               ({totalActions} actions · {runs.length} run{runs.length === 1 ? "" : "s"})
@@ -523,18 +571,35 @@ function RunGroupCard({
   explorer,
   isLatestRun,
 }: {
-  run: RunGroup;
+  run: AgentRunGroup;
   index: number;
   totalRuns: number;
   explorer?: string;
   isLatestRun: boolean;
 }) {
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const ts = run.finishedAtIso
     ? Math.floor(new Date(run.finishedAtIso).getTime() / 1000)
     : null;
   const rel = ts ? formatRelativeTime(ts) : null;
   const onChain = run.actions.filter((a) => !!a.txHash).length;
   const offChain = run.actions.length - onChain;
+  const toolCalls = run.run?.toolCalls ?? [];
+  const summary = (run.run?.summary ?? "").trim();
+  const reasoningSummaries = run.run?.reasoningSummaries ?? [];
+  const errors = run.run?.errors ?? [];
+  const softFailures = run.run?.softFailures ?? [];
+  const riskOfficerVerdicts = run.run?.riskOfficerVerdicts ?? [];
+  const confirmationBatches = run.run?.confirmationBatches ?? [];
+  const hasVerboseDetails =
+    !!summary ||
+    reasoningSummaries.length > 0 ||
+    toolCalls.length > 0 ||
+    errors.length > 0 ||
+    softFailures.length > 0 ||
+    riskOfficerVerdicts.length > 0 ||
+    confirmationBatches.length > 0;
 
   return (
     <section className="rounded-lg border border-app-border bg-app-surface/60 p-3">
@@ -553,6 +618,16 @@ function RunGroupCard({
             <span className="inline-flex items-center gap-1 text-[11px] text-app-muted">
               <Clock3 className="h-3 w-3" />
               {rel}
+            </span>
+          )}
+          {run.run?.model && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg-subtle px-1.5 py-0.5 font-mono text-[10px] text-app-muted">
+              {run.run.model}
+            </span>
+          )}
+          {typeof run.run?.turns === "number" && run.run.turns > 0 && (
+            <span className="inline-flex items-center gap-1 rounded-full border border-app-border bg-app-bg-subtle px-1.5 py-0.5 text-[10px] text-app-muted">
+              {run.run.turns} turn{run.run.turns === 1 ? "" : "s"}
             </span>
           )}
         </div>
@@ -574,16 +649,227 @@ function RunGroupCard({
           )}
         </div>
       </header>
-      <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
-        {run.actions.map((action, i) => (
-          <ActionCard
-            key={`${action.txHash ?? "no-tx"}-${i}`}
-            action={action}
-            explorer={explorer}
-          />
+      {summary && (
+        <ExpandableMarkdownSummary
+          markdown={summary}
+          expanded={summaryOpen}
+          onToggle={() => setSummaryOpen((v) => !v)}
+        />
+      )}
+      {toolCalls.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {toolCalls.slice(0, 8).map((tool, i) => (
+            <span
+              key={`${tool}-${i}`}
+              className="inline-flex rounded-full border border-app-border bg-app-bg-subtle px-2 py-0.5 font-mono text-[10px] text-app-muted"
+            >
+              {tool}
+            </span>
+          ))}
+          {toolCalls.length > 8 && (
+            <span className="inline-flex rounded-full border border-app-border bg-app-bg-subtle px-2 py-0.5 font-mono text-[10px] text-app-muted">
+              +{toolCalls.length - 8} more
+            </span>
+          )}
+        </div>
+      )}
+      {run.actions.length > 0 ? (
+        <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 xl:grid-cols-3">
+          {run.actions.map((action, i) => (
+            <ActionCard
+              key={`${action.txHash ?? "no-tx"}-${i}`}
+              action={action}
+              explorer={explorer}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-3 rounded-md border border-app-border bg-app-bg-subtle p-3 text-xs text-app-muted">
+          <div className="flex items-center gap-2 font-semibold text-app-text">
+            <CircleSlash className="h-3.5 w-3.5" />
+            No actions executed
+          </div>
+          <p className="mt-1 leading-relaxed">
+            This run completed without write actions. Review the summary and
+            tool-call trace for the decision context.
+          </p>
+        </div>
+      )}
+      {hasVerboseDetails && (
+        <div className="mt-3">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-app-accent hover:underline"
+            onClick={() => setDetailsOpen((v) => !v)}
+            aria-expanded={detailsOpen}
+          >
+            {detailsOpen ? (
+              <ChevronUp className="h-3.5 w-3.5" />
+            ) : (
+              <ChevronDown className="h-3.5 w-3.5" />
+            )}
+            {detailsOpen ? "Hide run details" : "Show run details"}
+          </button>
+          {detailsOpen && (
+            <RunDetails
+              summary={summary}
+              reasoningSummaries={reasoningSummaries}
+              toolCalls={toolCalls}
+              errors={errors}
+              softFailures={softFailures}
+              riskOfficerVerdicts={riskOfficerVerdicts}
+              confirmationBatches={confirmationBatches}
+            />
+          )}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function JsonDetailList({
+  title,
+  items,
+}: {
+  title: string;
+  items: Record<string, unknown>[];
+}) {
+  if (items.length === 0) return null;
+  return (
+    <div>
+      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+        {title}
+      </p>
+      <div className="mt-1 space-y-1">
+        {items.map((item, i) => (
+          <pre
+            key={`${title}-${i}`}
+            className="overflow-x-auto rounded-md border border-app-border bg-app-bg-subtle p-2 font-mono text-[10px] leading-relaxed text-app-muted"
+          >
+            {JSON.stringify(item, null, 2)}
+          </pre>
         ))}
       </div>
-    </section>
+    </div>
+  );
+}
+
+function MarkdownSummary({ markdown }: { markdown: string }) {
+  return (
+    <div className="prose-invert max-w-none">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        components={runMarkdownComponents}
+      >
+        {markdown}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+function ExpandableMarkdownSummary({
+  markdown,
+  expanded,
+  onToggle,
+}: {
+  markdown: string;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  const shouldClamp = markdown.length > 360 || markdown.split(/\r?\n/).length > 6;
+  return (
+    <div className="mt-2">
+      <div
+        className={
+          shouldClamp && !expanded
+            ? "relative max-h-32 overflow-hidden"
+            : undefined
+        }
+      >
+        <MarkdownSummary markdown={markdown} />
+        {shouldClamp && !expanded && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-app-surface/95 to-transparent" />
+        )}
+      </div>
+      {shouldClamp && (
+        <button
+          type="button"
+          className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-app-accent hover:underline"
+          onClick={onToggle}
+        >
+          {expanded ? (
+            <ChevronUp className="h-3.5 w-3.5" />
+          ) : (
+            <ChevronDown className="h-3.5 w-3.5" />
+          )}
+          {expanded ? "Show less" : "Show more"}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function RunDetails({
+  summary,
+  reasoningSummaries,
+  toolCalls,
+  errors,
+  softFailures,
+  riskOfficerVerdicts,
+  confirmationBatches,
+}: {
+  summary: string;
+  reasoningSummaries: string[];
+  toolCalls: string[];
+  errors: Record<string, unknown>[];
+  softFailures: Record<string, unknown>[];
+  riskOfficerVerdicts: Record<string, unknown>[];
+  confirmationBatches: Record<string, unknown>[];
+}) {
+  return (
+    <div className="mt-2 space-y-3 rounded-md border border-app-border bg-app-surface p-3">
+      {summary && (
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+            Final summary
+          </p>
+          <div className="mt-1">
+            <MarkdownSummary markdown={summary} />
+          </div>
+        </div>
+      )}
+      {reasoningSummaries.length > 0 && (
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+            Reasoning summaries
+          </p>
+          <div className="mt-1 space-y-2">
+            {reasoningSummaries.map((reasoning, i) => (
+              <p
+                key={`reasoning-${i}`}
+                className="whitespace-pre-wrap rounded-md border border-app-border bg-app-bg-subtle p-2 text-xs leading-relaxed text-app-muted"
+              >
+                {reasoning}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+      {toolCalls.length > 0 && (
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-app-muted">
+            Tool-call trace
+          </p>
+          <p className="mt-1 whitespace-pre-wrap break-words font-mono text-[11px] leading-relaxed text-app-muted">
+            {toolCalls.join(" → ")}
+          </p>
+        </div>
+      )}
+      <JsonDetailList title="Errors" items={errors} />
+      <JsonDetailList title="Soft failures" items={softFailures} />
+      <JsonDetailList title="Risk officer verdicts" items={riskOfficerVerdicts} />
+      <JsonDetailList title="Confirmation batches" items={confirmationBatches} />
+    </div>
   );
 }
 

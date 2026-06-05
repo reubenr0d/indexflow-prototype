@@ -1196,6 +1196,7 @@ export function translateFromResponsesResponse(json) {
   const outputItems = Array.isArray(json?.output) ? json.output : [];
   const textParts = [];
   const toolCalls = [];
+  const reasoningSummaries = extractReasoningSummariesFromResponsesOutput(outputItems);
 
   for (const item of outputItems) {
     if (!item || typeof item !== "object") continue;
@@ -1236,6 +1237,7 @@ export function translateFromResponsesResponse(json) {
   if (toolCalls.length > 0) message.tool_calls = toolCalls;
 
   return {
+    __reasoningSummaries: reasoningSummaries,
     choices: [
       {
         index: 0,
@@ -1244,6 +1246,23 @@ export function translateFromResponsesResponse(json) {
       },
     ],
   };
+}
+
+export function extractReasoningSummariesFromResponsesOutput(outputItems) {
+  if (!Array.isArray(outputItems)) return [];
+  const summaries = [];
+  for (const item of outputItems) {
+    if (!item || item.type !== "reasoning" || !Array.isArray(item.summary)) {
+      continue;
+    }
+    for (const part of item.summary) {
+      if (!part || typeof part !== "object") continue;
+      if (part.type !== "summary_text" || typeof part.text !== "string") continue;
+      const text = part.text.trim();
+      if (text) summaries.push(text);
+    }
+  }
+  return summaries;
 }
 
 const DRY_RUN = ["1", "true", "yes"].includes(
@@ -1762,6 +1781,119 @@ function getActionablePicks({ policy, picks }) {
   return out;
 }
 
+function numericOrNull(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
+function candidateKey(symbol, isLong) {
+  const side = isLong === false ? "short" : "long";
+  return `${String(symbol || "").toUpperCase()}::${side}`;
+}
+
+function isZeroAmountAllocation(args) {
+  return args?.amount === "0" || args?.amount === 0 || args?.amount === 0n;
+}
+
+// Atlas ML long/short selector for `entryDirection: long_short`.
+// Longs rank by `mlPredictedReturn`; shorts rank by `absPredictedReturn`.
+// Shorts that also appear in the current long top-N are excluded, and the
+// selected set respects both the combined open cap and the per-run short cap.
+function getActionableMlCandidates({ policy, longPicks, shortPicks }) {
+  if (!policy?.enabled || policy.entryMode !== "ml_score") return [];
+
+  const maxPositions = Math.max(0, Number(policy.maxNewPositionsPerRun || 0));
+  if (maxPositions <= 0) return [];
+
+  const minScore = Number(policy.entryMlScoreMin ?? 0);
+  const maxShorts = Math.max(0, Number(policy.maxNewShortsPerRun || 0));
+  const direction = policy.entryDirection || "long_only";
+
+  const longSymbols = new Set();
+  const longCandidates = [];
+  for (const pick of Array.isArray(longPicks) ? longPicks : []) {
+    if (!pick) continue;
+    const yahooSymbol = String(pick.yahooSymbol || "").toUpperCase();
+    if (!yahooSymbol || longSymbols.has(yahooSymbol)) continue;
+    longSymbols.add(yahooSymbol);
+
+    const mlScore = numericOrNull(pick.mlScore);
+    if (mlScore !== null && mlScore < minScore) continue;
+    const profitPotential = numericOrNull(pick.mlPredictedReturn);
+    if (profitPotential === null) continue;
+    longCandidates.push({
+      yahooSymbol,
+      symbol: yahooSymbol,
+      isLong: true,
+      side: "long",
+      profitPotential,
+      mlScore,
+      mlPredictedReturn: profitPotential,
+      primaryCommodity: pick.primaryCommodity ?? null,
+    });
+  }
+  longCandidates.sort((a, b) => b.profitPotential - a.profitPotential);
+
+  if (direction === "long_only") {
+    return longCandidates.slice(0, maxPositions);
+  }
+
+  const shortCandidates = [];
+  if (direction !== "long_only" && (maxShorts > 0 || direction === "short_only")) {
+    const seenShorts = new Set();
+    for (const pick of Array.isArray(shortPicks) ? shortPicks : []) {
+      if (!pick) continue;
+      const yahooSymbol = String(pick.yahooSymbol || "").toUpperCase();
+      if (!yahooSymbol || seenShorts.has(yahooSymbol)) continue;
+      seenShorts.add(yahooSymbol);
+      if (longSymbols.has(yahooSymbol)) continue;
+
+      const profitPotential = numericOrNull(pick.absPredictedReturn);
+      if (profitPotential === null) continue;
+      shortCandidates.push({
+        yahooSymbol,
+        symbol: yahooSymbol,
+        isLong: false,
+        side: "short",
+        profitPotential,
+        mlScore: numericOrNull(pick.mlScore),
+        mlPredictedReturn: numericOrNull(pick.mlPredictedReturn),
+        absPredictedReturn: profitPotential,
+        primaryCommodity: pick.primaryCommodity ?? null,
+      });
+    }
+  }
+  shortCandidates.sort((a, b) => b.profitPotential - a.profitPotential);
+
+  if (direction === "short_only") {
+    return shortCandidates.slice(0, Math.min(maxPositions, Math.max(maxShorts, maxPositions)));
+  }
+
+  const otherwiseSelectedLongs = longCandidates.slice(0, maxPositions);
+  const weakestSelectedLong = otherwiseSelectedLongs.at(-1);
+  const eligibleShorts = shortCandidates.filter((candidate) => {
+    if (otherwiseSelectedLongs.length < maxPositions) return true;
+    return (
+      weakestSelectedLong &&
+      candidate.profitPotential > weakestSelectedLong.profitPotential
+    );
+  });
+
+  const selected = [];
+  let shortsSelected = 0;
+  for (const candidate of [...longCandidates, ...eligibleShorts].sort(
+    (a, b) => b.profitPotential - a.profitPotential,
+  )) {
+    if (selected.length >= maxPositions) break;
+    if (candidate.isLong === false) {
+      if (shortsSelected >= maxShorts) continue;
+      shortsSelected += 1;
+    }
+    selected.push(candidate);
+  }
+  return selected;
+}
+
 // Pure decision helper for the deterministic pre-LLM auto-rebalance pass.
 // Given the list of open positions and the current Atlas ML top-N (as a set
 // of eligible Yahoo symbols), returns the closures the runner should
@@ -1809,12 +1941,11 @@ function computeAutoRebalanceClosures({ policy, positions, eligibleSymbols, minS
   return closures;
 }
 
-// Pure decision helper for the new rank-swap auto-exit pass. Run AFTER
+// Pure decision helper for the rank-swap auto-exit pass. Run AFTER
 // `computeAutoRebalanceClosures` so dropouts are already handled. When the
-// agent has open long legs that are still in the top-N but lower-ranked than
-// fresh picks the vault hasn't entered yet AND there isn't enough free
-// collateral to add the new picks, close the lowest-ranked-then-worst-PnL
-// existing long legs to make room.
+// agent has open legs that are less attractive than fresh candidates the
+// vault hasn't entered yet AND there isn't enough free collateral to add the
+// candidates, close only enough weaker legs to make room.
 //
 // Inputs:
 //   - policy:              parsed agent policy (entryDirection, autoExitMode, etc.)
@@ -1828,9 +1959,11 @@ function computeAutoRebalanceClosures({ policy, positions, eligibleSymbols, minS
 //
 // Output: array of `{ pos, reason }` closures, ordered worst-first.
 //
-// Direction handling matches `computeAutoRebalanceClosures`: in `long_short`
-// (and `long_only`) we only rotate longs. In `short_only` we never rotate
-// since the top-N is a long signal.
+// In `ml_score` + `long_short`, rankedPicks may include explicit long and
+// short candidates from `getActionableMlCandidates`; both held long and held
+// short legs can participate. Legacy callers that pass long-only rankedPicks
+// keep working because missing side defaults to long and rank is used as a
+// potential fallback.
 function computeRankSwapClosures({
   policy,
   positions,
@@ -1846,45 +1979,71 @@ function computeRankSwapClosures({
   const direction = policy.entryDirection || "long_only";
   if (direction === "short_only") return [];
 
-  const picks = Array.isArray(rankedPicks) ? rankedPicks : [];
+  const rawPicks = Array.isArray(rankedPicks) ? rankedPicks : [];
+  if (rawPicks.length === 0) return [];
+
+  const picks = rawPicks
+    .map((p, idx) => {
+      const yahooSymbol = String(p?.yahooSymbol || p?.symbol || "").toUpperCase();
+      if (!yahooSymbol) return null;
+      const isLong = typeof p?.isLong === "boolean"
+        ? p.isLong
+        : p?.side === "short"
+          ? false
+          : true;
+      const explicitPotential = numericOrNull(
+        p?.profitPotential ??
+          (isLong ? p?.mlPredictedReturn : p?.absPredictedReturn) ??
+          p?.score ??
+          p?.mlScore ??
+          p?.compositeScore,
+      );
+      return {
+        yahooSymbol,
+        isLong,
+        rank: idx + 1,
+        // Rank fallback preserves existing score/rank-swap behaviour for
+        // quality tests and old long-only pick payloads with no return field.
+        profitPotential: explicitPotential ?? rawPicks.length - idx,
+      };
+    })
+    .filter(Boolean);
   if (picks.length === 0) return [];
 
   const positionsList = Array.isArray(positions) ? positions : [];
 
-  // Tag each open long with its top-N rank (1-indexed). Untracked legs
-  // (still in the vault but no longer in the top-N) get `Infinity` and
-  // will sort last — though those are typically handled by
-  // `computeAutoRebalanceClosures` already.
-  const pickRank = new Map();
-  picks.forEach((p, idx) => {
-    const sym = String(p.yahooSymbol || "").toUpperCase();
-    if (sym && !pickRank.has(sym)) pickRank.set(sym, idx + 1);
-  });
+  const pickByKey = new Map();
+  for (const pick of picks) {
+    const key = candidateKey(pick.yahooSymbol, pick.isLong);
+    if (!pickByKey.has(key)) pickByKey.set(key, pick);
+  }
 
-  const heldLongs = [];
-  const heldLongSymbols = new Set();
+  const held = [];
+  const heldKeys = new Set();
   for (const pos of positionsList) {
     if (!pos?.exists) continue;
-    if (pos.isLong !== true) continue;
+    if (direction === "long_only" && pos.isLong !== true) continue;
     const symbol = String(pos.symbol || "").toUpperCase();
     if (!symbol) continue;
-    heldLongs.push({
+    const isLong = pos.isLong !== false;
+    const key = candidateKey(symbol, isLong);
+    const matchedPick = pickByKey.get(key);
+    held.push({
       pos,
       symbol,
-      rank: pickRank.get(symbol) ?? Number.POSITIVE_INFINITY,
+      isLong,
+      rank: matchedPick?.rank ?? Number.POSITIVE_INFINITY,
+      profitPotential: matchedPick?.profitPotential ?? Number.NEGATIVE_INFINITY,
       pnlPct: Number.isFinite(pos.unrealisedPnlPctOfCollateral)
         ? Number(pos.unrealisedPnlPctOfCollateral)
         : 0,
     });
-    heldLongSymbols.add(symbol);
+    heldKeys.add(key);
   }
 
   const picksWanted = picks
-    .map((p, idx) => ({
-      yahooSymbol: String(p.yahooSymbol || "").toUpperCase(),
-      rank: idx + 1,
-    }))
-    .filter((p) => p.yahooSymbol && !heldLongSymbols.has(p.yahooSymbol));
+    .filter((p) => !heldKeys.has(candidateKey(p.yahooSymbol, p.isLong)))
+    .sort((a, b) => b.profitPotential - a.profitPotential);
   if (picksWanted.length === 0) return [];
 
   let availableBn;
@@ -1900,10 +2059,17 @@ function computeRankSwapClosures({
   if (minSlotBn <= 0n) return [];
 
   const fitsNow = Number(availableBn / minSlotBn);
-  const slotsToFree = Math.max(0, picksWanted.length - fitsNow);
+  const maxNewPositions = Math.max(1, Number(policy.maxNewPositionsPerRun || 1));
+  const slotsToFree = Math.min(
+    maxNewPositions,
+    Math.max(0, picksWanted.length - fitsNow),
+  );
   if (slotsToFree === 0) return [];
 
-  const candidates = [...heldLongs].sort((a, b) => {
+  const candidates = [...held].sort((a, b) => {
+    if (a.profitPotential !== b.profitPotential) {
+      return a.profitPotential - b.profitPotential;
+    }
     if (a.rank !== b.rank) return b.rank - a.rank; // higher (worse) rank first
     return a.pnlPct - b.pnlPct; // tiebreaker: worst PnL first
   });
@@ -1914,24 +2080,32 @@ function computeRankSwapClosures({
     : null;
 
   const closures = [];
-  let freed = 0;
+  let wantedIdx = 0;
   for (const candidate of candidates) {
-    if (freed >= slotsToFree) break;
-    const { pos, symbol, rank, pnlPct } = candidate;
+    if (closures.length >= slotsToFree) break;
+    const { pos, symbol, rank, pnlPct, profitPotential } = candidate;
     if (minHoldMs > 0 && ageLookup) {
       const ageMs = ageLookup(pos);
       if (ageMs !== null && ageMs < minHoldMs) {
         continue;
       }
     }
-    const newcomer = picksWanted[freed];
+    const newcomer = picksWanted[wantedIdx];
+    if (!newcomer) break;
+    if (!(newcomer.profitPotential > profitPotential)) {
+      break;
+    }
     const rankLabel = Number.isFinite(rank) ? `#${rank}` : "off-top-N";
     const pnlLabel = `${(pnlPct * 100).toFixed(2)}%`;
+    const sideLabel = candidate.isLong ? "long" : "short";
+    const newcomerSide = newcomer.isLong ? "long" : "short";
+    const potentialLabel =
+      profitPotential === Number.NEGATIVE_INFINITY ? "missing" : profitPotential.toFixed(4);
     const reason = newcomer
-      ? `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel}) to free room for #${newcomer.rank} ${newcomer.yahooSymbol}`
-      : `rank rotation: closing ${rankLabel} ${symbol} (pnl ${pnlLabel})`;
+      ? `profit rotation: closing ${rankLabel} ${sideLabel} ${symbol} (potential ${potentialLabel}, pnl ${pnlLabel}) to free room for #${newcomer.rank} ${newcomerSide} ${newcomer.yahooSymbol} (potential ${newcomer.profitPotential.toFixed(4)})`
+      : `profit rotation: closing ${rankLabel} ${sideLabel} ${symbol} (pnl ${pnlLabel})`;
     closures.push({ pos, reason });
-    freed += 1;
+    wantedIdx += 1;
   }
   return closures;
 }
@@ -2622,6 +2796,7 @@ async function confirmWriteBatchInteractively({
 // ---------------------------------------------------------------------------
 
 const AGENT_METADATA_ACTION_LIMIT_DEFAULT = 100;
+const AGENT_METADATA_RUN_LIMIT_DEFAULT = 25;
 
 // Per-tool params summary surfaced in the AI Activity panel. We deliberately
 // drop the `vault` address and `justification` (already on the parent action)
@@ -2720,6 +2895,38 @@ function summarizeActionParams(tool, args) {
   }
 }
 
+function normalizeMetadataArray(value) {
+  return Array.isArray(value) ? value : [];
+}
+
+function buildRunDetail({ config, runSummary, runId }) {
+  const writeActions = normalizeMetadataArray(runSummary.writeActions);
+  const visibleActions = writeActions.filter((a) => !a?.skipped && a?.justification);
+  const txCount = visibleActions.filter((a) => !!a?.txHash).length;
+  return {
+    runId,
+    startedAt: runSummary.startedAt || null,
+    finishedAt: runSummary.finishedAt || null,
+    summary: runSummary.summary || "",
+    agentName: config.name,
+    model: runSummary.model || null,
+    modelSource: runSummary.modelSource || null,
+    network: runSummary.network || null,
+    dryRun: Boolean(runSummary.dryRun),
+    confirmWrites: Boolean(runSummary.confirmWrites),
+    turns: Number(runSummary.turns) || 0,
+    toolCalls: normalizeMetadataArray(runSummary.toolCalls),
+    actionCount: visibleActions.length,
+    onChainActionCount: txCount,
+    offChainActionCount: Math.max(0, visibleActions.length - txCount),
+    reasoningSummaries: normalizeMetadataArray(runSummary.reasoningSummaries),
+    errors: normalizeMetadataArray(runSummary.errors),
+    softFailures: normalizeMetadataArray(runSummary.softFailures),
+    riskOfficerVerdicts: normalizeMetadataArray(runSummary.riskOfficerVerdicts),
+    confirmationBatches: normalizeMetadataArray(runSummary.confirmationBatches),
+  };
+}
+
 function publishAgentMetadata(config, currentState, runSummary) {
   if (!currentState?.vaultAddress) return;
   const metaDir = resolve(PROJECT_ROOT, "apps/web/public/agent-metadata");
@@ -2774,10 +2981,25 @@ function publishAgentMetadata(config, currentState, runSummary) {
     AGENT_METADATA_ACTION_LIMIT_DEFAULT;
   const allActions = deduped.slice(0, cap);
 
+  const runDetail = buildRunDetail({ config, runSummary, runId });
+  const mergedRuns = [runDetail, ...(existing.recentRuns || [])];
+  const seenRuns = new Set();
+  const dedupedRuns = [];
+  for (const run of mergedRuns) {
+    if (!run?.runId || seenRuns.has(run.runId)) continue;
+    seenRuns.add(run.runId);
+    dedupedRuns.push(run);
+  }
+  const runCap =
+    Number(process.env.AGENT_METADATA_RUN_LIMIT) ||
+    AGENT_METADATA_RUN_LIMIT_DEFAULT;
+  const recentRuns = dedupedRuns.slice(0, runCap);
+
   const latestRun = {
     runId,
     finishedAt: runSummary.finishedAt,
     summary: runSummary.summary || "",
+    ...runDetail,
   };
 
   const usesAtlasMl = Array.isArray(config.mcpServers)
@@ -2799,6 +3021,7 @@ function publishAgentMetadata(config, currentState, runSummary) {
     thesis: currentState.thesis || null,
     lastRunAt: runSummary.finishedAt,
     latestRun,
+    recentRuns,
     recentActions: allActions,
   };
 
@@ -3035,6 +3258,7 @@ export async function runAgent(agentName) {
     latestOracleAssets: null,
     latestQuotes: null,
     latestMlPicks: null,
+    latestMlShortPicks: null,
     latestQualityPicks: null,
     longNewsBySymbol: new Map(),
     opensExecuted: 0,
@@ -3187,6 +3411,8 @@ export async function runAgent(agentName) {
     toolCalls: [],
     writeActions: [],
     confirmationBatches: [],
+    riskOfficerVerdicts: [],
+    reasoningSummaries: [],
     // Post-mortems for every position the runner closed this run. Hydrated by
     // `recordClosedPosition` from `(vault, assetId, isLong)` matches against
     // prior open_position calls in this run + recentRuns. Surfaced back into
@@ -3218,6 +3444,7 @@ export async function runAgent(agentName) {
       eligibleAssetCount: 0,
       eligibleAssetIds: [],
       eligibleSymbols: [],
+      actionablePickSymbols: [],
       allocationRequiredRaw: "0",
       allocationTriggered: false,
       allocationWritesExecuted: 0,
@@ -3344,6 +3571,34 @@ export async function runAgent(agentName) {
       // called `get_oracle_assets({ compact: true })`, see
       // normalizeOracleAssets above). Returning a synthetic success keeps
       // the LLM moving forward without a turn-burning revise loop.
+      if (
+        originalName === "allocate_to_perp" &&
+        isZeroAmountAllocation(args)
+      ) {
+        const skipMsg =
+          "[POLICY] Skipped allocate_to_perp: amount=0 is a no-op and VaultAccounting requires a positive amount.";
+        console.log(`  ${skipMsg}`);
+        runSummary.writeActions.push({
+          tool: toolName,
+          args,
+          skipped: true,
+          skipReason: "ZERO_AMOUNT",
+          justification: args.justification || null,
+          timestamp: new Date().toISOString(),
+        });
+        messages.push({
+          role: "tool",
+          tool_call_id: toolCall.id,
+          content: JSON.stringify({
+            success: true,
+            skipped: "ZERO_AMOUNT",
+            message:
+              "No allocation was required because amount=0. No transaction was submitted.",
+          }),
+        });
+        return;
+      }
+
       if (
         originalName === "set_vault_assets" &&
         Array.isArray(args?.assetIds) &&
@@ -3558,6 +3813,13 @@ export async function runAgent(agentName) {
           Array.isArray(parsed.picks)
         ) {
           policyRuntime.latestMlPicks = parsed.picks;
+        }
+        if (
+          originalName === "get_ml_short_picks" &&
+          parsed &&
+          Array.isArray(parsed.picks)
+        ) {
+          policyRuntime.latestMlShortPicks = parsed.picks;
         }
         if (
           originalName === "get_ml_basket" &&
@@ -4045,6 +4307,42 @@ export async function runAgent(agentName) {
         const picksRes = await runMcpTool(picksToolName, picksArgs);
         const picksParsed = picksRes.parsed;
         const picks = Array.isArray(picksParsed?.picks) ? picksParsed.picks : [];
+        if (!isQuality) {
+          policyRuntime.latestMlPicks = picks;
+        }
+
+        let shortPicks = [];
+        if (
+          !isQuality &&
+          policy.entryMode === "ml_score" &&
+          policy.entryDirection === "long_short" &&
+          Number(policy.maxNewShortsPerRun || 0) > 0
+        ) {
+          try {
+            const shortRes = await runMcpTool("get_ml_short_picks", {
+              limit: Math.max(1, Number(policy.maxTrackedAssets || 0) || 12),
+              maxScore: 20,
+              minAbsPredictedReturn: 0,
+            });
+            shortPicks = Array.isArray(shortRes?.parsed?.picks)
+              ? shortRes.parsed.picks
+              : [];
+            policyRuntime.latestMlShortPicks = shortPicks;
+          } catch (err) {
+            const safeErr = redactSecrets(err.message || String(err));
+            console.warn(`[AUTO-REBALANCE] get_ml_short_picks skipped: ${safeErr}`);
+          }
+        }
+        const rankedPicksForRotation =
+          !isQuality &&
+          policy.entryMode === "ml_score" &&
+          policy.entryDirection === "long_short"
+            ? getActionableMlCandidates({
+                policy,
+                longPicks: picks,
+                shortPicks,
+              })
+            : picks;
 
         const eligibleSymbols = new Set(
           picks
@@ -4133,7 +4431,7 @@ export async function runAgent(agentName) {
         const rankSwapClosures = computeRankSwapClosures({
           policy,
           positions: refreshedPositions,
-          rankedPicks: picks,
+          rankedPicks: rankedPicksForRotation,
           availableCollateralUsdc,
           minSlotCollateralUsdc,
           positionOpenAgeMs: (pos) =>
@@ -4268,6 +4566,9 @@ export async function runAgent(agentName) {
         config.temperature,
         llmStats
       );
+      if (Array.isArray(response.__reasoningSummaries)) {
+        runSummary.reasoningSummaries.push(...response.__reasoningSummaries);
+      }
       const llmElapsedMs = Date.now() - llmStartedAt;
       const llmElapsedFmt = (llmElapsedMs / 1000).toFixed(1);
       if (llmStats.retryCount > 0) {
@@ -4321,6 +4622,17 @@ export async function runAgent(agentName) {
               ? policyRuntime.latestMlPicks
               : null,
       });
+      const actionableMlCandidates =
+        config.policy?.entryMode === "ml_score" &&
+        config.policy?.entryDirection === "long_short"
+          ? getActionableMlCandidates({
+              policy: config.policy,
+              longPicks: policyRuntime.latestMlPicks,
+              shortPicks: policyRuntime.latestMlShortPicks,
+            })
+          : [];
+      const actionablePolicyPicks =
+        actionableMlCandidates.length > 0 ? actionableMlCandidates : actionablePicks;
       const allocationAmountRaw = computeAutoAllocationAmount(
         policyRuntime.latestVaultState,
         config.policy?.autoAllocateTargetBps || 0
@@ -4328,7 +4640,9 @@ export async function runAgent(agentName) {
       runSummary.policyDiagnostics.eligibleAssetCount = eligibleAssets.length;
       runSummary.policyDiagnostics.eligibleAssetIds = eligibleAssets.map((a) => a.assetId);
       runSummary.policyDiagnostics.eligibleSymbols = eligibleAssets.map((a) => a.symbol);
-      runSummary.policyDiagnostics.actionablePickSymbols = actionablePicks.map((p) => p.yahooSymbol);
+      runSummary.policyDiagnostics.actionablePickSymbols = actionablePolicyPicks.map((p) =>
+        p.side ? `${p.yahooSymbol}:${p.side}` : p.yahooSymbol,
+      );
       runSummary.policyDiagnostics.allocationRequiredRaw = allocationAmountRaw.toString();
       runSummary.policyDiagnostics.allocationWritesExecuted = policyRuntime.allocationWritesExecuted;
       runSummary.policyDiagnostics.opensExecuted = policyRuntime.opensExecuted;
@@ -4547,7 +4861,7 @@ export async function runAgent(agentName) {
             activeVault &&
             policyRuntime.opensExecuted === 0 &&
             eligibleAssets.length === 0 &&
-            actionablePicks.length > 0;
+            actionablePolicyPicks.length > 0;
           runSummary.policyDiagnostics.needsRollTriggered = Boolean(needsRoll);
 
           if (needsAllocation || needsEntry || needsRoll) {
@@ -4563,8 +4877,15 @@ export async function runAgent(agentName) {
                 .slice(0, maxOpens || eligibleAssets.length)
                 .map((a) => `${a.symbol} (${a.assetId})`)
                 .join(", ");
+              const entryDirection = config.policy?.entryDirection || "long_only";
+              const entryLabel =
+                entryDirection === "long_short"
+                  ? "long/short"
+                  : entryDirection === "short_only"
+                    ? "short-only"
+                    : "long-only";
               policyDirectives.push(
-                `2) Open long-only positions on eligible assets (${eligibleList}). Use at most ${maxOpens} new positions this run and choose sizing/collateral pragmatically.`
+                `2) Open ${entryLabel} positions on eligible assets (${eligibleList}). Use at most ${maxOpens} new positions this run. First call get_perp_capital_snapshot; if availableCollateral is too low but openPositions is non-empty, close weaker held legs whose current model profit potential is lower than the selected entrant, then retry plan_open_position.`
               );
             }
             if (needsRoll && !needsEntry) {
@@ -4588,11 +4909,13 @@ export async function runAgent(agentName) {
               // directive does not keep instructing the LLM to re-wire
               // impossible tickers on every enforcement round.
               const blacklistedSymbols = [...policyRuntime.persistentWireFailures];
-              const unwiredPicks = actionablePicks
+              const unwiredPicks = actionablePolicyPicks
                 .filter((p) => !oracleSymbolSet.has(p.yahooSymbol))
                 .filter((p) => !policyRuntime.persistentWireFailures.has(p.yahooSymbol))
-                .map((p) => p.yahooSymbol);
-              const allPickSymbols = actionablePicks.map((p) => p.yahooSymbol);
+                .map((p) => (p.side ? `${p.yahooSymbol} (${p.side})` : p.yahooSymbol));
+              const allPickSymbols = actionablePolicyPicks.map((p) =>
+                p.side ? `${p.yahooSymbol} (${p.side})` : p.yahooSymbol,
+              );
               const blacklistNote = blacklistedSymbols.length
                 ? ` Skip these symbols entirely for this run (wire_asset already failed with INVALID_SYMBOL_POLICY): ${blacklistedSymbols.join(", ")}.`
                 : "";
@@ -4601,7 +4924,7 @@ export async function runAgent(agentName) {
                   `Current top-N picks: ${allPickSymbols.join(", ") || "(none)"}. ` +
                   `Picks NOT yet wired to the oracle (call yfinance_quote then wire_asset for each, in that order, using the exact priceUsd from yfinance_quote as seedPriceUsd): ${unwiredPicks.join(", ") || "(none)"}.${blacklistNote} ` +
                   `Then call set_vault_assets with the assetIds of the current top-N picks (cap at maxTrackedAssets=${cap}). ` +
-                  `Then open up to ${maxOpens} long positions (isLong=true) on the highest-score picks now in the tracked set, sizing pragmatically against the perp capital available in the vault state.`,
+                  `Then open up to ${maxOpens} highest profit-potential positions now in the tracked set. For Atlas ML long/short agents, use isLong=true for long picks and isLong=false for selected short picks. Call get_perp_capital_snapshot first; if availableCollateral is zero but openPositions is non-empty, compare openPositions against the selected Atlas predictions, close weaker held legs, then retry plan_open_position. If there are no open positions and no idle/perp collateral, summarize the no-op instead of calling allocate_to_perp with amount=0.`,
               );
             }
 
@@ -4706,7 +5029,8 @@ export async function runAgent(agentName) {
 
     // --- Persist memory ---
     runSummary.finishedAt = new Date().toISOString();
-    runSummary.summary = agentSummaryText ? agentSummaryText.slice(0, 500) : "";
+    runSummary.summary = agentSummaryText || "";
+    runSummary.riskOfficerVerdicts = policyRuntime.riskOfficerVerdicts || [];
 
     const extractedThesis = extractThesis(agentSummaryText);
 
@@ -4804,7 +5128,7 @@ export async function runAgent(agentName) {
           toolCalls: runSummary.toolCalls,
           writeActions: runSummary.writeActions,
           closedPositions: runSummary.closedPositions || [],
-          riskOfficerVerdicts: policyRuntime.riskOfficerVerdicts || [],
+          riskOfficerVerdicts: runSummary.riskOfficerVerdicts || [],
           confirmationBatches: runSummary.confirmationBatches,
           errors: runSummary.errors,
           softFailures: runSummary.softFailures || [],
@@ -4950,6 +5274,8 @@ export const __agentRunnerInternals = {
   getEligibleMlScoreAssets,
   getEligibleQualityScoreAssets,
   getActionablePicks,
+  getActionableMlCandidates,
+  isZeroAmountAllocation,
   validatePolicyWriteBatch,
   computeAutoRebalanceClosures,
   computeRankSwapClosures,
@@ -4967,6 +5293,7 @@ export const __agentRunnerInternals = {
   publishAgentMetadata,
   publishPaperclipHeartbeat,
   summarizeActionParams,
+  buildRunDetail,
   parseRetryAfterHeader,
   parseRetryHintFromBody,
   computeRetryWaitMs,
@@ -4977,4 +5304,5 @@ export const __agentRunnerInternals = {
   modelRequiresResponsesApi,
   translateToResponsesRequest,
   translateFromResponsesResponse,
+  extractReasoningSummariesFromResponsesOutput,
 };

@@ -24,6 +24,7 @@ import {
   modelRequiresResponsesApi,
   translateToResponsesRequest,
   translateFromResponsesResponse,
+  extractReasoningSummariesFromResponsesOutput,
 } from "./agent-runner.mjs";
 
 // ---------------------------------------------------------------------------
@@ -346,7 +347,7 @@ test("translateFromResponsesResponse: mixed text + function_call surface both", 
   assert.equal(choice.finish_reason, "tool_calls");
 });
 
-test("translateFromResponsesResponse: reasoning items are ignored", () => {
+test("translateFromResponsesResponse: reasoning items stay out of assistant content and surface as summaries", () => {
   const out = translateFromResponsesResponse({
     output: [
       { type: "reasoning", summary: [{ type: "summary_text", text: "thinking..." }] },
@@ -359,6 +360,26 @@ test("translateFromResponsesResponse: reasoning items are ignored", () => {
   });
   assert.equal(out.choices[0].message.content, "Done.");
   assert.equal("tool_calls" in out.choices[0].message, false);
+  assert.deepEqual(out.__reasoningSummaries, ["thinking..."]);
+});
+
+test("extractReasoningSummariesFromResponsesOutput keeps only summary_text entries", () => {
+  const summaries = extractReasoningSummariesFromResponsesOutput([
+    {
+      type: "reasoning",
+      summary: [
+        { type: "summary_text", text: " First summary. " },
+        { type: "other", text: "ignored" },
+        { type: "summary_text", text: "" },
+      ],
+    },
+    { type: "message", content: [{ type: "output_text", text: "Done." }] },
+    {
+      type: "reasoning",
+      summary: [{ type: "summary_text", text: "Second summary." }],
+    },
+  ]);
+  assert.deepEqual(summaries, ["First summary.", "Second summary."]);
 });
 
 test("translateFromResponsesResponse: object-shaped arguments on a function_call are JSON-stringified", () => {

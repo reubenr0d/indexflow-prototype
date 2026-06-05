@@ -164,7 +164,7 @@ What is public, today, in git:
 
 - **Manifest + governance** — [`COMPANY.md`](COMPANY.md) (`schema: agentcompanies/v1`) declares active employees, brainstorm slate, board, budgets, sync contract, and four `governance.hardConstraints` enforced on every heartbeat (no auto-commit, deployment-memory allowlist, public-channel human gate, scope boundary).
 - **Trading agent state** — `agents/memory/<agent>/paperclip-heartbeat.json` (per-run thesis, write actions, risk-officer verdicts), `state.json` (vault binding, fingerprint), and `run-log.<network>.jsonl` (full turn-by-turn audit trail) for every vault-managing agent. Pushed by the `commit-results` job in [`.github/workflows/vault-agent.yml`](.github/workflows/vault-agent.yml).
-- **Per-vault AI Operator panel** — [`apps/web/public/agent-metadata/<vault>.json`](apps/web/public/agent-metadata/) feeds the "AI Activity" card on each `/baskets/<vault>` page (thesis + decisions + tx justifications).
+- **Per-vault AI Operator panel** — [`apps/web/public/agent-metadata/<vault>.json`](apps/web/public/agent-metadata/) feeds the "AI Activity" card on each `/baskets/<vault>` page (thesis, run details including no-action runs, reasoning summaries, tool-call traces, decisions, and tx justifications).
 - **Deployment ledger** — [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md) is the allowlist for every cloud / on-chain resource an agent may touch. Resources not listed there are read-only.
 - **Growth pipeline** — date-slotted Season 1 schedule in [`growth/X_CONTENT_CALENDAR.md`](growth/X_CONTENT_CALENDAR.md), per-partner files in [`growth/partnerships/`](growth/partnerships/), and the basket concepts queue at [`growth/basket-concepts/queue/`](growth/basket-concepts/queue/).
 

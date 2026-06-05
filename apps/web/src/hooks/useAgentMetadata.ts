@@ -38,15 +38,35 @@ export type AgentAction = {
   agentName?: string;
   runId?: string;
   params?: AgentActionParams;
+  riskOfficer?: Record<string, unknown>;
 };
 
 export type AgentRun = {
   runId: string;
   finishedAt: string;
   summary: string;
+  startedAt?: string | null;
+  agentName?: string;
+  model?: string | null;
+  modelSource?: string | null;
+  network?: string | null;
+  dryRun?: boolean;
+  confirmWrites?: boolean;
+  turns?: number;
+  toolCalls?: string[];
+  actionCount?: number;
+  onChainActionCount?: number;
+  offChainActionCount?: number;
+  reasoningSummaries?: string[];
+  errors?: Record<string, unknown>[];
+  softFailures?: Record<string, unknown>[];
+  riskOfficerVerdicts?: Record<string, unknown>[];
+  confirmationBatches?: Record<string, unknown>[];
 };
 
-export type AgentSignalSource = "atlas-ml" | null;
+export type AgentRunDetail = AgentRun;
+
+export type AgentSignalSource = "atlas-ml" | "atlas-quality" | null;
 
 export type AgentMetadata = {
   isAiManaged: boolean;
@@ -57,6 +77,7 @@ export type AgentMetadata = {
   thesis: string | null;
   lastRunAt: string;
   latestRun?: AgentRun;
+  recentRuns?: AgentRunDetail[];
   recentActions: AgentAction[];
 };
 
