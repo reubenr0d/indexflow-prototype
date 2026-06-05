@@ -5,6 +5,7 @@ import { __agentRunnerInternals } from "./agent-runner.mjs";
 const {
   parseAgentPolicy,
   computeAutoAllocationAmount,
+  deriveEntryEnforcementState,
   normalizeOracleAssets,
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
@@ -47,6 +48,51 @@ test("computeAutoAllocationAmount uses availableForPerp and target bps", () => {
     3000
   );
   assert.equal(amount.toString(), "2985000000");
+});
+
+test("deriveEntryEnforcementState is enforceable with available collateral", () => {
+  const state = deriveEntryEnforcementState({
+    accounting: { availableCollateral: "1000000" },
+    openPositions: [],
+  });
+
+  assert.equal(state.enforceable, true);
+  assert.equal(state.availableCollateral, 1000000n);
+  assert.equal(state.openPositionCount, 0);
+  assert.equal(state.blockedReason, null);
+});
+
+test("deriveEntryEnforcementState is enforceable with an open position", () => {
+  const state = deriveEntryEnforcementState({
+    accounting: { availableCollateral: "0" },
+    openPositions: [{ exists: true, symbol: "BHP" }],
+  });
+
+  assert.equal(state.enforceable, true);
+  assert.equal(state.availableCollateral, 0n);
+  assert.equal(state.openPositionCount, 1);
+  assert.equal(state.blockedReason, null);
+});
+
+test("deriveEntryEnforcementState blocks empty vault entry enforcement", () => {
+  const state = deriveEntryEnforcementState({
+    accounting: { availableCollateral: "0" },
+    openPositions: [],
+  });
+
+  assert.equal(state.enforceable, false);
+  assert.equal(state.availableCollateral, 0n);
+  assert.equal(state.openPositionCount, 0);
+  assert.equal(state.blockedReason, "no_available_collateral_or_open_positions");
+});
+
+test("deriveEntryEnforcementState is conservative before snapshot fetch", () => {
+  const state = deriveEntryEnforcementState(null);
+
+  assert.equal(state.enforceable, true);
+  assert.equal(state.availableCollateral, null);
+  assert.equal(state.openPositionCount, null);
+  assert.equal(state.blockedReason, null);
 });
 
 test("getEligibleMomentumVolumeAssets filters to tracked assets that pass thresholds", () => {

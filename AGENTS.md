@@ -2,6 +2,14 @@
 
 These rules apply to work in this repository unless a deeper-scope `AGENTS.md` overrides them.
 
+## Cursor Agent Rules
+
+Codex must also follow applicable Cursor agent rules under `.cursor/rules/`.
+
+- Before editing, check `.cursor/rules/*.mdc` for rules whose globs or descriptions match the files or task.
+- Treat matching Cursor rules as repo instructions alongside this file.
+- If a Cursor rule conflicts with this `AGENTS.md`, follow this `AGENTS.md`.
+
 ## Git Commit Policy (Never Auto-Commit)
 
 Never create git commits autonomously. Always ask the user to make commits themselves.

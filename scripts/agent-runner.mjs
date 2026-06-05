@@ -1551,6 +1551,38 @@ function computeAutoAllocationAmount(vaultState, autoAllocateTargetBps) {
   return (availableRaw * BigInt(autoAllocateTargetBps)) / 10_000n;
 }
 
+function deriveEntryEnforcementState(perpCapitalSnapshot) {
+  if (!perpCapitalSnapshot) {
+    return {
+      enforceable: true,
+      availableCollateral: null,
+      openPositionCount: null,
+      blockedReason: null,
+    };
+  }
+
+  const availableCollateral =
+    parseBigIntish(perpCapitalSnapshot?.accounting?.availableCollateral) ?? 0n;
+  const openPositions = perpCapitalSnapshot.openPositions;
+  if (!Array.isArray(openPositions)) {
+    return {
+      enforceable: true,
+      availableCollateral,
+      openPositionCount: null,
+      blockedReason: null,
+    };
+  }
+
+  const openPositionCount = openPositions.filter((pos) => pos?.exists !== false).length;
+  const enforceable = availableCollateral > 0n || openPositionCount > 0;
+  return {
+    enforceable,
+    availableCollateral,
+    openPositionCount,
+    blockedReason: enforceable ? null : "no_available_collateral_or_open_positions",
+  };
+}
+
 // Normalises a `get_oracle_assets` response into a `[{ assetId, symbol }]`
 // array regardless of whether the LLM called it with `compact: true` or not.
 // The compact response shape (see apps/mcps/vault-manager/index.js:583-632)
@@ -3449,6 +3481,8 @@ export async function runAgent(agentName) {
       allocationTriggered: false,
       allocationWritesExecuted: 0,
       entryTriggered: false,
+      entryEnforceable: true,
+      entryBlockedReason: null,
       opensExecuted: 0,
       shortOpensExecuted: 0,
       autoExitsClosed: 0,
@@ -4637,6 +4671,9 @@ export async function runAgent(agentName) {
         policyRuntime.latestVaultState,
         config.policy?.autoAllocateTargetBps || 0
       );
+      const entryEnforcement = deriveEntryEnforcementState(
+        policyRuntime.lastPerpCapitalSnapshot,
+      );
       runSummary.policyDiagnostics.eligibleAssetCount = eligibleAssets.length;
       runSummary.policyDiagnostics.eligibleAssetIds = eligibleAssets.map((a) => a.assetId);
       runSummary.policyDiagnostics.eligibleSymbols = eligibleAssets.map((a) => a.symbol);
@@ -4650,7 +4687,10 @@ export async function runAgent(agentName) {
       runSummary.policyDiagnostics.allocationTriggered =
         policyRuntime.allocationWritesExecuted > 0 || allocationAmountRaw > 0n;
       runSummary.policyDiagnostics.entryTriggered =
-        policyRuntime.opensExecuted > 0 || eligibleAssets.length > 0;
+        policyRuntime.opensExecuted > 0 ||
+        (eligibleAssets.length > 0 && entryEnforcement.enforceable);
+      runSummary.policyDiagnostics.entryEnforceable = entryEnforcement.enforceable;
+      runSummary.policyDiagnostics.entryBlockedReason = entryEnforcement.blockedReason;
 
       // Cheap pre-LLM guard: reject `allocate_to_perp` calls whose `amount`
       // is "0" when the auto-allocation target is positive. Run 1 of the
@@ -4848,7 +4888,8 @@ export async function runAgent(agentName) {
           const needsEntry =
             activeVault &&
             eligibleAssets.length > 0 &&
-            policyRuntime.opensExecuted === 0;
+            policyRuntime.opensExecuted === 0 &&
+            entryEnforcement.enforceable;
           // Stale tracked-asset set: picks exist above the score gate but
           // none of them are currently tracked by the vault, so
           // `eligibleAssets` is empty and `needsEntry` silently never fires.
@@ -4860,6 +4901,7 @@ export async function runAgent(agentName) {
           const needsRoll =
             activeVault &&
             policyRuntime.opensExecuted === 0 &&
+            entryEnforcement.enforceable &&
             eligibleAssets.length === 0 &&
             actionablePolicyPicks.length > 0;
           runSummary.policyDiagnostics.needsRollTriggered = Boolean(needsRoll);
@@ -5269,6 +5311,7 @@ export const __agentRunnerInternals = {
   rotateAgentMemoryForDeploymentChange,
   parseAgentPolicy,
   computeAutoAllocationAmount,
+  deriveEntryEnforcementState,
   normalizeOracleAssets,
   getEligibleMomentumVolumeAssets,
   getEligibleMlScoreAssets,
