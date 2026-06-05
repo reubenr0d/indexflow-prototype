@@ -5,101 +5,68 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.",
-  "lastRunAt": "2026-06-05T11:41:04.987Z",
+  "lastRunAt": "2026-06-05T12:43:52.608Z",
   "latestRun": {
-    "runId": "2026-06-05T11:41:04.987Z",
-    "finishedAt": "2026-06-05T11:41:04.987Z",
-    "summary": "The vault currently has no available collateral and no open positions, which means we cannot proceed with opening new long or short positions at this time. Without available collateral or existing positions to close, there are no immediate actions we can take to adjust the portfolio.\n\n### Final Summary\n\n- **Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n- **Current State**: No available collateral and no open positions.\n- **Tracked Assets**: The current set of tracked assets remains unchanged due to symbol resolution issues preventing new asset wiring.\n- **Actions Taken**: Attempted to wire new assets based on Atlas ML top picks and short candidates, but faced symbol resolution issues. Checked for available collateral to open new positions, but none is available.\n- **Recommendations**: Investigate the symbol resolution issues for FOX.CN, MI6.AX, and IRON.L to enable future wiring. Monitor the vault for changes in collateral availability to open new positions when feasible.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.",
-    "startedAt": "2026-06-05T11:39:24.085Z",
+    "runId": "2026-06-05T12:43:52.608Z",
+    "finishedAt": "2026-06-05T12:43:52.608Z",
+    "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions. This prevents the opening of new long or short positions at this time. Without available collateral or existing positions, the focus remains on preparing for future opportunities.\n\n2. **Atlas ML Top Picks**: The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all with high ML scores and predicted returns. These companies are primarily involved in diversified metals and precious metals.\n\n3. **News Context**: No specific bullish or bearish news headlines were found for the selected long or short candidates, indicating no immediate veto or support context from recent news.\n\n### Next Steps\n\n- **Prepare for Future Opportunities**: Given the lack of available collateral, focus on monitoring the market and news for any changes that might allow for new positions in the future.\n- **Monitor News**: Continue to watch for any significant news that might impact the selected long or short candidates, especially those with high predicted returns.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.\n\n### Recommendations for Next Run\n\n- **Re-evaluate Collateral**: Check if any changes in the vault's collateral or market conditions allow for new positions.\n- **Focus on Top Picks**: Prioritize the top ML picks for potential long positions if collateral becomes available.\n- **Consider Short Candidates**: Evaluate short candidates with high negative predicted returns if the market conditions support such positions.",
+    "startedAt": "2026-06-05T12:43:02.632Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 17,
+    "turns": 6,
     "toolCalls": [
       "get_vault_state",
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_quote",
       "yfinance_news",
       "yfinance_news",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "set_vault_assets",
-      "get_perp_capital_snapshot",
-      "get_perp_capital_snapshot",
       "get_perp_capital_snapshot"
     ],
-    "actionCount": 3,
+    "actionCount": 0,
     "onChainActionCount": 0,
-    "offChainActionCount": 3,
+    "offChainActionCount": 0,
     "reasoningSummaries": [],
     "errors": [],
-    "softFailures": [
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Suffixed symbol \\\"FOX.CN\\\" did not resolve on Yahoo Finance.\",\n  \"requestedSymbol\": \"FOX.CN\",\n  \"candidates\": [],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Suffixed symbol \\\"MI6.AX\\\" did not resolve on Yahoo Finance.\",\n  \"requestedSymbol\": \"MI6.AX\",\n  \"candidates\": [],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Suffixed symbol \\\"IRON.L\\\" did not resolve on Yahoo Finance.\",\n  \"requestedSymbol\": \"IRON.L\",\n  \"candidates\": [],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      }
-    ],
-    "riskOfficerVerdicts": [
-      {
-        "turn": 4,
-        "verdict": "approve",
-        "reason": "Batch involves wiring assets only; no open positions or collateral allocation involved. Market regime is metals_risk_on with no short penalty.",
-        "proposedTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets with no financial impact; no positions are being opened or closed.",
-        "proposedTools": [
-          "set_vault_assets"
-        ]
-      }
-    ],
-    "confirmationBatches": [
-      {
-        "turn": 4,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "set_vault_assets"
-        ]
-      }
-    ]
+    "softFailures": [],
+    "riskOfficerVerdicts": [],
+    "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-05T12:43:52.608Z",
+      "startedAt": "2026-06-05T12:43:02.632Z",
+      "finishedAt": "2026-06-05T12:43:52.608Z",
+      "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions. This prevents the opening of new long or short positions at this time. Without available collateral or existing positions, the focus remains on preparing for future opportunities.\n\n2. **Atlas ML Top Picks**: The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all with high ML scores and predicted returns. These companies are primarily involved in diversified metals and precious metals.\n\n3. **News Context**: No specific bullish or bearish news headlines were found for the selected long or short candidates, indicating no immediate veto or support context from recent news.\n\n### Next Steps\n\n- **Prepare for Future Opportunities**: Given the lack of available collateral, focus on monitoring the market and news for any changes that might allow for new positions in the future.\n- **Monitor News**: Continue to watch for any significant news that might impact the selected long or short candidates, especially those with high predicted returns.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.\n\n### Recommendations for Next Run\n\n- **Re-evaluate Collateral**: Check if any changes in the vault's collateral or market conditions allow for new positions.\n- **Focus on Top Picks**: Prioritize the top ML picks for potential long positions if collateral becomes available.\n- **Consider Short Candidates**: Evaluate short candidates with high negative predicted returns if the market conditions support such positions.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 6,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_news",
+        "yfinance_news",
+        "get_perp_capital_snapshot"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-05T11:41:04.987Z",
       "startedAt": "2026-06-05T11:39:24.085Z",
