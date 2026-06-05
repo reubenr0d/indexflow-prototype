@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import setupLogRocketReact from "logrocket-react";
 import {
+  LogRocket,
   getLogRocketRelease,
   initLogRocket,
   isLogRocketEnabled,
@@ -16,7 +17,7 @@ export function LogRocketBootstrap() {
   useEffect(() => {
     initLogRocket();
     if (isLogRocketEnabled()) {
-      setupLogRocketReact();
+      setupLogRocketReact(LogRocket);
       if (!probeTrackedThisPage) {
         probeTrackedThisPage = true;
         trackLogRocketEvent("ProdLogRocketProbe", {

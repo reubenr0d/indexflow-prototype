@@ -1,12 +1,13 @@
 import LogRocket from "logrocket";
 
-export const LOGROCKET_APP_ID = "rvyrh2/indexflow";
+export const LOGROCKET_APP_ID = "il70hv/indexflow";
 
 const isDev = process.env.NODE_ENV === "development";
+const isDevLogRocketEnabled = process.env.NEXT_PUBLIC_LOGROCKET_ENABLE_LOCAL === "1";
 const isE2E = process.env.NEXT_PUBLIC_E2E_TEST_MODE === "1";
 
 export function isLogRocketEnabled(): boolean {
-  return !isDev && !isE2E;
+  return (!isDev || isDevLogRocketEnabled) && !isE2E;
 }
 
 function resolveRelease(): string {
