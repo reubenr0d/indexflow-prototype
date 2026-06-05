@@ -7,6 +7,20 @@ const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
 const fxCache = new Map<string, { rate: number; ts: number }>();
 const FX_TTL_MS = 60_000;
 
+function getSearchQuotes(raw: unknown): Record<string, unknown>[] {
+  if (!raw || typeof raw !== "object") return [];
+  const quotes = (raw as { quotes?: unknown }).quotes;
+  if (!Array.isArray(quotes)) return [];
+  return quotes.filter(
+    (quote): quote is Record<string, unknown> => Boolean(quote) && typeof quote === "object",
+  );
+}
+
+function getString(row: Record<string, unknown>, key: string): string {
+  const value = row[key];
+  return typeof value === "string" ? value : "";
+}
+
 async function getUsdRate(currency: string): Promise<number | null> {
   if (currency === "USD") return 1;
   const baseCurrency = currency === "GBp" ? "GBP" : currency;
@@ -29,15 +43,14 @@ async function getUsdRate(currency: string): Promise<number | null> {
 async function getSearchRows(symbol: string) {
   try {
     const raw = await yf.search(symbol, { quotesCount: 20, newsCount: 0 }, { validateResult: false });
-    return (raw.quotes ?? [])
+    return getSearchQuotes(raw)
       .filter((quote) => "symbol" in quote)
       .map((quote) => {
-        const q = quote as Record<string, unknown>;
         return {
-          symbol: q.symbol as string,
-          quoteType: (q.quoteType ?? "") as string,
-          exchange: (q.exchDisp ?? q.exchange ?? "") as string,
-          name: (q.longname ?? q.shortname ?? "") as string,
+          symbol: getString(quote, "symbol"),
+          quoteType: getString(quote, "quoteType"),
+          exchange: getString(quote, "exchDisp") || getString(quote, "exchange"),
+          name: getString(quote, "longname") || getString(quote, "shortname"),
         };
       });
   } catch {

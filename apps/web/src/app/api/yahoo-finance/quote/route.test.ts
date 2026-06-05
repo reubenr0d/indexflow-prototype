@@ -74,4 +74,38 @@ describe("/api/yahoo-finance/quote", () => {
     });
     expect(body.quotes[0].priceUsd).toBeCloseTo(0.00030981, 10);
   });
+
+  it("handles malformed Yahoo search payloads without failing quotes", async () => {
+    searchMock.mockResolvedValue(null);
+    quoteMock.mockResolvedValue({
+      symbol: "AAPL",
+      regularMarketPrice: 210.5,
+      currency: "USD",
+      fullExchangeName: "NASDAQ",
+      marketState: "REGULAR",
+      longName: "Apple Inc.",
+    });
+
+    const response = await GET(makeRequest("AAPL"));
+    const body = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(body).toEqual({
+      quotes: [
+        {
+          requestedSymbol: "AAPL",
+          resolvedSymbol: "AAPL",
+          symbol: "AAPL",
+          name: "Apple Inc.",
+          price: 210.5,
+          priceUsd: 210.5,
+          currency: "USD",
+          exchange: "NASDAQ",
+          marketState: "REGULAR",
+          isAmbiguous: false,
+          candidates: [],
+        },
+      ],
+    });
+  });
 });
