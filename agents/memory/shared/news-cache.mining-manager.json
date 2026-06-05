@@ -1,391 +1,352 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-05T12:43:36.406Z",
+  "updatedAt": "2026-06-05T16:54:35.278Z",
   "entries": {
     "BIG.V": {
-      "fetchedAt": "2026-06-05T12:43:36.229Z",
+      "fetchedAt": "2026-06-05T16:54:35.024Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-05T12:43:36.229Z",
-      "headlines": [
-        {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "META"
-          ]
-        },
-        {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-06-05T12:43:36.229Z",
+      "fetchedAt": "2026-06-05T16:54:35.024Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
+            "FE42",
+            "C"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-05T16:54:35.024Z",
+      "headlines": [
+        {
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
           ]
         },
         {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-05T12:43:36.229Z",
+      "fetchedAt": "2026-06-05T16:54:35.024Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-05T12:43:36.229Z",
+      "fetchedAt": "2026-06-05T16:54:35.024Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-05T12:43:36.406Z",
-      "headlines": [
-        {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "META"
-          ]
-        },
-        {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-05T12:43:36.406Z",
+      "fetchedAt": "2026-06-05T16:54:35.278Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-05T12:43:36.406Z",
-      "headlines": [
-        {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "META"
-          ]
-        },
-        {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-05T12:43:36.406Z",
+      "fetchedAt": "2026-06-05T16:54:35.278Z",
       "headlines": [
         {
-          "title": "Lululemon Warning Sends Shockwaves Through Retail Sector, Shares Sink 13%",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/lululemon-warning-sends-shockwaves-retail-124327768.html",
-          "publishedAt": "2026-06-05T12:43:27.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "LULU"
+            "DIS"
           ]
         },
         {
-          "title": "Interactive Brokers Opens SpaceX IPO Access to UK Clients",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/interactive-brokers-opens-spacex-ipo-124221873.html",
-          "publishedAt": "2026-06-05T12:42:21.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IBKR",
-            "SPAX.PVT",
-            "DX-Y.NYB"
+            "FE42",
+            "C"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-05T16:54:35.278Z",
+      "headlines": [
+        {
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
           ]
         },
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "FE42",
+            "C"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-05T16:54:35.278Z",
+      "headlines": [
+        {
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DIS"
+          ]
+        },
+        {
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FE42",
+            "C"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GEMR.L": {
-      "fetchedAt": "2026-06-05T12:43:36.406Z",
+      "fetchedAt": "2026-06-05T16:54:35.278Z",
       "headlines": [
         {
-          "title": "Meta's AI Health Push Could Reshape Its Consumer Strategy",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/metas-ai-health-push-could-124018141.html",
-          "publishedAt": "2026-06-05T12:40:18.000Z",
+          "title": "Airline cancels almost all flights, passengers stranded",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1bb5a36e-1403-3f47-bb49-57cd8f759c5f/airline-cancels-almost-all.html",
+          "publishedAt": "2026-06-05T16:51:37.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "50-year-old theme park to close forever after summer season",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/884ce608-00a3-3c8d-9d99-15dd3adfab38/50-year-old-theme-park-to.html",
+          "publishedAt": "2026-06-05T16:50:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "META"
+            "DIS"
           ]
         },
         {
-          "title": "SpaceX Reveals It’s Really an AI Company — and That Changes Everything for Investors",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/1675a143-d338-3cb6-ba96-c8fe7c16ca8c/spacex-reveals-it%E2%80%99s-really-an.html",
-          "publishedAt": "2026-06-05T12:38:39.000Z",
+          "title": "FRN Variable Rate Fix",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/frn-variable-rate-fix-165000159.html",
+          "publishedAt": "2026-06-05T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "TSLA",
-            "AVGO",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Broadcom Eyes $100 Billion AI Sales as Deal Focus Fades",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/broadcom-eyes-100-billion-ai-123705585.html",
-          "publishedAt": "2026-06-05T12:37:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AVGO"
+            "FE42",
+            "C"
           ]
         }
       ],
