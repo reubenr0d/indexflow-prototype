@@ -7,33 +7,27 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-05T16:55:08.647Z",
-  "startedAt": "2026-06-05T16:53:52.828Z",
-  "finishedAt": "2026-06-05T16:55:08.647Z",
+  "runId": "2026-06-05T19:09:35.712Z",
+  "startedAt": "2026-06-05T19:07:54.927Z",
+  "finishedAt": "2026-06-05T19:09:35.712Z",
   "status": "succeeded",
   "usage": {
-    "turns": 9,
-    "toolCalls": 11,
+    "turns": 10,
+    "toolCalls": 10,
     "errors": 0,
-    "softFailures": 1,
-    "writeActions": 2
+    "softFailures": 0,
+    "writeActions": 1
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were selected due to their high absolute predicted returns, despite the metals risk-off regime suggesting caution with shorts. These short positions are justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
-  "summary": "### Final Summary\n\n1. **Vault State**: The vault has successfully opened a new long position on Hercules Metals (BIG.V) due to its high ML score and predicted return. The vault now holds two positions, including the existing position on AbraSilver Resource (ABRA.TO). The available collateral has been utilized effectively for these positions.\n\n2. **Atlas ML Top Picks**: The top long picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all with high ML scores and predicted returns. These picks are aligned with the current market dynamics, focusing on diversified metals and precious metals.\n\n3. **Atlas ML Short Picks**: The top short candidates include IRONVELD PLC (IRON.L) and ZINNWALD LITHIUM PLC (ZNWD.L), both with significant negative predicted returns. These picks are justified by the model's negative predicted return and lack of supporting bullish news.\n\n4. **News Analysis**: There were no significant news headlines affecting the selected long or short candidates that would influence the decision to open or close positions.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were selected due to their high absolute predicted returns, despite the metals risk-off regime suggesting caution with shorts. These short positions are justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the performance of the current positions and the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "summary": "### Final Summary\n\n1. **Vault State**: The vault has successfully opened a new long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return. The vault now holds three positions, including Hercules Metals (BIG.V) and AbraSilver Resource (ABRA.TO). The available collateral has been fully utilized, and the vault is positioned to capitalize on the predicted returns of these top picks.\n\n2. **Atlas ML Top Picks**: The top picks acted upon include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN). These picks have high ML scores and predicted returns, indicating strong potential for medium-term growth.\n\n3. **Atlas ML Short Picks**: While short candidates were identified, no short positions were opened due to the focus on maximizing long positions with the available collateral.\n\n4. **News Context**: No significant news was found for the top long picks that would alter their attractiveness. Similarly, no news was found for the short candidates that would veto their potential.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the performance of the current positions and the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
   "writeActions": [
     {
-      "tool": "close_position",
-      "txHash": "0x3311ae05bfad9bd66648453c1178e7c898476b2beae54a3f82c3879953a96115",
-      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
-      "kind": "vault-tx"
-    },
-    {
       "tool": "open_position",
-      "txHash": "0x4e5507ac1a2c9ba3ca8261c62b894adabb7d2ca3a664eef1f5c79be20289477d",
-      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its high ML score and predicted return, aligning with the current model's focus on diversified metals.",
+      "txHash": "0xd39ba1b194d2b0d17590b0573c0030470cc1fa72f5fe7f3c42660c91a6d35d6c",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return, aligning with the current model's focus on diversified metals and precious metals.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The proposed long position on Hercules Metals uses 33.3% of available collateral ($1769.92 of $5309.76), aligning with the metals_risk_off regime's longBonus of 2."
+        "reason": "The proposed long position on TEX.CN uses 100% of available collateral ($3539.84), aligning with the metals_risk_off regime's longBonus of 2."
       },
       "kind": "vault-tx"
     }
