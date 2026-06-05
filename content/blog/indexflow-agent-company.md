@@ -4,8 +4,8 @@ description: "The IndexFlow operating company is auditable in git: manifest, bud
 date: "2026-05-26"
 author: "Reuben Rodrigues"
 tags: ["AI-agents", "DAO", "governance", "transparency", "agent-company"]
-published: true
-image: "/blog/indexflow-agent-company.svg"
+published: false
+image: "/blog/indexflow-agent-company.png"
 ---
 
 Most "AI in crypto" pitches reduce to a screenshot of a dashboard. A pretty chart, a confident agent name, a thesis you can't audit because the system prompt isn't public, the budget isn't public, the approvals aren't public, and the run-log lives in someone's CI logs that get rotated out in seven days.

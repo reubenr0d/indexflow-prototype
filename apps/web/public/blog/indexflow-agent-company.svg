@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" width="920" height="440" fill="none">
+  <defs>
+    <linearGradient id="iac-bg" x1="0" y1="0" x2="920" y2="440" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#080c14"/>
+      <stop offset="100%" stop-color="#0a1019"/>
+    </linearGradient>
+    <radialGradient id="iac-core" cx="0.5" cy="0.5" r="0.65">
+      <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="iac-side-a" cx="0.18" cy="0.8" r="0.5">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="iac-side-b" cx="0.78" cy="0.2" r="0.5">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="iac-glow">
+      <feGaussianBlur stdDeviation="5" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="iac-soft">
+      <feGaussianBlur stdDeviation="10" result="s"/>
+      <feMerge>
+        <feMergeNode in="s"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="iac-arr" viewBox="0 0 10 8" refX="9" refY="4" markerWidth="8" markerHeight="6" orient="auto">
+      <path d="M0 0.5 L9 4 L0 7.5Z" fill="#2dd4bf" opacity="0.4"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="440" fill="url(#iac-bg)"/>
+  <ellipse cx="220" cy="315" rx="280" ry="140" fill="url(#iac-side-a)"/>
+  <ellipse cx="700" cy="110" rx="250" ry="110" fill="url(#iac-side-b)"/>
+  <ellipse cx="460" cy="220" rx="300" ry="220" fill="url(#iac-core)" opacity="0.22"/>
+
+  <g stroke="#2dd4bf" stroke-width="0.45" stroke-opacity="0.18">
+    <line x1="0" y1="110" x2="920" y2="110"/>
+    <line x1="0" y1="220" x2="920" y2="220"/>
+    <line x1="0" y1="330" x2="920" y2="330"/>
+    <line x1="230" y1="0" x2="230" y2="440"/>
+    <line x1="460" y1="0" x2="460" y2="440"/>
+    <line x1="690" y1="0" x2="690" y2="440"/>
+  </g>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M -20 360 C 80 310 160 250 250 235 C 360 218 430 252 520 220 C 600 190 670 156 760 114" stroke="#38bdf8" stroke-width="1" opacity="0.32" filter="url(#iac-soft)"/>
+    <path d="M 940 84 C 840 132 752 154 690 168 C 650 176 620 182 592 190" stroke="#2dd4bf" stroke-width="1.1" opacity="0.35" filter="url(#iac-soft)"/>
+    <path d="M 90 74 C 180 84 250 86 340 112 C 470 148 592 164 700 138" stroke="#f59e0b" stroke-width="0.9" opacity="0.26"/>
+  </g>
+
+  <g fill="none" opacity="0.5" stroke-width="1.1">
+    <path d="M 260 220 C 320 188 390 178 460 220 C 530 262 600 250 662 226 C 704 210 760 178 798 162" stroke="#2dd4bf" stroke-linecap="round" stroke-dasharray="4 6" marker-end="url(#iac-arr)"/>
+    <path d="M 260 220 C 320 248 380 250 440 218 C 500 186 590 196 660 166 C 725 138 780 110 823 94" stroke="#38bdf8" stroke-linecap="round" stroke-dasharray="3 5" marker-end="url(#iac-arr)"/>
+    <path d="M 258 218 C 322 250 374 276 448 232 C 520 190 600 210 668 228 C 735 245 804 222 870 214" stroke="#f59e0b" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="2 6" marker-end="url(#iac-arr)" opacity="0.4"/>
+  </g>
+
+  <g>
+    <circle cx="460" cy="220" r="68" fill="#0c141e" stroke="#2dd4bf" stroke-width="2.2" filter="url(#iac-glow)"/>
+    <circle cx="460" cy="220" r="46" fill="none" stroke="#38bdf8" stroke-width="1.1" opacity="0.45" stroke-dasharray="4 4"/>
+    <circle cx="460" cy="220" r="24" fill="#111b2b" stroke="#2dd4bf" stroke-width="1"/>
+    <circle cx="460" cy="220" r="7" fill="#2dd4bf" opacity="0.85" />
+  </g>
+
+  <g fill="#0c141e" stroke="#2dd4bf" stroke-linecap="round">
+    <circle cx="255" cy="172" r="14" stroke-width="1.2"/>
+    <circle cx="336" cy="230" r="12" stroke-width="1.1"/>
+    <circle cx="420" cy="146" r="10" stroke-width="1"/>
+    <circle cx="560" cy="173" r="11" stroke-width="1"/>
+    <circle cx="636" cy="236" r="10" stroke-width="1.1"/>
+    <circle cx="707" cy="184" r="11" stroke-width="1.2"/>
+    <circle cx="770" cy="145" r="9" stroke-width="1"/>
+    <circle cx="188" cy="286" r="9" stroke-width="1"/>
+    <circle cx="292" cy="311" r="8" stroke-width="1"/>
+    <circle cx="680" cy="288" r="8" stroke-width="1"/>
+    <circle cx="740" cy="322" r="9" stroke-width="1"/>
+  </g>
+
+  <g fill="none" stroke="#2dd4bf" stroke-opacity="0.65" stroke-width="0.85">
+    <line x1="255" y1="172" x2="336" y2="230"/>
+    <line x1="336" y1="230" x2="420" y2="146"/>
+    <line x1="420" y1="146" x2="460" y2="220"/>
+    <line x1="460" y1="220" x2="560" y2="173"/>
+    <line x1="560" y1="173" x2="636" y2="236"/>
+    <line x1="636" y1="236" x2="707" y2="184"/>
+    <line x1="707" y1="184" x2="770" y2="145"/>
+    <line x1="255" y1="172" x2="188" y2="286"/>
+    <line x1="188" y1="286" x2="292" y2="311"/>
+    <line x1="292" y1="311" x2="460" y2="220"/>
+    <line x1="680" y1="288" x2="740" y2="322"/>
+    <line x1="740" y1="322" x2="460" y2="220"/>
+    <line x1="336" y1="230" x2="707" y2="184"/>
+  </g>
+
+  <g fill="none" opacity="0.45">
+    <circle cx="460" cy="220" r="112"/>
+    <circle cx="460" cy="220" r="156"/>
+    <ellipse cx="460" cy="220" rx="228" ry="154"/>
+  </g>
+
+  <g stroke="#38bdf8" stroke-opacity="0.22" stroke-width="0.75" stroke-dasharray="5 7">
+    <circle cx="460" cy="220" r="224"/>
+    <circle cx="460" cy="220" r="174"/>
+  </g>
+
+  <g fill="none" stroke="#2dd4bf" opacity="0.28">
+    <circle cx="460" cy="220" r="190"/>
+    <circle cx="460" cy="220" r="130"/>
+    <circle cx="460" cy="220" r="70"/>
+  </g>
+
+  <g fill="#e2e8f0" opacity="0.65" font-family="ui-monospace, monospace" text-anchor="middle" font-size="8" letter-spacing="0.22">
+    <text x="255" y="170">audit</text>
+    <text x="336" y="231">policy</text>
+    <text x="420" y="145">identity</text>
+    <text x="560" y="172">runtime</text>
+    <text x="636" y="236">funding</text>
+    <text x="707" y="185">state</text>
+    <text x="770" y="146">deploy</text>
+    <text x="188" y="286">proof</text>
+    <text x="292" y="311">signals</text>
+    <text x="680" y="288">coord</text>
+    <text x="740" y="322">ledger</text>
+    <text x="460" y="214" font-size="12" fill="#2dd4bf" opacity="0.72">INDEXFLOW</text>
+    <text x="460" y="228" font-size="12" fill="#38bdf8" opacity="0.72">AGENT COMPANY</text>
+  </g>
+
+  <g fill="#2dd4bf" opacity="0.45">
+    <path d="M60 60h12M66 54v12"/>
+    <path d="M86 72h12M92 66v12"/>
+    <path d="M106 52h12M112 46v12"/>
+    <path d="M128 68h12M134 62v12"/>
+    <path d="M160 58h12M166 52v12"/>
+    <path d="M181 70h12M187 64v12"/>
+  </g>
+  <g fill="#38bdf8" opacity="0.4">
+    <path d="M720 52h10M725 48v8"/>
+    <path d="M741 46h10M746 42v8"/>
+    <path d="M760 56h10M765 52v8"/>
+  </g>
+
+  <g fill="#f59e0b" opacity="0.35">
+    <path d="M848 58h10M853 54v8"/>
+    <path d="M862 64h8M866 60v8"/>
+  </g>
+
+  <g fill="none" stroke="#2dd4bf" stroke-width="0.9" stroke-opacity="0.22">
+    <path d="M30 362 C 130 340 210 358 292 320 C 380 278 468 292 540 246 C 610 206 700 184 790 150"/>
+    <path d="M26 132 C 112 118 188 114 258 132 C 340 154 420 186 503 176 C 590 166 676 144 742 114"/>
+  </g>
+</svg>

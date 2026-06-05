@@ -40,6 +40,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-06-05] **Fix LogRocket React bootstrap type mismatch in web analytics bootstrap.** [`apps/web/src/components/analytics/logrocket-bootstrap.tsx`](apps/web/src/components/analytics/logrocket-bootstrap.tsx) now calls `setupLogRocketReact()` without passing `LogRocket` directly, matching the updated `logrocket-react@7` type signature and removing a Next.js build break.
+
 - [2026-06-05 20:05 UTC+05:30] **Fix TypeScript error in Yahoo quote search path.** [`apps/web/src/app/api/yahoo-finance/quote/route.ts`](apps/web/src/app/api/yahoo-finance/quote/route.ts) now normalizes `yf.search()` payloads before reading `quotes`, preventing `unknown`-typed `raw` from breaking strict TS checks at build time and preserving existing search fallback behavior.
 
 - [2026-06-05 18:10 UTC+05:30] **Vault-agent final-summary policy no longer burns enforcement turns on empty vaults.** [`scripts/agent-runner.mjs`](scripts/agent-runner.mjs) now derives entry enforceability from the latest `get_perp_capital_snapshot`: if `availableCollateral` is zero and there are no open positions to rotate, `needsEntry` / stale tracked-set `needsRoll` enforcement is skipped so the agent can emit the intended no-op summary. The run diagnostics now expose `entryEnforceable` and `entryBlockedReason`, and [`scripts/agent-runner-policy.test.mjs`](scripts/agent-runner-policy.test.mjs) covers positive collateral, rotatable open-position, empty-vault, and pre-snapshot conservative cases.
