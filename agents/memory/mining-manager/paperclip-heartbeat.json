@@ -7,19 +7,60 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-05T12:43:52.608Z",
-  "startedAt": "2026-06-05T12:43:02.632Z",
-  "finishedAt": "2026-06-05T12:43:52.608Z",
+  "runId": "2026-06-05T13:08:16.603Z",
+  "startedAt": "2026-06-05T13:05:47.929Z",
+  "finishedAt": "2026-06-05T13:08:16.603Z",
   "status": "succeeded",
   "usage": {
-    "turns": 6,
-    "toolCalls": 7,
+    "turns": 8,
+    "toolCalls": 13,
     "errors": 0,
     "softFailures": 0,
-    "writeActions": 0
+    "writeActions": 4
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.",
-  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions. This prevents the opening of new long or short positions at this time. Without available collateral or existing positions, the focus remains on preparing for future opportunities.\n\n2. **Atlas ML Top Picks**: The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all with high ML scores and predicted returns. These companies are primarily involved in diversified metals and precious metals.\n\n3. **News Context**: No specific bullish or bearish news headlines were found for the selected long or short candidates, indicating no immediate veto or support context from recent news.\n\n### Next Steps\n\n- **Prepare for Future Opportunities**: Given the lack of available collateral, focus on monitoring the market and news for any changes that might allow for new positions in the future.\n- **Monitor News**: Continue to watch for any significant news that might impact the selected long or short candidates, especially those with high predicted returns.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.\n\n### Recommendations for Next Run\n\n- **Re-evaluate Collateral**: Check if any changes in the vault's collateral or market conditions allow for new positions.\n- **Focus on Top Picks**: Prioritize the top ML picks for potential long positions if collateral becomes available.\n- **Consider Short Candidates**: Evaluate short candidates with high negative predicted returns if the market conditions support such positions.",
-  "writeActions": [],
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nFor the short side, Ironveld Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.",
+  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions. This prevents the opening of new long or short positions at this time. Without available collateral or existing positions, it is not feasible to proceed with opening long positions on the eligible assets (BIG.V, ABRA.TO, TEX.CN, FOX.CN, MI6.AX) or short positions on IRON.L.\n\n2. **Wiring New Assets**: Successfully wired Fox River Resources Corporation (FOX.CN), Minerals 260 Ltd (MI6.AX), and Ironveld Plc (IRON.L) as new assets based on their Atlas ML scores and predicted returns.\n\n3. **Set Tracked Assets**: Updated the vault's tracked assets to include the newly wired long and short candidates.\n\n4. **Collateral Allocation**: No available collateral to allocate to perp trading, thus unable to open new positions.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nFor the short side, Ironveld Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.\n\n### Recommendations for Next Run\n\n- **Monitor Collateral**: Ensure that collateral becomes available to enable opening new positions.\n- **Re-evaluate Short Candidates**: Given the metals risk-off regime, reassess short candidates for any changes in market conditions or news that may affect their viability.\n- **Continue Tracking News**: Stay updated with news on both long and short candidates to adjust strategies as needed.",
+  "writeActions": [
+    {
+      "tool": "wire_asset",
+      "txHash": "0x564291246ece7a786e412f2713acf1056830caebea2d535027a4fcfbc40977e8",
+      "justification": "Wiring Fox River Resources Corporation as it is a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch involves wiring assets only; no open positions proposed. No collateral or regime conflicts detected."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x8f8d90879effc780f68617e29a5ca9ff3e88eb5be96707f16911f09920ca228b",
+      "justification": "Wiring Minerals 260 Ltd as it is a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch involves wiring assets only; no open positions proposed. No collateral or regime conflicts detected."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x5f2793f50ae88ea18e4e798826c7306a395ec2bfe1df4e393323e41807d35c32",
+      "justification": "Wiring Ironveld Plc as a short candidate with a high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch involves wiring assets only; no open positions proposed. No collateral or regime conflicts detected."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x15de34b3a9a6cd6e66237c8488e7b8c0b4f94dc5aa7c258eb613a8a9555a7c95",
+      "justification": "Updating tracked assets to include newly wired long and short candidates.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
+      },
+      "kind": "vault-tx"
+    }
+  ],
   "errors": []
 }
