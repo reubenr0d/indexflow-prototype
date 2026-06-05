@@ -182,7 +182,7 @@ async function yf() {
 async function getSearchRows(symbol) {
   const client = await yf();
   try {
-    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 });
+    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 }, { validateResult: false });
     return (raw.quotes ?? [])
       .filter((quote) => "symbol" in quote)
       .map((quote) => ({

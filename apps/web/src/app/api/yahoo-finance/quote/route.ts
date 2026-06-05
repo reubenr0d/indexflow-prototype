@@ -9,15 +9,18 @@ const FX_TTL_MS = 60_000;
 
 async function getUsdRate(currency: string): Promise<number | null> {
   if (currency === "USD") return 1;
-  const cached = fxCache.get(currency);
-  if (cached && Date.now() - cached.ts < FX_TTL_MS) return cached.rate;
+  const baseCurrency = currency === "GBp" ? "GBP" : currency;
+  const cached = fxCache.get(baseCurrency);
+  if (cached && Date.now() - cached.ts < FX_TTL_MS) {
+    return currency === "GBp" ? cached.rate / 100 : cached.rate;
+  }
   try {
-    const pair = `${currency}USD=X`;
+    const pair = `${baseCurrency}USD=X`;
     const q = await yf.quote(pair);
     const rate = q.regularMarketPrice;
     if (!rate || rate <= 0) return null;
-    fxCache.set(currency, { rate, ts: Date.now() });
-    return rate;
+    fxCache.set(baseCurrency, { rate, ts: Date.now() });
+    return currency === "GBp" ? rate / 100 : rate;
   } catch {
     return null;
   }
@@ -25,7 +28,7 @@ async function getUsdRate(currency: string): Promise<number | null> {
 
 async function getSearchRows(symbol: string) {
   try {
-    const raw = await yf.search(symbol, { quotesCount: 20, newsCount: 0 });
+    const raw = await yf.search(symbol, { quotesCount: 20, newsCount: 0 }, { validateResult: false });
     return (raw.quotes ?? [])
       .filter((quote) => "symbol" in quote)
       .map((quote) => {

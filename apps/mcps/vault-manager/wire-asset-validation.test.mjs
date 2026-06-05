@@ -4,10 +4,16 @@ import assert from "node:assert/strict";
 import {
   validateSeedPriceUsd,
   SEED_PRICE_MAX_DEVIATION_BPS,
+  yahooUsdRateForQuoteCurrency,
 } from "../../shared/yahoo-usd-quote.mjs";
 
 test("SEED_PRICE_MAX_DEVIATION_BPS is 2000 (matches OracleAdapter default)", () => {
   assert.equal(SEED_PRICE_MAX_DEVIATION_BPS, 2000);
+});
+
+test("GBp Yahoo quotes use one hundredth of GBP/USD for pence-denominated prices", () => {
+  assert.equal(yahooUsdRateForQuoteCurrency("GBp", 1.347), 0.01347);
+  assert.equal(yahooUsdRateForQuoteCurrency("GBP", 1.347), 1.347);
 });
 
 test("exact match returns ok with devBps=0", () => {

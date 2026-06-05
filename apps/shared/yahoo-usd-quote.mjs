@@ -23,6 +23,14 @@ async function getClient() {
 const FX_TTL_MS = 60_000;
 const _fxCache = new Map();
 
+function yahooFxBaseCurrency(currency) {
+  return currency === "GBp" ? "GBP" : currency;
+}
+
+export function yahooUsdRateForQuoteCurrency(currency, rate) {
+  return currency === "GBp" ? rate / 100 : rate;
+}
+
 class YahooUnavailableError extends Error {
   constructor(message, cause) {
     super(message);
@@ -34,21 +42,24 @@ class YahooUnavailableError extends Error {
 
 async function getUsdRate(currency) {
   if (!currency || currency === "USD") return 1;
-  const cached = _fxCache.get(currency);
-  if (cached && Date.now() - cached.ts < FX_TTL_MS) return cached.rate;
+  const baseCurrency = yahooFxBaseCurrency(currency);
+  const cached = _fxCache.get(baseCurrency);
+  if (cached && Date.now() - cached.ts < FX_TTL_MS) {
+    return yahooUsdRateForQuoteCurrency(currency, cached.rate);
+  }
   let q;
   try {
     const client = await getClient();
-    q = await client.quote(`${currency}USD=X`);
+    q = await client.quote(`${baseCurrency}USD=X`);
   } catch (err) {
-    throw new YahooUnavailableError(`FX lookup failed for ${currency}USD=X: ${err.message}`, err);
+    throw new YahooUnavailableError(`FX lookup failed for ${baseCurrency}USD=X: ${err.message}`, err);
   }
   const rate = q?.regularMarketPrice;
   if (!rate || rate <= 0) {
-    throw new YahooUnavailableError(`FX rate unavailable for ${currency}USD=X`);
+    throw new YahooUnavailableError(`FX rate unavailable for ${baseCurrency}USD=X`);
   }
-  _fxCache.set(currency, { rate, ts: Date.now() });
-  return rate;
+  _fxCache.set(baseCurrency, { rate, ts: Date.now() });
+  return yahooUsdRateForQuoteCurrency(currency, rate);
 }
 
 /**

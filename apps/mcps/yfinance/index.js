@@ -44,7 +44,7 @@ async function yf() {
 async function getSearchRows(symbol) {
   const client = await yf();
   try {
-    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 });
+    const raw = await client.search(symbol, { quotesCount: 20, newsCount: 0 }, { validateResult: false });
     return (raw.quotes ?? [])
       .filter((quote) => "symbol" in quote)
       .map((quote) => ({
@@ -92,7 +92,11 @@ server.registerTool(
   async ({ query, limit }) => {
     try {
       const client = await yf();
-      const raw = await client.search(query, { quotesCount: Math.min(limit ?? 10, 20), newsCount: 0 });
+      const raw = await client.search(
+        query,
+        { quotesCount: Math.min(limit ?? 10, 20), newsCount: 0 },
+        { validateResult: false },
+      );
       const results = (raw.quotes ?? [])
         .filter((q) => "symbol" in q)
         .map((q) => ({
@@ -221,10 +225,14 @@ server.registerTool(
           }
 
           try {
-            const raw = await client.search(symbol, {
-              quotesCount: 0,
-              newsCount: perSymbolCap,
-            });
+            const raw = await client.search(
+              symbol,
+              {
+                quotesCount: 0,
+                newsCount: perSymbolCap,
+              },
+              { validateResult: false },
+            );
             const headlines = (raw.news ?? []).slice(0, perSymbolCap).map((item) => {
               const ts = item.providerPublishTime;
               let publishedAt = null;

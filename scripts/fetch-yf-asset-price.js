@@ -22,6 +22,14 @@ if (!symbol) {
 const PRICE_DECIMALS = 8;
 const outPath = path.join(__dirname, "..", "cache", "yf-seed-price.txt");
 
+function fxBaseCurrency(currency) {
+  return currency === "GBp" ? "GBP" : currency;
+}
+
+function usdRateForQuoteCurrency(currency, rate) {
+  return currency === "GBp" ? rate / 100 : rate;
+}
+
 async function main() {
   const YahooFinance = require("yahoo-finance2").default;
   const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
@@ -32,11 +40,12 @@ async function main() {
   const currency = q.currency ?? "USD";
   let usd = q.regularMarketPrice;
   if (currency !== "USD") {
-    const pair = `${currency}USD=X`;
+    const baseCurrency = fxBaseCurrency(currency);
+    const pair = `${baseCurrency}USD=X`;
     const fx = await yf.quote(pair);
     const rate = fx.regularMarketPrice;
     if (!rate || rate <= 0) throw new Error(`missing FX for ${currency}`);
-    usd = q.regularMarketPrice * rate;
+    usd = q.regularMarketPrice * usdRateForQuoteCurrency(currency, rate);
   }
   const raw = Math.round(usd * 10 ** PRICE_DECIMALS);
   if (raw <= 0 || !Number.isFinite(raw)) throw new Error("invalid raw price");

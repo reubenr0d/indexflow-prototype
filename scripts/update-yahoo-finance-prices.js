@@ -149,14 +149,16 @@ async function getFxRates(currencies) {
   const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
   const rates = new Map();
   for (const cur of unique) {
-    const pair = `${cur}USD=X`;
+    const baseCurrency = cur === "GBp" ? "GBP" : cur;
+    const pair = `${baseCurrency}USD=X`;
     const q = await yf.quote(pair);
     const rate = q.regularMarketPrice;
     if (!rate || rate <= 0) {
       throw new Error(`Could not fetch FX rate for ${pair}`);
     }
-    rates.set(cur, rate);
-    console.log(`  FX ${cur}/USD = ${rate}`);
+    const effectiveRate = cur === "GBp" ? rate / 100 : rate;
+    rates.set(cur, effectiveRate);
+    console.log(`  FX ${cur}/USD = ${effectiveRate}`);
   }
   return rates;
 }
