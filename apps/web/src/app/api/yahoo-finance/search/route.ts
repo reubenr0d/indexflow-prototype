@@ -3,6 +3,18 @@ import YahooFinance from "yahoo-finance2";
 
 const yf = new YahooFinance({ suppressNotices: ["yahooSurvey"] });
 
+function getString(row: Record<string, unknown>, key: string): string {
+  const value = row[key];
+  return typeof value === "string" ? value : "";
+}
+
+function getSearchQuotes(raw: unknown): Record<string, unknown>[] {
+  if (!raw || typeof raw !== "object") return [];
+  const quotes = (raw as { quotes?: unknown }).quotes;
+  if (!Array.isArray(quotes)) return [];
+  return quotes.filter((quote): quote is Record<string, unknown> => Boolean(quote) && typeof quote === "object");
+}
+
 export async function GET(request: NextRequest) {
   const q = request.nextUrl.searchParams.get("q")?.trim();
   if (!q || q.length < 1) {
@@ -10,22 +22,16 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const raw = await yf.search(q, { quotesCount: 20, newsCount: 0 });
-    const results = (raw.quotes ?? [])
-      .filter(
-        (quote) =>
-          "quoteType" in quote &&
-          (quote as Record<string, unknown>).quoteType === "EQUITY" &&
-          "symbol" in quote
-      )
+    const raw = await yf.search(q, { quotesCount: 20, newsCount: 0 }, { validateResult: false });
+    const results = getSearchQuotes(raw)
+      .filter((quote) => quote.quoteType === "EQUITY" && typeof quote.symbol === "string")
       .map((quote) => {
-        const q = quote as Record<string, unknown>;
         return {
-          symbol: q.symbol as string,
-          name: (q.longname ?? q.shortname ?? "") as string,
-          exchange: (q.exchDisp ?? q.exchange ?? "") as string,
-          sector: (q.sectorDisp ?? "") as string,
-          industry: (q.industryDisp ?? "") as string,
+          symbol: quote.symbol as string,
+          name: getString(quote, "longname") || getString(quote, "shortname"),
+          exchange: getString(quote, "exchDisp") || getString(quote, "exchange"),
+          sector: getString(quote, "sectorDisp"),
+          industry: getString(quote, "industryDisp"),
         };
       });
 
