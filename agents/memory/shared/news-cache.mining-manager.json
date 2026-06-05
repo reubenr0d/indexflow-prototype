@@ -1,366 +1,187 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-05T19:08:54.566Z",
+  "updatedAt": "2026-06-05T20:57:59.906Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-06-05T19:08:52.891Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-05T20:57:59.786Z",
       "headlines": [
         {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
+          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
+          "publishedAt": "2026-06-05T20:50:54.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "TOUR"
+            "SPAX.PVT",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "Sector Update: Healthcare",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/sector-healthcare-190018468.html",
-          "publishedAt": "2026-06-05T19:00:18.000Z",
+          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
+          "publishedAt": "2026-06-05T20:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INSM",
-            "XLV"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-05T19:08:52.891Z",
-      "headlines": [
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
+            "SPGI"
           ]
         },
         {
-          "title": "Sector Update: Healthcare",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/sector-healthcare-190018468.html",
-          "publishedAt": "2026-06-05T19:00:18.000Z",
+          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
+          "publishedAt": "2026-06-05T20:48:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INSM",
-            "XLV"
+            "MRVL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-05T19:08:52.891Z",
+      "fetchedAt": "2026-06-05T20:57:59.786Z",
       "headlines": [
         {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
+          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
+          "publishedAt": "2026-06-05T20:50:54.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "TOUR"
+            "SPAX.PVT",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "Sector Update: Healthcare",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/sector-healthcare-190018468.html",
-          "publishedAt": "2026-06-05T19:00:18.000Z",
+          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
+          "publishedAt": "2026-06-05T20:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INSM",
-            "XLV"
+            "SPGI"
+          ]
+        },
+        {
+          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
+          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-05T19:08:52.891Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-05T20:57:59.786Z",
       "headlines": [
         {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
+          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
+          "publishedAt": "2026-06-05T20:50:54.000Z",
+          "type": "VIDEO",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
+          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPGI"
+          ]
+        },
+        {
+          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
+          "publishedAt": "2026-06-05T20:48:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-05T19:08:52.891Z",
-      "headlines": [
-        {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-05T19:08:54.566Z",
-      "headlines": [
-        {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
+            "MRVL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-05T19:08:54.566Z",
+      "fetchedAt": "2026-06-05T20:57:59.906Z",
       "headlines": [
         {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
-          "type": "STORY",
+          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
+          "publishedAt": "2026-06-05T20:50:54.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
+            "SPAX.PVT",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
+          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
+          "publishedAt": "2026-06-05T20:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TOUR"
+            "SPGI"
+          ]
+        },
+        {
+          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
+          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-05T19:08:54.566Z",
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-05T20:57:59.906Z",
       "headlines": [
         {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
+          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
+          "publishedAt": "2026-06-05T20:50:54.000Z",
+          "type": "VIDEO",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
+          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPGI"
+          ]
+        },
+        {
+          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
+          "publishedAt": "2026-06-05T20:48:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-05T19:08:54.566Z",
-      "headlines": [
-        {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-05T19:08:54.566Z",
-      "headlines": [
-        {
-          "title": "1 Small-Cap Stock with Competitive Advantages and 2 We Ignore",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/1-small-cap-stock-competitive-190414149.html",
-          "publishedAt": "2026-06-05T19:04:14.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "G",
-            "FLG",
-            "FLG-PA",
-            "GDRX"
-          ]
-        },
-        {
-          "title": "US Treasury Closing Levels",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/news/us-treasury-closing-levels-190041236.html",
-          "publishedAt": "2026-06-05T19:00:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Tuniu Corp (TOUR) Q1 2026 Earnings Call Highlights: Strong Financial Performance Amid Market ...",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tuniu-corp-tour-q1-2026-190020383.html",
-          "publishedAt": "2026-06-05T19:00:20.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TOUR"
+            "MRVL"
           ]
         }
       ],
