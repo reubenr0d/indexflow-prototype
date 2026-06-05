@@ -1,188 +1,383 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-05T20:57:59.906Z",
+  "updatedAt": "2026-06-05T22:36:20.057Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-06-05T20:57:59.786Z",
+    "FOX.CN": {
+      "fetchedAt": "2026-06-05T22:36:19.850Z",
       "headlines": [
         {
-          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
-          "publishedAt": "2026-06-05T20:50:54.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
-          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
+          "publishedAt": "2026-06-05T22:24:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPGI"
+            "NFLX"
           ]
         },
         {
-          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
-          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
+          "publishedAt": "2026-06-05T22:20:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL"
+            "BTC-USD",
+            "MSTR",
+            "ETH-USD",
+            "XRP-USD",
+            "SOL-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "headlines": [
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
+          "publishedAt": "2026-06-05T22:24:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
+          ]
+        },
+        {
+          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
+          "publishedAt": "2026-06-05T22:20:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "MSTR",
+            "ETH-USD",
+            "XRP-USD",
+            "SOL-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-05T20:57:59.786Z",
+      "fetchedAt": "2026-06-05T22:36:19.850Z",
       "headlines": [
         {
-          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
-          "publishedAt": "2026-06-05T20:50:54.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
-          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
+          "publishedAt": "2026-06-05T22:24:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPGI"
+            "NFLX"
           ]
         },
         {
-          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
-          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
+          "publishedAt": "2026-06-05T22:20:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL"
+            "BTC-USD",
+            "MSTR",
+            "ETH-USD",
+            "XRP-USD",
+            "SOL-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-05T20:57:59.786Z",
+    "MI6.AX": {
+      "fetchedAt": "2026-06-05T22:36:19.850Z",
       "headlines": [
         {
-          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
-          "publishedAt": "2026-06-05T20:50:54.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
-          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPGI"
+            "BTG"
           ]
         },
         {
-          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
-          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL"
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
           ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "IRON.L": {
-      "fetchedAt": "2026-06-05T20:57:59.906Z",
+    "EEE.L": {
+      "fetchedAt": "2026-06-05T22:36:19.850Z",
       "headlines": [
         {
-          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
-          "publishedAt": "2026-06-05T20:50:54.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
-          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPGI"
+            "BTG"
           ]
         },
         {
-          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
-          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL"
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
           ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "headlines": [
+        {
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTG"
+          ]
+        },
+        {
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
+          ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-05T20:57:59.906Z",
+      "fetchedAt": "2026-06-05T22:36:20.057Z",
       "headlines": [
         {
-          "title": "SpaceX, OpenAI, Anthropic face a post-IPO test from Wall Street",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/spacex-openai-anthropic-face-a-post-ipo-test-from-wall-street-205054085.html",
-          "publishedAt": "2026-06-05T20:50:54.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "S&P Global to Present at Mizuho Technology Conference 2026 on June 10, 2026",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/p-global-present-mizuho-technology-205000282.html",
-          "publishedAt": "2026-06-05T20:50:00.000Z",
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPGI"
+            "BTG"
           ]
         },
         {
-          "title": "2 Reasons to Like MRVL (and 1 Not So Much)",
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/2-reasons-mrvl-1-not-204814987.html",
-          "publishedAt": "2026-06-05T20:48:14.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL"
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
           ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "headlines": [
+        {
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTG"
+          ]
+        },
+        {
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
+          ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "headlines": [
+        {
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTG"
+          ]
+        },
+        {
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
+          ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "headlines": [
+        {
+          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
+          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTG"
+          ]
+        },
+        {
+          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
+          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TTI",
+            "OKTA",
+            "VZ",
+            "NET",
+            "FLNC"
+          ]
+        },
+        {
+          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
+          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
