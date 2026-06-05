@@ -7,19 +7,80 @@
   "network": "sepolia",
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-05T13:28:50.071Z",
-  "startedAt": "2026-06-05T13:27:08.209Z",
-  "finishedAt": "2026-06-05T13:28:50.071Z",
+  "runId": "2026-06-05T16:42:54.281Z",
+  "startedAt": "2026-06-05T16:40:39.020Z",
+  "finishedAt": "2026-06-05T16:42:54.281Z",
   "status": "succeeded",
   "usage": {
-    "turns": 7,
-    "toolCalls": 8,
+    "turns": 9,
+    "toolCalls": 17,
     "errors": 0,
     "softFailures": 0,
-    "writeActions": 0
+    "writeActions": 6
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, Ironveld Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable opening new positions.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
-  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions, which means we cannot proceed with opening new long or short positions at this time. Without available collateral or existing positions, the vault is unable to take advantage of the current market opportunities.\n\n2. **Atlas ML Top Picks**: The top picks from the Atlas ML model include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all with high ML scores and predicted returns. These stocks are primarily involved in diversified metals and precious metals, aligning with the current market dynamics.\n\n3. **Atlas ML Short Picks**: The short candidates include IRONVELD PLC (IRON.L) with a high absolute predicted return, suggesting potential profit from shorting this stock. However, given the metals risk-off regime, caution is advised with shorts.\n\n4. **News Scan**: The news scan did not reveal any significant bullish or bearish headlines for the selected long and short candidates. The headlines were mostly neutral and unrelated to the specific stocks.\n\n5. **Next Steps**: Without available collateral, the vault cannot open new positions. The focus should be on monitoring the market for any changes in collateral availability and re-evaluating the top picks in the next run.\n\n## Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, Ironveld Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable opening new positions.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
-  "writeActions": [],
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, Zinnwald Lithium Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable opening new positions.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault currently has no available collateral and no open positions. This prevents the opening of new long or short positions at this time. Without available collateral or existing positions, the focus remains on preparing the vault for future opportunities.\n\n2. **Atlas ML Top Picks**: The top long picks from the Atlas ML model include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), among others. These picks are characterized by high ML scores and predicted returns, particularly in diversified metals and precious metals.\n\n3. **Atlas ML Short Picks**: The short candidates include Zinnwald Lithium Plc (ZNWD.L), Great Western Mining Corporation PLC (GWMO.L), and Solis Minerals Ltd. (SLM.AX). These were selected based on their negative predicted returns and high absolute predicted returns.\n\n4. **Asset Wiring**: Successfully wired the short candidates ZNWD.L, GWMO.L, SLM.AX, GEMR.L, and GAL.V to the vault. This prepares them for potential short positions once collateral becomes available.\n\n5. **Tracked Assets Update**: Updated the vault's tracked assets to include both the top long picks and the newly wired short candidates, ensuring alignment with the Atlas ML model's recommendations.\n\n6. **Perp Allocation**: No allocation was made due to zero available collateral.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nFor the short side, Zinnwald Lithium Plc was selected due to its high absolute predicted return, despite the metals risk-off regime suggesting caution with shorts. This short position is justified by the model's negative predicted return and lack of supporting bullish news.\n\n**Vault Address**: 0x02bdbdc13f22ee5760cb10522a76d64695f0c84c\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable opening new positions.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "writeActions": [
+    {
+      "tool": "wire_asset",
+      "txHash": "0x2707abc46e9598d7b4ec6c196836b2325906b732555d32eddd5cc13879ba8d2e",
+      "justification": "Wiring Zinnwald Lithium Plc (ZNWD.L) for short position based on Atlas ML model's negative predicted return and high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed shorts are consistent with the metals_risk_off regime and shortPenalty is 0; no collateral is currently allocated."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x711fbeefbc637a3d99b8752917d97a15a73ce19802de092fac63ce04f87f2476",
+      "justification": "Wiring Great Western Mining Corporation PLC (GWMO.L) for short position based on Atlas ML model's negative predicted return and high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed shorts are consistent with the metals_risk_off regime and shortPenalty is 0; no collateral is currently allocated."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x9ae240a486cf312578540ae75f7aff8bce87a41bc7d4a03e78fff05f01530482",
+      "justification": "Wiring Solis Minerals Ltd. (SLM.AX) for short position based on Atlas ML model's negative predicted return and high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed shorts are consistent with the metals_risk_off regime and shortPenalty is 0; no collateral is currently allocated."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x077f29374bf68554922c14b95f4ca7db8e98cbe780fbd7a402971a0f29205e94",
+      "justification": "Wiring Gem Resources Plc (GEMR.L) for short position based on Atlas ML model's negative predicted return and high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed shorts are consistent with the metals_risk_off regime and shortPenalty is 0; no collateral is currently allocated."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x02be8ed7194db337e8cc8edb0571b20c431fafd772b34961c80f463d50202096",
+      "justification": "Wiring Galantas Gold Corporation (GAL.V) for short position based on Atlas ML model's negative predicted return and high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed shorts are consistent with the metals_risk_off regime and shortPenalty is 0; no collateral is currently allocated."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x4ffb1b98f5b49ac59e07bc5b948e5edce10668dafabc1c9bfe25f44e447cce51",
+      "justification": "Updating tracked assets to include newly wired short candidates and top long picks from Atlas ML model.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only updates tracked assets with no capital allocation; no risk to available collateral or recent performance."
+      },
+      "kind": "vault-tx"
+    }
+  ],
   "errors": []
 }

@@ -641,3 +641,322 @@
     }
   ]
 }
+Hash": "0x5f2793f50ae88ea18e4e798826c7306a395ec2bfe1df4e393323e41807d35c32",
+      "agentName": "mining-manager",
+      "runId": "2026-06-05T13:08:16.603Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "IRON.L",
+        "seedPriceUsd": 0.0003
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch involves wiring assets only; no open positions proposed. No collateral or regime conflicts detected."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include newly wired long and short candidates.",
+      "timestamp": "2026-06-05T13:08:16.603Z",
+      "txHash": "0x15de34b3a9a6cd6e66237c8488e7b8c0b4f94dc5aa7c258eb613a8a9555a7c95",
+      "agentName": "mining-manager",
+      "runId": "2026-06-05T13:08:16.603Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac",
+          "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
+          "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14"
+        ],
+        "count": 6
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets with no financial impact; availableCollateral is $0, so no risk of over-leverage or regime conflict."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring FOX.CN as it is a top pick by Atlas ML with a high predicted return.",
+      "timestamp": "2026-06-05T11:41:04.987Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-05T11:41:04.987Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7926
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch involves wiring assets only; no open positions or collateral allocation involved. Market regime is metals_risk_on with no short penalty."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new top pick Fox River Resources Corporation (FOX.CN) with a high ML score of 99.7.",
+      "timestamp": "2026-06-01T10:33:51.055Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-01T10:33:51.055Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7887
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets without opening positions; no collateral or position risks involved."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating the auto-target amount into perp capital for trading.",
+      "timestamp": "2026-06-01T10:33:51.055Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-01T10:33:51.055Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only includes allocation to perp capital with zero amount, which has no impact on available collateral or positions."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available collateral to enable opening of new long positions on eligible assets (BIG.V, ABRA.TO, TEX.CN).",
+      "timestamp": "2026-05-31T23:20:14.660Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T23:20:14.660Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No available collateral to allocate; batch is a no-op with zero impact."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring new top pick Fox River Resources Corporation to align with the latest Atlas ML recommendations.",
+      "timestamp": "2026-05-31T22:16:56.516Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T22:16:56.516Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires new assets; no capital allocation or position opening involved, consistent with available collateral of $0."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Attempting to allocate any available collateral to enable opening of new positions on eligible assets.",
+      "timestamp": "2026-05-31T22:16:56.516Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T22:16:56.516Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only attempts to allocate available collateral, which is currently zero; no risk of over-leverage or regime conflict."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks with a high ML score.",
+      "timestamp": "2026-05-31T21:17:17.089Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T21:17:17.089Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7901
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened or closed, consistent with available collateral of $0."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available USDC to perp trading to open long positions on top picks.",
+      "timestamp": "2026-05-31T21:17:17.089Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T21:17:17.089Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No USDC is being allocated; the batch is a no-op with zero impact on available collateral or positions."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the top picks with a high ML score.",
+      "timestamp": "2026-05-31T19:44:57.898Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T19:44:57.898Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7903
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires new assets without opening positions; no collateral or regime constraints apply."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available capital to enable opening of new long positions on eligible assets.",
+      "timestamp": "2026-05-31T19:44:57.898Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T19:44:57.898Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only allocates zero capital, which is consistent with the vault's current state of zero available collateral."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new top pick by Atlas ML with a high score and predicted return.",
+      "timestamp": "2026-05-31T18:19:11.116Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T18:19:11.116Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7901
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. No collateral or open positions to evaluate against regime or past performance."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Attempting to allocate available capital for opening new long positions on eligible assets.",
+      "timestamp": "2026-05-31T18:19:11.116Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T18:19:11.116Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No capital is being allocated; the batch is a no-op with idleUsdc and availableCollateral both at $0."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a top pick by the Atlas ML model with a high predicted return.",
+      "timestamp": "2026-05-31T16:39:13.360Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T16:39:13.360Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7901
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wire_asset actions are consistent with the vault's available collateral of $0 and the metals_risk_off regime with no short penalty or long bonus."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available capital for new long positions on top picks from the Atlas ML model.",
+      "timestamp": "2026-05-31T16:39:13.360Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T16:39:13.360Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No capital is being allocated; the batch is a no-op with idleUsdc and availableCollateral both at $0."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available collateral to enable opening long positions on eligible assets BIG.V, ABRA.TO, and TEX.CN.",
+      "timestamp": "2026-05-31T12:21:53.819Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T12:21:53.819Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No collateral is being allocated; the batch is a no-op with zero impact on available collateral or positions."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation as it is a new entrant in the Atlas ML top picks.",
+      "timestamp": "2026-05-31T11:08:11.997Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T11:08:11.997Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires new assets with no immediate capital allocation; no risk to available collateral or recent loss history."
+      }
+    },
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available USDC to open long positions on eligible assets BIG.V, ABRA.TO, TEX.CN as per policy enforcement.",
+      "timestamp": "2026-05-31T08:24:29.578Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-05-31T08:24:29.578Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "0"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "No idle USDC available for allocation; batch is a no-op with zero impact on collateral or positions."
+      }
+    }
+  ]
+}
