@@ -1,182 +1,492 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-01T10:32:37.356Z",
+  "updatedAt": "2026-06-05T11:39:59.444Z",
   "entries": {
-    "FOX.CN": {
-      "fetchedAt": "2026-06-01T10:32:37.356Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-05T11:39:59.268Z",
       "headlines": [
         {
-          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
-          "publishedAt": "2026-06-01T10:30:00.000Z",
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
-          "publisher": "Just Auto",
-          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
-          "publishedAt": "2026-06-01T10:27:13.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "600104.SS"
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
           ]
         },
         {
-          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
-          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "LLY",
-            "NVO"
+            "BTC-USD",
+            "ETH-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-06-01T10:32:37.356Z",
+      "fetchedAt": "2026-06-05T11:39:59.268Z",
       "headlines": [
         {
-          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
-          "publishedAt": "2026-06-01T10:30:00.000Z",
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
-          "publisher": "Just Auto",
-          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
-          "publishedAt": "2026-06-01T10:27:13.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "600104.SS"
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
           ]
         },
         {
-          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
-          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-05T11:39:59.268Z",
+      "headlines": [
+        {
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "GOOGL",
+            "FIX",
             "LLY",
-            "NVO"
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-01T10:32:37.356Z",
+      "fetchedAt": "2026-06-05T11:39:59.268Z",
       "headlines": [
         {
-          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
-          "publishedAt": "2026-06-01T10:30:00.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Zurich expands data centre construction insurance to five new markets",
+          "publisher": "Life Insurance International",
+          "link": "https://finance.yahoo.com/m/7079879b-e493-3e47-b1fc-76ef5b899fc3/zurich-expands-data-centre.html",
+          "publishedAt": "2026-06-05T11:36:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MI6.AX": {
+      "fetchedAt": "2026-06-05T11:39:59.268Z",
+      "headlines": [
+        {
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
-          "publisher": "Just Auto",
-          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
-          "publishedAt": "2026-06-01T10:27:13.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "600104.SS"
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
           ]
         },
         {
-          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
-          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "LLY",
-            "NVO"
+            "BTC-USD",
+            "ETH-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FXPO.L": {
-      "fetchedAt": "2026-06-01T10:32:37.356Z",
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-05T11:39:59.444Z",
       "headlines": [
         {
-          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
-          "publishedAt": "2026-06-01T10:30:00.000Z",
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
-          "publisher": "Just Auto",
-          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
-          "publishedAt": "2026-06-01T10:27:13.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "600104.SS"
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
           ]
         },
         {
-          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
-          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "LLY",
-            "NVO"
+            "BTC-USD",
+            "ETH-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BIG.V": {
-      "fetchedAt": "2026-06-01T10:32:37.356Z",
+    "GWMO.L": {
+      "fetchedAt": "2026-06-05T11:39:59.444Z",
       "headlines": [
         {
-          "title": "Skyhawk Therapeutics Announces Twelve-Month Interim Results from Phase 1/2 Clinical Trial of SKY-0515 in Huntington's Disease",
-          "publisher": "CNW Group",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/skyhawk-therapeutics-announces-twelve-month-103000284.html",
-          "publishedAt": "2026-06-01T10:30:00.000Z",
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "China’s SAIC to sell 10% more equity in JSW MG Motor – report",
-          "publisher": "Just Auto",
-          "link": "https://finance.yahoo.com/m/2719717f-2a10-32c8-85ea-836e36404feb/china%E2%80%99s-saic-to-sell-10%25-more.html",
-          "publishedAt": "2026-06-01T10:27:13.000Z",
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "600104.SS"
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
           ]
         },
         {
-          "title": "Is Eli Lilly Starting an Nvidia-Style Run?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2154b74a-0dea-32fa-b094-69ea48067d2d/is-eli-lilly-starting-an.html",
-          "publishedAt": "2026-06-01T10:25:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-05T11:39:59.444Z",
+      "headlines": [
+        {
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "GOOGL",
+            "FIX",
             "LLY",
-            "NVO"
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-05T11:39:59.444Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Zurich expands data centre construction insurance to five new markets",
+          "publisher": "Life Insurance International",
+          "link": "https://finance.yahoo.com/m/7079879b-e493-3e47-b1fc-76ef5b899fc3/zurich-expands-data-centre.html",
+          "publishedAt": "2026-06-05T11:36:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-05T11:39:59.444Z",
+      "headlines": [
+        {
+          "title": "Canopy suggests wheat straw could replace wood pulp in fashion",
+          "publisher": "Just Style",
+          "link": "https://finance.yahoo.com/m/2c1f6436-d1c0-393c-b7c0-7f39632deca3/canopy-suggests-wheat-straw.html",
+          "publishedAt": "2026-06-05T11:39:14.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Dow Jones Futures Rise, Techs Fall As AI Trade Cools; Jobs Report Looms",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/24ee26d7-b02a-37d3-9e51-fec9bcb33482/dow-jones-futures-rise%2C-techs.html",
+          "publishedAt": "2026-06-05T11:37:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "GOOGL",
+            "FIX",
+            "LLY",
+            "^GSPC",
+            "AVGO",
+            "UNH",
+            "BLLN",
+            "^IXIC",
+            "SPAX.PVT",
+            "ANTH.PVT",
+            "CL=F",
+            "GOOG",
+            "CVS",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Bitcoin and ethereum prices today, Friday, June 5, 2026: Prices continue their descent - 5 reasons why",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-june-5-2026-prices-continue-their-descent---5-reasons-why-113631165.html",
+          "publishedAt": "2026-06-05T11:36:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
           ]
         }
       ],

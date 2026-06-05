@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x02bdbdc13f22ee5760cb10522a76d64695f0c84c",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:3e9e6e5f742423887aeb6e4cf105de1edc52f8666367b6757371fd204c0ee30c",
+  "agentFileHash": "sha256:83bf2aa14d8360228abc3a55779ae284e14760a8dca2fadf52012f66b5f5f204",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-01T10:33:51.055Z",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.",
-  "lastThesisUpdate": "2026-06-01T10:33:51.055Z"
+  "lastRunAt": "2026-06-05T11:41:04.987Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. No short positions were opened due to wiring constraints.",
+  "lastThesisUpdate": "2026-06-05T11:41:04.987Z"
 }
