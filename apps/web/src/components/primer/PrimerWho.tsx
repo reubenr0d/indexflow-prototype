@@ -18,12 +18,12 @@ const audiences = [
   },
   {
     Icon: Globe,
-    title: "Chain Partners",
+    title: "Liquidity Providers",
     body: "Deploy ring-fenced liquidity with full attribution. Every unit of support is traceable to TVL, volume, and fee generation. No cross-chain dilution of results.",
     items: [
-      "Grant committees",
-      "Ecosystem funds",
-      "Infrastructure pilots",
+      "Chain Grant committees & Ecosystem funds",
+      "LP Funds and Family offices",
+      "PoS Stakers",
     ],
   },
 ];

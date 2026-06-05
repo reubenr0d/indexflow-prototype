@@ -24,15 +24,15 @@ const chainProblems = [
   },
 ];
 
-const investorProblems = [
+const operatorProblems = [
   {
     title: "Illiquid Redemptions",
     body: "Basket products lock capital with no clear exit path. Holders wait for manual unwinds or discount-priced OTC deals.",
     visual: IlliquidSVG,
   },
   {
-    title: "Opaque NAV",
-    body: "Portfolio value can\u2019t be independently verified on-chain. Investors trust off-chain reports instead of transparent pricing.",
+    title: "No Audited Standardised Vaults",
+    body: "Chain operators need standardised vault modules, but every launch still pushes bespoke contracts, policy decisions, and regulatory heavy lifting onto the operator.",
     visual: OpaqueNAVSVG,
   },
 ];
@@ -41,8 +41,8 @@ export default function PrimerProblem() {
   const chainRef = useRef<HTMLDivElement>(null);
   const chainInView = useInView(chainRef, { once: true, margin: "-100px" });
 
-  const investorRef = useRef<HTMLDivElement>(null);
-  const investorInView = useInView(investorRef, { once: true, margin: "-100px" });
+  const operatorRef = useRef<HTMLDivElement>(null);
+  const operatorInView = useInView(operatorRef, { once: true, margin: "-100px" });
 
   const fragRef = useRef<HTMLDivElement>(null);
   const fragInView = useInView(fragRef, { once: true, margin: "-80px" });
@@ -58,8 +58,8 @@ export default function PrimerProblem() {
       </SectionHeading>
       <SectionBody>
         Strong primitives exist, but the product stack is fragmented.
-        Chains can&rsquo;t prove what incentive capital generated; investors
-        can&rsquo;t verify what their shares are worth.
+        Chains can&rsquo;t prove what incentive capital generated; chain
+        operators face bespoke vault design and regulatory work on every launch.
       </SectionBody>
 
       <div className="relative z-10 mt-14 grid gap-8 md:grid-cols-2">
@@ -85,16 +85,16 @@ export default function PrimerProblem() {
           ))}
         </div>
 
-        {/* For Investors — right column */}
-        <div ref={investorRef} className="flex flex-col gap-5">
+        {/* For Chain Operators — right column */}
+        <div ref={operatorRef} className="flex flex-col gap-5">
           <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-app-accent">
-            For Investors
+            For Chain Operators
           </p>
-          {investorProblems.map((p, i) => (
+          {operatorProblems.map((p, i) => (
             <motion.div
               key={p.title}
               initial={{ opacity: 0, y: 24 }}
-              animate={investorInView ? { opacity: 1, y: 0 } : {}}
+              animate={operatorInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
               className="primer-glow-card flex flex-1 flex-col rounded-xl border border-app-border bg-app-bg p-6"
             >
@@ -136,4 +136,3 @@ export default function PrimerProblem() {
     </Section>
   );
 }
-
