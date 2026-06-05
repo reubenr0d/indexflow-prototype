@@ -2,6 +2,8 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { resolve } from "path";
+import { fileURLToPath } from "url";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -238,6 +240,45 @@ function normalisePick(raw) {
   };
 }
 
+function normaliseShortPick(raw) {
+  const pick = normalisePick(raw);
+  if (!pick) return null;
+  const predictedReturn = Number(pick.mlPredictedReturn);
+  const absPredictedReturn = Number.isFinite(predictedReturn) ? Math.abs(predictedReturn) : null;
+  return {
+    ...pick,
+    side: "short",
+    absPredictedReturn,
+  };
+}
+
+function selectShortPicks(rawPicks, { limit = 10, maxScore = 20, minAbsPredictedReturn = 0 } = {}) {
+  if (!Array.isArray(rawPicks)) return [];
+  const cap = Math.max(1, Math.min(50, Number(limit) || 10));
+  const scoreCap = Number(maxScore);
+  const minAbsReturn = Number(minAbsPredictedReturn);
+  return rawPicks
+    .map(normaliseShortPick)
+    .filter((p) => p && p.yahooSymbol)
+    .filter((p) => {
+      const mlScore = Number(p.mlScore);
+      const predictedReturn = Number(p.mlPredictedReturn);
+      const absPredictedReturn = Number(p.absPredictedReturn);
+      if (!Number.isFinite(mlScore) || !Number.isFinite(predictedReturn)) return false;
+      if (predictedReturn >= 0) return false;
+      if (Number.isFinite(scoreCap) && mlScore > scoreCap) return false;
+      if (Number.isFinite(minAbsReturn) && absPredictedReturn < minAbsReturn) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      const aAbs = Number(a.absPredictedReturn) || 0;
+      const bAbs = Number(b.absPredictedReturn) || 0;
+      if (bAbs !== aAbs) return bAbs - aAbs;
+      return (Number(a.mlScore) || 0) - (Number(b.mlScore) || 0);
+    })
+    .slice(0, cap);
+}
+
 function normaliseBasketCompany(raw) {
   if (!raw || typeof raw !== "object") return null;
   const ticker = raw.ticker ?? null;
@@ -326,8 +367,11 @@ server.registerTool(
       const meta = data?.metadata ?? {};
       const featureImportance = Array.isArray(data?.feature_importance) ? data.feature_importance : [];
       const topPredictions = Array.isArray(data?.top_predictions) ? data.top_predictions : [];
+      const shortPredictions = Array.isArray(data?.short_predictions) ? data.short_predictions : [];
       const normalisedPredictions = topPredictions.slice(0, 10).map(normalisePick).filter(Boolean);
+      const normalisedShortPredictions = selectShortPicks(shortPredictions, { limit: 10, maxScore: 20 });
       const filteredPredictions = await filterPicksByYahooResolution(normalisedPredictions, "topPrediction");
+      const filteredShortPredictions = await filterPicksByYahooResolution(normalisedShortPredictions, "shortPrediction");
       const slim = {
         status: data?.status ?? "unknown",
         isHistorical: Boolean(data?.is_historical),
@@ -345,8 +389,49 @@ server.registerTool(
         })),
         scoreDistribution: data?.score_distribution ?? null,
         topPredictions: filteredPredictions,
+        shortPredictions: filteredShortPredictions,
       };
       return { content: [{ type: "text", text: JSON.stringify(slim, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_short_picks",
+  {
+    title: "Atlas ML Short Picks",
+    description:
+      "Get current mining-stock short candidates from the Atlas ML model, sourced from ml-model-info.short_predictions. " +
+      "Each pick includes derived `yahooSymbol`, `side: 'short'`, and `absPredictedReturn` for comparing against long candidates. " +
+      "Returns {status, asOfDate, picks: [{name, ticker, exchange, yahooSymbol, side, mlScore, mlPredictedReturn, absPredictedReturn, marketCapUsd, primaryCommodity, drillActivityScore, vaultFitTier}]}. " +
+      "Only negative ml_predicted_return picks are returned; use absPredictedReturn to rank short profit potential against long mlPredictedReturn.",
+    inputSchema: {
+      limit: z.number().int().min(1).max(50).optional().default(10).describe("Number of short picks to return (default 10, max 50)"),
+      maxScore: z.number().min(0).max(100).optional().default(20).describe("Maximum ml_score filter for shorts (default 20)"),
+      minAbsPredictedReturn: z.number().min(0).optional().default(0).describe("Minimum absolute negative predicted return, decimal form (0.25 = 25%)"),
+    },
+  },
+  async ({ limit, maxScore, minAbsPredictedReturn }) => {
+    try {
+      const data = await atlasGet("/api/v1/dashboard/stocks/ml-model-info");
+      const status = data?.status ?? "unknown";
+      const shortPredictions = Array.isArray(data?.short_predictions) ? data.short_predictions : [];
+      const picks = selectShortPicks(shortPredictions, {
+        limit: limit ?? 10,
+        maxScore: maxScore ?? 20,
+        minAbsPredictedReturn: minAbsPredictedReturn ?? 0,
+      });
+      const filtered = await filterPicksByYahooResolution(picks, "short pick");
+      const result = {
+        status,
+        asOfDate: new Date().toISOString().slice(0, 10),
+        source: "ml-model-info.short_predictions",
+        count: filtered.length,
+        picks: filtered,
+      };
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
     } catch (err) {
       return httpErrorToTool(err);
     }
@@ -426,5 +511,22 @@ server.registerTool(
 // Start
 // ---------------------------------------------------------------------------
 
-const transport = new StdioServerTransport();
-await server.connect(transport);
+async function startServer() {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+}
+
+const isDirectCliEntry =
+  process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+
+if (isDirectCliEntry) {
+  await startServer();
+}
+
+export const __atlasMlInternals = {
+  exchangeToYahooSuffix,
+  buildYahooSymbol,
+  normalisePick,
+  normaliseShortPick,
+  selectShortPicks,
+};
