@@ -425,11 +425,11 @@ function pickQualityEntryScore(pick) {
 }
 
 // ---------------------------------------------------------------------------
-// Vault-arg pinning (write tools)
+// Vault-arg pinning (vault-bound tools)
 // ---------------------------------------------------------------------------
 
 // Tools that accept a `vault` arg and operate against a single bound vault.
-// For write tools we override hallucinated values with the agent's canonical
+// We override hallucinated values with the agent's canonical
 // vault (state.vaultAddress / capturedVaultAddress) so the LLM cannot
 // accidentally target a sibling vault or burn gas on a malformed address.
 //
@@ -449,13 +449,23 @@ const VAULT_ARG_WRITE_TOOLS = new Set([
   "close_position",
 ]);
 
+const VAULT_ARG_PINNED_TOOLS = new Set([
+  "get_vault_state",
+  "get_vault_pnl",
+  "list_open_positions",
+  "get_perp_capital_snapshot",
+  "plan_open_position",
+  "get_position_tracking",
+  ...VAULT_ARG_WRITE_TOOLS,
+]);
+
 // Pure helper. Mutates `args` in-place when an override is applied so the
 // downstream MCP call sees the canonical vault. Returns a structured
 // description of what (if anything) was overridden so the caller can log /
-// record diagnostics. Safe to call with non-write tool names; will no-op.
+// record diagnostics. Safe to call with non-vault-bound tool names; will no-op.
 function applyVaultArgPin({ toolName, args, canonicalVault }) {
-  if (!VAULT_ARG_WRITE_TOOLS.has(toolName)) {
-    return { overridden: false, reason: "TOOL_NOT_VAULT_WRITE" };
+  if (!VAULT_ARG_PINNED_TOOLS.has(toolName)) {
+    return { overridden: false, reason: "TOOL_NOT_VAULT_BOUND" };
   }
   if (!canonicalVault || typeof canonicalVault !== "string") {
     return { overridden: false, reason: "NO_CANONICAL_VAULT" };
@@ -469,10 +479,12 @@ function applyVaultArgPin({ toolName, args, canonicalVault }) {
   }
   const note = `Runner pinned vault to canonical ${canonicalVault} (LLM supplied ${supplied || "(missing)"}).`;
   args.vault = canonicalVault;
-  if (typeof args.justification === "string" && args.justification.length > 0) {
-    args.justification = `${args.justification} [runner: ${note}]`;
-  } else {
-    args.justification = note;
+  if (VAULT_ARG_WRITE_TOOLS.has(toolName)) {
+    if (typeof args.justification === "string" && args.justification.length > 0) {
+      args.justification = `${args.justification} [runner: ${note}]`;
+    } else {
+      args.justification = note;
+    }
   }
   return {
     overridden: true,
@@ -3558,7 +3570,7 @@ export async function runAgent(agentName) {
     async function executeToolCall(call, { forceSkipWrites = false } = {}) {
       const { toolCall, toolName, originalName, args, isWrite } = call;
 
-      // Pin the `vault` arg on write tools to the agent's canonical vault.
+      // Pin the `vault` arg on vault-bound tools to the agent's canonical vault.
       // We only override when (a) the agent has exactly one bound vault in
       // memory, (b) the tool actually takes a vault parameter, and (c) the
       // LLM-provided value differs case-insensitively from the canonical one.
@@ -5299,6 +5311,7 @@ if (isDirectCliEntry) {
 
 export const __agentRunnerInternals = {
   applyVaultArgPin,
+  VAULT_ARG_PINNED_TOOLS,
   VAULT_ARG_WRITE_TOOLS,
   sanitizeNetworkKey,
   isWriteAllowedOnNetwork,

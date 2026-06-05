@@ -2,12 +2,13 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { __agentRunnerInternals } from "./agent-runner.mjs";
 
-const { applyVaultArgPin, VAULT_ARG_WRITE_TOOLS } = __agentRunnerInternals;
+const { applyVaultArgPin, VAULT_ARG_PINNED_TOOLS, VAULT_ARG_WRITE_TOOLS } =
+  __agentRunnerInternals;
 
 const CANONICAL = "0xbd7ea7e23ae07f0dd65a112f9ab93f64c9b8f045";
 
 // ---------------------------------------------------------------------------
-// VAULT_ARG_WRITE_TOOLS
+// VAULT_ARG_PINNED_TOOLS / VAULT_ARG_WRITE_TOOLS
 // ---------------------------------------------------------------------------
 
 test("VAULT_ARG_WRITE_TOOLS covers exactly the five vault-bound write tools", () => {
@@ -17,6 +18,25 @@ test("VAULT_ARG_WRITE_TOOLS covers exactly the five vault-bound write tools", ()
       "allocate_to_perp",
       "close_position",
       "open_position",
+      "set_vault_assets",
+      "withdraw_from_perp",
+    ],
+  );
+});
+
+test("VAULT_ARG_PINNED_TOOLS covers vault-bound reads, planning, and writes", () => {
+  assert.deepEqual(
+    [...VAULT_ARG_PINNED_TOOLS].sort(),
+    [
+      "allocate_to_perp",
+      "close_position",
+      "get_perp_capital_snapshot",
+      "get_position_tracking",
+      "get_vault_pnl",
+      "get_vault_state",
+      "list_open_positions",
+      "open_position",
+      "plan_open_position",
       "set_vault_assets",
       "withdraw_from_perp",
     ],
@@ -95,22 +115,48 @@ test("applyVaultArgPin overrides when vault is missing entirely", () => {
   assert.equal(args.vault, CANONICAL);
 });
 
+test("applyVaultArgPin overrides a hallucinated plan_open_position vault without adding justification", () => {
+  // Reproduction of the mining-manager 2026-06-05 shape: valid vault prefix
+  // concatenated with a bytes32 assetId tail. plan_open_position is read-only,
+  // but a malformed vault still burns an LLM turn before sizing can happen.
+  const hallucinated =
+    "0x4dcd435461e27f8bfb580d216b8c695fcf49eb9c083f8310654475abba0d8592505a7932";
+  const canonical = "0x4dcd435461e27f8bfb580d216b8d69490023a0ba";
+  const args = {
+    vault: hallucinated,
+    assetId: "0x" + "1".repeat(64),
+    isLong: true,
+    targetLeverage: 10,
+    numNewSlots: 3,
+  };
+
+  const result = applyVaultArgPin({
+    toolName: "plan_open_position",
+    args,
+    canonicalVault: canonical,
+  });
+
+  assert.equal(result.overridden, true);
+  assert.equal(result.suppliedVault, hallucinated);
+  assert.equal(result.canonicalVault, canonical);
+  assert.equal(args.vault, canonical);
+  assert.equal("justification" in args, false);
+});
+
 // ---------------------------------------------------------------------------
 // applyVaultArgPin — guards
 // ---------------------------------------------------------------------------
 
-test("applyVaultArgPin no-ops on read tools (e.g. get_vault_state)", () => {
+test("applyVaultArgPin overrides vault-bound read tools (e.g. get_vault_state)", () => {
   const args = { vault: "0xbad" };
   const result = applyVaultArgPin({
     toolName: "get_vault_state",
     args,
     canonicalVault: CANONICAL,
   });
-  assert.equal(result.overridden, false);
-  assert.equal(result.reason, "TOOL_NOT_VAULT_WRITE");
-  // Critically: we MUST NOT mutate args on read tools — those carry the LLM's
-  // own intent (e.g. polling a sibling vault before deploying).
-  assert.equal(args.vault, "0xbad");
+  assert.equal(result.overridden, true);
+  assert.equal(args.vault, CANONICAL);
+  assert.equal("justification" in args, false);
 });
 
 test("applyVaultArgPin no-ops on tools that don't take a vault arg (e.g. wire_asset)", () => {
@@ -121,7 +167,7 @@ test("applyVaultArgPin no-ops on tools that don't take a vault arg (e.g. wire_as
     canonicalVault: CANONICAL,
   });
   assert.equal(result.overridden, false);
-  assert.equal(result.reason, "TOOL_NOT_VAULT_WRITE");
+  assert.equal(result.reason, "TOOL_NOT_VAULT_BOUND");
 });
 
 test("applyVaultArgPin no-ops when the agent has no canonical vault yet", () => {
