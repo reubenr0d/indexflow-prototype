@@ -10,6 +10,7 @@ import {
   type BasketExposure,
   type ProtocolState,
   type VaultStateCurrent,
+  type AssetBasketMembership,
 } from "generated";
 import { type Address } from "viem";
 import {
@@ -59,6 +60,10 @@ function assetMetaId(chainId: number, assetId: string): string {
   return `${chainId}-${lc(assetId)}`;
 }
 
+function assetBasketMembershipId(chainId: number, assetId: string): string {
+  return `${chainId}-${lc(assetId)}`;
+}
+
 // `ChainPoolState` is the documented exception to the chain-scoped
 // `<chainId>-...` ID convention used elsewhere in this indexer. Every
 // `StateRelay.getRoutingWeights()` returns the same global routing table
@@ -76,6 +81,18 @@ function positionId(chainId: number, account: string, bId: string): string {
 
 function activityId(event: { chainId: number; block: { hash: string }; logIndex: number }): string {
   return `${event.chainId}-${lc(event.block.hash)}-${event.logIndex}`;
+}
+
+function uniqueLower(values: string[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const value of values) {
+    const lower = lc(value);
+    if (seen.has(lower)) continue;
+    seen.add(lower);
+    out.push(lower);
+  }
+  return out;
 }
 
 async function getOrCreateProtocolState(context: any, chainId: number, block: any): Promise<ProtocolState> {
@@ -341,6 +358,78 @@ async function syncBasketSnapshots(context: any, basket: Basket, block: any) {
   await syncBasketSnapshot(context, basket, chainId, SNAPSHOT_PERIOD_7D, WEEK_SECONDS, block);
 }
 
+async function getOrCreateAssetBasketMembership(
+  context: any,
+  chainId: number,
+  assetId: string,
+  block: any,
+): Promise<AssetBasketMembership> {
+  const id = assetBasketMembershipId(chainId, assetId);
+  const existing = await context.AssetBasketMembership.get(id);
+  if (existing) return existing;
+
+  const created: AssetBasketMembership = {
+    id,
+    chainId,
+    assetId: lc(assetId),
+    vaults: [],
+    updatedAt: ts(block),
+    updatedBlock: bn(block),
+  };
+  context.AssetBasketMembership.set(created);
+  return created;
+}
+
+async function addAssetBasketMembership(
+  context: any,
+  chainId: number,
+  assetId: string,
+  vaultAddress: string,
+  block: any,
+) {
+  const current = await getOrCreateAssetBasketMembership(context, chainId, assetId, block);
+  const vaults = uniqueLower([...current.vaults, vaultAddress]);
+
+  context.AssetBasketMembership.set({
+    ...current,
+    assetId: lc(assetId),
+    vaults,
+    updatedAt: ts(block),
+    updatedBlock: bn(block),
+  });
+}
+
+async function removeAssetBasketMembership(
+  context: any,
+  chainId: number,
+  assetId: string,
+  vaultAddress: string,
+  block: any,
+) {
+  const id = assetBasketMembershipId(chainId, assetId);
+  const current = await context.AssetBasketMembership.get(id);
+  if (!current) return;
+
+  const removed = lc(vaultAddress);
+  const vaults = uniqueLower(current.vaults.filter((vault: string) => lc(vault) !== removed));
+
+  context.AssetBasketMembership.set({
+    ...current,
+    vaults,
+    updatedAt: ts(block),
+    updatedBlock: bn(block),
+  });
+}
+
+async function refreshBasketsForPriceUpdate(context: any, chainId: number, assetId: string, block: any) {
+  const membership = await context.AssetBasketMembership.get(assetBasketMembershipId(chainId, assetId));
+  if (!membership) return;
+
+  for (const vaultAddress of membership.vaults) {
+    await refreshBasketFromChain(context, chainId, vaultAddress, block);
+  }
+}
+
 async function syncBasketAssets(context: any, chainId: number, vaultAddress: string, block: any) {
   const id = basketId(chainId, vaultAddress);
   const existingBasket = await context.Basket.get(id);
@@ -353,6 +442,10 @@ async function syncBasketAssets(context: any, chainId: number, vaultAddress: str
     const rowId = `${basket.id}-${i}`;
     const row = await context.BasketAsset.get(rowId);
     if (!row) continue;
+
+    if (row.active && row.assetId) {
+      await removeAssetBasketMembership(context, chainId, row.assetId, vaultAddress, block);
+    }
 
     context.BasketAsset.set({
       ...row,
@@ -370,15 +463,16 @@ async function syncBasketAssets(context: any, chainId: number, vaultAddress: str
     const id = `${basket.id}-${i}`;
     const existing = await context.BasketAsset.get(id);
     context.BasketAsset.set({
+      ...(existing ?? {}),
       id,
       chainId,
       basket_id: basket.id,
-      assetId,
+      assetId: lc(assetId),
       active: true,
       updatedAt: ts(block),
       updatedBlock: bn(block),
-      ...(existing ?? {}),
     });
+    await addAssetBasketMembership(context, chainId, assetId, vaultAddress, block);
   }
 }
 
@@ -818,6 +912,8 @@ OracleAdapter.PriceUpdated.handler(async ({ event, context }) => {
     logIndex: BigInt(event.logIndex),
     createdAt: ts(event.block),
   });
+
+  await refreshBasketsForPriceUpdate(context, chainId, event.params.assetId, event.block);
 });
 
 StateRelay.StateUpdated.handler(async ({ event, context }) => {

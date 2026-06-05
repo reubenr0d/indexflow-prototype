@@ -48,6 +48,19 @@ test("-25% rejects (matches today's CGNT.V scale, ~94% off)", () => {
   assert.equal(r.devBps > 2000, true);
 });
 
+test("EEE.L raw pence-as-USD seed rejects against converted live USD quote", () => {
+  const r = validateSeedPriceUsd(49.04928878, 0.46197729);
+  assert.equal(r.ok, false);
+  assert.equal(r.devBps > 1_000_000, true);
+  assert.match(r.reason, /deviation/);
+});
+
+test("EEE.L correctly converted USD seed is accepted", () => {
+  const r = validateSeedPriceUsd(0.46197729, 0.46197729);
+  assert.equal(r.ok, true);
+  assert.equal(r.devBps, 0);
+});
+
 test("livePriceUsd <= 0 rejects without divide-by-zero", () => {
   const r = validateSeedPriceUsd(10, 0);
   assert.equal(r.ok, false);

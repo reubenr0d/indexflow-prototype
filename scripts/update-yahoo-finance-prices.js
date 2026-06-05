@@ -141,6 +141,10 @@ async function fetchYahooQuotes(symbols) {
   return quotes;
 }
 
+function yahooUsdRateForQuoteCurrency(currency, rate) {
+  return currency === "GBp" ? rate / 100 : rate;
+}
+
 async function getFxRates(currencies) {
   const unique = [...new Set(currencies.filter((c) => c !== "USD"))];
   if (unique.length === 0) return new Map();
@@ -156,7 +160,7 @@ async function getFxRates(currencies) {
     if (!rate || rate <= 0) {
       throw new Error(`Could not fetch FX rate for ${pair}`);
     }
-    const effectiveRate = cur === "GBp" ? rate / 100 : rate;
+    const effectiveRate = yahooUsdRateForQuoteCurrency(cur, rate);
     rates.set(cur, effectiveRate);
     console.log(`  FX ${cur}/USD = ${effectiveRate}`);
   }
@@ -495,5 +499,6 @@ module.exports = {
     parseAssetConfig,
     parsePriceTuple,
     classifyPriceCandidate,
+    yahooUsdRateForQuoteCurrency,
   },
 };

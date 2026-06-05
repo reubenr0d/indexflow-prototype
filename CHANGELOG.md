@@ -40,6 +40,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-06-05 20:50 UTC+05:30] **Basket PnL/share-price drift after oracle price syncs is fixed.** Envio now maintains an asset→active-vault reverse index from basket asset updates and refreshes only affected baskets when `OracleAdapter.PriceUpdated` lands, so `Basket.sharePrice`, `basketPrice`, and snapshots follow on-chain NAV after price syncs without refreshing every basket. Added EEE.L/GBp regression coverage in the vault-manager seed guard and Yahoo price updater so raw pence quotes such as `49.049` cannot be treated as USD seeds when the live converted price is around `0.46`.
+
 - [2026-06-05] **Fix LogRocket React bootstrap type mismatch in web analytics bootstrap.** [`apps/web/src/components/analytics/logrocket-bootstrap.tsx`](apps/web/src/components/analytics/logrocket-bootstrap.tsx) now calls `setupLogRocketReact()` without passing `LogRocket` directly, matching the updated `logrocket-react@7` type signature and removing a Next.js build break.
 
 - [2026-06-05 20:05 UTC+05:30] **Fix TypeScript error in Yahoo quote search path.** [`apps/web/src/app/api/yahoo-finance/quote/route.ts`](apps/web/src/app/api/yahoo-finance/quote/route.ts) now normalizes `yf.search()` payloads before reading `quotes`, preventing `unknown`-typed `raw` from breaking strict TS checks at build time and preserving existing search fallback behavior.

@@ -80,6 +80,15 @@ type BasketAsset {
   updatedBlock: BigInt!
 }
 
+type AssetBasketMembership {
+  id: ID!
+  chainId: Int!
+  assetId: Bytes!
+  vaults: [Bytes!]!
+  updatedAt: BigInt!
+  updatedBlock: BigInt!
+}
+
 type BasketExposure {
   id: ID!
   chainId: Int!

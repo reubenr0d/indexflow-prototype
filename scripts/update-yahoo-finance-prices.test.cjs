@@ -9,12 +9,25 @@ const {
   parseAssetConfig,
   parsePriceTuple,
   classifyPriceCandidate,
+  yahooUsdRateForQuoteCurrency,
 } = __testing;
 
 test('normalizePrice scales 8 decimals to 1e30 precision', () => {
   const raw = 71230000n; // 0.7123 * 1e8
   const norm = normalizePrice(raw, 8);
   assert.equal(norm, 712300000000000000000000000000n);
+});
+
+test('yahooUsdRateForQuoteCurrency treats GBp as pence', () => {
+  assert.equal(yahooUsdRateForQuoteCurrency('GBp', 1.3384731), 0.013384731);
+  assert.equal(yahooUsdRateForQuoteCurrency('GBP', 1.3384731), 1.3384731);
+});
+
+test('EEE.L raw pence quote converts to USD before oracle normalization', () => {
+  const usd = 34.35 * yahooUsdRateForQuoteCurrency('GBp', 1.3384731);
+  const raw = BigInt(Math.round(usd * 1e8));
+  assert.equal(raw, 45976551n);
+  assert.equal(normalizePrice(raw, 8), 459765510000000000000000000000n);
 });
 
 test('computeDeviationBps calculates relative move', () => {
