@@ -1,403 +1,343 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-06T21:18:43.007Z",
+  "updatedAt": "2026-06-06T22:20:38.566Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-06-06T21:18:42.701Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-06T22:20:38.406Z",
       "headlines": [
         {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "title": "Nvidia’s Next Big Growth Lever?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA",
-            "ANTH.PVT",
-            "META"
+            "BRK-B",
+            "INTC"
           ]
         },
         {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-06T22:20:38.406Z",
+      "headlines": [
+        {
+          "title": "Nvidia’s Next Big Growth Lever?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GOOG"
+            "NVDA",
+            "BRK-B",
+            "INTC"
           ]
+        },
+        {
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-06T21:18:42.701Z",
+      "fetchedAt": "2026-06-06T22:20:38.406Z",
       "headlines": [
         {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "title": "Nvidia’s Next Big Growth Lever?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA",
-            "ANTH.PVT",
-            "META"
+            "BRK-B",
+            "INTC"
           ]
         },
         {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-06T21:18:42.701Z",
+      "fetchedAt": "2026-06-06T22:20:38.406Z",
       "headlines": [
         {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "title": "Nvidia’s Next Big Growth Lever?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA",
-            "ANTH.PVT",
-            "META"
+            "BRK-B",
+            "INTC"
           ]
         },
         {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-06T21:18:42.701Z",
-      "headlines": [
-        {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "ANTH.PVT",
-            "META"
-          ]
-        },
-        {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-06T21:18:42.701Z",
+      "fetchedAt": "2026-06-06T22:20:38.406Z",
       "headlines": [
         {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "title": "Nvidia’s Next Big Growth Lever?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA",
-            "ANTH.PVT",
-            "META"
+            "BRK-B",
+            "INTC"
           ]
         },
         {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-06T21:18:43.007Z",
-      "headlines": [
-        {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "ANTH.PVT",
-            "META"
-          ]
-        },
-        {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-06T21:18:43.007Z",
-      "headlines": [
-        {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "ANTH.PVT",
-            "META"
-          ]
-        },
-        {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-06T21:18:43.007Z",
-      "headlines": [
-        {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "ANTH.PVT",
-            "META"
-          ]
-        },
-        {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-06T21:18:43.007Z",
-      "headlines": [
-        {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "ANTH.PVT",
-            "META"
-          ]
-        },
-        {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GOOG"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-06T21:18:43.007Z",
+      "fetchedAt": "2026-06-06T22:20:38.566Z",
       "headlines": [
         {
-          "title": "Is Salesforce or ServiceNow a Better Stock to Buy Right Now?",
+          "title": "Nvidia’s Next Big Growth Lever?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1fa467bb-d784-3213-b0d3-50f515a7b6f0/is-salesforce-or-servicenow-a.html",
-          "publishedAt": "2026-06-06T21:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOW",
-            "CRM",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Conundrum of Investing in AI Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7be54533-d700-3066-8fcf-b28d6bc51f46/the-conundrum-of-investing-in.html",
-          "publishedAt": "2026-06-06T21:07:37.000Z",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
             "NVDA",
-            "ANTH.PVT",
-            "META"
+            "BRK-B",
+            "INTC"
           ]
         },
         {
-          "title": "Google targets costly problem for Android users",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3a1069ac-7f04-3cfa-80e8-6675dd2d1983/google-targets-costly-problem.html",
-          "publishedAt": "2026-06-06T21:03:00.000Z",
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-06T22:20:38.566Z",
+      "headlines": [
+        {
+          "title": "Nvidia’s Next Big Growth Lever?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GOOG"
+            "NVDA",
+            "BRK-B",
+            "INTC"
           ]
+        },
+        {
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-06T22:20:38.566Z",
+      "headlines": [
+        {
+          "title": "Nvidia’s Next Big Growth Lever?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BRK-B",
+            "INTC"
+          ]
+        },
+        {
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-06T22:20:38.566Z",
+      "headlines": [
+        {
+          "title": "Nvidia’s Next Big Growth Lever?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BRK-B",
+            "INTC"
+          ]
+        },
+        {
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-06T22:20:38.566Z",
+      "headlines": [
+        {
+          "title": "Nvidia’s Next Big Growth Lever?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/309ba93c-720f-3f82-8493-3d3ef292dc5c/nvidia%E2%80%99s-next-big-growth.html",
+          "publishedAt": "2026-06-06T22:16:59.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BRK-B",
+            "INTC"
+          ]
+        },
+        {
+          "title": "From Bystanders to Heart Savers: MedStar Health CPR Training Event Puts Power to Save Lives in Community's Hands",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/bystanders-heart-savers-medstar-health-221300868.html",
+          "publishedAt": "2026-06-06T22:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Kane edges England to underwhelming New Zealand victory",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e686c282-d077-33bb-9275-11f09faa8ae9/kane-edges-england-to.html",
+          "publishedAt": "2026-06-06T22:12:56.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

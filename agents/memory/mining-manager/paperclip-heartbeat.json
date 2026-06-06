@@ -7,33 +7,27 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-06T21:20:30.328Z",
-  "startedAt": "2026-06-06T21:18:01.981Z",
-  "finishedAt": "2026-06-06T21:20:30.328Z",
+  "runId": "2026-06-06T22:21:21.444Z",
+  "startedAt": "2026-06-06T22:19:33.530Z",
+  "finishedAt": "2026-06-06T22:21:21.444Z",
   "status": "succeeded",
   "usage": {
-    "turns": 28,
-    "toolCalls": 28,
+    "turns": 9,
+    "toolCalls": 12,
     "errors": 0,
-    "softFailures": 15,
-    "writeActions": 2
+    "softFailures": 2,
+    "writeActions": 1
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nOn the short side, the Atlas model has identified IRONVELD PLC as a potential short candidate due to its significant negative predicted return. This aligns with the model's prediction of downside potential for this stock.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Long Positions**: None currently due to churn guard restrictions.\n- **Short Positions**: IRONVELD PLC (IRON.L)",
-  "summary": "## Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nOn the short side, the Atlas model has identified IRONVELD PLC as a potential short candidate due to its significant negative predicted return. This aligns with the model's prediction of downside potential for this stock.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Long Positions**: None currently due to churn guard restrictions.\n- **Short Positions**: IRONVELD PLC (IRON.L)\n\n### Summary\n\n1. **Vault State**: The vault currently holds a short position on IRONVELD PLC (IRON.L). The NAV remains stable, and the vault has sufficient available collateral for new positions, but churn guard restrictions are preventing re-opening of previously closed positions.\n\n2. **Top Picks Acted On**: \n   - **Shorts**: IRONVELD PLC (ML Score: 0.1, Predicted Return: -54.35%)\n\n3. **Positions Opened**:\n   - **Short**: IRONVELD PLC (IRON.L)\n\n4. **Recommendations for Next Run**: \n   - Continue monitoring the Atlas ML model's top picks for any changes in scores and predicted returns.\n   - Evaluate the performance of the current positions and be ready to close any that fall outside the [-6%, +8%] PnL band.\n   - Consider reallocating capital if new high-potential picks emerge and churn guard restrictions are lifted.",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nOn the short side, the Atlas model has identified IRONVELD PLC as a potential short candidate due to its significant negative predicted return. This aligns with the model's prediction of downside potential for this stock.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Long Positions**: AbraSilver Resource (ABRA.TO) was opened due to its high ML score and predicted return.\n- **Short Positions**: IRONVELD PLC (IRON.L)",
+  "summary": "### Final Summary\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. \n\nOn the short side, the Atlas model has identified IRONVELD PLC as a potential short candidate due to its significant negative predicted return. This aligns with the model's prediction of downside potential for this stock.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Long Positions**: AbraSilver Resource (ABRA.TO) was opened due to its high ML score and predicted return.\n- **Short Positions**: IRONVELD PLC (IRON.L)\n\n## Actions Taken\n1. **Long Position Opened**: AbraSilver Resource (ABRA.TO) was opened with a size of 4511472460000000000000000000000000 and collateral of 451.15 USDC, leveraging the available collateral effectively.\n\n2. **Churn Guard Restrictions**: Hercules Metals (BIG.V) and Targa Exploration Corp. (TEX.CN) were not reopened due to churn guard restrictions. The cooldown period will end soon, allowing for potential re-entry in the next run.\n\n3. **News Context**: No significant news was found for the selected long and short candidates that would influence the trading decisions this run.\n\n## Recommendations for Next Run\n- Monitor the Atlas ML model's top picks and short candidates for any changes in rankings or predicted returns.\n- Re-evaluate the current positions and consider opening new positions if the churn guard restrictions are lifted.\n- Continue to scan for relevant news that might impact the selected assets and adjust the strategy accordingly.",
   "writeActions": [
     {
-      "tool": "close_position",
-      "txHash": "0x2007ae66b0a967a333c9039bcf401a478402e88ac866c6a90ae53196ec5dd490",
-      "justification": "auto-rebalance: profit rotation: closing #3 long TEX.CN (potential 0.7725, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)",
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "close_position",
-      "txHash": "0xb721ea86f8f28d78c1b8a328142534069e0711a568771ce983d280b7c42e3fd4",
-      "justification": "Closing Hercules Metals (BIG.V) to free up collateral for higher-ranked entries ABRA.TO and TEX.CN, which have higher predicted returns.",
+      "tool": "open_position",
+      "txHash": "0xdd5d919066e0b6796926761259bf12fe45e6c9bcf89e6227b5e9d4b15d98905a",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return, leveraging the available collateral effectively.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Closing BIG.V frees up $676.72 collateral, aligning with metals_risk_off regime favoring long positions."
+        "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($451.15 out of $1353.44), which is within acceptable limits given the longBonus of 2."
       },
       "kind": "vault-tx"
     }
