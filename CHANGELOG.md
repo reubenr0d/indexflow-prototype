@@ -24,6 +24,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Changed
 
+- [2026-06-06 18:30 UTC+05:30] **Basket detail AI decisions are collapsed by default.** The `/baskets/<vault>` AI Operator card now keeps historical run details hidden until the user clicks "Show AI decisions", with README/docs and tooltip copy updated to match.
+
 - [2026-06-05 18:10 UTC+05:30] **Codex repo rules now explicitly include applicable Cursor agent rules.** [`AGENTS.md`](AGENTS.md) tells Codex to check `.cursor/rules/*.mdc` before edits, apply matching Cursor rules alongside repo instructions, and defer to `AGENTS.md` if the two conflict.
 
 - [2026-05-26] **Envio HyperIndex URL rotated to `115a80f` (Mantle Sepolia multichain).** After the Mantle Sepolia hub deploy and `apps/envio/config.yaml` network `5003` push, Envio Cloud redeployed at `https://indexer.dev.hyperindex.xyz/115a80f/v1/graphql`. Updated [`AGENT_DEPLOYMENT_MEMORY.md`](AGENT_DEPLOYMENT_MEMORY.md), [`COMPANY.md`](COMPANY.md), envio-graphql skill/tests, and [`apps/envio/src/utils/contractCalls.ts`](apps/envio/src/utils/contractCalls.ts) (`MANTLE_SEPOLIA_RPC_URL` / chain `5003`). **Operator:** set Vercel `NEXT_PUBLIC_ENVIO_URL`, `apps/web/.env.local`, GitHub `ENVIO_URL`, and Envio Cloud RPC env vars to match; retire slug `822ce13`.
@@ -39,6 +41,8 @@ Legacy entries that predate this rule may remain without timestamps.
 - [2026-05-26 21:30 UTC+05:30] **`/ops` public surface renamed for clearer positioning.** Eyebrow is now **Live Manifest · v0.3**, H1 **IndexFlow AI DAO**, subtitle echoes manifest/heartbeats in git. Header and footer nav both link to `/ops` as **Agent Ops** (was "Agents" / "Agent Company"). SEO metadata on [`apps/web/src/app/ops/page.tsx`](apps/web/src/app/ops/page.tsx) and site-wide description in [`apps/web/src/app/layout.tsx`](apps/web/src/app/layout.tsx) updated to match. [`ops-hero.tsx`](apps/web/src/components/ops/ops-hero.tsx) synced for consistency (component unused in layout). Internal docs (`COMPANY.md`, blog, agent prompts) still use "Agent Company" as the canonical term.
 
 ### Fixed
+
+- [2026-06-05 23:08 UTC+05:30] **Issue/meta agents no longer get forced into vault deployment.** [`scripts/agent-runner.mjs`](scripts/agent-runner.mjs) now scopes vault lifecycle prompts and final-summary `create_vault` enforcement to agents with `vaultName` frontmatter. Non-vault agents such as `issue-implementer` and `self-improver-issues` keep state/run-log/heartbeat memory without receiving `## Your Vault` instructions or publishing vault metadata.
 
 - [2026-06-05 22:30 UTC+05:30] **Trading-agent vault pinning now covers read/planning tools.** [`scripts/agent-runner.mjs`](scripts/agent-runner.mjs) pins the canonical vault address for vault-bound reads and `plan_open_position`, preventing LLM-mashed vault/assetId hex strings from wasting a turn with `INVALID_ARGUMENT` before sizing. Write tools still append the existing audit note when the runner corrects a vault argument.
 

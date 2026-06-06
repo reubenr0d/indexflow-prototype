@@ -578,8 +578,16 @@ function shouldInvalidateDeploymentMemory(state, nextDeploymentFingerprint) {
   return state.deploymentFingerprint !== nextDeploymentFingerprint;
 }
 
-function resolveVaultLifecycle(state, currentAgentFileHash) {
-  const needsNewVault = !state || !state.vaultAddress;
+function usesVaultLifecycle(config) {
+  return Boolean(config?.vaultName);
+}
+
+function resolveVaultLifecycle(
+  state,
+  currentAgentFileHash,
+  { hasVaultLifecycle = true } = {},
+) {
+  const needsNewVault = hasVaultLifecycle && (!state || !state.vaultAddress);
   const agentFileChanged = Boolean(
     state?.agentFileHash && state.agentFileHash !== currentAgentFileHash
   );
@@ -772,6 +780,29 @@ export function buildClosedPositionEntry({
     entryJustification: matchingOpen?.justification || null,
     entryTxHash: matchingOpen?.txHash || null,
   };
+}
+
+function buildNonVaultMemoryState({
+  state,
+  currentAgentFileHash,
+  deploymentContext,
+  finishedAt,
+  extractedThesis,
+}) {
+  const nextState = {
+    agentFileHash: currentAgentFileHash,
+    deploymentFingerprint: deploymentContext.fingerprint,
+    deploymentConfigPath: deploymentContext.deploymentConfigPath,
+    lastRunAt: finishedAt,
+  };
+  if (extractedThesis) {
+    nextState.thesis = extractedThesis;
+    nextState.lastThesisUpdate = finishedAt;
+  } else if (state?.thesis) {
+    nextState.thesis = state.thesis;
+    nextState.lastThesisUpdate = state.lastThesisUpdate;
+  }
+  return nextState;
 }
 
 const LESSONS_DEFAULT_WINDOW_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
@@ -2345,20 +2376,22 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault, marketRegim
   }
 
   // Vault context
-  prompt += "\n\n## Your Vault\n";
-  if (needsNewVault) {
-    const name = config.vaultName || config.name;
-    prompt +=
-      `You do not have a vault yet. Your first action must be to create one:\n` +
-      `- Call create_vault with name="${name}", depositFeeBps=${config.depositFeeBps}, redeemFeeBps=${config.redeemFeeBps}\n` +
-      `- Use the returned vaultAddress from create_vault\n` +
-      `- Then proceed with your normal workflow using that vault address.`;
-  } else if (state?.vaultAddress) {
-    prompt +=
-      `Your vault address is: ${state.vaultAddress}\n` +
-      `Vault name: ${state.vaultName || "unknown"}\n` +
-      `Deployed: ${state.deployedAt || "unknown"}\n` +
-      `Only operate on this vault. Do not touch other vaults.`;
+  if (usesVaultLifecycle(config)) {
+    prompt += "\n\n## Your Vault\n";
+    if (needsNewVault) {
+      const name = config.vaultName || config.name;
+      prompt +=
+        `You do not have a vault yet. Your first action must be to create one:\n` +
+        `- Call create_vault with name="${name}", depositFeeBps=${config.depositFeeBps}, redeemFeeBps=${config.redeemFeeBps}\n` +
+        `- Use the returned vaultAddress from create_vault\n` +
+        `- Then proceed with your normal workflow using that vault address.`;
+    } else if (state?.vaultAddress) {
+      prompt +=
+        `Your vault address is: ${state.vaultAddress}\n` +
+        `Vault name: ${state.vaultName || "unknown"}\n` +
+        `Deployed: ${state.deployedAt || "unknown"}\n` +
+        `Only operate on this vault. Do not touch other vaults.`;
+    }
   }
 
   // Recent run history
@@ -3216,6 +3249,7 @@ export async function runAgent(agentName) {
   console.log(`  Model (global env): ${LLM_MODEL}`);
 
   const config = loadAgentConfig(agentName);
+  const hasVaultLifecycle = usesVaultLifecycle(config);
   const runNetwork = resolveRunNetworkKey();
   const isHubExecutionNetwork = isWriteAllowedOnNetwork(runNetwork, HUB_EXECUTION_NETWORK);
   const runLogFile = `run-log.${runNetwork}.jsonl`;
@@ -3399,11 +3433,12 @@ export async function runAgent(agentName) {
   }
   let { needsNewVault, agentFileChanged } = resolveVaultLifecycle(
     state,
-    config.fileHash
+    config.fileHash,
+    { hasVaultLifecycle },
   );
 
   const vaultOverride = parseVaultOverride(process.env.AGENT_VAULT_OVERRIDE);
-  const vaultOverrideActive = Boolean(vaultOverride);
+  const vaultOverrideActive = hasVaultLifecycle && Boolean(vaultOverride);
   if (vaultOverrideActive) {
     console.log(
       `Memory: AGENT_VAULT_OVERRIDE set — targeting ${vaultOverride} for this run only (state/metadata/run-log writes will be skipped).`
@@ -3421,22 +3456,33 @@ export async function runAgent(agentName) {
     recentRuns = [];
   }
 
-  if (needsNewVault) {
-    if (!state) {
-      console.log("Memory: no state found — agent will deploy a new vault.");
+  if (hasVaultLifecycle) {
+    if (needsNewVault) {
+      if (!state) {
+        console.log("Memory: no state found — agent will deploy a new vault.");
+      } else {
+        console.log("Memory: no vault address — agent will deploy a new vault.");
+      }
     } else {
-      console.log("Memory: no vault address — agent will deploy a new vault.");
+      console.log(`Memory: vault ${state.vaultAddress} (${state.vaultName})`);
+      if (agentFileChanged) {
+        console.log("Memory: agent .md file changed — reusing existing vault.");
+      }
+      // Seed the runtime tracker from persistent state so policy
+      // enforcement, get_all_vaults guards, and other code paths know
+      // the active vault from turn 1 (no need to wait for the model to
+      // re-discover it via state_get).
+      capturedVaultAddress = state.vaultAddress;
     }
   } else {
-    console.log(`Memory: vault ${state.vaultAddress} (${state.vaultName})`);
+    console.log(
+      state
+        ? "Memory: non-vault state loaded."
+        : "Memory: no state found — non-vault agent will run without vault context.",
+    );
     if (agentFileChanged) {
-      console.log("Memory: agent .md file changed — reusing existing vault.");
+      console.log("Memory: agent .md file changed — updating non-vault state after run.");
     }
-    // Seed the runtime tracker from persistent state so policy
-    // enforcement, get_all_vaults guards, and other code paths know
-    // the active vault from turn 1 (no need to wait for the model to
-    // re-discover it via state_get).
-    capturedVaultAddress = state.vaultAddress;
   }
   if (recentRuns.length > 0) {
     console.log(
@@ -4854,7 +4900,7 @@ export async function runAgent(agentName) {
             choice.finish_reason === "stop" ||
             !choice.message.tool_calls?.length
           ) {
-            if (needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
+            if (hasVaultLifecycle && needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
               policyRuntime.enforcementRounds += 1;
               messages.push({
                 role: "user",
@@ -4880,7 +4926,7 @@ export async function runAgent(agentName) {
         choice.finish_reason === "stop" ||
         !choice.message.tool_calls?.length
       ) {
-        if (needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
+        if (hasVaultLifecycle && needsNewVault && !capturedVaultAddress && policyRuntime.enforcementRounds < 8) {
           policyRuntime.enforcementRounds += 1;
           messages.push(choice.message);
           messages.push({
@@ -5093,7 +5139,7 @@ export async function runAgent(agentName) {
       console.log(
         "Memory: vault override active — skipping state/metadata/run-log writes."
       );
-    } else if (capturedVaultAddress) {
+    } else if (hasVaultLifecycle && capturedVaultAddress) {
       const newState = {
         vaultAddress: capturedVaultAddress,
         vaultName: config.vaultName || config.name,
@@ -5132,6 +5178,25 @@ export async function runAgent(agentName) {
         runSummary.errors.push({ tool: "_memory_publish_metadata", error: safeErr });
       }
       persistedState = newState;
+    } else if (!hasVaultLifecycle) {
+      const updatedState = buildNonVaultMemoryState({
+        state,
+        currentAgentFileHash: config.fileHash,
+        deploymentContext,
+        finishedAt: runSummary.finishedAt,
+        extractedThesis,
+      });
+      try {
+        await memory.writeState(updatedState);
+      } catch (err) {
+        const safeErr = redactSecrets(err.message || String(err));
+        console.error(`Memory: writeState failed via ${memory.mode} adapter: ${safeErr}`);
+        runSummary.errors.push({ tool: "_memory_write_state", error: safeErr });
+      }
+      if (extractedThesis) {
+        console.log(`Memory: thesis updated (${extractedThesis.slice(0, 80)}...)`);
+      }
+      persistedState = updatedState;
     } else if (state) {
       const updatedState = {
         ...state,
@@ -5318,7 +5383,9 @@ export const __agentRunnerInternals = {
   buildDeploymentFingerprint,
   shortHash,
   shouldInvalidateDeploymentMemory,
+  usesVaultLifecycle,
   resolveVaultLifecycle,
+  buildNonVaultMemoryState,
   parseVaultOverride,
   rotateFileToArchive,
   rotateAgentMemoryForDeploymentChange,
@@ -5339,6 +5406,7 @@ export const __agentRunnerInternals = {
   parseWriteConfirmationCommand,
   pushRejectedToolResponses,
   extractThesis,
+  buildSystemPrompt,
   extractNewestVaultAddress,
   extractVaultAddressFromCreateVaultResponse,
   recordMcpErrorIfPresent,

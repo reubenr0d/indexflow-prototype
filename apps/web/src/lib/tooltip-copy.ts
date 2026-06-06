@@ -188,7 +188,7 @@ export const TOOLTIP_COPY = {
 
   // AI agent vault management
   aiOperator:
-    "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations. The AI Decisions panel shows each run even when no actions executed, including final summaries, reasoning summaries, tool-call traces, errors, risk-officer verdicts, and any on-chain/off-chain actions.",
+    "This vault is managed by an autonomous AI agent that researches markets, opens and closes positions, and rebalances allocations. Use Show AI decisions to expand each run, including no-action runs, final summaries, reasoning summaries, tool-call traces, errors, risk-officer verdicts, and any on-chain/off-chain actions.",
   vaultThesis:
     "The AI operator's current investment thesis — a plain-English summary of the strategy rationale and target exposures. The header chips show the signal source (Atlas ML / Atlas Quality), the entry-mode policy, and how recently the operator last refreshed it. Inline tickers in the thesis (e.g. AHR.V, (CRML)) and the chips in the 'Top picks' rail beneath are clickable — they open the matching ticker on Yahoo Finance in a new tab. When a thesis hasn't been published yet, the card falls back to the latest run summary so you still see what the operator was thinking. Use 'Read more' to expand long write-ups.",
 } as const;

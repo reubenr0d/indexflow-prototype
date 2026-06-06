@@ -432,7 +432,7 @@ function AiActivitySection({
   agentMeta: NonNullable<ReturnType<typeof useAgentMetadata>["data"]>;
   className?: string;
 }) {
-  const [decisionsOpen, setDecisionsOpen] = useState(true);
+  const [decisionsOpen, setDecisionsOpen] = useState(false);
   const config = useConfig();
   const { chainId } = useDeploymentTarget();
   const explorer = config.chains.find((c) => c.id === chainId)?.blockExplorers?.default?.url;

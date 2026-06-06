@@ -104,11 +104,13 @@ test("publishPaperclipHeartbeat writes a v1 schema snapshot for a trading agent"
       txHash: "0xdeadbeef",
       justification: "Atlas top-pick GSR.V crossed 88 ml_score.",
       riskOfficer: { verdict: "approve", reason: "fits policy" },
+      kind: "vault-tx",
     });
     assert.deepEqual(payload.writeActions[1], {
       tool: "wire_asset",
       txHash: "0xfeedface",
       justification: "Onboard GSR.V at live oracle price.",
+      kind: "vault-tx",
     });
     assert.deepEqual(payload.errors, []);
   });

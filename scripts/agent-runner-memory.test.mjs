@@ -8,7 +8,10 @@ import { __agentRunnerInternals } from "./agent-runner.mjs";
 const {
   buildDeploymentFingerprint,
   shouldInvalidateDeploymentMemory,
+  usesVaultLifecycle,
   resolveVaultLifecycle,
+  buildNonVaultMemoryState,
+  buildSystemPrompt,
   rotateFileToArchive,
   shortHash,
 } = __agentRunnerInternals;
@@ -58,6 +61,97 @@ test("resolveVaultLifecycle reuses remembered vaults across agent file edits", (
       agentFileChanged: true,
     }
   );
+});
+
+test("usesVaultLifecycle is gated by vaultName frontmatter", () => {
+  assert.equal(usesVaultLifecycle({ name: "mining-manager", vaultName: "Minestarters ML Picks" }), true);
+  assert.equal(usesVaultLifecycle({ name: "issue-implementer", vaultName: null }), false);
+  assert.equal(usesVaultLifecycle({ name: "self-improver-issues" }), false);
+});
+
+test("resolveVaultLifecycle does not require vaults for non-vault agents", () => {
+  const currentHash = "sha256:new";
+
+  assert.deepEqual(
+    resolveVaultLifecycle(null, currentHash, { hasVaultLifecycle: false }),
+    {
+      needsNewVault: false,
+      agentFileChanged: false,
+    },
+  );
+
+  assert.deepEqual(
+    resolveVaultLifecycle(
+      {
+        agentFileHash: "sha256:old",
+      },
+      currentHash,
+      { hasVaultLifecycle: false },
+    ),
+    {
+      needsNewVault: false,
+      agentFileChanged: true,
+    },
+  );
+});
+
+test("buildSystemPrompt injects vault instructions only for vault agents", () => {
+  const baseConfig = {
+    name: "issue-implementer",
+    systemPrompt: "Base prompt.",
+    skills: [],
+    vaultName: null,
+    depositFeeBps: 50,
+    redeemFeeBps: 50,
+  };
+
+  const nonVaultPrompt = buildSystemPrompt(baseConfig, null, [], false);
+  assert.ok(!nonVaultPrompt.includes("## Your Vault"));
+  assert.ok(!nonVaultPrompt.includes("create_vault"));
+
+  const vaultPrompt = buildSystemPrompt(
+    {
+      ...baseConfig,
+      name: "mining-manager",
+      vaultName: "Minestarters ML Picks",
+    },
+    null,
+    [],
+    true,
+  );
+  assert.ok(vaultPrompt.includes("## Your Vault"));
+  assert.ok(vaultPrompt.includes('Call create_vault with name="Minestarters ML Picks"'));
+});
+
+test("buildNonVaultMemoryState persists thesis without vault fields", () => {
+  const state = {
+    vaultAddress: "0xabc0000000000000000000000000000000000001",
+    vaultName: "Wrong Vault",
+    thesis: "Previous thesis.",
+    lastThesisUpdate: "2026-06-01T00:00:00.000Z",
+  };
+  const next = buildNonVaultMemoryState({
+    state,
+    currentAgentFileHash: "sha256:new",
+    deploymentContext: {
+      fingerprint: "sha256:deployment",
+      deploymentConfigPath: "/tmp/deployment.json",
+    },
+    finishedAt: "2026-06-05T17:00:00.000Z",
+    extractedThesis: "New thesis.",
+  });
+
+  assert.deepEqual(next, {
+    agentFileHash: "sha256:new",
+    deploymentFingerprint: "sha256:deployment",
+    deploymentConfigPath: "/tmp/deployment.json",
+    lastRunAt: "2026-06-05T17:00:00.000Z",
+    thesis: "New thesis.",
+    lastThesisUpdate: "2026-06-05T17:00:00.000Z",
+  });
+  assert.equal("vaultAddress" in next, false);
+  assert.equal("vaultName" in next, false);
+  assert.equal("deployedAt" in next, false);
 });
 
 test("buildDeploymentFingerprint changes when deployment config content changes", () => {
