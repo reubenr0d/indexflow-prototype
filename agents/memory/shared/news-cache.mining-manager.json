@@ -1,543 +1,323 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-06T00:21:34.371Z",
+  "updatedAt": "2026-06-06T08:03:48.461Z",
   "entries": {
-    "FOX.CN": {
-      "fetchedAt": "2026-06-06T00:21:33.956Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-06T00:21:33.956Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-06T00:21:33.956Z",
+      "fetchedAt": "2026-06-06T08:03:46.926Z",
       "headlines": [
         {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TER"
+            "NIO"
           ]
         },
         {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-06-06T00:21:33.956Z",
+      "fetchedAt": "2026-06-06T08:03:46.926Z",
       "headlines": [
         {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TER"
+            "NIO"
           ]
         },
         {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-06T08:03:46.926Z",
+      "headlines": [
+        {
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RELY"
+            "NIO"
           ]
         },
         {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-06T08:03:46.926Z",
+      "headlines": [
+        {
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GT"
+            "NIO"
           ]
+        },
+        {
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-06T00:21:33.956Z",
+      "fetchedAt": "2026-06-06T08:03:46.926Z",
       "headlines": [
         {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TER"
+            "NIO"
           ]
         },
         {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BTO.TO": {
-      "fetchedAt": "2026-06-06T00:21:34.167Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-06T00:21:34.167Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-06-06T00:21:34.167Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-06T00:21:34.167Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AEM.TO": {
-      "fetchedAt": "2026-06-06T00:21:34.167Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-06T00:21:34.371Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-06-06T00:21:34.371Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-06T00:21:34.371Z",
+      "fetchedAt": "2026-06-06T08:03:48.461Z",
       "headlines": [
         {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TER"
+            "NIO"
           ]
         },
         {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ORD.AX": {
-      "fetchedAt": "2026-06-06T00:21:34.371Z",
-      "headlines": [
-        {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TER"
-          ]
-        },
-        {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RELY"
-          ]
-        },
-        {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GT"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-06T00:21:34.371Z",
+      "fetchedAt": "2026-06-06T08:03:48.461Z",
       "headlines": [
         {
-          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
-          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TER"
+            "NIO"
           ]
         },
         {
-          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
-          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-06T08:03:48.461Z",
+      "headlines": [
+        {
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RELY"
+            "NIO"
           ]
         },
         {
-          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
-          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-06T08:03:48.461Z",
+      "headlines": [
+        {
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GT"
+            "NIO"
           ]
+        },
+        {
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-06T08:03:48.461Z",
+      "headlines": [
+        {
+          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
+          "publishedAt": "2026-06-06T07:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
+          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NIO"
+          ]
+        },
+        {
+          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
+          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
