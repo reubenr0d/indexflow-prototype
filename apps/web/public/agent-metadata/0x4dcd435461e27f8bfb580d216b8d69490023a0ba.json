@@ -4,80 +4,85 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Empire Metals Limited, all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of a position in Empire Metals Limited reflects the model's confidence in its potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities once the churn guard cooldowns have expired.",
-  "lastRunAt": "2026-06-05T22:37:07.094Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the newly opened positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "lastRunAt": "2026-06-06T05:07:44.011Z",
   "latestRun": {
-    "runId": "2026-06-05T22:37:07.094Z",
-    "finishedAt": "2026-06-05T22:37:07.094Z",
-    "summary": "### Final Summary\n\n1. **Vault State**: The vault successfully opened a new long position on Empire Metals Limited (EEE.L), utilizing the available collateral. The vault's NAV remains at $2,024.73, with 12 assets currently tracked.\n\n2. **Atlas ML Top Picks**: The top picks included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Empire Metals Limited (EEE.L). Due to churn guard cooldowns, positions on BIG.V and ABRA.TO could not be reopened this run.\n\n3. **Position Opened**: A long position was successfully opened on Empire Metals Limited (EEE.L) due to its high ML score and predicted return, aligning with the current model's focus on diversified metals.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Empire Metals Limited, all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of a position in Empire Metals Limited reflects the model's confidence in its potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities once the churn guard cooldowns have expired.",
-    "startedAt": "2026-06-05T22:35:25.217Z",
+    "runId": "2026-06-06T05:07:44.011Z",
+    "finishedAt": "2026-06-06T05:07:44.011Z",
+    "summary": "### Current Situation\n\n1. **Available Collateral**: There is no available collateral for opening new positions, as all capital is currently locked in existing positions.\n\n2. **Open Positions**: The vault holds three long positions on:\n   - Hercules Metals (BIG.V)\n   - AbraSilver Resource (ABRA.TO)\n   - Targa Exploration Corp. (TEX.CN)\n\n3. **Action Required**: Since there is no available collateral, we cannot open additional positions without closing existing ones.\n\n### Next Steps\n\n1. **Evaluate Current Positions**: Since all positions are top picks, there might not be a weaker position to close. However, we will ensure that the current allocation is optimal.\n\n2. **Prepare for Future Opportunities**: In the next run, if there is a change in the top picks or if new high-potential short candidates arise, consider reallocating capital accordingly.\n\n3. **Monitor Market Conditions**: Keep an eye on market conditions and news that might affect the current positions or potential new entries.\n\n### Final Summary\n\nThe vault is currently fully allocated with top picks Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN). No new positions can be opened due to the lack of available collateral. The focus remains on monitoring existing positions and preparing for potential reallocations in the next run.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the current positions for any significant market changes.\n- Be prepared to act on new high-potential picks or short candidates if conditions permit.\n- Stay informed on news and market trends that could impact the vault's holdings.",
+    "startedAt": "2026-06-06T05:05:17.174Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 11,
+    "turns": 15,
     "toolCalls": [
       "get_vault_state",
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_news",
-      "yfinance_news",
       "get_perp_capital_snapshot",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "open_position",
-      "get_vault_state"
+      "get_perp_capital_snapshot",
+      "get_perp_capital_snapshot",
+      "get_perp_capital_snapshot",
+      "get_perp_capital_snapshot"
     ],
-    "actionCount": 2,
-    "onChainActionCount": 2,
+    "actionCount": 0,
+    "onChainActionCount": 0,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
-    "errors": [
-      {
-        "tool": "plan_open_position",
-        "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
-      }
-    ],
+    "errors": [],
     "softFailures": [
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932, isLong=true) is blocked: a close was recorded at 2026-06-05T20:59:12.897Z (llm_judged: Closing position on BIG.V to free up collateral for potential higher profit opportunities in the next run.). Cooldown ends at 2026-06-06T00:59:12.897Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932\",\n  \"isLong\": true,\n  \"ticker\": \"BIG.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-05T20:59:12.897Z\",\n    \"closedReason\": \"llm_judged: Closing position on BIG.V to free up collateral for potential higher profit opportunities in the next run.\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-06T00:59:12.897Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
-      },
-      {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6, isLong=true) is blocked: a close was recorded at 2026-06-05T22:35:50.386Z (auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)). Cooldown ends at 2026-06-06T02:35:50.386Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"isLong\": true,\n  \"ticker\": \"ABRA.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-05T22:35:50.386Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-06T02:35:50.386Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "get_perp_capital_snapshot",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_FAILED\",\n  \"message\": \"Command failed: cast call 0x4dcd435461e27f8bfb580d216b8d69490023a0ba maxPerpAllocation()(uint256) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: Max retries exceeded HTTP error 429 with empty body\\n\",\n  \"recovery_hint\": \"Verify the vault address is correct and the OracleAdapter / VaultAccounting deployment is reachable.\"\n}",
+        "errorCode": "READ_FAILED"
       }
     ],
-    "riskOfficerVerdicts": [
-      {
-        "turn": 9,
-        "verdict": "approve",
-        "reason": "The proposed long position on EEE.L uses 33.3% of available collateral ($674.91 out of $2024.73), which is within acceptable limits and aligns with the longBonus of 2.",
-        "proposedTools": [
-          "open_position"
-        ]
-      }
-    ],
-    "confirmationBatches": [
-      {
-        "turn": 9,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "open_position"
-        ]
-      }
-    ]
+    "riskOfficerVerdicts": [],
+    "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-06T05:07:44.011Z",
+      "startedAt": "2026-06-06T05:05:17.174Z",
+      "finishedAt": "2026-06-06T05:07:44.011Z",
+      "summary": "### Current Situation\n\n1. **Available Collateral**: There is no available collateral for opening new positions, as all capital is currently locked in existing positions.\n\n2. **Open Positions**: The vault holds three long positions on:\n   - Hercules Metals (BIG.V)\n   - AbraSilver Resource (ABRA.TO)\n   - Targa Exploration Corp. (TEX.CN)\n\n3. **Action Required**: Since there is no available collateral, we cannot open additional positions without closing existing ones.\n\n### Next Steps\n\n1. **Evaluate Current Positions**: Since all positions are top picks, there might not be a weaker position to close. However, we will ensure that the current allocation is optimal.\n\n2. **Prepare for Future Opportunities**: In the next run, if there is a change in the top picks or if new high-potential short candidates arise, consider reallocating capital accordingly.\n\n3. **Monitor Market Conditions**: Keep an eye on market conditions and news that might affect the current positions or potential new entries.\n\n### Final Summary\n\nThe vault is currently fully allocated with top picks Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN). No new positions can be opened due to the lack of available collateral. The focus remains on monitoring existing positions and preparing for potential reallocations in the next run.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Continue monitoring the current positions for any significant market changes.\n- Be prepared to act on new high-potential picks or short candidates if conditions permit.\n- Stay informed on news and market trends that could impact the vault's holdings.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 15,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "get_perp_capital_snapshot",
+        "get_perp_capital_snapshot",
+        "get_perp_capital_snapshot",
+        "get_perp_capital_snapshot",
+        "get_perp_capital_snapshot"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "get_perp_capital_snapshot",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_FAILED\",\n  \"message\": \"Command failed: cast call 0x4dcd435461e27f8bfb580d216b8d69490023a0ba maxPerpAllocation()(uint256) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: Max retries exceeded HTTP error 429 with empty body\\n\",\n  \"recovery_hint\": \"Verify the vault address is correct and the OracleAdapter / VaultAccounting deployment is reachable.\"\n}",
+          "errorCode": "READ_FAILED"
+        }
+      ],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-05T22:37:07.094Z",
       "startedAt": "2026-06-05T22:35:25.217Z",

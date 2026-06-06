@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-06T00:22:58.682Z",
+  "lastRunAt": "2026-06-06T05:07:44.011Z",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the newly opened positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
   "lastThesisUpdate": "2026-06-06T00:22:58.682Z"
 }
