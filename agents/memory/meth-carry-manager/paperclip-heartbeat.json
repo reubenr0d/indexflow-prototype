@@ -7,19 +7,92 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-06T12:32:09.801Z",
-  "startedAt": "2026-06-06T12:24:15.039Z",
-  "finishedAt": "2026-06-06T12:32:09.801Z",
-  "status": "succeeded",
+  "runId": "2026-06-06T14:33:10.617Z",
+  "startedAt": "2026-06-06T14:17:07.344Z",
+  "finishedAt": "2026-06-06T14:33:10.617Z",
+  "status": "failed",
   "usage": {
-    "turns": 40,
-    "toolCalls": 42,
-    "errors": 0,
-    "softFailures": 29,
+    "turns": 35,
+    "toolCalls": 70,
+    "errors": 18,
+    "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The vault remains inactive with no positions or assets available. The hedge ratio is not applicable, and no mETH yield has been realized since the last run. Given the current policy constraints, further actions will be taken once the vault has available collateral.\n\nI will exit now, and further actions can be taken once the vault has available collateral.",
-  "summary": "",
+  "summary": "FAILED: LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128400 tokens (122888 in the messages, 5512 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "get_reserve_state",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+    },
+    {
+      "tool": "_agent",
+      "error": "LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128400 tokens (122888 in the messages, 5512 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}"
+    }
+  ]
 }

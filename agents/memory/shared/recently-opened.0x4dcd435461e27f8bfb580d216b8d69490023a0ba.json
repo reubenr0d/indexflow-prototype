@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-05T22:37:00.741Z",
+  "updatedAt": "2026-06-06T14:13:50.194Z",
   "opens": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6:long": {
       "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
@@ -30,7 +30,7 @@
       "assetId": "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
       "ticker": "TEX.CN",
       "isLong": true,
-      "openedAt": "2026-06-05T19:09:28.500Z"
+      "openedAt": "2026-06-06T14:13:50.194Z"
     }
   }
 }
