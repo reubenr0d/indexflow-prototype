@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-06T14:15:50.833Z",
-  "startedAt": "2026-06-06T14:14:36.456Z",
-  "finishedAt": "2026-06-06T14:15:50.833Z",
+  "runId": "2026-06-06T15:44:30.199Z",
+  "startedAt": "2026-06-06T15:42:59.860Z",
+  "finishedAt": "2026-06-06T15:44:30.199Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n## Vault State\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness with a score of 75 or above.\n- **News Scan**: Not applicable as no trade-ready picks were identified.\n- **Short Candidates**: Not applicable as no Red-Flag signals were identified outside the top-N.\n\n## Recommendations for Next Run\n\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix's tier definitions and timing configurations to ensure alignment with market conditions.\n- Stay prepared to act on any new trade-ready picks or Red-Flag signals that may emerge.",
+  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault Address and Current State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness with a score of 75 or above.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix tiers and timing configurations if no new opportunities arise in subsequent runs.",
   "writeActions": [],
   "errors": []
 }
