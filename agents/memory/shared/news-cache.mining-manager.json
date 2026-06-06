@@ -1,383 +1,263 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-06T10:22:59.434Z",
+  "updatedAt": "2026-06-06T12:19:47.880Z",
   "entries": {
-    "MI6.AX": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-06T12:19:47.791Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Things Are Looking Up for Knicks Owner James Dolan",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/215afd2e-bd08-3e08-92ba-ceb61d2ed4b4/things-are-looking-up-for.html",
+          "publishedAt": "2026-06-06T12:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
-      "headlines": [
-        {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
-        },
-        {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
-        },
-        {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
-      "headlines": [
-        {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
-        },
-        {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
-        },
-        {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "fetchedAt": "2026-06-06T12:19:47.791Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Things Are Looking Up for Knicks Owner James Dolan",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/215afd2e-bd08-3e08-92ba-ceb61d2ed4b4/things-are-looking-up-for.html",
+          "publishedAt": "2026-06-06T12:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BTO.TO": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-06T12:19:47.791Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Things Are Looking Up for Knicks Owner James Dolan",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/215afd2e-bd08-3e08-92ba-ceb61d2ed4b4/things-are-looking-up-for.html",
+          "publishedAt": "2026-06-06T12:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-06T12:19:47.791Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "DELL",
-            "META"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Things Are Looking Up for Knicks Owner James Dolan",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/215afd2e-bd08-3e08-92ba-ceb61d2ed4b4/things-are-looking-up-for.html",
+          "publishedAt": "2026-06-06T12:05:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TNR.V": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "MI6.AX": {
+      "fetchedAt": "2026-06-06T12:19:47.791Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9dad6281-b55e-3d93-939f-809d82bbfb43/3-cathie-wood-etfs-to-buy.html",
+          "publishedAt": "2026-06-06T12:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DELL",
-            "META"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC",
+            "ARKK"
           ]
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AEM.TO": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-06T12:19:47.880Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9dad6281-b55e-3d93-939f-809d82bbfb43/3-cathie-wood-etfs-to-buy.html",
+          "publishedAt": "2026-06-06T12:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DELL",
-            "META"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC",
+            "ARKK"
           ]
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ORD.AX": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+    "GWMO.L": {
+      "fetchedAt": "2026-06-06T12:19:47.880Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9dad6281-b55e-3d93-939f-809d82bbfb43/3-cathie-wood-etfs-to-buy.html",
+          "publishedAt": "2026-06-06T12:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DELL",
-            "META"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC",
+            "ARKK"
           ]
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "fetchedAt": "2026-06-06T12:19:47.880Z",
       "headlines": [
         {
-          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
-          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "title": "3 Cathie Wood ETFs to Buy Before They (Likely) Invest in SpaceX",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/9dad6281-b55e-3d93-939f-809d82bbfb43/3-cathie-wood-etfs-to-buy.html",
+          "publishedAt": "2026-06-06T12:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DELL",
-            "META"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC",
+            "ARKK"
           ]
         },
         {
-          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
-          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "title": "Iran targets Bahrain and Kuwait after renewed US strikes",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/eb986ea3-5a57-3113-be8c-9c53c5dc8aad/iran-targets-bahrain-and.html",
+          "publishedAt": "2026-06-06T12:13:57.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "IDYA",
-            "RO.SW"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
-          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "title": "Pakistan interior minister heads to Iran amid push for peace deal - IRNA",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/db511037-2eac-33ef-83b0-2cd1ce389b0e/pakistan-interior-minister.html",
+          "publishedAt": "2026-06-06T12:06:56.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MFC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
