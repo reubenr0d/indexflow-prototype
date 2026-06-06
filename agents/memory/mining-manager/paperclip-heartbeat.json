@@ -7,41 +7,61 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-05T22:37:07.094Z",
-  "startedAt": "2026-06-05T22:35:25.217Z",
-  "finishedAt": "2026-06-05T22:37:07.094Z",
+  "runId": "2026-06-06T00:22:58.682Z",
+  "startedAt": "2026-06-06T00:19:59.823Z",
+  "finishedAt": "2026-06-06T00:22:58.682Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 11,
-    "toolCalls": 13,
+    "turns": 13,
+    "toolCalls": 20,
     "errors": 1,
-    "softFailures": 2,
-    "writeActions": 2
+    "softFailures": 3,
+    "writeActions": 4
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Empire Metals Limited, all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of a position in Empire Metals Limited reflects the model's confidence in its potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities once the churn guard cooldowns have expired.",
-  "summary": "### Final Summary\n\n1. **Vault State**: The vault successfully opened a new long position on Empire Metals Limited (EEE.L), utilizing the available collateral. The vault's NAV remains at $2,024.73, with 12 assets currently tracked.\n\n2. **Atlas ML Top Picks**: The top picks included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Empire Metals Limited (EEE.L). Due to churn guard cooldowns, positions on BIG.V and ABRA.TO could not be reopened this run.\n\n3. **Position Opened**: A long position was successfully opened on Empire Metals Limited (EEE.L) due to its high ML score and predicted return, aligning with the current model's focus on diversified metals.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Empire Metals Limited, all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of a position in Empire Metals Limited reflects the model's confidence in its potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the availability of collateral to enable further position openings.\n- Re-evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities once the churn guard cooldowns have expired.",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the newly opened positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
+  "summary": "### Final Summary\n\n1. **Vault State**: The vault has successfully opened new long positions on Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN). The NAV remains at $2,024.70, with these positions now contributing to the vault's portfolio.\n\n2. **Atlas ML Top Picks and Short Picks**:\n   - **Long Positions Opened**: \n     - Hercules Metals (BIG.V) with a high ML score and predicted return.\n     - AbraSilver Resource (ABRA.TO) with a high ML score and predicted return.\n     - Targa Exploration Corp. (TEX.CN) with a high ML score and predicted return.\n   - **Short Candidates**: No short positions were opened due to the focus on long candidates and the current strategy.\n\n3. **News Scan**: The news scan did not return any specific headlines related to the selected long or short candidates that would provide supporting or veto context.\n\n4. **Position Opening**: Successfully opened three new long positions with a churn-guard bypass due to the high ML scores and predicted returns of the selected candidates.\n\n### Thesis\n\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the newly opened positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0xf52030b9b75aa06ce42cd707ea1e4151ef06911ce0ba4e815c4db8bceb4b386a",
-      "justification": "auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)",
+      "txHash": "0x982b40791c5e221e7b1ecdfb58dcbe8aaf8a93243d2965ff7c652d32d5cc8c6d",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long EEE.L (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)",
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x2fc9100833d42e941c912f71d60c11da48c9203f94cf0180c7d44c14965b3f8c",
-      "justification": "Opening a long position on Empire Metals Limited (EEE.L) due to its high ML score and predicted return, aligning with the current model's focus on diversified metals.",
+      "txHash": "0x4572dde5e494ff4e9d3a33619a35bab6501d27682dc7287702c91546740fddb9",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its high ML score and predicted return. Churn-guard bypass active: Re-entering due to high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The proposed long position on EEE.L uses 33.3% of available collateral ($674.91 out of $2024.73), which is within acceptable limits and aligns with the longBonus of 2."
+        "reason": "All positions are long with a longBonus of 2, and total collateral of 2024.70 is sufficient for the proposed 2024.70 allocation."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0x9a5bfcf8064a661ea229e228dcce02c5f63e42551042d70774845d0104fb7830",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return. Churn-guard bypass active: Re-entering due to high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All positions are long with a longBonus of 2, and total collateral of 2024.70 is sufficient for the proposed 2024.70 allocation."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0x02b9e53998e29df9afe294f71d34801e3f6d4251c8dd633099a03216586bb316",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return. Churn-guard bypass active: Re-entering due to high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All positions are long with a longBonus of 2, and total collateral of 2024.70 is sufficient for the proposed 2024.70 allocation."
       },
       "kind": "vault-tx"
     }
   ],
   "errors": [
     {
-      "tool": "plan_open_position",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+      "tool": "yfinance_news",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool yfinance_news: [\n  {\n    \"code\": \"too_big\",\n    \"maximum\": 10,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at most 10 element(s)\",\n    \"path\": [\n      \"symbols\"\n    ]\n  }\n]"
     }
   ]
 }

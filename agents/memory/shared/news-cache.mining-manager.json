@@ -1,383 +1,543 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-05T22:36:20.057Z",
+  "updatedAt": "2026-06-06T00:21:34.371Z",
   "entries": {
     "FOX.CN": {
-      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "fetchedAt": "2026-06-06T00:21:33.956Z",
       "headlines": [
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
-          "publishedAt": "2026-06-05T22:24:11.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NFLX"
+            "TER"
           ]
         },
         {
-          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
-          "publishedAt": "2026-06-05T22:20:01.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTC-USD",
-            "MSTR",
-            "ETH-USD",
-            "XRP-USD",
-            "SOL-USD"
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "BIG.V": {
-      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "fetchedAt": "2026-06-06T00:21:33.956Z",
       "headlines": [
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
-          "publishedAt": "2026-06-05T22:24:11.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NFLX"
+            "TER"
           ]
         },
         {
-          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
-          "publishedAt": "2026-06-05T22:20:01.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTC-USD",
-            "MSTR",
-            "ETH-USD",
-            "XRP-USD",
-            "SOL-USD"
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "fetchedAt": "2026-06-06T00:21:33.956Z",
       "headlines": [
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Netflix names longtime director Jay Hoag as chairman, succeeding Reed Hastings",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-names-longtime-director-jay-222411110.html",
-          "publishedAt": "2026-06-05T22:24:11.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NFLX"
+            "TER"
           ]
         },
         {
-          "title": "Analyst who nailed 2021 Bitcoin crash sends another warning",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/3d2ddc7d-31a3-3295-ad4c-35177cd51372/analyst-who-nailed-2021.html",
-          "publishedAt": "2026-06-05T22:20:01.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTC-USD",
-            "MSTR",
-            "ETH-USD",
-            "XRP-USD",
-            "SOL-USD"
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-06T00:21:33.956Z",
+      "headlines": [
+        {
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TER"
+          ]
+        },
+        {
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "fetchedAt": "2026-06-06T00:21:33.956Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BTO.TO": {
+      "fetchedAt": "2026-06-06T00:21:34.167Z",
+      "headlines": [
+        {
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TER"
+          ]
+        },
+        {
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "EEE.L": {
-      "fetchedAt": "2026-06-05T22:36:19.850Z",
+      "fetchedAt": "2026-06-06T00:21:34.167Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-05T22:36:20.057Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-06-06T00:21:34.167Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-06T00:21:34.167Z",
+      "headlines": [
+        {
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TER"
+          ]
+        },
+        {
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM.TO": {
+      "fetchedAt": "2026-06-06T00:21:34.167Z",
+      "headlines": [
+        {
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TER"
+          ]
+        },
+        {
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "fetchedAt": "2026-06-06T00:21:34.371Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-05T22:36:20.057Z",
+    "TNR.V": {
+      "fetchedAt": "2026-06-06T00:21:34.371Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-05T22:36:20.057Z",
+      "fetchedAt": "2026-06-06T00:21:34.371Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-05T22:36:20.057Z",
+    "ORD.AX": {
+      "fetchedAt": "2026-06-06T00:21:34.371Z",
       "headlines": [
         {
-          "title": "B2Gold Announces Voting Results from its 2026 Annual General and Special Meeting",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/b2gold-announces-voting-results-2026-223300320.html",
-          "publishedAt": "2026-06-05T22:33:00.000Z",
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BTG"
+            "TER"
           ]
         },
         {
-          "title": "Stocks making big moves this week: Okta, TETRA Technologies, Fluence Energy, Verizon, and Cloudflare",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/stocks-making-big-moves-week-223214227.html",
-          "publishedAt": "2026-06-05T22:32:14.000Z",
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI",
-            "OKTA",
-            "VZ",
-            "NET",
-            "FLNC"
+            "RELY"
           ]
         },
         {
-          "title": "First Dual GLP-1/GIP Receptor Agonist Developed for Type 1 Diabetes Shows Promising Benefits in Blood Glucose Control",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/first-dual-glp-1-gip-223000974.html",
-          "publishedAt": "2026-06-05T22:30:00.000Z",
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "GT"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-06T00:21:34.371Z",
+      "headlines": [
+        {
+          "title": "Surging AI-Driven Test And Robotics Demand Could Be A Game Changer For Teradyne (TER)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/surging-ai-driven-test-robotics-001707288.html",
+          "publishedAt": "2026-06-06T00:17:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TER"
+          ]
+        },
+        {
+          "title": "How The Investment Story For Remitly (RELY) Is Shifting With New Targets And Fair Value",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/investment-story-remitly-rely-shifting-001703101.html",
+          "publishedAt": "2026-06-06T00:17:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RELY"
+          ]
+        },
+        {
+          "title": "Is Goodyear (GT) Using Lunar Tires To Quietly Reinvent Its High-Performance Innovation Story?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/goodyear-gt-using-lunar-tires-001702290.html",
+          "publishedAt": "2026-06-06T00:17:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GT"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-05T22:35:50.386Z",
+  "updatedAt": "2026-06-06T00:20:51.028Z",
   "closures": {
     "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932": {
       "ticker": "BIG.V",
@@ -19,6 +19,12 @@
       "isLong": true,
       "closedAt": "2026-06-05T22:35:50.386Z",
       "closedReason": "auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)"
+    },
+    "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf": {
+      "ticker": "EEE.L",
+      "isLong": true,
+      "closedAt": "2026-06-06T00:20:51.028Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long EEE.L (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)"
     }
   }
 }
