@@ -1,323 +1,383 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-06T08:03:48.461Z",
+  "updatedAt": "2026-06-06T10:22:59.434Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-06T08:03:46.926Z",
+    "MI6.AX": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-06T08:03:46.926Z",
+    "EEE.L": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "headlines": [
+        {
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DELL",
+            "META"
+          ]
+        },
+        {
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-06T08:03:46.926Z",
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BIG.V": {
-      "fetchedAt": "2026-06-06T08:03:46.926Z",
+    "BTO.TO": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-06T08:03:46.926Z",
+    "GTWO.TO": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "headlines": [
+        {
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DELL",
+            "META"
+          ]
+        },
+        {
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM.TO": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "headlines": [
+        {
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DELL",
+            "META"
+          ]
+        },
+        {
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ORD.AX": {
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
+      "headlines": [
+        {
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DELL",
+            "META"
+          ]
+        },
+        {
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "IDYA",
+            "RO.SW"
+          ]
+        },
+        {
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MFC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-06T08:03:48.461Z",
+      "fetchedAt": "2026-06-06T10:22:59.434Z",
       "headlines": [
         {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Trump urged you to ‘buy a Dell’ while holding the stock — now it’s up 255%. Enrich yourself even outside the White House",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/trump-urged-buy-dell-while-101500656.html",
+          "publishedAt": "2026-06-06T10:15:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "DELL",
+            "META"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-06T08:03:48.461Z",
-      "headlines": [
-        {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "What IDEAYA Biosciences (IDYA)'s Darovasertib Phase 2/3 Win and Roche Deal Mean For Shareholders",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/ideaya-biosciences-idya-darovasertib-phase-100846407.html",
+          "publishedAt": "2026-06-06T10:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "IDYA",
+            "RO.SW"
           ]
         },
         {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-06T08:03:48.461Z",
-      "headlines": [
-        {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
+          "title": "Will AI Partnerships and Digital Ecosystems Change Manulife Financial's (TSX:MFC) Narrative?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-partnerships-digital-ecosystems-change-100835240.html",
+          "publishedAt": "2026-06-06T10:08:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NIO"
+            "MFC"
           ]
-        },
-        {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-06T08:03:48.461Z",
-      "headlines": [
-        {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NIO"
-          ]
-        },
-        {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-06T08:03:48.461Z",
-      "headlines": [
-        {
-          "title": "Shuja Rabbani Positions Human Resources as a Strategic Force for the GCC's Next Era of Business Transformation",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/shuja-rabbani-positions-human-resources-074700883.html",
-          "publishedAt": "2026-06-06T07:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Nio Is Zigging While Rivals Zag, and Shockingly It's Winning",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a5788669-6fb2-3978-9516-6aa607ed0468/nio-is-zigging-while-rivals.html",
-          "publishedAt": "2026-06-06T07:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NIO"
-          ]
-        },
-        {
-          "title": "Walmart's $249 Seiko luxury watch is the perfect start to your watch collection",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/6e815416-7379-3879-9de3-1e6a8b4c0b47/walmart%27s-%24249-seiko-luxury.html",
-          "publishedAt": "2026-06-06T07:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

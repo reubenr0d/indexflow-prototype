@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-06T08:05:34.661Z",
-  "startedAt": "2026-06-06T08:02:43.555Z",
-  "finishedAt": "2026-06-06T08:05:34.661Z",
+  "runId": "2026-06-06T10:24:21.158Z",
+  "startedAt": "2026-06-06T10:21:52.802Z",
+  "finishedAt": "2026-06-06T10:24:21.158Z",
   "status": "succeeded",
   "usage": {
-    "turns": 18,
-    "toolCalls": 11,
+    "turns": 16,
+    "toolCalls": 9,
     "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the newly opened positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.",
-  "summary": "The current vault state indicates that there are already long positions on Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), which are aligned with the top picks from the Atlas ML model. There is no available collateral to open additional positions, and all capital is locked in these existing positions. Since these positions are already aligned with the current top picks, no further actions are required.\n\n### Final Summary\n\n1. **Vault State**: The vault holds long positions on Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), with no available collateral for new positions.\n\n2. **Current Positions**: \n   - **Hercules Metals (BIG.V)**: Long position, aligned with the top pick from the Atlas ML model.\n   - **AbraSilver Resource (ABRA.TO)**: Long position, aligned with the top pick from the Atlas ML model.\n   - **Targa Exploration Corp. (TEX.CN)**: Long position, aligned with the top pick from the Atlas ML model.\n\n3. **Next Steps**: \n   - Monitor the performance of the existing positions and adjust as necessary based on market conditions and model updates.\n   - Evaluate the potential for reallocation or closing of positions if new opportunities arise in the next run.\n\nThe current strategy remains focused on maintaining positions in top-performing mining stocks as identified by the Atlas ML model, with a focus on diversified metals and precious metals.",
+  "summary": "The vault currently holds long positions on BIG.V, ABRA.TO, and TEX.CN, which are the top picks from the Atlas ML model. Since these positions are already open and there is no available collateral, no new positions can be initiated at this time. All positions are within the policy limits, and there are no weaker legs to close for reallocating capital.\n\n### Current Vault Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp., all of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term. The successful opening of these positions reflects the model's confidence in their potential for growth.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor the performance of the existing positions and adjust as necessary based on market conditions and model updates.\n- Continue to evaluate the top picks and short candidates in the next run to take advantage of potential market opportunities.\n- Consider closing positions that fall outside the [-6%, +8%] PnL band to free up collateral for higher potential opportunities.",
   "writeActions": [],
   "errors": []
 }
