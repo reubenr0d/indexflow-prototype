@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-06T17:37:58.869Z",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals and Targa Exploration Corp., both of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nOn the short side, the Atlas model has identified IRONVELD PLC, ZINNWALD LITHIUM PLC, and GREAT WESTERN MINING CORPORATION as potential short candidates due to their negative predicted returns. However, no specific news supports or vetoes these short positions, indicating a reliance on the model's predictions for potential downside.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "lastThesisUpdate": "2026-06-06T17:37:58.869Z"
+  "lastRunAt": "2026-06-06T19:48:18.557Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals and AbraSilver Resource, both of which have high ML scores and predicted returns. The model's focus on diversified metals and precious metals aligns with the current market dynamics, where these commodities are expected to perform well over the medium term.\n\nOn the short side, the Atlas model has identified IRONVELD PLC as a potential short candidate due to its significant negative predicted return. This aligns with the model's prediction of downside potential for this stock.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Long Positions**: Hercules Metals (BIG.V), Targa Exploration Corp. (TEX.CN)\n- **Short Positions**: IRONVELD PLC (IRON.L)",
+  "lastThesisUpdate": "2026-06-06T19:48:18.557Z"
 }

@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-06T17:42:03.671Z",
-  "thesis": "The vault currently has no positions or assets available, resulting in a hedge ratio that is not applicable. The mETH yield has not been realized since the last run, and the funding rate context is not available due to the lack of open positions. Given the current state of the vault, I will proceed to open a short position at the band midpoint (1.00x hedge ratio) with 5x leverage.",
-  "lastThesisUpdate": "2026-06-06T15:46:35.656Z"
+  "lastRunAt": "2026-06-06T19:52:17.110Z",
+  "thesis": "Update\n- **Pre-Hedge Ratio**: Not applicable (no positions).\n- **Post-Hedge Ratio**: Not applicable (no positions).\n- **Realized mETH Yield**: $0.00 since the last run.\n- **Funding Rate Context**: Not applicable (no positions).",
+  "lastThesisUpdate": "2026-06-06T19:52:17.110Z"
 }
