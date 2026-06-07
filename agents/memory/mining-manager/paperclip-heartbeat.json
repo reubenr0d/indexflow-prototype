@@ -7,71 +7,51 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-07T04:59:29.293Z",
-  "startedAt": "2026-06-07T04:58:01.821Z",
-  "finishedAt": "2026-06-07T04:59:29.293Z",
-  "status": "succeeded",
+  "runId": "2026-06-07T08:39:54.711Z",
+  "startedAt": "2026-06-07T08:30:42.085Z",
+  "finishedAt": "2026-06-07T08:39:54.711Z",
+  "status": "failed",
   "usage": {
-    "turns": 10,
-    "toolCalls": 15,
-    "errors": 0,
-    "softFailures": 2,
-    "writeActions": 4
+    "turns": 15,
+    "toolCalls": 14,
+    "errors": 5,
+    "softFailures": 0,
+    "writeActions": 1
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.",
-  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.80\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 7\n\n#### Actions Taken\n1. **Opened New Position**: \n   - **Short on Zinnwald Lithium (ZNWD.L)**: Due to its high absPredictedReturn of 51.36%.\n\n2. **Updated Tracked Assets**: Included top ML picks and selected short candidates.\n\n#### Current Positions\n- **Longs**:\n  - Hercules Metals (BIG.V)\n  - AbraSilver Resource (ABRA.TO)\n  - Targa Exploration Corp. (TEX.CN)\n- **Shorts**:\n  - IRONVELD PLC (IRON.L)\n  - Zinnwald Lithium (ZNWD.L)\n\n#### ## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term. On the short side, IRONVELD PLC and Zinnwald Lithium have been identified as potential short candidates due to their negative predicted returns. \n\nThe vault remains well-positioned with a balanced approach, leveraging both long and short strategies to capitalize on the current market conditions.",
+  "summary": "FAILED: LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128224 tokens (122718 in the messages, 5506 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}",
   "writeActions": [
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring IRON.L for potential short position due to high absPredictedReturn of 54.35%.",
+      "tool": "close_position",
+      "txHash": "0x4cba2c124d736ad1f27c635c18359a9e26bf9e5b98ef6fb621c66996d81a1a83",
+      "justification": "Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Both wire_asset actions are for potential shorts with high predicted returns and no short penalty; availableCollateral is sufficient at $340.92."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring ZNWD.L for potential short position due to high absPredictedReturn of 51.36%.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both wire_asset actions are for potential shorts with high predicted returns and no short penalty; availableCollateral is sufficient at $340.92."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0x1dcf18c6c5b44c22abf8dcb5518331a437ae11f3cf33fd0eec29f47d34be5d3e",
-      "justification": "Updating tracked assets to include top ML picks and selected short candidates.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xbc6aa71c577a124be15af729384282050dbf88328ee5f2adb0bf62094f84e49b",
-      "justification": "Opening a short position on Zinnwald Lithium (ZNWD.L) due to its high absPredictedReturn of 51.36%.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed short on ZNWD.L uses 100% of available collateral ($340.92), exceeding 60% guideline.",
-        "downsizeFactor": 0.6,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1",
-          "isLong": false,
-          "beforeCollateral": "340923692",
-          "afterCollateral": "204554215",
-          "beforeSize": "1704618460000000000000000000000000",
-          "afterSize": "1022771076000000000000000000000000",
-          "downsizeFactor": 0.6
-        }
+        "reason": "Closing IRON.L short frees up $676.72 collateral, aligning with metals_risk_off regime and no short penalty."
       },
       "kind": "vault-tx"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "plan_open_position",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "tool": "plan_open_position",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "tool": "plan_open_position",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "tool": "plan_open_position",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "tool": "_agent",
+      "error": "LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128224 tokens (122718 in the messages, 5506 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}"
+    }
+  ]
 }
