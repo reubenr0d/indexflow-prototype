@@ -1,274 +1,420 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T18:20:48.491Z",
+  "updatedAt": "2026-06-07T20:39:07.036Z",
   "entries": {
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-07T20:39:05.744Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-07T20:39:05.744Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-07T20:39:05.744Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
     "FOX.CN": {
-      "fetchedAt": "2026-06-07T18:20:48.292Z",
+      "fetchedAt": "2026-06-07T20:39:05.744Z",
       "headlines": [
         {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
+            "MU",
             "NVDA"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-07T18:20:48.292Z",
-      "headlines": [
-        {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         },
         {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-07T18:20:48.292Z",
-      "headlines": [
-        {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
-            "NVDA"
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-07T18:20:48.292Z",
+      "fetchedAt": "2026-06-07T20:39:05.744Z",
       "headlines": [
         {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
+            "MU",
             "NVDA"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BTO.TO": {
-      "fetchedAt": "2026-06-07T18:20:48.292Z",
-      "headlines": [
-        {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         },
         {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-07T18:20:48.491Z",
-      "headlines": [
-        {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-07T18:20:48.491Z",
-      "headlines": [
-        {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
-            "NVDA"
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-07T18:20:48.491Z",
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
       "headlines": [
         {
-          "title": "United Airlines CEO says big merger unlikely after American rebuff, asset buys possible",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/news/united-airlines-ceo-says-big-180632855.html",
-          "publishedAt": "2026-06-07T18:06:32.000Z",
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Cockroach contraband valued at more than $140,000 seized in Australia",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/ba9d5a50-801e-3d25-8015-72eb059e24c1/cockroach-contraband-valued.html",
-          "publishedAt": "2026-06-07T18:05:52.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "It'll Be Awhile Before SpaceX Joins S&P 500 ETFs",
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8c8d140c-cf49-3923-8cf2-410ddb3154c0/it%27ll-be-awhile-before-spacex.html",
-          "publishedAt": "2026-06-07T18:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPAX.PVT",
-            "^GSPC",
+            "MU",
             "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GAL.V": {
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "headlines": [
+        {
+          "title": "Iran launches missiles at Israel for first time since Mideast truce",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
+          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
+          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
+          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "GOOG",
+            "MSFT",
+            "AMZN"
           ]
         }
       ],

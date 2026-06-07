@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-07T18:20:24.496Z",
+  "updatedAt": "2026-06-07T20:39:49.879Z",
   "closures": {
     "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c": {
       "ticker": "TEX.CN",
@@ -17,7 +17,7 @@
     "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932": {
       "ticker": "BIG.V",
       "isLong": true,
-      "closedAt": "2026-06-07T16:49:00.483Z",
+      "closedAt": "2026-06-07T20:39:49.879Z",
       "closedReason": "llm_judged: Closing Hercules Metals (BIG.V) to free up capital for higher-ranked entries."
     }
   }
