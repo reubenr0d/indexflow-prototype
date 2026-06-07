@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-07T22:21:42.104Z",
-  "startedAt": "2026-06-07T22:20:25.735Z",
-  "finishedAt": "2026-06-07T22:21:42.104Z",
+  "runId": "2026-06-07T23:35:12.483Z",
+  "startedAt": "2026-06-07T23:34:30.291Z",
+  "finishedAt": "2026-06-07T23:35:12.483Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness this run.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix's unknown signals once Atlas exposes more data, as these could rerank potential picks.\n- Consider the current \"metals_risk_off\" regime when evaluating future long positions, leveraging the long bonus if suitable candidates arise.",
+  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Actions Taken\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for action this run.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the quality matrix's trade-ready picks in the next run to identify potential long opportunities, especially given the current \"metals_risk_off\" regime which suggests a potential for upweighting long positions if suitable candidates arise.",
   "writeActions": [],
   "errors": []
 }

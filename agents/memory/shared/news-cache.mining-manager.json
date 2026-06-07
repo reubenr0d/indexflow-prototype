@@ -1,693 +1,513 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T22:19:00.058Z",
+  "updatedAt": "2026-06-07T23:32:56.591Z",
   "entries": {
-    "FOX.CN": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-07T23:32:56.426Z",
       "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
         {
           "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
           "publisher": "Investor's Business Daily",
           "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
           "type": "STORY",
           "relatedTickers": [
             "^DJI",
             "^GSPC",
-            "SPCX",
-            "LLY",
             "GOOG",
+            "SPCX",
             "ORCL",
             "ORCL-PD",
+            "LLY",
             "^IXIC",
             "SPAX.PVT",
             "AAPL",
             "AVGO",
             "CIEN"
           ]
-        },
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-07T23:32:56.426Z",
+      "headlines": [
         {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V",
+            "000660.KS",
             "NVDA"
           ]
         },
         {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "GOOG",
+            "SPCX",
+            "ORCL",
+            "ORCL-PD",
+            "LLY",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-07T23:32:56.426Z",
+      "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "GOOG",
+            "SPCX",
+            "ORCL",
+            "ORCL-PD",
+            "LLY",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-07T23:32:56.426Z",
+      "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "GOOG",
+            "SPCX",
+            "ORCL",
+            "ORCL-PD",
+            "LLY",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "fetchedAt": "2026-06-07T23:32:56.426Z",
       "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
         {
           "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
           "publisher": "Investor's Business Daily",
           "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
           "type": "STORY",
           "relatedTickers": [
             "^DJI",
             "^GSPC",
-            "SPCX",
-            "LLY",
             "GOOG",
+            "SPCX",
             "ORCL",
             "ORCL-PD",
+            "LLY",
             "^IXIC",
             "SPAX.PVT",
             "AAPL",
             "AVGO",
             "CIEN"
           ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EEE.L": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AEM.TO": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BTO.TO": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GTWO.TO": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ORD.AX": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-06-07T22:18:58.965Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "fetchedAt": "2026-06-07T23:32:56.591Z",
       "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
         {
           "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
           "publisher": "Investor's Business Daily",
           "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
           "type": "STORY",
           "relatedTickers": [
             "^DJI",
             "^GSPC",
-            "SPCX",
-            "LLY",
             "GOOG",
+            "SPCX",
             "ORCL",
             "ORCL-PD",
+            "LLY",
             "^IXIC",
             "SPAX.PVT",
             "AAPL",
             "AVGO",
             "CIEN"
           ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "fetchedAt": "2026-06-07T23:32:56.591Z",
       "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
         {
           "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
           "publisher": "Investor's Business Daily",
           "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
           "type": "STORY",
           "relatedTickers": [
             "^DJI",
             "^GSPC",
-            "SPCX",
-            "LLY",
             "GOOG",
+            "SPCX",
             "ORCL",
             "ORCL-PD",
+            "LLY",
             "^IXIC",
             "SPAX.PVT",
             "AAPL",
             "AVGO",
             "CIEN"
           ]
-        },
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-07T23:32:56.591Z",
+      "headlines": [
         {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V",
+            "000660.KS",
             "NVDA"
           ]
         },
         {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "GOOG",
+            "SPCX",
+            "ORCL",
+            "ORCL-PD",
+            "LLY",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-07T23:32:56.591Z",
+      "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "GOOG",
+            "SPCX",
+            "ORCL",
+            "ORCL-PD",
+            "LLY",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GEMR.L": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "fetchedAt": "2026-06-07T23:32:56.591Z",
       "headlines": [
+        {
+          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
+          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
+          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "SNDK",
+            "MU",
+            "CRWV"
+          ]
+        },
         {
           "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
           "publisher": "Investor's Business Daily",
           "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "publishedAt": "2026-06-07T23:23:31.000Z",
           "type": "STORY",
           "relatedTickers": [
             "^DJI",
             "^GSPC",
-            "SPCX",
-            "LLY",
             "GOOG",
+            "SPCX",
             "ORCL",
             "ORCL-PD",
+            "LLY",
             "^IXIC",
             "SPAX.PVT",
             "AAPL",
             "AVGO",
             "CIEN"
           ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GAL.V": {
-      "fetchedAt": "2026-06-07T22:19:00.058Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T22:06:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "SPCX",
-            "LLY",
-            "GOOG",
-            "ORCL",
-            "ORCL-PD",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        },
-        {
-          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
-          "publishedAt": "2026-06-07T22:04:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
-          "publishedAt": "2026-06-07T22:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
