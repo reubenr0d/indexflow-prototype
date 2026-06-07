@@ -7,51 +7,100 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-07T08:39:54.711Z",
-  "startedAt": "2026-06-07T08:30:42.085Z",
-  "finishedAt": "2026-06-07T08:39:54.711Z",
-  "status": "failed",
+  "runId": "2026-06-07T11:19:18.010Z",
+  "startedAt": "2026-06-07T11:16:41.289Z",
+  "finishedAt": "2026-06-07T11:19:18.010Z",
+  "status": "succeeded",
   "usage": {
-    "turns": 15,
-    "toolCalls": 14,
-    "errors": 5,
-    "softFailures": 0,
-    "writeActions": 1
+    "turns": 16,
+    "toolCalls": 21,
+    "errors": 0,
+    "softFailures": 5,
+    "writeActions": 8
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.",
-  "summary": "FAILED: LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128224 tokens (122718 in the messages, 5506 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}",
+  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.\n\n#### Vault Address and State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.24\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN), and Ironveld Plc (IRON.L).\n- **Positions Opened**:\n  - Long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.\n  - Long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.\n- Evaluate other short candidates if the churn guard persists on IRON.L.\n- Continue to track the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.",
   "writeActions": [
     {
-      "tool": "close_position",
-      "txHash": "0x4cba2c124d736ad1f27c635c18359a9e26bf9e5b98ef6fb621c66996d81a1a83",
-      "justification": "Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.",
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Hercules Metals (BIG.V) due to its top ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Closing IRON.L short frees up $676.72 collateral, aligning with metals_risk_off regime and no short penalty."
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Ironveld Plc (IRON.L) as a short candidate with high absolute predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x7400af99accf44b404567e7ce0a7daaa5813c8a0b4a2931f1cd1fdeb12cb5729",
+      "justification": "Updating tracked assets to include top ML picks and short candidate.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of exceeding available collateral or violating regime constraints."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0xff6b37444707506a421c7ecc6f8c0bf131617eca5315cc2dda698ed387cabfe7",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on BIG.V uses 38.9% of available collateral ($316.36 out of $812.69), which is within acceptable limits and aligns with the longBonus of 2."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0x760977a8b3e1905d0b7fc8c2c38166ac68794063e879db0f698f1a568a9d883f",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on ABRA.TO uses 31.2% of available collateral ($253.57 out of $812.69), which is within acceptable limits."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0xe520f341f4dcabcff9637767eab624457600c60f181054091a521244a28b2492",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on TEX.CN uses 29.9% of available collateral ($242.76 out of $812.69), which is within acceptable limits, and benefits from a long bonus of 2."
       },
       "kind": "vault-tx"
     }
   ],
-  "errors": [
-    {
-      "tool": "plan_open_position",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
-    },
-    {
-      "tool": "plan_open_position",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
-    },
-    {
-      "tool": "plan_open_position",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
-    },
-    {
-      "tool": "plan_open_position",
-      "error": "MCP error -32602: Input validation error: Invalid arguments for tool plan_open_position: [\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"assetId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"boolean\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"isLong\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
-    },
-    {
-      "tool": "_agent",
-      "error": "LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 128224 tokens (122718 in the messages, 5506 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}"
-    }
-  ]
+  "errors": []
 }

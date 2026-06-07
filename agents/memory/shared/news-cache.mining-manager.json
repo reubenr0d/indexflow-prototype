@@ -1,362 +1,174 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T08:31:08.999Z",
+  "updatedAt": "2026-06-07T11:17:38.700Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-07T08:31:08.821Z",
+    "IRON.L": {
+      "fetchedAt": "2026-06-07T11:17:38.700Z",
       "headlines": [
         {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
+          "title": "The Beaten-Down Stock About to Cash a $19.6 Billion Check From Elon Musk",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1d308dfd-e62c-35d3-a59f-670c4eade32c/the-beaten-down-stock-about.html",
+          "publishedAt": "2026-06-07T11:04:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BHE"
+            "SATS",
+            "SPAX.PVT",
+            "T",
+            "NVDA"
           ]
         },
         {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
+          "title": "Prediction: Micron Technology Stock Could Go Parabolic After June 24. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/112d6e38-71e7-340b-8c72-a4bb2beca465/prediction%3A-micron-technology.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VICR"
+            "MU",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
+          "title": "How to Own SpaceX Without Buying the IPO",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/3399c854-00cc-36b3-8f23-a28d38878db4/how-to-own-spacex-without.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-07T08:31:08.821Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-06-07T08:31:08.821Z",
+      "fetchedAt": "2026-06-07T11:17:38.700Z",
       "headlines": [
         {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
+          "title": "The Beaten-Down Stock About to Cash a $19.6 Billion Check From Elon Musk",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1d308dfd-e62c-35d3-a59f-670c4eade32c/the-beaten-down-stock-about.html",
+          "publishedAt": "2026-06-07T11:04:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BHE"
+            "SATS",
+            "SPAX.PVT",
+            "T",
+            "NVDA"
           ]
         },
         {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
+          "title": "Prediction: Micron Technology Stock Could Go Parabolic After June 24. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/112d6e38-71e7-340b-8c72-a4bb2beca465/prediction%3A-micron-technology.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VICR"
+            "MU",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
+          "title": "How to Own SpaceX Without Buying the IPO",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/3399c854-00cc-36b3-8f23-a28d38878db4/how-to-own-spacex-without.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-07T08:31:08.821Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-07T11:17:38.700Z",
       "headlines": [
         {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
+          "title": "The Beaten-Down Stock About to Cash a $19.6 Billion Check From Elon Musk",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1d308dfd-e62c-35d3-a59f-670c4eade32c/the-beaten-down-stock-about.html",
+          "publishedAt": "2026-06-07T11:04:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BHE"
+            "SATS",
+            "SPAX.PVT",
+            "T",
+            "NVDA"
           ]
         },
         {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
+          "title": "Prediction: Micron Technology Stock Could Go Parabolic After June 24. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/112d6e38-71e7-340b-8c72-a4bb2beca465/prediction%3A-micron-technology.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VICR"
+            "MU",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
+          "title": "How to Own SpaceX Without Buying the IPO",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/3399c854-00cc-36b3-8f23-a28d38878db4/how-to-own-spacex-without.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-07T08:31:08.821Z",
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-07T11:17:38.700Z",
       "headlines": [
         {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
+          "title": "The Beaten-Down Stock About to Cash a $19.6 Billion Check From Elon Musk",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1d308dfd-e62c-35d3-a59f-670c4eade32c/the-beaten-down-stock-about.html",
+          "publishedAt": "2026-06-07T11:04:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BHE"
+            "SATS",
+            "SPAX.PVT",
+            "T",
+            "NVDA"
           ]
         },
         {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
+          "title": "Prediction: Micron Technology Stock Could Go Parabolic After June 24. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/112d6e38-71e7-340b-8c72-a4bb2beca465/prediction%3A-micron-technology.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VICR"
+            "MU",
+            "NVDA",
+            "INTC"
           ]
         },
         {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
+          "title": "How to Own SpaceX Without Buying the IPO",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/3399c854-00cc-36b3-8f23-a28d38878db4/how-to-own-spacex-without.html",
+          "publishedAt": "2026-06-07T11:02:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-07T08:31:08.999Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-07T08:31:08.999Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-07T08:31:08.999Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-07T08:31:08.999Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-07T08:31:08.999Z",
-      "headlines": [
-        {
-          "title": "A Look At Benchmark Electronics (BHE) Valuation After A Strong 12 Month Share Price Run",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/look-benchmark-electronics-bhe-valuation-081218058.html",
-          "publishedAt": "2026-06-07T08:12:18.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BHE"
-          ]
-        },
-        {
-          "title": "Vicor’s Record Quarter And Guidance Test Market Nerves And Backlog Hopes",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/vicor-record-quarter-guidance-test-081205307.html",
-          "publishedAt": "2026-06-07T08:12:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VICR"
-          ]
-        },
-        {
-          "title": "TETRA Technologies (TTI) Is Down 9.2% After $100 Million Equity Raise For Arkansas Bromine Push",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/tetra-technologies-tti-down-9-081147558.html",
-          "publishedAt": "2026-06-07T08:11:47.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TTI"
+            "SPAX.PVT",
+            "NVDA",
+            "INTC"
           ]
         }
       ],

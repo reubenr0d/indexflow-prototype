@@ -5,59 +5,82 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.",
-  "lastRunAt": "2026-06-07T04:59:29.293Z",
+  "lastRunAt": "2026-06-07T11:19:18.010Z",
   "latestRun": {
-    "runId": "2026-06-07T04:59:29.293Z",
-    "finishedAt": "2026-06-07T04:59:29.293Z",
-    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.80\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 7\n\n#### Actions Taken\n1. **Opened New Position**: \n   - **Short on Zinnwald Lithium (ZNWD.L)**: Due to its high absPredictedReturn of 51.36%.\n\n2. **Updated Tracked Assets**: Included top ML picks and selected short candidates.\n\n#### Current Positions\n- **Longs**:\n  - Hercules Metals (BIG.V)\n  - AbraSilver Resource (ABRA.TO)\n  - Targa Exploration Corp. (TEX.CN)\n- **Shorts**:\n  - IRONVELD PLC (IRON.L)\n  - Zinnwald Lithium (ZNWD.L)\n\n#### ## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term. On the short side, IRONVELD PLC and Zinnwald Lithium have been identified as potential short candidates due to their negative predicted returns. \n\nThe vault remains well-positioned with a balanced approach, leveraging both long and short strategies to capitalize on the current market conditions.",
-    "startedAt": "2026-06-07T04:58:01.821Z",
+    "runId": "2026-06-07T11:19:18.010Z",
+    "finishedAt": "2026-06-07T11:19:18.010Z",
+    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.\n\n#### Vault Address and State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.24\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN), and Ironveld Plc (IRON.L).\n- **Positions Opened**:\n  - Long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.\n  - Long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.\n- Evaluate other short candidates if the churn guard persists on IRON.L.\n- Continue to track the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.",
+    "startedAt": "2026-06-07T11:16:41.289Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 10,
+    "turns": 16,
     "toolCalls": [
       "get_vault_state",
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "get_ml_model_info",
       "yfinance_quote",
       "yfinance_news",
-      "yfinance_news",
+      "wire_asset",
+      "wire_asset",
       "wire_asset",
       "wire_asset",
       "set_vault_assets",
       "get_perp_capital_snapshot",
       "plan_open_position",
+      "get_perp_capital_snapshot",
+      "plan_open_position",
+      "open_position",
+      "plan_open_position",
+      "open_position",
+      "plan_open_position",
       "open_position",
       "get_vault_state"
     ],
-    "actionCount": 4,
-    "onChainActionCount": 2,
-    "offChainActionCount": 2,
+    "actionCount": 8,
+    "onChainActionCount": 4,
+    "offChainActionCount": 4,
     "reasoningSummaries": [],
     "errors": [],
     "softFailures": [
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"BIG.V\\\" is already wired in OracleAdapter at assetId 0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932 (active=true).\",\n  \"symbol\": \"BIG.V\",\n  \"assetId\": \"0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      },
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      },
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"TEX.CN\\\" is already wired in OracleAdapter at assetId 0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c (active=true).\",\n  \"symbol\": \"TEX.CN\",\n  \"assetId\": \"0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      },
       {
         "tool": "wire_asset",
         "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"IRON.L\\\" is already wired in OracleAdapter at assetId 0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14 (active=true).\",\n  \"symbol\": \"IRON.L\",\n  \"assetId\": \"0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       },
       {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ZNWD.L\\\" is already wired in OracleAdapter at assetId 0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1 (active=true).\",\n  \"symbol\": \"ZNWD.L\",\n  \"assetId\": \"0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
+        "tool": "plan_open_position",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14, isLong=false) is blocked: a close was recorded at 2026-06-07T08:35:48.418Z (llm_judged: Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.). Cooldown ends at 2026-06-07T12:35:48.418Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14\",\n  \"isLong\": false,\n  \"ticker\": \"IRON.L\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-07T08:35:48.418Z\",\n    \"closedReason\": \"llm_judged: Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.\",\n    \"isLong\": false\n  },\n  \"cooldownEndsAt\": \"2026-06-07T12:35:48.418Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+        "errorCode": "CHURN_GUARD_COOLDOWN"
       }
     ],
     "riskOfficerVerdicts": [
       {
         "turn": 3,
         "verdict": "approve",
-        "reason": "Both wire_asset actions are for potential shorts with high predicted returns and no short penalty; availableCollateral is sufficient at $340.92.",
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds.",
         "proposedTools": [
+          "wire_asset",
+          "wire_asset",
           "wire_asset",
           "wire_asset"
         ]
@@ -65,28 +88,31 @@
       {
         "turn": 4,
         "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict.",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of exceeding available collateral or violating regime constraints.",
         "proposedTools": [
           "set_vault_assets"
         ]
       },
       {
-        "turn": 8,
-        "verdict": "downsize",
-        "reason": "Proposed short on ZNWD.L uses 100% of available collateral ($340.92), exceeding 60% guideline.",
-        "downsizeFactor": 0.6,
-        "audit": [
-          {
-            "tool": "open_position",
-            "assetId": "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1",
-            "isLong": false,
-            "beforeCollateral": "340923692",
-            "afterCollateral": "204554215",
-            "beforeSize": "1704618460000000000000000000000000",
-            "afterSize": "1022771076000000000000000000000000",
-            "downsizeFactor": 0.6
-          }
-        ],
+        "turn": 10,
+        "verdict": "approve",
+        "reason": "The proposed long position on BIG.V uses 38.9% of available collateral ($316.36 out of $812.69), which is within acceptable limits and aligns with the longBonus of 2.",
+        "proposedTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 12,
+        "verdict": "approve",
+        "reason": "The proposed long position on ABRA.TO uses 31.2% of available collateral ($253.57 out of $812.69), which is within acceptable limits.",
+        "proposedTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 14,
+        "verdict": "approve",
+        "reason": "The proposed long position on TEX.CN uses 29.9% of available collateral ($242.76 out of $812.69), which is within acceptable limits, and benefits from a long bonus of 2.",
         "proposedTools": [
           "open_position"
         ]
@@ -100,6 +126,8 @@
         "refinementRounds": 0,
         "proposedWriteTools": [
           "wire_asset",
+          "wire_asset",
+          "wire_asset",
           "wire_asset"
         ]
       },
@@ -113,7 +141,25 @@
         ]
       },
       {
-        "turn": 8,
+        "turn": 10,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 12,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 14,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -124,6 +170,169 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-07T11:19:18.010Z",
+      "startedAt": "2026-06-07T11:16:41.289Z",
+      "finishedAt": "2026-06-07T11:19:18.010Z",
+      "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.\n\n#### Vault Address and State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.24\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN), and Ironveld Plc (IRON.L).\n- **Positions Opened**:\n  - Long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.\n  - Long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.\n- Evaluate other short candidates if the churn guard persists on IRON.L.\n- Continue to track the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 16,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_news",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "open_position",
+        "plan_open_position",
+        "open_position",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 8,
+      "onChainActionCount": 4,
+      "offChainActionCount": 4,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"BIG.V\\\" is already wired in OracleAdapter at assetId 0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932 (active=true).\",\n  \"symbol\": \"BIG.V\",\n  \"assetId\": \"0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"TEX.CN\\\" is already wired in OracleAdapter at assetId 0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c (active=true).\",\n  \"symbol\": \"TEX.CN\",\n  \"assetId\": \"0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"IRON.L\\\" is already wired in OracleAdapter at assetId 0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14 (active=true).\",\n  \"symbol\": \"IRON.L\",\n  \"assetId\": \"0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "plan_open_position",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14, isLong=false) is blocked: a close was recorded at 2026-06-07T08:35:48.418Z (llm_judged: Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.). Cooldown ends at 2026-06-07T12:35:48.418Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14\",\n  \"isLong\": false,\n  \"ticker\": \"IRON.L\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-07T08:35:48.418Z\",\n    \"closedReason\": \"llm_judged: Closing the short position on IRONVELD PLC ORD 0.01P (IRON.L) to free up collateral for a higher-ranked short entry on GWMO.L.\",\n    \"isLong\": false\n  },\n  \"cooldownEndsAt\": \"2026-06-07T12:35:48.418Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+          "errorCode": "CHURN_GUARD_COOLDOWN"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 3,
+          "verdict": "approve",
+          "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "The batch only updates tracked assets without opening new positions; no risk of exceeding available collateral or violating regime constraints.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "verdict": "approve",
+          "reason": "The proposed long position on BIG.V uses 38.9% of available collateral ($316.36 out of $812.69), which is within acceptable limits and aligns with the longBonus of 2.",
+          "proposedTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 12,
+          "verdict": "approve",
+          "reason": "The proposed long position on ABRA.TO uses 31.2% of available collateral ($253.57 out of $812.69), which is within acceptable limits.",
+          "proposedTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 14,
+          "verdict": "approve",
+          "reason": "The proposed long position on TEX.CN uses 29.9% of available collateral ($242.76 out of $812.69), which is within acceptable limits, and benefits from a long bonus of 2.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 3,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 12,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 14,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-07T04:59:29.293Z",
       "startedAt": "2026-06-07T04:58:01.821Z",
@@ -688,6 +897,102 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Hercules Metals (BIG.V) due to its top ML score and predicted return.",
+      "timestamp": "2026-06-07T11:19:18.010Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-07T11:19:18.010Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "BIG.V",
+        "seedPriceUsd": 0.4522
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include top ML picks and short candidate.",
+      "timestamp": "2026-06-07T11:19:18.010Z",
+      "txHash": "0x7400af99accf44b404567e7ce0a7daaa5813c8a0b4a2931f1cd1fdeb12cb5729",
+      "agentName": "mining-manager",
+      "runId": "2026-06-07T11:19:18.010Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14"
+        ],
+        "count": 4
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of exceeding available collateral or violating regime constraints."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.",
+      "timestamp": "2026-06-07T11:19:18.010Z",
+      "txHash": "0xff6b37444707506a421c7ecc6f8c0bf131617eca5315cc2dda698ed387cabfe7",
+      "agentName": "mining-manager",
+      "runId": "2026-06-07T11:19:18.010Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+        "isLong": true,
+        "size": "3163592940000000000000000000000000",
+        "collateral": "316359294"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on BIG.V uses 38.9% of available collateral ($316.36 out of $812.69), which is within acceptable limits and aligns with the longBonus of 2."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-07T11:19:18.010Z",
+      "txHash": "0x760977a8b3e1905d0b7fc8c2c38166ac68794063e879db0f698f1a568a9d883f",
+      "agentName": "mining-manager",
+      "runId": "2026-06-07T11:19:18.010Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "2535713870000000000000000000000000",
+        "collateral": "253571387"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on ABRA.TO uses 31.2% of available collateral ($253.57 out of $812.69), which is within acceptable limits."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-07T11:19:18.010Z",
+      "txHash": "0xe520f341f4dcabcff9637767eab624457600c60f181054091a521244a28b2492",
+      "agentName": "mining-manager",
+      "runId": "2026-06-07T11:19:18.010Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+        "isLong": true,
+        "size": "2427610570000000000000000000000000",
+        "collateral": "242761057"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on TEX.CN uses 29.9% of available collateral ($242.76 out of $812.69), which is within acceptable limits, and benefits from a long bonus of 2."
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring IRON.L for potential short position due to high absPredictedReturn of 54.35%.",
