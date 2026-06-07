@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-06T22:42:08.538Z",
+  "lastRunAt": "2026-06-07T00:22:30.059Z",
   "thesis": "Update\n- **Pre-Hedge Ratio**: Not applicable (no positions).\n- **Post-Hedge Ratio**: Not applicable (no positions).\n- **Realized mETH Yield**: $0.00 since the last run.\n- **Funding Rate Context**: Not applicable (no positions).",
   "lastThesisUpdate": "2026-06-06T21:24:32.062Z"
 }
