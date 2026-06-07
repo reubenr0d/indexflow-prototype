@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-07T12:54:51.459Z",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, such as Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term. On the short side, IRONVELD PLC was selected due to its significant negative predicted return, indicating a potential decline in value.\n\nNo new positions were opened due to the lack of available collateral, and the existing positions are already aligned with the top picks.",
-  "lastThesisUpdate": "2026-06-07T12:54:51.459Z"
+  "lastRunAt": "2026-06-07T15:03:46.405Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), which are already held in the portfolio. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.",
+  "lastThesisUpdate": "2026-06-07T15:03:46.405Z"
 }
