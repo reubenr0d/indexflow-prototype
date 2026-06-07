@@ -1,421 +1,693 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T20:39:07.036Z",
+  "updatedAt": "2026-06-07T22:19:00.058Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-07T20:39:05.744Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-07T20:39:05.744Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-07T20:39:05.744Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "FOX.CN": {
-      "fetchedAt": "2026-06-07T20:39:05.744Z",
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
       "headlines": [
         {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
             "NVDA"
           ]
         },
         {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-07T20:39:05.744Z",
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
       "headlines": [
         {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
             "NVDA"
           ]
         },
         {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
             "GOOG",
-            "MSFT",
-            "AMZN"
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
           ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM.TO": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BTO.TO": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ORD.AX": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-06-07T22:18:58.965Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
       "headlines": [
         {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
             "NVDA"
           ]
         },
         {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
       "headlines": [
         {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
             "NVDA"
           ]
         },
         {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GAL.V": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
-      "headlines": [
-        {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "GOOG",
-            "MSFT",
-            "AMZN"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-07T20:39:07.036Z",
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
       "headlines": [
         {
-          "title": "Iran launches missiles at Israel for first time since Mideast truce",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f5b40816-443c-3a24-abef-249f0f109143/iran-launches-missiles-at.html",
-          "publishedAt": "2026-06-07T20:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Micron's Stock Is Up Over 270% This Year. Here's How It Can Still Double in 2026.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/d4ff6318-c43d-3ffc-a798-4dd453eae301/micron%27s-stock-is-up-over.html",
-          "publishedAt": "2026-06-07T20:31:00.000Z",
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
             "NVDA"
           ]
         },
         {
-          "title": "Which Big 3 Cloud Computing Stock Is the Best Buy Now?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5f9b4a61-95b5-3627-afc1-a3406c5abf84/which-big-3-cloud-computing.html",
-          "publishedAt": "2026-06-07T20:29:00.000Z",
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
             "GOOG",
-            "MSFT",
-            "AMZN"
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
           ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GAL.V": {
+      "fetchedAt": "2026-06-07T22:19:00.058Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
+          "publishedAt": "2026-06-07T22:06:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^DJI",
+            "^GSPC",
+            "SPCX",
+            "LLY",
+            "GOOG",
+            "ORCL",
+            "ORCL-PD",
+            "^IXIC",
+            "SPAX.PVT",
+            "AAPL",
+            "AVGO",
+            "CIEN"
+          ]
+        },
+        {
+          "title": "Is Visa Stock a Smart Way to Invest in the Cashless Economy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/ca07452d-ef65-3307-8469-cfa41029462d/is-visa-stock-a-smart-way-to.html",
+          "publishedAt": "2026-06-07T22:04:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "He Predicted Gold at $5,000. Now He Says This $2 Stock Could Be Even Bigger.",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/predicted-gold-5-000-now-220000400.html",
+          "publishedAt": "2026-06-07T22:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

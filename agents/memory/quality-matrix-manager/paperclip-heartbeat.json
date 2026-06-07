@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-07T20:41:51.211Z",
-  "startedAt": "2026-06-07T20:40:54.857Z",
-  "finishedAt": "2026-06-07T20:41:51.211Z",
+  "runId": "2026-06-07T22:21:42.104Z",
+  "startedAt": "2026-06-07T22:20:25.735Z",
+  "finishedAt": "2026-06-07T22:21:42.104Z",
   "status": "succeeded",
   "usage": {
-    "turns": 2,
+    "turns": 3,
     "toolCalls": 3,
     "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "Today's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n- **Deposit Fee**: 0.50%\n- **Redeem Fee**: 0.50%\n\n### Quality Matrix Definition\nThe analyst's quality matrix is grounded in eight categories, each with specific weights and provenance factors. The categories are Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), and Construction (5%). A provenance discount of 0.7 is applied to categories not yet empirically calibrated.\n\n### Trade-Ready Picks\nUnfortunately, there are no trade-ready picks available at this time that meet the criteria of a minimum composite score of 75 and a minimum trade readiness score of 75. This means no new long positions can be opened based on the current quality matrix signals.\n\n### Next Steps\n- **News Scan**: Since there are no trade-ready picks, a news scan for both potential long and short candidates will not yield actionable results today.\n- **Short Candidates**: Without trade-ready picks, no new short positions can be justified as there are no Red-Flag signals paired with bearish headlines.\n\n### Summary and Thesis\n## Thesis\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
+  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness this run.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix's unknown signals once Atlas exposes more data, as these could rerank potential picks.\n- Consider the current \"metals_risk_off\" regime when evaluating future long positions, leveraging the long bonus if suitable candidates arise.",
   "writeActions": [],
   "errors": []
 }
