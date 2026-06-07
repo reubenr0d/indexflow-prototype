@@ -1,392 +1,372 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T12:53:04.893Z",
+  "updatedAt": "2026-06-07T16:46:26.240Z",
   "entries": {
-    "TEX.CN": {
-      "fetchedAt": "2026-06-07T12:53:04.590Z",
+    "EEE.L": {
+      "fetchedAt": "2026-06-07T16:46:25.957Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-07T12:53:04.590Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-07T16:46:25.957Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-07T12:53:04.590Z",
-      "headlines": [
-        {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
         },
         {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Marvell Technology Rallied in May",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
-            "NVDA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-07T12:53:04.590Z",
-      "headlines": [
-        {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "AMD",
-            "NVDA",
-            "INTC"
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-07T12:53:04.590Z",
+      "fetchedAt": "2026-06-07T16:46:25.957Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-07T12:53:04.893Z",
+    "BTO.TO": {
+      "fetchedAt": "2026-06-07T16:46:25.957Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-07T16:46:25.957Z",
+      "headlines": [
+        {
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BTC-USD",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-07T12:53:04.893Z",
+      "fetchedAt": "2026-06-07T16:46:26.240Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-07T12:53:04.893Z",
-      "headlines": [
-        {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
         },
         {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Why Marvell Technology Rallied in May",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
-            "NVDA",
-            "INTC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-07T12:53:04.893Z",
-      "headlines": [
-        {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "AMD",
-            "NVDA",
-            "INTC"
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GEMR.L": {
-      "fetchedAt": "2026-06-07T12:53:04.893Z",
+      "fetchedAt": "2026-06-07T16:46:26.240Z",
       "headlines": [
         {
-          "title": "Five Below, Inc. Just Beat EPS By 26%: Here's What Analysts Think Will Happen Next",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/five-below-inc-just-beat-124631807.html",
-          "publishedAt": "2026-06-07T12:46:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FIVE"
-          ]
-        },
-        {
-          "title": "Greenpro Capital Insider Ups Holding During Year",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/greenpro-capital-insider-ups-holding-124254957.html",
-          "publishedAt": "2026-06-07T12:42:54.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GRNQ"
-          ]
-        },
-        {
-          "title": "Why Marvell Technology Rallied in May",
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a962a53a-1d8d-3df1-9776-ed3c68627089/why-marvell-technology.html",
-          "publishedAt": "2026-06-07T12:40:00.000Z",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "AMD",
             "NVDA",
+            "BTC-USD",
             "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-07T16:46:26.240Z",
+      "headlines": [
+        {
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BTC-USD",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-07T16:46:26.240Z",
+      "headlines": [
+        {
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BTC-USD",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GAL.V": {
+      "fetchedAt": "2026-06-07T16:46:26.240Z",
+      "headlines": [
+        {
+          "title": "If You'd Invested $10,000 in Nvidia Stock 10 Years Ago, Here's How Much You'd Have Today",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8cde4c91-596b-3b0b-a9e1-86d577981c06/if-you%27d-invested-%2410%2C000-in.html",
+          "publishedAt": "2026-06-07T16:35:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "BTC-USD",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Bolivian Congress gives Paz power to use troops against crippling protests",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/5dfcb8d2-7c58-3091-8f75-9a204001673d/bolivian-congress-gives-paz.html",
+          "publishedAt": "2026-06-07T16:32:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Will SpaceX’s $1.75 Trillion IPO Valuation Survive Friday’s Market Rout?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/efb4d906-119e-33a3-aa7c-d603310e5507/will-spacex%E2%80%99s-%241.75-trillion.html",
+          "publishedAt": "2026-06-07T16:31:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPAX.PVT",
+            "MORN"
           ]
         }
       ],

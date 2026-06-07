@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-07T15:05:44.396Z",
-  "startedAt": "2026-06-07T15:04:26.110Z",
-  "finishedAt": "2026-06-07T15:05:44.396Z",
+  "runId": "2026-06-07T16:51:56.564Z",
+  "startedAt": "2026-06-07T16:50:40.750Z",
+  "finishedAt": "2026-06-07T16:51:56.564Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness with a score above 75.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Watch for any changes in the metals regime that might influence the strategy for long or short positions.",
+  "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for opening positions.\n- **Longs**: No long positions opened due to lack of qualifying trade-ready picks.\n- **Shorts**: No short positions opened as no Red-Flag signals paired with bearish headlines were identified.\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix's trade-ready picks and Red-Flag signals in the next run to identify potential opportunities for opening new positions.",
   "writeActions": [],
   "errors": []
 }
