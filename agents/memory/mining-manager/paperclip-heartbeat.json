@@ -7,100 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-07T11:19:18.010Z",
-  "startedAt": "2026-06-07T11:16:41.289Z",
-  "finishedAt": "2026-06-07T11:19:18.010Z",
+  "runId": "2026-06-07T12:54:51.459Z",
+  "startedAt": "2026-06-07T12:51:58.228Z",
+  "finishedAt": "2026-06-07T12:54:51.459Z",
   "status": "succeeded",
   "usage": {
-    "turns": 16,
-    "toolCalls": 21,
+    "turns": 20,
+    "toolCalls": 14,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 8
+    "softFailures": 0,
+    "writeActions": 0
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.",
-  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. The top picks include Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN), all of which have high ML scores and predicted returns. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term.\n\n#### Vault Address and State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.24\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN), and Ironveld Plc (IRON.L).\n- **Positions Opened**:\n  - Long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.\n  - Long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.\n- Evaluate other short candidates if the churn guard persists on IRON.L.\n- Continue to track the performance of the current long positions and adjust as necessary based on the Atlas model and market conditions.",
-  "writeActions": [
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Hercules Metals (BIG.V) due to its top ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Ironveld Plc (IRON.L) as a short candidate with high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $812.69 and the metals_risk_off regime with a long bonus of 2, without exceeding risk thresholds."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0x7400af99accf44b404567e7ce0a7daaa5813c8a0b4a2931f1cd1fdeb12cb5729",
-      "justification": "Updating tracked assets to include top ML picks and short candidate.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk of exceeding available collateral or violating regime constraints."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xff6b37444707506a421c7ecc6f8c0bf131617eca5315cc2dda698ed387cabfe7",
-      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its top ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed long position on BIG.V uses 38.9% of available collateral ($316.36 out of $812.69), which is within acceptable limits and aligns with the longBonus of 2."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0x760977a8b3e1905d0b7fc8c2c38166ac68794063e879db0f698f1a568a9d883f",
-      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed long position on ABRA.TO uses 31.2% of available collateral ($253.57 out of $812.69), which is within acceptable limits."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xe520f341f4dcabcff9637767eab624457600c60f181054091a521244a28b2492",
-      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed long position on TEX.CN uses 29.9% of available collateral ($242.76 out of $812.69), which is within acceptable limits, and benefits from a long bonus of 2."
-      },
-      "kind": "vault-tx"
-    }
-  ],
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, such as Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term. On the short side, IRONVELD PLC was selected due to its significant negative predicted return, indicating a potential decline in value.\n\nNo new positions were opened due to the lack of available collateral, and the existing positions are already aligned with the top picks.",
+  "summary": "The current state indicates that there is no available collateral to open new positions, and the existing positions in Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), and Targa Exploration Corp. (TEX.CN) are already aligned with the top picks. There are no weaker held legs to close for freeing up collateral.\n\n### Summary\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,029.24\n- **Perp Allocated**: $7,690.35\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, such as Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. These selections align with the model's focus on diversified metals and precious metals, which are expected to perform well over the medium term. On the short side, IRONVELD PLC was selected due to its significant negative predicted return, indicating a potential decline in value.\n\nNo new positions were opened due to the lack of available collateral, and the existing positions are already aligned with the top picks.",
+  "writeActions": [],
   "errors": []
 }
