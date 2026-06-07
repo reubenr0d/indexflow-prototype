@@ -1,382 +1,261 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T00:17:57.767Z",
+  "updatedAt": "2026-06-07T04:58:41.519Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-06-07T00:17:57.596Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-07T04:58:41.390Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-07T04:58:41.390Z",
+      "headlines": [
+        {
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XRP-USD",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-07T00:17:57.596Z",
+      "fetchedAt": "2026-06-07T04:58:41.390Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-07T00:17:57.596Z",
+      "fetchedAt": "2026-06-07T04:58:41.390Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-07T00:17:57.596Z",
-      "headlines": [
-        {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NFLX"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-07T00:17:57.596Z",
+      "fetchedAt": "2026-06-07T04:58:41.390Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-07T00:17:57.767Z",
+      "fetchedAt": "2026-06-07T04:58:41.519Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NFLX"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-07T00:17:57.767Z",
+      "fetchedAt": "2026-06-07T04:58:41.519Z",
       "headlines": [
         {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
+          "title": "Prediction: XRP (Ripple) Will Be Worth This Much in 5 Years",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/d3d7d13d-c31d-342e-85b7-e6050d32baca/prediction%3A-xrp-%28ripple%29-will.html",
+          "publishedAt": "2026-06-07T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
+            "XRP-USD",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Here is Why Nvidia (NVDA) is One of the Best Quality Growth Stocks to Buy",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-nvidia-nvda-one-best-043942091.html",
+          "publishedAt": "2026-06-07T04:39:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-07T00:17:57.767Z",
-      "headlines": [
-        {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
             "NVDA"
           ]
         },
         {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
+          "title": "Is Netflix (NFLX) One of the Best Quality Growth Stocks to Buy?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/netflix-nflx-one-best-quality-043936153.html",
+          "publishedAt": "2026-06-07T04:39:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-07T00:17:57.767Z",
-      "headlines": [
-        {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-07T00:17:57.767Z",
-      "headlines": [
-        {
-          "title": "Is American Assets Trust a Buy After the Executive Chairman Purchased 10,000 Shares?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3873031c-73b6-33b9-b519-261c4717aa56/is-american-assets-trust-a.html",
-          "publishedAt": "2026-06-07T00:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAT"
-          ]
-        },
-        {
-          "title": "Navitas (NVTS) stuns market in unexpected move amid AI power surge",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/be7c8536-c412-3e81-bbc5-f1c28164d186/navitas-%28nvts%29-stuns-market.html",
-          "publishedAt": "2026-06-07T00:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVTS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "We Wouldn't Be Too Quick To Buy Hap Seng Consolidated Berhad (KLSE:HAPSENG) Before It Goes Ex-Dividend",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/wouldnt-too-quick-buy-hap-000050192.html",
-          "publishedAt": "2026-06-07T00:00:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "3034.KL",
-            "HAPSENG"
+            "NFLX"
           ]
         }
       ],
