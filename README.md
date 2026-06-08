@@ -219,22 +219,17 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Testnet live agents blog draft seeded (`growth/drafts/2026-05-26-blog-two-ai-agents-live-on-testnet.md`)
 - [x] Testnet live agents blog published (`/blog/two-ai-agents-live-on-testnet`)
 
-### Season 1 Operator Trials (Activation Campaign)
+### Season 1 Operator Trials (Curators Guild Soft Launch)
 
-Hybrid Galxe + Boost.xyz testnet activation campaign, Mon May 25 → Sun Jun 21, 2026. Scope and design live in [growth/X_GROWTH_PLAN.md](growth/X_GROWTH_PLAN.md) and [growth/GALXE_CAMPAIGN_PLAN.md](growth/GALXE_CAMPAIGN_PLAN.md).
+Galxe-only Curators Guild soft launch. Full design in [growth/GALXE_CAMPAIGN_PLAN.md](growth/GALXE_CAMPAIGN_PLAN.md). Other guilds (Educators, Allocators, Engineers) deferred to Season 2.
 
-- [ ] Galxe space created (Operator Trials) and 5 OATs uploaded (NAV Initiate, Reserve Designer, Risk Cartographer, Operator Voice, Doc Mason)
-- [ ] Galxe REST credential endpoint deployed (`apps/web/src/app/api/galxe/credential/route.ts`)
-- [ ] Boost.xyz One-Time Actions submitted for review (Week 0 prep)
-- [ ] Boost.xyz Time-Based Incentives configured (Curators, Allocators, Engineers, Educators, Cross-Chain Couriers)
-- [ ] Boost.xyz hub-chain support confirmed for the testnet (Week 0 blocker)
-- [ ] `/operators` Hall of Fame page deployed (multi-dimensional leaderboard view, tier badges, Boost claim UI)
-- [ ] Leaderboard worker deployed (Cloud Run) — fuses Galxe loyalty points, Boost.xyz claim state, and Envio quality-multiplier inputs
-- [ ] Auto-broadcast bot deployed (X account watching `BasketCreated` events via Envio subscription)
-- [ ] AGENT_DEPLOYMENT_MEMORY.md entries added for the three new services (owner: user)
-- [ ] Season 1 official launch thread posted (Sat May 30, [growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md](growth/drafts/2026-05-30-thread-operator-hall-of-fame-launch.md))
-- [ ] Season 1 close Spaces hosted (Sun Jun 21 21:00 UTC; raffle + Season 2 preview)
-- [ ] Season 1 recap blog post published
+- [ ] Galxe space created (Operator Trials) and 4 Curator OATs uploaded (Genesis, Champion, Consistent, Veteran)
+- [x] Galxe REST credential endpoint implemented (`apps/web/src/app/api/galxe/credential/route.ts` — deploy to Vercel)
+- [x] Curator leaderboard GitHub Actions workflow (`.github/workflows/curator-leaderboard.yml` — weekly snapshot + commit to `apps/web/public/`)
+- [x] Curator leaderboard worker scaffolded (`services/leaderboard-worker/`)
+- [ ] Curator weekly USDC pool funded ($200/month = $50/week)
+- [ ] Run first snapshot manually via **Actions → Curator Leaderboard Snapshot → Run workflow**
+- [ ] `/operators` page shows weekly rankings and OAT badges
 
 ### Partnerships
 

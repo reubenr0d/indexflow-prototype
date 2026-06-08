@@ -1,0 +1,19 @@
+{
+  "name": "@snx/leaderboard-worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "snapshot": "CURATOR_LEADERBOARD_STDOUT=1 tsx src/index.ts"
+  },
+  "dependencies": {
+    "graphql-request": "^7.3.0",
+    "viem": "^2.47.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

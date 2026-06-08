@@ -1,0 +1,59 @@
+name: Curator Leaderboard Snapshot
+
+on:
+  schedule:
+    # Sunday 23:59 UTC — weekly Galxe curator rankings snapshot
+    - cron: "59 23 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: curator-leaderboard-snapshot
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+  SNAPSHOT_PATH: apps/web/public/curator-leaderboard.snapshot.json
+
+jobs:
+  snapshot:
+    name: Generate and publish snapshot
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate curator leaderboard snapshot
+        env:
+          ENVIO_URL: ${{ secrets.ENVIO_URL }}
+          CURATOR_HUB_CHAIN_ID: "11155111"
+          CURATOR_LEADERBOARD_OUTPUT_PATH: ${{ env.SNAPSHOT_PATH }}
+        run: npm --prefix services/leaderboard-worker run start
+
+      - name: Commit snapshot to main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${SNAPSHOT_PATH}"
+          if git diff --staged --quiet; then
+            echo "Snapshot unchanged; skipping commit."
+            exit 0
+          fi
+          git commit -m "$(cat <<'EOF'
+chore: update curator leaderboard snapshot
+
+Weekly Galxe Curators Guild NAV rankings for credential checks.
+EOF
+)"
+          git push
