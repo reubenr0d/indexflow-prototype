@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-06-01T14:43:15.951Z",
-  "startedAt": "2026-06-01T14:42:46.420Z",
-  "finishedAt": "2026-06-01T14:43:15.951Z",
+  "runId": "2026-06-08T12:54:55.086Z",
+  "startedAt": "2026-06-08T12:54:36.294Z",
+  "finishedAt": "2026-06-08T12:54:55.086Z",
   "status": "succeeded",
   "usage": {
-    "turns": 10,
-    "toolCalls": 7,
+    "turns": 3,
+    "toolCalls": 2,
     "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": null,
-  "summary": "",
+  "summary": "## Blockers surfaced\n- None — issue context unavailable, sweep skipped.\n\n## Frontmatter refreshed\n- None — issue context missing, no files touched.\n\n## Skipped (already open)\n- N/A\n\n## Aging signal\n- Sweep not executed; awaiting valid issue context to resume tracking.\n\nIssue context file `.agent-self-improvement/issue-context.json` was not provided, so the scheduled partnership sweep could not proceed. Please rerun once the issue context is generated.",
   "writeActions": [],
   "errors": []
 }
