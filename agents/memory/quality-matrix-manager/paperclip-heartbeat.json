@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-08T18:13:16.807Z",
-  "startedAt": "2026-06-08T18:12:14.762Z",
-  "finishedAt": "2026-06-08T18:13:16.807Z",
+  "runId": "2026-06-08T20:41:29.157Z",
+  "startedAt": "2026-06-08T20:40:19.732Z",
+  "finishedAt": "2026-06-08T20:41:29.157Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -18,8 +18,8 @@
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "Today's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "## Thesis\n\nToday's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drill releases and material events that could impact trade readiness scores.\n- Keep an eye on the metals regime for any shifts that could influence long or short positioning.\n- Await new trade-ready picks with high composite and trade readiness scores to act upon.\n\nNo actions were taken this run as no trade-ready picks were available that met the criteria for opening new positions.",
+  "thesis": "Today's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
+  "summary": "## Thesis\n\nToday's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Actions Taken\n- No new trade-ready picks were available for action.\n- The vault's tracked assets remain unchanged as no new entrants were identified.\n- No allocation to perp capital was made due to the absence of trade-ready picks.\n- No long or short positions were opened.\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Watch for changes in the metals regime that might provide opportunities for long or short positions.\n- Re-evaluate the quality matrix's trade-ready picks in the next run to identify potential new entrants.",
   "writeActions": [],
   "errors": []
 }

@@ -5,79 +5,77 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC was previously highlighted due to its negative predicted return, but the position was closed to free up capital for higher potential long positions.",
-  "lastRunAt": "2026-06-08T18:11:42.787Z",
+  "lastRunAt": "2026-06-08T20:39:41.100Z",
   "latestRun": {
-    "runId": "2026-06-08T18:11:42.787Z",
-    "finishedAt": "2026-06-08T18:11:42.787Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC was previously highlighted due to its negative predicted return, but the position was closed to free up capital for higher potential long positions.\n\n#### Actions Taken\n- **Closed Position**: Short position on IRONVELD PLC (IRON.L) was closed to free up collateral.\n- **Opened Position**: Long position on Hercules Metals (BIG.V) was opened due to its high ML score and predicted return.\n- **Tracked Assets**: Confirmed that the vault is tracking the correct assets.\n\n#### Current Vault State\n- **NAV**: $1,960.00\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Open Positions**: 4\n\n#### Recommendations for Next Run\n- Monitor for any changes in available collateral to enable further position openings.\n- Re-evaluate the PnL band outcomes to determine if any positions should be closed.\n- Continue to track news for any significant developments impacting current holdings.",
-    "startedAt": "2026-06-08T18:09:06.421Z",
+    "runId": "2026-06-08T20:39:41.100Z",
+    "finishedAt": "2026-06-08T20:39:41.100Z",
+    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,697.44\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Realised PnL**: -$6,130.04\n- **Unrealised PnL**: +$137.12\n\n#### Actions Taken\n- **Closed Position**: Closed the long position on Targa Exploration Corp. (TEX.CN) to free up collateral for higher-ranked entries.\n- **Opened Positions**: \n  - Long position on Hercules Metals (BIG.V) based on its high ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) based on its high ML score and predicted return, within available collateral limits.\n\n#### ## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals and AbraSilver Resource remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. The strategic closure of lower-ranked positions allowed for the reallocation of capital to these higher-potential opportunities.\n\n#### Recommendations for Next Run\n- **Monitor Available Collateral**: With no available collateral, focus on optimizing existing positions and consider closing weaker positions to free up capital for higher-ranked entries.\n- **Review News Context**: Continue to monitor news for any significant updates that may impact the selected picks.\n- **Evaluate New Entrants**: Consider opening positions in the highest-ranked Atlas picks with strong predicted returns if collateral allows.",
+    "startedAt": "2026-06-08T20:34:51.763Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 14,
+    "turns": 20,
     "toolCalls": [
       "get_vault_state",
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "get_ml_model_info",
+      "yfinance_news",
+      "yfinance_news",
       "yfinance_quote",
-      "get_perp_capital_snapshot",
+      "yfinance_quote",
       "wire_asset",
       "wire_asset",
       "wire_asset",
       "wire_asset",
       "set_vault_assets",
-      "yfinance_news",
-      "allocate_to_perp",
-      "get_vault_state",
-      "list_open_positions",
       "get_perp_capital_snapshot",
       "close_position",
+      "get_vault_pnl",
+      "plan_open_position",
+      "open_position",
+      "plan_open_position",
+      "close_position",
+      "get_perp_capital_snapshot",
       "plan_open_position",
       "open_position",
       "get_vault_state"
     ],
-    "actionCount": 7,
-    "onChainActionCount": 2,
-    "offChainActionCount": 5,
+    "actionCount": 9,
+    "onChainActionCount": 5,
+    "offChainActionCount": 4,
     "reasoningSummaries": [],
     "errors": [],
     "softFailures": [
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"BIG.V\\\" is already wired in OracleAdapter at assetId 0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932 (active=true).\",\n  \"symbol\": \"BIG.V\",\n  \"assetId\": \"0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"FOX.CN\\\" is already wired in OracleAdapter at assetId 0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac (active=true).\",\n  \"symbol\": \"FOX.CN\",\n  \"assetId\": \"0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       },
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"MI6.AX\\\" is already wired in OracleAdapter at assetId 0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc (active=true).\",\n  \"symbol\": \"MI6.AX\",\n  \"assetId\": \"0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       },
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"TEX.CN\\\" is already wired in OracleAdapter at assetId 0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c (active=true).\",\n  \"symbol\": \"TEX.CN\",\n  \"assetId\": \"0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"EEE.L\\\" is already wired in OracleAdapter at assetId 0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf (active=true).\",\n  \"symbol\": \"EEE.L\",\n  \"assetId\": \"0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       },
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"IRON.L\\\" is already wired in OracleAdapter at assetId 0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14 (active=true).\",\n  \"symbol\": \"IRON.L\",\n  \"assetId\": \"0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ZNWD.L\\\" is already wired in OracleAdapter at assetId 0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1 (active=true).\",\n  \"symbol\": \"ZNWD.L\",\n  \"assetId\": \"0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "allocate_to_perp",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INSUFFICIENT_RESERVES\",\n  \"message\": \"Vault 0x4dcd435461e27f8bfb580d216b8d69490023a0ba has only 0 raw USDC available for perp allocation, but the call requested 30148150 (off by 30148150 raw USDC). getAvailableForPerpUsdc() respects minReserveBps and maxPerpAllocation caps; the prior snapshot may be stale by cents due to fee accrual or interim deposits/withdrawals.\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"requestedAmount\": \"30148150\",\n  \"availableAmount\": \"0\",\n  \"shortfall\": \"30148150\",\n  \"recovery_hint\": \"Re-read `get_vault_state` for the fresh `availableForPerp` value, then retry with `amount = availableForPerp` (or any smaller value). Do not rely on a snapshot from earlier in the run — fee accrual and concurrent deposits move the available reserve between reads.\"\n}",
-        "errorCode": "INSUFFICIENT_RESERVES"
       }
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 3,
+        "turn": 5,
         "verdict": "approve",
-        "reason": "All proposed positions are within available collateral of $30.15 and no recent losses >10% on these tickers.",
+        "reason": "All proposed wires are consistent with available collateral of $25.30 and no short penalty; no recent losses on proposed tickers.",
         "proposedTools": [
           "wire_asset",
           "wire_asset",
@@ -86,33 +84,75 @@
         ]
       },
       {
-        "turn": 4,
+        "turn": 6,
         "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or regime constraints.",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss triggers.",
         "proposedTools": [
           "set_vault_assets"
         ]
       },
       {
-        "turn": 5,
+        "turn": 8,
         "verdict": "approve",
-        "reason": "Allocating $30.15k to new positions is within available collateral and consistent with metals_risk_on regime.",
-        "proposedTools": [
-          "allocate_to_perp"
-        ]
-      },
-      {
-        "turn": 10,
-        "verdict": "approve",
-        "reason": "Closing IRON.L short frees up $10.05 collateral; aligns with metals_risk_on regime and no short penalty.",
+        "reason": "Closing ZNWD.L short frees $204.55 collateral, aligning with metals_risk_off regime and no short penalty.",
         "proposedTools": [
           "close_position"
         ]
       },
       {
         "turn": 12,
+        "verdict": "downsize",
+        "reason": "Proposed collateral $79.46 exceeds available $25.30; downsize to fit within available collateral.",
+        "downsizeFactor": 0.3,
+        "audit": [
+          {
+            "tool": "open_position",
+            "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+            "isLong": true,
+            "beforeCollateral": "79460931",
+            "afterCollateral": "23838279",
+            "beforeSize": "794609310000000000000000000000000",
+            "afterSize": "238382793000000000000000000000000",
+            "downsizeFactor": 0.3
+          }
+        ],
+        "proposedTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 14,
+        "verdict": "veto",
+        "reason": "Proposed long position on ABRA.TO exceeds available collateral ($25.30) with $71.51 requested, risking over-leverage.",
+        "proposedTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 15,
         "verdict": "approve",
-        "reason": "The proposed long position on BIG.V uses 41.9% of available collateral ($12.65k of $30.15k), which is within acceptable limits.",
+        "reason": "Closing TEX.CN long frees $773.95 collateral, aligning with strategy to reallocate to higher-ranked entries.",
+        "proposedTools": [
+          "close_position"
+        ]
+      },
+      {
+        "turn": 18,
+        "verdict": "downsize",
+        "reason": "Proposed collateral $257.06 exceeds 50% of available $514.13; downsize to mitigate risk.",
+        "downsizeFactor": 0.5,
+        "audit": [
+          {
+            "tool": "open_position",
+            "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+            "isLong": true,
+            "beforeCollateral": "257063864",
+            "afterCollateral": "128531932",
+            "beforeSize": "2570638640000000000000000000000000",
+            "afterSize": "1285319320000000000000000000000000",
+            "downsizeFactor": 0.5
+          }
+        ],
         "proposedTools": [
           "open_position"
         ]
@@ -120,7 +160,7 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 3,
+        "turn": 5,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -132,7 +172,7 @@
         ]
       },
       {
-        "turn": 4,
+        "turn": 6,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -141,16 +181,7 @@
         ]
       },
       {
-        "turn": 5,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "allocate_to_perp"
-        ]
-      },
-      {
-        "turn": 10,
+        "turn": 8,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -160,6 +191,33 @@
       },
       {
         "turn": 12,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 14,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 15,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "close_position"
+        ]
+      },
+      {
+        "turn": 18,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -170,6 +228,227 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-08T20:39:41.100Z",
+      "startedAt": "2026-06-08T20:34:51.763Z",
+      "finishedAt": "2026-06-08T20:39:41.100Z",
+      "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,697.44\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Realised PnL**: -$6,130.04\n- **Unrealised PnL**: +$137.12\n\n#### Actions Taken\n- **Closed Position**: Closed the long position on Targa Exploration Corp. (TEX.CN) to free up collateral for higher-ranked entries.\n- **Opened Positions**: \n  - Long position on Hercules Metals (BIG.V) based on its high ML score and predicted return.\n  - Long position on AbraSilver Resource (ABRA.TO) based on its high ML score and predicted return, within available collateral limits.\n\n#### ## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals and AbraSilver Resource remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. The strategic closure of lower-ranked positions allowed for the reallocation of capital to these higher-potential opportunities.\n\n#### Recommendations for Next Run\n- **Monitor Available Collateral**: With no available collateral, focus on optimizing existing positions and consider closing weaker positions to free up capital for higher-ranked entries.\n- **Review News Context**: Continue to monitor news for any significant updates that may impact the selected picks.\n- **Evaluate New Entrants**: Consider opening positions in the highest-ranked Atlas picks with strong predicted returns if collateral allows.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 20,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_news",
+        "yfinance_news",
+        "yfinance_quote",
+        "yfinance_quote",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "close_position",
+        "get_vault_pnl",
+        "plan_open_position",
+        "open_position",
+        "plan_open_position",
+        "close_position",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 9,
+      "onChainActionCount": 5,
+      "offChainActionCount": 4,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"FOX.CN\\\" is already wired in OracleAdapter at assetId 0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac (active=true).\",\n  \"symbol\": \"FOX.CN\",\n  \"assetId\": \"0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"MI6.AX\\\" is already wired in OracleAdapter at assetId 0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc (active=true).\",\n  \"symbol\": \"MI6.AX\",\n  \"assetId\": \"0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"EEE.L\\\" is already wired in OracleAdapter at assetId 0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf (active=true).\",\n  \"symbol\": \"EEE.L\",\n  \"assetId\": \"0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ZNWD.L\\\" is already wired in OracleAdapter at assetId 0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1 (active=true).\",\n  \"symbol\": \"ZNWD.L\",\n  \"assetId\": \"0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 5,
+          "verdict": "approve",
+          "reason": "All proposed wires are consistent with available collateral of $25.30 and no short penalty; no recent losses on proposed tickers.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 6,
+          "verdict": "approve",
+          "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss triggers.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 8,
+          "verdict": "approve",
+          "reason": "Closing ZNWD.L short frees $204.55 collateral, aligning with metals_risk_off regime and no short penalty.",
+          "proposedTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 12,
+          "verdict": "downsize",
+          "reason": "Proposed collateral $79.46 exceeds available $25.30; downsize to fit within available collateral.",
+          "downsizeFactor": 0.3,
+          "audit": [
+            {
+              "tool": "open_position",
+              "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+              "isLong": true,
+              "beforeCollateral": "79460931",
+              "afterCollateral": "23838279",
+              "beforeSize": "794609310000000000000000000000000",
+              "afterSize": "238382793000000000000000000000000",
+              "downsizeFactor": 0.3
+            }
+          ],
+          "proposedTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 14,
+          "verdict": "veto",
+          "reason": "Proposed long position on ABRA.TO exceeds available collateral ($25.30) with $71.51 requested, risking over-leverage.",
+          "proposedTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 15,
+          "verdict": "approve",
+          "reason": "Closing TEX.CN long frees $773.95 collateral, aligning with strategy to reallocate to higher-ranked entries.",
+          "proposedTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 18,
+          "verdict": "downsize",
+          "reason": "Proposed collateral $257.06 exceeds 50% of available $514.13; downsize to mitigate risk.",
+          "downsizeFactor": 0.5,
+          "audit": [
+            {
+              "tool": "open_position",
+              "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+              "isLong": true,
+              "beforeCollateral": "257063864",
+              "afterCollateral": "128531932",
+              "beforeSize": "2570638640000000000000000000000000",
+              "afterSize": "1285319320000000000000000000000000",
+              "downsizeFactor": 0.5
+            }
+          ],
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 5,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 6,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 8,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 12,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 14,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 15,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 18,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-08T18:11:42.787Z",
       "startedAt": "2026-06-08T18:09:06.421Z",
@@ -1753,6 +2032,146 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Fox River Resources Corporation (FOX.CN) based on its high ML score and predicted return.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "FOX.CN",
+        "seedPriceUsd": 0.7886
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed wires are consistent with available collateral of $25.30 and no short penalty; no recent losses on proposed tickers."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include selected Atlas long and short picks.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": "0xcad974f1590032c550f91c6185b0bca556324e229eea09efd89773a922417e27",
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac",
+          "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf",
+          "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1"
+        ],
+        "count": 7
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss triggers."
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "Closing the short position on ZNWD.L to free up collateral for higher-ranked entries.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": "0x3b2cb745fd0da8d048c17e735494b0501d48ea9929d1a0a5c3ba9aaa1653c6cc",
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1",
+        "isLong": false,
+        "sizeDelta": "1022771076000000000000000000000000",
+        "collateralDelta": "204554215"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Closing ZNWD.L short frees $204.55 collateral, aligning with metals_risk_off regime and no short penalty."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) based on its high ML score and predicted return.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": "0x85ca604e2593505e27584f04e5b826d26eea6c259717be421cb1aa143183b140",
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+        "isLong": true,
+        "size": "238382793000000000000000000000000",
+        "collateral": "23838279"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Proposed collateral $79.46 exceeds available $25.30; downsize to fit within available collateral.",
+        "downsizeFactor": 0.3,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+          "isLong": true,
+          "beforeCollateral": "79460931",
+          "afterCollateral": "23838279",
+          "beforeSize": "794609310000000000000000000000000",
+          "afterSize": "238382793000000000000000000000000",
+          "downsizeFactor": 0.3
+        }
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "Closing the long position on Targa Exploration Corp. (TEX.CN) to free up collateral for higher-ranked entries.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": "0xb50f2831e34130822d068cd6686622306740ac666ce7972493581941506e1dd4",
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+        "isLong": true,
+        "sizeDelta": "7739516875000000000000000000000000",
+        "collateralDelta": "773951687"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Closing TEX.CN long frees $773.95 collateral, aligning with strategy to reallocate to higher-ranked entries."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) based on its high ML score and predicted return, within available collateral limits.",
+      "timestamp": "2026-06-08T20:39:41.100Z",
+      "txHash": "0x1170c6045771ceb2de4fcf6f016f1c503889073b3982ebd13bbd1395fe191100",
+      "agentName": "mining-manager",
+      "runId": "2026-06-08T20:39:41.100Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "1285319320000000000000000000000000",
+        "collateral": "128531932"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Proposed collateral $257.06 exceeds 50% of available $514.13; downsize to mitigate risk.",
+        "downsizeFactor": 0.5,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "isLong": true,
+          "beforeCollateral": "257063864",
+          "afterCollateral": "128531932",
+          "beforeSize": "2570638640000000000000000000000000",
+          "afterSize": "1285319320000000000000000000000000",
+          "downsizeFactor": 0.5
+        }
+      }
+    },
     {
       "tool": "wire_asset",
       "justification": "Wiring Hercules Metals (BIG.V) based on top ML score and predicted return.",

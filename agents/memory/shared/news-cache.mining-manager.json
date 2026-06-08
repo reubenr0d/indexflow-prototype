@@ -1,151 +1,353 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-08T18:10:23.383Z",
+  "updatedAt": "2026-06-08T20:36:25.006Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-08T18:10:23.383Z",
-      "headlines": [
-        {
-          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
-          "publishedAt": "2026-06-08T18:01:43.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FRVO"
-          ]
-        },
-        {
-          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
-          "publishedAt": "2026-06-08T18:01:36.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
-          "publishedAt": "2026-06-08T18:00:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GLD",
-            "GCN6",
-            "CL=F"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-08T18:10:23.383Z",
-      "headlines": [
-        {
-          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
-          "publishedAt": "2026-06-08T18:01:43.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FRVO"
-          ]
-        },
-        {
-          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
-          "publishedAt": "2026-06-08T18:01:36.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
-          "publishedAt": "2026-06-08T18:00:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GLD",
-            "GCN6",
-            "CL=F"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "BIG.V": {
-      "fetchedAt": "2026-06-08T18:10:23.383Z",
+      "fetchedAt": "2026-06-08T20:36:24.648Z",
       "headlines": [
         {
-          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
-          "publishedAt": "2026-06-08T18:01:43.000Z",
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FRVO"
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
           ]
         },
         {
-          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
-          "publishedAt": "2026-06-08T18:01:36.000Z",
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
-          "publishedAt": "2026-06-08T18:00:19.000Z",
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GLD",
-            "GCN6",
-            "CL=F"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TEX.CN": {
-      "fetchedAt": "2026-06-08T18:10:23.383Z",
+      "fetchedAt": "2026-06-08T20:36:24.648Z",
       "headlines": [
         {
-          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
-          "publishedAt": "2026-06-08T18:01:43.000Z",
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "FRVO"
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
           ]
         },
         {
-          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
-          "publishedAt": "2026-06-08T18:01:36.000Z",
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
-          "publishedAt": "2026-06-08T18:00:19.000Z",
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-08T20:36:24.648Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GLD",
-            "GCN6",
-            "CL=F"
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
           ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MI6.AX": {
+      "fetchedAt": "2026-06-08T20:36:24.648Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-08T20:36:24.648Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs delivers clear message to stock market investors",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
+          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GS",
+            "^IXIC",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
+          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Banner Capital Welcomes McKay Potter as Principal",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
+          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

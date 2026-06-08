@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-08T14:28:17.399Z",
+  "lastRunAt": "2026-06-08T20:52:21.377Z",
   "thesis": "The vault remains inactive with no available USDC for trading or any positions. All attempts to wire assets, withdraw from RWA, and harvest yield have failed due to execution reverts. The current state requires further investigation or intervention to restore functionality.",
   "lastThesisUpdate": "2026-06-07T18:26:56.004Z"
 }
