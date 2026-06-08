@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-08T05:03:43.614Z",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, with Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. leading the top picks. The model's predictions suggest strong medium-term performance potential for these assets. The absence of significant news affecting these picks suggests stability in the current strategy. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC are highlighted due to their negative predicted returns, but no shorts were opened due to collateral constraints.",
-  "lastThesisUpdate": "2026-06-07T23:33:56.006Z"
+  "lastRunAt": "2026-06-08T09:57:42.712Z",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. are leading the top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC are highlighted due to their negative predicted returns, but no shorts were opened due to collateral constraints.",
+  "lastThesisUpdate": "2026-06-08T09:57:42.712Z"
 }

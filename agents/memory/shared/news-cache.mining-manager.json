@@ -1,686 +1,352 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-08T05:02:32.721Z",
+  "updatedAt": "2026-06-08T09:56:32.745Z",
   "entries": {
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GAL.V": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-08T05:02:30.930Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "BIG.V": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "fetchedAt": "2026-06-08T09:56:32.549Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "fetchedAt": "2026-06-08T09:56:32.549Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-08T09:56:32.549Z",
+      "headlines": [
+        {
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SDR.L"
+          ]
+        },
+        {
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RACE",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-08T09:56:32.549Z",
+      "headlines": [
+        {
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SDR.L"
+          ]
+        },
+        {
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "fetchedAt": "2026-06-08T09:56:32.549Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EEE.L": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+    "GWMO.L": {
+      "fetchedAt": "2026-06-08T09:56:32.745Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-08T09:56:32.745Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "BTO.TO": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-08T09:56:32.745Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AEM.TO": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+    "IRON.L": {
+      "fetchedAt": "2026-06-08T09:56:32.745Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GTWO.TO": {
-      "fetchedAt": "2026-06-08T05:02:32.610Z",
+    "GEMR.L": {
+      "fetchedAt": "2026-06-08T09:56:32.745Z",
       "headlines": [
         {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "title": "Form 8.3",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
+          "publishedAt": "2026-06-08T09:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
+            "SDR.L"
           ]
         },
         {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "title": "Canon USA appoints new senior marketing director for production print",
+          "publisher": "Packaging Gateway",
+          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
+          "publishedAt": "2026-06-08T09:54:15.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TNR.V": {
-      "fetchedAt": "2026-06-08T05:02:32.721Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
+          "publishedAt": "2026-06-08T09:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ORD.AX": {
-      "fetchedAt": "2026-06-08T05:02:32.721Z",
-      "headlines": [
-        {
-          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
-          "publishedAt": "2026-06-08T04:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HOOD",
-            "NVDA",
-            "INTC"
-          ]
-        },
-        {
-          "title": "Tech stocks dive as Fed bets rattle AI rally",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
-          "publishedAt": "2026-06-08T04:48:39.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
-          "publishedAt": "2026-06-08T04:46:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "DLR",
-            "DLR-PJ",
-            "DLR-PL"
+            "RACE",
+            "NVDA"
           ]
         }
       ],
