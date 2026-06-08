@@ -6,7 +6,7 @@
 
 - **Topic:** Build your first IndexFlow basket on testnet in six steps
 - **Pillar:** P1 Vault Operator Education + P4 Operator Stories
-- **Calendar week:** Week 2 (Season 1 — Track B / Curators headline thread)
+- **Calendar week:** Week 2 (Season 1 — Track B / Curators headline thread) — **polished, post by Wed Jun 10 (capture fresh screenshots first)**
 - **Source:** `docs/ASSET_MANAGER_FLOW.md`, `/baskets/new` flow, `apps/web/src/app/baskets/new/`
 - **Hook type:** Curiosity Gap
 

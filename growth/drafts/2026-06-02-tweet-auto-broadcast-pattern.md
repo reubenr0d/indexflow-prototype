@@ -6,7 +6,7 @@
 
 - **Topic:** Introduce the auto-broadcast bot — every new testnet basket announces itself
 - **Pillar:** P3 Technical Credibility
-- **Calendar week:** Week 2 (Season 1 — Track B / Curators support post)
+- **Calendar week:** Week 2 (Season 1 — Track B / Curators support post) — **polished, post-ready (catch-up sprint Jun 8)**
 - **Source:** Auto-broadcast worker spec (Envio `BasketCreated` → X), `growth/X_GROWTH_PLAN.md` X-native mechanics section
 - **Hook type:** Personal Story
 

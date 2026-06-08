@@ -9,7 +9,7 @@
 - **Calendar week:** Week 1 (Season 1)
 - **Source:** `docs/WHITEPAPER_DRAFT.md` (reserve and redemption layer), `src/vault/BasketVault.sol` (`minReserveBps`, `getRequiredReserveUsdc`)
 - **Hook type:** Curiosity Gap
-- **Day / slot:** Fri May 29
+- **Day / slot:** Fri May 29 — **polished, post by Wed Jun 10 (catch-up sprint)**
 - **Link:** none
 
 ---

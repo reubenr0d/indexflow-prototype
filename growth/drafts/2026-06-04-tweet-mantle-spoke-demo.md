@@ -2,6 +2,12 @@
 
 ---
 
+## Hold — deferred until Mantle Sepolia spoke deploy
+
+**Blocked as of 2026-06-08.** Mantle Sepolia hub stack is live (`apps/web/src/config/mantle-sepolia-deployment.json`, deployed 2026-05-26), but this co-tweet requires a **spoke** deposit demo: basket on Sepolia hub, deposit landing from a Mantle spoke `BasketVault`. Run `CHAIN=mantle-sepolia forge script DeploySpoke.s.sol --slow`, confirm a real cross-chain deposit, then flip the calendar row from `deferred` → `polished` and coordinate @Mantle_Official co-tweet timing.
+
+---
+
 ## Metadata
 
 - **Topic:** Mantle partner co-tweet — hub-and-spoke topology demo (basket on Sepolia hub, deposit from Mantle spoke)

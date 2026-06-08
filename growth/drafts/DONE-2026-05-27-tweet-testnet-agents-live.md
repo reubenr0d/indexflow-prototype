@@ -9,8 +9,9 @@
 - **Calendar week:** Week 1 (Season 1) — Mon May 25 → Sun May 31
 - **Source:** `growth/drafts/2026-05-26-blog-two-ai-agents-live-on-testnet.md`, `apps/web/public/agent-metadata/0x4dcd435461e27f8bfb580d216b8d69490023a0ba.json`, `apps/web/public/agent-metadata/0xbd7ea7e23ae07f0dd65e0738babf8864fdd741f3.json`
 - **Hook type:** Data
-- **Day / slot:** Wed May 27, 16:30 UTC (standalone)
+- **Day / slot:** Wed May 27, 16:30 UTC (standalone) — posted Sun Jun 1, 2026
 - **Target CTA link:** `https://indexflow.app/baskets?utm_source=x&utm_campaign=testnet-agents-live`
+- **Posted:** 2026-06-01 — main tweet + both quote-tweets live
 
 ---
 
@@ -50,10 +51,14 @@ Two quote-tweets, in this order:
 
    > One agent runs on an ML signal engine. The other runs on an analyst-style quality matrix across drilling, resources, met, economics, permitting, offtake, capital raises, construction. Same protocol. Different brains. Different picks.
 
+   **Posted:** https://x.com/indexflowDAO/status/2061354981073260652
+
 2. **When the blog goes live** (later this week, after the pre-publish fact-checks land) — quote-tweet again with the blog URL:
 
    > Long-form on what "up on testnet" actually means, why the long-tail mining universe is the wedge, and what we are not claiming yet.
    > https://indexflow.app/blog/two-ai-agents-live-on-testnet?utm_source=x&utm_campaign=testnet-agents-live
+
+   **Posted:** https://x.com/indexflowDAO/status/2061354644392317168
 
 - **Quote-tweet trigger condition:** Standalone QT fires regardless of engagement (it carries the differentiation). Blog QT fires when the post moves from `growth/drafts/` to `content/blog/` and the live URL resolves.
 

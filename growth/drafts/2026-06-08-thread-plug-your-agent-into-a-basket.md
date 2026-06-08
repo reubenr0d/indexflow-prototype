@@ -6,7 +6,7 @@
 
 - **Topic:** Plug an AI agent into a testnet basket vault using a single markdown file
 - **Pillar:** P3 Technical Credibility + P4 Operator Stories
-- **Calendar week:** Week 3 (Season 1, confidential-infra trinity)
+- **Calendar week:** Week 3 (Season 1, confidential-infra trinity) — **polished, post-ready Jun 8 @ 15:00 UTC**
 - **Source:** `docs/AGENTS_FRAMEWORK.md`, `agents/quality-matrix-manager.md`, `agents/skills/`, `apps/mcps/`, `scripts/agent-runner.mjs`
 - **Hook type:** Curiosity Gap
 
@@ -82,7 +82,7 @@ The trinity that makes this verifiable, private, and non-custodial drops this we
 
 Tomorrow: a real run-log entry as a receipt. Fri: iExec confidential compute. Sat: Secret Network encrypted state. Sun: Nox MPC signing.
 
-Agent docs + example file: [link with utm_source=x&utm_campaign=plug-your-agent-w3]
+Agent docs + example file: https://indexflow.app/docs/agents-framework?utm_source=x&utm_campaign=plug-your-agent-w3
 
 ---
 

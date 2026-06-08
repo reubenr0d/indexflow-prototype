@@ -6,9 +6,9 @@ co_marketing: pending_deploy
 funding_intros: none
 counterpart: TBD (TBD)
 indexflow_lead: Reuben
-last_touch: 2026-05-23
-next_milestone: "Land first Mantle Sepolia spoke deploy via script/DeploySpoke.s.sol for the hackathon demo; confirm @Mantle_Official co-tweet timing for Thu Jun 4; flag potential ecosystem grant track to user"
-next_milestone_date: 2026-06-01
+last_touch: 2026-06-08
+next_milestone: "Deploy Mantle Sepolia spoke via DeploySpoke.s.sol + live cross-chain deposit demo; then flip X calendar row 2026-06-04 from deferred → polished and reschedule @Mantle_Official co-tweet"
+next_milestone_date: 2026-06-10
 co_branded_surfaces:
   x_calendar: 2026-06-04
   galxe_quest: TBD (Season 2 candidate)

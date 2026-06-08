@@ -6,7 +6,7 @@
 
 - **Topic:** Cross-chain coordination layer — TWAP, CCIP, intent routing, oracle quorum
 - **Pillar:** P3 Technical
-- **Calendar week:** Week 1 (Season 1) — Thu May 28
+- **Calendar week:** Week 1 (Season 1) — Thu May 28 — **polished, post by Wed Jun 10 (catch-up sprint)**
 - **Source:** `docs/CROSS_CHAIN_COORDINATION.md`, `src/coordination/PoolReserveRegistry.sol`, `src/coordination/IntentRouter.sol`, `src/coordination/CrossChainIntentBridge.sol`, `src/coordination/OracleConfigQuorum.sol`. Refresh of `growth/drafts/2026-04-15-thread-cross-chain-coordination.md`.
 - **Hook type:** Contrarian
 
