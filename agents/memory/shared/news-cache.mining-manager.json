@@ -1,353 +1,388 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-08T20:36:25.006Z",
+  "updatedAt": "2026-06-08T22:50:45.121Z",
   "entries": {
     "BIG.V": {
-      "fetchedAt": "2026-06-08T20:36:24.648Z",
+      "fetchedAt": "2026-06-08T22:50:44.895Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-08T20:36:24.648Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "VC"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-08T20:36:24.648Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "ANTH.PVT",
+            "SPCX"
           ]
-        },
-        {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-08T20:36:24.648Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
-          ]
-        },
-        {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-08T20:36:24.648Z",
+      "fetchedAt": "2026-06-08T22:50:44.895Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "VC"
+          ]
         },
         {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-08T20:36:25.006Z",
+    "TEX.CN": {
+      "fetchedAt": "2026-06-08T22:50:44.895Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "VC"
+          ]
         },
         {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "IRON.L": {
-      "fetchedAt": "2026-06-08T20:36:25.006Z",
+    "FOX.CN": {
+      "fetchedAt": "2026-06-08T22:50:44.895Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
         },
         {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "title": "Asian Dividend Stocks To Consider: 3 Top Picks",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/asian-dividend-stocks-consider-3-223917242.html",
+          "publishedAt": "2026-06-08T22:39:17.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "4746.T",
+            "6088.T",
+            "XO-R.BK",
+            "XO.BK",
+            "8041.T",
+            "603368.SS"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-08T20:36:25.006Z",
+    "MI6.AX": {
+      "fetchedAt": "2026-06-08T22:50:44.895Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-08T20:36:25.006Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "VC"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GWMO.L": {
-      "fetchedAt": "2026-06-08T20:36:25.006Z",
+      "fetchedAt": "2026-06-08T22:50:45.121Z",
       "headlines": [
         {
-          "title": "Goldman Sachs delivers clear message to stock market investors",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/34ab8b39-e5b8-3cc0-9a7c-6c132cba9f45/goldman-sachs-delivers-clear.html",
-          "publishedAt": "2026-06-08T20:33:00.000Z",
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GS",
-            "^IXIC",
-            "^GSPC",
-            "^DJI"
+            "AAPL",
+            "ANTH.PVT"
           ]
         },
         {
-          "title": "KBRA Assigns Preliminary Ratings to ACHD Trust 2026-DS1",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/kbra-assigns-preliminary-ratings-achd-203200295.html",
-          "publishedAt": "2026-06-08T20:32:00.000Z",
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "VC"
+          ]
         },
         {
-          "title": "Banner Capital Welcomes McKay Potter as Principal",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/banner-capital-welcomes-mckay-potter-203000651.html",
-          "publishedAt": "2026-06-08T20:30:00.000Z",
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "headlines": [
+        {
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AAPL",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VC"
+          ]
+        },
+        {
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ZNWD.L": {
+      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "headlines": [
+        {
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AAPL",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VC"
+          ]
+        },
+        {
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "headlines": [
+        {
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AAPL",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VC"
+          ]
+        },
+        {
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GEMR.L": {
+      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "headlines": [
+        {
+          "title": "Apple pitches a more personal, easier-to-use AI",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
+          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AAPL",
+            "ANTH.PVT"
+          ]
+        },
+        {
+          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
+          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VC"
+          ]
+        },
+        {
+          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
+          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ANTH.PVT",
+            "SPCX"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
