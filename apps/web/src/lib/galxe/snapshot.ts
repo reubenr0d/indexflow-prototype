@@ -1,3 +1,5 @@
+import fs from "node:fs/promises";
+import path from "node:path";
 import type { CuratorLeaderboardSnapshot } from "./types";
 
 let cachedSnapshot: CuratorLeaderboardSnapshot | null = null;
@@ -31,6 +33,16 @@ async function fetchSnapshotFromUrl(url: string): Promise<CuratorLeaderboardSnap
   return parseSnapshotJson(text);
 }
 
+async function loadSnapshotFromPublicFile(): Promise<CuratorLeaderboardSnapshot | null> {
+  try {
+    const filePath = path.join(process.cwd(), "public", "curator-leaderboard.snapshot.json");
+    const text = await fs.readFile(filePath, "utf8");
+    return parseSnapshotJson(text);
+  } catch {
+    return null;
+  }
+}
+
 export async function loadCuratorLeaderboardSnapshot(): Promise<CuratorLeaderboardSnapshot | null> {
   if (cachedSnapshot && Date.now() - cachedAt < CACHE_TTL_MS) {
     return cachedSnapshot;
@@ -45,9 +57,17 @@ export async function loadCuratorLeaderboardSnapshot(): Promise<CuratorLeaderboa
 
   const snapshotUrl =
     process.env.CURATOR_LEADERBOARD_SNAPSHOT_URL?.trim() || defaultSnapshotUrl();
-  if (!snapshotUrl) return null;
+  if (snapshotUrl) {
+    try {
+      cachedSnapshot = await fetchSnapshotFromUrl(snapshotUrl);
+      cachedAt = Date.now();
+      return cachedSnapshot;
+    } catch {
+      // Fall through to bundled public snapshot (local dev / deploy fallback).
+    }
+  }
 
-  cachedSnapshot = await fetchSnapshotFromUrl(snapshotUrl);
+  cachedSnapshot = await loadSnapshotFromPublicFile();
   cachedAt = Date.now();
   return cachedSnapshot;
 }

@@ -229,7 +229,7 @@ Galxe-only Curators Guild soft launch. Full design in [growth/GALXE_CAMPAIGN_PLA
 - [x] Curator leaderboard worker scaffolded (`services/leaderboard-worker/`)
 - [ ] Curator weekly USDC pool funded ($200/month = $50/week)
 - [ ] Run first snapshot manually via **Actions → Curator Leaderboard Snapshot → Run workflow**
-- [ ] `/operators` page shows weekly rankings and OAT badges
+- [x] `/operators` page shows weekly rankings and OAT badges
 
 ### Partnerships
 
