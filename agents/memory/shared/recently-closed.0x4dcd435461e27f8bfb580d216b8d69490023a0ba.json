@@ -1,24 +1,12 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-07T20:39:49.879Z",
+  "updatedAt": "2026-06-08T18:11:12.637Z",
   "closures": {
-    "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c": {
-      "ticker": "TEX.CN",
-      "isLong": true,
-      "closedAt": "2026-06-07T16:48:13.121Z",
-      "closedReason": "llm_judged: Closing Targa Exploration Corp. (TEX.CN) to free up capital for higher-ranked entries."
-    },
-    "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6": {
-      "ticker": "ABRA.TO",
-      "isLong": true,
-      "closedAt": "2026-06-07T18:20:24.496Z",
-      "closedReason": "auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)"
-    },
-    "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932": {
-      "ticker": "BIG.V",
-      "isLong": true,
-      "closedAt": "2026-06-07T20:39:49.879Z",
-      "closedReason": "llm_judged: Closing Hercules Metals (BIG.V) to free up capital for higher-ranked entries."
+    "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14": {
+      "ticker": "IRON.L",
+      "isLong": false,
+      "closedAt": "2026-06-08T18:11:12.637Z",
+      "closedReason": "llm_judged: Closing short position on IRON.L to free up collateral for higher profit-potential long positions."
     }
   }
 }

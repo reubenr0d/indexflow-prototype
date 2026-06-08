@@ -7,38 +7,87 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-08T14:24:32.977Z",
-  "startedAt": "2026-06-08T14:23:02.636Z",
-  "finishedAt": "2026-06-08T14:24:32.977Z",
+  "runId": "2026-06-08T18:11:42.787Z",
+  "startedAt": "2026-06-08T18:09:06.421Z",
+  "finishedAt": "2026-06-08T18:11:42.787Z",
   "status": "succeeded",
   "usage": {
-    "turns": 10,
-    "toolCalls": 11,
+    "turns": 14,
+    "toolCalls": 21,
     "errors": 0,
-    "softFailures": 0,
-    "writeActions": 1
+    "softFailures": 5,
+    "writeActions": 7
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. are leading the top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC is highlighted due to its negative predicted return, making it a viable short candidate in the current market conditions.",
-  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,042.87\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n#### Actions Taken\n1. **Opened Short Position**: \n   - **IRONVELD PLC (IRON.L)**: Short position opened with a leverage of 5x, based on a strong negative predicted return of -54.35% and ML score of 0.1.\n\n#### Positions\n- **Long Positions**: Hercules Metals (BIG.V), AbraSilver Resource (ABRA.TO), Targa Exploration Corp. (TEX.CN)\n- **Short Position**: IRONVELD PLC (IRON.L)\n\n### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. are leading the top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC is highlighted due to its negative predicted return, making it a viable short candidate in the current market conditions.\n\n### Next Steps\n- Monitor the performance of the newly opened short position in IRONVELD PLC.\n- Reassess the portfolio in the next run based on updated ML signals and news context.",
+  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC was previously highlighted due to its negative predicted return, but the position was closed to free up capital for higher potential long positions.",
+  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC was previously highlighted due to its negative predicted return, but the position was closed to free up capital for higher potential long positions.\n\n#### Actions Taken\n- **Closed Position**: Short position on IRONVELD PLC (IRON.L) was closed to free up collateral.\n- **Opened Position**: Long position on Hercules Metals (BIG.V) was opened due to its high ML score and predicted return.\n- **Tracked Assets**: Confirmed that the vault is tracking the correct assets.\n\n#### Current Vault State\n- **NAV**: $1,960.00\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Open Positions**: 4\n\n#### Recommendations for Next Run\n- Monitor for any changes in available collateral to enable further position openings.\n- Re-evaluate the PnL band outcomes to determine if any positions should be closed.\n- Continue to track news for any significant developments impacting current holdings.",
   "writeActions": [
     {
-      "tool": "open_position",
-      "txHash": "0x0e0852a043a1ecf55c193fdcc26bf66b707fc8844a2353e08d8ea1b119630a69",
-      "justification": "Opening a short position on IRONVELD PLC (IRON.L) based on a strong negative predicted return of -54.35% and ML score of 0.1.",
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Hercules Metals (BIG.V) based on top ML score and predicted return.",
       "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed short on IRON.L uses 50% of available collateral ($20.1k of $40.2k); downsize to mitigate risk.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14",
-          "isLong": false,
-          "beforeCollateral": "20100000",
-          "afterCollateral": "10050000",
-          "beforeSize": "100500000000000000000000000000000",
-          "afterSize": "50250000000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
+        "verdict": "approve",
+        "reason": "All proposed positions are within available collateral of $30.15 and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring AbraSilver Resource (ABRA.TO) based on top ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed positions are within available collateral of $30.15 and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Targa Exploration Corp. (TEX.CN) based on top ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed positions are within available collateral of $30.15 and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring IRONVELD PLC (IRON.L) as a short candidate with high absPredictedReturn.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed positions are within available collateral of $30.15 and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "txHash": null,
+      "justification": "Allocating available collateral to open new positions based on Atlas ML picks.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Allocating $30.15k to new positions is within available collateral and consistent with metals_risk_on regime."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "close_position",
+      "txHash": "0xdffc71898464eafd79078851deed3879c47cbda4b508227eea6c0cf94cb669c2",
+      "justification": "Closing short position on IRON.L to free up collateral for higher profit-potential long positions.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Closing IRON.L short frees up $10.05 collateral; aligns with metals_risk_on regime and no short penalty."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0xe54eb0b9d1df730cf7563649b741cab2017b2d3a54a8e8e29c9a7b6685f53c46",
+      "justification": "Opening long position on Hercules Metals (BIG.V) due to high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on BIG.V uses 41.9% of available collateral ($12.65k of $30.15k), which is within acceptable limits."
       },
       "kind": "vault-tx"
     }

@@ -1,352 +1,150 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-08T09:56:32.745Z",
+  "updatedAt": "2026-06-08T18:10:23.383Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-06-08T09:56:32.549Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-08T09:56:32.549Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-08T09:56:32.549Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-08T09:56:32.549Z",
+      "fetchedAt": "2026-06-08T18:10:23.383Z",
       "headlines": [
         {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
+          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
+          "publishedAt": "2026-06-08T18:01:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SDR.L"
+            "FRVO"
           ]
         },
         {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
+          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
+          "publishedAt": "2026-06-08T18:01:36.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
+          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
+          "publishedAt": "2026-06-08T18:00:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-08T09:56:32.549Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-08T09:56:32.745Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-08T09:56:32.745Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-08T09:56:32.745Z",
-      "headlines": [
-        {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SDR.L"
-          ]
-        },
-        {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RACE",
-            "NVDA"
+            "GC=F",
+            "GLD",
+            "GCN6",
+            "CL=F"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-08T09:56:32.745Z",
+      "fetchedAt": "2026-06-08T18:10:23.383Z",
       "headlines": [
         {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
+          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
+          "publishedAt": "2026-06-08T18:01:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SDR.L"
+            "FRVO"
           ]
         },
         {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
+          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
+          "publishedAt": "2026-06-08T18:01:36.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
+          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
+          "publishedAt": "2026-06-08T18:00:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE",
-            "NVDA"
+            "GC=F",
+            "GLD",
+            "GCN6",
+            "CL=F"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-08T09:56:32.745Z",
+    "BIG.V": {
+      "fetchedAt": "2026-06-08T18:10:23.383Z",
       "headlines": [
         {
-          "title": "Form 8.3",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/options/articles/form-8-3-095500736.html",
-          "publishedAt": "2026-06-08T09:55:00.000Z",
+          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
+          "publishedAt": "2026-06-08T18:01:43.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SDR.L"
+            "FRVO"
           ]
         },
         {
-          "title": "Canon USA appoints new senior marketing director for production print",
-          "publisher": "Packaging Gateway",
-          "link": "https://finance.yahoo.com/m/af8b9181-246f-3a21-8171-fc98044fe693/canon-usa-appoints-new-senior.html",
-          "publishedAt": "2026-06-08T09:54:15.000Z",
+          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
+          "publishedAt": "2026-06-08T18:01:36.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Ferrari Stock Is Down 33% Since July 2025: 1 Reason the Market Is Wrong.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8f8a4ed9-269a-3b8b-a90c-4ca7683e7548/ferrari-stock-is-down-33%25.html",
-          "publishedAt": "2026-06-08T09:51:00.000Z",
+          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
+          "publishedAt": "2026-06-08T18:00:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RACE",
-            "NVDA"
+            "GC=F",
+            "GLD",
+            "GCN6",
+            "CL=F"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-08T18:10:23.383Z",
+      "headlines": [
+        {
+          "title": "Fervo draws bullish Wall Street initiations as analysts bet on geothermal scale-up",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/fervo-draws-bullish-wall-street-180143478.html",
+          "publishedAt": "2026-06-08T18:01:43.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FRVO"
+          ]
+        },
+        {
+          "title": "Apple Reportedly Introduces macOS Golden Gate 27 at WWDC",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/apple-reportedly-introduces-macos-golden-180136946.html",
+          "publishedAt": "2026-06-08T18:01:36.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Update: Gold Gives Up All Its Gains This Year as Rising Oil Prices Heighten Inflation Worries",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/gold-gives-gains-rising-oil-180019514.html",
+          "publishedAt": "2026-06-08T18:00:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GC=F",
+            "GLD",
+            "GCN6",
+            "CL=F"
           ]
         }
       ],
