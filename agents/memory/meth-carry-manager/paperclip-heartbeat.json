@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-07T23:44:20.569Z",
-  "startedAt": "2026-06-07T23:36:19.412Z",
-  "finishedAt": "2026-06-07T23:44:20.569Z",
-  "status": "succeeded",
+  "runId": "2026-06-08T05:33:40.621Z",
+  "startedAt": "2026-06-08T05:06:31.659Z",
+  "finishedAt": "2026-06-08T05:33:40.621Z",
+  "status": "failed",
   "usage": {
     "turns": 40,
-    "toolCalls": 42,
-    "errors": 0,
-    "softFailures": 30,
+    "toolCalls": 41,
+    "errors": 1,
+    "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The vault remains inactive with no available USDC for trading or any positions. All attempts to wire assets, withdraw from RWA, and harvest yield have failed due to execution reverts. The current state requires further investigation or intervention to restore functionality.",
-  "summary": "",
+  "summary": "FAILED: LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 129608 tokens (124096 in the messages, 5512 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "_agent",
+      "error": "LLM API 400: {\n  \"error\": {\n    \"message\": \"This model's maximum context length is 128000 tokens. However, your messages resulted in 129608 tokens (124096 in the messages, 5512 in the functions). Please reduce the length of the messages or functions.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"messages\",\n    \"code\": \"context_length_exceeded\"\n  }\n}"
+    }
+  ]
 }

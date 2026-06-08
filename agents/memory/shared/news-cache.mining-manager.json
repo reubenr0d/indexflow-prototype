@@ -1,512 +1,686 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-07T23:32:56.591Z",
+  "updatedAt": "2026-06-08T05:02:32.721Z",
   "entries": {
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-07T23:32:56.426Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-07T23:32:56.426Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-07T23:32:56.426Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "BIG.V": {
-      "fetchedAt": "2026-06-07T23:32:56.426Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-07T23:32:56.426Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-07T23:32:56.591Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-07T23:32:56.591Z",
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
       "headlines": [
         {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "HOOD",
             "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
+            "INTC"
           ]
         },
         {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-07T23:32:56.591Z",
-      "headlines": [
-        {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
           "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
-          ]
-        },
-        {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-07T23:32:56.591Z",
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
       "headlines": [
         {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "HOOD",
             "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
+            "INTC"
           ]
         },
         {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GAL.V": {
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GEMR.L": {
-      "fetchedAt": "2026-06-07T23:32:56.591Z",
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
       "headlines": [
         {
-          "title": "SK Hynix announces multi-year tech deal with Nvidia for AI factories",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/sk-hynix-announces-multi-tech-232702383.html",
-          "publishedAt": "2026-06-07T23:27:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "3 High-Growth Artificial Intelligence (AI) Stocks to Buy With $5,000 Right Now",
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/314bd4b5-56fb-34d0-b0f8-e4cf4449cd5f/3-high-growth-artificial.html",
-          "publishedAt": "2026-06-07T23:25:00.000Z",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "HOOD",
             "NVDA",
-            "SNDK",
-            "MU",
-            "CRWV"
+            "INTC"
           ]
         },
         {
-          "title": "Dow Jones Futures Fall As Trump Says This After Iran Attacks Israel; Market Rally Faces First Real Test",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/4e57fd62-a165-35ac-ab25-3c8bcc828d3c/dow-jones-futures-fall-as.html",
-          "publishedAt": "2026-06-07T23:23:31.000Z",
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^DJI",
-            "^GSPC",
-            "GOOG",
-            "SPCX",
-            "ORCL",
-            "ORCL-PD",
-            "LLY",
-            "^IXIC",
-            "SPAX.PVT",
-            "AAPL",
-            "AVGO",
-            "CIEN"
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-08T05:02:30.930Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BIG.V": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "FOX.CN": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MI6.AX": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EEE.L": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "BTO.TO": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AEM.TO": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GTWO.TO": {
+      "fetchedAt": "2026-06-08T05:02:32.610Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TNR.V": {
+      "fetchedAt": "2026-06-08T05:02:32.721Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ORD.AX": {
+      "fetchedAt": "2026-06-08T05:02:32.721Z",
+      "headlines": [
+        {
+          "title": "Robinhood vs. Coinbase: Which Fintech Company Is the Better Buy?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/699fb849-162e-33ce-af05-7c2357ff5bd9/robinhood-vs.-coinbase%3A-which.html",
+          "publishedAt": "2026-06-08T04:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HOOD",
+            "NVDA",
+            "INTC"
+          ]
+        },
+        {
+          "title": "Tech stocks dive as Fed bets rattle AI rally",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/instant-view-tech-stocks-dive-010522598.html",
+          "publishedAt": "2026-06-08T04:48:39.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Digital Realty Launches Malaysia Operations to Advance Southeast Asia’s Digital Connectivity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/digital-realty-launches-malaysia-operations-044600987.html",
+          "publishedAt": "2026-06-08T04:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "DLR",
+            "DLR-PJ",
+            "DLR-PL"
           ]
         }
       ],

@@ -7,36 +7,46 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-07T23:33:56.006Z",
-  "startedAt": "2026-06-07T23:32:16.264Z",
-  "finishedAt": "2026-06-07T23:33:56.006Z",
-  "status": "succeeded",
+  "runId": "2026-06-08T05:03:43.614Z",
+  "startedAt": "2026-06-08T05:01:40.169Z",
+  "finishedAt": "2026-06-08T05:03:43.614Z",
+  "status": "succeeded_with_errors",
   "usage": {
     "turns": 14,
-    "toolCalls": 15,
-    "errors": 0,
-    "softFailures": 1,
-    "writeActions": 2
+    "toolCalls": 16,
+    "errors": 1,
+    "softFailures": 0,
+    "writeActions": 3
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, with Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. leading the top picks. The model's predictions suggest strong medium-term performance potential for these assets. The absence of significant news affecting these picks suggests stability in the current strategy. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC are highlighted due to their negative predicted returns, but no shorts were opened due to collateral constraints.",
-  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,011.60\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n- **Open Positions**: 3 (BIG.V, ABRA.TO, TEX.CN)\n\n#### Actions Taken\n- **Opened Long Positions**:\n  - **AbraSilver Resource (ABRA.TO)**: Opened due to high ML score and predicted return.\n  - **Targa Exploration Corp. (TEX.CN)**: Opened due to high ML score and predicted return.\n\n### Recommendations for Next Run\n- Monitor the available collateral closely to enable opening new positions when possible.\n- Keep an eye on the news for any developments that could impact the selected top picks.\n\n## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, with Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. leading the top picks. The model's predictions suggest strong medium-term performance potential for these assets. The absence of significant news affecting these picks suggests stability in the current strategy. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC are highlighted due to their negative predicted returns, but no shorts were opened due to collateral constraints.",
+  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $2,012.11\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n- **Open Positions**: 4\n\n#### Actions Taken\n- **Opened Long Positions**:\n  - **Hercules Metals (BIG.V)**: ML Score 100, Predicted Return +100.67%\n  - **AbraSilver Resource (ABRA.TO)**: ML Score 99.9, Predicted Return +80.69%\n  - **Targa Exploration Corp. (TEX.CN)**: ML Score 99.8, Predicted Return +77.25%\n\n### ## Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals, with Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. leading the top picks. These assets have been selected due to their high ML scores and predicted returns, suggesting strong medium-term performance potential. The absence of significant news affecting these picks supports stability in the current strategy. On the short side, while IRONVELD PLC and ZINNWALD LITHIUM PLC are highlighted due to their negative predicted returns, no shorts were opened due to collateral constraints.\n\n### Recommendations for Next Run\n- Monitor available collateral for potential new entries.\n- Reassess short candidates if collateral becomes available.\n- Continue to track news for any significant changes impacting current or potential positions.",
   "writeActions": [
     {
       "tool": "open_position",
-      "txHash": "0x2b683f29cae2eb8a9cd9e84e06bb069d6a4e07949384a3f85d6158b7533ff239",
-      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return.",
+      "txHash": "0x5370fdae030c545148345c47593a3ef9e6fd915684518663348b87d4f3e3b8e1",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its top ML score and predicted return, utilizing available collateral efficiently.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on BIG.V uses 33.3% of available collateral ($78.15 out of $234.44), aligning with the metals_risk_off regime's longBonus of 2."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0x4fafec76ac4809160c911e8dbd4c316956104506b68564984160da0aa2d14382",
+      "justification": "Opening a long position on AbraSilver Resource (ABRA.TO) due to its high ML score and predicted return, utilizing available collateral efficiently.",
       "riskOfficer": {
         "verdict": "downsize",
-        "reason": "Proposed long on ABRA.TO uses 33% of available collateral ($112.53 out of $337.59), which is high given existing exposure.",
+        "reason": "Proposed collateral $52.10 exceeds 22% of available $234.44; downsize to mitigate risk.",
         "downsizeFactor": 0.5,
         "downsize": {
           "tool": "open_position",
           "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
           "isLong": true,
-          "beforeCollateral": "112529089",
-          "afterCollateral": "56264544",
-          "beforeSize": "1125290890000000000000000000000000",
-          "afterSize": "562645445000000000000000000000000",
+          "beforeCollateral": "52096800",
+          "afterCollateral": "26048400",
+          "beforeSize": "520968000000000000000000000000000",
+          "afterSize": "260484000000000000000000000000000",
           "downsizeFactor": 0.5
         }
       },
@@ -44,25 +54,19 @@
     },
     {
       "tool": "open_position",
-      "txHash": "0x20a9aa95f0649bd369e31bbfbf48b5fdfb0834009f8929a6c67707b0d1a7567e",
-      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return.",
+      "txHash": "0x556bf4e09139243fea9f6be370036c0dd611b9daf45ece9cb6c54f484e541460",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return, utilizing available collateral efficiently.",
       "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed long on TEX.CN uses 27.8% of available collateral ($93.77 out of $337.59), which is high given recent losses and current exposure.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
-          "isLong": true,
-          "beforeCollateral": "93774241",
-          "afterCollateral": "46887120",
-          "beforeSize": "937742410000000000000000000000000",
-          "afterSize": "468871205000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
+        "verdict": "approve",
+        "reason": "The proposed long position on TEX.CN uses 18.5% of available collateral ($43.41 out of $234.44), which is within acceptable limits, and aligns with the longBonus=2 regime."
       },
       "kind": "vault-tx"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "yfinance_news",
+      "error": "MCP error -32602: Input validation error: Invalid arguments for tool yfinance_news: [\n  {\n    \"code\": \"too_big\",\n    \"maximum\": 10,\n    \"type\": \"array\",\n    \"inclusive\": true,\n    \"exact\": false,\n    \"message\": \"Array must contain at most 10 element(s)\",\n    \"path\": [\n      \"symbols\"\n    ]\n  }\n]"
+    }
+  ]
 }
