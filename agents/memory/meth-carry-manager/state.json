@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-09T08:50:31.302Z",
+  "lastRunAt": "2026-06-09T12:21:29.344Z",
   "thesis": "The hedge ratio cannot be calculated as there are no open positions. The vault remains inactive with no available USDC for trading or any positions. All attempts to open a short position have failed due to insufficient collateral.",
   "lastThesisUpdate": "2026-06-09T08:50:31.302Z"
 }

@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-09T08:42:33.390Z",
-  "startedAt": "2026-06-09T08:42:18.576Z",
-  "finishedAt": "2026-06-09T08:42:33.390Z",
+  "runId": "2026-06-09T12:17:13.219Z",
+  "startedAt": "2026-06-09T12:16:54.146Z",
+  "finishedAt": "2026-06-09T12:17:13.219Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -18,8 +18,8 @@
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "Today's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening positions.\n\n### Immediate Steps\n- **Authorization Issue**: The error indicates a \"401 Unauthorized\" response from the Atlas API. This needs to be resolved before we can access the trade-ready picks and continue with the vault management tasks.\n\n### Recommendations for Next Run\n- **Resolve Authorization**: Ensure that the API credentials or access tokens are correctly configured and valid. This will allow us to access the necessary data from the Atlas API.\n- **Retry Access**: Once the authorization issue is resolved, retry fetching the trade-ready picks and proceed with the intended actions.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Assets Tracked**: 0\n\nThe vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
+  "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
+  "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
   "writeActions": [],
   "errors": [
     {

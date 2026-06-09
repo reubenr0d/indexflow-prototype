@@ -4,13 +4,13 @@
   "agentDescription": "Mining long/short vault driven by the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction)",
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
-  "thesis": "Today's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "lastRunAt": "2026-06-07T12:56:47.590Z",
+  "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
+  "lastRunAt": "2026-06-09T12:17:13.219Z",
   "latestRun": {
-    "runId": "2026-06-07T12:56:47.590Z",
-    "finishedAt": "2026-06-07T12:56:47.590Z",
-    "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n## Vault State\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n\n- **Quality Matrix Definition**: Retrieved to ensure alignment with analyst's tier definitions.\n- **Trade-Ready Picks**: No eligible picks were found with a trade readiness score above the threshold.\n\n## Recommendations for Next Run\n\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the market regime and adjust the strategy accordingly if new opportunities arise.\n- Ensure readiness to act on any new signals that meet the criteria for opening positions.",
-    "startedAt": "2026-06-07T12:55:35.658Z",
+    "runId": "2026-06-09T12:17:13.219Z",
+    "finishedAt": "2026-06-09T12:17:13.219Z",
+    "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
+    "startedAt": "2026-06-09T12:16:54.146Z",
     "agentName": "quality-matrix-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -27,12 +27,50 @@
     "onChainActionCount": 0,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
-    "errors": [],
+    "errors": [
+      {
+        "tool": "get_quality_trade_ready_picks",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+        "errorCode": "ATLAS_HTTP_ERROR"
+      }
+    ],
     "softFailures": [],
     "riskOfficerVerdicts": [],
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-09T12:17:13.219Z",
+      "startedAt": "2026-06-09T12:16:54.146Z",
+      "finishedAt": "2026-06-09T12:17:13.219Z",
+      "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
+      "agentName": "quality-matrix-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 3,
+      "toolCalls": [
+        "get_vault_state",
+        "get_quality_matrix_definition",
+        "get_quality_trade_ready_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_quality_trade_ready_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-07T12:56:47.590Z",
       "startedAt": "2026-06-07T12:55:35.658Z",
