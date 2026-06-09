@@ -1,30 +1,18 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-09T00:16:39.060Z",
+  "updatedAt": "2026-06-09T04:37:36.668Z",
   "closures": {
-    "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1": {
-      "ticker": "ZNWD.L",
-      "isLong": false,
-      "closedAt": "2026-06-08T20:38:01.755Z",
-      "closedReason": "llm_judged: Closing the short position on ZNWD.L to free up collateral for higher-ranked entries."
-    },
-    "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c": {
-      "ticker": "TEX.CN",
-      "isLong": true,
-      "closedAt": "2026-06-08T20:39:01.295Z",
-      "closedReason": "llm_judged: Closing the long position on Targa Exploration Corp. (TEX.CN) to free up collateral for higher-ranked entries."
-    },
     "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac": {
       "ticker": "FOX.CN",
       "isLong": true,
-      "closedAt": "2026-06-09T00:16:25.989Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)"
+      "closedAt": "2026-06-09T04:37:25.650Z",
+      "closedReason": "auto-rebalance: dropped from ML top-12 (score < 85)"
     },
     "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc": {
       "ticker": "MI6.AX",
       "isLong": true,
-      "closedAt": "2026-06-09T00:16:39.060Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long MI6.AX (potential missing, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)"
+      "closedAt": "2026-06-09T04:37:36.668Z",
+      "closedReason": "auto-rebalance: dropped from ML top-12 (score < 85)"
     }
   }
 }

@@ -5,103 +5,82 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "lastRunAt": "2026-06-09T00:18:31.864Z",
+  "lastRunAt": "2026-06-09T04:37:46.228Z",
   "latestRun": {
-    "runId": "2026-06-09T00:18:31.864Z",
-    "finishedAt": "2026-06-09T00:18:31.864Z",
-    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,694.59\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n#### Actions Taken\n- **Opened Positions**:\n  - **Fox River Resources Corporation (FOX.CN)**: Long position opened with a churn-guard bypass due to re-evaluation of its potential with fresh signal.\n  - **Minerals 260 Ltd (MI6.AX)**: Long position opened with a churn-guard bypass due to re-evaluation of its potential with fresh signal.\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions on FOX.CN and MI6.AX.\n- Re-evaluate capital allocation to ensure sufficient collateral for new opportunities.\n- Continue monitoring news for any significant developments that could impact the selected long or short candidates.",
-    "startedAt": "2026-06-09T00:16:00.965Z",
+    "runId": "2026-06-09T04:37:46.228Z",
+    "finishedAt": "2026-06-09T04:37:46.228Z",
+    "summary": "It seems there was an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for long and short positions. Without these signals, we cannot proceed with wiring new assets, updating the tracked-asset list, or opening new positions based on the Atlas model.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,658.80\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\n1. **Resolve API Access**: The immediate priority is to resolve the authorization issue with the Atlas ML API to regain access to the model's top picks and short candidates.\n2. **Reattempt Data Retrieval**: Once access is restored, reattempt to pull the Atlas ML top picks and short picks.\n3. **Proceed with Strategy**: Upon successful data retrieval, follow the planned strategy to wire new assets, update the tracked-asset list, allocate capital, and open positions based on the model's recommendations.\n\nGiven the current situation, no new positions can be opened or adjusted without the necessary model data. Please ensure API credentials are correct and retry the process.",
+    "startedAt": "2026-06-09T04:37:10.575Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 14,
+    "turns": 2,
     "toolCalls": [
       "get_vault_state",
       "get_ml_top_picks",
-      "get_ml_short_picks",
-      "get_oracle_assets",
-      "yfinance_quote",
-      "yfinance_news",
-      "yfinance_news",
-      "get_perp_capital_snapshot",
-      "plan_open_position",
-      "plan_open_position",
-      "get_vault_state",
-      "list_open_positions",
-      "plan_open_position",
-      "plan_open_position",
-      "open_position",
-      "open_position",
-      "get_vault_state"
+      "get_ml_short_picks"
     ],
-    "actionCount": 4,
-    "onChainActionCount": 4,
+    "actionCount": 2,
+    "onChainActionCount": 2,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
-    "errors": [],
-    "softFailures": [
+    "errors": [
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac, isLong=true) is blocked: a close was recorded at 2026-06-09T00:16:25.989Z (auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)). Cooldown ends at 2026-06-09T04:16:25.989Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac\",\n  \"isLong\": true,\n  \"ticker\": \"FOX.CN\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-09T00:16:25.989Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-09T04:16:25.989Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "get_ml_top_picks",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+        "errorCode": "ATLAS_HTTP_ERROR"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc, isLong=true) is blocked: a close was recorded at 2026-06-09T00:16:39.060Z (auto-rebalance: profit rotation: closing off-top-N long MI6.AX (potential missing, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)). Cooldown ends at 2026-06-09T04:16:39.060Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc\",\n  \"isLong\": true,\n  \"ticker\": \"MI6.AX\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-09T00:16:39.060Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long MI6.AX (potential missing, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-09T04:16:39.060Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "get_ml_short_picks",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+        "errorCode": "ATLAS_HTTP_ERROR"
       }
     ],
-    "riskOfficerVerdicts": [
-      {
-        "turn": 12,
-        "verdict": "downsize",
-        "reason": "Proposed long positions on FOX.CN and MI6.AX each use 50% of available collateral ($192.62 out of $385.23), risking over-allocation.",
-        "downsizeFactor": 0.5,
-        "audit": [
-          {
-            "tool": "open_position",
-            "assetId": "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac",
-            "isLong": true,
-            "beforeCollateral": "192616899",
-            "afterCollateral": "96308449",
-            "beforeSize": "1926168990000000000000000000000000",
-            "afterSize": "963084495000000000000000000000000",
-            "downsizeFactor": 0.5
-          },
-          {
-            "tool": "open_position",
-            "assetId": "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
-            "isLong": true,
-            "beforeCollateral": "192616899",
-            "afterCollateral": "96308449",
-            "beforeSize": "1926168990000000000000000000000000",
-            "afterSize": "963084495000000000000000000000000",
-            "downsizeFactor": 0.5
-          }
-        ],
-        "proposedTools": [
-          "open_position",
-          "open_position"
-        ]
-      }
-    ],
-    "confirmationBatches": [
-      {
-        "turn": 12,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "open_position",
-          "open_position"
-        ]
-      }
-    ]
+    "softFailures": [],
+    "riskOfficerVerdicts": [],
+    "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-09T04:37:46.228Z",
+      "startedAt": "2026-06-09T04:37:10.575Z",
+      "finishedAt": "2026-06-09T04:37:46.228Z",
+      "summary": "It seems there was an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for long and short positions. Without these signals, we cannot proceed with wiring new assets, updating the tracked-asset list, or opening new positions based on the Atlas model.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,658.80\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\n1. **Resolve API Access**: The immediate priority is to resolve the authorization issue with the Atlas ML API to regain access to the model's top picks and short candidates.\n2. **Reattempt Data Retrieval**: Once access is restored, reattempt to pull the Atlas ML top picks and short picks.\n3. **Proceed with Strategy**: Upon successful data retrieval, follow the planned strategy to wire new assets, update the tracked-asset list, allocate capital, and open positions based on the model's recommendations.\n\nGiven the current situation, no new positions can be opened or adjusted without the necessary model data. Please ensure API credentials are correct and retry the process.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 2,
+      "onChainActionCount": 2,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-09T00:18:31.864Z",
       "startedAt": "2026-06-09T00:16:00.965Z",
@@ -2242,6 +2221,36 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
+      "timestamp": "2026-06-09T04:37:46.228Z",
+      "txHash": "0xc7137095292866b68591dd8a294a187ca64d3cb86bd2abc68c6782a30f21f02b",
+      "agentName": "mining-manager",
+      "runId": "2026-06-09T04:37:46.228Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac",
+        "isLong": true,
+        "sizeDelta": "963084495000000000000000000000000",
+        "collateralDelta": "96308449"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
+      "timestamp": "2026-06-09T04:37:46.228Z",
+      "txHash": "0xa64499f75e42e37ef09d4ed0988a134125fb40ab00aee8a44eba4dba8d7f3bc8",
+      "agentName": "mining-manager",
+      "runId": "2026-06-09T04:37:46.228Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
+        "isLong": true,
+        "sizeDelta": "963084495000000000000000000000000",
+        "collateralDelta": "96308449"
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)",

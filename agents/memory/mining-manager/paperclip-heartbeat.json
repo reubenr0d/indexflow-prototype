@@ -7,74 +7,41 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-09T00:18:31.864Z",
-  "startedAt": "2026-06-09T00:16:00.965Z",
-  "finishedAt": "2026-06-09T00:18:31.864Z",
-  "status": "succeeded",
+  "runId": "2026-06-09T04:37:46.228Z",
+  "startedAt": "2026-06-09T04:37:10.575Z",
+  "finishedAt": "2026-06-09T04:37:46.228Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 14,
-    "toolCalls": 17,
-    "errors": 0,
-    "softFailures": 2,
-    "writeActions": 4
+    "turns": 2,
+    "toolCalls": 3,
+    "errors": 2,
+    "softFailures": 0,
+    "writeActions": 2
   },
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,694.59\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n#### Actions Taken\n- **Opened Positions**:\n  - **Fox River Resources Corporation (FOX.CN)**: Long position opened with a churn-guard bypass due to re-evaluation of its potential with fresh signal.\n  - **Minerals 260 Ltd (MI6.AX)**: Long position opened with a churn-guard bypass due to re-evaluation of its potential with fresh signal.\n\n#### Thesis\nThe Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions on FOX.CN and MI6.AX.\n- Re-evaluate capital allocation to ensure sufficient collateral for new opportunities.\n- Continue monitoring news for any significant developments that could impact the selected long or short candidates.",
+  "summary": "It seems there was an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for long and short positions. Without these signals, we cannot proceed with wiring new assets, updating the tracked-asset list, or opening new positions based on the Atlas model.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,658.80\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\n1. **Resolve API Access**: The immediate priority is to resolve the authorization issue with the Atlas ML API to regain access to the model's top picks and short candidates.\n2. **Reattempt Data Retrieval**: Once access is restored, reattempt to pull the Atlas ML top picks and short picks.\n3. **Proceed with Strategy**: Upon successful data retrieval, follow the planned strategy to wire new assets, update the tracked-asset list, allocate capital, and open positions based on the model's recommendations.\n\nGiven the current situation, no new positions can be opened or adjusted without the necessary model data. Please ensure API credentials are correct and retry the process.",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0x4b0d7b8446206528a5a53add893558d54964ecd99e9e2ff2be4532ecb55ca887",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)",
+      "txHash": "0xc7137095292866b68591dd8a294a187ca64d3cb86bd2abc68c6782a30f21f02b",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
       "kind": "vault-tx"
     },
     {
       "tool": "close_position",
-      "txHash": "0x694226d367e80ba3fc41ad97d9b14ef4ed8c555af3b52484991d8863b8f035ab",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long MI6.AX (potential missing, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)",
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0x184325bc30d829a3d4846f5f5046b0baa5f65e7d38cc9ee4623384390aaef98b",
-      "justification": "Opening a long position on Fox River Resources Corporation (FOX.CN) with a churn-guard bypass due to re-evaluation of its potential with fresh signal.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed long positions on FOX.CN and MI6.AX each use 50% of available collateral ($192.62 out of $385.23), risking over-allocation.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac",
-          "isLong": true,
-          "beforeCollateral": "192616899",
-          "afterCollateral": "96308449",
-          "beforeSize": "1926168990000000000000000000000000",
-          "afterSize": "963084495000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xdae41006d08182627f6d9fa2b6959a9dc714e3b6dd7a7f13ff1b633abe286798",
-      "justification": "Opening a long position on Minerals 260 Ltd (MI6.AX) with a churn-guard bypass due to re-evaluation of its potential with fresh signal. [runner: Runner pinned vault to canonical 0x4dcd435461e27f8bfb580d216b8d69490023a0ba (LLM supplied 0x4dcd435461e27f8bfb580d216b8d69490023a0df441b1de68c032dd5fc10f429b3aac).]",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed long positions on FOX.CN and MI6.AX each use 50% of available collateral ($192.62 out of $385.23), risking over-allocation.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
-          "isLong": true,
-          "beforeCollateral": "192616899",
-          "afterCollateral": "96308449",
-          "beforeSize": "1926168990000000000000000000000000",
-          "afterSize": "963084495000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
-      },
+      "txHash": "0xa64499f75e42e37ef09d4ed0988a134125fb40ab00aee8a44eba4dba8d7f3bc8",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
       "kind": "vault-tx"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_ml_top_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    },
+    {
+      "tool": "get_ml_short_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    }
+  ]
 }
