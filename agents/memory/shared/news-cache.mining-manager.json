@@ -1,388 +1,363 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-08T22:50:45.121Z",
+  "updatedAt": "2026-06-09T00:17:16.487Z",
   "entries": {
     "BIG.V": {
-      "fetchedAt": "2026-06-08T22:50:44.895Z",
+      "fetchedAt": "2026-06-09T00:17:16.333Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VC"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-08T22:50:44.895Z",
-      "headlines": [
-        {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VC"
-          ]
-        },
-        {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-08T22:50:44.895Z",
-      "headlines": [
-        {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VC"
-          ]
-        },
-        {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "FOX.CN": {
-      "fetchedAt": "2026-06-08T22:50:44.895Z",
+      "fetchedAt": "2026-06-09T00:17:16.333Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "Asian Dividend Stocks To Consider: 3 Top Picks",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/asian-dividend-stocks-consider-3-223917242.html",
-          "publishedAt": "2026-06-08T22:39:17.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TEX.CN": {
+      "fetchedAt": "2026-06-09T00:17:16.333Z",
+      "headlines": [
+        {
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "4746.T",
-            "6088.T",
-            "XO-R.BK",
-            "XO.BK",
-            "8041.T",
-            "603368.SS"
+            "MU"
           ]
+        },
+        {
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SBUX",
+            "TXRH",
+            "KC=F"
+          ]
+        },
+        {
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-09T00:17:16.333Z",
+      "headlines": [
+        {
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU"
+          ]
+        },
+        {
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SBUX",
+            "TXRH",
+            "KC=F"
+          ]
+        },
+        {
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MI6.AX": {
-      "fetchedAt": "2026-06-08T22:50:44.895Z",
+      "fetchedAt": "2026-06-09T00:17:16.333Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VC"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-08T22:50:45.121Z",
-      "headlines": [
-        {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VC"
-          ]
-        },
-        {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-08T22:50:45.121Z",
-      "headlines": [
-        {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
-          ]
-        },
-        {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VC"
-          ]
-        },
-        {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ZNWD.L": {
-      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "fetchedAt": "2026-06-09T00:17:16.487Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VC"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GWMO.L": {
+      "fetchedAt": "2026-06-09T00:17:16.487Z",
+      "headlines": [
+        {
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
+            "MU"
           ]
+        },
+        {
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SBUX",
+            "TXRH",
+            "KC=F"
+          ]
+        },
+        {
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "IRON.L": {
-      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "fetchedAt": "2026-06-09T00:17:16.487Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VC"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-09T00:17:16.487Z",
+      "headlines": [
+        {
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
+            "MU"
           ]
+        },
+        {
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SBUX",
+            "TXRH",
+            "KC=F"
+          ]
+        },
+        {
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GEMR.L": {
-      "fetchedAt": "2026-06-08T22:50:45.121Z",
+      "fetchedAt": "2026-06-09T00:17:16.487Z",
       "headlines": [
         {
-          "title": "Apple pitches a more personal, easier-to-use AI",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/sectors/technology/article/apple-pitches-a-more-personal-easier-to-use-ai-224739067.html",
-          "publishedAt": "2026-06-08T22:47:39.000Z",
+          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
+          "publishedAt": "2026-06-09T00:05:50.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AAPL",
-            "ANTH.PVT"
+            "MU"
           ]
         },
         {
-          "title": "Senior Vice President Sells VC Shares for $352K, According to Recent SEC Filing",
+          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/af30dab0-72f3-3f0d-8222-649d3674c033/senior-vice-president-sells.html",
-          "publishedAt": "2026-06-08T22:41:56.000Z",
+          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
+          "publishedAt": "2026-06-09T00:05:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VC"
+            "SBUX",
+            "TXRH",
+            "KC=F"
           ]
         },
         {
-          "title": "OpenAI Files Confidentially For IPO A Week After AI Rival Anthropic",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/8b0d3514-14df-31a4-bbba-1f6d0689974b/openai-files-confidentially.html",
-          "publishedAt": "2026-06-08T22:39:55.000Z",
+          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
+          "publishedAt": "2026-06-09T00:05:10.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ANTH.PVT",
-            "SPCX"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

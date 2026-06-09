@@ -1,13 +1,7 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-08T20:39:01.295Z",
+  "updatedAt": "2026-06-09T00:16:39.060Z",
   "closures": {
-    "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14": {
-      "ticker": "IRON.L",
-      "isLong": false,
-      "closedAt": "2026-06-08T18:11:12.637Z",
-      "closedReason": "llm_judged: Closing short position on IRON.L to free up collateral for higher profit-potential long positions."
-    },
     "0x239a82d0f31bd99267966b2235d8ee23eb568e48f642f37b117d5f37210970a1": {
       "ticker": "ZNWD.L",
       "isLong": false,
@@ -19,6 +13,18 @@
       "isLong": true,
       "closedAt": "2026-06-08T20:39:01.295Z",
       "closedReason": "llm_judged: Closing the long position on Targa Exploration Corp. (TEX.CN) to free up collateral for higher-ranked entries."
+    },
+    "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac": {
+      "ticker": "FOX.CN",
+      "isLong": true,
+      "closedAt": "2026-06-09T00:16:25.989Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long FOX.CN (potential missing, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)"
+    },
+    "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc": {
+      "ticker": "MI6.AX",
+      "isLong": true,
+      "closedAt": "2026-06-09T00:16:39.060Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long MI6.AX (potential missing, pnl 0.00%) to free room for #2 long ABRA.TO (potential 0.8069)"
     }
   }
 }

@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-08T22:54:34.996Z",
+  "lastRunAt": "2026-06-09T00:19:58.784Z",
   "thesis": "Today's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "lastThesisUpdate": "2026-06-08T22:54:34.996Z"
+  "lastThesisUpdate": "2026-06-09T00:19:58.784Z"
 }
