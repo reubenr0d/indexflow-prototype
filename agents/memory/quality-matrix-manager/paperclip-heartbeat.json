@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-09T12:17:13.219Z",
-  "startedAt": "2026-06-09T12:16:54.146Z",
-  "finishedAt": "2026-06-09T12:17:13.219Z",
+  "runId": "2026-06-09T15:31:08.714Z",
+  "startedAt": "2026-06-09T15:30:42.465Z",
+  "finishedAt": "2026-06-09T15:31:08.714Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
-  "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
+  "summary": "It seems there is an authorization issue with accessing the Atlas API for retrieving the latest trade-ready picks. This prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening long positions.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None currently\n\n### Quality Matrix Grounding\nThe analyst's quality matrix is grounded in eight categories with specific weights: Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), and Construction (5%). Categories not yet empirically calibrated are subject to a provenance discount of 0.7.\n\n### Next Steps\n- **Authorization Issue**: The Atlas API access needs to be restored to proceed with retrieving trade-ready picks and making informed trading decisions.\n- **Monitoring**: Continue monitoring for fresh signals and news that could impact the vault's strategy once access is restored.\n- **Thesis Update**: The strategy remains focused on acting on fresh signals as they emerge, with a balanced approach to long and short positions based on the quality matrix.\n\nIf the authorization issue persists, it may require intervention to resolve access permissions with the Atlas API.",
   "writeActions": [],
   "errors": [
     {

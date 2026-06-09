@@ -3548,3 +3548,94 @@
     }
   ]
 }
+teral for higher-ranked entries ABRA.TO and TEX.CN, which have higher predicted returns.",
+      "timestamp": "2026-06-06T21:20:30.328Z",
+      "txHash": "0xb721ea86f8f28d78c1b8a328142534069e0711a568771ce983d280b7c42e3fd4",
+      "agentName": "mining-manager",
+      "runId": "2026-06-06T21:20:30.328Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+        "isLong": true,
+        "sizeDelta": "6767208690000000000000000000000000",
+        "collateralDelta": "676720869"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Closing BIG.V frees up $676.72 collateral, aligning with metals_risk_off regime favoring long positions."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a short position on IRONVELD PLC (IRON.L) due to its significant negative predicted return, aligning with the current short strategy.",
+      "timestamp": "2026-06-06T19:48:18.557Z",
+      "txHash": "0x3e9ce0dbb03297f602f701135bded6af4adc0a4efa612f036650ed082bcb6183",
+      "agentName": "mining-manager",
+      "runId": "2026-06-06T19:48:18.557Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14",
+        "isLong": false,
+        "size": "3383604350000000000000000000000000",
+        "collateral": "676720870"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The short position on IRON.L uses 100% of available collateral ($676.72), which is within acceptable limits given shortPenalty=0."
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing #2 long ABRA.TO (potential 0.8069, pnl 0.00%) to free room for #1 long BIG.V (potential 1.0067)",
+      "timestamp": "2026-06-06T17:37:58.869Z",
+      "txHash": "0x17de91b6eef436d23b39b8810956928fc26777dc93953281cf933b1f8eb84226",
+      "agentName": "mining-manager",
+      "runId": "2026-06-06T17:37:58.869Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "sizeDelta": "13516571805000000000000000000000000",
+        "collateralDelta": "1351657180"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Hercules Metals (BIG.V) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-06T17:37:58.869Z",
+      "txHash": "0xda2bea6c6e9ffb910a78786692108be7bc2e35e3e82920c6fb05d1ea02a1ace7",
+      "agentName": "mining-manager",
+      "runId": "2026-06-06T17:37:58.869Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xaaf63ae6081c6f60fa8c695fcf49eb9c083f8310654475abba0d8592505a7932",
+        "isLong": true,
+        "size": "6767208690000000000000000000000000",
+        "collateral": "676720869"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each, totaling 66.6%, which is within limits; regime longBonus=2 supports long positions."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Targa Exploration Corp. (TEX.CN) due to its high ML score and predicted return. [runner: Runner pinned vault to canonical 0x4dcd435461e27f8bfb580d216b8d69490023a0ba (LLM supplied 0x4dcd435461e27f8bfb580d216b8c695fcf49eb9c083f8310654475abba0d8592505a7932).]",
+      "timestamp": "2026-06-06T17:37:58.869Z",
+      "txHash": "0xde24e9500482eff898e9e839e95b1091b39d947cf5a3cbbc82fa8d6fec6760a4",
+      "agentName": "mining-manager",
+      "runId": "2026-06-06T17:37:58.869Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+        "isLong": true,
+        "size": "6767208690000000000000000000000000",
+        "collateral": "676720869"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each, totaling 66.6%, which is within limits; regime longBonus=2 supports long positions."
+      }
+    }
+  ]
+}

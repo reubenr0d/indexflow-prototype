@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-09T12:21:29.344Z",
-  "startedAt": "2026-06-09T12:18:34.493Z",
-  "finishedAt": "2026-06-09T12:21:29.344Z",
+  "runId": "2026-06-09T15:33:49.051Z",
+  "startedAt": "2026-06-09T15:32:43.563Z",
+  "finishedAt": "2026-06-09T15:33:49.051Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 9,
-    "toolCalls": 10,
+    "turns": 6,
+    "toolCalls": 7,
     "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "The hedge ratio cannot be calculated as there are no open positions. The vault remains inactive with no available USDC for trading or any positions. All attempts to open a short position have failed due to insufficient collateral.",
-  "summary": "The vault is currently inactive, with no available USDC for trading or any open positions. Here are the key details:\n\n1. **Vault State**:\n   - NAV: $0.00\n   - Total Supply: 0\n   - Idle USDC: $0.00\n   - Perp Allocated: $0.00\n   - Open Positions: None\n\n2. **Perpetual Capital Snapshot**:\n   - Available Collateral: $0.00\n   - Open Interest: $0\n   - Position Count: 0\n\n3. **Reserve State**:\n   - The attempt to read the reserve state failed, indicating that the vault's reserve adapter may not be functioning properly or is not wired correctly.\n\n4. **Oracle Assets**:\n   - The vault has no active assets wired, which means it cannot trade or open positions.\n\n### Current Hedge Ratio\n- Since there are no open positions, the hedge ratio cannot be calculated.\n\n### Action Plan\nGiven that there are no available USDC and no open positions, I cannot open a short position or perform any rebalancing actions. The vault remains inactive.\n\n### ## Thesis\nThe hedge ratio is currently undefined due to the absence of positions. The vault has not realised any mETH yield since the last run, and the funding rate context is not applicable as there are no open positions or collateral. The vault is inactive, and further actions cannot be taken until there are available funds or positions to manage.\n\nNext steps should focus on ensuring the vault is properly wired and operational to facilitate trading activities.",
+  "thesis": "The vault is currently inactive with no available USDC for trading or any open positions. As a result, the hedge ratio cannot be calculated, and no actions can be taken. The strategy will need to evolve to ensure that funds are available for trading in future runs.\n\nI will update the memory and exit.",
+  "summary": "The vault remains inactive with no available USDC for trading or any open positions. The perpetual capital snapshot confirms that:\n\n- **Available Collateral**: $0.00\n- **Open Positions**: 0\n\nSince there are no funds available to open a position, I cannot proceed with opening a short position at this time.\n\n### Summary\n- **Current Hedge Ratio**: Not applicable (no positions exist).\n- **mETH Yield Realised Since Last Run**: $0.00 (no activity).\n- **Funding Rate Context**: Not applicable (no positions exist).\n\n### Thesis\nThe vault is currently inactive with no available USDC for trading or any open positions. As a result, the hedge ratio cannot be calculated, and no actions can be taken. The strategy will need to evolve to ensure that funds are available for trading in future runs.\n\nI will update the memory and exit.",
   "writeActions": [],
   "errors": [
     {
