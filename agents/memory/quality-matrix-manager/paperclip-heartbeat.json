@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-09T04:38:46.635Z",
-  "startedAt": "2026-06-09T04:38:28.928Z",
-  "finishedAt": "2026-06-09T04:38:46.635Z",
+  "runId": "2026-06-09T08:42:33.390Z",
+  "startedAt": "2026-06-09T08:42:18.576Z",
+  "finishedAt": "2026-06-09T08:42:33.390Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run did not yield any new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
-  "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new positions.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nThe analyst's quality matrix is grounded in the following composite weights:\n- Drilling: 35%\n- Resources: 20%\n- Economic Studies: 15%\n- Metallurgy: 10%\n- Permitting: 5%\n- Offtake: 5%\n- Capital Raises: 5%\n- Construction: 5%\n\nThe `provenanceDiscount` is applied to categories not yet empirically calibrated, affecting Resources, Met, Econ, Permitting, Offtake, Capital Raises, and Construction.\n\n### Next Steps\n- **Authorization Issue**: The Atlas API returned a 401 Unauthorized error. This needs to be resolved to access the trade-ready picks and proceed with the strategy.\n- **Monitoring**: Continue monitoring for fresh signals and material events that could impact trade readiness scores.\n- **Thesis Update**: The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" indicating a neutral stance for both long and short positions.\n\nPlease address the authorization issue with the Atlas API to enable future runs to retrieve necessary data and execute the strategy effectively.",
+  "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening positions.\n\n### Immediate Steps\n- **Authorization Issue**: The error indicates a \"401 Unauthorized\" response from the Atlas API. This needs to be resolved before we can access the trade-ready picks and continue with the vault management tasks.\n\n### Recommendations for Next Run\n- **Resolve Authorization**: Ensure that the API credentials or access tokens are correctly configured and valid. This will allow us to access the necessary data from the Atlas API.\n- **Retry Access**: Once the authorization issue is resolved, retry fetching the trade-ready picks and proceed with the intended actions.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Assets Tracked**: 0\n\nThe vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" indicating a neutral stance for both long and short positions. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.",
   "writeActions": [],
   "errors": [
     {
