@@ -1,12 +1,18 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-10T14:30:03.398Z",
+  "updatedAt": "2026-06-10T18:10:36.748Z",
   "closures": {
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
       "ticker": "GSR.V",
       "isLong": true,
       "closedAt": "2026-06-10T14:30:03.398Z",
       "closedReason": "auto-rebalance: profit rotation: closing #3 long GSR.V (potential 0.5774, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)"
+    },
+    "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6": {
+      "ticker": "ABRA.TO",
+      "isLong": true,
+      "closedAt": "2026-06-10T18:10:36.748Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)"
     }
   }
 }

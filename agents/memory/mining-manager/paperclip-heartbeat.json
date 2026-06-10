@@ -7,119 +7,103 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-10T14:33:43.751Z",
-  "startedAt": "2026-06-10T14:29:47.679Z",
-  "finishedAt": "2026-06-10T14:33:43.751Z",
+  "runId": "2026-06-10T18:15:13.417Z",
+  "startedAt": "2026-06-10T18:10:09.479Z",
+  "finishedAt": "2026-06-10T18:15:13.417Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 14,
-    "toolCalls": 22,
+    "turns": 40,
+    "toolCalls": 68,
     "errors": 1,
-    "softFailures": 1,
+    "softFailures": 14,
     "writeActions": 9
   },
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our long positions in Amarc Resources and Gold Strike Resources are supported by high ML scores and predicted returns, reinforcing confidence in these selections. Additionally, a short position has been opened on Ironveld PLC, driven by its negative ML predicted return and high absolute predicted return, making it a compelling short candidate.",
-  "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our long positions in Amarc Resources and Gold Strike Resources are supported by high ML scores and predicted returns, reinforcing confidence in these selections. Additionally, a short position has been opened on Ironveld PLC, driven by its negative ML predicted return and high absolute predicted return, making it a compelling short candidate.\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,229.59\n- **Tracked Assets**: 12\n- **Perp Allocated**: $7,690.35\n\n#### Actions Taken\n- **Wired Assets**: Arizona Sonoran Copper, Hudbay Minerals, Homeland Uranium, Minbos Resources, Karelian Diamond Resources.\n- **Updated Tracked Assets**: Included newly wired assets.\n- **Opened Short Position**: Ironveld PLC (IRON.L) based on negative ML predicted return and high absPredictedReturn.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened short position on Ironveld PLC.\n- Continue to evaluate the top picks from the Atlas ML model for potential long and short opportunities.\n- Ensure compliance with policy constraints when opening new positions.\n\nThis approach aligns with the current model insights and market conditions, optimizing the portfolio for potential gains while managing risks effectively.",
+  "summary": "",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0x1687de318f2e6c5561a5fcf236fbe6afb796b4858957c485d0ed00d179607d49",
-      "justification": "auto-rebalance: profit rotation: closing #3 long GSR.V (potential 0.5774, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)",
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0x2d21dfd668333e2c9d1d23985855dff34ea0ba4918bbb9f48f3402dcb785116c",
-      "justification": "Wiring Arizona Sonoran Copper for long position based on high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed positions may exceed available collateral of $173.06; downsize to mitigate risk.",
-        "downsizeFactor": 0.5
-      },
+      "txHash": "0xae3bf7c4f62129197323aa864740259b0a9e5048ffdf158bac9467efea28508d",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)",
       "kind": "vault-tx"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Hudbay Minerals for long position based on high ML score and predicted return.",
+      "justification": "Wiring Arizona Sonoran Copper as a top Atlas ML pick with a high predicted return.",
       "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed positions may exceed available collateral of $173.06; downsize to mitigate risk.",
-        "downsizeFactor": 0.5
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
-      "txHash": "0x8e35028b6413909f7a049443899800f6a70eadd72a70545e1a220218feb829d6",
-      "justification": "Wiring Homeland Uranium for short position based on negative ML predicted return.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed positions may exceed available collateral of $173.06; downsize to mitigate risk.",
-        "downsizeFactor": 0.5
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0xc69a29742166264c250f014fadaca0b2e727c20f65bb5eb1cf2b4b94e5ab9748",
-      "justification": "Wiring Minbos Resources for short position based on negative ML predicted return.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed positions may exceed available collateral of $173.06; downsize to mitigate risk.",
-        "downsizeFactor": 0.5
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0x21256c555688685e304cf9e0edab7c2a961121a3e6d2709fa2c8e047022cb4e4",
-      "justification": "Wiring Karelian Diamond Resources for short position based on negative ML predicted return.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed positions may exceed available collateral of $173.06; downsize to mitigate risk.",
-        "downsizeFactor": 0.5
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0x899feec2276b8a56c76c60de4231825d6289a13543653c139d7bf4069b758cae",
-      "justification": "Wiring Hudbay Minerals for long position based on high ML score and predicted return.",
+      "txHash": null,
+      "justification": "Wiring AbraSilver Resource as a top Atlas ML pick with a high predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The proposed wiring for HBM.TO aligns with the metals_risk_off regime's longBonus=1 and availableCollateral of $173.06 is sufficient."
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Hudbay Minerals as a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x11853bd2437691dfcd3bc2bcf19a17f5517fb9ee8016556c6b68ad8ce4e7185e",
+      "justification": "Wiring Andina Copper as a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x7b0680c90fe5b98e2358ffaa6ee0efd5808234bc08e66d46c7587e25461336e8",
+      "justification": "Wiring Arras Minerals as a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x58981e3b44d79adf78455a7fd4afd24c9f1d533b579b328e32972da7985de0da",
+      "justification": "Wiring Canada Nickel as a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x35d1fb30e9ede35683736fb66b8dd4c20338cac77ebb763b5532be7a8f057872",
+      "justification": "Wiring Ero Copper as a top Atlas ML pick with a high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "set_vault_assets",
-      "txHash": "0x105fbb89cfd6847ad9b07f764b57f28d93365e5fd83e316ddd4584b6c5cfe933",
-      "justification": "Updating tracked assets to include newly wired long and short picks.",
+      "txHash": "0x0d86009dd10e13804e4d4861a358308214f100cd8a2c91aee8f2258b033d3866",
+      "justification": "Updating tracked assets to include top Atlas ML picks and ensure coverage of high predicted return opportunities.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent losses."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0x7787029b50ee333264e782214070dbd0d6c8a707a308fd428ecdbe5b03d616be",
-      "justification": "Opening short position on IRON.L based on negative ML predicted return and high absPredictedReturn.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed short on IRON.L uses 33.3% of available collateral ($57.69 out of $173.06), which is high given current market regime.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14",
-          "isLong": false,
-          "beforeCollateral": "57685575",
-          "afterCollateral": "28842787",
-          "beforeSize": "288427875000000000000000000000000",
-          "afterSize": "144213937500000000000000000000000",
-          "downsizeFactor": 0.5
-        }
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict."
       },
       "kind": "vault-tx"
     }
