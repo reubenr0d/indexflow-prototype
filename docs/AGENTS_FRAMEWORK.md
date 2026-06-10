@@ -241,7 +241,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `list_open_positions`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups + news | `yfinance_search`, `yfinance_quote`, `yfinance_news` |
-| `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_model_info`, `get_ml_basket`, `get_ml_thesis` |
+| `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_short_picks`, `get_ml_model_info`, `get_ml_runs`, `get_ml_horizon_recommendation`, `get_ml_horizon_coverage`, `get_ml_horizon_experiments`, `trigger_ml_horizon_evaluation`, `get_ml_basket`, `get_ml_thesis` |
 | `atlas-quality-mcp` | Analyst-authored 8-category Quality Matrix scorer (drilling / resources / met / econ / permitting / offtake / capital raises / construction). Reads existing read-only Atlas endpoints and classifies tiers locally; never modifies Atlas. | `get_quality_top_picks`, `get_quality_company_card`, `get_quality_matrix_definition`, `get_quality_short_candidates`, `classify_drill_release_text` |
 
 ### Server Registry Format
@@ -261,7 +261,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
   "atlas-ml-mcp": {
     "command": "node",
     "args": ["apps/mcps/atlas-ml/index.js"],
-    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_REQUEST_TIMEOUT_MS"]
+    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_AUTH_MODE", "ATLAS_BASIC_AUTH", "ATLAS_USERNAME", "ATLAS_PASSWORD", "ATLAS_AUTH_HEADER_NAME", "ATLAS_AUTH_HEADER_VALUE", "ATLAS_REQUEST_TIMEOUT_MS"]
   },
   "atlas-quality-mcp": {
     "command": "node",
@@ -295,10 +295,19 @@ To add a new MCP server: add the server code under `apps/mcps/`, then add an ent
 
 Wraps the Atlas mining-stock ML engine (default `https://atlas.minestarters.com`, override via `ATLAS_API_URL`). Every returned pick includes a derived `yahooSymbol` with the correct exchange suffix (e.g. `GSR` on TSXV becomes `GSR.V`) for direct use with `wire_asset` / `yfinance_quote`.
 
+The default `https://atlas.minestarters.com` host uses a built-in Basic auth fallback. Env vars still take precedence: set `ATLAS_API_KEY` for bearer auth, `ATLAS_AUTH_MODE=basic` plus either `ATLAS_BASIC_AUTH` (base64 token or `username:password`) or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for another basic-auth deployment, or `ATLAS_AUTH_MODE=header` plus `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for a custom gateway. `ATLAS_AUTH_MODE=none` disables auth headers.
+
 | Tool | Purpose | Key params |
 |---|---|---|
 | `get_ml_top_picks` | Ranked top mining stocks (`{ml_score, ml_predicted_return, primary_commodity, vault_fit_tier, yahooSymbol, ...}`) | `limit`, `minScore` |
-| `get_ml_model_info` | Slim model metadata (horizon, Spearman IC, top features, score distribution, bundled top predictions) | -- |
+| `get_ml_short_picks` | Short candidates from Atlas negative-return predictions, with `absPredictedReturn` for ranking | `limit`, `maxScore`, `minAbsPredictedReturn` |
+| `get_ml_model_info` | Current or historical model metadata (horizon, label type, feature mode, Spearman IC, fold summary, top features, score distribution, bundled predictions) | `tag`, `runId` |
+| `get_ml_runs` | Recent Atlas ML training runs for freshness checks and historical `runId` lookup | `limit` |
+| `get_ml_horizon_config` | Active horizon-selection defaults and thresholds | -- |
+| `get_ml_horizon_coverage` | Feature coverage diagnostics across raw/relative/absolute modes without retraining | `asOfDate`, `featureModes` |
+| `get_ml_horizon_experiments` | Previous persisted horizon-grid experiments | `limit` |
+| `get_ml_horizon_recommendation` | Best candidate from the latest horizon-grid experiment; read-only | -- |
+| `trigger_ml_horizon_evaluation` | POST a non-destructive horizon-grid evaluation; `persistModels` defaults false | `horizons`, `featureModes`, `labelType`, `targetType`, `evalFrequency`, `nanThreshold`, `persistModels` |
 | `get_ml_basket` | Top-N basket enriched with cash/debt/EV/jurisdiction | `n`, `tag` |
 | `get_ml_thesis` | Claude-generated investment thesis on the current basket (use sparingly) | `n`, `tag` |
 
@@ -568,7 +577,8 @@ Required for the round-robin matrix:
 - `KEEPER_PRIVATE_KEY` — same wallet for all seven agents; serialised by the matrix's `max-parallel: 1` and the shared `keeper-key-serialized` concurrency group.
 - `MANTLE_SEPOLIA_RPC_URL` — every matrix entry resolves its RPC from this secret. The `rpc_url_secret` field in the matrix points at it explicitly so a future Sepolia fallback only needs a new branch in `setup-matrix`, not a per-agent env shuffle.
 - `ENVIO_URL` — Envio HyperIndex GraphQL endpoint. `rwa-treasurer`, `rwa-yield-router`, and `smart-money-mirror-manager` read it via `envio-graphql-mcp`; unset values fall back to the URL parsed from `AGENT_DEPLOYMENT_MEMORY.md`.
-- `ATLAS_API_KEY` — `mining-manager` and `quality-matrix-manager` read this via `atlas-ml-mcp` / `atlas-quality-mcp`.
+- `ATLAS_API_KEY` — `mining-manager` and `quality-matrix-manager` read this via `atlas-ml-mcp` / `atlas-quality-mcp`; `atlas-ml-mcp` uses it as bearer auth when set.
+- `ATLAS_AUTH_MODE`, `ATLAS_BASIC_AUTH`, `ATLAS_USERNAME`, `ATLAS_PASSWORD`, `ATLAS_AUTH_HEADER_NAME`, `ATLAS_AUTH_HEADER_VALUE` — optional `atlas-ml-mcp` auth overrides for Atlas deployments protected by basic auth or a custom gateway header.
 
 Optional sponsor-stack keys (each agent declares its degraded-fallback mode in its frontmatter):
 

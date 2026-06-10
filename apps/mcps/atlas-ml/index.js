@@ -12,7 +12,15 @@ import { z } from "zod";
 
 const ATLAS_API_URL = (process.env.ATLAS_API_URL || "https://atlas.minestarters.com").replace(/\/+$/, "");
 const ATLAS_API_KEY = process.env.ATLAS_API_KEY || "";
+const ATLAS_AUTH_MODE = (process.env.ATLAS_AUTH_MODE || "").trim().toLowerCase();
+const ATLAS_BASIC_AUTH = process.env.ATLAS_BASIC_AUTH || "";
+const ATLAS_USERNAME = process.env.ATLAS_USERNAME || "";
+const ATLAS_PASSWORD = process.env.ATLAS_PASSWORD || "";
+const ATLAS_AUTH_HEADER_NAME = process.env.ATLAS_AUTH_HEADER_NAME || "";
+const ATLAS_AUTH_HEADER_VALUE = process.env.ATLAS_AUTH_HEADER_VALUE || "";
 const ATLAS_REQUEST_TIMEOUT_MS = parseInt(process.env.ATLAS_REQUEST_TIMEOUT_MS || "15000", 10);
+const DEFAULT_ATLAS_API_URL = "https://atlas.minestarters.com";
+const DEFAULT_ATLAS_BASIC_AUTH = "atlas:minestarters-atlas-dashboard";
 
 // When true (default), atlas-ml verifies every derived `yahooSymbol` against
 // Yahoo Finance and drops picks whose symbol does not resolve to a live quote.
@@ -68,25 +76,114 @@ function buildYahooSymbol(ticker, exchange) {
 // HTTP helpers
 // ---------------------------------------------------------------------------
 
-async function atlasGet(path, query) {
-  const url = new URL(`${ATLAS_API_URL}${path}`);
+function base64Encode(value) {
+  return Buffer.from(String(value), "utf8").toString("base64");
+}
+
+function usesDefaultAtlasHost(apiUrl = ATLAS_API_URL) {
+  try {
+    return new URL(apiUrl).origin === DEFAULT_ATLAS_API_URL;
+  } catch {
+    return false;
+  }
+}
+
+function resolveAtlasAuthMode(config = {}) {
+  const explicitMode = (config.authMode ?? ATLAS_AUTH_MODE ?? "").trim().toLowerCase();
+  if (explicitMode) return explicitMode;
+  if (config.apiKey ?? ATLAS_API_KEY) return "bearer";
+  if ((config.basicAuth ?? ATLAS_BASIC_AUTH) || ((config.username ?? ATLAS_USERNAME) && (config.password ?? ATLAS_PASSWORD))) {
+    return "basic";
+  }
+  if ((config.authHeaderName ?? ATLAS_AUTH_HEADER_NAME) && (config.authHeaderValue ?? ATLAS_AUTH_HEADER_VALUE)) {
+    return "header";
+  }
+  if (usesDefaultAtlasHost(config.apiUrl)) return "basic";
+  return "none";
+}
+
+function buildAtlasAuthHeaders(config = {}) {
+  const mode = resolveAtlasAuthMode(config);
+  if (mode === "none") return {};
+
+  if (mode === "bearer") {
+    const apiKey = config.apiKey ?? ATLAS_API_KEY;
+    return apiKey ? { Authorization: `Bearer ${apiKey}` } : {};
+  }
+
+  if (mode === "basic") {
+    const configuredBasicAuth = config.basicAuth ?? ATLAS_BASIC_AUTH;
+    const username = config.username ?? ATLAS_USERNAME;
+    const password = config.password ?? ATLAS_PASSWORD;
+    const basicAuth = configuredBasicAuth || (!username && !password && usesDefaultAtlasHost(config.apiUrl) ? DEFAULT_ATLAS_BASIC_AUTH : "");
+    if (basicAuth) {
+      const token = String(basicAuth).includes(":") ? base64Encode(basicAuth) : String(basicAuth);
+      return { Authorization: `Basic ${token}` };
+    }
+    if (username && password) return { Authorization: `Basic ${base64Encode(`${username}:${password}`)}` };
+    return {};
+  }
+
+  if (mode === "header") {
+    const name = config.authHeaderName ?? ATLAS_AUTH_HEADER_NAME;
+    const value = config.authHeaderValue ?? ATLAS_AUTH_HEADER_VALUE;
+    return name && value ? { [name]: value } : {};
+  }
+
+  return {};
+}
+
+function appendQueryParams(url, query) {
   if (query && typeof query === "object") {
     for (const [k, v] of Object.entries(query)) {
       if (v === undefined || v === null || v === "") continue;
-      url.searchParams.set(k, String(v));
+      if (Array.isArray(v)) {
+        for (const item of v) {
+          if (item === undefined || item === null || item === "") continue;
+          url.searchParams.append(k, String(item));
+        }
+      } else {
+        url.searchParams.set(k, String(v));
+      }
     }
   }
+  return url;
+}
+
+function buildHorizonEvaluationBody(input = {}) {
+  const body = {
+    nan_threshold: input.nanThreshold ?? 0.95,
+    persist_models: input.persistModels ?? false,
+  };
+  if (input.horizons !== undefined) body.horizons = input.horizons;
+  if (input.featureModes !== undefined) body.feature_modes = input.featureModes;
+  if (input.labelType !== undefined) body.label_type = input.labelType;
+  if (input.targetType !== undefined) body.target_type = input.targetType;
+  if (input.evalFrequency !== undefined) body.eval_frequency = input.evalFrequency;
+  return body;
+}
+
+async function atlasRequest(path, { method = "GET", query, body } = {}) {
+  const url = appendQueryParams(new URL(`${ATLAS_API_URL}${path}`), query);
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ATLAS_REQUEST_TIMEOUT_MS);
   try {
-    const headers = { Accept: "application/json" };
-    if (ATLAS_API_KEY) headers.Authorization = `Bearer ${ATLAS_API_KEY}`;
-    const res = await fetch(url, { method: "GET", headers, signal: controller.signal });
+    const headers = {
+      Accept: "application/json",
+      ...buildAtlasAuthHeaders(),
+    };
+    const fetchOptions = { method, headers, signal: controller.signal };
+    if (body !== undefined) {
+      headers["Content-Type"] = "application/json";
+      fetchOptions.body = JSON.stringify(body);
+    }
+    const res = await fetch(url, fetchOptions);
     const text = await res.text();
     if (!res.ok) {
       const err = new Error(`Atlas API ${res.status} ${res.statusText}: ${text.slice(0, 400)}`);
-      err.code = res.status === 404 ? "ATLAS_NOT_FOUND" : "ATLAS_HTTP_ERROR";
+      if (res.status === 401 || res.status === 403) err.code = "ATLAS_UNAUTHORIZED";
+      else err.code = res.status === 404 ? "ATLAS_NOT_FOUND" : "ATLAS_HTTP_ERROR";
       err.status = res.status;
       throw err;
     }
@@ -102,6 +199,14 @@ async function atlasGet(path, query) {
   }
 }
 
+async function atlasGet(path, query) {
+  return atlasRequest(path, { method: "GET", query });
+}
+
+async function atlasPost(path, body, query) {
+  return atlasRequest(path, { method: "POST", query, body });
+}
+
 function toolError(code, message, recoveryHint) {
   const payload = { success: false, error_code: code, message };
   if (recoveryHint) payload.recovery_hint = recoveryHint;
@@ -112,6 +217,13 @@ function toolError(code, message, recoveryHint) {
 }
 
 function httpErrorToTool(err) {
+  if (err.code === "ATLAS_UNAUTHORIZED") {
+    return toolError(
+      "ATLAS_UNAUTHORIZED",
+      err.message,
+      "Atlas rejected the request. Configure ATLAS_AUTH_MODE=bearer with ATLAS_API_KEY, ATLAS_AUTH_MODE=basic with ATLAS_BASIC_AUTH or ATLAS_USERNAME/ATLAS_PASSWORD, or ATLAS_AUTH_MODE=header with ATLAS_AUTH_HEADER_NAME/ATLAS_AUTH_HEADER_VALUE.",
+    );
+  }
   if (err.code === "ATLAS_NOT_FOUND") {
     return toolError(
       "ATLAS_NOT_FOUND",
@@ -301,6 +413,83 @@ function normaliseBasketCompany(raw) {
   };
 }
 
+function summariseFoldMetrics(foldMetrics, limit = 5) {
+  if (!Array.isArray(foldMetrics)) return { count: 0, sample: [] };
+  return {
+    count: foldMetrics.length,
+    sample: foldMetrics.slice(0, limit),
+  };
+}
+
+function normaliseMlRun(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  return {
+    id: raw.id ?? null,
+    tag: raw.tag ?? null,
+    trainedAt: raw.trained_at ?? null,
+    createdAt: raw.created_at ?? null,
+    horizonDays: raw.horizon_days ?? null,
+    targetType: raw.target_type ?? null,
+    labelType: raw.label_type ?? null,
+    featureMode: raw.feature_mode ?? null,
+    nFeatures: raw.n_features ?? null,
+    nSamples: raw.n_samples ?? null,
+    nFolds: raw.n_folds ?? null,
+    nanThreshold: raw.nan_threshold ?? null,
+    evalFrequency: raw.eval_frequency ?? null,
+    meanMae: raw.mean_mae ?? null,
+    meanSpearmanIc: raw.mean_spearman_ic ?? null,
+    meanHitRate: raw.mean_hit_rate ?? null,
+    trainDurationSeconds: raw.train_duration_seconds ?? null,
+  };
+}
+
+function normaliseHorizonCandidate(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  return {
+    status: raw.status ?? null,
+    experimentId: raw.experiment_id ?? null,
+    createdAt: raw.created_at ?? null,
+    horizonDays: raw.horizon_days ?? null,
+    featureMode: raw.feature_mode ?? null,
+    labelType: raw.label_type ?? null,
+    targetType: raw.target_type ?? null,
+    modelTag: raw.model_tag ?? null,
+    nSamples: raw.n_samples ?? null,
+    nFeatures: raw.n_features ?? null,
+    nFolds: raw.n_folds ?? null,
+    meanMae: raw.mean_mae ?? null,
+    meanRmse: raw.mean_rmse ?? null,
+    meanR2: raw.mean_r2 ?? null,
+    meanSpearmanIc: raw.mean_spearman_ic ?? null,
+    meanQuintileSpread: raw.mean_quintile_spread ?? null,
+    meanHitRate: raw.mean_hit_rate ?? null,
+    trainDurationSeconds: raw.train_duration_seconds ?? null,
+    featuresBeforePrune: raw.features_before_prune ?? null,
+    featureCoverageMeanRatio: raw.feature_coverage_mean_ratio ?? null,
+    rowCoverageMeanRatio: raw.row_coverage_mean_ratio ?? null,
+    coverage: raw.coverage ?? null,
+    error: raw.error ?? null,
+  };
+}
+
+function normaliseHorizonExperiment(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  const results = Array.isArray(raw.results)
+    ? raw.results.map(normaliseHorizonCandidate).filter(Boolean)
+    : [];
+  return {
+    type: raw.type ?? null,
+    experimentId: raw.experiment_id ?? null,
+    createdAt: raw.created_at ?? null,
+    settings: raw.settings ?? null,
+    request: raw.request ?? null,
+    count: results.length,
+    results,
+    recommendedCandidate: normaliseHorizonCandidate(raw.recommended_candidate),
+  };
+}
+
 // ---------------------------------------------------------------------------
 // MCP Server
 // ---------------------------------------------------------------------------
@@ -356,15 +545,23 @@ server.registerTool(
   {
     title: "Atlas ML Model Info",
     description:
-      "Get a compact summary of the currently deployed Atlas ML model: status, training metadata, top feature importances, score distribution, " +
+      "Get a compact summary of the currently deployed or historical Atlas ML model: status, training metadata, top feature importances, score distribution, " +
       "and the bundled top predictions. Trimmed to fit in the LLM context budget (drops per-fold metrics and feature importance below the top 5). " +
-      "Use this once at the start of a run to ground the agent in what the model is actually measuring.",
-    inputSchema: {},
+      "Use this once at the start of a run to ground the agent in what the model is actually measuring. " +
+      "Pass runId to inspect a historical run returned by get_ml_runs.",
+    inputSchema: {
+      tag: z.string().optional().default("latest").describe("Model tag to inspect when runId is omitted (default 'latest')"),
+      runId: z.string().optional().describe("Historical ml_model_runs UUID to inspect"),
+    },
   },
-  async () => {
+  async ({ tag, runId } = {}) => {
     try {
-      const data = await atlasGet("/api/v1/dashboard/stocks/ml-model-info");
+      const data = await atlasGet("/api/v1/dashboard/stocks/ml-model-info", {
+        tag: tag ?? "latest",
+        run_id: runId,
+      });
       const meta = data?.metadata ?? {};
+      const aggregate = meta?.aggregate_metrics ?? {};
       const featureImportance = Array.isArray(data?.feature_importance) ? data.feature_importance : [];
       const topPredictions = Array.isArray(data?.top_predictions) ? data.top_predictions : [];
       const shortPredictions = Array.isArray(data?.short_predictions) ? data.short_predictions : [];
@@ -377,13 +574,29 @@ server.registerTool(
         isHistorical: Boolean(data?.is_historical),
         horizonDays: meta?.horizon_days ?? null,
         targetType: meta?.target_type ?? null,
-        trainedAt: meta?.aggregate_metrics?.trained_at ?? null,
-        nFeatures: meta?.aggregate_metrics?.n_features ?? null,
-        nSamples: meta?.aggregate_metrics?.n_samples ?? null,
-        meanSpearmanIc: meta?.aggregate_metrics?.mean_spearman_ic ?? null,
-        meanHitRate: meta?.aggregate_metrics?.mean_hit_rate ?? null,
-        meanQuintileSpread: meta?.aggregate_metrics?.mean_quintile_spread ?? null,
-        topFeatures: featureImportance.slice(0, 5).map((f) => ({
+        labelType: meta?.label_type ?? null,
+        featureMode: meta?.feature_mode ?? null,
+        nanThreshold: meta?.nan_threshold ?? null,
+        evalFrequency: meta?.eval_frequency ?? null,
+        trainedAt: aggregate?.trained_at ?? null,
+        nFeatures: aggregate?.n_features ?? null,
+        nSamples: aggregate?.n_samples ?? null,
+        nFolds: aggregate?.n_folds ?? null,
+        featuresBeforePrune: aggregate?.features_before_prune ?? null,
+        pruned: aggregate?.pruned ?? null,
+        meanMae: aggregate?.mean_mae ?? null,
+        meanRmse: aggregate?.mean_rmse ?? null,
+        meanR2: aggregate?.mean_r2 ?? null,
+        meanSpearmanIc: aggregate?.mean_spearman_ic ?? null,
+        meanHitRate: aggregate?.mean_hit_rate ?? null,
+        meanQuintileSpread: aggregate?.mean_quintile_spread ?? null,
+        trainDurationSeconds: aggregate?.train_duration_seconds ?? null,
+        pipelineDurationSeconds: aggregate?.pipeline_duration_seconds ?? null,
+        featureBuildSeconds: aggregate?.feature_build_seconds ?? null,
+        droppedFeatures: Array.isArray(meta?.dropped_features) ? meta.dropped_features.slice(0, 20) : [],
+        droppedFeatureCount: Array.isArray(meta?.dropped_features) ? meta.dropped_features.length : 0,
+        foldMetrics: summariseFoldMetrics(meta?.fold_metrics),
+        topFeatures: featureImportance.slice(0, 10).map((f) => ({
           feature: f.feature,
           importance: f.importance,
         })),
@@ -431,6 +644,162 @@ server.registerTool(
         count: filtered.length,
         picks: filtered,
       };
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_runs",
+  {
+    title: "Atlas ML Training Runs",
+    description:
+      "List recent Atlas ML training runs from the dashboard API. " +
+      "Use this to inspect model freshness and pick a runId for get_ml_model_info({ runId }). " +
+      "Returns {count, runs: [{id, tag, trainedAt, horizonDays, targetType, labelType, featureMode, nFeatures, nSamples, meanSpearmanIc, meanHitRate, ...}]}",
+    inputSchema: {
+      limit: z.number().int().min(1).max(100).optional().default(10).describe("Maximum number of runs to return (default 10, max 100)"),
+    },
+  },
+  async ({ limit } = {}) => {
+    try {
+      const data = await atlasGet("/api/v1/dashboard/stocks/ml-runs");
+      const runs = Array.isArray(data)
+        ? data.map(normaliseMlRun).filter(Boolean).slice(0, limit ?? 10)
+        : [];
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({ count: runs.length, runs }, null, 2),
+        }],
+      };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_horizon_config",
+  {
+    title: "Atlas ML Horizon Config",
+    description:
+      "Return Atlas's active horizon-selection API configuration: supported horizons, feature modes, label types, defaults, and model-selection thresholds.",
+    inputSchema: {},
+  },
+  async () => {
+    try {
+      const data = await atlasGet("/api/v1/ml/horizons/config");
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_horizon_coverage",
+  {
+    title: "Atlas ML Horizon Feature Coverage",
+    description:
+      "Inspect current prediction feature coverage across raw/relative/absolute feature modes without retraining. " +
+      "Use this to understand whether sparse features may make a horizon experiment unreliable.",
+    inputSchema: {
+      asOfDate: z.string().optional().describe("YYYY-MM-DD as-of date; defaults to Atlas server today"),
+      featureModes: z.array(z.string()).optional().describe("Optional feature modes; repeated as feature_modes query params"),
+    },
+  },
+  async ({ asOfDate, featureModes } = {}) => {
+    try {
+      const data = await atlasGet("/api/v1/ml/horizons/coverage", {
+        as_of_date: asOfDate,
+        feature_modes: featureModes,
+      });
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_horizon_experiments",
+  {
+    title: "Atlas ML Horizon Experiments",
+    description:
+      "List persisted horizon-grid experiment summaries. These are previous non-destructive model-selection runs stored by Atlas.",
+    inputSchema: {
+      limit: z.number().int().min(1).max(100).optional().default(20).describe("Maximum number of experiments to return (default 20, max 100)"),
+    },
+  },
+  async ({ limit } = {}) => {
+    try {
+      const data = await atlasGet("/api/v1/ml/horizons/experiments", { limit: limit ?? 20 });
+      const items = Array.isArray(data?.items)
+        ? data.items.map(normaliseHorizonExperiment).filter(Boolean)
+        : [];
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({ count: items.length, items }, null, 2),
+        }],
+      };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_horizon_recommendation",
+  {
+    title: "Atlas ML Horizon Recommendation",
+    description:
+      "Return the best currently known horizon candidate from the latest Atlas horizon-grid experiment. " +
+      "This is read-only and does not change the active latest model.",
+    inputSchema: {},
+  },
+  async () => {
+    try {
+      const data = await atlasGet("/api/v1/ml/horizons/recommendation");
+      const result = {
+        settings: data?.settings ?? null,
+        experimentId: data?.experiment_id ?? null,
+        recommendedCandidate: normaliseHorizonCandidate(data?.recommended_candidate),
+      };
+      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "trigger_ml_horizon_evaluation",
+  {
+    title: "Trigger Atlas ML Horizon Evaluation",
+    description:
+      "Start a non-destructive Atlas horizon-grid evaluation over selected horizons and feature modes. " +
+      "Defaults are read by Atlas when omitted; persistModels defaults false so the current latest model is not overwritten.",
+    inputSchema: {
+      horizons: z.array(z.number().int().positive()).optional().describe("Optional forward-return horizons in days"),
+      featureModes: z.array(z.string()).optional().describe("Optional feature modes such as raw, relative, absolute"),
+      labelType: z.string().optional().describe("Optional label type such as raw, relative, barrier"),
+      targetType: z.string().optional().describe("Optional target family such as regression or classification"),
+      evalFrequency: z.string().optional().describe("Optional evaluation cadence such as monthly or quarterly"),
+      nanThreshold: z.number().min(0).max(1).optional().default(0.95).describe("Maximum tolerated NaN ratio before prune eligibility"),
+      persistModels: z.boolean().optional().default(false).describe("Persist evaluated models under dedicated tags; never overwrites latest"),
+    },
+  },
+  async (input = {}) => {
+    try {
+      const data = await atlasPost(
+        "/api/v1/ml/horizons/evaluate",
+        buildHorizonEvaluationBody(input),
+      );
+      const result = normaliseHorizonExperiment(data);
       return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
     } catch (err) {
       return httpErrorToTool(err);
@@ -524,9 +893,17 @@ if (isDirectCliEntry) {
 }
 
 export const __atlasMlInternals = {
+  appendQueryParams,
+  buildAtlasAuthHeaders,
+  buildHorizonEvaluationBody,
   exchangeToYahooSuffix,
   buildYahooSymbol,
   normalisePick,
   normaliseShortPick,
   selectShortPicks,
+  normaliseMlRun,
+  normaliseHorizonCandidate,
+  normaliseHorizonExperiment,
+  httpErrorToTool,
+  usesDefaultAtlasHost,
 };

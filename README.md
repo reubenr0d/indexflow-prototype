@@ -605,10 +605,13 @@ Agents are defined as markdown files in `agents/` -- each file is a system promp
 
 All three use OpenAI (or any OpenAI-compatible chat-completions endpoint) for inference and sign transactions directly with `PRIVATE_KEY`. For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryMlScoreMin`, `entryQualityScoreMin`, `entryDirection`, `maxNewPositionsPerRun`, `rebalanceMode`).
 
+Atlas-backed agents read `ATLAS_API_URL` and `ATLAS_API_KEY` through `atlas-ml-mcp` / `atlas-quality-mcp`. `atlas-ml-mcp` ships with the default Basic auth fallback for `https://atlas.minestarters.com`, and also supports `ATLAS_AUTH_MODE=basic` with `ATLAS_BASIC_AUTH` or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for other nginx-protected Atlas deployments, plus `ATLAS_AUTH_MODE=header` with `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for custom gateways. The mining manager can inspect historical ML runs and horizon experiments through the Atlas ML MCP; horizon evaluation is intentionally explicit/operator-driven because it can be expensive.
+
 ```bash
 # Install MCP server deps (one-time)
 npm --prefix apps/mcps/vault-manager install
 npm --prefix apps/mcps/yfinance install
+npm --prefix apps/mcps/atlas-ml install
 
 # Uses repo-root .env / .env.local if present (see Configuration above)
 
