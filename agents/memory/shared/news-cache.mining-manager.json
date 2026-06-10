@@ -1,363 +1,169 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-09T00:17:16.487Z",
+  "updatedAt": "2026-06-10T11:21:42.117Z",
   "entries": {
-    "BIG.V": {
-      "fetchedAt": "2026-06-09T00:17:16.333Z",
+    "CDT.AX": {
+      "fetchedAt": "2026-06-10T11:21:42.117Z",
       "headlines": [
         {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
+          "publishedAt": "2026-06-10T11:18:34.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
+          "publishedAt": "2026-06-10T11:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VOO",
+            "NVDA",
+            "AAPL",
+            "VFFSX",
+            "VFIAX",
+            "VFINX",
+            "SPY",
+            "FTEC"
+          ]
+        },
+        {
+          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
+          "publishedAt": "2026-06-10T11:14:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SAP"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "FOX.CN": {
-      "fetchedAt": "2026-06-09T00:17:16.333Z",
+    "TGR.L": {
+      "fetchedAt": "2026-06-10T11:21:42.117Z",
       "headlines": [
         {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
+          "publishedAt": "2026-06-10T11:18:34.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
+          "publishedAt": "2026-06-10T11:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VOO",
+            "NVDA",
+            "AAPL",
+            "VFFSX",
+            "VFIAX",
+            "VFINX",
+            "SPY",
+            "FTEC"
+          ]
+        },
+        {
+          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
+          "publishedAt": "2026-06-10T11:14:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SAP"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TEX.CN": {
-      "fetchedAt": "2026-06-09T00:17:16.333Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-10T11:21:42.117Z",
       "headlines": [
         {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
+          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
+          "publishedAt": "2026-06-10T11:18:34.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
+          "publishedAt": "2026-06-10T11:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VOO",
+            "NVDA",
+            "AAPL",
+            "VFFSX",
+            "VFIAX",
+            "VFINX",
+            "SPY",
+            "FTEC"
+          ]
+        },
+        {
+          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
+          "publishedAt": "2026-06-10T11:14:36.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SAP"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-09T00:17:16.333Z",
+    "AMG.L": {
+      "fetchedAt": "2026-06-10T11:21:42.117Z",
       "headlines": [
         {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
+          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
+          "publishedAt": "2026-06-10T11:15:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "VOO",
+            "NVDA",
+            "AAPL",
+            "VFFSX",
+            "VFIAX",
+            "VFINX",
+            "SPY",
+            "FTEC"
           ]
         },
         {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
+          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
+          "publishedAt": "2026-06-10T11:14:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
+            "SAP"
           ]
         },
         {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MI6.AX": {
-      "fetchedAt": "2026-06-09T00:17:16.333Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
+          "title": "TPG to invest in US tax and accounting practice Smith + Howard",
+          "publisher": "International Accounting Bulletin",
+          "link": "https://finance.yahoo.com/m/f098099f-2d85-35da-a376-5ca9b83a76d5/tpg-to-invest-in-us-tax-and.html",
+          "publishedAt": "2026-06-10T11:13:31.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "TPG"
           ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ZNWD.L": {
-      "fetchedAt": "2026-06-09T00:17:16.487Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GWMO.L": {
-      "fetchedAt": "2026-06-09T00:17:16.487Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-09T00:17:16.487Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-09T00:17:16.487Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GEMR.L": {
-      "fetchedAt": "2026-06-09T00:17:16.487Z",
-      "headlines": [
-        {
-          "title": "Q1 Earnings Roundup: Micron (NASDAQ:MU) And The Rest Of The Semiconductors Segment",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/q1-earnings-roundup-micron-nasdaq-000550743.html",
-          "publishedAt": "2026-06-09T00:05:50.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "Starbucks vs. Texas Roadhouse: Which Consumer Stock Is a Better Buy in 2026?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8e3d0004-fbac-3c58-8e94-f910fd5888eb/starbucks-vs.-texas.html",
-          "publishedAt": "2026-06-09T00:05:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SBUX",
-            "TXRH",
-            "KC=F"
-          ]
-        },
-        {
-          "title": "LA mayor race results: Nithya Raman to advance, NBC and AP project",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/9c8f8015-0b76-3328-b3fb-db6aa14cb462/la-mayor-race-results%3A-nithya.html",
-          "publishedAt": "2026-06-09T00:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

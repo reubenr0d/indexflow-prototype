@@ -7,32 +7,115 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-10T11:04:23.969Z",
-  "startedAt": "2026-06-10T11:04:08.641Z",
-  "finishedAt": "2026-06-10T11:04:23.969Z",
+  "runId": "2026-06-10T11:24:18.957Z",
+  "startedAt": "2026-06-10T11:21:05.000Z",
+  "finishedAt": "2026-06-10T11:24:18.957Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 2,
-    "toolCalls": 4,
-    "errors": 3,
-    "softFailures": 0,
-    "writeActions": 0
+    "turns": 27,
+    "toolCalls": 27,
+    "errors": 1,
+    "softFailures": 2,
+    "writeActions": 9
   },
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.35\n- **Tracked Assets**: 3\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n### Issue Encountered\n\nUnfortunately, I encountered an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for today. Without these signals, I am unable to proceed with selecting new entrants or making informed trading decisions.\n\n### Next Steps\n\n1. **API Access**: Ensure that the API credentials or access permissions are correctly configured to allow access to the Atlas ML API. This issue needs to be resolved to proceed with the strategy.\n\n2. **Re-run Strategy**: Once the API access issue is resolved, re-run the strategy to pull the latest Atlas ML top picks and short picks. This will allow for the selection of new entrants and the execution of trades based on the updated model signals.\n\n3. **Monitor and Adjust**: After resolving the API issue and executing the strategy, continue to monitor the vault's performance and adjust positions as necessary based on new signals and market conditions.\n\n### Summary\n\nDue to the API access issue, no new positions were opened or closed this run. The vault's current state remains unchanged, with a NAV of $1,227.35 and three tracked assets. Please address the API access issue to enable the execution of the strategy in future runs.",
-  "writeActions": [],
+  "thesis": "## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+  "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.02\n- **Tracked Assets**: 3 (AHR.V, AMG.L, GSR.V)\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n### Actions Taken\n\n1. **Opened Positions**: Successfully opened long positions on:\n   - **Amarc Resources Ltd. (AHR.V)**: Due to its high ML score and predicted return.\n   - **Gold Strike Resources Corp. (GSR.V)**: Due to its high ML score and predicted return.\n\n2. **Re-read Vault State**: Confirmed the current state of the vault after opening positions.\n\n### Summary\n\nThe Atlas ML model continues to favor diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources being top picks due to their high ML scores and predicted returns. The vault's tracked assets have been updated to reflect these selections, and positions have been opened in these high-potential candidates. The available collateral has been fully utilized to maximize the potential returns from these positions.\n\n### Thesis\n\n## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+  "writeActions": [
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Amarc Resources Ltd. for its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x717d3a4ae61af6132c58aaa925186ec25f99d55daa1918dd6985d3a9d393014a",
+      "justification": "Wiring Atlas Metals Group for its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x1bc9bdd15c3376bf391f1bd392a8aae5f197849ec87ae3c4e87031b639c25759",
+      "justification": "Wiring Tirupati Graphite for its high absolute predicted return as a short candidate.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": "0x205aa88af4c5b8eed02ab7a81b6235b11f9ea05da28000c2dbb52391322c6229",
+      "justification": "Wiring Castle Minerals for its high absolute predicted return as a short candidate.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x09180c6182775faf5730a7feee53e900cf96286c1a80212b83a8a89cc6188c4d",
+      "justification": "Updating tracked assets to include new long and short candidates.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only updates tracked assets; no financial impact or risk to available collateral of $345.52."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Atlas Metals Group for its high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The wiring of AMG.L is consistent with the available collateral of $345.52 and the metals risk-off regime with a long bonus of 1."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x34251be66da4f28294bf8927ddb9509c9df0f3eb8d505f92adc89adff923ba98",
+      "justification": "Updating tracked assets to include current top-N Atlas ML picks.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss history."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0xbf00735d5670e575b44edc292288d181adda982984c156fd80ac62ece9e0d8d8",
+      "justification": "Opening long position on Amarc Resources Ltd. due to high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime favoring longs."
+      },
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "open_position",
+      "txHash": "0xbba01e141fb4cac6181091b804bcf1101fcb1be31c3bbb5c837ae66aa84fb464",
+      "justification": "Opening long position on Gold Strike Resources Corp. due to high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime's longBonus."
+      },
+      "kind": "vault-tx"
+    }
+  ],
   "errors": [
     {
-      "tool": "get_ml_top_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
-    },
-    {
-      "tool": "get_ml_short_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
-    },
-    {
-      "tool": "get_ml_model_info",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+      "tool": "get_ml_horizon_recommendation",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 500 Internal Server Error: Internal Server Error\"\n}"
     }
   ]
 }

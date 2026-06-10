@@ -1,11 +1,11 @@
 {
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "agentFileHash": "sha256:83bf2aa14d8360228abc3a55779ae284e14760a8dca2fadf52012f66b5f5f204",
+  "agentFileHash": "sha256:16589691face561537465259185c18d2b946e238a3ca20d6c8310567c2e84c85",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-10T11:04:23.969Z",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "lastThesisUpdate": "2026-06-09T00:18:31.864Z"
+  "lastRunAt": "2026-06-10T11:24:18.957Z",
+  "thesis": "## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+  "lastThesisUpdate": "2026-06-10T11:24:18.957Z"
 }

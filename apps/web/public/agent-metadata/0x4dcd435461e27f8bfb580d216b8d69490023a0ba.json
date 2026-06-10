@@ -4,52 +4,363 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "lastRunAt": "2026-06-10T11:04:23.969Z",
+  "thesis": "## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+  "lastRunAt": "2026-06-10T11:24:18.957Z",
   "latestRun": {
-    "runId": "2026-06-10T11:04:23.969Z",
-    "finishedAt": "2026-06-10T11:04:23.969Z",
-    "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.35\n- **Tracked Assets**: 3\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n### Issue Encountered\n\nUnfortunately, I encountered an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for today. Without these signals, I am unable to proceed with selecting new entrants or making informed trading decisions.\n\n### Next Steps\n\n1. **API Access**: Ensure that the API credentials or access permissions are correctly configured to allow access to the Atlas ML API. This issue needs to be resolved to proceed with the strategy.\n\n2. **Re-run Strategy**: Once the API access issue is resolved, re-run the strategy to pull the latest Atlas ML top picks and short picks. This will allow for the selection of new entrants and the execution of trades based on the updated model signals.\n\n3. **Monitor and Adjust**: After resolving the API issue and executing the strategy, continue to monitor the vault's performance and adjust positions as necessary based on new signals and market conditions.\n\n### Summary\n\nDue to the API access issue, no new positions were opened or closed this run. The vault's current state remains unchanged, with a NAV of $1,227.35 and three tracked assets. Please address the API access issue to enable the execution of the strategy in future runs.",
-    "startedAt": "2026-06-10T11:04:08.641Z",
+    "runId": "2026-06-10T11:24:18.957Z",
+    "finishedAt": "2026-06-10T11:24:18.957Z",
+    "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.02\n- **Tracked Assets**: 3 (AHR.V, AMG.L, GSR.V)\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n### Actions Taken\n\n1. **Opened Positions**: Successfully opened long positions on:\n   - **Amarc Resources Ltd. (AHR.V)**: Due to its high ML score and predicted return.\n   - **Gold Strike Resources Corp. (GSR.V)**: Due to its high ML score and predicted return.\n\n2. **Re-read Vault State**: Confirmed the current state of the vault after opening positions.\n\n### Summary\n\nThe Atlas ML model continues to favor diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources being top picks due to their high ML scores and predicted returns. The vault's tracked assets have been updated to reflect these selections, and positions have been opened in these high-potential candidates. The available collateral has been fully utilized to maximize the potential returns from these positions.\n\n### Thesis\n\n## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+    "startedAt": "2026-06-10T11:21:05.000Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 2,
+    "turns": 27,
     "toolCalls": [
       "get_vault_state",
+      "get_ml_runs",
+      "get_ml_horizon_recommendation",
+      "get_ml_model_info",
       "get_ml_top_picks",
       "get_ml_short_picks",
-      "get_ml_model_info"
+      "get_oracle_assets",
+      "yfinance_quote",
+      "yfinance_news",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "set_vault_assets",
+      "get_perp_capital_snapshot",
+      "yfinance_quote",
+      "wire_asset",
+      "set_vault_assets",
+      "get_perp_capital_snapshot",
+      "plan_open_position",
+      "get_vault_state",
+      "get_perp_capital_snapshot",
+      "plan_open_position",
+      "open_position",
+      "plan_open_position",
+      "open_position",
+      "get_vault_state"
     ],
-    "actionCount": 0,
-    "onChainActionCount": 0,
-    "offChainActionCount": 0,
+    "actionCount": 9,
+    "onChainActionCount": 7,
+    "offChainActionCount": 2,
     "reasoningSummaries": [],
     "errors": [
       {
-        "tool": "get_ml_top_picks",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
-        "errorCode": "ATLAS_HTTP_ERROR"
-      },
-      {
-        "tool": "get_ml_short_picks",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
-        "errorCode": "ATLAS_HTTP_ERROR"
-      },
-      {
-        "tool": "get_ml_model_info",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+        "tool": "get_ml_horizon_recommendation",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 500 Internal Server Error: Internal Server Error\"\n}",
         "errorCode": "ATLAS_HTTP_ERROR"
       }
     ],
-    "softFailures": [],
-    "riskOfficerVerdicts": [],
-    "confirmationBatches": []
+    "softFailures": [
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"AHR.V\\\" is already wired in OracleAdapter at assetId 0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6 (active=true).\",\n  \"symbol\": \"AHR.V\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      },
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"AMG.L\\\" is already wired in OracleAdapter at assetId 0x165faa4223d9f8ebe72f33ec81e2078b0a2fff5e6281ddbd19dd002087daf0ce (active=true).\",\n  \"symbol\": \"AMG.L\",\n  \"assetId\": \"0x165faa4223d9f8ebe72f33ec81e2078b0a2fff5e6281ddbd19dd002087daf0ce\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      }
+    ],
+    "riskOfficerVerdicts": [
+      {
+        "turn": 4,
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime.",
+        "proposedTools": [
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 5,
+        "verdict": "approve",
+        "reason": "Batch only updates tracked assets; no financial impact or risk to available collateral of $345.52.",
+        "proposedTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 9,
+        "verdict": "approve",
+        "reason": "The wiring of AMG.L is consistent with the available collateral of $345.52 and the metals risk-off regime with a long bonus of 1.",
+        "proposedTools": [
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 10,
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss history.",
+        "proposedTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 23,
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime favoring longs.",
+        "proposedTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 25,
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime's longBonus.",
+        "proposedTools": [
+          "open_position"
+        ]
+      }
+    ],
+    "confirmationBatches": [
+      {
+        "turn": 4,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 5,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 9,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 10,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 23,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      },
+      {
+        "turn": 25,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "open_position"
+        ]
+      }
+    ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-10T11:24:18.957Z",
+      "startedAt": "2026-06-10T11:21:05.000Z",
+      "finishedAt": "2026-06-10T11:24:18.957Z",
+      "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.02\n- **Tracked Assets**: 3 (AHR.V, AMG.L, GSR.V)\n- **Perp Allocated**: $7,690.35\n- **Available Collateral**: $0.00\n\n### Actions Taken\n\n1. **Opened Positions**: Successfully opened long positions on:\n   - **Amarc Resources Ltd. (AHR.V)**: Due to its high ML score and predicted return.\n   - **Gold Strike Resources Corp. (GSR.V)**: Due to its high ML score and predicted return.\n\n2. **Re-read Vault State**: Confirmed the current state of the vault after opening positions.\n\n### Summary\n\nThe Atlas ML model continues to favor diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources being top picks due to their high ML scores and predicted returns. The vault's tracked assets have been updated to reflect these selections, and positions have been opened in these high-potential candidates. The available collateral has been fully utilized to maximize the potential returns from these positions.\n\n### Thesis\n\n## Thesis\n\nThe Atlas ML model indicates strong medium-term performance potential for diversified metals and precious metals stocks, with Amarc Resources and Gold Strike Resources leading the long picks. These selections are supported by their high ML scores and predicted returns. The model's predictions are reinforced by the absence of conflicting news headlines, allowing us to proceed with confidence in these selections.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 27,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_news",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "yfinance_quote",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "get_vault_state",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "open_position",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 9,
+      "onChainActionCount": 7,
+      "offChainActionCount": 2,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 500 Internal Server Error: Internal Server Error\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"AHR.V\\\" is already wired in OracleAdapter at assetId 0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6 (active=true).\",\n  \"symbol\": \"AHR.V\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"AMG.L\\\" is already wired in OracleAdapter at assetId 0x165faa4223d9f8ebe72f33ec81e2078b0a2fff5e6281ddbd19dd002087daf0ce (active=true).\",\n  \"symbol\": \"AMG.L\",\n  \"assetId\": \"0x165faa4223d9f8ebe72f33ec81e2078b0a2fff5e6281ddbd19dd002087daf0ce\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "verdict": "approve",
+          "reason": "Batch only updates tracked assets; no financial impact or risk to available collateral of $345.52.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 9,
+          "verdict": "approve",
+          "reason": "The wiring of AMG.L is consistent with the available collateral of $345.52 and the metals risk-off regime with a long bonus of 1.",
+          "proposedTools": [
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 10,
+          "verdict": "approve",
+          "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss history.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 23,
+          "verdict": "approve",
+          "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime favoring longs.",
+          "proposedTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 25,
+          "verdict": "approve",
+          "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime's longBonus.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 9,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 10,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 23,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        },
+        {
+          "turn": 25,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-10T11:04:23.969Z",
       "startedAt": "2026-06-10T11:04:08.641Z",
@@ -260,5 +571,157 @@
       "confirmationBatches": []
     }
   ],
-  "recentActions": []
+  "recentActions": [
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Amarc Resources Ltd. for its high ML score and predicted return.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "AHR.V",
+        "seedPriceUsd": 0.7396
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Atlas Metals Group for its high ML score and predicted return.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0x717d3a4ae61af6132c58aaa925186ec25f99d55daa1918dd6985d3a9d393014a",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "AMG.L",
+        "seedPriceUsd": 0.1012
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Tirupati Graphite for its high absolute predicted return as a short candidate.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0x1bc9bdd15c3376bf391f1bd392a8aae5f197849ec87ae3c4e87031b639c25759",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "TGR.L",
+        "seedPriceUsd": 0.0161
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Castle Minerals for its high absolute predicted return as a short candidate.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0x205aa88af4c5b8eed02ab7a81b6235b11f9ea05da28000c2dbb52391322c6229",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "CDT.AX",
+        "seedPriceUsd": 0.0519
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only wires assets; no positions opened. Available collateral is $345.52, and no short penalty exists in current regime."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include new long and short candidates.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0x09180c6182775faf5730a7feee53e900cf96286c1a80212b83a8a89cc6188c4d",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x8ab5f73301d3bb9e7b5b8d010d85c75b6eee7482d37497a6bbe4465c54f07f14",
+          "0x3343b81aa26c772d76db082011ee4340ce75e9dd86ce00965dce81d10be6122d",
+          "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc",
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x71bf333422995918b49a974f4c8eef80447554a46339b6718f806354c34d5faf"
+        ],
+        "count": 6
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only updates tracked assets; no financial impact or risk to available collateral of $345.52."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include current top-N Atlas ML picks.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0x34251be66da4f28294bf8927ddb9509c9df0f3eb8d505f92adc89adff923ba98",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x165faa4223d9f8ebe72f33ec81e2078b0a2fff5e6281ddbd19dd002087daf0ce",
+          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245"
+        ],
+        "count": 3
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk to available collateral or recent loss history."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Amarc Resources Ltd. due to high ML score and predicted return.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0xbf00735d5670e575b44edc292288d181adda982984c156fd80ac62ece9e0d8d8",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "1727591270000000000000000000000000",
+        "collateral": "172759127"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime favoring longs."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Gold Strike Resources Corp. due to high ML score and predicted return.",
+      "timestamp": "2026-06-10T11:24:18.957Z",
+      "txHash": "0xbba01e141fb4cac6181091b804bcf1101fcb1be31c3bbb5c837ae66aa84fb464",
+      "agentName": "mining-manager",
+      "runId": "2026-06-10T11:24:18.957Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "size": "1727591270000000000000000000000000",
+        "collateral": "172759127"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The long position uses 50% of available collateral ($172.76 out of $345.52), within limits and aligned with the metals_risk_off regime's longBonus."
+      }
+    }
+  ]
 }
