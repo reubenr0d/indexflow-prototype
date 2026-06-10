@@ -1,169 +1,373 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-10T11:21:42.117Z",
+  "updatedAt": "2026-06-10T22:57:34.949Z",
   "entries": {
-    "CDT.AX": {
-      "fetchedAt": "2026-06-10T11:21:42.117Z",
+    "AMG.L": {
+      "fetchedAt": "2026-06-10T22:57:34.756Z",
       "headlines": [
         {
-          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
-          "publishedAt": "2026-06-10T11:18:34.000Z",
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
-          "publishedAt": "2026-06-10T11:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VOO",
-            "NVDA",
-            "AAPL",
-            "VFFSX",
-            "VFIAX",
-            "VFINX",
-            "SPY",
-            "FTEC"
-          ]
-        },
-        {
-          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
-          "publishedAt": "2026-06-10T11:14:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "TGR.L": {
-      "fetchedAt": "2026-06-10T11:21:42.117Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-10T22:57:34.756Z",
       "headlines": [
         {
-          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
-          "publishedAt": "2026-06-10T11:18:34.000Z",
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
-          "publishedAt": "2026-06-10T11:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VOO",
-            "NVDA",
-            "AAPL",
-            "VFFSX",
-            "VFIAX",
-            "VFINX",
-            "SPY",
-            "FTEC"
-          ]
-        },
-        {
-          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
-          "publishedAt": "2026-06-10T11:14:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-10T11:21:42.117Z",
+      "fetchedAt": "2026-06-10T22:57:34.756Z",
       "headlines": [
         {
-          "title": "Italy PM Meloni hails industrial output rise, analysts remain cautious",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/articles/italys-industrial-output-unexpectedly-rises-092826462.html",
-          "publishedAt": "2026-06-10T11:18:34.000Z",
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
-          "publishedAt": "2026-06-10T11:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "VOO",
-            "NVDA",
-            "AAPL",
-            "VFFSX",
-            "VFIAX",
-            "VFINX",
-            "SPY",
-            "FTEC"
-          ]
-        },
-        {
-          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
-          "publishedAt": "2026-06-10T11:14:36.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AMG.L": {
-      "fetchedAt": "2026-06-10T11:21:42.117Z",
+    "ASCU.TO": {
+      "fetchedAt": "2026-06-10T22:57:34.756Z",
       "headlines": [
         {
-          "title": "Forget VOO: Fidelity’s Tech ETF Is Up 29% While the Broad Market Lags",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/46c98d9a-1454-3c48-9265-78a9cae1d5e2/forget-voo%3A-fidelity%E2%80%99s-tech.html",
-          "publishedAt": "2026-06-10T11:15:25.000Z",
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "VOO",
-            "NVDA",
-            "AAPL",
-            "VFFSX",
-            "VFIAX",
-            "VFINX",
-            "SPY",
-            "FTEC"
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
           ]
         },
         {
-          "title": "SAP falls as Goldman lowers gross margin forecast on rising hardware costs",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sap-falls-goldman-lowers-gross-111436765.html",
-          "publishedAt": "2026-06-10T11:14:36.000Z",
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SAP"
+            "REPX",
+            "CHRD"
           ]
         },
         {
-          "title": "TPG to invest in US tax and accounting practice Smith + Howard",
-          "publisher": "International Accounting Bulletin",
-          "link": "https://finance.yahoo.com/m/f098099f-2d85-35da-a376-5ca9b83a76d5/tpg-to-invest-in-us-tax-and.html",
-          "publishedAt": "2026-06-10T11:13:31.000Z",
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-10T22:57:34.756Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TPG"
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
           ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TGR.L": {
+      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CDT.AX": {
+      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "headlines": [
+        {
+          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
+          "publisher": "ACCESS Newswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
+          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TXP.TO",
+            "TXP.L",
+            "TXP.NE"
+          ]
+        },
+        {
+          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
+          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "REPX",
+            "CHRD"
+          ]
+        },
+        {
+          "title": "Mystery vandal glues school doors shut, disrupts finals week",
+          "publisher": "USA TODAY",
+          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
+          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
