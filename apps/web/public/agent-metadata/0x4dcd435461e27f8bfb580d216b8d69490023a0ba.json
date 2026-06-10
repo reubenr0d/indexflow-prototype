@@ -5,12 +5,12 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to favor mining stocks, particularly those involved in diversified metals and precious metals. Hercules Metals, AbraSilver Resource, and Targa Exploration Corp. remain top picks due to their high ML scores and predicted returns, suggesting strong medium-term performance potential for these assets. On the short side, IRONVELD PLC and ZINNWALD LITHIUM PLC were highlighted due to their negative predicted returns, but no new short positions were opened due to capital constraints.",
-  "lastRunAt": "2026-06-10T06:43:24.410Z",
+  "lastRunAt": "2026-06-10T11:04:23.969Z",
   "latestRun": {
-    "runId": "2026-06-10T06:43:24.410Z",
-    "finishedAt": "2026-06-10T06:43:24.410Z",
-    "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,215.85\n- **Tracked Assets**: 3\n- **Perp Allocated**: $7,690.35\n\n### Issue Encountered\n\nI attempted to retrieve the latest Atlas ML top picks and short picks, but encountered a 401 Unauthorized error from the Atlas API. This prevents us from accessing the model-driven recommendations necessary for making informed trading decisions.\n\n### Next Steps\n\nDue to the inability to access the Atlas ML data, I am unable to proceed with wiring new assets, setting the tracked-asset list, or opening new positions based on the model's insights. I recommend addressing the authorization issue with the Atlas API to restore access to the necessary data for future runs.\n\n### Recommendations for Next Run\n\n1. **Resolve Atlas API Access**: Ensure that the authorization credentials for accessing the Atlas ML API are correct and functional.\n2. **Reattempt Data Retrieval**: Once access is restored, reattempt to retrieve the top picks and short picks to guide the trading strategy.\n3. **Monitor News and Market Conditions**: Stay informed about any significant news or market changes that might impact the mining sector.\n\nIf the authorization issue is resolved, I will be able to execute the planned strategy, including wiring new assets, adjusting the tracked-asset list, and opening positions based on the latest model insights.",
-    "startedAt": "2026-06-10T06:42:50.614Z",
+    "runId": "2026-06-10T11:04:23.969Z",
+    "finishedAt": "2026-06-10T11:04:23.969Z",
+    "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.35\n- **Tracked Assets**: 3\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n### Issue Encountered\n\nUnfortunately, I encountered an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for today. Without these signals, I am unable to proceed with selecting new entrants or making informed trading decisions.\n\n### Next Steps\n\n1. **API Access**: Ensure that the API credentials or access permissions are correctly configured to allow access to the Atlas ML API. This issue needs to be resolved to proceed with the strategy.\n\n2. **Re-run Strategy**: Once the API access issue is resolved, re-run the strategy to pull the latest Atlas ML top picks and short picks. This will allow for the selection of new entrants and the execution of trades based on the updated model signals.\n\n3. **Monitor and Adjust**: After resolving the API issue and executing the strategy, continue to monitor the vault's performance and adjust positions as necessary based on new signals and market conditions.\n\n### Summary\n\nDue to the API access issue, no new positions were opened or closed this run. The vault's current state remains unchanged, with a NAV of $1,227.35 and three tracked assets. Please address the API access issue to enable the execution of the strategy in future runs.",
+    "startedAt": "2026-06-10T11:04:08.641Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -20,20 +20,15 @@
     "turns": 2,
     "toolCalls": [
       "get_vault_state",
-      "get_ml_model_info",
       "get_ml_top_picks",
-      "get_ml_short_picks"
+      "get_ml_short_picks",
+      "get_ml_model_info"
     ],
     "actionCount": 0,
     "onChainActionCount": 0,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
     "errors": [
-      {
-        "tool": "get_ml_model_info",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
-        "errorCode": "ATLAS_HTTP_ERROR"
-      },
       {
         "tool": "get_ml_top_picks",
         "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
@@ -43,6 +38,11 @@
         "tool": "get_ml_short_picks",
         "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
         "errorCode": "ATLAS_HTTP_ERROR"
+      },
+      {
+        "tool": "get_ml_model_info",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+        "errorCode": "ATLAS_HTTP_ERROR"
       }
     ],
     "softFailures": [],
@@ -50,6 +50,49 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-10T11:04:23.969Z",
+      "startedAt": "2026-06-10T11:04:08.641Z",
+      "finishedAt": "2026-06-10T11:04:23.969Z",
+      "summary": "### Current Situation\n\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,227.35\n- **Tracked Assets**: 3\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n### Issue Encountered\n\nUnfortunately, I encountered an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for today. Without these signals, I am unable to proceed with selecting new entrants or making informed trading decisions.\n\n### Next Steps\n\n1. **API Access**: Ensure that the API credentials or access permissions are correctly configured to allow access to the Atlas ML API. This issue needs to be resolved to proceed with the strategy.\n\n2. **Re-run Strategy**: Once the API access issue is resolved, re-run the strategy to pull the latest Atlas ML top picks and short picks. This will allow for the selection of new entrants and the execution of trades based on the updated model signals.\n\n3. **Monitor and Adjust**: After resolving the API issue and executing the strategy, continue to monitor the vault's performance and adjust positions as necessary based on new signals and market conditions.\n\n### Summary\n\nDue to the API access issue, no new positions were opened or closed this run. The vault's current state remains unchanged, with a NAV of $1,227.35 and three tracked assets. Please address the API access issue to enable the execution of the strategy in future runs.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_ml_model_info"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-10T06:43:24.410Z",
       "startedAt": "2026-06-10T06:42:50.614Z",
