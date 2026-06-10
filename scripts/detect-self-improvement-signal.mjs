@@ -2,21 +2,23 @@
 
 // Deterministic, free pre-check that decides whether the `self-improver`
 // meta-agent should run on this CI tick. Reads the tail of every
-// `agents/memory/<agent>/run-log.<network>.jsonl` and looks for the five
+// `agents/memory/<agent>/run-log.<network>.jsonl` and looks for the six
 // trigger conditions described in
 // `.cursor/plans/self-improving_vault_agent_via_prs_*.plan.md` Layer A:
 //
 //   1. recurring_losers   — same ticker closed at < -5% PnL of collateral
 //                            twice or more inside the last 7 days
-//   2. new_error_code     — an MCP `error_code` that did NOT appear in
+//   2. latest_run_errors  — the most recent run finished with non-empty
+//                            hard `errors[]` entries
+//   3. new_error_code     — an MCP `error_code` that did NOT appear in
 //                            the prior 100 runs (excluding the recent
 //                            window itself)
-//   3. cap_saturation     — `maxNewPositionsPerRun` or
+//   4. cap_saturation     — `maxNewPositionsPerRun` or
 //                            `maxNewShortsPerRun` hit on >= 3 consecutive
 //                            most-recent runs
-//   4. risk_officer_dissonance — >= 3 risk-officer veto verdicts on the
+//   5. risk_officer_dissonance — >= 3 risk-officer veto verdicts on the
 //                            same vault in the last 24 hours
-//   5. loss_streak        — >= 3 closed positions with < -5% PnL of
+//   6. loss_streak        — >= 3 closed positions with < -5% PnL of
 //                            collateral in the last 24 hours
 //
 // The script is pure (file IO only, no network, no LLM, no shell-out)
@@ -262,7 +264,58 @@ export function detectRecurringLosers({ runs, agent, network, now }) {
 }
 
 // ---------------------------------------------------------------------------
-// Trigger 2 — new error_code
+// Trigger 2 — latest run errors
+// ---------------------------------------------------------------------------
+
+export function detectLatestRunErrors({ runs, agent, network }) {
+  if (runs.length === 0) return [];
+  const latest = runs[runs.length - 1];
+  const errs = Array.isArray(latest?.errors) ? latest.errors : [];
+  if (errs.length === 0) return [];
+
+  const normalized = errs.map((e) => normalizeLatestRunError(e, latest));
+  const evidence = normalized.slice(0, 5);
+  const tools = Array.from(new Set(normalized.map((e) => e.tool).filter(Boolean))).sort();
+  const errorCodes = Array.from(
+    new Set(normalized.map((e) => e.errorCode || e.parsedErrorCode).filter(Boolean)),
+  ).sort();
+  const codeLabel = errorCodes.length > 0 ? errorCodes.join(", ") : "no structured error_code";
+  const toolLabel = tools.length > 0 ? tools.join(", ") : "unknown tool";
+
+  return [
+    {
+      id: signalId(["latest_run_errors", agent, network, latest.timestamp || "", codeLabel]),
+      kind: "latest_run_errors",
+      agent,
+      network,
+      vault: latest?.vault || null,
+      runTimestamp: latest?.timestamp || null,
+      turns: Number.isFinite(Number(latest?.turns)) ? Number(latest.turns) : null,
+      tools,
+      errorCodes,
+      evidence,
+      summary: `Latest ${agent} run recorded ${errs.length} hard error(s): ${codeLabel} via ${toolLabel}`,
+    },
+  ];
+}
+
+function normalizeLatestRunError(err, run) {
+  const rawError = typeof err?.error === "string" ? err.error : "";
+  const parsedErrorCode = extractErrorCode(err?.error || err);
+  const explicitErrorCode = typeof err?.errorCode === "string" ? err.errorCode : null;
+  return {
+    runTimestamp: run?.timestamp || null,
+    vault: run?.vault || null,
+    turns: Number.isFinite(Number(run?.turns)) ? Number(run.turns) : null,
+    tool: err?.tool || null,
+    errorCode: explicitErrorCode || parsedErrorCode,
+    parsedErrorCode,
+    error: rawError ? rawError.slice(0, 800) : null,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Trigger 3 — new error_code
 // ---------------------------------------------------------------------------
 
 export function detectNewErrorCodes({ runs, agent, network }) {
@@ -331,7 +384,7 @@ export function extractErrorCode(errLike) {
 }
 
 // ---------------------------------------------------------------------------
-// Trigger 2b — recurring error_code
+// Trigger 3b — recurring error_code
 //
 // Complements `new_error_code` (which only fires the FIRST time an MCP code
 // shows up). A REQUIRE_REVERT or INSUFFICIENT_RESERVES code that recurs
@@ -421,7 +474,7 @@ function pickFirstErrorByCode(errs, code) {
 }
 
 // ---------------------------------------------------------------------------
-// Trigger 3 — cap saturation
+// Trigger 4 — cap saturation
 // ---------------------------------------------------------------------------
 
 export function detectCapSaturation({ runs, agent, network }) {
@@ -470,7 +523,7 @@ function countSuccessfulOpens(run) {
 }
 
 // ---------------------------------------------------------------------------
-// Trigger 4 — risk-officer dissonance
+// Trigger 5 — risk-officer dissonance
 // ---------------------------------------------------------------------------
 
 export function detectRiskOfficerDissonance({ runs, agent, network, now }) {
@@ -507,7 +560,7 @@ export function detectRiskOfficerDissonance({ runs, agent, network, now }) {
 }
 
 // ---------------------------------------------------------------------------
-// Trigger 5 — loss streak
+// Trigger 6 — loss streak
 // ---------------------------------------------------------------------------
 
 export function detectLossStreak({ runs, agent, network, now }) {
@@ -547,6 +600,7 @@ export function detectLossStreak({ runs, agent, network, now }) {
 export function detectSignalsForAgent({ runs, agent, network, now }) {
   return [
     ...detectRecurringLosers({ runs, agent, network, now }),
+    ...detectLatestRunErrors({ runs, agent, network }),
     ...detectNewErrorCodes({ runs, agent, network }),
     ...detectRecurringErrorCodes({ runs, agent, network }),
     ...detectCapSaturation({ runs, agent, network }),

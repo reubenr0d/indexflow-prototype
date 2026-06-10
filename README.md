@@ -635,6 +635,8 @@ AGENT_NON_INTERACTIVE_WRITE_EXECUTE=1 LLM_API_KEY=sk-... PRIVATE_KEY=0x... npm r
 
 A GitHub Actions cron (`.github/workflows/vault-agent.yml`) fires hourly at minute `:18` and picks **one** trading agent per tick via `HOUR_UTC % 7` (each agent therefore runs every seven hours, ~3.4×/day). A `workflow_dispatch` event accepts any single agent slug for ad-hoc runs plus a `dry_run` toggle. A follow-up `commit-results` job in the same workflow pushes the updated `agents/memory/` + `apps/web/public/agent-metadata/` files back to the default branch under the `vault-agent[bot]` identity, so the next scheduled run starts from the prior state. See [docs/AGENTS_FRAMEWORK.md](docs/AGENTS_FRAMEWORK.md) for the full guide (creating agents, MCP tool reference, vault lifecycle, memory) and the slot-by-slot rotation table.
 
+After run logs are committed, the self-improver issues channel scans hard `errors[]` entries; fresh runtime failures such as `ATLAS_HTTP_ERROR` become dedupe-friendly `agent-finding` investigations before broader speculative ideas.
+
 Agent run history is network-scoped to avoid cross-network context bleed: each agent writes/reads `agents/memory/<agent>/run-log.<network>.jsonl`. Override with `AGENT_NETWORK` if needed. Dry runs (`AGENT_DRY_RUN=1`) do not update run logs.
 
 Agent memory is deployment-aware: the runner fingerprints the active deployment context (network key + `DEPLOYMENT_CONFIG` content + `RPC_URL`). When that fingerprint changes (for example after redeploying contracts), it automatically invalidates stale memory for that network by rotating `state.json` and `run-log.<network>.jsonl` into `agents/memory/<agent>/archive/`, then starts from a fresh vault context.

@@ -10,6 +10,7 @@ import { join } from "node:path";
 
 import {
   detectRecurringLosers,
+  detectLatestRunErrors,
   detectNewErrorCodes,
   detectRecurringErrorCodes,
   detectCapSaturation,
@@ -37,7 +38,16 @@ function closure({ ticker, side = "long", pct, ageMs }) {
   return out;
 }
 
-function run({ ageMs = 0, closures = [], errors = [], writeActions = [], riskOfficerVerdicts = [], vault = "0xVAULT" } = {}) {
+function run({
+  ageMs = 0,
+  closures = [],
+  errors = [],
+  softFailures = [],
+  writeActions = [],
+  riskOfficerVerdicts = [],
+  vault = "0xVAULT",
+  turns,
+} = {}) {
   // Propagate the parent run age onto any closure that didn't set its own
   // ageMs so test fixtures stay terse — `closure({ pct: -0.07 })` inside a
   // 7-day-old run means "closed 7 days ago" by default.
@@ -54,9 +64,11 @@ function run({ ageMs = 0, closures = [], errors = [], writeActions = [], riskOff
     vault,
     closedPositions: stampedClosures,
     errors,
+    softFailures,
     writeActions,
     riskOfficerVerdicts,
     summary: "test",
+    ...(turns === undefined ? {} : { turns }),
   };
 }
 
@@ -141,7 +153,76 @@ test("detectRecurringLosers treats long and short legs of same ticker separately
 });
 
 // ---------------------------------------------------------------------------
-// Trigger 2 — new error_code
+// Trigger 2 — latest run errors
+// ---------------------------------------------------------------------------
+
+test("detectLatestRunErrors fires when the newest run has hard errors", () => {
+  const runs = [
+    run({ ageMs: 2 * HOUR, errors: [] }),
+    run({
+      ageMs: 1 * HOUR,
+      turns: 2,
+      vault: "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
+      errors: [
+        {
+          tool: "get_ml_top_picks",
+          error: '{"success":false,"error_code":"ATLAS_HTTP_ERROR","message":"Atlas API 401 Unauthorized"}',
+          errorCode: "ATLAS_HTTP_ERROR",
+        },
+      ],
+    }),
+  ];
+  const sigs = detectLatestRunErrors({ runs, agent: "mining-manager", network: "sepolia" });
+  assert.equal(sigs.length, 1);
+  assert.equal(sigs[0].kind, "latest_run_errors");
+  assert.equal(sigs[0].vault, "0x4dcd435461e27f8bfb580d216b8d69490023a0ba");
+  assert.equal(sigs[0].turns, 2);
+  assert.deepEqual(sigs[0].tools, ["get_ml_top_picks"]);
+  assert.deepEqual(sigs[0].errorCodes, ["ATLAS_HTTP_ERROR"]);
+  assert.equal(sigs[0].evidence[0].errorCode, "ATLAS_HTTP_ERROR");
+});
+
+test("detectLatestRunErrors ignores softFailures when errors[] is empty", () => {
+  const runs = [
+    run({
+      ageMs: 1 * HOUR,
+      softFailures: [
+        {
+          tool: "plan_open_position",
+          error: '{"success":false,"error_code":"CHURN_GUARD_COOLDOWN"}',
+          errorCode: "CHURN_GUARD_COOLDOWN",
+        },
+      ],
+    }),
+  ];
+  const sigs = detectLatestRunErrors({ runs, agent: "mining-manager", network: "sepolia" });
+  assert.equal(sigs.length, 0);
+});
+
+test("detectLatestRunErrors preserves Atlas 401 vault, tool, and parsed error_code", () => {
+  const atlas401 = "{\n" +
+    '  "success": false,\n' +
+    '  "error_code": "ATLAS_HTTP_ERROR",\n' +
+    '  "message": "Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n"\n' +
+    "}";
+  const runs = [
+    run({
+      ageMs: 1 * HOUR,
+      turns: 2,
+      vault: "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
+      errors: [{ tool: "get_ml_model_info", error: atlas401 }],
+    }),
+  ];
+  const sigs = detectLatestRunErrors({ runs, agent: "mining-manager", network: "sepolia" });
+  assert.equal(sigs.length, 1);
+  assert.equal(sigs[0].evidence[0].vault, "0x4dcd435461e27f8bfb580d216b8d69490023a0ba");
+  assert.equal(sigs[0].evidence[0].tool, "get_ml_model_info");
+  assert.equal(sigs[0].evidence[0].parsedErrorCode, "ATLAS_HTTP_ERROR");
+  assert.match(sigs[0].evidence[0].error, /401 Unauthorized/);
+});
+
+// ---------------------------------------------------------------------------
+// Trigger 3 — new error_code
 // ---------------------------------------------------------------------------
 
 test("detectNewErrorCodes fires on a code that didn't appear in prior history", () => {
@@ -185,7 +266,7 @@ test("detectNewErrorCodes does NOT fire on codes seen in prior 100 runs", () => 
 });
 
 // ---------------------------------------------------------------------------
-// Trigger 2b — recurring error_code
+// Trigger 3b — recurring error_code
 // ---------------------------------------------------------------------------
 
 test("detectRecurringErrorCodes fires when same code recurs in >=3 of last 10 runs", () => {
@@ -295,7 +376,7 @@ test("classifyErrorCodeSeverity: known severity tiers", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Trigger 3 — cap saturation
+// Trigger 4 — cap saturation
 // ---------------------------------------------------------------------------
 
 test("detectCapSaturation fires on >=3 consecutive runs with cap errors + successful opens", () => {
@@ -330,7 +411,7 @@ test("detectCapSaturation does NOT fire if any of the last 3 runs has no cap err
 });
 
 // ---------------------------------------------------------------------------
-// Trigger 4 — risk-officer dissonance
+// Trigger 5 — risk-officer dissonance
 // ---------------------------------------------------------------------------
 
 test("detectRiskOfficerDissonance fires on >=3 vetoes on same vault in 24h", () => {
@@ -355,7 +436,7 @@ test("detectRiskOfficerDissonance ignores approve / downsize verdicts", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Trigger 5 — loss streak
+// Trigger 6 — loss streak
 // ---------------------------------------------------------------------------
 
 test("detectLossStreak fires on >=3 losing closes (<-5%) in 24h", () => {
@@ -438,6 +519,39 @@ test("detectSelfImprovementSignals walks the agents/memory tree", () => {
     assert.deepEqual(result.agents, ["qm"]);
     assert.equal(result.signals.length, 1);
     assert.equal(result.signals[0].kind, "recurring_losers");
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("detectSelfImprovementSignals includes latest_run_errors from the newest run", () => {
+  const tmp = mkdtempSync(join(tmpdir(), "snx-signal-latest-errors-"));
+  try {
+    const agentDir = join(tmp, "mining-manager");
+    mkdirSync(agentDir, { recursive: true });
+    const runs = [
+      run({ ageMs: 2 * HOUR, errors: [] }),
+      run({
+        ageMs: 1 * HOUR,
+        vault: "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
+        errors: [{ tool: "get_ml_top_picks", error: '{"error_code":"ATLAS_HTTP_ERROR"}' }],
+      }),
+    ];
+    writeFileSync(
+      join(agentDir, "run-log.sepolia.jsonl"),
+      runs.map((l) => JSON.stringify(l)).join("\n") + "\n",
+    );
+
+    const result = detectSelfImprovementSignals({
+      memoryDir: tmp,
+      now: NOW,
+      projectRoot: tmp,
+    });
+    assert.equal(result.shouldRun, true);
+    assert.deepEqual(result.agents, ["mining-manager"]);
+    assert.ok(result.signals.some((s) => s.kind === "latest_run_errors"));
+    const latest = result.signals.find((s) => s.kind === "latest_run_errors");
+    assert.equal(latest.vault, "0x4dcd435461e27f8bfb580d216b8d69490023a0ba");
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

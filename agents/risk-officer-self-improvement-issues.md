@@ -39,7 +39,7 @@ The rubric applies to THREE meta-agents that share the same `.agent-self-improve
 Same approve/downsize/veto verdicts and same cap. The category enum is the only divergence — see the per-category gates below.
 
 - **Approve** when:
-  - every issue cites at least one concrete run-log pattern (a `(agent, timestamp, ticker)` triple or a `(agent, error_code, frequency)` pair) OR makes a coherent architectural argument grounded in an existing file (`agents/<name>.md`, `agents/skills/<name>.md`, `agents/mcp-servers.json`),
+  - every issue cites at least one concrete run-log pattern (a `(agent, timestamp, ticker)` triple, a `(agent, error_code, frequency)` pair, or a `(agent, error_code, runTimestamp)` runtime-failure citation) OR makes a coherent architectural argument grounded in an existing file (`agents/<name>.md`, `agents/skills/<name>.md`, `agents/mcp-servers.json`),
   - the `category` is one of `new_mcp_or_skill`, `strategy_idea`, `data_gap`, `refactor`, `investigation`, `partnership-blocker`, `vault-concept`,
   - none of the issue ids collides with the `extractIssueIdMarker` id in any `openIssues[*].body` (the opener will dedup again as a belt-and-braces check, but a same-id submission means the meta-agent re-pitched a still-open issue),
   - the total `currentOpenIssueCount + len(manifest.issues)` would stay ≤ `cap`,
@@ -55,7 +55,7 @@ Same approve/downsize/veto verdicts and same cap. The category enum is the only 
   - the manifest is empty (no `issues[]`) — the opener short-circuits anyway but log it cleanly,
   - `currentOpenIssueCount >= cap` — the cap is full and humans haven't triaged the backlog, refuse to add more,
   - any issue has zero run-log citation AND no architectural grounding (pure "we should be better at this" hand-waving),
-  - any issue's `category` is `investigation` but the body does NOT name a vault address (`0x[0-9a-fA-F]{40}`) or an explicit `(agent, ticker)` pair — investigations without a target are unactionable,
+  - any issue's `category` is `investigation` but the body does NOT name a vault address (`0x[0-9a-fA-F]{40}`), an explicit `(agent, ticker)` pair, or an explicit `(agent, error_code, runTimestamp)` runtime-failure pattern — investigations without a target are unactionable,
   - any issue's `category` is `partnership-blocker` but the body does NOT cite a specific partner file path (`growth/partnerships/<partner>.md` or a row in `growth/partnerships/README.md`) AND a concrete blocking frontmatter field (`handle: TBD`, stale `next_milestone_date`, `awaiting_response` aging, `co_marketing: pending_deploy` with no date) — partnership blockers without a citation are unverifiable BD-ops noise,
   - any issue's `category` is `vault-concept` but the body does NOT link to the paired `growth/basket-concepts/queue/<date>-<slug>.md` draft AND identify a target curator persona from `growth/GALXE_CAMPAIGN_PLAN.md` (Track A institutional / Track B crypto builder / Track C AI-agent builder) — vault-concept proposals without a queue file and a persona are unactionable for the trading-agent-author flow,
   - any issue's title or id collides with an `openIssues[*]` entry (the opener would dedup; vetoing here saves the LLM round-trip),

@@ -425,18 +425,18 @@ Issue bodies use [`.github/ISSUE_TEMPLATE/agent-finding.yml`](../.github/ISSUE_T
 
 #### Self-Improvement issues channel
 
-The issues channel is **always-on**: every tick it brainstorms broader ideas (a new MCP, a strategy tweak, an investigation against a specific vault) and files them as GitHub Issues for human triage.
+The issues channel is **always-on**: every tick it brainstorms broader ideas (a new MCP, a strategy tweak, an investigation against a specific vault) and files them as GitHub Issues for human triage. When the deterministic signal detector sees hard run-log failures (`latest_run_errors`, `new_error_code`, or `recurring_error_code`), the issue agent prioritises a dedupe-friendly runtime-failure investigation before speculative ideas.
 
 Components (all sibling-of-PR-channel; no shared state beyond the run log + the repo-editor MCP):
 
 | Layer | File | Role |
 |---|---|---|
-| F | `agents/self-improver-issues.md` | Meta-agent that runs every tick. Calls `propose_issue` (a new MCP tool) to draft 1-3 issue ideas across five categories: `new_mcp_or_skill`, `strategy_idea`, `data_gap`, `refactor`, `investigation`. |
+| F | `agents/self-improver-issues.md` | Meta-agent that runs every tick. Calls `propose_issue` (a new MCP tool) to draft 1-3 issue ideas across five categories: `new_mcp_or_skill`, `strategy_idea`, `data_gap`, `refactor`, `investigation`. Runtime hard-error signals must produce a stable `(agent, error_code)` investigation unless an equivalent issue is already open. |
 | F-MCP | `apps/mcps/repo-editor/index.js` (`propose_issue`, `list_open_issues`) | `propose_issue` writes to `.agent-self-improvement/proposed-issues.json`; `list_open_issues` shells out to `gh issue list` for dedup awareness. Both gated by the same `repo-editor-mcp` server. |
-| F' | `agents/risk-officer-self-improvement-issues.md` + `scripts/run-self-improvement-issue-risk-officer.mjs` | Same `approve` / `downsize` / `veto` schema as the PR-side risk officer; softer rubric (issues don't change code). Vetoes when the per-period cap is full, when a proposal has zero run-log grounding, when an `investigation` issue lacks a target vault, or on title/id collisions with open issues. |
+| F' | `agents/risk-officer-self-improvement-issues.md` + `scripts/run-self-improvement-issue-risk-officer.mjs` | Same `approve` / `downsize` / `veto` schema as the PR-side risk officer; softer rubric (issues don't change code). Vetoes when the per-period cap is full, when a proposal has zero run-log grounding, when an `investigation` issue lacks a target vault, `(agent, ticker)`, or runtime `(agent, error_code, runTimestamp)`, or on title/id collisions with open issues. |
 | F'' | `scripts/apply-self-improvement-issues.mjs` | Dedupes against open issues by id-marker (`<!-- self-improver-issue-id: <SHA-12> -->` baked into the body) and exact-title match; respects `MAX_OPEN_SELF_IMPROVER_ISSUES` (default 10); prefixes every title with `agent: ` and calls `gh issue create` with labels matching [`.github/ISSUE_TEMPLATE/agent-finding.yml`](.github/ISSUE_TEMPLATE/agent-finding.yml) verbatim (`agent-finding` + `needs-human-review`) plus a dynamic `category:<x>` label, so bot-filed and human-filed agent findings share the same triage queue. **Never edits existing issues, never assigns, never closes.** |
 
-The issues channel honours the **same allowlist** as the PR channel for any `read_repo_file` calls; `propose_issue` has no path argument so the allow-list is N/A there. The five-category enum (`new_mcp_or_skill` / `strategy_idea` / `data_gap` / `refactor` / `investigation`) is the only knob shaping what kinds of suggestions the channel can file, and the title/body length caps (120 chars / 8 KB) are enforced in `apps/mcps/repo-editor/issue-manifest.js`.
+The issues channel honours the **same allowlist** as the PR channel for any `read_repo_file` calls; `propose_issue` has no path argument so the allow-list is N/A there. The five-category enum (`new_mcp_or_skill` / `strategy_idea` / `data_gap` / `refactor` / `investigation`) is the only knob shaping what kinds of suggestions the channel can file, and the title/body length caps (120 chars / 8 KB) are enforced in `apps/mcps/repo-editor/issue-manifest.js`. Runtime-failure investigations are grounded by `(agent, error_code, runTimestamp)` evidence and may cite vault addresses when the failed run was vault-bound.
 
 Local invocation:
 

@@ -50,6 +50,8 @@ Legacy entries that predate this rule may remain without timestamps.
 
 ### Fixed
 
+- [2026-06-10 16:44 UTC+05:30] **Self-improver issues now surface hard agent runtime failures.** `scripts/detect-self-improvement-signal.mjs` emits `latest_run_errors` when the newest run-log entry has hard `errors[]`, and the issue-channel prompts prioritise dedupe-friendly investigations such as `Investigate mining-manager ATLAS_HTTP_ERROR failures` before speculative ideas.
+
 - [2026-06-05 23:08 UTC+05:30] **Issue/meta agents no longer get forced into vault deployment.** [`scripts/agent-runner.mjs`](scripts/agent-runner.mjs) now scopes vault lifecycle prompts and final-summary `create_vault` enforcement to agents with `vaultName` frontmatter. Non-vault agents such as `issue-implementer` and `self-improver-issues` keep state/run-log/heartbeat memory without receiving `## Your Vault` instructions or publishing vault metadata.
 
 - [2026-06-05 22:30 UTC+05:30] **Trading-agent vault pinning now covers read/planning tools.** [`scripts/agent-runner.mjs`](scripts/agent-runner.mjs) pins the canonical vault address for vault-bound reads and `plan_open_position`, preventing LLM-mashed vault/assetId hex strings from wasting a turn with `INVALID_ARGUMENT` before sizing. Write tools still append the existing audit note when the runner corrects a vault argument.
