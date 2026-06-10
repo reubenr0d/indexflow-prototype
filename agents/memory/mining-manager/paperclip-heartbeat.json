@@ -7,103 +7,89 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-10T18:15:13.417Z",
-  "startedAt": "2026-06-10T18:10:09.479Z",
-  "finishedAt": "2026-06-10T18:15:13.417Z",
+  "runId": "2026-06-10T20:50:28.544Z",
+  "startedAt": "2026-06-10T20:45:08.322Z",
+  "finishedAt": "2026-06-10T20:50:28.544Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 40,
-    "toolCalls": 68,
+    "turns": 8,
+    "toolCalls": 18,
     "errors": 1,
-    "softFailures": 14,
-    "writeActions": 9
+    "softFailures": 3,
+    "writeActions": 5
   },
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our long positions in Amarc Resources and Gold Strike Resources are supported by high ML scores and predicted returns, reinforcing confidence in these selections. Additionally, a short position has been opened on Ironveld PLC, driven by its negative ML predicted return and high absolute predicted return, making it a compelling short candidate.",
-  "summary": "",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our long position in Arizona Sonoran Copper (ASCU.TO) is supported by a high ML score and predicted return, reinforcing confidence in this selection. Additionally, a short position has been opened on Tirupati Graphite (TGR.L), driven by its negative ML predicted return and high absolute predicted return, making it a compelling short candidate.",
+  "summary": "### Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our long position in Arizona Sonoran Copper (ASCU.TO) is supported by a high ML score and predicted return, reinforcing confidence in this selection. Additionally, a short position has been opened on Tirupati Graphite (TGR.L), driven by its negative ML predicted return and high absolute predicted return, making it a compelling short candidate.\n\n#### Vault Status\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $582.43\n- **Tracked Assets**: 12\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n\n#### Actions Taken\n- **Positions Opened**:\n  - **Long**: Arizona Sonoran Copper (ASCU.TO) with a transaction hash of `0x09f5e2647f6ef899936d63dfcc540ad7523639e87f71e8dfd4ccbb5ec3387361`\n  - **Short**: Tirupati Graphite (TGR.L) with a transaction hash of `0xe955cabf32bd38b8c8bf3acf0998ef38c203d5bbaa506851b5f7802e7410bf71`\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened positions and adjust as necessary based on the Atlas ML model's predictions and any significant news developments.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates, ensuring that the portfolio remains aligned with the model's insights.",
   "writeActions": [
     {
-      "tool": "close_position",
-      "txHash": "0xae3bf7c4f62129197323aa864740259b0a9e5048ffdf158bac9467efea28508d",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)",
-      "kind": "vault-tx"
-    },
-    {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Arizona Sonoran Copper as a top Atlas ML pick with a high predicted return.",
+      "justification": "Wiring Arizona Sonoran Copper (ASCU.TO) due to high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+        "reason": "Batch aligns with available collateral ($363.77) and regime (shortPenalty=0, longBonus=2); no recent losses on proposed tickers."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring AbraSilver Resource as a top Atlas ML pick with a high predicted return.",
+      "justification": "Wiring Tirupati Graphite (TGR.L) for short position due to high absolute predicted negative return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+        "reason": "Batch aligns with available collateral ($363.77) and regime (shortPenalty=0, longBonus=2); no recent losses on proposed tickers."
       },
       "kind": "file-diff"
     },
     {
       "tool": "wire_asset",
       "txHash": null,
-      "justification": "Wiring Hudbay Minerals as a top Atlas ML pick with a high predicted return.",
+      "justification": "Wiring Castle Minerals (CDT.AX) for short position due to high absolute predicted negative return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+        "reason": "Batch aligns with available collateral ($363.77) and regime (shortPenalty=0, longBonus=2); no recent losses on proposed tickers."
       },
       "kind": "file-diff"
     },
     {
-      "tool": "wire_asset",
-      "txHash": "0x11853bd2437691dfcd3bc2bcf19a17f5517fb9ee8016556c6b68ad8ce4e7185e",
-      "justification": "Wiring Andina Copper as a top Atlas ML pick with a high predicted return.",
+      "tool": "open_position",
+      "txHash": "0x09f5e2647f6ef899936d63dfcc540ad7523639e87f71e8dfd4ccbb5ec3387361",
+      "justification": "Opening long position on Arizona Sonoran Copper (ASCU.TO) due to high ML score and predicted return.",
       "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
+        "verdict": "downsize",
+        "reason": "Proposed long on ASCU.TO uses 33% of available collateral; downsize to mitigate risk in metals_risk_off regime.",
+        "downsizeFactor": 0.5,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d",
+          "isLong": true,
+          "beforeCollateral": "121256648",
+          "afterCollateral": "60628324",
+          "beforeSize": "1212566480000000000000000000000000",
+          "afterSize": "606283240000000000000000000000000",
+          "downsizeFactor": 0.5
+        }
       },
       "kind": "vault-tx"
     },
     {
-      "tool": "wire_asset",
-      "txHash": "0x7b0680c90fe5b98e2358ffaa6ee0efd5808234bc08e66d46c7587e25461336e8",
-      "justification": "Wiring Arras Minerals as a top Atlas ML pick with a high predicted return.",
+      "tool": "open_position",
+      "txHash": "0xe955cabf32bd38b8c8bf3acf0998ef38c203d5bbaa506851b5f7802e7410bf71",
+      "justification": "Opening short position on Tirupati Graphite (TGR.L) due to high absolute predicted negative return.",
       "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0x58981e3b44d79adf78455a7fd4afd24c9f1d533b579b328e32972da7985de0da",
-      "justification": "Wiring Canada Nickel as a top Atlas ML pick with a high predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": "0x35d1fb30e9ede35683736fb66b8dd4c20338cac77ebb763b5532be7a8f057872",
-      "justification": "Wiring Ero Copper as a top Atlas ML pick with a high predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "All proposed assets are long positions, aligning with the metals_risk_off regime's longBonus of 2, and no recent losses >10% on these tickers."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0x0d86009dd10e13804e4d4861a358308214f100cd8a2c91aee8f2258b033d3866",
-      "justification": "Updating tracked assets to include top Atlas ML picks and ensure coverage of high predicted return opportunities.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict."
+        "verdict": "downsize",
+        "reason": "Proposed long on ASCU.TO uses 33% of available collateral; downsize to mitigate risk in metals_risk_off regime.",
+        "downsizeFactor": 0.5,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0x9a4e3f2e2a6ad3458f94d045edea5a54094900107a0be1bb5622911e466bef90",
+          "isLong": false,
+          "beforeCollateral": "121256648",
+          "afterCollateral": "60628324",
+          "beforeSize": "606283240000000000000000000000000",
+          "afterSize": "303141620000000000000000000000000",
+          "downsizeFactor": 0.5
+        }
       },
       "kind": "vault-tx"
     }
