@@ -1,18 +1,12 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-09T04:37:36.668Z",
+  "updatedAt": "2026-06-10T14:30:03.398Z",
   "closures": {
-    "0x3fbe5817c95eaef02fde7b87f7a6e71a0df441b1de68c032dd5fc10f429b3aac": {
-      "ticker": "FOX.CN",
+    "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
+      "ticker": "GSR.V",
       "isLong": true,
-      "closedAt": "2026-06-09T04:37:25.650Z",
-      "closedReason": "auto-rebalance: dropped from ML top-12 (score < 85)"
-    },
-    "0x8df2fdabe49634949fe7c51f0206b72c52b5f62cba34e72cf16728e3d6ff46bc": {
-      "ticker": "MI6.AX",
-      "isLong": true,
-      "closedAt": "2026-06-09T04:37:36.668Z",
-      "closedReason": "auto-rebalance: dropped from ML top-12 (score < 85)"
+      "closedAt": "2026-06-10T14:30:03.398Z",
+      "closedReason": "auto-rebalance: profit rotation: closing #3 long GSR.V (potential 0.5774, pnl 0.00%) to free room for #2 long AMG.L (potential 0.6230)"
     }
   }
 }
