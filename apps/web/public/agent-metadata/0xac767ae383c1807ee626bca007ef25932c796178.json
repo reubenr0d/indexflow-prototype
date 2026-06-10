@@ -4,13 +4,13 @@
   "agentDescription": "Mining long/short vault driven by the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction)",
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
-  "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
-  "lastRunAt": "2026-06-09T12:17:13.219Z",
+  "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
+  "lastRunAt": "2026-06-10T01:33:22.780Z",
   "latestRun": {
-    "runId": "2026-06-09T12:17:13.219Z",
-    "finishedAt": "2026-06-09T12:17:13.219Z",
-    "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
-    "startedAt": "2026-06-09T12:16:54.146Z",
+    "runId": "2026-06-10T01:33:22.780Z",
+    "finishedAt": "2026-06-10T01:33:22.780Z",
+    "summary": "It seems there is an authorization issue with accessing the Atlas API for retrieving the latest trade-ready picks. This prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening new positions. \n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n## Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Recommendations\n- Resolve the authorization issue with the Atlas API to enable access to trade-ready picks.\n- Once access is restored, proceed with wiring new entrants, setting the tracked-asset list, and opening positions based on fresh signals.\n- Continue monitoring the metals regime and adjust the strategy accordingly.",
+    "startedAt": "2026-06-10T01:33:09.365Z",
     "agentName": "quality-matrix-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -40,10 +40,10 @@
   },
   "recentRuns": [
     {
-      "runId": "2026-06-09T12:17:13.219Z",
-      "startedAt": "2026-06-09T12:16:54.146Z",
-      "finishedAt": "2026-06-09T12:17:13.219Z",
-      "summary": "It seems there was an authorization error when attempting to retrieve the latest trade-ready picks from the Atlas API. This issue prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, and opening new long positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with no short penalty and no long bonus, indicating a neutral stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n### Recommendations\n- Investigate and resolve the authorization issue with the Atlas API to enable access to trade-ready picks in future runs.\n- Once resolved, proceed with the planned actions of wiring new entrants, setting the tracked-asset list, and opening long positions based on the quality matrix signals.",
+      "runId": "2026-06-10T01:33:22.780Z",
+      "startedAt": "2026-06-10T01:33:09.365Z",
+      "finishedAt": "2026-06-10T01:33:22.780Z",
+      "summary": "It seems there is an authorization issue with accessing the Atlas API for retrieving the latest trade-ready picks. This prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening new positions. \n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n## Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Recommendations\n- Resolve the authorization issue with the Atlas API to enable access to trade-ready picks.\n- Once access is restored, proceed with wiring new entrants, setting the tracked-asset list, and opening positions based on fresh signals.\n- Continue monitoring the metals regime and adjust the strategy accordingly.",
       "agentName": "quality-matrix-manager",
       "model": "gpt-4o",
       "modelSource": "env-global",
@@ -70,215 +70,7 @@
       "softFailures": [],
       "riskOfficerVerdicts": [],
       "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-07T12:56:47.590Z",
-      "startedAt": "2026-06-07T12:55:35.658Z",
-      "finishedAt": "2026-06-07T12:56:47.590Z",
-      "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n## Vault State\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n\n- **Quality Matrix Definition**: Retrieved to ensure alignment with analyst's tier definitions.\n- **Trade-Ready Picks**: No eligible picks were found with a trade readiness score above the threshold.\n\n## Recommendations for Next Run\n\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the market regime and adjust the strategy accordingly if new opportunities arise.\n- Ensure readiness to act on any new signals that meet the criteria for opening positions.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-06T15:44:30.199Z",
-      "startedAt": "2026-06-06T15:42:59.860Z",
-      "finishedAt": "2026-06-06T15:44:30.199Z",
-      "summary": "## Thesis\n\nToday's run did not present new opportunities for opening long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault Address and Current State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness with a score of 75 or above.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix tiers and timing configurations if no new opportunities arise in subsequent runs.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-06T00:24:31.019Z",
-      "startedAt": "2026-06-06T00:23:35.133Z",
-      "finishedAt": "2026-06-06T00:24:31.019Z",
-      "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness this run.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the market regime and adjust strategies accordingly.\n- Stay alert for any changes in the quality matrix or new signals that could present opportunities.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-05T19:11:27.535Z",
-      "startedAt": "2026-06-05T19:10:14.184Z",
-      "finishedAt": "2026-06-05T19:11:27.535Z",
-      "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 0, indicating no auto-block for shorts, and a long bonus of 2, suggesting potential upweighting for long positions if suitable candidates arise. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for action.\n- **Long Positions**: None opened due to lack of qualifying candidates.\n- **Short Positions**: None opened; no Red-Flag signals with bearish news were identified.\n\n### Recommendations for Next Run\n- Continue monitoring for fresh signals and drilling releases that could impact trade readiness scores.\n- Re-evaluate the matrix and timing configurations if persistent lack of opportunities continues.\n- Consider the current metals regime and adjust strategies accordingly, especially if market conditions change.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-05T13:30:30.455Z",
-      "startedAt": "2026-06-05T13:29:24.344Z",
-      "finishedAt": "2026-06-05T13:30:30.455Z",
-      "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n## Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: No assets currently tracked, no capital allocated to perps.\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for action this run.\n- **Actions Taken**: None, as no new opportunities were identified.\n- **Recommendations**: Continue monitoring for fresh drill releases and material events that could impact trade readiness scores. Adjust strategy as new data becomes available.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
     }
   ],
-  "recentActions": [
-    {
-      "tool": "create_vault",
-      "justification": "Establishing a dedicated vault for managing mining equities based on the quality matrix signals.",
-      "timestamp": "2026-05-28T08:06:24.267Z",
-      "txHash": "0x3aeeaf6aa198018b782fc30b5550bd26f5b99dce8f8eb2e1c047ebe453e09e84",
-      "agentName": "quality-matrix-manager",
-      "runId": "2026-05-28T08:06:24.267Z",
-      "params": {
-        "kind": "create_vault",
-        "name": "Minestarters Quality Matrix",
-        "depositFeeBps": 50,
-        "redeemFeeBps": 50
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch is for creating a new vault, which does not involve any trading actions or risk exposure."
-      }
-    }
-  ]
-}
-rade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-06-05T13:30:30.455Z",
-      "startedAt": "2026-06-05T13:29:24.344Z",
-      "finishedAt": "2026-06-05T13:30:30.455Z",
-      "summary": "## Thesis\n\nThe current run did not present new opportunities for long or short positions based on the quality matrix's trade-ready picks and Red-Flag signals. No companies met the criteria for opening new positions this run. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with a short penalty of 1, indicating caution for shorts but no auto-block. The vault's strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores.\n\n## Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Vault State**: No assets currently tracked, no capital allocated to perps.\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for action this run.\n- **Actions Taken**: None, as no new opportunities were identified.\n- **Recommendations**: Continue monitoring for fresh drill releases and material events that could impact trade readiness scores. Adjust strategy as new data becomes available.",
-      "agentName": "quality-matrix-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 3,
-      "toolCalls": [
-        "get_vault_state",
-        "get_quality_matrix_definition",
-        "get_quality_trade_ready_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    }
-  ],
-  "recentActions": [
-    {
-      "tool": "create_vault",
-      "justification": "Establishing a dedicated vault for managing mining equities based on the quality matrix signals.",
-      "timestamp": "2026-05-28T08:06:24.267Z",
-      "txHash": "0x3aeeaf6aa198018b782fc30b5550bd26f5b99dce8f8eb2e1c047ebe453e09e84",
-      "agentName": "quality-matrix-manager",
-      "runId": "2026-05-28T08:06:24.267Z",
-      "params": {
-        "kind": "create_vault",
-        "name": "Minestarters Quality Matrix",
-        "depositFeeBps": 50,
-        "redeemFeeBps": 50
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch is for creating a new vault, which does not involve any trading actions or risk exposure."
-      }
-    }
-  ]
+  "recentActions": []
 }
