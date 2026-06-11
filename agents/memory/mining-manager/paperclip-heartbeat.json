@@ -7,48 +7,49 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-11T07:09:14.535Z",
-  "startedAt": "2026-06-11T07:05:41.895Z",
-  "finishedAt": "2026-06-11T07:09:14.535Z",
+  "runId": "2026-06-11T11:52:12.982Z",
+  "startedAt": "2026-06-11T11:48:49.942Z",
+  "finishedAt": "2026-06-11T11:52:12.982Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 11,
-    "toolCalls": 15,
+    "turns": 10,
+    "toolCalls": 14,
     "errors": 1,
     "softFailures": 0,
-    "writeActions": 2
+    "writeActions": 4
   },
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Arizona Sonoran Copper (ASCU.TO), which have been successfully opened as long positions. These positions are supported by the model's high predicted returns and robust ML scores.",
-  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Arizona Sonoran Copper (ASCU.TO), which have been successfully opened as long positions. These positions are supported by the model's high predicted returns and robust ML scores.\n\n#### Current State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $526.45 USDC\n- **Tracked Assets**: AHR.V, AMG.L, GSR.V, ASCU.TO, TGR.L, CDT.AX\n- **Open Positions**: New long positions opened on GSR.V and ASCU.TO.\n\n#### Actions Taken\n- **Tracked Assets Update**: Ensured the vault tracks top Atlas ML long and short picks.\n- **Opened Positions**: Successfully opened long positions on GSR.V and ASCU.TO, leveraging the available collateral efficiently.\n- **News Scan**: No significant news impacting the selected long and short candidates was found.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened positions and adjust as necessary based on updated ML predictions and market conditions.\n- Continue to track news for any developments that could impact the current holdings.\n- Evaluate the potential for opening additional positions if capital becomes available or if existing positions are closed.",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.",
+  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $5,774.29\n- **Perp Allocated**: $10,322.63\n- **Available for Perp**: $2,632.27\n- **Tracked Assets**: 9\n\n#### Actions Taken\n- **Allocated**: $2,632.27 to perp trading.\n- **Opened Long Position**: Amarc Resources Ltd. (AHR.V) with a size of $28,303.57 and collateral of $2,830.36.\n- **No Short Positions Opened**: Due to lack of compelling short candidates.\n\n#### Recommendations for Next Run\n- Continue monitoring the Atlas ML top picks and short candidates for potential new entries.\n- Reassess the short candidates if their predicted returns improve relative to the current long positions.\n- Maintain vigilance on news that could impact the selected assets, adjusting positions as necessary based on new information.\n\nThis strategy aligns with the current model's predictions and market conditions, ensuring a balanced approach to maximizing returns while managing risks.",
   "writeActions": [
     {
-      "tool": "open_position",
-      "txHash": "0xc9d76572281e437969e8cd73f7cf753400797fa428b61f83cc94596c4b467cce",
-      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) due to high ML score and predicted return.",
+      "tool": "close_position",
+      "txHash": "0x1e187b493fae87db9ad37c33e99ced33d5be7024292c62940bf61029c18b8bb3",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "close_position",
+      "txHash": "0xe0bab8b5026add2fc5c941f2bc5737dabc46b0161573632ac6a8ba6864cac78b",
+      "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "allocate_to_perp",
+      "txHash": "0x9dd3f6dceb1a5c48056bb8ee575fa262b8cc97b4a2da2649ed1d3586615e4615",
+      "justification": "Allocating 50% of available USDC to perp trading to enable new positions based on current Atlas ML top picks and short candidates.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The proposed long position on GSR.V uses 33.3% of available collateral ($66.55 out of $199.66), which is within acceptable limits, and benefits from a long bonus of 2."
+        "reason": "Allocating 50% of available USDC ($2,632,272.50) to perp trading is consistent with current idle USDC and market regime favoring long positions."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x02f6aa9d42331d2b2a2344a34382489f83ef937c0b7452017b9d96cbb793b06f",
-      "justification": "Opening long position on Arizona Sonoran Copper (ASCU.TO) due to high ML score and predicted return.",
+      "txHash": "0x645c183a5f397fc1549bf2aaf0db6e2468f9e292fd2c0a3759dfe5c3f998c610",
+      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) due to its high ML score and predicted return, supported by available collateral.",
       "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed collateral $44.37 exceeds 22% of available $199.66; downsize to mitigate risk in metals_risk_off regime.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d",
-          "isLong": true,
-          "beforeCollateral": "44369516",
-          "afterCollateral": "22184758",
-          "beforeSize": "443695160000000000000000000000000",
-          "afterSize": "221847580000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
+        "verdict": "approve",
+        "reason": "The proposed long position on AHR.V uses 100% of available collateral ($2830.36), aligning with the metals_risk_off regime's longBonus of 2."
       },
       "kind": "vault-tx"
     }

@@ -1,216 +1,385 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-11T07:08:04.901Z",
+  "updatedAt": "2026-06-11T11:50:47.689Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
-      "headlines": [
-        {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
-        },
-        {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALK-B.CO"
-          ]
-        },
-        {
-          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ASCU.TO": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
-      "headlines": [
-        {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
-        },
-        {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALK-B.CO"
-          ]
-        },
-        {
-          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "AMG.L": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
+      "fetchedAt": "2026-06-11T11:50:47.383Z",
       "headlines": [
         {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SAP"
+            "BTC-USD",
+            "ETH-USD"
           ]
         },
         {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ALK-B.CO"
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "RARE.V": {
+      "fetchedAt": "2026-06-11T11:50:47.383Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
           ]
         },
         {
-          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NOK"
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
+      "fetchedAt": "2026-06-11T11:50:47.383Z",
       "headlines": [
         {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SAP"
+            "BTC-USD",
+            "ETH-USD"
           ]
         },
         {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALK-B.CO"
-          ]
-        },
-        {
-          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CDT.AX": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
-      "headlines": [
-        {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SAP"
-          ]
-        },
-        {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ALK-B.CO"
-          ]
-        },
-        {
-          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NOK"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TGR.L": {
-      "fetchedAt": "2026-06-11T07:08:04.901Z",
-      "headlines": [
-        {
-          "title": "Villas of Distinction® Celebrates Multi-Generational Travel's",
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/articles/villas-distinction-celebrates-multi-generational-070000357.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SAP"
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LUN.TO": {
+      "fetchedAt": "2026-06-11T11:50:47.383Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
           ]
         },
         {
-          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
-          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ALK-B.CO"
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SCCO": {
+      "fetchedAt": "2026-06-11T11:50:47.383Z",
+      "headlines": [
+        {
+          "title": "Southern Copper (SCCO) Registers a Bigger Fall Than the Market: Important Facts to Note",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-scco-registers-bigger-215004451.html",
+          "publishedAt": "2026-06-10T21:50:04.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO",
+            "^GSPC",
+            "^DJI",
+            "^IXIC"
+          ]
+        },
+        {
+          "title": "A Look At Southern Copper (SCCO) Valuation After Record Earnings And Higher Production Guidance",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/look-southern-copper-scco-valuation-101031957.html",
+          "publishedAt": "2026-06-10T10:10:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO",
+            "HG=F"
+          ]
+        },
+        {
+          "title": "How The Southern Copper (SCCO) Investment Story Is Evolving As The Analyst Narrative Holds Steady",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-scco-investment-story-160857620.html",
+          "publishedAt": "2026-06-09T16:08:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-11T11:50:47.689Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "RYO.V": {
+      "fetchedAt": "2026-06-11T11:50:47.689Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-11T11:50:47.689Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-11T11:50:47.689Z",
+      "headlines": [
+        {
+          "title": "Bitcoin and ethereum prices today, Thursday, June 11, 2026: Prices lifting off low opening figures",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-thursday-june-11-2026-prices-lifting-off-low-opening-figures-114705725.html",
+          "publishedAt": "2026-06-11T11:47:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BTC-USD",
+            "ETH-USD"
+          ]
+        },
+        {
+          "title": "Rare Breed® Launches at Chewy with 3-Ingredient, Human-Grade Beef & Pork Treats",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/rare-breed-launches-chewy-3-114600310.html",
+          "publishedAt": "2026-06-11T11:46:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ACE HARDWARE FRANCHISE OPERATOR BECOMES SECOND U.S. RETAIL PARTNER TO DISTRIBUTE FCL-X™ LITHIUM BATTERY FIRE SUPPRESSION SOLUTION",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/ace-hardware-franchise-operator-becomes-114500891.html",
+          "publishedAt": "2026-06-11T11:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FCLIF",
+            "K0Q.F",
+            "FCLI.NE",
+            "FCLI.V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "JAGU": {
+      "fetchedAt": "2026-06-11T11:50:47.689Z",
+      "headlines": [
+        {
+          "title": "Fusion Fuel Highlights Jaguar Uranium’s Surface Uranium-Copper-Vanadium Findings at Huemul Project; Planned Royal Uranium Acquisition Expected to Provide 1.0% NSR Royalty Exposure",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/fusion-fuel-highlights-jaguar-uranium-123000105.html",
+          "publishedAt": "2026-06-04T12:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HTOO",
+            "HG=F",
+            "JAGU"
+          ]
+        },
+        {
+          "title": "Jaguar Uranium Finds Surface Uranium-Copper-Vanadium at Huemul; Assays Pending",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/jaguar-uranium-finds-surface-uranium-114500309.html",
+          "publishedAt": "2026-06-02T11:45:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HG=F",
+            "JAGU"
+          ]
+        },
+        {
+          "title": "Jaguar Uranium Begins Field Work at Guanaco; Targets Potential Resource at Laguna Salada",
+          "publisher": "CNW Group",
+          "link": "https://finance.yahoo.com/sectors/energy/articles/jaguar-uranium-begins-field-guanaco-115500195.html",
+          "publishedAt": "2026-05-12T11:55:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "JAGU"
           ]
         }
       ],

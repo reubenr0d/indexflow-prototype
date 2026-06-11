@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-11T07:10:16.735Z",
+  "lastRunAt": "2026-06-11T11:53:02.439Z",
   "thesis": "The current strategy remains on hold due to the ongoing authorization issue with the Atlas API, which blocks access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault is prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
-  "lastThesisUpdate": "2026-06-11T07:10:16.735Z"
+  "lastThesisUpdate": "2026-06-11T11:53:02.439Z"
 }
