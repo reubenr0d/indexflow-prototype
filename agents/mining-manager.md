@@ -57,15 +57,35 @@ You have access to a dedicated MCP server (`atlas-ml-mcp`) that wraps the Atlas 
 - `get_ml_runs({ limit })` — recent Atlas ML training runs. Call near the start of each run so you know whether the serving model is fresh and which horizon / feature mode it uses.
 - `get_ml_horizon_recommendation()` — best candidate from the latest horizon-grid experiment. Call near the start of each run as context; it is read-only and does not change the active model.
 - `get_ml_horizon_config()`, `get_ml_horizon_coverage({ asOfDate?, featureModes? })`, and `get_ml_horizon_experiments({ limit })` — diagnostics for the horizon-selection layer. Use only when model metadata looks stale, sparse, or inconsistent.
-- `trigger_ml_horizon_evaluation({ horizons?, featureModes?, labelType?, targetType?, evalFrequency?, nanThreshold?, persistModels? })` — expensive model-selection run. **Do not call during normal trading runs.** Use only when the human prompt explicitly asks you to trigger an Atlas horizon evaluation, or when the latest model metadata is missing/stale enough that the run cannot proceed and you need a diagnostic artifact. Leave `persistModels: false` unless explicitly told otherwise.
+- `trigger_ml_horizon_evaluation({ horizons?, featureModes?, labelType?, targetType?, evalFrequency?, nanThreshold?, persistModels? })` — Horizon job trigger. **The runner owns cadence and staleness; only call manually if the user explicitly asks for a now-sync.** The runner stores `state.ml` and uses it across runs to run on cache hits/refreshes. Leave `persistModels: false` unless explicitly told otherwise.
+- `trigger_ml_horizon_evaluation({ horizons?, featureModes?, labelType?, targetType?, evalFrequency?, nanThreshold?, persistModels?, filters?, waitForCompletion?, waitTimeoutMs?, pollIntervalMs?, maxAttempts? })` — non-destructive async horizon-grid evaluation job. Returns a job summary immediately; set `waitForCompletion: true` to block until terminal state. Use `filters` for dynamic feature restrictions.
+- `get_ml_horizon_jobs({ status?, limit? })` / `get_ml_horizon_job({ jobId })` — inspect async horizon-eval jobs and pull completed results.
+- `cancel_ml_horizon_job({ jobId })` — cancel queued/running horizon jobs when an evaluation run is no longer needed.
 
 The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%. **Treat its picks as medium-term positions** — open and hold across runs, do not flip intraday.
+
+### Autonomous Horizon Orchestration
+
+- The runner persists one recent horizon recommendation in `state.ml` and keeps it alive across runs.
+- Decision matrix for refresh:
+  - If `state.ml.lastJob.status` is `queued` or `running` → `trigger_and_wait` only when explicit user request is detected; otherwise `use_cached_or_wait`.
+  - If no terminal result exists (`state.ml.lastResult` is empty) → `trigger_and_continue`.
+  - If `state.ml.strategyFingerprint` changed since last saved state → `trigger_and_continue`.
+  - If cached result is older than `min(cadenceHours, staleAfterHours)` → `trigger_and_continue`.
+  - If cached candidate confidence is below `confidenceFloor` → `trigger_and_continue`.
+  - If explicit user request is present in prompt (`refresh`, `fresh ML`, `run horizon`) → `trigger_and_wait`.
+  - If `cooldownUntil` is still in the future → do not trigger; remain cached.
+  - Otherwise → `consume_cached_result`.
+- Defaults:
+  - normal cycle: `waitForCompletion: false` (non-blocking) and continue with cached result.
+  - explicit freshness request: `waitForCompletion: true` (single-run blocking).
+- If a job is already queued/running and fresh data is requested explicitly, the runner keeps polling the same job until terminal (no duplicate trigger).
 
 ## Workflow
 
 1. **Check Vault**: If the "Your Vault" section lists an address, call `get_vault_state` with that address. If you need to deploy, call `create_vault` — the runner will detect the new address from the tool result and persist it to `state.json` for the next run.
 
-2. **Ground in the Model**: Call `get_ml_runs({ limit: 5 })`, `get_ml_horizon_recommendation()`, and `get_ml_model_info()` once so you understand the current model's freshness, active horizon/feature mode, strengths, and feature mix. If these diagnostics disagree, proceed conservatively with the active `get_ml_top_picks` / `get_ml_short_picks` outputs and mention the mismatch in the summary. Do not trigger a horizon evaluation unless the user explicitly requested it or the active model metadata is unavailable/stale enough to block trading.
+2. **Ground in the Model**: Call `get_ml_runs({ limit: 5 })`, `get_ml_horizon_recommendation()`, and `get_ml_model_info()` once so you understand the current model's freshness, active horizon/feature mode, strengths, and feature mix. If these diagnostics disagree, proceed conservatively with the active `get_ml_top_picks` / `get_ml_short_picks` outputs and mention the mismatch in the summary. Prefer cached `state.ml` horizon context for continuity across runs; do not manually re-trigger during normal cycles.
 
 3. **Get Today's Long and Short Picks**: Call `get_ml_top_picks({ limit: 12, minScore: 85 })` for candidate longs, then call `get_ml_short_picks({ limit: 6, maxScore: 20, minAbsPredictedReturn: 0 })` for candidate shorts. Candidate longs are scored by positive `mlPredictedReturn`; candidate shorts are scored by `absPredictedReturn`.
 
@@ -130,6 +150,10 @@ The runner persists everything for you; you do not call any `state_set` or `log_
 **State keys (runner-owned):**
 - `vault_address`, `vault_name`, `agent_file_hash`, `deployment_fingerprint`, `deployment_config_path`, `deployed_at`, `last_run_at` — written after every run.
 - `thesis`, `last_thesis_update` — extracted from your final summary's `## Thesis` section.
+- `ml`: lifecycle state persisted for horizon jobs:
+  - `enabled`, `policy`, `strategyFingerprint`, `nextSuggestedAction`, `refreshReason`, `cooldownUntil`.
+  - `lastJob`: `id`, `status`, `startedAt`, `completedAt`, `result`, `errorMessage`.
+  - `lastResult`: `status`, `settings`, `experimentId`, `recommendedCandidate`, `fetchedAt`, `sourceJobId`, `candidateConfidence`, `raw`, `resultDigest`.
 
 CI uploads `agents/memory/` + `apps/web/public/agent-metadata/` as artifacts and a follow-up job commits them back to the default branch under the `vault-agent[bot]` identity.
 

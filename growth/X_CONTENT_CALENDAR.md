@@ -51,7 +51,7 @@ Threads default to **15:00 UTC**; standalones default to **16:30 UTC**; Spaces s
 | 2026-06-05 | Fri | 15:00 | thread | A | none | P2 | Insider Knowledge | `growth/drafts/2026-06-05-thread-five-waves-of-onchain-exposure.md` | seeded |  |
 | 2026-06-06 | Sat | 16:30 | standalone | B | Curators | P4 | Stakes | `growth/drafts/2026-06-06-tweet-spaces-announcement-week-2.md` | seeded |  |
 | 2026-06-07 | Sun | 16:30 | standalone | A | none | P3 | Insider Knowledge | `growth/drafts/DONE-2026-06-07-tweet-route-by-depth-not-by-default.md` | posted | https://x.com/indexflowDAO/status/2064033245059297681 |
-| 2026-06-08 | Mon | 15:00 | thread | C | Engineers | P3 | Curiosity Gap | `growth/drafts/2026-06-08-thread-plug-your-agent-into-a-basket.md` | polished |  |
+| 2026-06-08 | Mon | 15:00 | thread | C | Engineers | P3 | Curiosity Gap | `growth/drafts/2026-06-08-thread-plug-your-agent-into-a-basket.md` | posted | https://x.com/indexflowDAO/status/2064670178898845796 |
 | 2026-06-09 | Tue | 16:30 | standalone | C | Engineers | P3 | Data | `growth/drafts/2026-06-09-tweet-run-log-as-receipt.md` | seeded |  |
 | 2026-06-10 | Wed | 15:00 | thread | B | Curators | P4 | Personal Story | `growth/drafts/2026-06-10-thread-operator-of-the-week-curator-2.md` | seeded |  |
 | 2026-06-11 | Thu | 16:30 | standalone | C | Engineers | P3 | Insider Knowledge | `growth/drafts/2026-06-11-tweet-many-baskets-one-engine.md` | seeded |  |
@@ -91,7 +91,7 @@ Backlog slots polished and queued after the May 27 testnet-agents post went live
 | -------- | ---- | ----- | ------ | ------ |
 | P1 | 2026-06-07 | `2026-06-07-tweet-route-by-depth-not-by-default.md` | posted | https://x.com/indexflowDAO/status/2064033245059297681 |
 | P1 | 2026-06-02 | `2026-06-02-tweet-auto-broadcast-pattern.md` | polished | Post standalone same morning (optional but recommended) |
-| P0 | 2026-06-08 | `2026-06-08-thread-plug-your-agent-into-a-basket.md` | polished | Post 10-tweet thread at 15:00 UTC; QT hook ~17:30 UTC |
+| P0 | 2026-06-08 | `2026-06-08-thread-plug-your-agent-into-a-basket.md` | posted | https://x.com/indexflowDAO/status/2064670178898845796 |
 | P2 | 2026-06-01 | `2026-06-01-thread-build-a-basket-in-10-minutes.md` | polished | Post by Wed Jun 10 — capture fresh testnet screenshots first |
 | P2 | 2026-05-28 | `2026-05-28-thread-six-contracts-zero-chain-pickers.md` | polished | Post by Wed Jun 10 |
 | P2 | 2026-05-29 | `2026-05-29-tweet-reserve-depth-is-product-quality.md` | polished | Post by Wed Jun 10 |

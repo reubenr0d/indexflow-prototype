@@ -16,87 +16,105 @@
 
 ### Tweet 1 -- Hook
 
-An AI agent managing a real DeFi vault should be a markdown file.
+An AI agent managing a real vault should be easy to read.
 
-One file: system prompt at the top, YAML config at the bottom. Point it at a testnet basket. Markdown in, on-chain trades out, every decision committed to git.
+One file says what the agent believes, what it is allowed to do, and where every decision gets recorded.
+
+Point it at a testnet basket. The agent acts. The receipts go to git.
 
 Here's the whole stack.
 
 ### Tweet 2
 
-Open `agents/quality-matrix-manager.md`. The frontmatter declares everything the runner needs to instantiate the agent:
+Open `agents/quality-matrix-manager.md`.
 
-`mcpServers`, `writeTools`, `maxTurns`, `temperature`, `entryMode`, `entryQualityScoreMin`, `maxNewPositionsPerRun`, `autoAllocateTargetBps`.
+The first few lines tell the runner what the agent is allowed to do: which tools it can touch, how cautious it should be, and how much capital it can move.
 
 No JavaScript. No framework boilerplate.
 
 ### Tweet 3
 
-The body below the `---` is the agent's soul. Identity, strategy, rules.
+The rest of the file is the playbook.
 
-The `## User Prompt` section at the end is the heartbeat — the message that kicks off every scheduled run.
+Role. Strategy. Risk rules. What to do when the market changes.
 
-That's the whole authoring surface. Three sections, one file per agent.
+The final section is the heartbeat: the recurring instruction that starts each scheduled run.
+
+That's it. One readable file per agent.
 
 ### Tweet 4
 
-Capabilities are MCP servers, registered once in `agents/mcp-servers.json` and referenced by name in the agent's frontmatter.
+Tools are plugged in by name.
 
-Today: `vault-manager-mcp` (on-chain reads + writes), `yfinance-mcp` (market data), `atlas-quality-mcp` (mining quality matrix). New capability = new MCP server.
+One tool reads and writes vault state. One fetches market data. One scores mining companies.
+
+To give an agent a new skill, you add a new tool. The agent file stays readable.
 
 ### Tweet 5
 
-`scripts/agent-runner.mjs` is the only glue. It parses the markdown, spawns the declared MCP servers, injects vault state + recent run history into the system prompt, and calls the LLM with the MCP tools attached.
+The runner is the translator.
 
-Same runner for every agent. The diff between agents is the markdown.
+It reads the agent file, checks the vault, pulls recent history, gives the agent its tools, and asks it what to do next.
+
+Same runner for every agent. The difference is the playbook.
 
 ### Tweet 6
 
 Memory is git.
 
-`agents/memory/<agent>/state.json` carries the vault address, deployment fingerprint, and current thesis. `run-log.<network>.jsonl` appends one structured line per run.
+Each agent keeps a small state file and a run-log.
 
-A `commit-results` job in the vault-agent workflow pushes both back to `main` after every tick.
+After every scheduled run, the result is committed back to the repo.
+
+No hidden dashboard. No private notebook. The audit trail is the product.
 
 ### Tweet 7
 
-Writes sign with the keeper key through `cast send`. Every `open_position`, `close_position`, `wire_asset` is a real transaction with a real tx hash threaded back into the run-log.
+When the agent opens, closes, or updates a position, it is a real transaction with a real tx hash.
 
-(Yes, that's a single EOA today. Sunday's tweet on Nox MPC signing is the answer to "but what about the EOA?")
+That hash goes straight into the run-log next to the reason for the decision.
+
+The agent does not just say what it would do. It leaves receipts for what it did.
 
 ### Tweet 8
 
-Before any agent goes live, `AGENT_DRY_RUN=1` runs the full loop with writes blocked. The reasoning surface, the tool calls, and the proposed actions all land in the run-log — nothing touches the chain.
+Before an agent can move capital, it runs in rehearsal mode.
 
-Every new agent earns the keeper key by passing dry-run first.
+It reads the vault, forms a decision, and writes the reasoning to the log — but no transaction is sent.
+
+Every new agent has to prove it can think clearly before it gets permission to act.
 
 ### Tweet 9
 
 Run an agent against a testnet basket during Season 1 and you earn Engineer-tier points, a Boost.xyz USDC payout, and mainnet whitelist priority.
 
-The bar is one vault, one agent file, one committed run-log.
+The bar is simple: one vault, one agent file, one public run-log.
 
 ### Tweet 10 -- CTA
 
-The trinity that makes this verifiable, private, and non-custodial drops this week.
+Agent-run vaults need three things: verifiable decisions, private compute, non-custodial signing.
 
-Tomorrow: a real run-log entry as a receipt. Fri: iExec confidential compute. Sat: Secret Network encrypted state. Sun: Nox MPC signing.
+Tomorrow: run-log receipt.
 
-Agent docs + example file: https://indexflow.app/docs/agents-framework?utm_source=x&utm_campaign=plug-your-agent-w3
+Fri: iExec.
+Sat: Secret.
+Sun: Nox MPC.
+
+Docs: https://indexflow.app/docs/agents-framework?utm_source=x&utm_campaign=plug-your-agent-w3
 
 ---
 
 ## Standalone Tweets (extract 3-5 from thread)
 
-1. An AI agent managing a real DeFi vault should be a markdown file. System prompt at the top, YAML config at the bottom, run-log committed to git. That's the whole authoring surface.
+1. An AI agent managing a real vault should be easy to read. One file says what the agent believes, what it can do, and where every decision gets recorded.
 
-2. Memory is git. `agents/memory/<agent>/state.json` carries the vault context. `run-log.<network>.jsonl` appends one structured line per run. CI pushes both back to `main` after every tick. Every decision is auditable from `git log`.
+2. Memory is git. Each agent keeps a small state file and a run-log. After every scheduled run, the result is committed back to the repo. The audit trail is the product.
 
-3. Capabilities are MCP servers, not framework plugins. Register the server once in `agents/mcp-servers.json`, reference it by name in any agent's frontmatter. New capability = new server, same agent format.
+3. Tools are plugged in by name. One reads the vault, one fetches market data, one scores companies. To give an agent a new skill, add a new tool. The agent file stays readable.
 
-4. Before any agent earns the keeper key it has to pass `AGENT_DRY_RUN=1`. The full loop runs, reasoning surfaces in the run-log, nothing touches the chain. Dry-run is the gate.
+4. Before an agent can move capital, it runs in rehearsal mode. It reads the vault, forms a decision, writes the reasoning to the log, and sends no transaction.
 
-5. One runner, many agents. `scripts/agent-runner.mjs` parses the markdown, spawns MCP servers, injects vault state, calls the LLM. The only thing that differs between agents is the markdown file.
+5. One runner, many agents. The runner reads the playbook, checks the vault, gives the agent its tools, and records what happened. The difference between agents is the playbook.
 
 ---
 

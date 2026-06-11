@@ -241,7 +241,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
 |---|---|---|
 | `vault-manager-mcp` | On-chain vault reads and writes | `get_all_vaults`, `get_vault_state`, `get_all_vault_states`, `get_vault_pnl`, `get_oracle_assets`, `get_position_tracking`, `list_open_positions`, `wire_asset`, `create_vault`, `set_vault_assets`, `allocate_to_perp`, `withdraw_from_perp`, `open_position`, `close_position` |
 | `yfinance-mcp` | Market data lookups + news | `yfinance_search`, `yfinance_quote`, `yfinance_news` |
-| `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_short_picks`, `get_ml_model_info`, `get_ml_runs`, `get_ml_horizon_recommendation`, `get_ml_horizon_coverage`, `get_ml_horizon_experiments`, `trigger_ml_horizon_evaluation`, `get_ml_basket`, `get_ml_thesis` |
+| `atlas-ml-mcp` | Atlas mining-stock ML engine | `get_ml_top_picks`, `get_ml_short_picks`, `get_ml_model_info`, `get_ml_runs`, `get_ml_horizon_recommendation`, `get_ml_horizon_coverage`, `get_ml_horizon_experiments`, `get_ml_horizon_jobs`, `get_ml_horizon_job`, `cancel_ml_horizon_job`, `trigger_ml_horizon_evaluation`, `get_ml_basket`, `get_ml_thesis` |
 | `atlas-quality-mcp` | Analyst-authored 8-category Quality Matrix scorer (drilling / resources / met / econ / permitting / offtake / capital raises / construction). Reads existing read-only Atlas endpoints and classifies tiers locally; never modifies Atlas. | `get_quality_top_picks`, `get_quality_company_card`, `get_quality_matrix_definition`, `get_quality_short_candidates`, `classify_drill_release_text` |
 
 ### Server Registry Format
@@ -266,7 +266,7 @@ Agents connect to MCP (Model Context Protocol) servers for tools. Servers are re
   "atlas-quality-mcp": {
     "command": "node",
     "args": ["apps/mcps/atlas-quality/index.js"],
-    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_REQUEST_TIMEOUT_MS"]
+    "envPassthrough": ["ATLAS_API_URL", "ATLAS_API_KEY", "ATLAS_AUTH_MODE", "ATLAS_BASIC_AUTH", "ATLAS_USERNAME", "ATLAS_PASSWORD", "ATLAS_AUTH_HEADER_NAME", "ATLAS_AUTH_HEADER_VALUE", "ATLAS_REQUEST_TIMEOUT_MS"]
   }
 }
 ```
@@ -295,7 +295,7 @@ To add a new MCP server: add the server code under `apps/mcps/`, then add an ent
 
 Wraps the Atlas mining-stock ML engine (default `https://atlas.minestarters.com`, override via `ATLAS_API_URL`). Every returned pick includes a derived `yahooSymbol` with the correct exchange suffix (e.g. `GSR` on TSXV becomes `GSR.V`) for direct use with `wire_asset` / `yfinance_quote`.
 
-The default `https://atlas.minestarters.com` host uses a built-in Basic auth fallback. Env vars still take precedence: set `ATLAS_API_KEY` for bearer auth, `ATLAS_AUTH_MODE=basic` plus either `ATLAS_BASIC_AUTH` (base64 token or `username:password`) or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for another basic-auth deployment, or `ATLAS_AUTH_MODE=header` plus `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for a custom gateway. `ATLAS_AUTH_MODE=none` disables auth headers.
+The same auth pattern applies to both `atlas-ml-mcp` and `atlas-quality-mcp`: the default `https://atlas.minestarters.com` host uses a built-in Basic auth fallback, while env vars still take precedence: set `ATLAS_API_KEY` for bearer auth, `ATLAS_AUTH_MODE=basic` plus either `ATLAS_BASIC_AUTH` (base64 token or `username:password`) or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for another basic-auth deployment, or `ATLAS_AUTH_MODE=header` plus `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for a custom gateway. `ATLAS_AUTH_MODE=none` disables auth headers.
 
 | Tool | Purpose | Key params |
 |---|---|---|
@@ -307,7 +307,10 @@ The default `https://atlas.minestarters.com` host uses a built-in Basic auth fal
 | `get_ml_horizon_coverage` | Feature coverage diagnostics across raw/relative/absolute modes without retraining | `asOfDate`, `featureModes` |
 | `get_ml_horizon_experiments` | Previous persisted horizon-grid experiments | `limit` |
 | `get_ml_horizon_recommendation` | Best candidate from the latest horizon-grid experiment; read-only | -- |
-| `trigger_ml_horizon_evaluation` | POST a non-destructive horizon-grid evaluation; `persistModels` defaults false | `horizons`, `featureModes`, `labelType`, `targetType`, `evalFrequency`, `nanThreshold`, `persistModels` |
+| `trigger_ml_horizon_evaluation` | POST non-destructive horizon-grid evaluation job; defaults come from Atlas config, `persistModels` defaults false | `horizons`, `featureModes`, `labelType`, `targetType`, `evalFrequency`, `nanThreshold`, `persistModels`, `filters`, `waitForCompletion`, `waitTimeoutMs`, `pollIntervalMs`, `maxAttempts` |
+| `get_ml_horizon_jobs` | List async horizon jobs | `status`, `limit` |
+| `get_ml_horizon_job` | Read async horizon job state + result when terminal | `jobId` |
+| `cancel_ml_horizon_job` | Cancel async horizon job while queued/running | `jobId` |
 | `get_ml_basket` | Top-N basket enriched with cash/debt/EV/jurisdiction | `n`, `tag` |
 | `get_ml_thesis` | Claude-generated investment thesis on the current basket (use sparingly) | `n`, `tag` |
 

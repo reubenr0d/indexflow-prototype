@@ -18,7 +18,8 @@ Many baskets. One trading engine.
 
 Three pieces of infrastructure most DeFi protocols treat as someone else's problem: confidential compute, confidential state, MPC signing.
 
-This week, the engine gets all three. Fri, Sat, Sun.
+This week, the engine is moving into this trinity:
+First beat: compute.
 
 ---
 
@@ -29,6 +30,7 @@ This week, the engine gets all three. Fri, Sat, Sun.
 - **No link** — the post is structural, not promotional. The reader's reward for clicking the profile or scrolling forward is the Fri thread.
 - Posts Thu Jun 11 at 16:30 UTC per the standalone cadence in `growth/X_GROWTH_PLAN.md`.
 - Character count: 217 (well under the 280 cap; leaves room for tightening if the engine-team wants to swap a noun).
-- Voice gut-check: zero hashtags, zero emoji, no preamble. Three short sentences, escalating specificity, the punchline (`Fri, Sat, Sun`) is the calendar itself.
+- Voice gut-check: zero hashtags, zero emoji, no preamble. Three short sentences, escalating specificity, the sequence is engine-first.
+- Priority call: Theseus is the next partner lane to queue after the trinity posts once the vault deploy gate opens.
 - **Alternative hook (kept in reserve):** if the team prefers a sharper one-line opener, swap the first sentence for the contrarian variant *"One trading engine carries every basket. Three pieces of confidential infrastructure carry the engine."* — same beats, drops the canonical phrase. Default to the canonical version above unless engineering objects to "engine = the stack."
 - Quote-tweet on Fri morning, 2 hours before the iExec thread drops, with one line: "Today: compute." This collapses the trinity preview into a three-beat drip across Fri / Sat / Sun mornings.

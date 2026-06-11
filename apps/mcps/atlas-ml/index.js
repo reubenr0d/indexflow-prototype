@@ -160,6 +160,7 @@ function buildHorizonEvaluationBody(input = {}) {
   if (input.labelType !== undefined) body.label_type = input.labelType;
   if (input.targetType !== undefined) body.target_type = input.targetType;
   if (input.evalFrequency !== undefined) body.eval_frequency = input.evalFrequency;
+  if (input.filters !== undefined) body.filters = input.filters;
   return body;
 }
 
@@ -205,6 +206,34 @@ async function atlasGet(path, query) {
 
 async function atlasPost(path, body, query) {
   return atlasRequest(path, { method: "POST", query, body });
+}
+
+async function atlasDelete(path, query) {
+  return atlasRequest(path, { method: "DELETE", query });
+}
+
+async function waitForAtlasJobCompletion(jobId, options = {}) {
+  const { maxAttempts = 120, intervalMs = 10000, timeoutMs = 900000 } = options;
+  const startedAt = Date.now();
+  let attempt = 0;
+  while (attempt < maxAttempts) {
+    attempt += 1;
+    const data = await atlasGet(`/api/v1/ml/jobs/${jobId}`);
+    const status = data?.status ?? "";
+    if (status === "completed" || status === "failed" || status === "cancelled") {
+      return data;
+    }
+    if (Date.now() - startedAt >= timeoutMs) {
+      const err = new Error(`Atlas job ${jobId} did not finish within ${timeoutMs}ms`);
+      err.code = "ATLAS_JOB_TIMEOUT";
+      throw err;
+    }
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
+
+  const err = new Error(`Atlas job ${jobId} timed out after ${maxAttempts} polls`);
+  err.code = "ATLAS_JOB_TIMEOUT";
+  throw err;
 }
 
 function toolError(code, message, recoveryHint) {
@@ -490,6 +519,22 @@ function normaliseHorizonExperiment(raw) {
   };
 }
 
+function normaliseHorizonJob(raw) {
+  if (!raw || typeof raw !== "object") return null;
+  return {
+    jobId: raw.job_id ?? null,
+    jobType: raw.job_type ?? null,
+    status: raw.status ?? null,
+    createdAt: raw.created_at ?? null,
+    startedAt: raw.started_at ?? null,
+    finishedAt: raw.finished_at ?? null,
+    completedAt: raw.completed_at ?? raw.finished_at ?? null,
+    errorMessage: raw.error_message ?? null,
+    params: raw.params ?? null,
+    result: raw.result ? normaliseHorizonExperiment(raw.result) : null,
+  };
+}
+
 // ---------------------------------------------------------------------------
 // MCP Server
 // ---------------------------------------------------------------------------
@@ -753,6 +798,78 @@ server.registerTool(
 );
 
 server.registerTool(
+  "get_ml_horizon_jobs",
+  {
+    title: "Atlas ML Horizon Jobs",
+    description:
+      "List recent horizon-evaluation async jobs and their terminal state. Each normalized item includes `jobId`, `status`, `startedAt`, `completedAt`, `result`, and `errorMessage` when terminal.",
+    inputSchema: {
+      status: z.string().optional().describe("Optional status filter: queued|running|completed|failed|cancelled"),
+      limit: z.number().int().min(1).max(500).optional().default(20).describe("Maximum number of jobs to return (default 20)"),
+    },
+  },
+  async ({ status, limit } = {}) => {
+    try {
+      const data = await atlasGet("/api/v1/ml/jobs", {
+        status,
+        limit: limit ?? 20,
+      });
+      const jobs = Array.isArray(data?.items)
+        ? data.items.map(normaliseHorizonJob).filter(Boolean)
+        : [];
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({ count: jobs.length, jobs }, null, 2),
+        }],
+      };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "get_ml_horizon_job",
+  {
+    title: "Atlas ML Horizon Job",
+    description:
+      "Fetch a single horizon-evaluation job, including result when terminal. Response is a normalized job object.",
+    inputSchema: {
+      jobId: z.string().describe("job_id returned by trigger_ml_horizon_evaluation"),
+    },
+  },
+  async ({ jobId } = {}) => {
+    try {
+      const data = await atlasGet(`/api/v1/ml/jobs/${jobId}`);
+      const job = normaliseHorizonJob(data);
+      return { content: [{ type: "text", text: JSON.stringify(job, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
+  "cancel_ml_horizon_job",
+  {
+    title: "Cancel Atlas ML Horizon Job",
+    description: "Cancel a queued/running horizon evaluation job.",
+    inputSchema: {
+      jobId: z.string().describe("job_id returned by trigger_ml_horizon_evaluation"),
+    },
+  },
+  async ({ jobId } = {}) => {
+    try {
+      const data = await atlasDelete(`/api/v1/ml/jobs/${jobId}`);
+      return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
+    } catch (err) {
+      return httpErrorToTool(err);
+    }
+  },
+);
+
+server.registerTool(
   "get_ml_horizon_recommendation",
   {
     title: "Atlas ML Horizon Recommendation",
@@ -782,7 +899,8 @@ server.registerTool(
     title: "Trigger Atlas ML Horizon Evaluation",
     description:
       "Start a non-destructive Atlas horizon-grid evaluation over selected horizons and feature modes. " +
-      "Defaults are read by Atlas when omitted; persistModels defaults false so the current latest model is not overwritten.",
+      "Defaults are read by Atlas when omitted; persistModels defaults false so the current latest model is not overwritten. " +
+      "Returns a normalized job payload immediately (`jobId`, `status`, `startedAt`, optional `result`) and supports optional async wait (`waitForCompletion`).",
     inputSchema: {
       horizons: z.array(z.number().int().positive()).optional().describe("Optional forward-return horizons in days"),
       featureModes: z.array(z.string()).optional().describe("Optional feature modes such as raw, relative, absolute"),
@@ -791,16 +909,35 @@ server.registerTool(
       evalFrequency: z.string().optional().describe("Optional evaluation cadence such as monthly or quarterly"),
       nanThreshold: z.number().min(0).max(1).optional().default(0.95).describe("Maximum tolerated NaN ratio before prune eligibility"),
       persistModels: z.boolean().optional().default(false).describe("Persist evaluated models under dedicated tags; never overwrites latest"),
+      filters: z.array(
+        z.object({
+          field: z.string().describe("Feature column"),
+          operator: z.string().describe("eq | ne | gt | gte | lt | lte | in | not_in | between | contains | notna | isna"),
+          value: z.any().describe("Filter RHS value"),
+        }),
+      ).optional().describe("Optional dynamic feature filters"),
+      waitForCompletion: z.boolean().optional().default(false).describe("If true, poll until the job reaches a terminal state"),
+      waitTimeoutMs: z.number().int().min(5000).max(1800000).optional().describe("Max wait time in ms when waitForCompletion=true"),
+      pollIntervalMs: z.number().int().min(1000).max(60000).optional().describe("Polling interval in ms when waitForCompletion=true"),
+      maxAttempts: z.number().int().min(1).max(180).optional().describe("Maximum polls when waitForCompletion=true"),
     },
   },
   async (input = {}) => {
     try {
       const data = await atlasPost(
-        "/api/v1/ml/horizons/evaluate",
+        "/api/v1/ml/jobs/horizon-evaluate",
         buildHorizonEvaluationBody(input),
       );
-      const result = normaliseHorizonExperiment(data);
-      return { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] };
+      if (!input.waitForCompletion) {
+        const job = normaliseHorizonJob(data);
+        return { content: [{ type: "text", text: JSON.stringify(job, null, 2) }] };
+      }
+      const terminal = await waitForAtlasJobCompletion(data?.job_id, {
+        timeoutMs: input.waitTimeoutMs ?? 900000,
+        intervalMs: input.pollIntervalMs ?? 10000,
+        maxAttempts: input.maxAttempts ?? 120,
+      });
+      return { content: [{ type: "text", text: JSON.stringify(normaliseHorizonJob(terminal), null, 2) }] };
     } catch (err) {
       return httpErrorToTool(err);
     }
@@ -904,6 +1041,8 @@ export const __atlasMlInternals = {
   normaliseMlRun,
   normaliseHorizonCandidate,
   normaliseHorizonExperiment,
+  normaliseHorizonJob,
   httpErrorToTool,
   usesDefaultAtlasHost,
+  waitForAtlasJobCompletion,
 };

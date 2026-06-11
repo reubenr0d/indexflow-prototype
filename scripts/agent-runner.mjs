@@ -199,6 +199,237 @@ function parseJsonText(text) {
   }
 }
 
+const ML_AUTOMATION_AGENT_NAMES = new Set(["mining-manager"]);
+const MILLISECONDS_PER_HOUR = 60 * 60 * 1000;
+const ML_FORCE_REFRESH_HINTS = [
+  /\brefresh\b.*\bhorizon\b/i,
+  /\bhorizon\b.*\brefresh\b/i,
+  /\bfresh\b.*\bml\b/i,
+  /\brun\b.*\bhorizon\b/i,
+  /trigger.*evaluation/i,
+];
+
+const ML_DEFAULT_AUTOMATION_POLICY = {
+  enabled: true,
+  cadenceHours: 24,
+  staleAfterHours: 24,
+  confidenceFloor: 0,
+  retryBackoffMinutes: 30,
+};
+
+function clampPositiveNumber(value, fallback) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed < 0) return fallback;
+  return parsed;
+}
+
+function parseIsoTimestampMs(value) {
+  if (!value || typeof value !== "string") return null;
+  const ms = Date.parse(value);
+  return Number.isFinite(ms) ? ms : null;
+}
+
+function isMlPolicyEnabled(config) {
+  return Boolean(
+    config?.name &&
+      ML_AUTOMATION_AGENT_NAMES.has(config.name) &&
+      Array.isArray(config.mcpServers) &&
+      config.mcpServers.some((server) => server?.name === "atlas-ml-mcp"),
+  );
+}
+
+function buildMlStrategyFingerprint(config) {
+  const policy = config?.policy || {};
+  const fingerprint = {
+    name: config?.name || "unknown",
+    entryDirection: policy.entryDirection || "long_only",
+    entryMode: policy.entryMode || "none",
+    entryMlScoreMin: policy.entryMlScoreMin ?? 0,
+    entryQualityScoreMin: policy.entryQualityScoreMin ?? 0,
+    maxNewPositionsPerRun: policy.maxNewPositionsPerRun ?? 0,
+    maxNewShortsPerRun: policy.maxNewShortsPerRun ?? 0,
+    maxTrackedAssets: policy.maxTrackedAssets ?? 0,
+    rebalanceMode: policy.rebalanceMode || "none",
+    autoExitMode: policy.autoExitMode || "none",
+    autoAllocateTargetBps: policy.autoAllocateTargetBps ?? 0,
+    positionSizingMode: policy.positionSizingMode || "model_decides",
+  };
+  return createHash("sha256")
+    .update(JSON.stringify(fingerprint))
+    .digest("hex");
+}
+
+function normalizeMlPolicy(raw = {}) {
+  const enabled = raw.enabled !== false;
+  return {
+    enabled,
+    cadenceHours: clampPositiveNumber(raw.cadenceHours, ML_DEFAULT_AUTOMATION_POLICY.cadenceHours),
+    staleAfterHours: clampPositiveNumber(raw.staleAfterHours, ML_DEFAULT_AUTOMATION_POLICY.staleAfterHours),
+    confidenceFloor: clampPositiveNumber(raw.confidenceFloor, ML_DEFAULT_AUTOMATION_POLICY.confidenceFloor),
+    retryBackoffMinutes: clampPositiveNumber(raw.retryBackoffMinutes, ML_DEFAULT_AUTOMATION_POLICY.retryBackoffMinutes),
+  };
+}
+
+function extractMlRecommendationConfidence(result = null) {
+  if (!result || typeof result !== "object") return null;
+  const candidate = result.recommendedCandidate || null;
+  const candidates = [
+    candidate?.meanSpearmanIc,
+    candidate?.meanHitRate,
+    result.meanSpearmanIc,
+    result.meanHitRate,
+    result.confidence,
+  ];
+  for (const value of candidates) {
+    const num = Number(value);
+    if (Number.isFinite(num)) return num;
+  }
+  return null;
+}
+
+function normalizeMlState(raw = null, config = null) {
+  const parsed = raw && typeof raw === "object" ? raw : {};
+  const policy = normalizeMlPolicy(parsed.policy);
+  const normalizedJob = parsed.lastJob && typeof parsed.lastJob === "object" ? parsed.lastJob : {};
+  const normalizedJobCompletedAt =
+    normalizedJob.completedAt || normalizedJob.finishedAt || null;
+  const lastResult = parsed.lastResult && typeof parsed.lastResult === "object" ? parsed.lastResult : null;
+  return {
+    enabled: isMlPolicyEnabled(config) ? policy.enabled : false,
+    policy,
+    strategyFingerprint: typeof parsed.strategyFingerprint === "string"
+      ? parsed.strategyFingerprint
+      : buildMlStrategyFingerprint(config || {}),
+    nextSuggestedAction: parsed.nextSuggestedAction || null,
+    refreshReason: parsed.refreshReason || null,
+    cooldownUntil: parsed.cooldownUntil || null,
+    lastJob: {
+      id: normalizedJob.id || null,
+      status: normalizedJob.status || null,
+      startedAt: normalizedJob.startedAt || null,
+      completedAt: normalizedJobCompletedAt,
+      result: normalizedJob.result || null,
+      errorMessage: normalizedJob.errorMessage || null,
+    },
+    lastResult: lastResult
+      ? {
+          status: lastResult.status || null,
+          settings: lastResult.settings || null,
+          experimentId: lastResult.experimentId || null,
+          recommendedCandidate: lastResult.recommendedCandidate || null,
+          fetchedAt: lastResult.fetchedAt || null,
+          sourceJobId: lastResult.sourceJobId || null,
+          candidateConfidence:
+            Number.isFinite(lastResult.candidateConfidence)
+              ? Number(lastResult.candidateConfidence)
+              : extractMlRecommendationConfidence(lastResult),
+          raw: lastResult.raw || lastResult,
+          resultDigest: lastResult.resultDigest || null,
+        }
+      : null,
+    lastResultAt:
+      parsed.lastResult?.fetchedAt ||
+      normalizedJob.completedAt ||
+      parsed.lastResult?.completedAt ||
+      null,
+  };
+}
+
+function isMlJobTerminal(status) {
+  return status === "completed" || status === "failed" || status === "cancelled" || status === "canceled";
+}
+
+function evaluateMlRefreshNeed({
+  mlState,
+  config,
+  nowMs,
+  explicitRefreshNow = false,
+}) {
+  const policy = mlState.policy || ML_DEFAULT_AUTOMATION_POLICY;
+  const reasons = [];
+  if (!mlState.enabled) {
+    return { decision: "disabled", shouldTrigger: false, shouldWait: false, reasons };
+  }
+  const now = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const lastStatus = (mlState.lastJob?.status || "").toLowerCase();
+
+  if (["queued", "running"].includes(lastStatus)) {
+    if (explicitRefreshNow) {
+      return {
+        decision: "waitForExistingPending",
+        shouldTrigger: false,
+        shouldWait: true,
+        reasons: ["pending_job"],
+      };
+    }
+    return {
+      decision: "waitForExistingPending",
+      shouldTrigger: false,
+      shouldWait: false,
+      reasons: ["pending_job"],
+    };
+  }
+
+  const cooldownUntilMs = parseIsoTimestampMs(mlState.cooldownUntil);
+  if (cooldownUntilMs && cooldownUntilMs > now) {
+    reasons.push("retry_cooldown");
+    return {
+      decision: "cooldown",
+      shouldTrigger: false,
+      shouldWait: false,
+      reasons,
+    };
+  }
+
+  if (!mlState.lastResult) {
+    reasons.push("no_terminal_result");
+  }
+  const currentFp = buildMlStrategyFingerprint(config || {});
+  if (mlState.strategyFingerprint && mlState.strategyFingerprint !== currentFp) {
+    reasons.push("strategy_fingerprint_drift");
+  }
+  const lastResultMs = parseIsoTimestampMs(mlState.lastResultAt);
+  const lastResultMsSafe = Number.isFinite(lastResultMs) ? lastResultMs : 0;
+  if (mlState.lastResult && Number.isFinite(lastResultMsSafe)) {
+    const staleAfter = Math.min(
+      Math.max(policy.cadenceHours, 0),
+      Math.max(policy.staleAfterHours, 0),
+    );
+    const freshnessMs = staleAfter * MILLISECONDS_PER_HOUR;
+    if (lastResultMsSafe > 0 && now - lastResultMsSafe > freshnessMs) {
+      reasons.push("cached_result_stale");
+    }
+  } else if (mlState.lastResult) {
+    reasons.push("cached_result_unparseable_timestamp");
+  }
+  const confidence = extractMlRecommendationConfidence(mlState.lastResult);
+  if (Number.isFinite(confidence) && confidence < policy.confidenceFloor) {
+    reasons.push("confidence_below_floor");
+  }
+  if (["failed", "cancelled", "canceled"].includes(lastStatus)) {
+    reasons.push("last_job_terminal_failure");
+  }
+  if (explicitRefreshNow) {
+    reasons.push("explicit_refresh_requested");
+  }
+
+  if (reasons.length === 0 && mlState.lastResult) {
+    return {
+      decision: "use_cached_result",
+      shouldTrigger: false,
+      shouldWait: false,
+      reasons: [],
+    };
+  }
+
+  return {
+    decision: explicitRefreshNow ? "refresh_now" : "refresh_later",
+    shouldTrigger: true,
+    shouldWait: explicitRefreshNow,
+    reasons,
+  };
+}
+
 function parseAgentPolicy(frontmatter) {
   const hasPolicyFields =
     frontmatter.autoAllocateTargetBps !== undefined ||
@@ -803,6 +1034,34 @@ function buildNonVaultMemoryState({
     nextState.lastThesisUpdate = state.lastThesisUpdate;
   }
   return nextState;
+}
+
+function assignMlResultDigest(result = null) {
+  if (!result || typeof result !== "object") return null;
+  return createHash("sha256").update(JSON.stringify(result)).digest("hex");
+}
+
+function buildMlResultSummary({
+  sourceJobId = null,
+  status = null,
+  settings = null,
+  experimentId = null,
+  recommendedCandidate = null,
+  raw = null,
+}) {
+  return {
+    status: status || null,
+    settings: settings || null,
+    experimentId: experimentId || null,
+    recommendedCandidate: recommendedCandidate || null,
+    fetchedAt: new Date().toISOString(),
+    sourceJobId: sourceJobId || null,
+    candidateConfidence: Number.isFinite(extractMlRecommendationConfidence(raw))
+      ? Number(extractMlRecommendationConfidence(raw))
+      : null,
+    raw: raw || null,
+    resultDigest: raw ? assignMlResultDigest(raw) : null,
+  };
 }
 
 const LESSONS_DEFAULT_WINDOW_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
@@ -2460,6 +2719,40 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault, marketRegim
     prompt += "Update this thesis in your final summary if the strategy has evolved.";
   }
 
+  if (state?.ml?.enabled) {
+    prompt += "\n\n## ML Horizon Orchestration\n";
+    prompt += `strategyFingerprint: ${state.ml.strategyFingerprint || "unknown"}\n`;
+    prompt += `action: ${state.ml.nextSuggestedAction || "none"}\n`;
+    if (state.ml.refreshReason) {
+      prompt += `refreshReason: ${state.ml.refreshReason}\n`;
+    }
+    if (state.ml.lastResult?.candidateConfidence !== null) {
+      prompt += `lastResultConfidence: ${state.ml.lastResult.candidateConfidence}\n`;
+    }
+    if (state.ml.lastResult?.fetchedAt) {
+      prompt += `lastResultFetchedAt: ${state.ml.lastResult.fetchedAt}\n`;
+    }
+    if (state.ml.lastResult?.recommendedCandidate) {
+      const cand = state.ml.lastResult.recommendedCandidate;
+      prompt += `lastRecommendation: horizonDays=${cand.horizonDays ?? "n/a"}, ` +
+        `featureMode=${cand.featureMode ?? "n/a"}, ` +
+        `modelTag=${cand.modelTag ?? cand.model_tag ?? "n/a"}\n`;
+    } else if (state.ml.lastJob?.result?.recommendedCandidate) {
+      const cand = state.ml.lastJob.result.recommendedCandidate;
+      prompt += `lastRecommendation: horizonDays=${cand.horizonDays ?? "n/a"}, featureMode=${cand.featureMode ?? "n/a"}, modelTag=${cand.modelTag ?? cand.model_tag ?? "n/a"}\n`;
+    } else {
+      prompt += "lastRecommendation: none\n";
+    }
+    if (state.ml.lastJob?.id) {
+      prompt += `activeJobId: ${state.ml.lastJob.id}\n`;
+      prompt += `activeJobStatus: ${state.ml.lastJob.status || "unknown"}\n`;
+    }
+    if (state.ml.cooldownUntil) {
+      prompt += `cooldownUntil: ${state.ml.cooldownUntil}\n`;
+    }
+    prompt += "Use cached horizon context when present. If `nextSuggestedAction` is `trigger_and_continue`, proceed with current context and assume the run will be refreshed next cycle.";
+  }
+
   // Action justifications
   prompt += "\n\n## Action Justifications\n";
   prompt += "For every write tool call, include a `justification` argument: a 1-2 sentence explanation\n";
@@ -3375,6 +3668,7 @@ export async function runAgent(agentName) {
     // approved or rescaled it.
     riskOfficerVerdicts: [],
     pendingRiskOfficerVerdict: null,
+    ml: null,
   };
 
   for (const serverDef of config.mcpServers) {
@@ -3545,6 +3839,16 @@ export async function runAgent(agentName) {
       shortOpensExecuted: 0,
       autoExitsClosed: 0,
       autoExitsAttempted: 0,
+      ml: {
+        enabled: false,
+        decision: "uninitialized",
+        shouldTrigger: false,
+        shouldWait: false,
+        reasons: [],
+        lastJobId: null,
+        lastJobStatus: null,
+        nextAction: null,
+      },
     },
     startedAt: new Date().toISOString(),
     finishedAt: null,
@@ -3569,6 +3873,227 @@ export async function runAgent(agentName) {
 
     const allTools = [...toolMap.values()].map((v) => v.tool);
     const openaiTools = mcpToolsToOpenAI(allTools);
+
+    let stateForPrompt = state ? { ...state } : {};
+    let mlState = normalizeMlState(state?.ml, config);
+    if (!isMlPolicyEnabled(config)) {
+      mlState.enabled = false;
+    }
+    const explicitMlRefreshNow =
+      (process.env.AGENT_FORCE_ML_REFRESH || "").toLowerCase().trim() === "1" ||
+      (process.env.AGENT_ML_REFRESH_NOW || "").toLowerCase().trim() === "1" ||
+      ML_FORCE_REFRESH_HINTS.some((pattern) => pattern.test(config.userPrompt || ""));
+
+    async function callAtlasMlTool(toolName, args = {}) {
+      const entry = toolMap.get(toolName);
+      if (!entry) return null;
+      try {
+        const result = await entry.client.callTool({
+          name: toolName,
+          arguments: args,
+        });
+        const content = redactSecrets(
+          result.content
+            .map((c) => (c.type === "text" ? c.text : JSON.stringify(c)))
+            .join("\n"),
+        );
+        return { content, parsed: parseJsonText(content) };
+      } catch (err) {
+        const safeErr = redactSecrets(err?.message || String(err));
+        console.warn(`[ML AUTOPILOT] call ${toolName} failed: ${safeErr}`);
+        return null;
+      }
+    }
+
+    async function waitForMlHorizonJobCompletion(jobId, { intervalMs = 8000, maxAttempts = 60 } = {}) {
+      let lastParsed = null;
+      for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+        const job = await callAtlasMlTool("get_ml_horizon_job", { jobId });
+        if (!job?.parsed || typeof job.parsed !== "object") {
+          return { parsed: lastParsed, timedOut: true };
+        }
+        lastParsed = job.parsed;
+        const status = String(lastParsed.status || "").toLowerCase();
+        if (isMlJobTerminal(status)) {
+          return { parsed: lastParsed, timedOut: false };
+        }
+        if (attempt + 1 < maxAttempts) {
+          await new Promise((resolve) => setTimeout(resolve, intervalMs));
+        }
+      }
+      return { parsed: lastParsed, timedOut: true };
+    }
+
+    if (mlState.enabled) {
+      const jobTool = toolMap.get("get_ml_horizon_job");
+      const triggerTool = toolMap.get("trigger_ml_horizon_evaluation");
+      if (!jobTool || !triggerTool) {
+        console.warn(
+          "[ML AUTOPILOT] Atlas horizon tools not available; skipping automated orchestration.",
+        );
+      } else {
+        if (mlState.lastJob?.id) {
+          const job = await callAtlasMlTool("get_ml_horizon_job", {
+            jobId: mlState.lastJob.id,
+          });
+          if (job?.parsed && typeof job.parsed === "object") {
+            const status = String(job.parsed.status || "").toLowerCase();
+            const finishedAt = job.parsed.finishedAt || null;
+            const completedAt = job.parsed.completedAt || finishedAt || null;
+            mlState.lastJob.status = status || mlState.lastJob.status;
+            mlState.lastJob.startedAt =
+              job.parsed.startedAt || mlState.lastJob.startedAt;
+            mlState.lastJob.completedAt = completedAt || mlState.lastJob.completedAt;
+            mlState.lastJob.result = job.parsed.result || null;
+            mlState.lastJob.errorMessage =
+              job.parsed.errorMessage || mlState.lastJob.errorMessage;
+            if (isMlJobTerminal(status)) {
+              mlState.lastResult = buildMlResultSummary({
+                sourceJobId: mlState.lastJob.id,
+                status: status,
+                settings: job.parsed?.settings || job.parsed?.result?.settings,
+                experimentId: job.parsed?.experimentId || job.parsed?.result?.experimentId,
+                recommendedCandidate: job.parsed?.recommendedCandidate || job.parsed?.result?.recommendedCandidate,
+                raw: job.parsed?.result || job.parsed,
+              });
+              mlState.lastResultAt = mlState.lastJob.completedAt || new Date().toISOString();
+            }
+            if (explicitMlRefreshNow && ["queued", "running"].includes(status)) {
+              const completion = await waitForMlHorizonJobCompletion(mlState.lastJob.id, {
+                intervalMs: 8000,
+                maxAttempts: 60,
+              });
+              if (completion.parsed && typeof completion.parsed === "object") {
+                const completionStatus = String(completion.parsed.status || "").toLowerCase();
+                const completionFinishedAt = completion.parsed.finishedAt || null;
+                const completionCompletedAt =
+                  completion.parsed.completedAt || completionFinishedAt || null;
+                mlState.lastJob.status = completionStatus || mlState.lastJob.status;
+                mlState.lastJob.startedAt =
+                  completion.parsed.startedAt || mlState.lastJob.startedAt;
+                mlState.lastJob.completedAt = completionCompletedAt || mlState.lastJob.completedAt;
+                mlState.lastJob.result = completion.parsed.result || mlState.lastJob.result;
+                mlState.lastJob.errorMessage =
+                  completion.parsed.errorMessage || mlState.lastJob.errorMessage;
+                if (isMlJobTerminal(completionStatus)) {
+                  mlState.lastResult = buildMlResultSummary({
+                    sourceJobId: mlState.lastJob.id,
+                    status: completionStatus,
+                    settings:
+                      completion.parsed.settings || completion.parsed.result?.settings,
+                    experimentId:
+                      completion.parsed.experimentId ||
+                      completion.parsed.result?.experimentId,
+                    recommendedCandidate:
+                      completion.parsed.recommendedCandidate ||
+                      completion.parsed.result?.recommendedCandidate,
+                    raw: completion.parsed.result || completion.parsed,
+                  });
+                  mlState.lastResultAt = mlState.lastJob.completedAt || new Date().toISOString();
+                }
+                if (completion.timedOut) {
+                  console.warn(
+                    `[ML AUTOPILOT] wait for existing job ${mlState.lastJob.id} timed out after polling`,
+                  );
+                }
+              } else {
+                console.warn(
+                  `[ML AUTOPILOT] wait for existing job ${mlState.lastJob.id} returned no parseable payload.`,
+                );
+              }
+            }
+            if (status === "failed") {
+              const cooldownMs = Math.max(
+                clampPositiveNumber(mlState.policy.retryBackoffMinutes, ML_DEFAULT_AUTOMATION_POLICY.retryBackoffMinutes),
+                0,
+              ) * 60 * 1000;
+              if (cooldownMs > 0 && mlState.lastJob.completedAt) {
+                mlState.cooldownUntil = new Date(
+                  Date.parse(mlState.lastJob.completedAt) + cooldownMs,
+                ).toISOString();
+              }
+            }
+          }
+        }
+
+        const decision = evaluateMlRefreshNeed({
+          mlState,
+          config,
+          nowMs: Date.now(),
+          explicitRefreshNow,
+        });
+        if (decision.reasons.includes("last_job_terminal_failure")) {
+          mlState.lastResult = null;
+          mlState.lastResultAt = null;
+        }
+        const decisionForDiagnostics = {
+          enabled: mlState.enabled,
+          decision: decision.decision,
+          shouldTrigger: decision.shouldTrigger,
+          shouldWait: decision.shouldWait,
+          reasons: decision.reasons,
+          lastJobId: mlState.lastJob?.id || null,
+          lastJobStatus: mlState.lastJob?.status || null,
+          nextAction: decision.shouldTrigger
+            ? decision.shouldWait
+              ? "trigger_and_wait"
+              : "trigger_and_continue"
+            : "use_cached_or_wait",
+        };
+        runSummary.policyDiagnostics.ml = decisionForDiagnostics;
+        mlState.nextSuggestedAction = decisionForDiagnostics.nextAction;
+        mlState.refreshReason = decisionForDiagnostics.reasons.join(",") || null;
+
+        if (decision.shouldTrigger) {
+          const trigger = await callAtlasMlTool("trigger_ml_horizon_evaluation", {
+            persistModels: false,
+            waitForCompletion: decision.shouldWait,
+          });
+          if (trigger?.parsed && typeof trigger.parsed === "object") {
+            const parsed = trigger.parsed;
+            const parsedStatus = String(parsed.status || "").toLowerCase();
+            const triggerFinishedAt = parsed.finishedAt || null;
+            const triggerCompletedAt = parsed.completedAt || triggerFinishedAt || null;
+            mlState.lastJob = {
+              id: parsed.jobId || mlState.lastJob?.id || null,
+              status: parsedStatus,
+              startedAt: parsed.startedAt || mlState.lastJob?.startedAt || null,
+              completedAt: triggerCompletedAt,
+              result: parsed.result || null,
+              errorMessage: parsed.errorMessage || null,
+            };
+            if (parsedStatus === "completed") {
+              mlState.lastResult = buildMlResultSummary({
+                sourceJobId: mlState.lastJob.id,
+                status: parsedStatus,
+                settings: parsed.settings || parsed.result?.settings,
+                experimentId: parsed.experimentId || parsed.result?.experimentId,
+                recommendedCandidate: parsed.recommendedCandidate || parsed.result?.recommendedCandidate,
+                raw: parsed.result || parsed,
+              });
+              mlState.lastResultAt = mlState.lastJob.completedAt || new Date().toISOString();
+            }
+            if (parsedStatus !== "completed") {
+              mlState.lastResult = mlState.lastResult;
+            }
+          } else {
+            console.warn("[ML AUTOPILOT] trigger_ml_horizon_evaluation returned no parseable response.");
+          }
+        }
+      }
+    }
+
+    const mlFingerprint = buildMlStrategyFingerprint(config);
+    mlState.strategyFingerprint = mlFingerprint;
+    if (!stateForPrompt) {
+      stateForPrompt = {};
+    }
+    stateForPrompt.ml = mlState;
+    state = {
+      ...(state || {}),
+      ml: mlState,
+    };
+    policyRuntime.ml = mlState;
 
     // Pre-LLM market-regime fetch. Pinned into the system prompt so the
     // model doesn't have to remember to call it AND so the runner's short-
@@ -3602,7 +4127,7 @@ export async function runAgent(agentName) {
 
     const systemPrompt = buildSystemPrompt(
       config,
-      state,
+      stateForPrompt,
       recentRuns,
       needsNewVault,
       marketRegime,
@@ -3920,6 +4445,42 @@ export async function runAgent(agentName) {
           !policyRuntime.latestMlPicks
         ) {
           policyRuntime.latestMlPicks = parsed.companies;
+        }
+        if (originalName === "get_ml_horizon_job" && parsed && typeof parsed === "object") {
+          const parsedStatus = String(parsed.status || "").toLowerCase();
+          const parsedFinishedAt = parsed.finishedAt || null;
+          const parsedCompletedAt = parsed.completedAt || parsedFinishedAt || null;
+          const normalizedStatus =
+            parsedStatus || (policyRuntime.ml?.lastJob?.status ?? null);
+          const lastJob = {
+            id: parsed.jobId || parsed.id || policyRuntime.ml?.lastJob?.id || null,
+            status: normalizedStatus,
+            startedAt: parsed.startedAt || policyRuntime.ml?.lastJob?.startedAt || null,
+            completedAt: parsedCompletedAt || policyRuntime.ml?.lastJob?.completedAt || null,
+            result: parsed.result || null,
+            errorMessage: parsed.errorMessage || null,
+          };
+          const refreshAt = isMlJobTerminal(normalizedStatus)
+            ? (lastJob.completedAt || new Date().toISOString())
+            : null;
+          const summary = isMlJobTerminal(normalizedStatus)
+            ? buildMlResultSummary({
+                sourceJobId: lastJob.id,
+                status: normalizedStatus,
+                settings: parsed.settings || parsed.result?.settings,
+                experimentId: parsed.experimentId || parsed.result?.experimentId,
+                recommendedCandidate: parsed.recommendedCandidate || parsed.result?.recommendedCandidate,
+                raw: parsed.result || parsed,
+              })
+            : null;
+          if (isMlJobTerminal(normalizedStatus) && summary) {
+            summary.fetchedAt = refreshAt;
+            if (policyRuntime.ml) {
+              policyRuntime.ml.lastJob = lastJob;
+              policyRuntime.ml.lastResult = summary;
+              policyRuntime.ml.lastResultAt = refreshAt;
+            }
+          }
         }
         if (
           (originalName === "get_quality_top_picks" ||
@@ -5146,6 +5707,7 @@ export async function runAgent(agentName) {
         agentFileHash: config.fileHash,
         deploymentFingerprint: deploymentContext.fingerprint,
         deploymentConfigPath: deploymentContext.deploymentConfigPath,
+        ml: mlState,
         deployedAt:
           didCreateVault && capturedVaultAddress !== state?.vaultAddress
             ? runSummary.startedAt
@@ -5186,6 +5748,7 @@ export async function runAgent(agentName) {
         finishedAt: runSummary.finishedAt,
         extractedThesis,
       });
+      updatedState.ml = mlState;
       try {
         await memory.writeState(updatedState);
       } catch (err) {

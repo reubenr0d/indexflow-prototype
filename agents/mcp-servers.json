@@ -45,6 +45,12 @@
     "envPassthrough": [
       "ATLAS_API_URL",
       "ATLAS_API_KEY",
+      "ATLAS_AUTH_MODE",
+      "ATLAS_BASIC_AUTH",
+      "ATLAS_USERNAME",
+      "ATLAS_PASSWORD",
+      "ATLAS_AUTH_HEADER_NAME",
+      "ATLAS_AUTH_HEADER_VALUE",
       "ATLAS_REQUEST_TIMEOUT_MS"
     ]
   },

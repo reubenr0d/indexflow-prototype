@@ -21,7 +21,15 @@ import { buildTradeReadyPicks, loadTimingCalibration } from "./timing/trade-read
 
 const ATLAS_API_URL = (process.env.ATLAS_API_URL || "https://atlas.minestarters.com").replace(/\/+$/, "");
 const ATLAS_API_KEY = process.env.ATLAS_API_KEY || "";
+const ATLAS_AUTH_MODE = (process.env.ATLAS_AUTH_MODE || "").trim().toLowerCase();
+const ATLAS_BASIC_AUTH = process.env.ATLAS_BASIC_AUTH || "";
+const ATLAS_USERNAME = process.env.ATLAS_USERNAME || "";
+const ATLAS_PASSWORD = process.env.ATLAS_PASSWORD || "";
+const ATLAS_AUTH_HEADER_NAME = process.env.ATLAS_AUTH_HEADER_NAME || "";
+const ATLAS_AUTH_HEADER_VALUE = process.env.ATLAS_AUTH_HEADER_VALUE || "";
 const ATLAS_REQUEST_TIMEOUT_MS = parseInt(process.env.ATLAS_REQUEST_TIMEOUT_MS || "15000", 10);
+const DEFAULT_ATLAS_API_URL = "https://atlas.minestarters.com";
+const DEFAULT_ATLAS_BASIC_AUTH = "atlas:minestarters-atlas-dashboard";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const MATRIX = JSON.parse(readFileSync(resolve(__dirname, "scoring/matrix.json"), "utf8"));
@@ -66,6 +74,63 @@ function buildYahooSymbol(ticker, exchange) {
 // HTTP helpers
 // ---------------------------------------------------------------------------
 
+function base64Encode(value) {
+  return Buffer.from(String(value), "utf8").toString("base64");
+}
+
+function usesDefaultAtlasHost(apiUrl = ATLAS_API_URL) {
+  try {
+    return new URL(apiUrl).origin === DEFAULT_ATLAS_API_URL;
+  } catch {
+    return false;
+  }
+}
+
+function resolveAtlasAuthMode(config = {}) {
+  const explicitMode = (config.authMode ?? ATLAS_AUTH_MODE ?? "").trim().toLowerCase();
+  if (explicitMode) return explicitMode;
+  if (config.apiKey ?? ATLAS_API_KEY) return "bearer";
+  if ((config.basicAuth ?? ATLAS_BASIC_AUTH) || ((config.username ?? ATLAS_USERNAME) && (config.password ?? ATLAS_PASSWORD))) {
+    return "basic";
+  }
+  if ((config.authHeaderName ?? ATLAS_AUTH_HEADER_NAME) && (config.authHeaderValue ?? ATLAS_AUTH_HEADER_VALUE)) {
+    return "header";
+  }
+  if (usesDefaultAtlasHost(config.apiUrl)) return "basic";
+  return "none";
+}
+
+function buildAtlasAuthHeaders(config = {}) {
+  const mode = resolveAtlasAuthMode(config);
+  if (mode === "none") return {};
+
+  if (mode === "bearer") {
+    const apiKey = config.apiKey ?? ATLAS_API_KEY;
+    return apiKey ? { Authorization: `Bearer ${apiKey}` } : {};
+  }
+
+  if (mode === "basic") {
+    const configuredBasicAuth = config.basicAuth ?? ATLAS_BASIC_AUTH;
+    const username = config.username ?? ATLAS_USERNAME;
+    const password = config.password ?? ATLAS_PASSWORD;
+    const basicAuth = configuredBasicAuth || (!username && !password && usesDefaultAtlasHost(config.apiUrl) ? DEFAULT_ATLAS_BASIC_AUTH : "");
+    if (basicAuth) {
+      const token = String(basicAuth).includes(":") ? base64Encode(basicAuth) : String(basicAuth);
+      return { Authorization: `Basic ${token}` };
+    }
+    if (username && password) return { Authorization: `Basic ${base64Encode(`${username}:${password}`)}` };
+    return {};
+  }
+
+  if (mode === "header") {
+    const name = config.authHeaderName ?? ATLAS_AUTH_HEADER_NAME;
+    const value = config.authHeaderValue ?? ATLAS_AUTH_HEADER_VALUE;
+    return name && value ? { [name]: value } : {};
+  }
+
+  return {};
+}
+
 async function atlasGet(path, query) {
   const url = new URL(`${ATLAS_API_URL}${path}`);
   if (query && typeof query === "object") {
@@ -77,13 +142,16 @@ async function atlasGet(path, query) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ATLAS_REQUEST_TIMEOUT_MS);
   try {
-    const headers = { Accept: "application/json" };
-    if (ATLAS_API_KEY) headers.Authorization = `Bearer ${ATLAS_API_KEY}`;
+    const headers = {
+      Accept: "application/json",
+      ...buildAtlasAuthHeaders(),
+    };
     const res = await fetch(url, { method: "GET", headers, signal: controller.signal });
     const text = await res.text();
     if (!res.ok) {
       const err = new Error(`Atlas API ${res.status} ${res.statusText}: ${text.slice(0, 400)}`);
-      err.code = res.status === 404 ? "ATLAS_NOT_FOUND" : "ATLAS_HTTP_ERROR";
+      if (res.status === 401 || res.status === 403) err.code = "ATLAS_UNAUTHORIZED";
+      else err.code = res.status === 404 ? "ATLAS_NOT_FOUND" : "ATLAS_HTTP_ERROR";
       err.status = res.status;
       throw err;
     }
@@ -109,6 +177,13 @@ function toolError(code, message, recoveryHint) {
 }
 
 function httpErrorToTool(err) {
+  if (err.code === "ATLAS_UNAUTHORIZED") {
+    return toolError(
+      "ATLAS_UNAUTHORIZED",
+      err.message,
+      "Atlas rejected the request. Configure ATLAS_AUTH_MODE=bearer with ATLAS_API_KEY, ATLAS_AUTH_MODE=basic with ATLAS_BASIC_AUTH or ATLAS_USERNAME/ATLAS_PASSWORD, or ATLAS_AUTH_MODE=header with ATLAS_AUTH_HEADER_NAME/ATLAS_AUTH_HEADER_VALUE.",
+    );
+  }
   if (err.code === "ATLAS_NOT_FOUND") {
     return toolError(
       "ATLAS_NOT_FOUND",

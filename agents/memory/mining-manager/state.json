@@ -7,5 +7,37 @@
   "deployedAt": "2026-05-28T08:01:09.114Z",
   "lastRunAt": "2026-06-11T11:52:12.982Z",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.",
-  "lastThesisUpdate": "2026-06-11T11:52:12.982Z"
+  "lastThesisUpdate": "2026-06-11T11:52:12.982Z",
+  "ml": {
+    "enabled": true,
+    "policy": {
+      "cadenceHours": 24,
+      "staleAfterHours": 24,
+      "confidenceFloor": 0,
+      "retryBackoffMinutes": 30
+    },
+    "strategyFingerprint": "0f2fbe6b1df2a9e8e3b4f4f8db7f4d0f6a1f3a9b8e6c4d1a2f7e8b5c3d0a2f1e",
+    "nextSuggestedAction": "consume_cached_result",
+    "refreshReason": null,
+    "cooldownUntil": null,
+    "lastJob": {
+      "id": null,
+      "status": null,
+      "startedAt": null,
+      "completedAt": null,
+      "result": null,
+      "errorMessage": null
+    },
+    "lastResult": {
+      "status": null,
+      "settings": null,
+      "experimentId": null,
+      "recommendedCandidate": null,
+      "fetchedAt": null,
+      "sourceJobId": null,
+      "candidateConfidence": null,
+      "raw": null,
+      "resultDigest": null
+    }
+  }
 }

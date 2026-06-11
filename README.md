@@ -218,6 +218,7 @@ Progress tracker for the IndexFlow growth engine. Strategy, templates, and playb
 - [x] Autonomous-AI-agents-managing-vaults blog refreshed for OpenAI-powered agents with git-committed memory and static `/agent-metadata/<vault>.json` (`content/blog/autonomous-ai-agents-managing-vaults.md`)
 - [x] Testnet live agents blog draft seeded (`growth/drafts/2026-05-26-blog-two-ai-agents-live-on-testnet.md`)
 - [x] Testnet live agents blog published (`/blog/two-ai-agents-live-on-testnet`)
+- [x] Theseus priority teaser draft seeded (`growth/drafts/2026-06-11-tweet-theseus-priority-primer.md`)
 
 ### Season 1 Operator Trials (Curators Guild Soft Launch)
 
@@ -605,7 +606,7 @@ Agents are defined as markdown files in `agents/` -- each file is a system promp
 
 All three use OpenAI (or any OpenAI-compatible chat-completions endpoint) for inference and sign transactions directly with `PRIVATE_KEY`. For deterministic behavior, agents can also define policy frontmatter (for example `autoAllocateTargetBps`, `entryMode`, `entryMomentumPctMin`, `entryVolumeMin`, `entryMlScoreMin`, `entryQualityScoreMin`, `entryDirection`, `maxNewPositionsPerRun`, `rebalanceMode`).
 
-Atlas-backed agents read `ATLAS_API_URL` and `ATLAS_API_KEY` through `atlas-ml-mcp` / `atlas-quality-mcp`. `atlas-ml-mcp` ships with the default Basic auth fallback for `https://atlas.minestarters.com`, and also supports `ATLAS_AUTH_MODE=basic` with `ATLAS_BASIC_AUTH` or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for other nginx-protected Atlas deployments, plus `ATLAS_AUTH_MODE=header` with `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for custom gateways. The mining manager can inspect historical ML runs and horizon experiments through the Atlas ML MCP; horizon evaluation is intentionally explicit/operator-driven because it can be expensive.
+Atlas-backed agents read `ATLAS_API_URL` and `ATLAS_API_KEY` through `atlas-ml-mcp` / `atlas-quality-mcp`. Both MCPs support the same auth overrides: `ATLAS_AUTH_MODE=basic` with `ATLAS_BASIC_AUTH` or `ATLAS_USERNAME` / `ATLAS_PASSWORD` for nginx-protected Atlas deployments (with `https://atlas.minestarters.com` defaulting to a built-in Basic auth fallback), plus `ATLAS_AUTH_MODE=header` with `ATLAS_AUTH_HEADER_NAME` / `ATLAS_AUTH_HEADER_VALUE` for custom gateways. The mining manager can inspect historical ML runs and horizon experiments through the Atlas ML MCP; horizon evaluation is intentionally explicit/operator-driven because it can be expensive.
 
 ```bash
 # Install MCP server deps (one-time)

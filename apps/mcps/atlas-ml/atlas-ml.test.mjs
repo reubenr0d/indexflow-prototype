@@ -145,6 +145,9 @@ test("buildHorizonEvaluationBody maps MCP camelCase input to Atlas snake_case PO
       evalFrequency: "monthly",
       nanThreshold: 0.8,
       persistModels: true,
+      filters: [
+        { field: "momentum_60d", operator: "gt", value: 0.1 },
+      ],
     }),
     {
       horizons: [30, 90],
@@ -154,6 +157,7 @@ test("buildHorizonEvaluationBody maps MCP camelCase input to Atlas snake_case PO
       eval_frequency: "monthly",
       nan_threshold: 0.8,
       persist_models: true,
+      filters: [{ field: "momentum_60d", operator: "gt", value: 0.1 }],
     },
   );
 });

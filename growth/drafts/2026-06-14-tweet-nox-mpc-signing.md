@@ -16,20 +16,19 @@
 
 An AI agent with the keeper key is a single point of custody.
 
-Compute on @iEx_ec. State on @SecretNetwork. Writes signed by [@NOX_HANDLE] MPC.
+Writes signed by [@NOX_HANDLE] MPC is the signing direction.
 
-The whole stack is verifiable. None of it is custodial.
+The goal is a verifiable stack where no single private key is a custody point.
 
-That's the trinity.
-
+That's the trinity direction.
 ---
 
 ## Notes
 
 - **Co-tweet target:** Nox X handle TBD. **Reuben to confirm** — see `growth/partnerships/nox.md` (not yet created in `growth/partnerships/`; the file should be scaffolded from `growth/partnerships/_TEMPLATE.md` before Sun Jun 14 with the confirmed handle, counterpart name, and `co_branded_surfaces.x_calendar: 2026-06-14`). Coordinate quote-tweet from Nox at 16:30 UTC (same slot as our standalone post) with one line on what they think about MPC signing for autonomous DeFi agents. Nox's tweet should land 5–15 min after ours so the algorithm sees engagement on the hook before partner amplification.
-- **Closes the trinity arc.** This is the **load-bearing structural closer** for Week 3: all three legs of the confidential-infra trinity are named in calendar order inside one tweet (iExec → Secret → Nox), then the body collapses them into a one-sentence summary ("The whole stack is verifiable. None of it is custodial."), then the punchline ("That's the trinity.") cashes the curiosity bond opened by Thu Jun 11's standalone.
+- **Closes the trinity arc.** This is the signing-post in Week 3: only the Nox/MPC handle should be tagged here. Friday and Saturday carry compute and state tags, respectively.
 - **Stakes framing:** the hook ("An AI agent with the keeper key is a single point of custody") names the loss directly. The body answers it. This is what `growth/templates/tweet-thread.md` calls a Stakes hook — show what readers lose by not having the information, then close the loss in the same post.
-- **Cross-trinity references (required):** explicit `@iEx_ec` (Fri compute leg), explicit `@SecretNetwork` (Sat state leg), explicit `[@NOX_HANDLE]` (today's signing leg). Three handles in one line. Every Week 3 trinity post references the other two — this one references both because it's the close.
+- **Cross-trinity references (required):** this post is the signing leg; only `[@NOX_HANDLE]` appears so each post stays protocol-specific.
 - **Technical accuracy:** today's agent signs writes with `PRIVATE_KEY` via `cast send` (`docs/AGENTS_FRAMEWORK.md` § Write Confirmation Mode, `agents/quality-matrix-manager.md` § Infrastructure). That's exactly the single-EOA custody point the hook names. MPC threshold signing via Nox replaces that with N-of-M signer redundancy. `services/keeper/` is the cleanest first target for the integration (per the original Week 3 brief) because it already has the only place in the codebase that holds the keeper key.
 - **No link.** The trinity arc is the payoff. Adding a link to "read the joint blog post" would dilute the close — the reader's reward is the realisation, not a click. Let the second-wave reply or quote-tweet (Mon morning) carry the deep-dive link if and when a write-up exists.
 - **Posting cadence:** posts Sun Jun 14 at 16:30 UTC per the standalone cadence in `growth/X_GROWTH_PLAN.md`. This is the Season 1 Week-3 close beat — anchor it before the Week 4 institutional pivot kicks off Mon Jun 15.
