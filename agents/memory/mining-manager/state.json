@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-11T11:52:12.982Z",
+  "lastRunAt": "2026-06-11T16:23:58.190Z",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.",
   "lastThesisUpdate": "2026-06-11T11:52:12.982Z",
   "ml": {
