@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-11T19:47:05.004Z",
-  "thesis": "Currently, the vault is unable to proceed with any new trading actions due to the absence of trade-ready picks that meet the required thresholds. The latest attempt to retrieve trade-ready picks yielded no results, indicating that there are no candidates with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories.\n\nThe vault's strategy remains on hold until new trade-ready signals emerge. The focus will continue to be on maintaining a balanced portfolio and monitoring for fresh drilling releases and material events that could impact trade readiness scores. The current metals regime is \"metals_risk_on,\" which would typically favor long positions, but without eligible picks, no new positions can be opened. The vault will be ready to act once suitable candidates are identified.",
-  "lastThesisUpdate": "2026-06-11T19:47:05.004Z"
+  "lastRunAt": "2026-06-11T22:17:09.299Z",
+  "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
+  "lastThesisUpdate": "2026-06-11T22:17:09.299Z"
 }
