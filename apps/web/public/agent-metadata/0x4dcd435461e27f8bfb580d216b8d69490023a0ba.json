@@ -5,19 +5,19 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.",
-  "lastRunAt": "2026-06-11T11:52:12.982Z",
+  "lastRunAt": "2026-06-11T16:23:58.190Z",
   "latestRun": {
-    "runId": "2026-06-11T11:52:12.982Z",
-    "finishedAt": "2026-06-11T11:52:12.982Z",
-    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $5,774.29\n- **Perp Allocated**: $10,322.63\n- **Available for Perp**: $2,632.27\n- **Tracked Assets**: 9\n\n#### Actions Taken\n- **Allocated**: $2,632.27 to perp trading.\n- **Opened Long Position**: Amarc Resources Ltd. (AHR.V) with a size of $28,303.57 and collateral of $2,830.36.\n- **No Short Positions Opened**: Due to lack of compelling short candidates.\n\n#### Recommendations for Next Run\n- Continue monitoring the Atlas ML top picks and short candidates for potential new entries.\n- Reassess the short candidates if their predicted returns improve relative to the current long positions.\n- Maintain vigilance on news that could impact the selected assets, adjusting positions as necessary based on new information.\n\nThis strategy aligns with the current model's predictions and market conditions, ensuring a balanced approach to maximizing returns while managing risks.",
-    "startedAt": "2026-06-11T11:48:49.942Z",
+    "runId": "2026-06-11T16:23:58.190Z",
+    "finishedAt": "2026-06-11T16:23:58.190Z",
+    "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.\n\n#### Vault Address and State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $6,460.23\n- **Perp Allocated**: $11,638.76\n- **Available for Perp**: $1,316.14\n- **Tracked Assets**: 9\n\n#### Actions Taken\n- **Allocated Capital**: $1,316.14 to perp trading.\n- **Opened Long Position**: Amarc Resources Ltd. (AHR.V) due to high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML predictions and market conditions.\n- Continue to evaluate potential short candidates, ensuring they surpass the weakest long entrant in profit potential.\n- Reassess the tracked assets to ensure alignment with the latest Atlas ML model recommendations.",
+    "startedAt": "2026-06-11T16:21:09.753Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 10,
+    "turns": 9,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,39 +26,44 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_news",
-      "yfinance_news",
       "allocate_to_perp",
       "get_perp_capital_snapshot",
       "plan_open_position",
       "open_position",
       "get_vault_state"
     ],
-    "actionCount": 4,
-    "onChainActionCount": 4,
+    "actionCount": 2,
+    "onChainActionCount": 2,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
-    "errors": [
-      {
-        "tool": "get_ml_horizon_recommendation",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 500 Internal Server Error: Internal Server Error\"\n}",
-        "errorCode": "ATLAS_HTTP_ERROR"
-      }
-    ],
+    "errors": [],
     "softFailures": [],
     "riskOfficerVerdicts": [
       {
-        "turn": 5,
+        "turn": 4,
         "verdict": "approve",
-        "reason": "Allocating 50% of available USDC ($2,632,272.50) to perp trading is consistent with current idle USDC and market regime favoring long positions.",
+        "reason": "Allocating 50% of idle USDC to perp trading is consistent with the vault's strategy and current market regime; no available collateral is currently locked.",
         "proposedTools": [
           "allocate_to_perp"
         ]
       },
       {
-        "turn": 8,
-        "verdict": "approve",
-        "reason": "The proposed long position on AHR.V uses 100% of available collateral ($2830.36), aligning with the metals_risk_off regime's longBonus of 2.",
+        "turn": 7,
+        "verdict": "downsize",
+        "reason": "Proposed collateral $1316.14 exceeds 60% of available $1316.14; downsize to manage risk.",
+        "downsizeFactor": 0.5,
+        "audit": [
+          {
+            "tool": "open_position",
+            "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+            "isLong": true,
+            "beforeCollateral": "1316136250",
+            "afterCollateral": "658068125",
+            "beforeSize": "13161362500000000000000000000000000",
+            "afterSize": "6580681250000000000000000000000000",
+            "downsizeFactor": 0.5
+          }
+        ],
         "proposedTools": [
           "open_position"
         ]
@@ -66,7 +71,7 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 5,
+        "turn": 4,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -75,7 +80,7 @@
         ]
       },
       {
-        "turn": 8,
+        "turn": 7,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -86,6 +91,90 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-11T16:23:58.190Z",
+      "startedAt": "2026-06-11T16:21:09.753Z",
+      "finishedAt": "2026-06-11T16:23:58.190Z",
+      "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), which was successfully opened as a long position due to its high predicted return and robust ML score. These positions are supported by the model's high predicted returns and robust ML scores. On the short side, no new short positions were opened this run due to the lack of overwhelming short candidates that surpassed the weakest long entrant in profit potential.\n\n#### Vault Address and State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $6,460.23\n- **Perp Allocated**: $11,638.76\n- **Available for Perp**: $1,316.14\n- **Tracked Assets**: 9\n\n#### Actions Taken\n- **Allocated Capital**: $1,316.14 to perp trading.\n- **Opened Long Position**: Amarc Resources Ltd. (AHR.V) due to high ML score and predicted return.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML predictions and market conditions.\n- Continue to evaluate potential short candidates, ensuring they surpass the weakest long entrant in profit potential.\n- Reassess the tracked assets to ensure alignment with the latest Atlas ML model recommendations.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 9,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "allocate_to_perp",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 2,
+      "onChainActionCount": 2,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "Allocating 50% of idle USDC to perp trading is consistent with the vault's strategy and current market regime; no available collateral is currently locked.",
+          "proposedTools": [
+            "allocate_to_perp"
+          ]
+        },
+        {
+          "turn": 7,
+          "verdict": "downsize",
+          "reason": "Proposed collateral $1316.14 exceeds 60% of available $1316.14; downsize to manage risk.",
+          "downsizeFactor": 0.5,
+          "audit": [
+            {
+              "tool": "open_position",
+              "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+              "isLong": true,
+              "beforeCollateral": "1316136250",
+              "afterCollateral": "658068125",
+              "beforeSize": "13161362500000000000000000000000000",
+              "afterSize": "6580681250000000000000000000000000",
+              "downsizeFactor": 0.5
+            }
+          ],
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "allocate_to_perp"
+          ]
+        },
+        {
+          "turn": 7,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-11T11:52:12.982Z",
       "startedAt": "2026-06-11T11:48:49.942Z",
@@ -157,80 +246,7 @@
         {
           "turn": 8,
           "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position"
-          ]
-        }
-      ]
-    },
-    {
-      "runId": "2026-06-11T07:09:14.535Z",
-      "startedAt": "2026-06-11T07:05:41.895Z",
-      "finishedAt": "2026-06-11T07:09:14.535Z",
-      "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Arizona Sonoran Copper (ASCU.TO), which have been successfully opened as long positions. These positions are supported by the model's high predicted returns and robust ML scores.\n\n#### Current State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $526.45 USDC\n- **Tracked Assets**: AHR.V, AMG.L, GSR.V, ASCU.TO, TGR.L, CDT.AX\n- **Open Positions**: New long positions opened on GSR.V and ASCU.TO.\n\n#### Actions Taken\n- **Tracked Assets Update**: Ensured the vault tracks top Atlas ML long and short picks.\n- **Opened Positions**: Successfully opened long positions on GSR.V and ASCU.TO, leveraging the available collateral efficiently.\n- **News Scan**: No significant news impacting the selected long and short candidates was found.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened positions and adjust as necessary based on updated ML predictions and market conditions.\n- Continue to track news for any developments that could impact the current holdings.\n- Evaluate the potential for opening additional positions if capital becomes available or if existing positions are closed.",
-      "agentName": "mining-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 11,
-      "toolCalls": [
-        "get_vault_state",
-        "get_ml_runs",
-        "get_ml_horizon_recommendation",
-        "get_ml_model_info",
-        "get_ml_top_picks",
-        "get_ml_short_picks",
-        "get_oracle_assets",
-        "set_vault_assets",
-        "yfinance_news",
-        "get_perp_capital_snapshot",
-        "plan_open_position",
-        "open_position",
-        "plan_open_position",
-        "open_position",
-        "get_vault_state"
-      ],
-      "actionCount": 2,
-      "onChainActionCount": 2,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [
-        {
-          "tool": "get_ml_horizon_recommendation",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 500 Internal Server Error: Internal Server Error\"\n}",
-          "errorCode": "ATLAS_HTTP_ERROR"
-        }
-      ],
-      "softFailures": [],
-      "riskOfficerVerdicts": [
-        {
-          "turn": 3,
-          "verdict": "approve",
-          "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict.",
-          "proposedTools": [
-            "set_vault_assets"
-          ]
-        },
-        {
-          "turn": 7,
-          "verdict": "approve",
-          "reason": "The proposed long position on GSR.V uses 33.3% of available collateral ($66.55 out of $199.66), which is within acceptable limits, and benefits from a long bonus of 2.",
-          "proposedTools": [
-            "open_position"
-          ]
-        },
-        {
-          "turn": 9,
-          "verdict": "downsize",
-          "reason": "Proposed collateral $44.37 exceeds 22% of available $199.66; downsize to mitigate risk in metals_risk_off regime.",
-          "downsizeFactor": 0.5,
-          "audit": [
-            {
-              "tool": "open_position",
+open_position",
               "assetId": "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d",
               "isLong": true,
               "beforeCollateral": "44369516",
@@ -1402,6 +1418,50 @@
       "startedAt": "2026-06-09T18:21:28.823Z",
       "finishedAt": "2026-06-09T18:22:02.169Z",
       "summary": "It seems there is an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for new positions. Here's the current state of the vault:\n\n### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,094.79\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\nGiven the inability to access the Atlas ML API, we cannot proceed with wiring new assets, setting tracked assets, or opening new positions based on the latest model signals. Additionally, since there is no available collateral for new positions, any action would require closing existing positions to free up capital.\n\n### Next Steps\n- **API Access**: Investigate and resolve the 401 Unauthorized error with the Atlas ML API to regain access to model-driven signals.\n- **Capital Management**: Monitor existing positions and consider closing any that are outside the PnL bands of `[-6%, +8%]` to manage risk and potentially free up capital for future opportunities.\n- **Summary Update**: Once API access is restored, update the vault's thesis and strategy based on the latest model outputs and market conditions.\n\nPlease ensure that the API credentials and access permissions are correctly configured to prevent future access issues.",
+      "agentName": "ming capital, and opening positions based on the latest model data.\n\n### Summary\n\nDue to the API access issue, no new positions can be opened or adjusted at this time. The focus should be on resolving the authorization error to enable full functionality in future runs.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
+    {
+      "runId": "2026-06-09T18:22:02.169Z",
+      "startedAt": "2026-06-09T18:21:28.823Z",
+      "finishedAt": "2026-06-09T18:22:02.169Z",
+      "summary": "It seems there is an issue accessing the Atlas ML API for both the top picks and short picks, resulting in a 401 Unauthorized error. This prevents us from retrieving the latest model-driven recommendations for new positions. Here's the current state of the vault:\n\n### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,094.79\n- **Perp Allocated**: $7,690.35\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\nGiven the inability to access the Atlas ML API, we cannot proceed with wiring new assets, setting tracked assets, or opening new positions based on the latest model signals. Additionally, since there is no available collateral for new positions, any action would require closing existing positions to free up capital.\n\n### Next Steps\n- **API Access**: Investigate and resolve the 401 Unauthorized error with the Atlas ML API to regain access to model-driven signals.\n- **Capital Management**: Monitor existing positions and consider closing any that are outside the PnL bands of `[-6%, +8%]` to manage risk and potentially free up capital for future opportunities.\n- **Summary Update**: Once API access is restored, update the vault's thesis and strategy based on the latest model outputs and market conditions.\n\nPlease ensure that the API credentials and access permissions are correctly configured to prevent future access issues.",
       "agentName": "mining-manager",
       "model": "gpt-4o",
       "modelSource": "env-global",
@@ -1436,6 +1496,52 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "allocate_to_perp",
+      "justification": "Allocating available USDC to perp trading to enable new long and short positions based on Atlas ML model recommendations.",
+      "timestamp": "2026-06-11T16:23:58.190Z",
+      "txHash": "0x14acb39a0fe8f69c276ce6f9885398449e80ef98eb24f72acda3df5408a833cd",
+      "agentName": "mining-manager",
+      "runId": "2026-06-11T16:23:58.190Z",
+      "params": {
+        "kind": "allocate_to_perp",
+        "amountUsdc": "1316136250"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Allocating 50% of idle USDC to perp trading is consistent with the vault's strategy and current market regime; no available collateral is currently locked."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) due to high ML score and predicted return, supported by sufficient available collateral.",
+      "timestamp": "2026-06-11T16:23:58.190Z",
+      "txHash": "0x109f1792c414eb5a37b8c9842422995a9ed7514de06f657565e10e8b1e06635f",
+      "agentName": "mining-manager",
+      "runId": "2026-06-11T16:23:58.190Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "6580681250000000000000000000000000",
+        "collateral": "658068125"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Proposed collateral $1316.14 exceeds 60% of available $1316.14; downsize to manage risk.",
+        "downsizeFactor": 0.5,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "isLong": true,
+          "beforeCollateral": "1316136250",
+          "afterCollateral": "658068125",
+          "beforeSize": "13161362500000000000000000000000000",
+          "afterSize": "6580681250000000000000000000000000",
+          "downsizeFactor": 0.5
+        }
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: dropped from ML top-12 (score < 85)",
