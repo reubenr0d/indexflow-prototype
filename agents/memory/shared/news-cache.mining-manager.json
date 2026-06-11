@@ -1,452 +1,216 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-11T01:40:50.503Z",
+  "updatedAt": "2026-06-11T07:08:04.901Z",
   "entries": {
-    "AMG.L": {
-      "fetchedAt": "2026-06-11T01:40:50.151Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-11T01:40:50.151Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "ALK-B.CO"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
+            "NOK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ASCU.TO": {
-      "fetchedAt": "2026-06-11T01:40:50.151Z",
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
+            "ALK-B.CO"
+          ]
+        },
+        {
+          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NOK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-06-11T01:40:50.151Z",
+    "AMG.L": {
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
+            "ALK-B.CO"
+          ]
+        },
+        {
+          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NOK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-11T01:40:50.151Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-11T01:40:50.503Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "ALK-B.CO"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
+            "NOK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CDT.AX": {
-      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
+            "ALK-B.CO"
+          ]
+        },
+        {
+          "title": "Nokia introduces agentic AI framework in Network Services Platform to enable trust-based AI operations for IP networks",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/nokia-introduces-agentic-ai-framework-070000664.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NOK"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "TGR.L": {
-      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "fetchedAt": "2026-06-11T07:08:04.901Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
-          ]
-        },
-        {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "title": "Villas of Distinction® Celebrates Multi-Generational Travel's",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/articles/villas-distinction-celebrates-multi-generational-070000357.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Payhawk’s Summer ’26 Edition delivers enterprise-grade control to finance teams without enterprise complexity",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/payhawk-summer-26-edition-delivers-070000692.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-11T01:40:50.503Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
+            "SAP"
           ]
         },
         {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "title": "Anaphylaxis management is falling short in 2026 – EAACI data suggest EURneffy, the only needle-free nasal adrenaline spray, could help close the gap",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/sectors/healthcare/articles/anaphylaxis-management-falling-short-2026-070000366.html",
+          "publishedAt": "2026-06-11T07:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-11T01:40:50.503Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
-          "publishedAt": "2026-06-11T01:36:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "ORCL",
-            "SPCX",
-            "^DJI",
-            "BE",
-            "NVDA",
-            "ORCL-PD",
-            "PWR",
-            "^GSPC",
-            "GOOG",
-            "TGTX",
-            "GEV"
-          ]
-        },
-        {
-          "title": "G7 summit under tight security on both sides of Lake Geneva",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
-          "publishedAt": "2026-06-11T01:34:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
-          "publishedAt": "2026-06-11T01:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V"
+            "ALK-B.CO"
           ]
         }
       ],

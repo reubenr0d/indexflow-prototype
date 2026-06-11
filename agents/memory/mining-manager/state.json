@@ -5,7 +5,7 @@
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-11T01:41:35.174Z",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V) and Gold Strike Resources Corp. (GSR.V), which have been successfully opened as long positions. On the short side, Tirupati Graphite PLC (TGR.L) presents a compelling opportunity due to its negative predicted return and high absolute predicted return, though no short positions were opened this run due to capital constraints.",
-  "lastThesisUpdate": "2026-06-11T01:41:35.174Z"
+  "lastRunAt": "2026-06-11T07:09:14.535Z",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Amarc Resources Ltd. (AHR.V), Gold Strike Resources Corp. (GSR.V), and Arizona Sonoran Copper (ASCU.TO), which have been successfully opened as long positions. These positions are supported by the model's high predicted returns and robust ML scores.",
+  "lastThesisUpdate": "2026-06-11T07:09:14.535Z"
 }
