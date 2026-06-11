@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-10T22:59:19.927Z",
-  "startedAt": "2026-06-10T22:58:56.424Z",
-  "finishedAt": "2026-06-10T22:59:19.927Z",
+  "runId": "2026-06-11T01:42:19.905Z",
+  "startedAt": "2026-06-11T01:42:08.745Z",
+  "finishedAt": "2026-06-11T01:42:19.905Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "Today's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
-  "summary": "It seems there is still an authorization issue with accessing the Atlas API, which is preventing us from retrieving the latest trade-ready picks. This issue needs to be resolved before we can proceed with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening positions.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n## Recommendations for Next Run\n- Resolve the authorization issue with the Atlas API to enable retrieval of trade-ready picks.\n- Once access is restored, proceed with wiring new entrants, setting the tracked-asset list, and opening positions based on the latest trade-ready signals.\n- Monitor for any changes in the metals regime that could affect long or short strategies.",
+  "summary": "It seems there is still an authorization issue with accessing the Atlas API, which is preventing us from retrieving the latest trade-ready picks. This issue needs to be resolved before we can proceed with any trading actions based on the quality matrix's trade-ready signals. As a result, no new positions can be opened or adjusted at this time.\n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Recommendations\n- Resolve the authorization issue with the Atlas API to enable access to trade-ready picks.\n- Once access is restored, prioritize reviewing the latest picks and adjust the portfolio accordingly.\n- Continue monitoring the metals regime for any significant changes that could impact trading strategy.",
   "writeActions": [],
   "errors": [
     {

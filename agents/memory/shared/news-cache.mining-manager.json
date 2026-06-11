@@ -1,373 +1,453 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-10T22:57:34.949Z",
+  "updatedAt": "2026-06-11T01:40:50.503Z",
   "entries": {
     "AMG.L": {
-      "fetchedAt": "2026-06-10T22:57:34.756Z",
+      "fetchedAt": "2026-06-11T01:40:50.151Z",
       "headlines": [
         {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
           ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-10T22:57:34.756Z",
-      "headlines": [
-        {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
-          ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "REPX",
-            "CHRD"
+            "V"
           ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-10T22:57:34.756Z",
+      "fetchedAt": "2026-06-11T01:40:50.151Z",
       "headlines": [
         {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
           ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ASCU.TO": {
-      "fetchedAt": "2026-06-10T22:57:34.756Z",
+      "fetchedAt": "2026-06-11T01:40:50.151Z",
       "headlines": [
         {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
           ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-11T01:40:50.151Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
+          ]
+        },
+        {
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ABRA.TO": {
-      "fetchedAt": "2026-06-10T22:57:34.756Z",
+      "fetchedAt": "2026-06-11T01:40:50.151Z",
       "headlines": [
         {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
           ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "IRON.L": {
-      "fetchedAt": "2026-06-10T22:57:34.949Z",
-      "headlines": [
-        {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
-          ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "REPX",
-            "CHRD"
+            "V"
           ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TGR.L": {
-      "fetchedAt": "2026-06-10T22:57:34.949Z",
-      "headlines": [
-        {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
-          ]
-        },
-        {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CDT.AX": {
-      "fetchedAt": "2026-06-10T22:57:34.949Z",
-      "headlines": [
-        {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
-          ]
-        },
-        {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-10T22:57:34.949Z",
-      "headlines": [
-        {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
-          ]
-        },
-        {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-10T22:57:34.949Z",
+      "fetchedAt": "2026-06-11T01:40:50.503Z",
       "headlines": [
         {
-          "title": "Touchstone Exploration Announces Closing of the Fundraise and Notice of AGM",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/touchstone-exploration-announces-closing-fundraise-225100039.html",
-          "publishedAt": "2026-06-10T22:51:00.000Z",
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TXP.TO",
-            "TXP.L",
-            "TXP.NE"
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
           ]
         },
         {
-          "title": "Riley Exploration Permian and Chord Energy Shares Skyrocket, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/riley-exploration-permian-chord-energy-224928062.html",
-          "publishedAt": "2026-06-10T22:49:28.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "REPX",
-            "CHRD"
-          ]
-        },
-        {
-          "title": "Mystery vandal glues school doors shut, disrupts finals week",
-          "publisher": "USA TODAY",
-          "link": "https://finance.yahoo.com/m/222ae8aa-3885-39ca-a76c-aad4bc97a123/mystery-vandal-glues-school.html",
-          "publishedAt": "2026-06-10T22:48:24.000Z",
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CDT.AX": {
+      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
+          ]
+        },
+        {
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TGR.L": {
+      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
+          ]
+        },
+        {
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "IRON.L": {
+      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
+          ]
+        },
+        {
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-11T01:40:50.503Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures Rise Despite Iran Attacks, Oracle's Dive; SpaceX IPO On Launch Pad",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/f2b12cac-6dbd-3fc7-9e38-bed11bdf0d4a/dow-jones-futures-rise.html",
+          "publishedAt": "2026-06-11T01:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "ORCL",
+            "SPCX",
+            "^DJI",
+            "BE",
+            "NVDA",
+            "ORCL-PD",
+            "PWR",
+            "^GSPC",
+            "GOOG",
+            "TGTX",
+            "GEV"
+          ]
+        },
+        {
+          "title": "G7 summit under tight security on both sides of Lake Geneva",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/78f7d9d1-13d6-3086-8ed3-5948f8787e3c/g7-summit-under-tight.html",
+          "publishedAt": "2026-06-11T01:34:24.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Visa Partners with OpenAI to Power the Next Generation of AI Commerce",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/sectors/technology/articles/visa-partners-openai-power-next-013000441.html",
+          "publishedAt": "2026-06-11T01:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
