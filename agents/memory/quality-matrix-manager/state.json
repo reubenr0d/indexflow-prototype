@@ -4,8 +4,32 @@
   "agentFileHash": "sha256:7c6941850116741c2b22ba65a57d3163f492189278074bfb681f9bdf146dd350",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
+  "ml": {
+    "enabled": false,
+    "policy": {
+      "enabled": true,
+      "cadenceHours": 24,
+      "staleAfterHours": 24,
+      "confidenceFloor": 0,
+      "retryBackoffMinutes": 30
+    },
+    "strategyFingerprint": "9396b1261ba837646c6c900b57b587b94c9ac868a204339deb6fad8dc52519c8",
+    "nextSuggestedAction": null,
+    "refreshReason": null,
+    "cooldownUntil": null,
+    "lastJob": {
+      "id": null,
+      "status": null,
+      "startedAt": null,
+      "completedAt": null,
+      "result": null,
+      "errorMessage": null
+    },
+    "lastResult": null,
+    "lastResultAt": null
+  },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-11T16:24:50.450Z",
-  "thesis": "The current strategy remains on hold due to the ongoing authorization issue with the Atlas API, which blocks access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault is prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
-  "lastThesisUpdate": "2026-06-11T11:53:02.439Z"
+  "lastRunAt": "2026-06-11T16:44:37.010Z",
+  "thesis": "The current strategy remains on hold due to the ongoing authorization issue with the Atlas API, which blocks access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault is prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_on,\" with a short penalty of 1, indicating caution for short positions but not an outright block. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.",
+  "lastThesisUpdate": "2026-06-11T16:44:37.010Z"
 }

@@ -4,8 +4,32 @@
   "agentFileHash": "sha256:046f45e3421697a1d61fdc426adc9df4ff2f39c7ec80b42c7b37f88e73378567",
   "deploymentFingerprint": "sha256:5e53609eb7010cc4cba26d2ae8a93e683dab503e60daa7614db24acff0852ccf",
   "deploymentConfigPath": "/home/runner/work/indexflow-prototype/indexflow-prototype/apps/web/src/config/sepolia-deployment.json",
+  "ml": {
+    "enabled": false,
+    "policy": {
+      "enabled": true,
+      "cadenceHours": 24,
+      "staleAfterHours": 24,
+      "confidenceFloor": 0,
+      "retryBackoffMinutes": 30
+    },
+    "strategyFingerprint": "c52e46237916db4a2b0d45f836eedbcdfa6bccc47124a5eda2ba3846d9ed64af",
+    "nextSuggestedAction": null,
+    "refreshReason": null,
+    "cooldownUntil": null,
+    "lastJob": {
+      "id": null,
+      "status": null,
+      "startedAt": null,
+      "completedAt": null,
+      "result": null,
+      "errorMessage": null
+    },
+    "lastResult": null,
+    "lastResultAt": null
+  },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-11T16:26:45.703Z",
+  "lastRunAt": "2026-06-11T16:47:56.119Z",
   "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. \n\nI will update the memory and exit.",
   "lastThesisUpdate": "2026-06-10T21:00:34.694Z"
 }
