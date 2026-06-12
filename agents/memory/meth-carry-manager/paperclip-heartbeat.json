@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-11T23:58:16.143Z",
-  "startedAt": "2026-06-11T23:57:09.943Z",
-  "finishedAt": "2026-06-11T23:58:16.143Z",
+  "runId": "2026-06-12T05:06:38.530Z",
+  "startedAt": "2026-06-12T05:05:30.051Z",
+  "finishedAt": "2026-06-12T05:06:38.530Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 5,
-    "toolCalls": 6,
+    "turns": 4,
+    "toolCalls": 5,
     "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
-  "summary": "The current state of the vault is as follows:\n\n### Vault State\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n\n### Perpetual Capital Snapshot\n- **Available Collateral**: $0.00\n- **Open Interest**: $0\n- **Position Count**: 0\n- **Realised PnL**: $0\n\n### Oracle Price\n- **ETH-USD Price**: $1672.09\n\n### Hedge Ratio Calculation\nSince there are no open positions, the hedge ratio cannot be calculated. \n\n### Action Plan\nGiven that there are no open positions and the available collateral is $0.00, I will attempt to open a short position at the band midpoint (1.00x hedge ratio, 5x leverage). However, since the available collateral is $0.00, this action cannot be executed.\n\n### Summary\n- **Pre-Hedge Ratio**: N/A (no positions)\n- **Post-Hedge Ratio**: N/A (no positions)\n- **mETH Yield Realised Since Last Run**: N/A (no activity)\n- **Funding Rate Context**: N/A (no positions)\n\n## Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
+  "summary": "It seems that there was an issue retrieving the reserve state for the vault. The command to read the reserve state has failed, indicating that the adapter may not be properly wired or there could be a problem with the contract itself.\n\n### Current Vault State\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Idle USDC**: $0.00\n- **Perp Allocated**: $0.00\n- **Open Positions**: None\n\n### Current Market Data\n- **ETH-USD Price**: $1672.15\n- **Funding Rate**: Not available due to the failure in reading the reserve state.\n\n### Hedge Ratio Calculation\nSince there are no open positions and no available data from the reserve state, the hedge ratio cannot be calculated. \n\n### Next Steps\nGiven that there is no short position and the vault is inactive, I will not be able to open a new position or perform any rebalancing actions. \n\n### Summary\n- **Thesis**: The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will update the memory and exit.",
   "writeActions": [],
   "errors": [
     {
