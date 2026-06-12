@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-12T09:15:46.457Z",
-  "startedAt": "2026-06-12T09:14:35.652Z",
-  "finishedAt": "2026-06-12T09:15:46.457Z",
+  "runId": "2026-06-12T12:34:55.662Z",
+  "startedAt": "2026-06-12T12:33:26.034Z",
+  "finishedAt": "2026-06-12T12:34:55.662Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 5,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
-  "summary": "It seems that I am unable to retrieve the reserve state for the vault due to an error with the RWA adapter. This could indicate that the adapter is not properly wired or there is an issue with the contract. As a result, I cannot compute the hedge ratio or assess the current state of the vault.\n\nGiven the current situation, I will update the memory and exit without taking any actions. \n\n## Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
+  "summary": "It seems that I am unable to retrieve the reserve state for the vault due to an error with the RWA adapter. This could indicate that the adapter is not properly wired or there is an issue with the contract itself. As a result, I cannot compute the hedge ratio or proceed with any trading actions.\n\n## Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
   "writeActions": [],
   "errors": [
     {
       "tool": "get_reserve_state",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted\\n\"\n}"
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"READ_RESERVE_STATE_FAILED\",\n  \"message\": \"Command failed: cast call 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f rwaAdapter()(address) --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ\\nError: server returned an error response: error code 3: execution reverted, data: \\\"0x\\\"\\n\"\n}"
     },
     {
       "tool": "get_reserve_state",
