@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-12T05:04:18.013Z",
-  "startedAt": "2026-06-12T05:03:18.717Z",
-  "finishedAt": "2026-06-12T05:04:18.013Z",
+  "runId": "2026-06-12T09:13:31.349Z",
+  "startedAt": "2026-06-12T09:12:29.211Z",
+  "finishedAt": "2026-06-12T09:13:31.349Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- Checked the state of the vault and confirmed no assets are currently tracked.\n- Retrieved the quality matrix definition to ensure alignment with the analyst's tier definitions.\n- Attempted to pull the latest trade-ready picks but found none meeting the criteria.\n\n### Recommendations for Next Run\n- Continue to monitor for fresh drilling releases and material events that could improve trade readiness scores.\n- Re-evaluate the matrix and timing configurations to ensure they align with current market conditions and data availability.\n- Prepare to act swiftly once suitable candidates are identified, leveraging the favorable metals regime.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Recent Actions\n- No new trade-ready picks were identified with the required composite and trade readiness scores.\n- The vault remains in a monitoring state, awaiting fresh data or events that could elevate potential candidates into actionable status.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events.\n- Re-evaluate the trade readiness of candidates as new data becomes available.\n- Ensure that any new entrants are supported by strong matrix signals and recent bullish news to justify long positions.",
   "writeActions": [],
   "errors": []
 }
