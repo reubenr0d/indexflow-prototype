@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-13T18:44:55.973Z",
-  "startedAt": "2026-06-13T18:44:16.980Z",
-  "finishedAt": "2026-06-13T18:44:55.973Z",
+  "runId": "2026-06-13T20:42:22.628Z",
+  "startedAt": "2026-06-13T20:41:42.803Z",
+  "finishedAt": "2026-06-13T20:42:22.628Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Summary\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **Current State**: No assets tracked, no positions open.\n- **Trade-Ready Picks**: None met the criteria of `minCompositeScore: 75` and `minTradeReadinessScore: 75`.\n- **Actions Taken**: None, due to the absence of qualifying trade-ready picks.\n- **Recommendations**: Continue monitoring for fresh data and material events that could elevate potential candidates to trade-ready status.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Grounded in Analyst's Matrix**: The matrix definitions were reviewed to ensure alignment with the analyst's tier definitions.\n- **Trade-Ready Picks**: No trade-ready picks were identified that met the criteria for opening new positions.\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix and timing configurations to ensure they align with current market conditions and data availability.\n- Consider exploring additional data sources or signals that may enhance the identification of trade-ready picks.",
   "writeActions": [],
   "errors": []
 }

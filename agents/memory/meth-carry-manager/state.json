@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-13T18:48:23.947Z",
+  "lastRunAt": "2026-06-13T20:44:04.084Z",
   "thesis": "The hedge ratio is not applicable as there are no positions. The vault is currently inactive with no available USDC for trading. The funding rate context is also not applicable due to the lack of positions. The mETH yield since the last run is not applicable due to inactivity.",
   "lastThesisUpdate": "2026-06-13T16:50:44.395Z"
 }

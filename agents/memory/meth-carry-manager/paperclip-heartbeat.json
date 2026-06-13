@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-13T18:48:23.947Z",
-  "startedAt": "2026-06-13T18:46:11.300Z",
-  "finishedAt": "2026-06-13T18:48:23.947Z",
+  "runId": "2026-06-13T20:44:04.084Z",
+  "startedAt": "2026-06-13T20:43:25.978Z",
+  "finishedAt": "2026-06-13T20:44:04.084Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 6,
-    "toolCalls": 7,
+    "turns": 4,
+    "toolCalls": 5,
     "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The hedge ratio is not applicable as there are no positions. The vault is currently inactive with no available USDC for trading. The funding rate context is also not applicable due to the lack of positions. The mETH yield since the last run is not applicable due to inactivity.",
-  "summary": "The vault has no available collateral for trading, which means I cannot open a short position at this time. \n\n### Summary of Actions\n- **Current Hedge Ratio**: Not applicable as there are no positions.\n- **mETH Yield Realised**: Not applicable due to inactivity.\n- **Funding Rate Context**: Not applicable as there are no positions.\n\n### Final Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio is not applicable, and there are no realized yields or funding rates to report. \n\nNext steps will involve monitoring the vault for any changes in available collateral or market conditions that would allow for trading activities. \n\nIf the situation changes, I will be ready to act accordingly.",
+  "summary": "It seems that I encountered an error while trying to read the reserve state for the vault. The command failed due to an issue with the RWA adapter, which indicates that the adapter may not be properly wired or there is an issue with the contract itself.\n\nGiven that the vault is currently inactive with no available USDC for trading or any open positions, I cannot proceed with any actions related to opening or rebalancing positions at this time.\n\n### Summary of Actions\n- **Vault State**: The vault is currently inactive with no available USDC for trading or any open positions.\n- **Funding Rate**: Not applicable as there are no positions.\n- **Current Hedge Ratio**: Not applicable as there are no positions.\n\n### ## Thesis\nThe hedge ratio is not applicable as there are no positions. The vault is currently inactive with no available USDC for trading. The funding rate context is also not applicable due to the lack of positions. The mETH yield since the last run is not applicable due to inactivity.\n\nI will need to address the issue with the RWA adapter in the next run to enable trading and position management.",
   "writeActions": [],
   "errors": [
     {
