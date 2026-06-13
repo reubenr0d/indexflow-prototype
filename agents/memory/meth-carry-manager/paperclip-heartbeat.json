@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-13T11:29:19.499Z",
-  "startedAt": "2026-06-13T11:28:04.820Z",
-  "finishedAt": "2026-06-13T11:29:19.499Z",
+  "runId": "2026-06-13T14:29:45.873Z",
+  "startedAt": "2026-06-13T14:28:19.675Z",
+  "finishedAt": "2026-06-13T14:29:45.873Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 5,
@@ -18,8 +18,8 @@
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
-  "summary": "It appears that I am unable to retrieve the reserve state for the vault due to an error with the RWA adapter. This could indicate that the adapter is not properly wired or there is an issue with the contract itself. \n\nGiven that the vault is currently inactive with no available USDC for trading or any open positions, I cannot compute the hedge ratio or proceed with any trading actions.\n\n## Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
+  "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated due to the inability to read the reserve state. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
+  "summary": "It seems that I am unable to retrieve the reserve state for the vault due to an error with the RWA adapter. This could indicate that the adapter is not properly wired or there is an issue with the contract itself. As a result, I cannot compute the current hedge ratio or gather the necessary data to make trading decisions.\n\nGiven that there are no open positions and no available USDC for trading, I will not be able to take any action at this time. \n\n## Thesis\nThe vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated due to the inability to read the reserve state. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
   "writeActions": [],
   "errors": [
     {

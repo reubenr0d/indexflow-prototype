@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-13T11:29:19.499Z",
-  "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
-  "lastThesisUpdate": "2026-06-13T11:29:19.499Z"
+  "lastRunAt": "2026-06-13T14:29:45.873Z",
+  "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated due to the inability to read the reserve state. The mETH yield since the last run is not applicable due to inactivity. \n\nVault Address: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\nCurrent State: Inactive, no positions, no USDC available.",
+  "lastThesisUpdate": "2026-06-13T14:29:45.873Z"
 }
