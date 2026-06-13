@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-12T23:51:25.608Z",
-  "startedAt": "2026-06-12T23:50:26.525Z",
-  "finishedAt": "2026-06-12T23:51:25.608Z",
+  "runId": "2026-06-13T04:53:06.404Z",
+  "startedAt": "2026-06-13T04:51:51.932Z",
+  "finishedAt": "2026-06-13T04:53:06.404Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n### Vault Address and State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the minimum composite and trade readiness scores.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events.\n- Re-evaluate the matrix and timing configurations if the absence of trade-ready picks persists.\n- Consider exploring potential adjustments to the provenance discount or category weights if empirical calibration data becomes available.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocation**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n- **Grounded in Analyst's Matrix**: The quality matrix was reviewed to ensure alignment with the analyst's tier definitions.\n- **Trade-Ready Picks**: No trade-ready picks were available with the required composite and trade readiness scores.\n- **No New Positions Opened**: Due to the lack of eligible picks, no new positions were opened.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could improve trade readiness scores.\n- Re-evaluate the current filters and thresholds to ensure they align with market conditions and the availability of data.\n- Stay prepared to act swiftly when suitable candidates emerge.",
   "writeActions": [],
   "errors": []
 }
