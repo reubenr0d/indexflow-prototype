@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-14T00:22:13.869Z",
-  "startedAt": "2026-06-14T00:21:22.734Z",
-  "finishedAt": "2026-06-14T00:22:13.869Z",
+  "runId": "2026-06-14T06:06:36.548Z",
+  "startedAt": "2026-06-14T06:05:57.230Z",
+  "finishedAt": "2026-06-14T06:06:36.548Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n- **Grounded in Quality Matrix**: Retrieved the analyst's tier definitions to ensure alignment with the scoring criteria.\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness this run.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could improve trade readiness scores.\n- Re-evaluate the matrix and timing configurations to ensure they align with current market conditions and data availability.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n- **Trade-Ready Picks**: No new trade-ready picks met the criteria for opening positions.\n- **Tracked Assets**: No changes made due to the absence of eligible picks.\n- **Perp Allocation**: No allocation changes due to lack of new positions.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Re-evaluate the matrix tiers and timing configurations if no suitable candidates emerge in the near future.\n- Stay alert for any changes in the market regime that could affect the strategy.",
   "writeActions": [],
   "errors": []
 }
