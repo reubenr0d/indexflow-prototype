@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-14T18:48:54.407Z",
-  "startedAt": "2026-06-14T18:47:50.389Z",
-  "finishedAt": "2026-06-14T18:48:54.407Z",
+  "runId": "2026-06-14T20:44:19.381Z",
+  "startedAt": "2026-06-14T20:43:43.404Z",
+  "finishedAt": "2026-06-14T20:44:19.381Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 4,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current hedge ratio is not applicable as there are no positions in the vault. The mETH balance and mETH/USD price could not be retrieved due to an error with the RWA adapter, and the funding rate context is also unavailable. Since there is no available USDC for trading, I will not take any action at this time. \n\nThe strategy remains unchanged until the RWA adapter issue is resolved.",
-  "summary": "It seems that I encountered an error while trying to read the reserve state for the vault due to an issue with the RWA adapter. This indicates that the adapter may not be properly wired or there is an issue with the contract itself. As a result, I am unable to retrieve the mETH balance and mETH/USD price.\n\nGiven that there are currently no open positions in the vault and no available USDC for trading, I will not take any action at this time. \n\n## Thesis\nThe current hedge ratio is not applicable as there are no positions in the vault. The mETH balance and mETH/USD price could not be retrieved due to an error with the RWA adapter, and the funding rate context is also unavailable. Since there is no available USDC for trading, I will not take any action at this time. \n\nThe strategy remains unchanged until the RWA adapter issue is resolved.",
+  "summary": "It seems that I encountered an error while trying to read the reserve state for the vault. The command failed due to an issue with the RWA adapter, which indicates that the adapter may not be properly wired or there is an underlying issue with the vault's configuration.\n\nSince I couldn't retrieve the mETH balance and mETH/USD price, I also cannot compute the hedge ratio or determine the current state of the vault accurately. Additionally, the funding rate context is unavailable due to the same issue.\n\nGiven that there are no positions currently open in the vault, I will not take any action at this time. The strategy remains unchanged until the RWA adapter issue is resolved.\n\n## Thesis\nThe current hedge ratio is not applicable as there are no positions in the vault. The mETH balance and mETH/USD price could not be retrieved due to an error with the RWA adapter, and the funding rate context is also unavailable. Since there is no available USDC for trading, I will not take any action at this time. \n\nThe strategy remains unchanged until the RWA adapter issue is resolved.",
   "writeActions": [],
   "errors": [
     {
