@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-14T22:38:16.705Z",
+  "lastRunAt": "2026-06-15T01:45:33.159Z",
   "thesis": "The current hedge ratio is not applicable as there are no positions in the vault. The mETH balance and mETH/USD price could not be retrieved due to an error with the RWA adapter, and the funding rate context is also unavailable. Since there is no available USDC for trading, I will not take any action at this time. \n\nThe strategy remains unchanged until the RWA adapter issue is resolved.",
   "lastThesisUpdate": "2026-06-14T20:44:19.381Z"
 }
