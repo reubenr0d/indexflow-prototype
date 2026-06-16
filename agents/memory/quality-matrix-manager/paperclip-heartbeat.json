@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-16T21:20:24.902Z",
-  "startedAt": "2026-06-16T21:19:57.850Z",
-  "finishedAt": "2026-06-16T21:20:24.902Z",
-  "status": "succeeded",
+  "runId": "2026-06-16T23:48:59.209Z",
+  "startedAt": "2026-06-16T23:48:44.933Z",
+  "finishedAt": "2026-06-16T23:48:59.209Z",
+  "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
     "toolCalls": 3,
-    "errors": 0,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Actions Taken\n\n- **Grounded in Analyst's Tier Definitions**: Retrieved the full quality matrix to ensure alignment with the analyst's scoring criteria.\n- **Trade-Ready Picks**: Attempted to retrieve trade-ready picks but found none meeting the criteria. Encountered several internal server errors from the Atlas API, which may have impacted the availability of data.\n\n## Recommendations for Next Run\n\n- **Monitor for Fresh Data**: Continue to watch for new drilling releases and material events that could influence trade readiness scores.\n- **Address API Errors**: Investigate the internal server errors encountered with the Atlas API to ensure data availability for future runs.\n- **Prepare for Opportunities**: Remain ready to act on any new trade-ready picks that meet the required thresholds once data issues are resolved.",
+  "thesis": "The current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.",
+  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API resulted in a \"502 Bad Gateway\" error. This indicates a temporary issue with the Atlas server, preventing access to the necessary data for making informed trading decisions at this time.\n\nGiven this situation, I will summarize the current state and suggest next steps:\n\n## Thesis\nThe current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.\n\n## Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None currently set\n\n## Recommendations\n- Monitor the status of the Atlas API to ensure it becomes operational again.\n- Once the API is functional, proceed with the planned workflow to identify and act on trade-ready picks.\n- Continue to watch for fresh drilling releases and material events that could impact trade readiness scores.\n\nI will await further instructions or the resolution of the API issue to proceed with the next steps.",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_quality_trade_ready_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    }
+  ]
 }
