@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-16T11:37:17.659Z",
+  "lastRunAt": "2026-06-16T17:34:14.686Z",
   "thesis": "- **Pre-Hedge Ratio**: N/A (no positions)\n- **Post-Hedge Ratio**: N/A (no positions)\n- **Realised mETH Yield**: N/A (due to RWA adapter issue)\n- **Funding Rate Context**: N/A (due to RWA adapter issue)\n\n**Next Steps**: Await resolution of the RWA adapter issue to enable trading actions. \n\nI will now update the memory with the current state and exit.",
   "lastThesisUpdate": "2026-06-16T11:37:17.659Z"
 }
