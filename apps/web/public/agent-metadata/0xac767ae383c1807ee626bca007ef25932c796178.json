@@ -5,12 +5,12 @@
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
   "thesis": "The current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.",
-  "lastRunAt": "2026-06-15T19:13:05.326Z",
+  "lastRunAt": "2026-06-16T00:03:34.513Z",
   "latestRun": {
-    "runId": "2026-06-15T19:13:05.326Z",
-    "finishedAt": "2026-06-15T19:13:05.326Z",
-    "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Actions Taken\n\n- **Grounded in Quality Matrix**: The analyst's tier definitions were reviewed to ensure alignment with the scoring criteria.\n- **Trade-Ready Picks**: No picks met the criteria of a composite score and trade readiness score above 75.\n\n## Recommendations for Next Run\n\n- Continue monitoring for fresh drilling releases and material events.\n- Re-evaluate the matrix and timing configurations if no candidates emerge in the near future.\n- Consider exploring adjustments to the trade readiness criteria or thresholds to better align with current market conditions.",
-    "startedAt": "2026-06-15T19:11:50.802Z",
+    "runId": "2026-06-16T00:03:34.513Z",
+    "finishedAt": "2026-06-16T00:03:34.513Z",
+    "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n- Checked the vault state and grounded in the analyst's tier definitions.\n- Attempted to pull the latest trade-ready picks, but no candidates met the required thresholds.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Address any potential issues with data completeness or priced-in penalties that might be affecting the availability of suitable candidates.",
+    "startedAt": "2026-06-16T00:03:02.925Z",
     "agentName": "quality-matrix-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -33,6 +33,32 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-16T00:03:34.513Z",
+      "startedAt": "2026-06-16T00:03:02.925Z",
+      "finishedAt": "2026-06-16T00:03:34.513Z",
+      "summary": "## Thesis\n\nThe current strategy remains on hold due to the ongoing absence of trade-ready picks that meet the required thresholds. Despite the favorable \"metals_risk_on\" regime, which typically supports long positions, no candidates have emerged with a composite score and trade readiness score above 75. This situation may be due to a combination of factors including the freshness of available data, priced-in penalties, or insufficient data completeness across categories. The vault will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores. Once suitable candidates are identified, the vault will be ready to act.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n- Checked the vault state and grounded in the analyst's tier definitions.\n- Attempted to pull the latest trade-ready picks, but no candidates met the required thresholds.\n\n## Recommendations for Next Run\n- Continue monitoring for fresh drilling releases and material events that could impact trade readiness scores.\n- Address any potential issues with data completeness or priced-in penalties that might be affecting the availability of suitable candidates.",
+      "agentName": "quality-matrix-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 3,
+      "toolCalls": [
+        "get_vault_state",
+        "get_quality_matrix_definition",
+        "get_quality_trade_ready_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-15T19:13:05.326Z",
       "startedAt": "2026-06-15T19:11:50.802Z",
