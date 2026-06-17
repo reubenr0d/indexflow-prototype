@@ -1,106 +1,139 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-17T17:26:28.215Z",
+  "updatedAt": "2026-06-17T20:32:46.982Z",
   "entries": {
     "CNC.V": {
-      "fetchedAt": "2026-06-17T17:26:27.921Z",
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
       "headlines": [
         {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GHC"
+            "PFBC"
           ]
         },
         {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ARIS.TO": {
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
+      "headlines": [
+        {
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PFBC"
+          ]
+        },
+        {
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-17T17:26:27.921Z",
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
       "headlines": [
         {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GHC"
+            "PFBC"
           ]
         },
         {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-17T17:26:27.921Z",
-      "headlines": [
-        {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GHC"
+            "CERT"
           ]
         },
         {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "HBM"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-17T17:26:27.921Z",
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
       "headlines": [
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
+        },
+        {
+          "title": "Micron & Another AI Memory Stock to Buy Now for Big Upside",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/micron-another-ai-memory-stock-190000361.html",
+          "publishedAt": "2026-06-17T19:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "STX"
+          ]
+        },
         {
           "title": "Copper Tariff Uncertainty Returns As Hudbay Minerals (HBM) And Peers Face Policy Risk Ahead Of U.S. Decision",
           "publisher": "Insider Monkey",
@@ -114,222 +147,239 @@
             "RIO",
             "IE"
           ]
-        },
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TDG.V": {
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
+      "headlines": [
         {
-          "title": "Prediction: Sandisk Stock Will Soar to $5,000 in 2 Years",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/0a4a8954-e549-3de8-be3c-f6fb291ee684/prediction%3A-sandisk-stock.html",
-          "publishedAt": "2026-06-17T15:09:00.000Z",
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "PFBC"
+          ]
+        },
+        {
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SCCO": {
+      "fetchedAt": "2026-06-17T20:32:46.845Z",
+      "headlines": [
+        {
+          "title": "Southern Copper (SCCO) Rises Higher Than Market: Key Facts",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-scco-rises-higher-214503209.html",
+          "publishedAt": "2026-06-15T21:45:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "Stocks Supported by Lower Crude Oil Prices and Bond Yields",
+          "publisher": "Barchart",
+          "link": "https://finance.yahoo.com/m/27a772cd-d509-3783-90a1-afe31459b5a8/stocks-supported-by-lower.html",
+          "publishedAt": "2026-06-16T14:18:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ES*0",
+            "MPC",
+            "CL*0",
+            "AU",
+            "CCL",
+            "TSCO",
+            "NCLH",
+            "HL",
+            "APA",
+            "DAL",
+            "VMI",
+            "NEM",
+            "QQQ",
+            "EW",
+            "FANG",
+            "$SPX",
+            "PANW",
+            "UAL",
+            "ZS",
+            "ZN*0",
+            "RCL",
+            "B",
+            "SPY",
+            "$DOWI",
+            "MCHP",
+            "HPP",
+            "COP",
+            "VLO",
+            "SKT",
+            "QCOM",
+            "$IUXX",
+            "PLAY",
+            "STX",
+            "FTNT",
+            "NQ*0",
+            "CDE",
+            "FCX",
+            "SCCO",
             "SNDK",
-            "NVDA"
+            "ARM",
+            "ADI",
+            "ALK",
+            "DIA",
+            "HUN",
+            "MBLY",
+            "WDC",
+            "LUV",
+            "DVN",
+            "SPCX",
+            "AAL",
+            "CRWD",
+            "HAL"
           ]
         },
         {
-          "title": "Citi lifts PTs on AMAT, LRCX, & KLAC amid booming WFE demand",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/technology/articles/citi-lifts-pts-amat-lrcx-121803127.html",
-          "publishedAt": "2026-06-17T12:18:03.000Z",
+          "title": "Southern Copper Registers Common Stock, Debt Securities for Future Offerings",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-registers-common-stock-124708252.html",
+          "publishedAt": "2026-06-15T12:47:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMAT",
-            "LRCX",
-            "KLAC",
-            "2330.TW"
+            "SCCO"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-17T17:26:27.921Z",
-      "headlines": [
-        {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GHC"
-          ]
-        },
-        {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-17T17:26:28.215Z",
-      "headlines": [
-        {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GHC"
-          ]
-        },
-        {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-17T17:26:28.215Z",
-      "headlines": [
-        {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GHC"
-          ]
-        },
-        {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-17T17:26:28.215Z",
-      "headlines": [
-        {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GHC"
-          ]
-        },
-        {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-17T17:26:28.215Z",
+      "fetchedAt": "2026-06-17T20:32:46.982Z",
       "headlines": [
         {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GHC"
+            "PFBC"
           ]
         },
         {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-17T17:26:28.215Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-17T20:32:46.982Z",
       "headlines": [
         {
-          "title": "St. Jude redesignated as WHO Collaborating Centre for Childhood Cancer",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/st-jude-redesignated-collaborating-centre-172200077.html",
-          "publishedAt": "2026-06-17T17:22:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Code3 Earns Dual Industry Honors for AI Innovation and Digital Commerce Excellence",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/code3-earns-dual-industry-honors-172100308.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GHC"
+            "PFBC"
           ]
         },
         {
-          "title": "Century Fasteners Corp. Exhibiting at 2026 Farnborough International Airshow",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/small-business/articles/century-fasteners-corp-exhibiting-2026-172100899.html",
-          "publishedAt": "2026-06-17T17:21:00.000Z",
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-17T20:32:46.982Z",
+      "headlines": [
+        {
+          "title": "Preferred Bank Announces Quarterly Dividend",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/preferred-bank-announces-quarterly-dividend-203000442.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PFBC"
+          ]
+        },
+        {
+          "title": "Certara Announces CFO Transition",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/certara-announces-cfo-transition-203000893.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CERT"
+          ]
+        },
+        {
+          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
+          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
