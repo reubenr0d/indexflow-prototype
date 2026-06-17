@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-16T23:48:59.209Z",
-  "startedAt": "2026-06-16T23:48:44.933Z",
-  "finishedAt": "2026-06-16T23:48:59.209Z",
+  "runId": "2026-06-17T05:17:40.402Z",
+  "startedAt": "2026-06-17T05:17:18.614Z",
+  "finishedAt": "2026-06-17T05:17:40.402Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.",
-  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API resulted in a \"502 Bad Gateway\" error. This indicates a temporary issue with the Atlas server, preventing access to the necessary data for making informed trading decisions at this time.\n\nGiven this situation, I will summarize the current state and suggest next steps:\n\n## Thesis\nThe current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.\n\n## Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None currently set\n\n## Recommendations\n- Monitor the status of the Atlas API to ensure it becomes operational again.\n- Once the API is functional, proceed with the planned workflow to identify and act on trade-ready picks.\n- Continue to watch for fresh drilling releases and material events that could impact trade readiness scores.\n\nI will await further instructions or the resolution of the API issue to proceed with the next steps.",
+  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API resulted in a \"502 Bad Gateway\" error. This indicates a temporary issue with the Atlas server, preventing access to the necessary data for identifying candidates that meet the required thresholds for composite and trade readiness scores. As a result, the strategy remains on hold until the issue is resolved and data becomes available.\n\n## Thesis\nThe current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Recommendations for Next Run\n- Monitor the status of the Atlas API to ensure data retrieval is possible.\n- Once operational, proceed with the outlined strategy to identify and act on trade-ready picks.\n- Ensure the vault's tracked assets are updated and aligned with the top-N picks once data is available.",
   "writeActions": [],
   "errors": [
     {
