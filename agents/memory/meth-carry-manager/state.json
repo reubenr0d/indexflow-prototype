@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-12T12:34:55.662Z",
-  "thesis": "The vault remains inactive with no available USDC for trading or any open positions. The hedge ratio cannot be calculated as there are no positions. The mETH yield since the last run is not applicable due to inactivity. \n\nI will now update the memory and exit.",
-  "lastThesisUpdate": "2026-06-12T12:34:55.662Z"
+  "lastRunAt": "2026-06-17T10:08:01.665Z",
+  "thesis": "The vault is currently inactive due to an inability to read the reserve state. As a result, no positions can be opened or adjusted. The next steps should focus on resolving the RWA adapter issue to enable trading actions. \n\nI will now update the memory and exit.",
+  "lastThesisUpdate": "2026-06-17T10:08:01.665Z"
 }

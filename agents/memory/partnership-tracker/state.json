@@ -2,5 +2,29 @@
   "agentFileHash": "sha256:78d23bc649946c8cc1915c9050732c8b60a246e9731481690e33f0d5fb830fc4",
   "deploymentFingerprint": "sha256:7346243ded4545bfa3acd79fd08103d378ac00ca353138f1bd61ad6c788e2fd8",
   "deploymentConfigPath": null,
-  "lastRunAt": "2026-06-08T12:54:55.086Z"
+  "lastRunAt": "2026-06-15T14:51:07.474Z",
+  "ml": {
+    "enabled": false,
+    "policy": {
+      "enabled": true,
+      "cadenceHours": 24,
+      "staleAfterHours": 24,
+      "confidenceFloor": 0,
+      "retryBackoffMinutes": 30
+    },
+    "strategyFingerprint": "b241c1867b27422fba4c8c5a71eaa1e529415c480a1d43b20125aab7be6decfd",
+    "nextSuggestedAction": null,
+    "refreshReason": null,
+    "cooldownUntil": null,
+    "lastJob": {
+      "id": null,
+      "status": null,
+      "startedAt": null,
+      "completedAt": null,
+      "result": null,
+      "errorMessage": null
+    },
+    "lastResult": null,
+    "lastResultAt": null
+  }
 }
