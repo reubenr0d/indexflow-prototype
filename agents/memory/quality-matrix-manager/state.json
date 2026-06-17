@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-17T05:17:40.402Z",
+  "lastRunAt": "2026-06-17T10:06:17.072Z",
   "thesis": "The current strategy remains on hold due to the inability to retrieve trade-ready picks from the Atlas API. This technical issue prevents the identification of candidates that meet the required thresholds for composite and trade readiness scores. The vault will continue to monitor for resolution of this issue and will be ready to act once the data becomes available.",
-  "lastThesisUpdate": "2026-06-17T05:17:40.402Z"
+  "lastThesisUpdate": "2026-06-17T10:06:17.072Z"
 }

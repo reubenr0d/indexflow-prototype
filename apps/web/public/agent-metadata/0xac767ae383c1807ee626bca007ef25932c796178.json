@@ -146,3 +146,40 @@
   ],
   "recentActions": []
 }
+   "confirmationBatches": []
+    },
+    {
+      "runId": "2026-06-10T01:33:22.780Z",
+      "startedAt": "2026-06-10T01:33:09.365Z",
+      "finishedAt": "2026-06-10T01:33:22.780Z",
+      "summary": "It seems there is an authorization issue with accessing the Atlas API for retrieving the latest trade-ready picks. This prevents us from proceeding with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, and opening new positions. \n\n## Thesis\nToday's run was unable to proceed due to an authorization issue with the Atlas API, which blocked access to the latest trade-ready picks. This prevents the vault from making informed decisions based on the quality matrix's trade-ready signals. The vault remains prepared to act on fresh signals as they emerge, with a focus on maintaining a balanced portfolio. The current metals regime is \"metals_risk_off,\" with no short penalty and a slight long bonus, indicating a cautious stance for both long and short positions. The strategy will continue to monitor for fresh drilling releases and material events that could impact trade readiness scores once access is restored.\n\n## Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Recommendations\n- Resolve the authorization issue with the Atlas API to enable access to trade-ready picks.\n- Once access is restored, proceed with wiring new entrants, setting the tracked-asset list, and opening positions based on fresh signals.\n- Continue monitoring the metals regime and adjust the strategy accordingly.",
+      "agentName": "quality-matrix-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 3,
+      "toolCalls": [
+        "get_vault_state",
+        "get_quality_matrix_definition",
+        "get_quality_trade_ready_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_quality_trade_ready_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 401 Unauthorized: <html>\\r\\n<head><title>401 Authorization Required</title></head>\\r\\n<body>\\r\\n<center><h1>401 Authorization Required</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    }
+  ],
+  "recentActions": []
+}
