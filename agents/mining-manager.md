@@ -74,12 +74,18 @@ The Atlas model has a 180-day horizon and a Spearman IC of ~0.33 / hit rate ~54%
   - If cached result is older than `min(cadenceHours, staleAfterHours)` → `trigger_and_continue`.
   - If cached candidate confidence is below `confidenceFloor` → `trigger_and_continue`.
   - If explicit user request is present in prompt (`refresh`, `fresh ML`, `run horizon`) → `trigger_and_wait`.
+  - If your prompt asks for specific horizons (`run horizon 30d and 90d`, `compare horizons 30d vs 90d`), the runner uses those values as the `horizons` list in `trigger_ml_horizon_evaluation`.
   - If `cooldownUntil` is still in the future → do not trigger; remain cached.
   - Otherwise → `consume_cached_result`.
 - Defaults:
   - normal cycle: `waitForCompletion: false` (non-blocking) and continue with cached result.
   - explicit freshness request: `waitForCompletion: true` (single-run blocking).
 - If a job is already queued/running and fresh data is requested explicitly, the runner keeps polling the same job until terminal (no duplicate trigger).
+- A completed horizon experiment stores `state.ml.lastResult.horizonDecision` with:
+  - winner candidate across tested horizons,
+  - top-ranked candidate list (`horizonCandidates`),
+  - and a derived hold-band recommendation derived from the winning horizon.
+- The runner injects this in the prompt as `horizonCandidatesTop`, `lastRecommendationWinners`, and `holdPlanHours` so the model can choose the best horizon and holding time by evidence, not only default memory.
 
 ## Workflow
 
@@ -154,6 +160,7 @@ The runner persists everything for you; you do not call any `state_set` or `log_
   - `enabled`, `policy`, `strategyFingerprint`, `nextSuggestedAction`, `refreshReason`, `cooldownUntil`.
   - `lastJob`: `id`, `status`, `startedAt`, `completedAt`, `result`, `errorMessage`.
   - `lastResult`: `status`, `settings`, `experimentId`, `recommendedCandidate`, `fetchedAt`, `sourceJobId`, `candidateConfidence`, `raw`, `resultDigest`.
+  - `lastResult.horizonDecision`: `candidates`, `winner`, `holdRecommendation` (`minHoldHours`, `suggestedHoldHours`, `maxHoldHours`).
 
 CI uploads `agents/memory/` + `apps/web/public/agent-metadata/` as artifacts and a follow-up job commits them back to the default branch under the `vault-agent[bot]` identity.
 

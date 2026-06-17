@@ -201,6 +201,8 @@ function parseJsonText(text) {
 
 const ML_AUTOMATION_AGENT_NAMES = new Set(["mining-manager"]);
 const MILLISECONDS_PER_HOUR = 60 * 60 * 1000;
+const ML_DEFAULT_HORIZON_DAYS = [30, 60, 180];
+const ML_MAX_HORIZON_DAYS = 365;
 const ML_FORCE_REFRESH_HINTS = [
   /\brefresh\b.*\bhorizon\b/i,
   /\bhorizon\b.*\brefresh\b/i,
@@ -216,6 +218,152 @@ const ML_DEFAULT_AUTOMATION_POLICY = {
   confidenceFloor: 0,
   retryBackoffMinutes: 30,
 };
+
+function normalisePositiveIntegerList(values, { maxCount = 6, maxValue = ML_MAX_HORIZON_DAYS } = {}) {
+  const seen = new Set();
+  for (const v of values) {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n <= 0 || n > maxValue) continue;
+    const intN = Math.trunc(n);
+    if (intN < 1 || intN > maxValue) continue;
+    seen.add(intN);
+  }
+  return Array.from(seen).sort((a, b) => a - b).slice(0, Math.max(1, maxCount));
+}
+
+function parseMlHorizonPlanFromPrompt({
+  userPrompt = "",
+  fallbackHorizonDays = ML_DEFAULT_HORIZON_DAYS,
+} = {}) {
+  const text = String(userPrompt || "").toLowerCase();
+  const mentionsHorizon =
+    /\bhorizon(s)?\b/.test(text) ||
+    /\btime\s*horizon/i.test(text) ||
+    /\bhold\s*time\b/i.test(text) ||
+    /\bcompare\b/.test(text);
+
+  if (!mentionsHorizon) {
+    return {
+      explicitRefresh: false,
+      compareRequested: false,
+      horizons: null,
+      source: "auto",
+    };
+  }
+
+  const aroundHorizonChunks = text.match(/[^.!?;\n]{0,80}\bhorizon(s)?\b[^.!?;\n]{0,80}/g) || [];
+  const extracted = [];
+  for (const chunk of aroundHorizonChunks) {
+    const m1 = chunk.matchAll(/(\d{1,3})\s*(?:d|day|days)?\b/g);
+    for (const match of m1) {
+      extracted.push(Number(match[1]));
+    }
+  }
+  if (extracted.length === 0) {
+    const shortHorizonUnits = text.matchAll(/(\d{1,3})\s*(?:d|day|days)\b/g);
+    for (const match of shortHorizonUnits) {
+      extracted.push(Number(match[1]));
+    }
+  }
+
+  const horizons = normalisePositiveIntegerList(extracted, { maxCount: 8 });
+  const compareRequested =
+    /\bcompare\b/.test(text) || /\bversus\b/.test(text) || /\bvs\.?\b/.test(text);
+  const explicitRefresh =
+    ML_FORCE_REFRESH_HINTS.some((pattern) => pattern.test(text)) ||
+    horizons.length > 0 ||
+    /\brun\b.*\bhorizon/i.test(text) ||
+    compareRequested;
+
+  if (horizons.length > 0) {
+    return {
+      explicitRefresh,
+      compareRequested,
+      horizons,
+      source: "user",
+    };
+  }
+
+  return {
+    explicitRefresh,
+    compareRequested,
+    horizons:
+      fallbackHorizonDays && fallbackHorizonDays.length > 0
+        ? normalisePositiveIntegerList(fallbackHorizonDays)
+        : null,
+    source: horizons.length > 0 ? "user" : "auto-fallback",
+  };
+}
+
+function summariseMlHorizonCandidates(raw = null) {
+  if (!raw || typeof raw !== "object" || !Array.isArray(raw.results)) {
+    return null;
+  }
+  const candidates = raw.results
+    .map((row) => {
+      if (!row || typeof row !== "object") return null;
+      const horizonDays = Number(row.horizonDays);
+      if (!Number.isFinite(horizonDays)) return null;
+      const meanSpearmanIc = Number(row.meanSpearmanIc);
+      const meanHitRate = Number(row.meanHitRate);
+      const score = [meanSpearmanIc, meanHitRate].find((value) => Number.isFinite(value));
+      return {
+        horizonDays,
+        featureMode: row.featureMode || null,
+        modelTag: row.modelTag || null,
+        status: row.status || null,
+        meanSpearmanIc: Number.isFinite(meanSpearmanIc) ? meanSpearmanIc : null,
+        meanHitRate: Number.isFinite(meanHitRate) ? meanHitRate : null,
+        confidence: Number.isFinite(score) ? score : null,
+        source: row,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => {
+      if (a.confidence !== b.confidence) {
+        if (a.confidence === null) return 1;
+        if (b.confidence === null) return -1;
+        return b.confidence - a.confidence;
+      }
+      return b.horizonDays - a.horizonDays;
+    });
+  return candidates.length > 0 ? candidates : null;
+}
+
+function inferMlHoldPlanFromHorizonDays(horizonDays = null) {
+  const horizon = Number(horizonDays);
+  if (!Number.isFinite(horizon) || horizon <= 0) return null;
+  const horizonHours = Math.round(horizon * 24);
+  const suggestedHoldHours = Math.round(horizonHours * 0.85);
+  const minHoldHours = Math.round(horizonHours * 0.5);
+  const maxHoldHours = Math.round(horizonHours * 1.25);
+  return {
+    horizonDays: horizon,
+    horizonHours,
+    minHoldHours,
+    suggestedHoldHours,
+    maxHoldHours,
+  };
+}
+
+function buildMlHorizonDecision(raw = null) {
+  const candidates = summariseMlHorizonCandidates(raw);
+  if (!candidates || candidates.length === 0) return null;
+  const recommended = candidates[0];
+  return {
+    candidates,
+    winner: {
+      horizonDays: recommended.horizonDays,
+      featureMode: recommended.featureMode,
+      modelTag: recommended.modelTag,
+      status: recommended.status,
+      meanSpearmanIc: recommended.meanSpearmanIc,
+      meanHitRate: recommended.meanHitRate,
+      confidence: recommended.confidence,
+    },
+    holdRecommendation: inferMlHoldPlanFromHorizonDays(recommended.horizonDays),
+  };
+}
 
 function clampPositiveNumber(value, fallback) {
   const parsed = Number(value);
@@ -317,6 +465,7 @@ function normalizeMlState(raw = null, config = null) {
           settings: lastResult.settings || null,
           experimentId: lastResult.experimentId || null,
           recommendedCandidate: lastResult.recommendedCandidate || null,
+          horizonDecision: lastResult.horizonDecision || null,
           fetchedAt: lastResult.fetchedAt || null,
           sourceJobId: lastResult.sourceJobId || null,
           candidateConfidence:
@@ -1049,6 +1198,8 @@ function buildMlResultSummary({
   recommendedCandidate = null,
   raw = null,
 }) {
+  const recommendationConfidence = extractMlRecommendationConfidence(raw);
+  const horizonDecision = buildMlHorizonDecision(raw);
   return {
     status: status || null,
     settings: settings || null,
@@ -1056,8 +1207,15 @@ function buildMlResultSummary({
     recommendedCandidate: recommendedCandidate || null,
     fetchedAt: new Date().toISOString(),
     sourceJobId: sourceJobId || null,
-    candidateConfidence: Number.isFinite(extractMlRecommendationConfidence(raw))
-      ? Number(extractMlRecommendationConfidence(raw))
+    candidateConfidence: Number.isFinite(recommendationConfidence)
+      ? Number(recommendationConfidence)
+      : null,
+    horizonDecision: horizonDecision
+      ? {
+          candidates: horizonDecision.candidates.slice(0, 8),
+          winner: horizonDecision.winner,
+          holdRecommendation: horizonDecision.holdRecommendation,
+        }
       : null,
     raw: raw || null,
     resultDigest: raw ? assignMlResultDigest(raw) : null,
@@ -2726,22 +2884,56 @@ function buildSystemPrompt(config, state, recentRuns, needsNewVault, marketRegim
     if (state.ml.refreshReason) {
       prompt += `refreshReason: ${state.ml.refreshReason}\n`;
     }
-    if (state.ml.lastResult?.candidateConfidence !== null) {
+    if (Number.isFinite(state.ml.lastResult?.candidateConfidence)) {
       prompt += `lastResultConfidence: ${state.ml.lastResult.candidateConfidence}\n`;
     }
     if (state.ml.lastResult?.fetchedAt) {
       prompt += `lastResultFetchedAt: ${state.ml.lastResult.fetchedAt}\n`;
     }
-    if (state.ml.lastResult?.recommendedCandidate) {
+    const horizonDecision = state.ml.lastResult?.horizonDecision || null;
+    if (horizonDecision?.winner) {
+      const winner = horizonDecision.winner;
+      const holdRecommendation = horizonDecision.holdRecommendation;
+      prompt += `lastRecommendationWinners: horizonDays=${winner.horizonDays ?? "n/a"}, ` +
+        `featureMode=${winner.featureMode ?? "n/a"}, ` +
+        `modelTag=${winner.modelTag ?? "n/a"}, ` +
+        `meanSpearmanIc=${winner.meanSpearmanIc ?? "n/a"}, ` +
+        `meanHitRate=${winner.meanHitRate ?? "n/a"}\n`;
+      if (holdRecommendation) {
+        prompt += `holdPlanHours: min=${holdRecommendation.minHoldHours}h ` +
+          `target=${holdRecommendation.suggestedHoldHours}h max=${holdRecommendation.maxHoldHours}h ` +
+          `(${holdRecommendation.horizonDays}d horizon)\n`;
+      }
+    } else if (state.ml.lastResult?.recommendedCandidate) {
       const cand = state.ml.lastResult.recommendedCandidate;
-      prompt += `lastRecommendation: horizonDays=${cand.horizonDays ?? "n/a"}, ` +
+      const horizonDays = cand.horizonDays ?? "n/a";
+      const holdHint = inferMlHoldPlanFromHorizonDays(
+        typeof horizonDays === "number" ? horizonDays : null,
+      );
+      prompt += `lastRecommendation: horizonDays=${horizonDays ?? "n/a"}, ` +
         `featureMode=${cand.featureMode ?? "n/a"}, ` +
         `modelTag=${cand.modelTag ?? cand.model_tag ?? "n/a"}\n`;
+      if (holdHint) {
+        prompt += `holdPlanHours: min=${holdHint.minHoldHours}h target=${holdHint.suggestedHoldHours}h max=${holdHint.maxHoldHours}h (${holdHint.horizonDays}d horizon)\n`;
+      }
     } else if (state.ml.lastJob?.result?.recommendedCandidate) {
       const cand = state.ml.lastJob.result.recommendedCandidate;
-      prompt += `lastRecommendation: horizonDays=${cand.horizonDays ?? "n/a"}, featureMode=${cand.featureMode ?? "n/a"}, modelTag=${cand.modelTag ?? cand.model_tag ?? "n/a"}\n`;
+      const horizonDays = cand.horizonDays ?? "n/a";
+      const holdHint = inferMlHoldPlanFromHorizonDays(
+        typeof cand.horizonDays === "number" ? cand.horizonDays : null,
+      );
+      prompt += `lastRecommendation: horizonDays=${horizonDays ?? "n/a"}, featureMode=${cand.featureMode ?? "n/a"}, modelTag=${cand.modelTag ?? cand.model_tag ?? "n/a"}\n`;
+      if (holdHint) {
+        prompt += `holdPlanHours: min=${holdHint.minHoldHours}h target=${holdHint.suggestedHoldHours}h max=${holdHint.maxHoldHours}h (${holdHint.horizonDays}d horizon)\n`;
+      }
     } else {
       prompt += "lastRecommendation: none\n";
+    }
+    if (Array.isArray(horizonDecision?.candidates) && horizonDecision.candidates.length > 0) {
+      const best = horizonDecision.candidates.slice(0, 3).map((cand) => {
+        return `d${cand.horizonDays}/fm=${cand.featureMode || "n/a"}/ic=${cand.meanSpearmanIc ?? "n/a"}/hit=${cand.meanHitRate ?? "n/a"}`;
+      });
+      prompt += `horizonCandidatesTop: ${best.join(" | ")}\n`;
     }
     if (state.ml.lastJob?.id) {
       prompt += `activeJobId: ${state.ml.lastJob.id}\n`;
@@ -3879,9 +4071,16 @@ export async function runAgent(agentName) {
     if (!isMlPolicyEnabled(config)) {
       mlState.enabled = false;
     }
+    const mlHorizonPlan = parseMlHorizonPlanFromPrompt({
+      userPrompt: config.userPrompt,
+      fallbackHorizonDays: mlState.lastResult?.recommendedCandidate
+        ? [mlState.lastResult.recommendedCandidate.horizonDays]
+        : ML_DEFAULT_HORIZON_DAYS,
+    });
     const explicitMlRefreshNow =
       (process.env.AGENT_FORCE_ML_REFRESH || "").toLowerCase().trim() === "1" ||
       (process.env.AGENT_ML_REFRESH_NOW || "").toLowerCase().trim() === "1" ||
+      mlHorizonPlan.explicitRefresh ||
       ML_FORCE_REFRESH_HINTS.some((pattern) => pattern.test(config.userPrompt || ""));
 
     async function callAtlasMlTool(toolName, args = {}) {
@@ -4020,7 +4219,7 @@ export async function runAgent(agentName) {
           mlState,
           config,
           nowMs: Date.now(),
-          explicitRefreshNow,
+          explicitRefreshNow: explicitMlRefreshNow,
         });
         if (decision.reasons.includes("last_job_terminal_failure")) {
           mlState.lastResult = null;
@@ -4032,6 +4231,9 @@ export async function runAgent(agentName) {
           shouldTrigger: decision.shouldTrigger,
           shouldWait: decision.shouldWait,
           reasons: decision.reasons,
+          requestedHorizonDays: mlHorizonPlan.horizons || null,
+          compareRequested: Boolean(mlHorizonPlan.compareRequested),
+          horizonPlanSource: mlHorizonPlan.source,
           lastJobId: mlState.lastJob?.id || null,
           lastJobStatus: mlState.lastJob?.status || null,
           nextAction: decision.shouldTrigger
@@ -4045,10 +4247,17 @@ export async function runAgent(agentName) {
         mlState.refreshReason = decisionForDiagnostics.reasons.join(",") || null;
 
         if (decision.shouldTrigger) {
-          const trigger = await callAtlasMlTool("trigger_ml_horizon_evaluation", {
+          const triggerPayload = {
             persistModels: false,
             waitForCompletion: decision.shouldWait,
-          });
+          };
+          if (Array.isArray(mlHorizonPlan.horizons) && mlHorizonPlan.horizons.length > 0) {
+            triggerPayload.horizons = mlHorizonPlan.horizons;
+          }
+          const trigger = await callAtlasMlTool(
+            "trigger_ml_horizon_evaluation",
+            triggerPayload,
+          );
           if (trigger?.parsed && typeof trigger.parsed === "object") {
             const parsed = trigger.parsed;
             const parsedStatus = String(parsed.status || "").toLowerCase();
