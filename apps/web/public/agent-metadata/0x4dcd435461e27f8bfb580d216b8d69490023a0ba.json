@@ -4,13 +4,13 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
-  "lastRunAt": "2026-06-18T01:46:53.033Z",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V), which has been identified for its high predicted return and robust ML score. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
+  "lastRunAt": "2026-06-18T07:10:54.165Z",
   "latestRun": {
-    "runId": "2026-06-18T01:46:53.033Z",
-    "finishedAt": "2026-06-18T01:46:53.033Z",
-    "summary": "The short position on Homeland Uranium Corp. (HLU.V) has been successfully opened. Here is a summary of the actions taken and the current state:\n\n## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n### Current State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Short Position Opened**: Homeland Uranium Corp. (HLU.V)\n  - **Justification**: Negative predicted return and high absPredictedReturn from Atlas ML model.\n- **Long Positions**: No new long positions opened due to policy constraints.\n\n### Recommendations for Next Run\n- Re-evaluate the eligible set for long positions once the cooldown period ends.\n- Continue monitoring the performance of the short position on HLU.V.\n- Consider any new Atlas ML top picks that align with policy constraints.\n\nThis approach ensures compliance with policy constraints while leveraging the Atlas ML model's insights for potential profit opportunities.",
-    "startedAt": "2026-06-18T01:42:07.384Z",
+    "runId": "2026-06-18T07:10:54.165Z",
+    "finishedAt": "2026-06-18T07:10:54.165Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V), which has been identified for its high predicted return and robust ML score. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Current NAV**: $6,753.54\n- **Perp Allocated**: $12,954.90\n- **Available Collateral**: $6,294.26\n\n### Actions Taken\n- **Tracked Assets Updated**: Included high ML score long picks and high absPredictedReturn short picks.\n- **Positions Opened**:\n  - **Long Position**: Canada Nickel Company Inc. (CNC.V) with a collateral of $3,147.13.\n  - **Short Position**: Solis Minerals Ltd. (SLM.AX) with a collateral of $3,147.13.\n\n### Recommendations for Next Run\n- Monitor the performance of the newly opened positions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.\n- Stay updated with market news to support or veto potential trades based on emerging information.",
+    "startedAt": "2026-06-18T07:06:27.439Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -26,79 +26,98 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
+      "yfinance_quote",
+      "yfinance_quote",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
       "set_vault_assets",
-      "allocate_to_perp",
       "get_perp_capital_snapshot",
-      "yfinance_news",
       "plan_open_position",
       "plan_open_position",
       "plan_open_position",
       "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
+      "open_position",
       "open_position"
     ],
-    "actionCount": 5,
+    "actionCount": 8,
     "onChainActionCount": 4,
-    "offChainActionCount": 1,
+    "offChainActionCount": 4,
     "reasoningSummaries": [],
     "errors": [],
     "softFailures": [
       {
-        "tool": "allocate_to_perp",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INSUFFICIENT_RESERVES\",\n  \"message\": \"Vault 0x4dcd435461e27f8bfb580d216b8d69490023a0ba has only 0 raw USDC available for perp allocation, but the call requested 500000000 (off by 500000000 raw USDC). getAvailableForPerpUsdc() respects minReserveBps and maxPerpAllocation caps; the prior snapshot may be stale by cents due to fee accrual or interim deposits/withdrawals.\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"requestedAmount\": \"500000000\",\n  \"availableAmount\": \"0\",\n  \"shortfall\": \"500000000\",\n  \"recovery_hint\": \"Re-read `get_vault_state` for the fresh `availableForPerp` value, then retry with `amount = availableForPerp` (or any smaller value). Do not rely on a snapshot from earlier in the run — fee accrual and concurrent deposits move the available reserve between reads.\"\n}",
-        "errorCode": "INSUFFICIENT_RESERVES"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+        "errorCode": "INVALID_SYMBOL_POLICY"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3, isLong=true) is blocked: a close was recorded at 2026-06-18T01:43:48.855Z (auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-18T05:43:48.855Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3\",\n  \"isLong\": true,\n  \"ticker\": \"LUN.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T01:43:48.855Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-18T05:43:48.855Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ARIS.TO\\\" is already wired in OracleAdapter at assetId 0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907 (active=true).\",\n  \"symbol\": \"ARIS.TO\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3, isLong=true) is blocked: a close was recorded at 2026-06-18T01:43:48.855Z (auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-18T05:43:48.855Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3\",\n  \"isLong\": true,\n  \"ticker\": \"LUN.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T01:43:48.855Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-18T05:43:48.855Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.MX, SCCO.JK.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.MX\",\n    \"SCCO.JK\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+        "errorCode": "INVALID_SYMBOL_POLICY"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3, isLong=true) is blocked: a close was recorded at 2026-06-18T01:43:48.855Z (auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-18T05:43:48.855Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3\",\n  \"isLong\": true,\n  \"ticker\": \"LUN.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T01:43:48.855Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-18T05:43:48.855Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       }
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 3,
+        "turn": 4,
         "verdict": "approve",
-        "reason": "The batch updates tracked assets and allocates $500 to perp capital, which is within the available collateral of $6269.82 and aligns with the metals risk-off regime.",
+        "reason": "Batch aligns with available collateral ($6294.26) and regime favors longs with longBonus=2; no recent losses >10% on proposed tickers.",
         "proposedTools": [
-          "set_vault_assets",
-          "allocate_to_perp"
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 5,
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
+        "proposedTools": [
+          "set_vault_assets"
         ]
       },
       {
         "turn": 10,
         "verdict": "approve",
-        "reason": "The short position on HLU.V uses 100% of available collateral ($6269.82), but shortPenalty is 0, aligning with metals_risk_off regime.",
+        "reason": "Both positions use 50% of available collateral each, within limits; no recent losses on these tickers; regime supports long with bonus.",
         "proposedTools": [
+          "open_position",
           "open_position"
         ]
       }
     ],
     "confirmationBatches": [
       {
-        "turn": 3,
+        "turn": 4,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
-          "set_vault_assets",
-          "allocate_to_perp"
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
+        ]
+      },
+      {
+        "turn": 5,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "set_vault_assets"
         ]
       },
       {
@@ -107,12 +126,139 @@
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
+          "open_position",
           "open_position"
         ]
       }
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-18T07:10:54.165Z",
+      "startedAt": "2026-06-18T07:06:27.439Z",
+      "finishedAt": "2026-06-18T07:10:54.165Z",
+      "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V), which has been identified for its high predicted return and robust ML score. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Current NAV**: $6,753.54\n- **Perp Allocated**: $12,954.90\n- **Available Collateral**: $6,294.26\n\n### Actions Taken\n- **Tracked Assets Updated**: Included high ML score long picks and high absPredictedReturn short picks.\n- **Positions Opened**:\n  - **Long Position**: Canada Nickel Company Inc. (CNC.V) with a collateral of $3,147.13.\n  - **Short Position**: Solis Minerals Ltd. (SLM.AX) with a collateral of $3,147.13.\n\n### Recommendations for Next Run\n- Monitor the performance of the newly opened positions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.\n- Stay updated with market news to support or veto potential trades based on emerging information.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 11,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_quote",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position",
+        "open_position"
+      ],
+      "actionCount": 8,
+      "onChainActionCount": 4,
+      "offChainActionCount": 4,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+          "errorCode": "INVALID_SYMBOL_POLICY"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ARIS.TO\\\" is already wired in OracleAdapter at assetId 0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907 (active=true).\",\n  \"symbol\": \"ARIS.TO\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.MX, SCCO.JK.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.MX\",\n    \"SCCO.JK\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+          "errorCode": "INVALID_SYMBOL_POLICY"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "Batch aligns with available collateral ($6294.26) and regime favors longs with longBonus=2; no recent losses >10% on proposed tickers.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "verdict": "approve",
+          "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "verdict": "approve",
+          "reason": "Both positions use 50% of available collateral each, within limits; no recent losses on these tickers; regime supports long with bonus.",
+          "proposedTools": [
+            "open_position",
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position",
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-18T01:46:53.033Z",
       "startedAt": "2026-06-18T01:42:07.384Z",
@@ -392,6 +538,106 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-18T07:10:54.165Z",
+      "txHash": "0xe09989c7c1cb7f84626d8f3b79ee15290ebfb493d2887a0b69b2e277496a6029",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T07:10:54.165Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": false,
+        "sizeDelta": "31349104190000000000000000000000000",
+        "collateralDelta": "6269820838"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Hudbay Minerals Inc. (HBM) for a long position based on high ML score and predicted return.",
+      "timestamp": "2026-06-18T07:10:54.165Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T07:10:54.165Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "HBM",
+        "seedPriceUsd": 28.17
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch aligns with available collateral ($6294.26) and regime favors longs with longBonus=2; no recent losses >10% on proposed tickers."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include high ML score long picks and high absPredictedReturn short picks.",
+      "timestamp": "2026-06-18T07:10:54.165Z",
+      "txHash": "0x7e2577851c22b042cfd913ed890f853f0a05f685b1432e6bd580465fa2acf23f",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T07:10:54.165Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+          "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+          "0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3",
+          "0x4ee9304f9eaf9b613fcb083739225e32cca61aaf42c3f02f4e96ee78ce374952",
+          "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+          "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "0x4aed6664af22cc5ec9eb254c2e9f203d4e02a041eafdf4690c9fca4c7a0218e5",
+          "0x06c71f5ac4b84759e4a2b857fa1337e2d191fe0a349365b9e552f924bfce5146",
+          "0x4f7dc1174b04b7aa540255775c625276b3514de95da12c4598c526f214872dc5",
+          "0x6e7fb206b8458f2482e7fa67dceed6c0bed214d32a63c14be571e5278f65a19c",
+          "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09",
+          "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19"
+        ],
+        "count": 12
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening short position on Solis Minerals Ltd. (SLM.AX) due to negative predicted return and high absPredictedReturn.",
+      "timestamp": "2026-06-18T07:10:54.165Z",
+      "txHash": "0x31fe62fe9ad14c51f49fd4dd6877ad89f8f5f10571983dec03b1b7775e056fd3",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T07:10:54.165Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+        "isLong": false,
+        "size": "15735658710000000000000000000000000",
+        "collateral": "3147131742"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 50% of available collateral each, within limits; no recent losses on these tickers; regime supports long with bonus."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Canada Nickel Company Inc. (CNC.V) based on high ML score and predicted return.",
+      "timestamp": "2026-06-18T07:10:54.165Z",
+      "txHash": "0x7a807836f491ef67859a9c1f7b8caa5ee12d3f84995270c7fbc9c18840012c22",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T07:10:54.165Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3",
+        "isLong": true,
+        "size": "31471317420000000000000000000000000",
+        "collateral": "3147131742"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 50% of available collateral each, within limits; no recent losses on these tickers; regime supports long with bonus."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
