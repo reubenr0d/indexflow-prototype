@@ -4,20 +4,20 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have identified Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
-  "lastRunAt": "2026-06-18T20:42:10.631Z",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Gold Strike Resources Corp. (GSR.V) and Aris Mining Corporation (ARIS.TO), which have been identified for their high predicted returns and robust ML scores. On the short side, although no new shorts were opened this run, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
+  "lastRunAt": "2026-06-18T23:11:16.035Z",
   "latestRun": {
-    "runId": "2026-06-18T20:42:10.631Z",
-    "finishedAt": "2026-06-18T20:42:10.631Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have identified Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary\n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $5,752.49\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n\n### Top Picks Acted On\n- **Longs**: Canada Nickel Company Inc. (CNC.V), Sage Potash Corp. (SAGE.V), Hudbay Minerals (HBM), Gold Strike Resources Corp. (GSR.V), Amarc Resources Ltd. (AHR.V), Aris Mining Corporation (ARIS.TO)\n- **Shorts**: Homeland Uranium Corp. (HLU.V), SOLIS FPO (SLM.AX), Vault Strategic Mining Corp. (KNOX.V)\n\n### Positions Opened\n- **Long Positions**: Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return.\n\n### News Context\n- **Hudbay Minerals (HBM)**: Positive news with the groundbreaking of the New Ingerbelle Expansion Project in British Columbia, supporting its inclusion in the long basket.\n- **Homeland Uranium Corp. (HLU.V)**: No significant news impacting the short thesis.\n\n### Recommendations for Next Run\n- Monitor the performance of the newly opened positions and adjust the strategy based on updated ML predictions and market conditions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.\n- Be vigilant for any significant news that could impact the current positions, especially those in the short basket.",
-    "startedAt": "2026-06-18T20:39:07.732Z",
+    "runId": "2026-06-18T23:11:16.035Z",
+    "finishedAt": "2026-06-18T23:11:16.035Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Gold Strike Resources Corp. (GSR.V) and Aris Mining Corporation (ARIS.TO), which have been identified for their high predicted returns and robust ML scores. On the short side, although no new shorts were opened this run, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary and Next Steps\n\n### Current Situation\n- **Positions Opened**: Successfully opened long positions on Gold Strike Resources Corp. (GSR.V) and Aris Mining Corporation (ARIS.TO) based on their high ML scores and predicted returns.\n- **Churn Guard**: AHR.V was skipped due to a recent close and is under churn guard until 2026-06-19T03:07:25.358Z.\n\n### Recommendations\n- **Monitor News**: Continue to monitor news for any significant updates on selected assets.\n- **Re-evaluate Positions**: Re-evaluate positions based on updated ML predictions and news context in the next cycle.\n- **Short Candidates**: Consider opening a short on Homeland Uranium Corp. (HLU.V) if its negative predicted return remains compelling and capital becomes available.\n\n### Vault State\n- **NAV**: $5,771.64\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 12\n\nThe vault remains well-positioned with a focus on high-potential long positions, and we will continue to adjust based on the latest ML insights and market conditions.",
+    "startedAt": "2026-06-18T23:05:20.274Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 11,
+    "turns": 8,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,68 +26,115 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_news",
-      "yfinance_news",
       "get_perp_capital_snapshot",
       "plan_open_position",
       "plan_open_position",
       "plan_open_position",
       "open_position",
+      "open_position",
       "get_vault_state"
     ],
-    "actionCount": 1,
-    "onChainActionCount": 1,
+    "actionCount": 3,
+    "onChainActionCount": 3,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
     "errors": [],
     "softFailures": [
       {
         "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245, isLong=true) is blocked: a close was recorded at 2026-06-18T18:13:01.361Z (auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)). Cooldown ends at 2026-06-18T22:13:01.361Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245\",\n  \"isLong\": true,\n  \"ticker\": \"GSR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T18:13:01.361Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-18T22:13:01.361Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
-      },
-      {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907, isLong=true) is blocked: a close was recorded at 2026-06-18T18:12:50.333Z (auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-18T22:12:50.333Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"isLong\": true,\n  \"ticker\": \"ARIS.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T18:12:50.333Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-18T22:12:50.333Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6, isLong=true) is blocked: a close was recorded at 2026-06-18T23:07:25.358Z (auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-19T03:07:25.358Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"isLong\": true,\n  \"ticker\": \"AHR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T23:07:25.358Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-19T03:07:25.358Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
         "errorCode": "CHURN_GUARD_COOLDOWN"
       }
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 9,
-        "verdict": "downsize",
-        "reason": "Proposed long on AHR.V uses 33% of available collateral; downsize to mitigate risk given recent close on same ticker.",
-        "downsizeFactor": 0.75,
-        "audit": [
-          {
-            "tool": "open_position",
-            "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
-            "isLong": true,
-            "beforeCollateral": "1087114818",
-            "afterCollateral": "815336113",
-            "beforeSize": "10871148180000000000000000000000000",
-            "afterSize": "8153361135000000000000000000000000",
-            "downsizeFactor": 0.75
-          }
-        ],
+        "turn": 6,
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (1861.86 USDC of 5585.59 USDC), within limits and aligned with longBonus=1.",
         "proposedTools": [
+          "open_position",
           "open_position"
         ]
       }
     ],
     "confirmationBatches": [
       {
-        "turn": 9,
+        "turn": 6,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
+          "open_position",
           "open_position"
         ]
       }
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-18T23:11:16.035Z",
+      "startedAt": "2026-06-18T23:05:20.274Z",
+      "finishedAt": "2026-06-18T23:11:16.035Z",
+      "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Gold Strike Resources Corp. (GSR.V) and Aris Mining Corporation (ARIS.TO), which have been identified for their high predicted returns and robust ML scores. On the short side, although no new shorts were opened this run, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary and Next Steps\n\n### Current Situation\n- **Positions Opened**: Successfully opened long positions on Gold Strike Resources Corp. (GSR.V) and Aris Mining Corporation (ARIS.TO) based on their high ML scores and predicted returns.\n- **Churn Guard**: AHR.V was skipped due to a recent close and is under churn guard until 2026-06-19T03:07:25.358Z.\n\n### Recommendations\n- **Monitor News**: Continue to monitor news for any significant updates on selected assets.\n- **Re-evaluate Positions**: Re-evaluate positions based on updated ML predictions and news context in the next cycle.\n- **Short Candidates**: Consider opening a short on Homeland Uranium Corp. (HLU.V) if its negative predicted return remains compelling and capital becomes available.\n\n### Vault State\n- **NAV**: $5,771.64\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 12\n\nThe vault remains well-positioned with a focus on high-potential long positions, and we will continue to adjust based on the latest ML insights and market conditions.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 8,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 3,
+      "onChainActionCount": 3,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "plan_open_position",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6, isLong=true) is blocked: a close was recorded at 2026-06-18T23:07:25.358Z (auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-19T03:07:25.358Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"isLong\": true,\n  \"ticker\": \"AHR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-18T23:07:25.358Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-19T03:07:25.358Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+          "errorCode": "CHURN_GUARD_COOLDOWN"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 6,
+          "verdict": "approve",
+          "reason": "Both positions use 33.3% of available collateral each (1861.86 USDC of 5585.59 USDC), within limits and aligned with longBonus=1.",
+          "proposedTools": [
+            "open_position",
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 6,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position",
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-18T20:42:10.631Z",
       "startedAt": "2026-06-18T20:39:07.732Z",
@@ -738,6 +785,59 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-18T23:11:16.035Z",
+      "txHash": "0x68226e051daa3edc90fe63dffc6acbeba9a122e5133de395d5e380c14c7ba312",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T23:11:16.035Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "24460083405000000000000000000000000",
+        "collateralDelta": "2446008340"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) based on high ML score and predicted return.",
+      "timestamp": "2026-06-18T23:11:16.035Z",
+      "txHash": "0x8d2d4ac6d6e522dab4fde6d180ce45c23c0da98c37009a30eb6d682c2575e1f1",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T23:11:16.035Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "size": "18618628940000000000000000000000000",
+        "collateral": "1861862894"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (1861.86 USDC of 5585.59 USDC), within limits and aligned with longBonus=1."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Aris Mining Corporation (ARIS.TO) based on high ML score and predicted return.",
+      "timestamp": "2026-06-18T23:11:16.035Z",
+      "txHash": "0xe0b6dcf40a8323b8d38a0d6c0429a94fc38171cc8f8b2d4613de23ad4fc3034f",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T23:11:16.035Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+        "isLong": true,
+        "size": "18618628940000000000000000000000000",
+        "collateral": "1861862894"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Both positions use 33.3% of available collateral each (1861.86 USDC of 5585.59 USDC), within limits and aligned with longBonus=1."
+      }
+    },
     {
       "tool": "open_position",
       "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) based on its high ML score and predicted return, leveraging available collateral efficiently.",
