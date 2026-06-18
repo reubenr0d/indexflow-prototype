@@ -1,99 +1,126 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-18T18:13:29.243Z",
+  "updatedAt": "2026-06-18T20:41:14.026Z",
   "entries": {
     "GSR.V": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MSGM"
+          ]
         },
         {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CNC.V": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MSGM"
+          ]
         },
         {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "headlines": [
+        {
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
+        },
+        {
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSGM"
+          ]
+        },
+        {
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
       "headlines": [
         {
           "title": "Hudbay Minerals Breaks Ground at New Ingerbelle Expansion Project in British Columbia",
@@ -121,432 +148,289 @@
           ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Tim Cook Says Chip Wars Will Take a Big Bite of Apple",
+          "publisher": "Moby",
+          "link": "https://finance.yahoo.com/m/7ee5a96f-42bc-3d24-96a8-97cd0b5d79d7/tim-cook-says-chip-wars-will.html",
+          "publishedAt": "2026-06-18T19:39:39.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "AAPL",
+            "NVDA",
+            "IBM"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "ARIS.TO": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TDG.V": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LUN.TO": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SCCO": {
-      "fetchedAt": "2026-06-18T18:13:27.941Z",
-      "headlines": [
-        {
-          "title": "Copper Stocks Are Making A Comeback. Here's Why.",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/0cc37d88-eade-3d46-a42c-11d7da087dc8/copper-stocks-are-making-a.html",
-          "publishedAt": "2026-06-18T14:55:45.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SCCO",
-            "ERO"
+            "CCEC",
+            "ARHN"
           ]
         },
         {
-          "title": "Southern Copper (SCCO) Rises Higher Than Market: Key Facts",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-scco-rises-higher-214503209.html",
-          "publishedAt": "2026-06-15T21:45:03.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SCCO",
-            "^GSPC",
-            "^DJI"
+            "MSGM"
           ]
         },
         {
-          "title": "Stocks Supported by Lower Crude Oil Prices and Bond Yields",
-          "publisher": "Barchart",
-          "link": "https://finance.yahoo.com/m/27a772cd-d509-3783-90a1-afe31459b5a8/stocks-supported-by-lower.html",
-          "publishedAt": "2026-06-16T14:18:10.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ES*0",
-            "MPC",
-            "CL*0",
-            "AU",
-            "CCL",
-            "TSCO",
-            "NCLH",
-            "HL",
-            "APA",
-            "DAL",
-            "VMI",
-            "NEM",
-            "QQQ",
-            "EW",
-            "FANG",
-            "$SPX",
-            "PANW",
-            "UAL",
-            "ZS",
-            "ZN*0",
-            "RCL",
-            "B",
-            "SPY",
-            "$DOWI",
-            "MCHP",
-            "HPP",
-            "COP",
-            "VLO",
-            "SKT",
-            "QCOM",
-            "$IUXX",
-            "PLAY",
-            "STX",
-            "FTNT",
-            "NQ*0",
-            "CDE",
-            "FCX",
-            "SCCO",
-            "SNDK",
-            "ARM",
-            "ADI",
-            "ALK",
-            "DIA",
-            "HUN",
-            "MBLY",
-            "WDC",
-            "LUV",
-            "DVN",
-            "SPCX",
-            "AAL",
-            "CRWD",
-            "HAL"
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "headlines": [
+        {
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
+        },
+        {
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSGM"
+          ]
+        },
+        {
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-18T20:41:14.026Z",
+      "headlines": [
+        {
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
+        },
+        {
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSGM"
+          ]
+        },
+        {
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
+      "fetchedAt": "2026-06-18T20:41:14.026Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MSGM"
+          ]
         },
         {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
+      "fetchedAt": "2026-06-18T20:41:14.026Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MSGM"
+          ]
         },
         {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-18T20:41:14.026Z",
+      "headlines": [
+        {
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
+        },
+        {
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MSGM"
+          ]
+        },
+        {
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
+      "fetchedAt": "2026-06-18T20:41:14.026Z",
       "headlines": [
         {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
+          "publishedAt": "2026-06-18T20:35:04.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CCEC",
+            "ARHN"
+          ]
         },
         {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
+          "publishedAt": "2026-06-18T20:34:42.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "MSGM"
+          ]
         },
         {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
+          "publishedAt": "2026-06-18T20:33:38.000Z",
           "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EUZ.JO": {
-      "fetchedAt": "2026-06-18T18:13:29.243Z",
-      "headlines": [
-        {
-          "title": "How biotech executives are confronting the funding and regulatory shifts",
-          "publisher": "Pharmaceutical Technology",
-          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
-          "publishedAt": "2026-06-18T18:10:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
-          "publishedAt": "2026-06-18T18:08:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
-          "publisher": "Associated Press",
-          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
-          "publishedAt": "2026-06-18T18:06:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "RPAY",
+            "USDC-USD",
+            "XLM-USD"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

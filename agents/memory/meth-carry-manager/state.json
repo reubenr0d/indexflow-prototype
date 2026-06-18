@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-18T18:17:32.899Z",
+  "lastRunAt": "2026-06-18T20:50:30.289Z",
   "thesis": "The hedge ratio is currently not applicable as there are no positions open and the vault is inactive. The mETH yield since the last run is also not applicable due to the lack of activity. The funding rate context is irrelevant as there are no positions to consider. \n\nNext steps would involve troubleshooting the RWA adapter wiring or checking for contract issues to restore functionality.",
   "lastThesisUpdate": "2026-06-18T14:37:24.229Z"
 }
