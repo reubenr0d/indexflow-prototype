@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-17T23:01:16.727Z",
-  "startedAt": "2026-06-17T23:00:36.015Z",
-  "finishedAt": "2026-06-17T23:01:16.727Z",
+  "runId": "2026-06-18T01:48:35.950Z",
+  "startedAt": "2026-06-18T01:47:31.209Z",
+  "finishedAt": "2026-06-18T01:48:35.950Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents any new long positions from being opened. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents any new long positions from being opened. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Trade-Ready Picks\n- No trade-ready picks were available with a composite score of at least 75 and a trade readiness score of at least 75.\n\n## Actions Taken\n- No new positions were opened or closed due to the lack of eligible trade-ready picks.\n\n## Recommendations for Next Run\n- Monitor the availability of trade-ready picks from the Atlas API.\n- Continue to assess the market regime and adjust the strategy accordingly once eligible candidates are available.\n- Re-evaluate the potential for short positions if Red-Flag signals and bearish news headlines emerge.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents any new long positions from being opened. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n### Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Actions Taken\n- **Trade-Ready Picks**: No eligible picks met the criteria for trade readiness (minCompositeScore: 75, minTradeReadinessScore: 75).\n- **Long Positions**: No new long positions opened due to the absence of trade-ready picks.\n- **Short Positions**: No short positions considered due to lack of Red-Flag signals and bearish news headlines.\n\n### Recommendations for Next Run\n- Monitor for updates from the Atlas API to identify any new trade-ready picks.\n- Re-evaluate the market regime and potential short candidates if Red-Flag signals or bearish headlines emerge.\n- Consider any changes in the quality matrix or signal availability that could impact future rankings.",
   "writeActions": [],
   "errors": []
 }

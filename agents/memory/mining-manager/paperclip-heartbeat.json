@@ -7,108 +7,59 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-17T22:59:54.962Z",
-  "startedAt": "2026-06-17T22:56:35.256Z",
-  "finishedAt": "2026-06-17T22:59:54.962Z",
+  "runId": "2026-06-18T01:46:53.033Z",
+  "startedAt": "2026-06-18T01:42:07.384Z",
+  "finishedAt": "2026-06-18T01:46:53.033Z",
   "status": "succeeded",
   "usage": {
-    "turns": 12,
-    "toolCalls": 20,
+    "turns": 11,
+    "toolCalls": 24,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 8
+    "softFailures": 4,
+    "writeActions": 5
   },
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
-  "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Current State**: The vault has successfully allocated available USDC to perp trading and updated its tracked assets to include top Atlas ML picks and selected short candidates.\n- **Top Picks Acted On**:\n  - **Long Candidates**: Canada Nickel Company Inc. (CNC.V), Sage Potash Corp. (SAGE.V)\n  - **Short Candidates**: Solis Minerals Ltd. (SLM.AX)\n- **Positions Opened**:\n  - **Short**: Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return.\n- **Recommendations for Next Run**:\n  - Monitor the performance of the newly opened short position on Solis Minerals Ltd.\n  - Continue to evaluate top ML picks for potential new long positions.\n  - Reassess any positions that fall outside the [-6%, +8%] PnL band for potential closure.\n\nThis run focused on aligning with the Atlas ML model's predictions and ensuring compliance with policy constraints, particularly in the selection of short positions.",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
+  "summary": "The short position on Homeland Uranium Corp. (HLU.V) has been successfully opened. Here is a summary of the actions taken and the current state:\n\n## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have opened a position in Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n### Current State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Short Position Opened**: Homeland Uranium Corp. (HLU.V)\n  - **Justification**: Negative predicted return and high absPredictedReturn from Atlas ML model.\n- **Long Positions**: No new long positions opened due to policy constraints.\n\n### Recommendations for Next Run\n- Re-evaluate the eligible set for long positions once the cooldown period ends.\n- Continue monitoring the performance of the short position on HLU.V.\n- Consider any new Atlas ML top picks that align with policy constraints.\n\nThis approach ensures compliance with policy constraints while leveraging the Atlas ML model's insights for potential profit opportunities.",
   "writeActions": [
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Hudbay Minerals Inc. as a new long candidate due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $3254.20 and the metals_risk_off regime with a long bonus of 2, supporting long positions."
-      },
-      "kind": "file-diff"
+      "tool": "close_position",
+      "txHash": "0x301e8848e73a7fef3b6b5a03e27e6b8556105f80febf124eccf45d2853969e8f",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "kind": "vault-tx"
     },
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Aris Mining Corporation as a new long candidate due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $3254.20 and the metals_risk_off regime with a long bonus of 2, supporting long positions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Southern Copper Corporation as a new long candidate due to its high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $3254.20 and the metals_risk_off regime with a long bonus of 2, supporting long positions."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Solis Minerals Ltd. as a new short candidate due to its negative predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed batch aligns with the available collateral of $3254.20 and the metals_risk_off regime with a long bonus of 2, supporting long positions."
-      },
-      "kind": "file-diff"
+      "tool": "close_position",
+      "txHash": "0xd75c4781f99fbe9d5402fa4380e3cdc49eb5e4ab0b426366951fc001a88362cd",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
+      "kind": "vault-tx"
     },
     {
       "tool": "set_vault_assets",
-      "txHash": "0x60095b02aa394027851acd026075dbbf8959a066c12d526ef671c3b8a5a87e1d",
-      "justification": "Updating tracked assets to include top Atlas ML picks and selected short candidates.",
+      "txHash": "0x8f9a7020e0a6a99c1deabaab02a0262fb700ef6e2c640d59d9e127048ebffc1e",
+      "justification": "Updating tracked assets to include selected long and short entrants based on Atlas ML picks.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict."
+        "reason": "The batch updates tracked assets and allocates $500 to perp capital, which is within the available collateral of $6269.82 and aligns with the metals risk-off regime."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "allocate_to_perp",
       "txHash": null,
-      "justification": "Allocating available USDC to perp trading to support new position openings.",
+      "justification": "Allocating auto-target into perp capital for new positions.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Allocating $164,520 to perp trading aligns with available idle USDC and supports new positions; no conflicts with recent losses or regime constraints."
+        "reason": "The batch updates tracked assets and allocates $500 to perp capital, which is within the available collateral of $6269.82 and aligns with the metals risk-off regime."
       },
       "kind": "file-diff"
     },
     {
-      "tool": "allocate_to_perp",
-      "txHash": "0x5717389361ca358be1734b8184d7148d96e2efd5d99069828b817e9b42eb8830",
-      "justification": "Allocating available USDC to perp trading to support new position openings.",
+      "tool": "open_position",
+      "txHash": "0x37ae21482c2dc156ac0bdf1569bf5bca1dd96367a592fafee0161632c33f60bc",
+      "justification": "Opening short position on Homeland Uranium Corp. (HLU.V) due to negative predicted return and high absPredictedReturn.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Allocating $164,517.03 to perp trading is consistent with idle USDC and supports new positions; no conflicting post-mortems or regime issues."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xd83098fc018f3df7e0ace2a47c8de5b8ccb557d80b0e62ef13d043ede5cb30da",
-      "justification": "Opening short position on Solis Minerals Ltd. due to its negative predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed short position collateral $3418.72 is 100% of available collateral, which is too high; downsize to reduce risk.",
-        "downsizeFactor": 0.5,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
-          "isLong": false,
-          "beforeCollateral": "3418719392",
-          "afterCollateral": "1709359696",
-          "beforeSize": "17093596960000000000000000000000000",
-          "afterSize": "8546798480000000000000000000000000",
-          "downsizeFactor": 0.5
-        }
+        "reason": "The short position on HLU.V uses 100% of available collateral ($6269.82), but shortPenalty is 0, aligning with metals_risk_off regime."
       },
       "kind": "vault-tx"
     }
