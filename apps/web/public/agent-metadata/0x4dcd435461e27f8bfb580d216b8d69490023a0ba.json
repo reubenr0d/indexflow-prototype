@@ -4,20 +4,20 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V), which has been identified for its high predicted return and robust ML score. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
-  "lastRunAt": "2026-06-18T07:10:54.165Z",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have identified Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
+  "lastRunAt": "2026-06-18T11:22:21.971Z",
   "latestRun": {
-    "runId": "2026-06-18T07:10:54.165Z",
-    "finishedAt": "2026-06-18T07:10:54.165Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V), which has been identified for its high predicted return and robust ML score. On the short side, we have opened a position in Solis Minerals Ltd. (SLM.AX) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **Current NAV**: $6,753.54\n- **Perp Allocated**: $12,954.90\n- **Available Collateral**: $6,294.26\n\n### Actions Taken\n- **Tracked Assets Updated**: Included high ML score long picks and high absPredictedReturn short picks.\n- **Positions Opened**:\n  - **Long Position**: Canada Nickel Company Inc. (CNC.V) with a collateral of $3,147.13.\n  - **Short Position**: Solis Minerals Ltd. (SLM.AX) with a collateral of $3,147.13.\n\n### Recommendations for Next Run\n- Monitor the performance of the newly opened positions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.\n- Stay updated with market news to support or veto potential trades based on emerging information.",
-    "startedAt": "2026-06-18T07:06:27.439Z",
+    "runId": "2026-06-18T11:22:21.971Z",
+    "finishedAt": "2026-06-18T11:22:21.971Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have identified Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Vault Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $6,786.78\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 12\n\n## Actions Taken\n\n### Long Positions Opened\n- **Gold Strike Resources Corp. (GSR.V)**\n  - **ML Score**: 99.6\n  - **Predicted Return**: +39.9%\n  - **Justification**: High ML score and positive predicted return.\n\n- **Amarc Resources Ltd. (AHR.V)**\n  - **ML Score**: 99.5\n  - **Predicted Return**: +39.28%\n  - **Justification**: High ML score and positive predicted return.\n\n- **Aris Mining Corporation (ARIS.TO)**\n  - **ML Score**: 99.4\n  - **Predicted Return**: +38.85%\n  - **Justification**: High ML score and positive predicted return.\n\n## Recommendations for Next Run\n- Monitor the performance of the newly opened positions.\n- Reassess the short position on Homeland Uranium Corp. (HLU.V) if the market conditions change.\n- Continue to leverage the Atlas ML model for identifying high-potential mining stocks.\n\nThis summary reflects the current strategy and actions taken based on the latest Atlas ML model insights and market conditions.",
+    "startedAt": "2026-06-18T11:19:01.175Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 11,
+    "turns": 9,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,73 +26,63 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_quote",
-      "yfinance_quote",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "set_vault_assets",
+      "yfinance_news",
+      "yfinance_news",
       "get_perp_capital_snapshot",
       "plan_open_position",
       "plan_open_position",
       "plan_open_position",
-      "plan_open_position",
       "open_position",
-      "open_position"
+      "open_position",
+      "open_position",
+      "get_vault_state"
     ],
-    "actionCount": 8,
-    "onChainActionCount": 4,
-    "offChainActionCount": 4,
+    "actionCount": 6,
+    "onChainActionCount": 5,
+    "offChainActionCount": 1,
     "reasoningSummaries": [],
     "errors": [],
-    "softFailures": [
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ARIS.TO\\\" is already wired in OracleAdapter at assetId 0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907 (active=true).\",\n  \"symbol\": \"ARIS.TO\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.MX, SCCO.JK.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.MX\",\n    \"SCCO.JK\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      }
-    ],
+    "softFailures": [],
     "riskOfficerVerdicts": [
       {
-        "turn": 4,
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($6294.26) and regime favors longs with longBonus=2; no recent losses >10% on proposed tickers.",
+        "turn": 7,
+        "verdict": "downsize",
+        "reason": "Total collateral for new longs is 63% of available collateral ($6317.35), which is high; downsize to reduce risk.",
+        "downsizeFactor": 0.75,
+        "audit": [
+          {
+            "tool": "open_position",
+            "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+            "isLong": true,
+            "beforeCollateral": "2105783178",
+            "afterCollateral": "1579337383",
+            "beforeSize": "21057831780000000000000000000000000",
+            "afterSize": "15793373835000000000000000000000000",
+            "downsizeFactor": 0.75
+          },
+          {
+            "tool": "open_position",
+            "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+            "isLong": true,
+            "beforeCollateral": "2105783178",
+            "afterCollateral": "1579337383",
+            "beforeSize": "21057831780000000000000000000000000",
+            "afterSize": "15793373835000000000000000000000000",
+            "downsizeFactor": 0.75
+          },
+          {
+            "tool": "open_position",
+            "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+            "isLong": true,
+            "beforeCollateral": "2105783178",
+            "afterCollateral": "1579337383",
+            "beforeSize": "21057831780000000000000000000000000",
+            "afterSize": "15793373835000000000000000000000000",
+            "downsizeFactor": 0.75
+          }
+        ],
         "proposedTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
-        "proposedTools": [
-          "set_vault_assets"
-        ]
-      },
-      {
-        "turn": 10,
-        "verdict": "approve",
-        "reason": "Both positions use 50% of available collateral each, within limits; no recent losses on these tickers; regime supports long with bonus.",
-        "proposedTools": [
+          "open_position",
           "open_position",
           "open_position"
         ]
@@ -100,32 +90,12 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 4,
+        "turn": 7,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "set_vault_assets"
-        ]
-      },
-      {
-        "turn": 10,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
+          "open_position",
           "open_position",
           "open_position"
         ]
@@ -133,6 +103,102 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-18T11:22:21.971Z",
+      "startedAt": "2026-06-18T11:19:01.175Z",
+      "finishedAt": "2026-06-18T11:22:21.971Z",
+      "summary": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, we have identified Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n## Vault Summary\n\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $6,786.78\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 12\n\n## Actions Taken\n\n### Long Positions Opened\n- **Gold Strike Resources Corp. (GSR.V)**\n  - **ML Score**: 99.6\n  - **Predicted Return**: +39.9%\n  - **Justification**: High ML score and positive predicted return.\n\n- **Amarc Resources Ltd. (AHR.V)**\n  - **ML Score**: 99.5\n  - **Predicted Return**: +39.28%\n  - **Justification**: High ML score and positive predicted return.\n\n- **Aris Mining Corporation (ARIS.TO)**\n  - **ML Score**: 99.4\n  - **Predicted Return**: +38.85%\n  - **Justification**: High ML score and positive predicted return.\n\n## Recommendations for Next Run\n- Monitor the performance of the newly opened positions.\n- Reassess the short position on Homeland Uranium Corp. (HLU.V) if the market conditions change.\n- Continue to leverage the Atlas ML model for identifying high-potential mining stocks.\n\nThis summary reflects the current strategy and actions taken based on the latest Atlas ML model insights and market conditions.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 9,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_news",
+        "yfinance_news",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position",
+        "open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 6,
+      "onChainActionCount": 5,
+      "offChainActionCount": 1,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 7,
+          "verdict": "downsize",
+          "reason": "Total collateral for new longs is 63% of available collateral ($6317.35), which is high; downsize to reduce risk.",
+          "downsizeFactor": 0.75,
+          "audit": [
+            {
+              "tool": "open_position",
+              "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+              "isLong": true,
+              "beforeCollateral": "2105783178",
+              "afterCollateral": "1579337383",
+              "beforeSize": "21057831780000000000000000000000000",
+              "afterSize": "15793373835000000000000000000000000",
+              "downsizeFactor": 0.75
+            },
+            {
+              "tool": "open_position",
+              "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+              "isLong": true,
+              "beforeCollateral": "2105783178",
+              "afterCollateral": "1579337383",
+              "beforeSize": "21057831780000000000000000000000000",
+              "afterSize": "15793373835000000000000000000000000",
+              "downsizeFactor": 0.75
+            },
+            {
+              "tool": "open_position",
+              "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+              "isLong": true,
+              "beforeCollateral": "2105783178",
+              "afterCollateral": "1579337383",
+              "beforeSize": "21057831780000000000000000000000000",
+              "afterSize": "15793373835000000000000000000000000",
+              "downsizeFactor": 0.75
+            }
+          ],
+          "proposedTools": [
+            "open_position",
+            "open_position",
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 7,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position",
+            "open_position",
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-18T07:10:54.165Z",
       "startedAt": "2026-06-18T07:06:27.439Z",
@@ -538,6 +604,141 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": "0x92ff74c99b85900a984364781e8d24d0d613c2bfa0f6db77257fe0a4714ff288",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+        "isLong": false,
+        "sizeDelta": "15735658710000000000000000000000000",
+        "collateralDelta": "3147131742"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": "0x2b75f5b7f7ad656f7d4331ed6a422360903c3b68b87e891975f498a464451cf7",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3",
+        "isLong": true,
+        "sizeDelta": "31471317420000000000000000000000000",
+        "collateralDelta": "3147131742"
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+        "isLong": false,
+        "sizeDelta": "15735658710000000000000000000000000",
+        "collateralDelta": "3147131742"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": "0xcea72d3727fd29d69ba12fcd0ead53a4d8ae9706179dbd56b2322d650e02d940",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "size": "15793373835000000000000000000000000",
+        "collateral": "1579337383"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Total collateral for new longs is 63% of available collateral ($6317.35), which is high; downsize to reduce risk.",
+        "downsizeFactor": 0.75,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+          "isLong": true,
+          "beforeCollateral": "2105783178",
+          "afterCollateral": "1579337383",
+          "beforeSize": "21057831780000000000000000000000000",
+          "afterSize": "15793373835000000000000000000000000",
+          "downsizeFactor": 0.75
+        }
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": "0x82881470e307096fa4367a7244e319e1b47da324701d2cb218b0f91165a25345",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "size": "15793373835000000000000000000000000",
+        "collateral": "1579337383"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Total collateral for new longs is 63% of available collateral ($6317.35), which is high; downsize to reduce risk.",
+        "downsizeFactor": 0.75,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+          "isLong": true,
+          "beforeCollateral": "2105783178",
+          "afterCollateral": "1579337383",
+          "beforeSize": "21057831780000000000000000000000000",
+          "afterSize": "15793373835000000000000000000000000",
+          "downsizeFactor": 0.75
+        }
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on Aris Mining Corporation (ARIS.TO) due to its high ML score and predicted return.",
+      "timestamp": "2026-06-18T11:22:21.971Z",
+      "txHash": "0x09c53fa697dfe78ad46b384b7859b84551528c6f7dc98d98811a1a4f5ac1beda",
+      "agentName": "mining-manager",
+      "runId": "2026-06-18T11:22:21.971Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+        "isLong": true,
+        "size": "15793373835000000000000000000000000",
+        "collateral": "1579337383"
+      },
+      "riskOfficer": {
+        "verdict": "downsize",
+        "reason": "Total collateral for new longs is 63% of available collateral ($6317.35), which is high; downsize to reduce risk.",
+        "downsizeFactor": 0.75,
+        "downsize": {
+          "tool": "open_position",
+          "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+          "isLong": true,
+          "beforeCollateral": "2105783178",
+          "afterCollateral": "1579337383",
+          "beforeSize": "21057831780000000000000000000000000",
+          "afterSize": "15793373835000000000000000000000000",
+          "downsizeFactor": 0.75
+        }
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N short AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",

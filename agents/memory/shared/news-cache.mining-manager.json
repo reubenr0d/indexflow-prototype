@@ -1,141 +1,99 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-18T01:46:01.568Z",
+  "updatedAt": "2026-06-18T11:21:14.059Z",
   "entries": {
-    "CNC.V": {
-      "fetchedAt": "2026-06-18T01:46:01.568Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-18T11:21:13.860Z",
       "headlines": [
         {
-          "title": "EU wrestles over how to tackle China export flood",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/economy/policy/articles/eu-wrestles-over-tackle-china-013948336.html",
-          "publishedAt": "2026-06-18T01:39:48.000Z",
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Ultra-luxury hotel brand will return to global capital after 15 years",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/50957324-0c82-3b7e-93cb-4b078d2385d5/ultra-luxury-hotel-brand-will.html",
-          "publishedAt": "2026-06-18T01:37:00.000Z",
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise After Fed Rate Hike Bets Hit Stocks; SpaceX Falls As Robinhood Jumps",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/d2bdbf77-f3c4-3751-a3c0-3b4699fc0ef9/dow-jones-futures-rise-after.html",
-          "publishedAt": "2026-06-18T01:35:55.000Z",
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "^DJI",
-            "HWM",
-            "HOOD",
-            "FTAIM",
-            "FTAI",
-            "CMI",
-            "BE",
-            "^GSPC",
-            "^IXIC",
-            "SEI",
-            "GEV",
-            "XBI"
-          ]
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-18T01:46:01.568Z",
+      "fetchedAt": "2026-06-18T11:21:13.860Z",
       "headlines": [
         {
-          "title": "EU wrestles over how to tackle China export flood",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/economy/policy/articles/eu-wrestles-over-tackle-china-013948336.html",
-          "publishedAt": "2026-06-18T01:39:48.000Z",
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Ultra-luxury hotel brand will return to global capital after 15 years",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/50957324-0c82-3b7e-93cb-4b078d2385d5/ultra-luxury-hotel-brand-will.html",
-          "publishedAt": "2026-06-18T01:37:00.000Z",
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Dow Jones Futures Rise After Fed Rate Hike Bets Hit Stocks; SpaceX Falls As Robinhood Jumps",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/d2bdbf77-f3c4-3751-a3c0-3b4699fc0ef9/dow-jones-futures-rise-after.html",
-          "publishedAt": "2026-06-18T01:35:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "^DJI",
-            "HWM",
-            "HOOD",
-            "FTAIM",
-            "FTAI",
-            "CMI",
-            "BE",
-            "^GSPC",
-            "^IXIC",
-            "SEI",
-            "GEV",
-            "XBI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-18T01:46:01.568Z",
-      "headlines": [
-        {
-          "title": "EU wrestles over how to tackle China export flood",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/economy/policy/articles/eu-wrestles-over-tackle-china-013948336.html",
-          "publishedAt": "2026-06-18T01:39:48.000Z",
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "Ultra-luxury hotel brand will return to global capital after 15 years",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/50957324-0c82-3b7e-93cb-4b078d2385d5/ultra-luxury-hotel-brand-will.html",
-          "publishedAt": "2026-06-18T01:37:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Dow Jones Futures Rise After Fed Rate Hike Bets Hit Stocks; SpaceX Falls As Robinhood Jumps",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/d2bdbf77-f3c4-3751-a3c0-3b4699fc0ef9/dow-jones-futures-rise-after.html",
-          "publishedAt": "2026-06-18T01:35:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "^DJI",
-            "HWM",
-            "HOOD",
-            "FTAIM",
-            "FTAI",
-            "CMI",
-            "BE",
-            "^GSPC",
-            "^IXIC",
-            "SEI",
-            "GEV",
-            "XBI"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-18T01:46:01.568Z",
+      "fetchedAt": "2026-06-18T11:21:13.860Z",
       "headlines": [
         {
           "title": "Hudbay Minerals Prices $52 Million Solid Waste Disposal Revenue Bonds",
@@ -148,25 +106,212 @@
           ]
         },
         {
-          "title": "Hudbay Announces Pricing for US$52 Million of Municipal Bonds for Copper World at 4.50%",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-announces-pricing-us-52-203000239.html",
-          "publishedAt": "2026-06-17T20:30:00.000Z",
+          "title": "The iShares Semiconductor ETF Is Obliterating the S&P 500 in 2026, but Is It Still a Buy? The Answer Might Surprise You.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/8168c3f8-8037-3a05-8a73-4e81affc539b/the-ishares-semiconductor-etf.html",
+          "publishedAt": "2026-06-18T08:42:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HBM"
+            "NVDA",
+            "^GSPC",
+            "MU",
+            "AMD"
           ]
         },
         {
-          "title": "Why Citi is still backing Applied Materials after the rally",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/85c592f2-8917-3ed9-99bb-4030e99fdde7/why-citi-is-still-backing.html",
-          "publishedAt": "2026-06-18T00:37:00.000Z",
+          "title": "NETLIST EXPANDS LEGAL ACTION AGAINST SAMSUNG AND GOOGLE FOR INFRINGEMENT OF NEW AI MEMORY PATENTS",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/netlist-expands-legal-action-against-015500448.html",
+          "publishedAt": "2026-06-18T01:55:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMAT",
-            "C"
+            "NLST",
+            "005930.KS",
+            "GOOG",
+            "SMCI",
+            "NVDA",
+            "AVGO"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "headlines": [
+        {
+          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
+          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
+          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
+          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
