@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-18T11:26:00.507Z",
-  "thesis": "The hedge ratio is currently not applicable as there are no positions open. The vault is inactive with no available USDC, preventing any trading actions. The mETH yield since the last run is also not applicable due to the lack of activity. The funding rate context is irrelevant as there are no positions to consider.",
-  "lastThesisUpdate": "2026-06-18T11:26:00.507Z"
+  "lastRunAt": "2026-06-18T14:37:24.229Z",
+  "thesis": "The hedge ratio is currently not applicable as there are no positions open and the vault is inactive. The mETH yield since the last run is also not applicable due to the lack of activity. The funding rate context is irrelevant as there are no positions to consider. \n\nNext steps would involve troubleshooting the RWA adapter wiring or checking for contract issues to restore functionality.",
+  "lastThesisUpdate": "2026-06-18T14:37:24.229Z"
 }
