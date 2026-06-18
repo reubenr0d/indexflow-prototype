@@ -1,18 +1,18 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-18T11:20:50.146Z",
+  "updatedAt": "2026-06-18T18:13:01.361Z",
   "closures": {
-    "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19": {
-      "ticker": "SLM.AX",
-      "isLong": false,
-      "closedAt": "2026-06-18T11:20:37.282Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
-    },
-    "0x06b91b7116c13e6903e6d8f18decb0ef974b2d0ea5a2fe9f5b6b1d62491aafe3": {
-      "ticker": "LUN.TO",
+    "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907": {
+      "ticker": "ARIS.TO",
       "isLong": true,
-      "closedAt": "2026-06-18T11:20:50.146Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long LUN.TO (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)"
+      "closedAt": "2026-06-18T18:12:50.333Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
+    },
+    "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
+      "ticker": "GSR.V",
+      "isLong": true,
+      "closedAt": "2026-06-18T18:13:01.361Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)"
     }
   }
 }

@@ -1,31 +1,31 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-18T11:21:14.059Z",
+  "updatedAt": "2026-06-18T18:13:29.243Z",
   "entries": {
     "GSR.V": {
-      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -33,29 +33,29 @@
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -63,29 +63,29 @@
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,73 +93,308 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
       "headlines": [
         {
-          "title": "Hudbay Minerals Prices $52 Million Solid Waste Disposal Revenue Bonds",
+          "title": "Hudbay Minerals Breaks Ground at New Ingerbelle Expansion Project in British Columbia",
           "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hudbay-minerals-prices-52-million-211356025.html",
-          "publishedAt": "2026-06-17T21:13:56.000Z",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-minerals-breaks-ground-ingerbelle-123736536.html",
+          "publishedAt": "2026-06-18T12:37:36.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HBM"
+            "HBM",
+            "HG=F",
+            "GC=F",
+            "SI=F"
           ]
         },
         {
-          "title": "The iShares Semiconductor ETF Is Obliterating the S&P 500 in 2026, but Is It Still a Buy? The Answer Might Surprise You.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/8168c3f8-8037-3a05-8a73-4e81affc539b/the-ishares-semiconductor-etf.html",
-          "publishedAt": "2026-06-18T08:42:00.000Z",
+          "title": "Hudbay Celebrates Groundbreaking of New Ingerbelle Expansion at Copper Mountain Mine",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/hudbay-celebrates-groundbreaking-ingerbelle-expansion-120000690.html",
+          "publishedAt": "2026-06-18T12:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA",
-            "^GSPC",
-            "MU",
-            "AMD"
+            "HBM",
+            "HG=F",
+            "GC=F"
           ]
         },
         {
-          "title": "NETLIST EXPANDS LEGAL ACTION AGAINST SAMSUNG AND GOOGLE FOR INFRINGEMENT OF NEW AI MEMORY PATENTS",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/netlist-expands-legal-action-against-015500448.html",
-          "publishedAt": "2026-06-18T01:55:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "NLST",
-            "005930.KS",
-            "GOOG",
-            "SMCI",
-            "NVDA",
-            "AVGO"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-18T11:21:13.860Z",
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ARIS.TO": {
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TDG.V": {
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LUN.TO": {
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SCCO": {
+      "fetchedAt": "2026-06-18T18:13:27.941Z",
+      "headlines": [
+        {
+          "title": "Copper Stocks Are Making A Comeback. Here's Why.",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/0cc37d88-eade-3d46-a42c-11d7da087dc8/copper-stocks-are-making-a.html",
+          "publishedAt": "2026-06-18T14:55:45.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO",
+            "ERO"
+          ]
+        },
+        {
+          "title": "Southern Copper (SCCO) Rises Higher Than Market: Key Facts",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/southern-copper-scco-rises-higher-214503209.html",
+          "publishedAt": "2026-06-15T21:45:03.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SCCO",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
+        {
+          "title": "Stocks Supported by Lower Crude Oil Prices and Bond Yields",
+          "publisher": "Barchart",
+          "link": "https://finance.yahoo.com/m/27a772cd-d509-3783-90a1-afe31459b5a8/stocks-supported-by-lower.html",
+          "publishedAt": "2026-06-16T14:18:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ES*0",
+            "MPC",
+            "CL*0",
+            "AU",
+            "CCL",
+            "TSCO",
+            "NCLH",
+            "HL",
+            "APA",
+            "DAL",
+            "VMI",
+            "NEM",
+            "QQQ",
+            "EW",
+            "FANG",
+            "$SPX",
+            "PANW",
+            "UAL",
+            "ZS",
+            "ZN*0",
+            "RCL",
+            "B",
+            "SPY",
+            "$DOWI",
+            "MCHP",
+            "HPP",
+            "COP",
+            "VLO",
+            "SKT",
+            "QCOM",
+            "$IUXX",
+            "PLAY",
+            "STX",
+            "FTNT",
+            "NQ*0",
+            "CDE",
+            "FCX",
+            "SCCO",
+            "SNDK",
+            "ARM",
+            "ADI",
+            "ALK",
+            "DIA",
+            "HUN",
+            "MBLY",
+            "WDC",
+            "LUV",
+            "DVN",
+            "SPCX",
+            "AAL",
+            "CRWD",
+            "HAL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -167,59 +402,29 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-18T11:21:14.059Z",
-      "headlines": [
-        {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -227,59 +432,59 @@
       "sourceAgent": "mining-manager"
     },
     "MNB.AX": {
-      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-18T11:21:14.059Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -287,29 +492,59 @@
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-18T11:21:14.059Z",
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
       "headlines": [
         {
-          "title": "A third of adults under 35 still live with their parents. High housing costs are probably to blame.",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/economy/article/a-third-of-adults-under-35-still-live-with-their-parents-high-housing-costs-are-probably-to-blame-111917425.html",
-          "publishedAt": "2026-06-18T11:19:17.000Z",
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "ARTERY MCU Adds BGA100 Package to Boost Dexterous Hand and Robot Joint Control Applications",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/artery-mcu-adds-bga100-package-111800736.html",
-          "publishedAt": "2026-06-18T11:18:00.000Z",
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "SOLAI Plans 1-for-7 Reverse ADS Split",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/solai-plans-1-7-reverse-111720033.html",
-          "publishedAt": "2026-06-18T11:17:20.000Z",
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EUZ.JO": {
+      "fetchedAt": "2026-06-18T18:13:29.243Z",
+      "headlines": [
+        {
+          "title": "How biotech executives are confronting the funding and regulatory shifts",
+          "publisher": "Pharmaceutical Technology",
+          "link": "https://finance.yahoo.com/m/d0ed7348-fb8e-3980-a8c2-c73a6b5a9835/how-biotech-executives-are.html",
+          "publishedAt": "2026-06-18T18:10:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "After 40 years of falling PC prices, the AI boom just reversed the trend — and your next laptop could cost 20% more",
+          "publisher": "Moneywise",
+          "link": "https://finance.yahoo.com/technology/articles/40-years-falling-pc-prices-180823026.html",
+          "publishedAt": "2026-06-18T18:08:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Iran's supreme leader endorses face-to-face negotiations with the US",
+          "publisher": "Associated Press",
+          "link": "https://finance.yahoo.com/m/81133875-251d-3c5e-b342-1635aa450e4e/iran%27s-supreme-leader.html",
+          "publishedAt": "2026-06-18T18:06:23.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
