@@ -1,123 +1,81 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-19T15:46:21.916Z",
+  "updatedAt": "2026-06-19T18:08:54.333Z",
   "entries": {
-    "AHR.V": {
-      "fetchedAt": "2026-06-19T15:46:21.714Z",
-      "headlines": [
-        {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE"
-          ]
-        },
-        {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
-        },
-        {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "CNC.V": {
-      "fetchedAt": "2026-06-19T15:46:21.714Z",
+      "fetchedAt": "2026-06-19T18:08:54.138Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-06-19T15:46:21.714Z",
+      "fetchedAt": "2026-06-19T18:08:54.138Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-19T15:46:21.714Z",
+      "fetchedAt": "2026-06-19T18:08:54.138Z",
       "headlines": [
         {
           "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
@@ -161,229 +119,253 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "ARIS.TO": {
-      "fetchedAt": "2026-06-19T15:46:21.714Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-19T18:08:54.138Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-19T15:46:21.916Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-19T18:08:54.138Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-19T15:46:21.916Z",
-      "headlines": [
-        {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BE"
-          ]
-        },
-        {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
-        },
-        {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "fetchedAt": "2026-06-19T18:08:54.333Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "INTC",
-            "AAPL"
+            "NVO",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-19T18:08:54.333Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-19T18:08:54.333Z",
+      "headlines": [
+        {
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "GC=F",
+            "GS"
+          ]
+        },
+        {
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "fetchedAt": "2026-06-19T18:08:54.333Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "fetchedAt": "2026-06-19T18:08:54.333Z",
       "headlines": [
         {
-          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
-          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
+          "publishedAt": "2026-06-19T18:05:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BE"
+            "GC=F",
+            "GS"
           ]
         },
         {
-          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
-          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "title": "Clark leads as fellow major winners charge at US Open",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
+          "publishedAt": "2026-06-19T18:02:53.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INTC",
-            "AAPL"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
-          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
+          "publishedAt": "2026-06-19T18:01:42.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "NVDA"
+            "NVO",
+            "AMZN"
           ]
         }
       ],
