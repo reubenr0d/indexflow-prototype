@@ -1,121 +1,151 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-19T07:30:32.538Z",
+  "updatedAt": "2026-06-19T15:46:21.916Z",
   "entries": {
+    "AHR.V": {
+      "fetchedAt": "2026-06-19T15:46:21.714Z",
+      "headlines": [
+        {
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BE"
+          ]
+        },
+        {
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
     "CNC.V": {
-      "fetchedAt": "2026-06-19T07:30:32.538Z",
+      "fetchedAt": "2026-06-19T15:46:21.714Z",
       "headlines": [
         {
-          "title": "European stocks muted as US-Iran peace talks called off",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
-          "publishedAt": "2026-06-19T07:24:57.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
-          "publishedAt": "2026-06-19T07:17:19.000Z",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "ADBE",
-            "^GSPC",
-            "POOL"
+            "BE"
           ]
         },
         {
-          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
-          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSM"
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-19T07:30:32.538Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-19T15:46:21.714Z",
       "headlines": [
         {
-          "title": "European stocks muted as US-Iran peace talks called off",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
-          "publishedAt": "2026-06-19T07:24:57.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
-          "publishedAt": "2026-06-19T07:17:19.000Z",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "ADBE",
-            "^GSPC",
-            "POOL"
+            "BE"
           ]
         },
         {
-          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
-          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSM"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-19T07:30:32.538Z",
-      "headlines": [
-        {
-          "title": "European stocks muted as US-Iran peace talks called off",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
-          "publishedAt": "2026-06-19T07:24:57.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
-          "publishedAt": "2026-06-19T07:17:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "ADBE",
-            "^GSPC",
-            "POOL"
+            "INTC",
+            "AAPL"
           ]
         },
         {
-          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
-          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSM"
+            "MU",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-19T07:30:32.538Z",
+      "fetchedAt": "2026-06-19T15:46:21.714Z",
       "headlines": [
+        {
+          "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-hudbay-minerals-hbm-combines-095811845.html",
+          "publishedAt": "2026-06-19T09:58:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM",
+            "HG=F"
+          ]
+        },
+        {
+          "title": "AI Memory Bottleneck? These ETFs Let You Buy All the Winners",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-memory-bottleneck-etfs-let-123900189.html",
+          "publishedAt": "2026-06-19T12:39:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SNDK",
+            "DRAM",
+            "NVDA",
+            "MU",
+            "STX",
+            "HBMX",
+            "000660.KS"
+          ]
+        },
         {
           "title": "HudBay Minerals (HBM) Stock Declines While Market Improves: Some Information for Investors",
           "publisher": "Zacks",
@@ -127,66 +157,233 @@
             "^GSPC",
             "^DJI"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ARIS.TO": {
+      "fetchedAt": "2026-06-19T15:46:21.714Z",
+      "headlines": [
+        {
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BE"
+          ]
         },
         {
-          "title": "Micron's Earnings Report Is Almost Here. Can the Memory Boom Keep Going?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/88d02d86-b4ac-3316-b1b9-d9e51e81ac2b/micron%27s-earnings-report-is.html",
-          "publishedAt": "2026-06-19T04:12:00.000Z",
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
           "type": "STORY",
           "relatedTickers": [
             "MU",
             "NVDA"
           ]
-        },
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "headlines": [
         {
-          "title": "Hudbay Minerals Breaks Ground at New Ingerbelle Expansion Project in British Columbia",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-minerals-breaks-ground-ingerbelle-123736536.html",
-          "publishedAt": "2026-06-18T12:37:36.000Z",
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HBM",
-            "HG=F",
-            "GC=F",
-            "SI=F"
+            "BE"
+          ]
+        },
+        {
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "headlines": [
+        {
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BE"
+          ]
+        },
+        {
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-19T07:30:32.538Z",
+      "fetchedAt": "2026-06-19T15:46:21.916Z",
       "headlines": [
         {
-          "title": "European stocks muted as US-Iran peace talks called off",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
-          "publishedAt": "2026-06-19T07:24:57.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
-          "publishedAt": "2026-06-19T07:17:19.000Z",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "ADBE",
-            "^GSPC",
-            "POOL"
+            "BE"
           ]
         },
         {
-          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
           "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
-          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "TSM"
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "headlines": [
+        {
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BE"
+          ]
+        },
+        {
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-19T15:46:21.916Z",
+      "headlines": [
+        {
+          "title": "Is Bloom Energy (BE) The Best Energy Stock in Trump’s Latest Portfolio?",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/energy/articles/bloom-energy-best-energy-stock-154102684.html",
+          "publishedAt": "2026-06-19T15:41:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BE"
+          ]
+        },
+        {
+          "title": "Beyond Trump Hype: Does Intel (INTC) Have Long-Term Growth Catalysts",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/beyond-trump-hype-does-intel-153956796.html",
+          "publishedAt": "2026-06-19T15:39:56.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC",
+            "AAPL"
+          ]
+        },
+        {
+          "title": "Donald Trump’s Favorite AI Chip Stock in 2026 That Performed Better Than Nvidia (NVDA)",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/donald-trump-favorite-ai-chip-153822311.html",
+          "publishedAt": "2026-06-19T15:38:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
           ]
         }
       ],

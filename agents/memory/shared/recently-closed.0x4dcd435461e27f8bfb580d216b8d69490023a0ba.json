@@ -1,12 +1,12 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-19T12:19:37.824Z",
+  "updatedAt": "2026-06-19T15:47:25.306Z",
   "closures": {
     "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907": {
       "ticker": "ARIS.TO",
       "isLong": true,
-      "closedAt": "2026-06-19T12:19:14.000Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
+      "closedAt": "2026-06-19T15:47:25.306Z",
+      "closedReason": "llm_judged: Closing ARIS.TO to free up collateral for higher-ranked entries GSR.V and AHR.V based on current model predictions."
     },
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
       "ticker": "GSR.V",
