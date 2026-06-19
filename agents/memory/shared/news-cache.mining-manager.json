@@ -1,127 +1,96 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-18T20:41:14.026Z",
+  "updatedAt": "2026-06-19T02:07:51.249Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
-      "headlines": [
-        {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CCEC",
-            "ARHN"
-          ]
-        },
-        {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
-        },
-        {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "SAGE.V": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "fetchedAt": "2026-06-19T02:07:51.160Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "fetchedAt": "2026-06-19T02:07:51.160Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "fetchedAt": "2026-06-19T02:07:51.160Z",
       "headlines": [
+        {
+          "title": "HudBay Minerals (HBM) Stock Declines While Market Improves: Some Information for Investors",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hudbay-minerals-hbm-stock-declines-221502013.html",
+          "publishedAt": "2026-06-18T22:15:02.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM",
+            "^GSPC",
+            "^DJI"
+          ]
+        },
         {
           "title": "Hudbay Minerals Breaks Ground at New Ingerbelle Expansion Project in British Columbia",
           "publisher": "MT Newswires",
@@ -136,300 +105,199 @@
           ]
         },
         {
-          "title": "Hudbay Celebrates Groundbreaking of New Ingerbelle Expansion at Copper Mountain Mine",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/hudbay-celebrates-groundbreaking-ingerbelle-expansion-120000690.html",
-          "publishedAt": "2026-06-18T12:00:00.000Z",
+          "title": "After DRAM, Investors Want a Photonics ETF",
+          "publisher": "etf.com",
+          "link": "https://finance.yahoo.com/m/1cff657e-301a-3f97-835d-1b368268516c/after-dram%2C-investors-want-a.html",
+          "publishedAt": "2026-06-19T00:49:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HBM",
-            "HG=F",
-            "GC=F"
-          ]
-        },
-        {
-          "title": "Tim Cook Says Chip Wars Will Take a Big Bite of Apple",
-          "publisher": "Moby",
-          "link": "https://finance.yahoo.com/m/7ee5a96f-42bc-3d24-96a8-97cd0b5d79d7/tim-cook-says-chip-wars-will.html",
-          "publishedAt": "2026-06-18T19:39:39.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AAPL",
-            "NVDA",
-            "IBM"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ARIS.TO": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
-      "headlines": [
-        {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CCEC",
-            "ARHN"
-          ]
-        },
-        {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
-        },
-        {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "IBIT",
+            "MU"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-18T20:41:13.853Z",
+      "fetchedAt": "2026-06-19T02:07:51.160Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HLU.V": {
-      "fetchedAt": "2026-06-18T20:41:14.026Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-19T02:07:51.160Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-18T20:41:14.026Z",
-      "headlines": [
-        {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CCEC",
-            "ARHN"
-          ]
-        },
-        {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
-        },
-        {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-18T20:41:14.026Z",
+      "fetchedAt": "2026-06-19T02:07:51.249Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-18T20:41:14.026Z",
+    "KNOX.V": {
+      "fetchedAt": "2026-06-19T02:07:51.249Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-18T20:41:14.026Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-19T02:07:51.249Z",
       "headlines": [
         {
-          "title": "Capital Clean Energy Carriers Takes Delivery of LNG Carrier Agamemnon",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/energy/articles/capital-clean-energy-carriers-takes-203504842.html",
-          "publishedAt": "2026-06-18T20:35:04.000Z",
+          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
+          "publishedAt": "2026-06-19T01:59:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CCEC",
-            "ARHN"
+            "IHT"
           ]
         },
         {
-          "title": "Motorsport Games Appoints Peter Hansen-Chambers as CFO",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/motorsport-games-appoints-peter-hansen-203442030.html",
-          "publishedAt": "2026-06-18T20:34:42.000Z",
+          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
+          "publishedAt": "2026-06-19T01:55:28.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MSGM"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Repay Completes Proof of Concept for Stablecoin Payments",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/crypto/articles/repay-completes-proof-concept-stablecoin-203338702.html",
-          "publishedAt": "2026-06-18T20:33:38.000Z",
+          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
+          "publishedAt": "2026-06-19T01:50:22.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "RPAY",
-            "USDC-USD",
-            "XLM-USD"
+            "005380.KS",
+            "9984.T",
+            "012330.KS",
+            "086280.KS"
           ]
         }
       ],
