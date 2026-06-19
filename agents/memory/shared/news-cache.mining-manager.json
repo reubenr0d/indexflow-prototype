@@ -1,83 +1,120 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-19T02:07:51.249Z",
+  "updatedAt": "2026-06-19T07:30:32.538Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-19T02:07:51.160Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-19T07:30:32.538Z",
       "headlines": [
         {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
+          "title": "European stocks muted as US-Iran peace talks called off",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
+          "publishedAt": "2026-06-19T07:24:57.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
+          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
+          "publishedAt": "2026-06-19T07:17:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
+            "MRVL",
+            "ADBE",
+            "^GSPC",
+            "POOL"
+          ]
+        },
+        {
+          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
+          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CNC.V": {
-      "fetchedAt": "2026-06-19T02:07:51.160Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-19T07:30:32.538Z",
       "headlines": [
         {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
+          "title": "European stocks muted as US-Iran peace talks called off",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
+          "publishedAt": "2026-06-19T07:24:57.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
+          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
+          "publishedAt": "2026-06-19T07:17:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
+            "MRVL",
+            "ADBE",
+            "^GSPC",
+            "POOL"
+          ]
+        },
+        {
+          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
+          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSM"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-19T07:30:32.538Z",
+      "headlines": [
+        {
+          "title": "European stocks muted as US-Iran peace talks called off",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
+          "publishedAt": "2026-06-19T07:24:57.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
+          "publishedAt": "2026-06-19T07:17:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "ADBE",
+            "^GSPC",
+            "POOL"
+          ]
+        },
+        {
+          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
+          "publishedAt": "2026-06-19T07:16:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "TSM"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-19T02:07:51.160Z",
+      "fetchedAt": "2026-06-19T07:30:32.538Z",
       "headlines": [
         {
           "title": "HudBay Minerals (HBM) Stock Declines While Market Improves: Some Information for Investors",
@@ -92,6 +129,17 @@
           ]
         },
         {
+          "title": "Micron's Earnings Report Is Almost Here. Can the Memory Boom Keep Going?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/88d02d86-b4ac-3316-b1b9-d9e51e81ac2b/micron%27s-earnings-report-is.html",
+          "publishedAt": "2026-06-19T04:12:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
+        {
           "title": "Hudbay Minerals Breaks Ground at New Ingerbelle Expansion Project in British Columbia",
           "publisher": "MT Newswires",
           "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-minerals-breaks-ground-ingerbelle-123736536.html",
@@ -103,201 +151,42 @@
             "GC=F",
             "SI=F"
           ]
-        },
-        {
-          "title": "After DRAM, Investors Want a Photonics ETF",
-          "publisher": "etf.com",
-          "link": "https://finance.yahoo.com/m/1cff657e-301a-3f97-835d-1b368268516c/after-dram%2C-investors-want-a.html",
-          "publishedAt": "2026-06-19T00:49:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IBIT",
-            "MU"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-19T02:07:51.160Z",
-      "headlines": [
-        {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-19T02:07:51.160Z",
-      "headlines": [
-        {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-19T02:07:51.249Z",
+      "fetchedAt": "2026-06-19T07:30:32.538Z",
       "headlines": [
         {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
+          "title": "European stocks muted as US-Iran peace talks called off",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/world-indices/articles/european-stocks-muted-us-iran-072457742.html",
+          "publishedAt": "2026-06-19T07:24:57.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
+          "title": "Marvell Technology, Inc. (MRVL) Names Adobe’s Dan Durn as Finance Chief",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/marvell-technology-inc-mrvl-names-071719592.html",
+          "publishedAt": "2026-06-19T07:17:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-19T02:07:51.249Z",
-      "headlines": [
-        {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
+            "MRVL",
+            "ADBE",
+            "^GSPC",
+            "POOL"
           ]
         },
         {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
+          "title": "Taiwan Semiconductor Manufacturing Company (TSM) Does Not Rule Out Price Rises as Costs Increase",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/taiwan-semiconductor-manufacturing-company-tsm-071611478.html",
+          "publishedAt": "2026-06-19T07:16:11.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-19T02:07:51.249Z",
-      "headlines": [
-        {
-          "title": "INNSUITES FY 2027 Q1 RECORDS CONSOLIDATED NET INCOME PROFIT; REVERSE MERGER EXPLORATION CONTINUES",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/innsuites-fy-2027-q1-records-015900793.html",
-          "publishedAt": "2026-06-19T01:59:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IHT"
-          ]
-        },
-        {
-          "title": "Ivory Coast's Diomande living World Cup dream, dealing with tragedy",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/68053986-155c-3127-ba57-54457195a547/ivory-coast%27s-diomande-living.html",
-          "publishedAt": "2026-06-19T01:55:28.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Hyundai to buy SoftBank's remaining stake in Boston Dynamics for $325 million, newspaper says",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hyundai-buy-softbanks-remaining-stake-015022894.html",
-          "publishedAt": "2026-06-19T01:50:22.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005380.KS",
-            "9984.T",
-            "012330.KS",
-            "086280.KS"
+            "TSM"
           ]
         }
       ],
