@@ -1,23 +1,23 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-19T07:30:02.095Z",
+  "updatedAt": "2026-06-19T12:19:37.824Z",
   "closures": {
     "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907": {
       "ticker": "ARIS.TO",
       "isLong": true,
-      "closedAt": "2026-06-19T07:29:26.988Z",
+      "closedAt": "2026-06-19T12:19:14.000Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
     },
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
       "ticker": "GSR.V",
       "isLong": true,
-      "closedAt": "2026-06-19T07:29:38.105Z",
+      "closedAt": "2026-06-19T12:19:26.806Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)"
     },
     "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6": {
       "ticker": "AHR.V",
       "isLong": true,
-      "closedAt": "2026-06-19T07:30:02.095Z",
+      "closedAt": "2026-06-19T12:19:37.824Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)"
     }
   }
