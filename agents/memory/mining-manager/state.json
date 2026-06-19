@@ -19,17 +19,17 @@
     "cooldownUntil": "2026-06-17T17:54:15.342Z",
     "lastJob": {
       "id": "3fe2296f745c4628b548be3f8f4eefcc",
-      "status": "failed",
+      "status": "",
       "startedAt": "2026-06-17T17:24:05.572839+00:00",
-      "completedAt": "2026-06-17T17:24:15.342749+00:00",
+      "completedAt": null,
       "result": null,
-      "errorMessage": "(sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.InFailedSQLTransactionError'>: current transaction is aborted, commands ignored until end of transaction block\n[SQL: \n            SELECT ticker, exchange, date, COALESCE(adjusted_close, close_price) AS price\n            FROM stock_prices\n            WHERE date >= $1 AND date <= $2\n            ORDER BY ticker, exchange, date\n        ]\n[parameters: (datetime.date(2023, 1, 1), datetime.date(2023, 5, 1))]\n(Background on this error at: https://sqlalche.me/e/20/dbapi)"
+      "errorMessage": null
     },
     "lastResult": null,
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-19T20:09:00.258Z",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThis summary reflects the current state and actions taken based on the latest Atlas ML model insights and operational constraints. The churn-guard bypass was justified by fresh ML signals, ensuring that the strategy remains aligned with the model's predictions.",
-  "lastThesisUpdate": "2026-06-19T20:09:00.258Z"
+  "lastRunAt": "2026-06-19T21:37:31.380Z",
+  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns and robust ML scores. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.",
+  "lastThesisUpdate": "2026-06-19T21:37:31.380Z"
 }

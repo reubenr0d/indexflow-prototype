@@ -1,81 +1,237 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-19T18:08:54.333Z",
+  "updatedAt": "2026-06-19T21:36:11.787Z",
   "entries": {
     "CNC.V": {
-      "fetchedAt": "2026-06-19T18:08:54.138Z",
+      "fetchedAt": "2026-06-19T21:36:11.678Z",
       "headlines": [
         {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GS"
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SAGE.V": {
+      "fetchedAt": "2026-06-19T21:36:11.678Z",
+      "headlines": [
+        {
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
+          ]
+        },
+        {
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-06-19T18:08:54.138Z",
+      "fetchedAt": "2026-06-19T21:36:11.678Z",
       "headlines": [
         {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GS"
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-19T21:36:11.678Z",
+      "headlines": [
+        {
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
+          ]
+        },
+        {
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-19T18:08:54.138Z",
+      "fetchedAt": "2026-06-19T21:36:11.678Z",
       "headlines": [
         {
           "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
@@ -89,19 +245,15 @@
           ]
         },
         {
-          "title": "AI Memory Bottleneck? These ETFs Let You Buy All the Winners",
+          "title": "Micron Gets the Headlines, But Sandisk Could Offer More Upside",
           "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ai-memory-bottleneck-etfs-let-123900189.html",
-          "publishedAt": "2026-06-19T12:39:00.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/micron-gets-headlines-sandisk-could-190000313.html",
+          "publishedAt": "2026-06-19T19:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SNDK",
-            "DRAM",
-            "NVDA",
             "MU",
-            "STX",
-            "HBMX",
-            "000660.KS"
+            "SNDK",
+            "NVDA"
           ]
         },
         {
@@ -119,253 +271,172 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-19T18:08:54.138Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GS"
-          ]
-        },
-        {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVO",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-19T18:08:54.138Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GS"
-          ]
-        },
-        {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVO",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "SLM.AX": {
-      "fetchedAt": "2026-06-19T18:08:54.333Z",
+      "fetchedAt": "2026-06-19T21:36:11.787Z",
       "headlines": [
         {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GS"
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-19T18:08:54.333Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GS"
+            "CDR.TO",
+            "CDR.NE"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-19T18:08:54.333Z",
-      "headlines": [
-        {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "GC=F",
-            "GS"
-          ]
-        },
-        {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVO",
-            "AMZN"
+            "MRVL",
+            "NVDA",
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-19T18:08:54.333Z",
+      "fetchedAt": "2026-06-19T21:36:11.787Z",
       "headlines": [
         {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GS"
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-19T18:08:54.333Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-19T21:36:11.787Z",
       "headlines": [
         {
-          "title": "Goldman Sachs Cuts Year-End Gold Target by $500 to $4,900",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/goldman-sachs-cuts-end-gold-180510265.html",
-          "publishedAt": "2026-06-19T18:05:10.000Z",
+          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
+          "publishedAt": "2026-06-19T21:30:35.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "GC=F",
-            "GS"
+            "NVDA",
+            "AAPL",
+            "VITSX",
+            "VSMPX",
+            "VSTSX",
+            "VTI",
+            "VTSAX",
+            "VTSMX",
+            "VGTSX",
+            "VTIAX",
+            "VTISX",
+            "VTPSX",
+            "VTSNX",
+            "VXUS",
+            "MSFT",
+            "^GSPC",
+            "AMZN",
+            "META",
+            "GOOG"
           ]
         },
         {
-          "title": "Clark leads as fellow major winners charge at US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-as-fellow-major.html",
-          "publishedAt": "2026-06-19T18:02:53.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Novo Nordisk Stock Rally as Owner Unveils $69 Million Obesity Research Push",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/healthcare/articles/novo-nordisk-stock-rally-owner-180142118.html",
-          "publishedAt": "2026-06-19T18:01:42.000Z",
+          "title": "Condor Announces Director Election Results",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
+          "publishedAt": "2026-06-19T21:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVO",
-            "AMZN"
+            "CDR.TO",
+            "CDR.NE"
+          ]
+        },
+        {
+          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
+          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA",
+            "^GSPC"
           ]
         }
       ],
