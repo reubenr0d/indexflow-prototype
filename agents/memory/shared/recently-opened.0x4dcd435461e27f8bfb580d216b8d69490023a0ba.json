@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-19T21:37:24.593Z",
+  "updatedAt": "2026-06-20T00:25:13.172Z",
   "opens": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6:long": {
       "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
@@ -54,7 +54,7 @@
       "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
       "ticker": "GSR.V",
       "isLong": true,
-      "openedAt": "2026-06-19T21:36:50.005Z"
+      "openedAt": "2026-06-20T00:25:13.172Z"
     },
     "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d:long": {
       "assetId": "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d",

@@ -1,237 +1,99 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-19T21:36:11.787Z",
+  "updatedAt": "2026-06-20T00:23:47.839Z",
   "entries": {
-    "CNC.V": {
-      "fetchedAt": "2026-06-19T21:36:11.678Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-20T00:23:47.839Z",
       "headlines": [
         {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
+          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
+          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
+          "publishedAt": "2026-06-20T00:15:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "title": "Clark leads US Open by four with major champs in the hunt",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
+          "publishedAt": "2026-06-20T00:11:35.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
+          "relatedTickers": []
+        },
+        {
+          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
+          "publishedAt": "2026-06-20T00:08:59.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-20T00:23:47.839Z",
+      "headlines": [
+        {
+          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
+          "publishedAt": "2026-06-20T00:15:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Clark leads US Open by four with major champs in the hunt",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
+          "publishedAt": "2026-06-20T00:11:35.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
+          "publishedAt": "2026-06-20T00:08:59.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-19T21:36:11.678Z",
+      "fetchedAt": "2026-06-20T00:23:47.839Z",
       "headlines": [
         {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
+          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
           "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
+          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
+          "publishedAt": "2026-06-20T00:15:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
+          "title": "Clark leads US Open by four with major champs in the hunt",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
+          "publishedAt": "2026-06-20T00:11:35.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-19T21:36:11.678Z",
-      "headlines": [
-        {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Condor Announces Director Election Results",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
+          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
+          "publishedAt": "2026-06-20T00:08:59.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
-        },
-        {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-19T21:36:11.678Z",
-      "headlines": [
-        {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
-        },
-        {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-19T21:36:11.678Z",
+      "fetchedAt": "2026-06-20T00:23:47.839Z",
       "headlines": [
         {
           "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
@@ -266,177 +128,6 @@
             "HBM",
             "^GSPC",
             "^DJI"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-19T21:36:11.787Z",
-      "headlines": [
-        {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
-        },
-        {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-19T21:36:11.787Z",
-      "headlines": [
-        {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
-        },
-        {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-19T21:36:11.787Z",
-      "headlines": [
-        {
-          "title": "Making Six Figures but Betting Everything on U.S. Stocks? AVUV Fixes That Problem",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/9aa99b5e-574f-393a-97eb-1de8b09c3f42/making-six-figures-but.html",
-          "publishedAt": "2026-06-19T21:30:35.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "NVDA",
-            "AAPL",
-            "VITSX",
-            "VSMPX",
-            "VSTSX",
-            "VTI",
-            "VTSAX",
-            "VTSMX",
-            "VGTSX",
-            "VTIAX",
-            "VTISX",
-            "VTPSX",
-            "VTSNX",
-            "VXUS",
-            "MSFT",
-            "^GSPC",
-            "AMZN",
-            "META",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Condor Announces Director Election Results",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/energy/articles/condor-announces-director-election-results-213000742.html",
-          "publishedAt": "2026-06-19T21:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "CDR.TO",
-            "CDR.NE"
-          ]
-        },
-        {
-          "title": "After Being Called the Next Trillion-Dollar AI Stock and Joining the S&P 500, Marvell's CFO Just Filed to Dump $65 Million of Stock. Here's Why.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/bd14ef13-a55f-3b5d-a2e9-47ece5a73b4e/after-being-called-the-next.html",
-          "publishedAt": "2026-06-19T21:27:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA",
-            "^GSPC"
           ]
         }
       ],
