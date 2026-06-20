@@ -1,114 +1,95 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-20T18:48:09.292Z",
+  "updatedAt": "2026-06-20T22:37:55.770Z",
   "entries": {
     "GSR.V": {
-      "fetchedAt": "2026-06-20T18:48:09.119Z",
+      "fetchedAt": "2026-06-20T22:37:55.539Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-20T18:48:09.119Z",
+      "fetchedAt": "2026-06-20T22:37:55.539Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CNC.V": {
-      "fetchedAt": "2026-06-20T18:48:09.119Z",
-      "headlines": [
+        },
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
           "type": "STORY",
           "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-20T18:48:09.119Z",
+      "fetchedAt": "2026-06-20T22:37:55.539Z",
       "headlines": [
         {
           "title": "Got $100? 1 Artificial Intelligence (AI) Memory ETF to Buy Hand Over Fist",
@@ -147,142 +128,303 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-20T18:48:09.119Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-20T22:37:55.539Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-20T18:48:09.292Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-20T22:37:55.539Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-20T18:48:09.292Z",
+      "fetchedAt": "2026-06-20T22:37:55.770Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
+          ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-20T18:48:09.292Z",
+      "fetchedAt": "2026-06-20T22:37:55.770Z",
       "headlines": [
         {
-          "title": "Scheffler opens with bogeys while McIlroy pars at windy US Open",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9296bedc-ce91-3ebe-ab87-089888dff408/scheffler-opens-with-bogeys.html",
-          "publishedAt": "2026-06-20T18:37:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany told Google it owns every wrong answer its AI gives — and 78% of Americans already use these tools",
-          "publisher": "Moneywise",
-          "link": "https://finance.yahoo.com/technology/ai/articles/germany-told-google-owns-every-183535247.html",
-          "publishedAt": "2026-06-20T18:35:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "This is My Favorite Nuclear Energy Stock to Capitalize on the AI Power Boom",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/395ef17f-bf0c-3c6e-97b6-9e6036c68c67/this-is-my-favorite-nuclear.html",
-          "publishedAt": "2026-06-20T18:35:00.000Z",
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "OKLO",
-            "BEPC",
-            "SMR",
-            "NVDA"
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
           ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
+          ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "headlines": [
+        {
+          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
+          "publishedAt": "2026-06-20T22:29:08.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "FDX",
+            "^DJI",
+            "MTSI",
+            "MCHPP",
+            "MXL",
+            "MU",
+            "NVDA",
+            "^GSPC",
+            "^IXIC",
+            "MCHP",
+            "FORM"
+          ]
+        },
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
+          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

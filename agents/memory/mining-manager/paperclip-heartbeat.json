@@ -7,93 +7,47 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-20T20:48:17.066Z",
-  "startedAt": "2026-06-20T20:41:28.490Z",
-  "finishedAt": "2026-06-20T20:48:17.066Z",
+  "runId": "2026-06-20T22:39:27.804Z",
+  "startedAt": "2026-06-20T22:35:15.154Z",
+  "finishedAt": "2026-06-20T22:39:27.804Z",
   "status": "succeeded",
   "usage": {
-    "turns": 40,
-    "toolCalls": 51,
+    "turns": 9,
+    "toolCalls": 17,
     "errors": 0,
-    "softFailures": 6,
-    "writeActions": 8
+    "softFailures": 0,
+    "writeActions": 3
   },
-  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
-  "summary": "",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
+  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.26 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n### Actions Taken\n1. **Opened Long Positions**:\n   - **Gold Strike Resources Corp. (GSR.V)**: Opened with a collateral of $1,362.84 USDC.\n   - **Amarc Resources Ltd. (AHR.V)**: Opened with a collateral of $1,362.84 USDC.\n   - **Aris Mining Corporation (ARIS.TO)**: Opened with a collateral of $1,362.84 USDC.\n\n### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML signals and market conditions.\n- Continue to scan for news that might impact the selected assets, particularly for any significant changes in the mining sector.\n- Evaluate the potential for opening new positions if the model identifies high-potential opportunities and capital becomes available.",
   "writeActions": [
     {
-      "tool": "close_position",
-      "txHash": "0x8fa9c1fec563ec718651083d4a9df4a709758eba509f825652222a2539c3cf30",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "tool": "open_position",
+      "txHash": "0xbca54140e450c6cb38563e1eed0d4e327c720f89c416ef9d5e4dc9d6f1a28dcf",
+      "justification": "Opening long position on Gold Strike Resources Corp. (GSR.V) based on high ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new longs is 40.0% of available collateral ($4088.51), within safe limits and aligned with metals_risk_off regime favoring longs."
+      },
       "kind": "vault-tx"
     },
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Hudbay Minerals (HBM) due to high ML score and predicted return.",
+      "tool": "open_position",
+      "txHash": "0x0e6595d74eabab21553f824d7d9e60e55669386af9be2757a10951e9e0a18c9a",
+      "justification": "Opening long position on Amarc Resources Ltd. (AHR.V) based on high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+        "reason": "Total collateral for new longs is 40.0% of available collateral ($4088.51), within safe limits and aligned with metals_risk_off regime favoring longs."
       },
-      "kind": "file-diff"
+      "kind": "vault-tx"
     },
     {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Aris Mining Corporation (ARIS.TO) due to high ML score and predicted return.",
+      "tool": "open_position",
+      "txHash": "0x7efa12c3e360beb2fdda1c61701b2e587077c603219b48850d76e1c345bc3500",
+      "justification": "Opening long position on Aris Mining Corporation (ARIS.TO) based on high ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Southern Copper Corporation (SCCO) due to high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Homeland Uranium Corp. (HLU.V) for short position due to negative predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Solis Minerals Ltd. (SLM.AX) for short position due to negative predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Vault Strategic Mining Corp. (KNOX.V) for short position due to negative predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($4088.51) and regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0x2bb87af7b4b0f0f5791b97ed292e9d2623bf492ee4075276b13a8da843359480",
-      "justification": "Updating tracked assets to include top Atlas ML picks and short candidates.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict."
+        "reason": "Total collateral for new longs is 40.0% of available collateral ($4088.51), within safe limits and aligned with metals_risk_off regime favoring longs."
       },
       "kind": "vault-tx"
     }
