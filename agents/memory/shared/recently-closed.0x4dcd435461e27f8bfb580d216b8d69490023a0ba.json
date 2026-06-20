@@ -1,12 +1,18 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-20T05:45:40.133Z",
+  "updatedAt": "2026-06-20T09:41:25.907Z",
   "closures": {
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245": {
       "ticker": "GSR.V",
       "isLong": true,
       "closedAt": "2026-06-20T05:45:40.133Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
+    },
+    "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09": {
+      "ticker": "HLU.V",
+      "isLong": false,
+      "closedAt": "2026-06-20T09:41:25.907Z",
+      "closedReason": "auto-rebalance: profit rotation: closing off-top-N short HLU.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
     }
   }
 }

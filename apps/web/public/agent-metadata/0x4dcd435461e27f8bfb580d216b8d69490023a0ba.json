@@ -5,19 +5,19 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-  "lastRunAt": "2026-06-20T05:47:41.928Z",
+  "lastRunAt": "2026-06-20T09:42:28.735Z",
   "latestRun": {
-    "runId": "2026-06-20T05:47:41.928Z",
-    "finishedAt": "2026-06-20T05:47:41.928Z",
-    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: Updated to include selected Atlas long and short picks.\n\n#### Actions Taken\n- **Opened Short Position**: Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return. This position was successfully opened with a transaction hash of `0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d`.\n\n#### ## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened short position on Homeland Uranium Corp. (HLU.V).\n- Re-evaluate the top Atlas ML picks for any new eligible long or short candidates.\n- Ensure compliance with policy constraints, especially regarding the maximum number of new short positions per run.\n\nThis concludes the current run. The vault's strategy remains aligned with the Atlas ML model's recommendations, focusing on maximizing potential returns while adhering to policy constraints.",
-    "startedAt": "2026-06-20T05:43:49.430Z",
+    "runId": "2026-06-20T09:42:28.735Z",
+    "finishedAt": "2026-06-20T09:42:28.735Z",
+    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $4,088.64 USDC\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included AbraSilver Resource Corp. (ABRA.TO), Solis Minerals Ltd. (SLM.AX), and Vault Strategic Mining Corp. (KNOX.V) based on Atlas ML signals.\n- **Opened Short Position**: Solis Minerals Ltd. (SLM.AX) was opened as a short position due to its negative ML predicted return and high absolute predicted return.\n\n#### ## Thesis\nThe Atlas ML model continues to highlight strong medium-term potential in diversified metals and precious metals stocks. This run focused on leveraging high ML score picks such as AbraSilver Resource Corp. (ABRA.TO) for potential long positions, while also identifying Solis Minerals Ltd. (SLM.AX) as a viable short candidate due to its negative predicted return. The strategy remains aligned with maximizing returns through a balanced approach of long and short positions, respecting the operational constraints and ML signals.\n\n#### Recommendations for Next Run\n- **Monitor Positions**: Keep an eye on the performance of the newly opened short position on Solis Minerals Ltd. (SLM.AX) and adjust as necessary based on market conditions and ML updates.\n- **Evaluate New Entrants**: Continue to evaluate potential new entrants based on updated ML signals and market news.\n- **Optimize Capital Allocation**: Ensure efficient use of available collateral to maximize potential returns while maintaining risk management protocols.\n\nThis summary reflects the current strategy and actions taken, ensuring alignment with the Atlas ML model's insights and the vault's operational guidelines.",
+    "startedAt": "2026-06-20T09:40:10.490Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 14,
+    "turns": 11,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -27,7 +27,7 @@
       "get_ml_short_picks",
       "get_oracle_assets",
       "yfinance_quote",
-      "yfinance_news",
+      "yfinance_quote",
       "wire_asset",
       "wire_asset",
       "wire_asset",
@@ -35,12 +35,6 @@
       "wire_asset",
       "set_vault_assets",
       "get_perp_capital_snapshot",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
       "plan_open_position",
       "plan_open_position",
       "open_position"
@@ -53,27 +47,27 @@
     "softFailures": [
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"CNC.V\\\" is already wired in OracleAdapter at assetId 0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30 (active=true).\",\n  \"symbol\": \"CNC.V\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SAGE.V\\\" is already wired in OracleAdapter at assetId 0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d (active=true).\",\n  \"symbol\": \"SAGE.V\",\n  \"assetId\": \"0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
         "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
         "errorCode": "INVALID_SYMBOL_POLICY"
       },
       {
         "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"HLU.V\\\" is already wired in OracleAdapter at assetId 0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09 (active=true).\",\n  \"symbol\": \"HLU.V\",\n  \"assetId\": \"0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.JK, SCCO.MX.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.JK\",\n    \"SCCO.MX\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+        "errorCode": "INVALID_SYMBOL_POLICY"
+      },
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       },
       {
         "tool": "wire_asset",
         "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
+      },
+      {
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"KNOX.V\\\" is already wired in OracleAdapter at assetId 0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6 (active=true).\",\n  \"symbol\": \"KNOX.V\",\n  \"assetId\": \"0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
         "errorCode": "ALREADY_WIRED"
       }
     ],
@@ -81,7 +75,7 @@
       {
         "turn": 4,
         "verdict": "approve",
-        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers.",
+        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers.",
         "proposedTools": [
           "wire_asset",
           "wire_asset",
@@ -93,15 +87,15 @@
       {
         "turn": 5,
         "verdict": "approve",
-        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict.",
+        "reason": "The writeBatch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
         "proposedTools": [
           "set_vault_assets"
         ]
       },
       {
-        "turn": 13,
+        "turn": 10,
         "verdict": "approve",
-        "reason": "Short position on HLU.V uses 100% of available collateral ($4084.60), but shortPenalty is 0, aligning with metals_risk_off regime.",
+        "reason": "Short position on SLM.AX uses 33.3% of available collateral ($1362.88 of $4088.64), within acceptable limits and regime supports shorts (shortPenalty=0).",
         "proposedTools": [
           "open_position"
         ]
@@ -131,7 +125,7 @@
         ]
       },
       {
-        "turn": 13,
+        "turn": 10,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -142,6 +136,135 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-20T09:42:28.735Z",
+      "startedAt": "2026-06-20T09:40:10.490Z",
+      "finishedAt": "2026-06-20T09:42:28.735Z",
+      "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $4,088.64 USDC\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included AbraSilver Resource Corp. (ABRA.TO), Solis Minerals Ltd. (SLM.AX), and Vault Strategic Mining Corp. (KNOX.V) based on Atlas ML signals.\n- **Opened Short Position**: Solis Minerals Ltd. (SLM.AX) was opened as a short position due to its negative ML predicted return and high absolute predicted return.\n\n#### ## Thesis\nThe Atlas ML model continues to highlight strong medium-term potential in diversified metals and precious metals stocks. This run focused on leveraging high ML score picks such as AbraSilver Resource Corp. (ABRA.TO) for potential long positions, while also identifying Solis Minerals Ltd. (SLM.AX) as a viable short candidate due to its negative predicted return. The strategy remains aligned with maximizing returns through a balanced approach of long and short positions, respecting the operational constraints and ML signals.\n\n#### Recommendations for Next Run\n- **Monitor Positions**: Keep an eye on the performance of the newly opened short position on Solis Minerals Ltd. (SLM.AX) and adjust as necessary based on market conditions and ML updates.\n- **Evaluate New Entrants**: Continue to evaluate potential new entrants based on updated ML signals and market news.\n- **Optimize Capital Allocation**: Ensure efficient use of available collateral to maximize potential returns while maintaining risk management protocols.\n\nThis summary reflects the current strategy and actions taken, ensuring alignment with the Atlas ML model's insights and the vault's operational guidelines.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 11,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_quote",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position"
+      ],
+      "actionCount": 8,
+      "onChainActionCount": 3,
+      "offChainActionCount": 5,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+          "errorCode": "INVALID_SYMBOL_POLICY"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.JK, SCCO.MX.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.JK\",\n    \"SCCO.MX\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+          "errorCode": "INVALID_SYMBOL_POLICY"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"KNOX.V\\\" is already wired in OracleAdapter at assetId 0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6 (active=true).\",\n  \"symbol\": \"KNOX.V\",\n  \"assetId\": \"0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "verdict": "approve",
+          "reason": "The writeBatch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "verdict": "approve",
+          "reason": "Short position on SLM.AX uses 33.3% of available collateral ($1362.88 of $4088.64), within acceptable limits and regime supports shorts (shortPenalty=0).",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 10,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-20T05:47:41.928Z",
       "startedAt": "2026-06-20T05:43:49.430Z",
@@ -384,6 +507,78 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short HLU.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-20T09:42:28.735Z",
+      "txHash": "0x46e467fe325e037a6bae9b56aba3d175b04f5f4a9c500f89169674cc2489047c",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T09:42:28.735Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09",
+        "isLong": false,
+        "sizeDelta": "20423014030000000000000000000000000",
+        "collateralDelta": "4084602806"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Hudbay Minerals (HBM) for long position based on high ML score and predicted return.",
+      "timestamp": "2026-06-20T09:42:28.735Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T09:42:28.735Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "HBM",
+        "seedPriceUsd": 27.59
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include newly selected long and short picks based on Atlas ML signals.",
+      "timestamp": "2026-06-20T09:42:28.735Z",
+      "txHash": "0xe3619b03dfb003186d3fc6512095285eee408f350128b214f42cbc9d958d55f8",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T09:42:28.735Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+          "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+          "0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6"
+        ],
+        "count": 3
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The writeBatch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening short position on Solis Minerals Ltd. (SLM.AX) based on negative ML predicted return and high absolute predicted return.",
+      "timestamp": "2026-06-20T09:42:28.735Z",
+      "txHash": "0x168f216699240ac82f92c89b018233ad27cfa9106ce8610f8e347dbdd7e27928",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T09:42:28.735Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+        "isLong": false,
+        "size": "6814408230000000000000000000000000",
+        "collateral": "1362881646"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Short position on SLM.AX uses 33.3% of available collateral ($1362.88 of $4088.64), within acceptable limits and regime supports shorts (shortPenalty=0)."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
