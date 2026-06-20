@@ -1,120 +1,81 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-20T14:31:48.808Z",
+  "updatedAt": "2026-06-20T16:52:50.746Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-20T14:31:48.674Z",
-      "headlines": [
-        {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
-        },
-        {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IVZ",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "CNC.V": {
-      "fetchedAt": "2026-06-20T14:31:48.674Z",
+      "fetchedAt": "2026-06-20T16:52:50.643Z",
       "headlines": [
         {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IVZ",
+            "WFC",
             "^GSPC"
           ]
         },
         {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-20T14:31:48.674Z",
+      "fetchedAt": "2026-06-20T16:52:50.643Z",
       "headlines": [
         {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IVZ",
+            "WFC",
             "^GSPC"
           ]
         },
         {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-20T14:31:48.674Z",
+      "fetchedAt": "2026-06-20T16:52:50.643Z",
       "headlines": [
         {
           "title": "Move Over Marvell, Here Are the Next 2 $1 Trillion Semiconductor Stocks",
@@ -155,150 +116,182 @@
       ],
       "sourceAgent": "mining-manager"
     },
+    "GSR.V": {
+      "fetchedAt": "2026-06-20T16:52:50.643Z",
+      "headlines": [
+        {
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WFC",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
     "AHR.V": {
-      "fetchedAt": "2026-06-20T14:31:48.674Z",
+      "fetchedAt": "2026-06-20T16:52:50.643Z",
       "headlines": [
         {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IVZ",
+            "WFC",
             "^GSPC"
           ]
         },
         {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-20T14:31:48.808Z",
-      "headlines": [
-        {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
+            "XLP",
+            "^IXIC"
           ]
-        },
-        {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IVZ",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-20T14:31:48.808Z",
-      "headlines": [
-        {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
-        },
-        {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "IVZ",
-            "^GSPC"
-          ]
-        },
-        {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-20T14:31:48.808Z",
+      "fetchedAt": "2026-06-20T16:52:50.746Z",
       "headlines": [
         {
-          "title": "Sandisk Stock Is Up More Than 5,900% Since It Spun Off From Western Digital. Is It Too Late to Buy?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/3669bbbc-6fa5-3df0-b756-a3fc48f2becc/sandisk-stock-is-up-more-than.html",
-          "publishedAt": "2026-06-20T14:21:00.000Z",
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SNDK",
-            "NVDA",
-            "WDC"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Bank ETF Showdown: Invesco Crushes iShares",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4633d374-a08d-3d60-92d0-cabf9a59af4c/bank-etf-showdown%3A-invesco.html",
-          "publishedAt": "2026-06-20T14:20:01.000Z",
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "IVZ",
+            "WFC",
             "^GSPC"
           ]
         },
         {
-          "title": "Trump escalates spat with Italy's Meloni over G7 photo claim",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/6243b06f-c68f-38c9-b975-453c3883c709/trump-escalates-spat-with.html",
-          "publishedAt": "2026-06-20T14:19:49.000Z",
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-20T16:52:50.746Z",
+      "headlines": [
+        {
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WFC",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-20T16:52:50.746Z",
+      "headlines": [
+        {
+          "title": "Pronounce Spring 2027: 10 Years Lighter",
+          "publisher": "WWD",
+          "link": "https://finance.yahoo.com/m/41d27e48-3772-3134-9fcd-e3a5678fd330/pronounce-spring-2027%3A-10.html",
+          "publishedAt": "2026-06-20T16:48:04.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Wells Fargo new S&P 500 target sends investors clear signal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/b6f0c974-bbd4-36c7-8360-b5fb1ec877d1/wells-fargo-new-s%26p-500.html",
+          "publishedAt": "2026-06-20T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "WFC",
+            "^GSPC"
+          ]
+        },
+        {
+          "title": "When You Play Defense With Consumer Staples, Which ETF Should You Own? Funds From State Street and First Trust Offer a Stark Choice.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/adec2e66-555a-347e-a32c-2fda9f9bd37e/when-you-play-defense-with.html",
+          "publishedAt": "2026-06-20T16:37:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "XLP",
+            "^IXIC"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

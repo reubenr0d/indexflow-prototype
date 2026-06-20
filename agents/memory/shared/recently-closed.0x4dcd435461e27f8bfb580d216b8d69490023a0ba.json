@@ -1,17 +1,11 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-20T14:31:13.794Z",
+  "updatedAt": "2026-06-20T16:52:26.820Z",
   "closures": {
-    "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19": {
-      "ticker": "SLM.AX",
-      "isLong": false,
-      "closedAt": "2026-06-20T12:10:13.209Z",
-      "closedReason": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
-    },
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6": {
       "ticker": "ABRA.TO",
       "isLong": true,
-      "closedAt": "2026-06-20T14:31:13.794Z",
+      "closedAt": "2026-06-20T16:52:26.820Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
     }
   }
