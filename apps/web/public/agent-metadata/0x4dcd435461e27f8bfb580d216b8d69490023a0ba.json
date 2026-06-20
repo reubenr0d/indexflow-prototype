@@ -4,20 +4,20 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-  "lastRunAt": "2026-06-20T09:42:28.735Z",
+  "thesis": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
+  "lastRunAt": "2026-06-20T12:11:06.820Z",
   "latestRun": {
-    "runId": "2026-06-20T09:42:28.735Z",
-    "finishedAt": "2026-06-20T09:42:28.735Z",
-    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $4,088.64 USDC\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included AbraSilver Resource Corp. (ABRA.TO), Solis Minerals Ltd. (SLM.AX), and Vault Strategic Mining Corp. (KNOX.V) based on Atlas ML signals.\n- **Opened Short Position**: Solis Minerals Ltd. (SLM.AX) was opened as a short position due to its negative ML predicted return and high absolute predicted return.\n\n#### ## Thesis\nThe Atlas ML model continues to highlight strong medium-term potential in diversified metals and precious metals stocks. This run focused on leveraging high ML score picks such as AbraSilver Resource Corp. (ABRA.TO) for potential long positions, while also identifying Solis Minerals Ltd. (SLM.AX) as a viable short candidate due to its negative predicted return. The strategy remains aligned with maximizing returns through a balanced approach of long and short positions, respecting the operational constraints and ML signals.\n\n#### Recommendations for Next Run\n- **Monitor Positions**: Keep an eye on the performance of the newly opened short position on Solis Minerals Ltd. (SLM.AX) and adjust as necessary based on market conditions and ML updates.\n- **Evaluate New Entrants**: Continue to evaluate potential new entrants based on updated ML signals and market news.\n- **Optimize Capital Allocation**: Ensure efficient use of available collateral to maximize potential returns while maintaining risk management protocols.\n\nThis summary reflects the current strategy and actions taken, ensuring alignment with the Atlas ML model's insights and the vault's operational guidelines.",
-    "startedAt": "2026-06-20T09:40:10.490Z",
+    "runId": "2026-06-20T12:11:06.820Z",
+    "finishedAt": "2026-06-20T12:11:06.820Z",
+    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n#### Recent Actions\n- **Opened Long Position**: AbraSilver Resource (ABRA.TO) was opened with a size of $13,628.82 and collateral of $1,362.88 USDC. This decision was based on its high ML score and predicted return, aligning with the current strategy to capitalize on strong ML signals.\n\n#### Thesis\n\n## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML signals and news context.\n- Re-evaluate short positions based on news and market conditions to ensure alignment with the model's predictions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.",
+    "startedAt": "2026-06-20T12:08:57.124Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 11,
+    "turns": 8,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,76 +26,22 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "yfinance_quote",
-      "yfinance_quote",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "set_vault_assets",
       "get_perp_capital_snapshot",
       "plan_open_position",
-      "plan_open_position",
-      "open_position"
+      "open_position",
+      "get_vault_state"
     ],
-    "actionCount": 8,
-    "onChainActionCount": 3,
-    "offChainActionCount": 5,
+    "actionCount": 2,
+    "onChainActionCount": 2,
+    "offChainActionCount": 0,
     "reasoningSummaries": [],
     "errors": [],
-    "softFailures": [
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"SCCO\\\". Use an explicit exchange suffix: SCCO.BA, SCCO.JK, SCCO.MX.\",\n  \"requestedSymbol\": \"SCCO\",\n  \"candidates\": [\n    \"SCCO.BA\",\n    \"SCCO.JK\",\n    \"SCCO.MX\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
-        "errorCode": "INVALID_SYMBOL_POLICY"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"ABRA.TO\\\" is already wired in OracleAdapter at assetId 0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6 (active=true).\",\n  \"symbol\": \"ABRA.TO\",\n  \"assetId\": \"0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"KNOX.V\\\" is already wired in OracleAdapter at assetId 0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6 (active=true).\",\n  \"symbol\": \"KNOX.V\",\n  \"assetId\": \"0x3f9596d1f88ba6511e96c866b590d6cf39d49073001543ffdeffbb038d1d53e6\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      }
-    ],
+    "softFailures": [],
     "riskOfficerVerdicts": [
       {
-        "turn": 4,
+        "turn": 6,
         "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers.",
-        "proposedTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "verdict": "approve",
-        "reason": "The writeBatch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict.",
-        "proposedTools": [
-          "set_vault_assets"
-        ]
-      },
-      {
-        "turn": 10,
-        "verdict": "approve",
-        "reason": "Short position on SLM.AX uses 33.3% of available collateral ($1362.88 of $4088.64), within acceptable limits and regime supports shorts (shortPenalty=0).",
+        "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.88 of $4088.64), which is within acceptable limits and aligns with the metals_risk_off regime.",
         "proposedTools": [
           "open_position"
         ]
@@ -103,29 +49,7 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 4,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset",
-          "wire_asset"
-        ]
-      },
-      {
-        "turn": 5,
-        "status": "bypassed-non-interactive-execute",
-        "interactive": false,
-        "refinementRounds": 0,
-        "proposedWriteTools": [
-          "set_vault_assets"
-        ]
-      },
-      {
-        "turn": 10,
+        "turn": 6,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -136,6 +60,59 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-20T12:11:06.820Z",
+      "startedAt": "2026-06-20T12:08:57.124Z",
+      "finishedAt": "2026-06-20T12:11:06.820Z",
+      "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n#### Recent Actions\n- **Opened Long Position**: AbraSilver Resource (ABRA.TO) was opened with a size of $13,628.82 and collateral of $1,362.88 USDC. This decision was based on its high ML score and predicted return, aligning with the current strategy to capitalize on strong ML signals.\n\n#### Thesis\n\n## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML signals and news context.\n- Re-evaluate short positions based on news and market conditions to ensure alignment with the model's predictions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 8,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 2,
+      "onChainActionCount": 2,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 6,
+          "verdict": "approve",
+          "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.88 of $4088.64), which is within acceptable limits and aligns with the metals_risk_off regime.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 6,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-20T09:42:28.735Z",
       "startedAt": "2026-06-20T09:40:10.490Z",
@@ -507,6 +484,40 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-20T12:11:06.820Z",
+      "txHash": "0xcf2bb50b45e9c65c36c5fc31d6c6bab746dcdcba0737438deeebb8333b515d15",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T12:11:06.820Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19",
+        "isLong": false,
+        "sizeDelta": "6814408230000000000000000000000000",
+        "collateralDelta": "1362881646"
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) based on high ML score and predicted return. This aligns with the current strategy to capitalize on strong ML signals.",
+      "timestamp": "2026-06-20T12:11:06.820Z",
+      "txHash": "0x3d428d14b285b4b617d2c50ceeba1d3ab8dbc0a83f26dcf76050ffb1e2041e21",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T12:11:06.820Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
+        "isLong": true,
+        "size": "13628816460000000000000000000000000",
+        "collateral": "1362881646"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.88 of $4088.64), which is within acceptable limits and aligns with the metals_risk_off regime."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N short HLU.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",

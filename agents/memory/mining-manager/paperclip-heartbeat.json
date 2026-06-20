@@ -7,93 +7,33 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-20T09:42:28.735Z",
-  "startedAt": "2026-06-20T09:40:10.490Z",
-  "finishedAt": "2026-06-20T09:42:28.735Z",
+  "runId": "2026-06-20T12:11:06.820Z",
+  "startedAt": "2026-06-20T12:08:57.124Z",
+  "finishedAt": "2026-06-20T12:11:06.820Z",
   "status": "succeeded",
   "usage": {
-    "turns": 11,
-    "toolCalls": 19,
+    "turns": 8,
+    "toolCalls": 11,
     "errors": 0,
-    "softFailures": 5,
-    "writeActions": 8
+    "softFailures": 0,
+    "writeActions": 2
   },
-  "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $4,088.64 USDC\n\n#### Actions Taken\n- **Tracked Assets Updated**: Included AbraSilver Resource Corp. (ABRA.TO), Solis Minerals Ltd. (SLM.AX), and Vault Strategic Mining Corp. (KNOX.V) based on Atlas ML signals.\n- **Opened Short Position**: Solis Minerals Ltd. (SLM.AX) was opened as a short position due to its negative ML predicted return and high absolute predicted return.\n\n#### ## Thesis\nThe Atlas ML model continues to highlight strong medium-term potential in diversified metals and precious metals stocks. This run focused on leveraging high ML score picks such as AbraSilver Resource Corp. (ABRA.TO) for potential long positions, while also identifying Solis Minerals Ltd. (SLM.AX) as a viable short candidate due to its negative predicted return. The strategy remains aligned with maximizing returns through a balanced approach of long and short positions, respecting the operational constraints and ML signals.\n\n#### Recommendations for Next Run\n- **Monitor Positions**: Keep an eye on the performance of the newly opened short position on Solis Minerals Ltd. (SLM.AX) and adjust as necessary based on market conditions and ML updates.\n- **Evaluate New Entrants**: Continue to evaluate potential new entrants based on updated ML signals and market news.\n- **Optimize Capital Allocation**: Ensure efficient use of available collateral to maximize potential returns while maintaining risk management protocols.\n\nThis summary reflects the current strategy and actions taken, ensuring alignment with the Atlas ML model's insights and the vault's operational guidelines.",
+  "thesis": "## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
+  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.43 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n#### Recent Actions\n- **Opened Long Position**: AbraSilver Resource (ABRA.TO) was opened with a size of $13,628.82 and collateral of $1,362.88 USDC. This decision was based on its high ML score and predicted return, aligning with the current strategy to capitalize on strong ML signals.\n\n#### Thesis\n\n## Thesis\n\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.\n\n#### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML signals and news context.\n- Re-evaluate short positions based on news and market conditions to ensure alignment with the model's predictions.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0x46e467fe325e037a6bae9b56aba3d175b04f5f4a9c500f89169674cc2489047c",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N short HLU.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Hudbay Minerals (HBM) for long position based on high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Southern Copper Corporation (SCCO) for long position based on high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring AbraSilver Resource Corp. (ABRA.TO) for long position based on high ML score and predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Solis Minerals Ltd. (SLM.AX) for short position based on negative ML predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "wire_asset",
-      "txHash": null,
-      "justification": "Wiring Vault Strategic Mining Corp. (KNOX.V) for short position based on negative ML predicted return and high absolute predicted return.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Total proposed collateral is within available collateral ($4088.64), and no recent losses >10% on proposed tickers."
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "set_vault_assets",
-      "txHash": "0xe3619b03dfb003186d3fc6512095285eee408f350128b214f42cbc9d958d55f8",
-      "justification": "Updating tracked assets to include newly selected long and short picks based on Atlas ML signals.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The writeBatch only updates tracked assets without opening positions; no risk of over-leverage or regime conflict."
-      },
+      "txHash": "0xcf2bb50b45e9c65c36c5fc31d6c6bab746dcdcba0737438deeebb8333b515d15",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N short SLM.AX (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x168f216699240ac82f92c89b018233ad27cfa9106ce8610f8e347dbdd7e27928",
-      "justification": "Opening short position on Solis Minerals Ltd. (SLM.AX) based on negative ML predicted return and high absolute predicted return.",
+      "txHash": "0x3d428d14b285b4b617d2c50ceeba1d3ab8dbc0a83f26dcf76050ffb1e2041e21",
+      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) based on high ML score and predicted return. This aligns with the current strategy to capitalize on strong ML signals.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Short position on SLM.AX uses 33.3% of available collateral ($1362.88 of $4088.64), within acceptable limits and regime supports shorts (shortPenalty=0)."
+        "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.88 of $4088.64), which is within acceptable limits and aligns with the metals_risk_off regime."
       },
       "kind": "vault-tx"
     }
