@@ -4,13 +4,13 @@
   "agentDescription": "Mining long/short vault driven by the analyst's 8-category Quality Matrix (Drilling / Resources / Met / Econ / Permitting / Offtake / Capital Raises / Construction)",
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
-  "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents any new long positions from being opened. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "lastRunAt": "2026-06-17T23:01:16.727Z",
+  "thesis": "The strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents the opening of new long positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
+  "lastRunAt": "2026-06-20T20:50:05.144Z",
   "latestRun": {
-    "runId": "2026-06-17T23:01:16.727Z",
-    "finishedAt": "2026-06-17T23:01:16.727Z",
-    "summary": "## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents any new long positions from being opened. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Trade-Ready Picks\n- No trade-ready picks were available with a composite score of at least 75 and a trade readiness score of at least 75.\n\n## Actions Taken\n- No new positions were opened or closed due to the lack of eligible trade-ready picks.\n\n## Recommendations for Next Run\n- Monitor the availability of trade-ready picks from the Atlas API.\n- Continue to assess the market regime and adjust the strategy accordingly once eligible candidates are available.\n- Re-evaluate the potential for short positions if Red-Flag signals and bearish news headlines emerge.",
-    "startedAt": "2026-06-17T23:00:36.015Z",
+    "runId": "2026-06-20T20:50:05.144Z",
+    "finishedAt": "2026-06-20T20:50:05.144Z",
+    "summary": "## Thesis\n\nThe strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents the opening of new long positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Actions\n- **Trade-Ready Picks**: No eligible candidates with a tradeReadinessScore above 75.\n- **Long Positions**: None opened due to lack of trade-ready picks.\n- **Short Positions**: None considered due to absence of Red-Flag signals and bearish news headlines.\n\n## Recommendations for Next Run\n- Monitor for any updates in the Atlas API that may provide new trade-ready picks.\n- Continue to assess the metals regime and adjust strategy accordingly.\n- Await the availability of trade-ready picks to proceed with any trading actions.",
+    "startedAt": "2026-06-20T20:48:55.620Z",
     "agentName": "quality-matrix-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -33,6 +33,32 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-20T20:50:05.144Z",
+      "startedAt": "2026-06-20T20:48:55.620Z",
+      "finishedAt": "2026-06-20T20:50:05.144Z",
+      "summary": "## Thesis\n\nThe strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents the opening of new long positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Actions\n- **Trade-Ready Picks**: No eligible candidates with a tradeReadinessScore above 75.\n- **Long Positions**: None opened due to lack of trade-ready picks.\n- **Short Positions**: None considered due to absence of Red-Flag signals and bearish news headlines.\n\n## Recommendations for Next Run\n- Monitor for any updates in the Atlas API that may provide new trade-ready picks.\n- Continue to assess the metals regime and adjust strategy accordingly.\n- Await the availability of trade-ready picks to proceed with any trading actions.",
+      "agentName": "quality-matrix-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 3,
+      "toolCalls": [
+        "get_vault_state",
+        "get_quality_matrix_definition",
+        "get_quality_trade_ready_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-17T23:01:16.727Z",
       "startedAt": "2026-06-17T23:00:36.015Z",
