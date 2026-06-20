@@ -1,11 +1,11 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-20T16:52:26.820Z",
+  "updatedAt": "2026-06-20T18:47:13.184Z",
   "closures": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6": {
       "ticker": "ABRA.TO",
       "isLong": true,
-      "closedAt": "2026-06-20T16:52:26.820Z",
+      "closedAt": "2026-06-20T18:47:13.184Z",
       "closedReason": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
     }
   }

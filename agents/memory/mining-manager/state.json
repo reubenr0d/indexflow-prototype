@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-20T16:53:35.901Z",
-  "thesis": "The Atlas ML model continues to show robust potential for medium-term performance in the mining sector, particularly for diversified metals and precious metals stocks. The top picks, such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), have been identified for their high predicted returns, supported by strong ML scores. These companies are well-positioned in the market with significant potential for growth, especially in the nickel and diversified metals sectors.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) stands out with a negative predicted return and a high absolute predicted return, indicating a potential decline. This short position is supported by the model's analysis, which suggests a downturn in the uranium sector, making it a viable candidate for shorting.",
-  "lastThesisUpdate": "2026-06-20T16:53:35.901Z"
+  "lastRunAt": "2026-06-20T18:49:13.559Z",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
+  "lastThesisUpdate": "2026-06-20T18:49:13.559Z"
 }

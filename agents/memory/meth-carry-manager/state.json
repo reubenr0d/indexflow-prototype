@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-20T16:57:47.931Z",
+  "lastRunAt": "2026-06-20T18:52:21.221Z",
   "thesis": "The vault currently has no available funds or positions, resulting in an inability to calculate the hedge ratio or funding rate context. The strategy remains on hold until sufficient funds are available for trading activities. I will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
-  "lastThesisUpdate": "2026-06-20T14:37:27.052Z"
+  "lastThesisUpdate": "2026-06-20T18:52:21.221Z"
 }

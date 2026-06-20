@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-20T16:57:47.931Z",
-  "startedAt": "2026-06-20T16:56:36.048Z",
-  "finishedAt": "2026-06-20T16:57:47.931Z",
+  "runId": "2026-06-20T18:52:21.221Z",
+  "startedAt": "2026-06-20T18:51:44.756Z",
+  "finishedAt": "2026-06-20T18:52:21.221Z",
   "status": "succeeded_with_errors",
   "usage": {
-    "turns": 8,
-    "toolCalls": 9,
+    "turns": 5,
+    "toolCalls": 6,
     "errors": 2,
-    "softFailures": 1,
+    "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The vault currently has no available funds or positions, resulting in an inability to calculate the hedge ratio or funding rate context. The strategy remains on hold until sufficient funds are available for trading activities. I will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
-  "summary": "The vault currently has no available funds or positions, resulting in an inability to calculate the hedge ratio or funding rate context. The attempt to open a short position in `ETH-USD` failed due to insufficient collateral, as the available collateral is $0.00, which is below the minimum required for opening a position.\n\n### Summary of Actions\n- **Current Hedge Ratio**: Undefined (no positions)\n- **mETH Balance**: Not retrievable\n- **mETH/USD Price**: Not retrievable\n- **Funding Rate**: Not retrievable\n- **Action Taken**: Attempted to open a short position in `ETH-USD` but failed due to insufficient collateral.\n\n### Next Steps\nI will continue to monitor the situation and attempt to retrieve the necessary data in the next run. The strategy remains on hold until sufficient funds are available for trading activities.\n\n## Updated Thesis\nThe vault currently has no available funds or positions, resulting in an inability to calculate the hedge ratio or funding rate context. The strategy remains on hold until sufficient funds are available for trading activities.",
+  "summary": "It appears that I am currently unable to retrieve the necessary data from the vault due to repeated errors when attempting to read the reserve state. This could indicate that the RWA adapter is not properly configured or there is an issue with the underlying contract.\n\nGiven that the vault has no available funds or positions, I cannot compute the hedge ratio or take any further actions regarding the short position. Therefore, I will update the current thesis to reflect this situation.\n\n## Thesis\nThe vault currently has no available funds or positions, resulting in an inability to calculate the hedge ratio or funding rate context. The strategy remains on hold until sufficient funds are available for trading activities. I will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
   "writeActions": [],
   "errors": [
     {
