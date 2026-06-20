@@ -7,49 +7,93 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-20T00:25:23.447Z",
-  "startedAt": "2026-06-20T00:20:51.364Z",
-  "finishedAt": "2026-06-20T00:25:23.447Z",
+  "runId": "2026-06-20T05:47:41.928Z",
+  "startedAt": "2026-06-20T05:43:49.430Z",
+  "finishedAt": "2026-06-20T05:47:41.928Z",
   "status": "succeeded",
   "usage": {
-    "turns": 18,
-    "toolCalls": 20,
+    "turns": 14,
+    "toolCalls": 25,
     "errors": 0,
     "softFailures": 5,
-    "writeActions": 4
+    "writeActions": 8
   },
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $0.00 USDC\n\n#### Actions Taken\n- **Closed Position**: Successfully closed the long position in Amarc Resources Ltd. (AHR.V) to free up collateral for higher-ranked entries.\n- **Opened Long Position**: Successfully opened a long position on GSR.V with a churn-guard bypass due to its high ML score and predicted return.\n\n#### Next Steps\n1. **Monitor New Position**: Keep an eye on the performance of the newly opened position in GSR.V and adjust as necessary based on market conditions and ML model updates.\n2. **Focus on High Potential Entrants**: Continue to monitor the market and the Atlas ML model for new high-potential entrants that align with the current strategy.\n3. **Review and Adjust Strategy**: Given the current constraints, consider adjusting the strategy to focus on other high ML score picks that are not subject to churn guard restrictions.\n\n### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
+  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: Updated to include selected Atlas long and short picks.\n\n#### Actions Taken\n- **Opened Short Position**: Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return. This position was successfully opened with a transaction hash of `0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d`.\n\n#### ## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened short position on Homeland Uranium Corp. (HLU.V).\n- Re-evaluate the top Atlas ML picks for any new eligible long or short candidates.\n- Ensure compliance with policy constraints, especially regarding the maximum number of new short positions per run.\n\nThis concludes the current run. The vault's strategy remains aligned with the Atlas ML model's recommendations, focusing on maximizing potential returns while adhering to policy constraints.",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0x3931fb717df9623fa5221dc0a5d2bd819efb5664557ba0c1d48c9fa3d2dd63a1",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "txHash": "0xf235d98c910b3befdd1cac2f4631008553683d1336ca9d35a6e5766a2097bad7",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
       "kind": "vault-tx"
     },
     {
-      "tool": "close_position",
-      "txHash": "0x954135a310e98e8c646a3163923fc41460d670db65ac3d10229b76774481a53d",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "close_position",
-      "txHash": "0x5083a01486060bebcb7fb381d933ad95a65bbbe3baa52d7a477dcee4c3070d99",
-      "justification": "Closing AHR.V to free up collateral for higher-ranked entries GSR.V and ARIS.TO.",
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Canada Nickel Company Inc. (CNC.V) due to strong ML signal and high predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Closing AHR.V frees up $907.81 collateral, aligning with strategy to reallocate to higher-ranked entries GSR.V and ARIS.TO."
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Sage Potash Corp. (SAGE.V) due to strong ML signal and high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Hudbay Minerals (HBM) due to strong ML signal and high predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Homeland Uranium Corp. (HLU.V) for potential short opportunity due to negative predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring SOLIS FPO (SLM.AX) for potential short opportunity due to negative predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0x1b62bfc942387dc90f0f8add3435fad8c29659225908c2487415e441b9bb9cb0",
+      "justification": "Updating tracked assets to include selected Atlas long and short picks.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x26b2bff2d45ed0c01487f19d5c9ab6ca414527c1cf83d044784e8a83adff7376",
-      "justification": "Opening long position on GSR.V due to high ML score and predicted return, justifying re-opening despite recent close. Churn-guard bypass active.",
+      "txHash": "0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d",
+      "justification": "Opening short position on Homeland Uranium Corp. (HLU.V) due to negative predicted return and high absolute predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The proposed long position on GSR.V uses 42.8% of available collateral ($1,361.53 of $3,176.96), which is within acceptable limits and aligns with the longBonus regime."
+        "reason": "Short position on HLU.V uses 100% of available collateral ($4084.60), but shortPenalty is 0, aligning with metals_risk_off regime."
       },
       "kind": "vault-tx"
     }

@@ -5,19 +5,19 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-  "lastRunAt": "2026-06-20T00:25:23.447Z",
+  "lastRunAt": "2026-06-20T05:47:41.928Z",
   "latestRun": {
-    "runId": "2026-06-20T00:25:23.447Z",
-    "finishedAt": "2026-06-20T00:25:23.447Z",
-    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available Collateral**: $0.00 USDC\n\n#### Actions Taken\n- **Closed Position**: Successfully closed the long position in Amarc Resources Ltd. (AHR.V) to free up collateral for higher-ranked entries.\n- **Opened Long Position**: Successfully opened a long position on GSR.V with a churn-guard bypass due to its high ML score and predicted return.\n\n#### Next Steps\n1. **Monitor New Position**: Keep an eye on the performance of the newly opened position in GSR.V and adjust as necessary based on market conditions and ML model updates.\n2. **Focus on High Potential Entrants**: Continue to monitor the market and the Atlas ML model for new high-potential entrants that align with the current strategy.\n3. **Review and Adjust Strategy**: Given the current constraints, consider adjusting the strategy to focus on other high ML score picks that are not subject to churn guard restrictions.\n\n### Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
-    "startedAt": "2026-06-20T00:20:51.364Z",
+    "runId": "2026-06-20T05:47:41.928Z",
+    "finishedAt": "2026-06-20T05:47:41.928Z",
+    "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: Updated to include selected Atlas long and short picks.\n\n#### Actions Taken\n- **Opened Short Position**: Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return. This position was successfully opened with a transaction hash of `0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d`.\n\n#### ## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened short position on Homeland Uranium Corp. (HLU.V).\n- Re-evaluate the top Atlas ML picks for any new eligible long or short candidates.\n- Ensure compliance with policy constraints, especially regarding the maximum number of new short positions per run.\n\nThis concludes the current run. The vault's strategy remains aligned with the Atlas ML model's recommendations, focusing on maximizing potential returns while adhering to policy constraints.",
+    "startedAt": "2026-06-20T05:43:49.430Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 18,
+    "turns": 14,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,65 +26,82 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
+      "yfinance_quote",
       "yfinance_news",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "wire_asset",
+      "set_vault_assets",
       "get_perp_capital_snapshot",
-      "get_perp_capital_snapshot",
       "plan_open_position",
       "plan_open_position",
       "plan_open_position",
-      "close_position",
       "plan_open_position",
       "plan_open_position",
-      "get_vault_state",
       "plan_open_position",
-      "open_position",
-      "get_vault_state"
+      "plan_open_position",
+      "plan_open_position",
+      "open_position"
     ],
-    "actionCount": 4,
-    "onChainActionCount": 4,
-    "offChainActionCount": 0,
+    "actionCount": 8,
+    "onChainActionCount": 3,
+    "offChainActionCount": 5,
     "reasoningSummaries": [],
     "errors": [],
     "softFailures": [
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245, isLong=true) is blocked: a close was recorded at 2026-06-20T00:23:02.408Z (auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)). Cooldown ends at 2026-06-20T04:23:02.408Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245\",\n  \"isLong\": true,\n  \"ticker\": \"GSR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-20T00:23:02.408Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-20T04:23:02.408Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"CNC.V\\\" is already wired in OracleAdapter at assetId 0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30 (active=true).\",\n  \"symbol\": \"CNC.V\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907, isLong=true) is blocked: a close was recorded at 2026-06-20T00:22:49.350Z (auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-20T04:22:49.350Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"isLong\": true,\n  \"ticker\": \"ARIS.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-20T00:22:49.350Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-20T04:22:49.350Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SAGE.V\\\" is already wired in OracleAdapter at assetId 0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d (active=true).\",\n  \"symbol\": \"SAGE.V\",\n  \"assetId\": \"0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6, isLong=true) is blocked: a close was recorded at 2026-06-19T21:35:49.091Z (auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)). Cooldown ends at 2026-06-20T01:35:49.091Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"isLong\": true,\n  \"ticker\": \"AHR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-19T21:35:49.091Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-20T01:35:49.091Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+        "errorCode": "INVALID_SYMBOL_POLICY"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245, isLong=true) is blocked: a close was recorded at 2026-06-20T00:23:02.408Z (auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)). Cooldown ends at 2026-06-20T04:23:02.408Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245\",\n  \"isLong\": true,\n  \"ticker\": \"GSR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-20T00:23:02.408Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-20T04:23:02.408Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"HLU.V\\\" is already wired in OracleAdapter at assetId 0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09 (active=true).\",\n  \"symbol\": \"HLU.V\",\n  \"assetId\": \"0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       },
       {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907, isLong=true) is blocked: a close was recorded at 2026-06-20T00:22:49.350Z (auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-20T04:22:49.350Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"isLong\": true,\n  \"ticker\": \"ARIS.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-20T00:22:49.350Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-20T04:22:49.350Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
+        "tool": "wire_asset",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+        "errorCode": "ALREADY_WIRED"
       }
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 11,
+        "turn": 4,
         "verdict": "approve",
-        "reason": "Closing AHR.V frees up $907.81 collateral, aligning with strategy to reallocate to higher-ranked entries GSR.V and ARIS.TO.",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers.",
         "proposedTools": [
-          "close_position"
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
         ]
       },
       {
-        "turn": 16,
+        "turn": 5,
         "verdict": "approve",
-        "reason": "The proposed long position on GSR.V uses 42.8% of available collateral ($1,361.53 of $3,176.96), which is within acceptable limits and aligns with the longBonus regime.",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict.",
+        "proposedTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 13,
+        "verdict": "approve",
+        "reason": "Short position on HLU.V uses 100% of available collateral ($4084.60), but shortPenalty is 0, aligning with metals_risk_off regime.",
         "proposedTools": [
           "open_position"
         ]
@@ -92,16 +109,29 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 11,
+        "turn": 4,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
-          "close_position"
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset",
+          "wire_asset"
         ]
       },
       {
-        "turn": 16,
+        "turn": 5,
+        "status": "bypassed-non-interactive-execute",
+        "interactive": false,
+        "refinementRounds": 0,
+        "proposedWriteTools": [
+          "set_vault_assets"
+        ]
+      },
+      {
+        "turn": 13,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -112,6 +142,141 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-20T05:47:41.928Z",
+      "startedAt": "2026-06-20T05:43:49.430Z",
+      "finishedAt": "2026-06-20T05:47:41.928Z",
+      "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,346.14 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: Updated to include selected Atlas long and short picks.\n\n#### Actions Taken\n- **Opened Short Position**: Homeland Uranium Corp. (HLU.V) due to its negative predicted return and high absolute predicted return. This position was successfully opened with a transaction hash of `0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d`.\n\n#### ## Thesis\nThe Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\n#### Recommendations for Next Run\n- Monitor the performance of the newly opened short position on Homeland Uranium Corp. (HLU.V).\n- Re-evaluate the top Atlas ML picks for any new eligible long or short candidates.\n- Ensure compliance with policy constraints, especially regarding the maximum number of new short positions per run.\n\nThis concludes the current run. The vault's strategy remains aligned with the Atlas ML model's recommendations, focusing on maximizing potential returns while adhering to policy constraints.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 14,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_news",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "wire_asset",
+        "set_vault_assets",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position"
+      ],
+      "actionCount": 8,
+      "onChainActionCount": 3,
+      "offChainActionCount": 5,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"CNC.V\\\" is already wired in OracleAdapter at assetId 0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30 (active=true).\",\n  \"symbol\": \"CNC.V\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SAGE.V\\\" is already wired in OracleAdapter at assetId 0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d (active=true).\",\n  \"symbol\": \"SAGE.V\",\n  \"assetId\": \"0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"INVALID_SYMBOL_POLICY\",\n  \"message\": \"Ambiguous unsuffixed equity symbol \\\"HBM\\\". Use an explicit exchange suffix: HBM.TO.\",\n  \"requestedSymbol\": \"HBM\",\n  \"candidates\": [\n    \"HBM.TO\"\n  ],\n  \"recovery_hint\": \"Use an explicit exchange suffix for ambiguous equities (for example: BHP.AX).\"\n}",
+          "errorCode": "INVALID_SYMBOL_POLICY"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"HLU.V\\\" is already wired in OracleAdapter at assetId 0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09 (active=true).\",\n  \"symbol\": \"HLU.V\",\n  \"assetId\": \"0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        },
+        {
+          "tool": "wire_asset",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SLM.AX\\\" is already wired in OracleAdapter at assetId 0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19 (active=true).\",\n  \"symbol\": \"SLM.AX\",\n  \"assetId\": \"0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
+          "errorCode": "ALREADY_WIRED"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "approve",
+          "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "verdict": "approve",
+          "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict.",
+          "proposedTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 13,
+          "verdict": "approve",
+          "reason": "Short position on HLU.V uses 100% of available collateral ($4084.60), but shortPenalty is 0, aligning with metals_risk_off regime.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 5,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "set_vault_assets"
+          ]
+        },
+        {
+          "turn": 13,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-20T00:25:23.447Z",
       "startedAt": "2026-06-20T00:20:51.364Z",
@@ -219,6 +384,79 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-20T05:47:41.928Z",
+      "txHash": "0xf235d98c910b3befdd1cac2f4631008553683d1336ca9d35a6e5766a2097bad7",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T05:47:41.928Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
+        "isLong": true,
+        "sizeDelta": "13615342680000000000000000000000000",
+        "collateralDelta": "1361534268"
+      }
+    },
+    {
+      "tool": "wire_asset",
+      "justification": "Wiring Canada Nickel Company Inc. (CNC.V) due to strong ML signal and high predicted return.",
+      "timestamp": "2026-06-20T05:47:41.928Z",
+      "txHash": null,
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T05:47:41.928Z",
+      "params": {
+        "kind": "wire_asset",
+        "symbol": "CNC.V",
+        "seedPriceUsd": 1.0387
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "All proposed actions align with available collateral ($4084.60) and market regime (shortPenalty=0, longBonus=1); no recent losses >10% on proposed tickers."
+      }
+    },
+    {
+      "tool": "set_vault_assets",
+      "justification": "Updating tracked assets to include selected Atlas long and short picks.",
+      "timestamp": "2026-06-20T05:47:41.928Z",
+      "txHash": "0x1b62bfc942387dc90f0f8add3435fad8c29659225908c2487415e441b9bb9cb0",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T05:47:41.928Z",
+      "params": {
+        "kind": "set_vault_assets",
+        "assetIds": [
+          "0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30",
+          "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d",
+          "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09",
+          "0x4da1bc4c9e87eb1b70fc5bc0d7cfa718e8ba32328420c9e3a6097ead27731f19"
+        ],
+        "count": 4
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The batch only updates tracked assets without opening new positions; no risk of over-leverage or regime conflict."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening short position on Homeland Uranium Corp. (HLU.V) due to negative predicted return and high absolute predicted return.",
+      "timestamp": "2026-06-20T05:47:41.928Z",
+      "txHash": "0x37c575a9c1bdae7a7676a5337adad9cb85cee1677c5f2237cd68f53938c77f0d",
+      "agentName": "mining-manager",
+      "runId": "2026-06-20T05:47:41.928Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09",
+        "isLong": false,
+        "size": "20423014030000000000000000000000000",
+        "collateral": "4084602806"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Short position on HLU.V uses 100% of available collateral ($4084.60), but shortPenalty is 0, aligning with metals_risk_off regime."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",

@@ -1,31 +1,71 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-20T00:23:47.839Z",
+  "updatedAt": "2026-06-20T05:46:19.932Z",
   "entries": {
-    "HLU.V": {
-      "fetchedAt": "2026-06-20T00:23:47.839Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-20T05:46:19.932Z",
       "headlines": [
         {
-          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
-          "publishedAt": "2026-06-20T00:15:00.000Z",
+          "title": "IRGC set to benefit from Iran sanctions relief under U.S. deal - Reuters",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/economy/policy/articles/irgc-set-benefit-iran-sanctions-054105488.html",
+          "publishedAt": "2026-06-20T05:41:05.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CL=F",
+            "CL"
+          ]
         },
         {
-          "title": "Clark leads US Open by four with major champs in the hunt",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
-          "publishedAt": "2026-06-20T00:11:35.000Z",
+          "title": "Greenstone Biosciences, Inc. and Intel Corp. Launch Strategic Collaboration to Scale Human-Centric Drug Discovery",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/healthcare/articles/greenstone-biosciences-inc-intel-corp-053900534.html",
+          "publishedAt": "2026-06-20T05:39:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "INTC"
+          ]
         },
         {
-          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
+          "title": "Indian guru urges broader view of yoga",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
-          "publishedAt": "2026-06-20T00:08:59.000Z",
+          "link": "https://finance.yahoo.com/m/627fe379-0f32-3c28-a777-2e0553454b73/indian-guru-urges-broader.html",
+          "publishedAt": "2026-06-20T05:23:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-20T05:46:19.932Z",
+      "headlines": [
+        {
+          "title": "IRGC set to benefit from Iran sanctions relief under U.S. deal - Reuters",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/economy/policy/articles/irgc-set-benefit-iran-sanctions-054105488.html",
+          "publishedAt": "2026-06-20T05:41:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "CL"
+          ]
+        },
+        {
+          "title": "Greenstone Biosciences, Inc. and Intel Corp. Launch Strategic Collaboration to Scale Human-Centric Drug Discovery",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/healthcare/articles/greenstone-biosciences-inc-intel-corp-053900534.html",
+          "publishedAt": "2026-06-20T05:39:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC"
+          ]
+        },
+        {
+          "title": "Indian guru urges broader view of yoga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/627fe379-0f32-3c28-a777-2e0553454b73/indian-guru-urges-broader.html",
+          "publishedAt": "2026-06-20T05:23:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -33,59 +73,34 @@
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-20T00:23:47.839Z",
+      "fetchedAt": "2026-06-20T05:46:19.932Z",
       "headlines": [
         {
-          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
-          "publishedAt": "2026-06-20T00:15:00.000Z",
+          "title": "IRGC set to benefit from Iran sanctions relief under U.S. deal - Reuters",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/economy/policy/articles/irgc-set-benefit-iran-sanctions-054105488.html",
+          "publishedAt": "2026-06-20T05:41:05.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "CL=F",
+            "CL"
+          ]
         },
         {
-          "title": "Clark leads US Open by four with major champs in the hunt",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
-          "publishedAt": "2026-06-20T00:11:35.000Z",
+          "title": "Greenstone Biosciences, Inc. and Intel Corp. Launch Strategic Collaboration to Scale Human-Centric Drug Discovery",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/healthcare/articles/greenstone-biosciences-inc-intel-corp-053900534.html",
+          "publishedAt": "2026-06-20T05:39:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "INTC"
+          ]
         },
         {
-          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
+          "title": "Indian guru urges broader view of yoga",
           "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
-          "publishedAt": "2026-06-20T00:08:59.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-20T00:23:47.839Z",
-      "headlines": [
-        {
-          "title": "SR22 Direct Launches Nationwide Service for Affordable, Hassle-Free SR22 and FR44 Filings",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/sr22-direct-launches-nationwide-affordable-001500309.html",
-          "publishedAt": "2026-06-20T00:15:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Clark leads US Open by four with major champs in the hunt",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/9a456d08-c32c-3623-b4ff-80f3d93f23b8/clark-leads-us-open-by-four.html",
-          "publishedAt": "2026-06-20T00:11:35.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Saibari early strike gives Morocco World Cup win over Scotland",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/ef1eaa61-5040-3b95-9375-ef3deb0579e2/saibari-early-strike-gives.html",
-          "publishedAt": "2026-06-20T00:08:59.000Z",
+          "link": "https://finance.yahoo.com/m/627fe379-0f32-3c28-a777-2e0553454b73/indian-guru-urges-broader.html",
+          "publishedAt": "2026-06-20T05:23:08.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,7 +108,7 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-20T00:23:47.839Z",
+      "fetchedAt": "2026-06-20T05:46:19.932Z",
       "headlines": [
         {
           "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
@@ -129,6 +144,41 @@
             "^GSPC",
             "^DJI"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-20T05:46:19.932Z",
+      "headlines": [
+        {
+          "title": "IRGC set to benefit from Iran sanctions relief under U.S. deal - Reuters",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/economy/policy/articles/irgc-set-benefit-iran-sanctions-054105488.html",
+          "publishedAt": "2026-06-20T05:41:05.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "CL"
+          ]
+        },
+        {
+          "title": "Greenstone Biosciences, Inc. and Intel Corp. Launch Strategic Collaboration to Scale Human-Centric Drug Discovery",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/healthcare/articles/greenstone-biosciences-inc-intel-corp-053900534.html",
+          "publishedAt": "2026-06-20T05:39:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INTC"
+          ]
+        },
+        {
+          "title": "Indian guru urges broader view of yoga",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/627fe379-0f32-3c28-a777-2e0553454b73/indian-guru-urges-broader.html",
+          "publishedAt": "2026-06-20T05:23:08.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"

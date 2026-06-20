@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-20T00:25:23.447Z",
+  "lastRunAt": "2026-06-20T05:47:41.928Z",
   "thesis": "The Atlas ML model continues to indicate strong medium-term performance potential for diversified metals and precious metals stocks. Our strategy focuses on high ML score picks such as Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V), which have been identified for their high predicted returns. On the short side, Homeland Uranium Corp. (HLU.V) remains a candidate due to its negative predicted return and high absolute predicted return, indicating potential for profit from a decline.\n\nThe current churn guard restrictions highlight the importance of timing and signal strength in executing trades. Moving forward, the focus will be on maximizing the use of available collateral and aligning with the strongest ML signals while respecting operational constraints.",
   "lastThesisUpdate": "2026-06-20T00:25:23.447Z"
 }
