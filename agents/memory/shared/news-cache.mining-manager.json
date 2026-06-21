@@ -1,31 +1,34 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-21T06:20:51.036Z",
+  "updatedAt": "2026-06-21T12:23:48.219Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-21T12:23:48.121Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -33,59 +36,98 @@
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "fetchedAt": "2026-06-21T12:23:48.121Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CNC.V": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-21T12:23:48.121Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-21T12:23:48.121Z",
+      "headlines": [
+        {
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,8 +135,19 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "fetchedAt": "2026-06-21T12:23:48.121Z",
       "headlines": [
+        {
+          "title": "Micron Just Crossed $1,000 a Share. Here's the Math on Where It Goes Next.",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/996ee557-ff4d-31d9-8d31-f2b409384786/micron-just-crossed-%241%2C000-a.html",
+          "publishedAt": "2026-06-21T12:01:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
         {
           "title": "SK Hynix (KOSE:A000660) Ships HBM4E DRAM To AI Customers",
           "publisher": "Simply Wall St.",
@@ -117,267 +170,37 @@
             "MU",
             "NVDA"
           ]
-        },
-        {
-          "title": "The Memory-Chip Crisis Is Here—and You’re Footing the Bill",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/7112df22-5337-3fbd-a5fa-d3aef55ace91/the-memory-chip-crisis-is.html",
-          "publishedAt": "2026-06-20T23:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "7974.T"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ARIS.TO": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "TDG.V": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "LUN.TO": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "ABRA.TO": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SCCO": {
-      "fetchedAt": "2026-06-21T06:20:49.342Z",
-      "headlines": [
-        {
-          "title": "Why Southern Copper (SCCO) Still Offers Scale and Pricing Leverage Despite Production Pressure",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-southern-copper-scco-still-095713317.html",
-          "publishedAt": "2026-06-19T09:57:13.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SCCO",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "This Metal is Crucial for AI, Yet in Short Supply. Here Are 3 Top Mining Stocks to Buy to Capitalize on the Looming Deficit.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/b1c5edda-0233-3af9-9940-9efd4e798d5b/this-metal-is-crucial-for-ai%2C.html",
-          "publishedAt": "2026-06-19T18:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HG=F",
-            "NVDA",
-            "META",
-            "AMZN",
-            "GOOG"
-          ]
-        },
-        {
-          "title": "Centrus Energy (LEU) Soars 12.4%: Is Further Upside Left in the Stock?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/centrus-energy-leu-soars-12-094800392.html",
-          "publishedAt": "2026-06-19T09:48:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "LEU",
-            "OKLO",
-            "SCCO"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
+      "fetchedAt": "2026-06-21T12:23:48.219Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -385,119 +208,65 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
+      "fetchedAt": "2026-06-21T12:23:48.219Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
+    "KNOX.V": {
+      "fetchedAt": "2026-06-21T12:23:48.219Z",
       "headlines": [
         {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "title": "Iran Closes Strait of Hormuz Again: Are Fed Rate Hikes Back on the Table?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f20cd562-1273-3ace-bc77-4475038adbb5/iran-closes-strait-of-hormuz.html",
+          "publishedAt": "2026-06-21T12:15:57.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "CL=F",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Medicare's prior authorization experiment is off to a rocky start",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/healthcare/article/medicares-prior-authorization-experiment-is-off-to-a-rocky-start-121019353.html",
+          "publishedAt": "2026-06-21T12:10:19.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "EUZ.JO": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-21T06:20:51.036Z",
-      "headlines": [
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-21T06:14:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
-          "publishedAt": "2026-06-21T06:11:02.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
-          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "title": "Your Dividend Portfolio Says $150,000. The IRS Says Something Else",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/1efe8ae4-91a7-3cf1-985c-488f86740baa/your-dividend-portfolio-says.html",
+          "publishedAt": "2026-06-21T12:07:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
