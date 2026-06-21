@@ -1,121 +1,143 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-21T15:20:33.190Z",
+  "updatedAt": "2026-06-21T16:57:58.341Z",
   "entries": {
-    "CNC.V": {
-      "fetchedAt": "2026-06-21T15:20:32.979Z",
-      "headlines": [
-        {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "SAGE.V": {
-      "fetchedAt": "2026-06-21T15:20:32.979Z",
+      "fetchedAt": "2026-06-21T16:57:58.220Z",
       "headlines": [
         {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "SPCX",
             "NVDA"
           ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-06-21T15:20:32.979Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-21T16:57:58.220Z",
       "headlines": [
         {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "SPCX",
             "NVDA"
           ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-21T16:57:58.220Z",
+      "headlines": [
+        {
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-21T15:20:32.979Z",
+      "fetchedAt": "2026-06-21T16:57:58.220Z",
       "headlines": [
+        {
+          "title": "3 AI Tech Stocks That Just Crushed Earnings: Are They Still Buys for the Long Term?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2ec937f1-57b3-3d26-a75b-191b37528d99/3-ai-tech-stocks-that-just.html",
+          "publishedAt": "2026-06-21T16:05:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HPE",
+            "MU",
+            "PLTR",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Micron Must Do This on June 24, or Its Stock Could Crash",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/e8033ccb-e0df-3023-ab94-ea5258caea64/micron-must-do-this-on-june.html",
+          "publishedAt": "2026-06-21T15:45:31.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "AVGO",
+            "NVDA"
+          ]
+        },
         {
           "title": "Micron Just Crossed $1,000 a Share. Here's the Math on Where It Goes Next.",
           "publisher": "Motley Fool",
@@ -126,251 +148,150 @@
             "MU",
             "NVDA"
           ]
-        },
-        {
-          "title": "SK Hynix (KOSE:A000660) Ships HBM4E DRAM To AI Customers",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/technology/ai/articles/sk-hynix-kose-a000660-ships-031333713.html",
-          "publishedAt": "2026-06-21T03:13:33.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "A000660",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Where Will Micron Technology Be in 5 Years?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/96c1506c-623f-3c38-86fb-edd7f8c72b65/where-will-micron-technology.html",
-          "publishedAt": "2026-06-21T00:43:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "NVDA"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-21T15:20:32.979Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-21T16:57:58.220Z",
       "headlines": [
         {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "SPCX",
             "NVDA"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-21T15:20:33.190Z",
-      "headlines": [
-        {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
         },
         {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "MRVL",
             "NVDA"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-21T15:20:33.190Z",
-      "headlines": [
-        {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
         },
         {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
+          "title": "Morgan Housel thinks investors are missing something about AI",
           "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "NVDA"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-21T15:20:33.190Z",
-      "headlines": [
-        {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^GSPC",
-            "NVDA"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-21T15:20:33.190Z",
+      "fetchedAt": "2026-06-21T16:57:58.341Z",
       "headlines": [
         {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "SPCX",
             "NVDA"
           ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-21T15:20:33.190Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-21T16:57:58.341Z",
       "headlines": [
         {
-          "title": "To the Fathers of the World: Thank You for Your Love, Your Sacrifice, and the Light You Bring to Your Families",
-          "publisher": "ACCESS Newswire",
-          "link": "https://finance.yahoo.com/media-advertising/articles/fathers-world-thank-love-sacrifice-151100701.html",
-          "publishedAt": "2026-06-21T15:11:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ELEK"
-          ]
-        },
-        {
-          "title": "AbbVie's biggest deal since 2019 could land soon",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/7161bb69-eded-35a0-912e-ef74b1cb26e9/abbvie%27s-biggest-deal-since.html",
-          "publishedAt": "2026-06-21T15:07:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "ABBV"
-          ]
-        },
-        {
-          "title": "Warning: The S&P 500 Could Be on the Verge of Doing Something for the First Time in 155 Years, and It's Not Good News for Investors",
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/a469173d-dc4f-3bc3-ab63-008ba1382ff0/warning%3A-the-s%26p-500-could-be.html",
-          "publishedAt": "2026-06-21T15:05:00.000Z",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^GSPC",
+            "SPCX",
             "NVDA"
           ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-21T16:57:58.341Z",
+      "headlines": [
+        {
+          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
+          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
+          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MRVL",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Morgan Housel thinks investors are missing something about AI",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
+          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
