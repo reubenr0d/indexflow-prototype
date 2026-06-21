@@ -7,32 +7,40 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-21T17:00:07.001Z",
-  "startedAt": "2026-06-21T16:56:03.805Z",
-  "finishedAt": "2026-06-21T17:00:07.001Z",
-  "status": "succeeded",
+  "runId": "2026-06-21T18:51:10.750Z",
+  "startedAt": "2026-06-21T18:50:35.811Z",
+  "finishedAt": "2026-06-21T18:51:10.750Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 28,
-    "toolCalls": 41,
-    "errors": 0,
-    "softFailures": 24,
-    "writeActions": 2
+    "turns": 2,
+    "toolCalls": 6,
+    "errors": 5,
+    "softFailures": 0,
+    "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
-  "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.24 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $4,088.77 USDC\n\n#### Recent Atlas ML Model Insights\n- **Model Horizon**: 180 days\n- **Feature Mode**: Raw\n- **Mean Spearman IC**: 0.3659\n- **Mean Hit Rate**: 56.02%\n\n#### Top Atlas ML Picks\n1. **Canada Nickel Company Inc. (CNC.V)**\n   - ML Score: 99.9\n   - Predicted Return: +42.88%\n   - Commodity: Nickel\n2. **Sage Potash Corp. (SAGE.V)**\n   - ML Score: 99.8\n   - Predicted Return: +41.04%\n   - Commodity: Diversified Metals\n3. **Hudbay Minerals (HBM)**\n   - ML Score: 99.7\n   - Predicted Return: +40.50%\n   - Commodity: Copper\n\n#### Short Candidates\n1. **Homeland Uranium Corp. (HLU.V)**\n   - ML Score: 0.1\n   - Predicted Return: -39.89%\n   - Commodity: Uranium\n2. **SOLIS FPO (SLM.AX)**\n   - ML Score: 0.2\n   - Predicted Return: -39.14%\n   - Commodity: Copper\n\n#### News Highlights\n- **Canada Nickel Company Inc. (CNC.V)**: No significant news affecting the stock.\n- **Sage Potash Corp. (SAGE.V)**: No significant news affecting the stock.\n- **Hudbay Minerals (HBM)**: No significant news affecting the stock.\n- **Homeland Uranium Corp. (HLU.V)**: No significant news affecting the stock.\n- **SOLIS FPO (SLM.AX)**: No significant news affecting the stock.\n\n#### Actions Taken\n- **Positions Opened**: None due to churn guard cooldowns on GSR.V, AHR.V, and ARIS.TO.\n- **Positions Closed**: None as no positions were outside the PnL bands.\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
-  "writeActions": [
+  "summary": "It seems there was an issue accessing the Atlas ML API, resulting in a \"502 Bad Gateway\" error. This means I couldn't retrieve the recent Atlas ML run history, the current horizon recommendation, model information, latest Atlas ML top picks, or Atlas ML short picks. Without these, I cannot proceed with wiring new assets, setting the tracked-asset list, or making informed trading decisions based on the latest model insights.\n\nHere's what I can confirm from the current vault state:\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.24 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\nGiven the current situation, I recommend the following steps:\n1. **Retry Access**: Attempt to access the Atlas ML API again later to gather the necessary model insights and top picks.\n2. **Monitor API Status**: Ensure that the Atlas ML API is operational before the next scheduled run.\n3. **Prepare for Next Run**: Once the API is accessible, proceed with the planned actions: wiring new assets, updating the tracked list, allocating capital, and opening positions based on the latest model data.\n\nIf you have any other actions or need further assistance, please let me know!",
+  "writeActions": [],
+  "errors": [
     {
-      "tool": "close_position",
-      "txHash": "0xcb10e0bb5ecec4c52a45e99b3a30cf66c0670943012766a739734e818ac536cd",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
-      "kind": "vault-tx"
+      "tool": "get_ml_runs",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
     },
     {
-      "tool": "close_position",
-      "txHash": "0xc7b688446d6d7bce0bfe525f7566c6815fe68f4afb1fa38007ca66fcef8505b8",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
-      "kind": "vault-tx"
+      "tool": "get_ml_horizon_recommendation",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    },
+    {
+      "tool": "get_ml_model_info",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    },
+    {
+      "tool": "get_ml_top_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
+    },
+    {
+      "tool": "get_ml_short_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
     }
-  ],
-  "errors": []
+  ]
 }

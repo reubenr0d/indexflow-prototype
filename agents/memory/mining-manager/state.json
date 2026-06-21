@@ -15,21 +15,21 @@
     },
     "strategyFingerprint": "58bfa090460a7f48a5356e3d14197499cd449aaec10ec31aff0ed63183c5071d",
     "nextSuggestedAction": "trigger_and_wait",
-    "refreshReason": "cached_result_stale,last_job_terminal_failure,explicit_refresh_requested",
+    "refreshReason": "no_terminal_result,last_job_terminal_failure,explicit_refresh_requested",
     "cooldownUntil": "2026-06-17T17:54:15.342Z",
     "lastJob": {
       "id": "3fe2296f745c4628b548be3f8f4eefcc",
-      "status": "failed",
+      "status": "",
       "startedAt": "2026-06-17T17:24:05.572839+00:00",
-      "completedAt": "2026-06-17T17:24:15.342749+00:00",
+      "completedAt": null,
       "result": null,
-      "errorMessage": "(sqlalchemy.dialects.postgresql.asyncpg.Error) <class 'asyncpg.exceptions.InFailedSQLTransactionError'>: current transaction is aborted, commands ignored until end of transaction block\n[SQL: \n            SELECT ticker, exchange, date, COALESCE(adjusted_close, close_price) AS price\n            FROM stock_prices\n            WHERE date >= $1 AND date <= $2\n            ORDER BY ticker, exchange, date\n        ]\n[parameters: (datetime.date(2023, 1, 1), datetime.date(2023, 5, 1))]\n(Background on this error at: https://sqlalche.me/e/20/dbapi)"
+      "errorMessage": null
     },
     "lastResult": null,
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-21T17:00:07.001Z",
+  "lastRunAt": "2026-06-21T18:51:10.750Z",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
   "lastThesisUpdate": "2026-06-21T17:00:07.001Z"
 }
