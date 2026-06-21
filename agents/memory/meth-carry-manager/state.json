@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-20T22:43:12.257Z",
-  "thesis": "The current hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run, and the funding rate context is also not applicable. The strategy remains on hold until sufficient funds are available for trading activities.",
-  "lastThesisUpdate": "2026-06-20T20:51:56.152Z"
+  "lastRunAt": "2026-06-21T00:28:16.632Z",
+  "thesis": "The current hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run, and the funding rate context is also not applicable. The strategy remains on hold until sufficient funds are available for trading activities. \n\nI will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
+  "lastThesisUpdate": "2026-06-21T00:28:16.632Z"
 }

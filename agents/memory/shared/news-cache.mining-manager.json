@@ -1,87 +1,129 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-20T22:37:55.770Z",
+  "updatedAt": "2026-06-21T00:23:55.811Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-20T22:37:55.539Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-21T00:23:55.639Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-20T22:37:55.539Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-21T00:23:55.639Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-21T00:23:55.639Z",
+      "headlines": [
+        {
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-21T00:23:55.639Z",
+      "headlines": [
+        {
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -89,8 +131,18 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-20T22:37:55.539Z",
+      "fetchedAt": "2026-06-21T00:23:55.639Z",
       "headlines": [
+        {
+          "title": "The Memory-Chip Crisis Is Here—and You’re Footing the Bill",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/7112df22-5337-3fbd-a5fa-d3aef55ace91/the-memory-chip-crisis-is.html",
+          "publishedAt": "2026-06-20T23:00:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "7974.T"
+          ]
+        },
         {
           "title": "Got $100? 1 Artificial Intelligence (AI) Memory ETF to Buy Hand Over Fist",
           "publisher": "Motley Fool",
@@ -113,101 +165,36 @@
             "MSFT",
             "AMZN"
           ]
-        },
-        {
-          "title": "Why Hudbay Minerals (HBM) Combines Copper Production Visibility With a Capital-Return Signal",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-hudbay-minerals-hbm-combines-095811845.html",
-          "publishedAt": "2026-06-19T09:58:11.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HBM",
-            "HG=F"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CNC.V": {
-      "fetchedAt": "2026-06-20T22:37:55.539Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-21T00:23:55.811Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
+            "RDDT"
           ]
         },
         {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-20T22:37:55.539Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -215,42 +202,31 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "fetchedAt": "2026-06-21T00:23:55.811Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -258,42 +234,31 @@
       "sourceAgent": "mining-manager"
     },
     "MNB.AX": {
-      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "fetchedAt": "2026-06-21T00:23:55.811Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -301,85 +266,31 @@
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "fetchedAt": "2026-06-21T00:23:55.811Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
+            "RDDT"
           ]
         },
         {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-20T22:37:55.770Z",
-      "headlines": [
-        {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -387,42 +298,31 @@
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-20T22:37:55.770Z",
+      "fetchedAt": "2026-06-21T00:23:55.811Z",
       "headlines": [
         {
-          "title": "Dow Jones Futures: Iran Closes Strait Of Hormuz; Nvidia Near Buy Point, Watch For This SpaceX Move",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/aa0411a1-2ba1-3057-bff9-1381bd5225f7/dow-jones-futures%3A-iran.html",
-          "publishedAt": "2026-06-20T22:29:08.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "FDX",
-            "^DJI",
-            "MTSI",
-            "MCHPP",
-            "MXL",
-            "MU",
-            "NVDA",
-            "^GSPC",
-            "^IXIC",
-            "MCHP",
-            "FORM"
-          ]
-        },
-        {
-          "title": "Germany into World Cup last 32 after late comeback, Dutch thrash Sweden",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
-          "publishedAt": "2026-06-20T22:27:03.000Z",
+          "title": "Thousands protest in Albania over Kushner-backed resort project",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
+          "publishedAt": "2026-06-21T00:04:13.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Germany come from behind to beat Ivory Coast and reach World Cup last 32",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/2a44914c-c149-3c96-9d95-3d5ccc6702aa/germany-come-from-behind-to.html",
-          "publishedAt": "2026-06-20T22:26:18.000Z",
+          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
+          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "RDDT"
+          ]
+        },
+        {
+          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
+          "publishedAt": "2026-06-21T00:00:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
