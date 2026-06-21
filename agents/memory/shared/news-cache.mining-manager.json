@@ -1,33 +1,61 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-21T00:23:55.811Z",
+  "updatedAt": "2026-06-21T06:20:51.036Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-21T00:23:55.639Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
       "headlines": [
         {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SAGE.V": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -35,95 +63,29 @@
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-21T00:23:55.639Z",
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
       "headlines": [
         {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-21T00:23:55.639Z",
-      "headlines": [
-        {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-21T00:23:55.639Z",
-      "headlines": [
-        {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -131,8 +93,31 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-21T00:23:55.639Z",
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
       "headlines": [
+        {
+          "title": "SK Hynix (KOSE:A000660) Ships HBM4E DRAM To AI Customers",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/technology/ai/articles/sk-hynix-kose-a000660-ships-031333713.html",
+          "publishedAt": "2026-06-21T03:13:33.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "A000660",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "Where Will Micron Technology Be in 5 Years?",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/96c1506c-623f-3c38-86fb-edd7f8c72b65/where-will-micron-technology.html",
+          "publishedAt": "2026-06-21T00:43:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "NVDA"
+          ]
+        },
         {
           "title": "The Memory-Chip Crisis Is Here—and You’re Footing the Bill",
           "publisher": "The Wall Street Journal",
@@ -142,123 +127,227 @@
           "relatedTickers": [
             "7974.T"
           ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         },
         {
-          "title": "Got $100? 1 Artificial Intelligence (AI) Memory ETF to Buy Hand Over Fist",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/7f05f742-963d-3bcf-af6d-91737a39bb32/got-%24100%3F-1-artificial.html",
-          "publishedAt": "2026-06-20T17:50:00.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ARIS.TO": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "TDG.V": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "LUN.TO": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "ABRA.TO": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SCCO": {
+      "fetchedAt": "2026-06-21T06:20:49.342Z",
+      "headlines": [
+        {
+          "title": "Why Southern Copper (SCCO) Still Offers Scale and Pricing Leverage Despite Production Pressure",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-southern-copper-scco-still-095713317.html",
+          "publishedAt": "2026-06-19T09:57:13.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA"
+            "SCCO",
+            "HG=F"
           ]
         },
         {
-          "title": "Move Over Marvell, Here Are the Next 2 $1 Trillion Semiconductor Stocks",
+          "title": "This Metal is Crucial for AI, Yet in Short Supply. Here Are 3 Top Mining Stocks to Buy to Capitalize on the Looming Deficit.",
           "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/5085d120-8183-36d0-b59f-13d6bcfd3e41/move-over-marvell%2C-here-are.html",
-          "publishedAt": "2026-06-20T11:10:00.000Z",
+          "link": "https://finance.yahoo.com/m/b1c5edda-0233-3af9-9940-9efd4e798d5b/this-metal-is-crucial-for-ai%2C.html",
+          "publishedAt": "2026-06-19T18:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "HG=F",
             "NVDA",
-            "MRVL",
-            "MSFT",
-            "AMZN"
+            "META",
+            "AMZN",
+            "GOOG"
+          ]
+        },
+        {
+          "title": "Centrus Energy (LEU) Soars 12.4%: Is Further Upside Left in the Stock?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/centrus-energy-leu-soars-12-094800392.html",
+          "publishedAt": "2026-06-19T09:48:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "LEU",
+            "OKLO",
+            "SCCO"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-21T00:23:55.811Z",
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
       "headlines": [
         {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-21T00:23:55.811Z",
-      "headlines": [
-        {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-21T00:23:55.811Z",
-      "headlines": [
-        {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
-        },
-        {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -266,31 +355,119 @@
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-21T00:23:55.811Z",
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
       "headlines": [
         {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EUZ.JO": {
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
+      "headlines": [
+        {
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -298,31 +475,29 @@
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-21T00:23:55.811Z",
+      "fetchedAt": "2026-06-21T06:20:51.036Z",
       "headlines": [
         {
-          "title": "Thousands protest in Albania over Kushner-backed resort project",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/m/10de2693-21e9-3c57-bdda-6013e719a89e/thousands-protest-in-albania.html",
-          "publishedAt": "2026-06-21T00:04:13.000Z",
+          "title": "Germany into World Cup last 32 after late comeback, Curacao shock Ecuador",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/307b6a24-1de7-3ba4-9c2a-be15dc4f3da1/germany-into-world-cup-last.html",
+          "publishedAt": "2026-06-21T06:14:29.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Outside of Social Security, my parents have absolutely nothing for retirement and I’ll be stuck financing their retirement – is this normal?",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/f4662349-20fb-36d6-89ab-0164c3a67b64/outside-of-social-security%2C.html",
-          "publishedAt": "2026-06-21T00:01:16.000Z",
+          "title": "Curacao keeper Room jokes he deserves statue after World Cup heroics",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/fcec2458-6868-3a58-9bda-5fcf48ba7620/curacao-keeper-room-jokes-he.html",
+          "publishedAt": "2026-06-21T06:11:02.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "RDDT"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Constantino Closes NY-21 Primary Explaining How He Will Bring Back American Manufacturing",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/economy/policy/articles/constantino-closes-ny-21-primary-000000711.html",
-          "publishedAt": "2026-06-21T00:00:00.000Z",
+          "title": "Japan stroll to victory over Tunisia in World Cup's 1,000th game",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/f336f808-11d9-396d-9062-400b3ddb0fb7/japan-stroll-to-victory-over.html",
+          "publishedAt": "2026-06-21T06:08:55.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
