@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-21T06:26:53.897Z",
-  "thesis": "The current hedge ratio is not applicable as there are no positions, and the vault has realized no mETH yield since the last run. The attempt to read the reserve state failed, indicating potential issues with the RWA adapter. The strategy remains on hold until sufficient funds are available for trading activities or the issue with the reserve state is resolved. \n\nI will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
-  "lastThesisUpdate": "2026-06-21T06:26:53.897Z"
+  "lastRunAt": "2026-06-21T10:15:20.644Z",
+  "thesis": "The hedge ratio is not applicable as there are no positions. The vault has realized no mETH yield since the last run, and the funding rate context is unavailable due to lack of funds. The current state remains on hold until sufficient funds are available for trading activities. \n\nI will continue to monitor the situation and attempt to retrieve the necessary data in the next run.",
+  "lastThesisUpdate": "2026-06-21T10:15:20.644Z"
 }

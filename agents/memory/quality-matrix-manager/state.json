@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-06-21T06:24:26.012Z",
+  "lastRunAt": "2026-06-21T10:13:31.174Z",
   "thesis": "The strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the \"metals_risk_off\" regime, which suggests caution, the lack of eligible candidates prevents the opening of new long positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "lastThesisUpdate": "2026-06-21T06:24:26.012Z"
+  "lastThesisUpdate": "2026-06-21T10:13:31.174Z"
 }
