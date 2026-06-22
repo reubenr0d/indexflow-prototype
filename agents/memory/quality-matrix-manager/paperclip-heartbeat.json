@@ -7,24 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-22T07:42:58.482Z",
-  "startedAt": "2026-06-22T07:42:45.717Z",
-  "finishedAt": "2026-06-22T07:42:58.482Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-06-22T13:49:52.733Z",
+  "startedAt": "2026-06-22T13:49:03.754Z",
+  "finishedAt": "2026-06-22T13:49:52.733Z",
+  "status": "succeeded",
   "usage": {
     "turns": 3,
     "toolCalls": 3,
-    "errors": 1,
+    "errors": 0,
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "The strategy remains on hold due to the inability to access trade-ready picks from the Atlas API, compounded by a \"metals_risk_off\" regime that suggests caution. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API resulted in a \"502 Bad Gateway\" error, indicating a temporary issue with the server. As a result, I am unable to proceed with the planned actions for this run, such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, or opening new positions.\n\n## Thesis\nThe strategy remains on hold due to the inability to access trade-ready picks from the Atlas API, compounded by a \"metals_risk_off\" regime that suggests caution. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Recommendations for Next Run\n- Monitor the Atlas API status to ensure access to trade-ready picks.\n- Once available, proceed with wiring new entrants and setting the tracked-asset list.\n- Allocate capital and open positions based on updated trade-ready picks and market conditions.",
+  "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. The metals market is in a \"metals_risk_off\" regime, which suggests caution in opening new positions. As there are no trade-ready picks available, no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
+  "summary": "## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. The metals market is in a \"metals_risk_off\" regime, which suggests caution in opening new positions. As there are no trade-ready picks available, no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n## Vault State\n\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n## Actions Taken\n\n- **Trade-Ready Picks**: No picks available with a trade readiness score above 75.\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n## Recommendations for Next Run\n\n- Monitor the availability of trade-ready picks from the Atlas API.\n- Reassess the market regime and adjust the strategy accordingly.\n- Continue to scan for Red-Flag signals and bearish news headlines for potential short opportunities.",
   "writeActions": [],
-  "errors": [
-    {
-      "tool": "get_quality_trade_ready_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}"
-    }
-  ]
+  "errors": []
 }

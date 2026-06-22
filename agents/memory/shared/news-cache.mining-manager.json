@@ -1,37 +1,69 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-21T16:57:58.341Z",
+  "updatedAt": "2026-06-22T13:46:57.810Z",
   "entries": {
     "SAGE.V": {
-      "fetchedAt": "2026-06-21T16:57:58.220Z",
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
       "headlines": [
         {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "NVDA"
+            "FOCT"
           ]
         },
         {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "NVDA"
+            "SPCX"
           ]
         },
         {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -39,71 +71,33 @@
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-21T16:57:58.220Z",
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
       "headlines": [
         {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "NVDA"
+            "FOCT"
           ]
         },
         {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "NVDA"
+            "SPCX"
           ]
         },
         {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-21T16:57:58.220Z",
-      "headlines": [
-        {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -111,149 +105,108 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-21T16:57:58.220Z",
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
       "headlines": [
         {
-          "title": "3 AI Tech Stocks That Just Crushed Earnings: Are They Still Buys for the Long Term?",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2ec937f1-57b3-3d26-a75b-191b37528d99/3-ai-tech-stocks-that-just.html",
-          "publishedAt": "2026-06-21T16:05:00.000Z",
+          "title": "Micron Q3 Earnings Preview: What to Expect From Upcoming Report",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/micron-q3-earnings-preview-expect-131951647.html",
+          "publishedAt": "2026-06-22T13:19:51.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "HPE",
-            "MU",
-            "PLTR",
-            "NVDA"
+            "MU"
           ]
         },
         {
-          "title": "Micron Must Do This on June 24, or Its Stock Could Crash",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/e8033ccb-e0df-3023-ab94-ea5258caea64/micron-must-do-this-on-june.html",
-          "publishedAt": "2026-06-21T15:45:31.000Z",
+          "title": "Micron and Anthropic Announce Strategic Agreement to Scale Next-Generation AI Infrastructure",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/micron-anthropic-announce-strategic-agreement-130000301.html",
+          "publishedAt": "2026-06-22T13:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "AVGO",
-            "NVDA"
+            "MU"
           ]
         },
         {
-          "title": "Micron Just Crossed $1,000 a Share. Here's the Math on Where It Goes Next.",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/996ee557-ff4d-31d9-8d31-f2b409384786/micron-just-crossed-%241%2C000-a.html",
-          "publishedAt": "2026-06-21T12:01:00.000Z",
+          "title": "SK Hynix overtakes Samsung to become South Korea's most valuable company",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sk-hynix-overtakes-samsung-to-become-koreas-most-valuable-company-043834467.html",
+          "publishedAt": "2026-06-22T04:38:34.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "000660.KS",
+            "005930.KS",
+            "NVDA",
+            "GOOGL",
             "MU",
-            "NVDA"
+            "GOOG"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-06-21T16:57:58.220Z",
+    "ARIS.TO": {
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
       "headlines": [
         {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "NVDA"
+            "FOCT"
           ]
         },
         {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "NVDA"
+            "SPCX"
           ]
         },
         {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-21T16:57:58.341Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-22T13:46:55.637Z",
       "headlines": [
         {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "NVDA"
+            "FOCT"
           ]
         },
         {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "NVDA"
+            "SPCX"
           ]
         },
         {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-21T16:57:58.341Z",
-      "headlines": [
-        {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -261,35 +214,203 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-21T16:57:58.341Z",
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
       "headlines": [
         {
-          "title": "3 Ways to Prepare Your Portfolio for the Second Half of 2026",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/1cf915b5-5dc7-3a5c-a113-4635ce431309/3-ways-to-prepare-your.html",
-          "publishedAt": "2026-06-21T16:50:00.000Z",
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX",
-            "NVDA"
+            "FOCT"
           ]
         },
         {
-          "title": "The Next $1 Trillion AI Winner May Already Be Hiding Inside Nvidia's Supply Chain",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/4787c8f3-d790-35e8-9059-2ee8595372a6/the-next-%241-trillion-ai.html",
-          "publishedAt": "2026-06-21T16:49:07.000Z",
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MRVL",
-            "NVDA"
+            "SPCX"
           ]
         },
         {
-          "title": "Morgan Housel thinks investors are missing something about AI",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/1cab5142-4a93-3afa-a877-fc8808e5a06a/morgan-housel-thinks.html",
-          "publishedAt": "2026-06-21T16:47:00.000Z",
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "EUZ.JO": {
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "headlines": [
+        {
+          "title": "Net Asset Value(s)",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
+          "publishedAt": "2026-06-22T13:44:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "FOCT"
+          ]
+        },
+        {
+          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
+          "publisher": "Quartz",
+          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
+          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX"
+          ]
+        },
+        {
+          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
+          "publisher": "Retail Insight Network",
+          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
+          "publishedAt": "2026-06-22T13:41:26.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
