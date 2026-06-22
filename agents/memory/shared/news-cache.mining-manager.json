@@ -1,71 +1,112 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-22T18:20:42.967Z",
+  "updatedAt": "2026-06-22T23:00:59.151Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-22T18:20:42.793Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-22T23:00:57.179Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-22T18:20:42.793Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-22T23:00:57.179Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-22T23:00:57.179Z",
+      "headlines": [
+        {
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }
@@ -73,7 +114,7 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-22T18:20:42.793Z",
+      "fetchedAt": "2026-06-22T23:00:57.179Z",
       "headlines": [
         {
           "title": "AI Boom and HBM Demand to Boost Micron's DRAM Revenues in Q3",
@@ -88,165 +129,67 @@
           ]
         },
         {
-          "title": "ONTO vs. KLAC: Which Semiconductor Equipment Stock is the Better Bet?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/onto-vs-klac-semiconductor-equipment-140900213.html",
-          "publishedAt": "2026-06-22T14:09:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "KLAC",
-            "ONTO"
-          ]
-        },
-        {
-          "title": "Why Sandisk Stock Soared Today",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/952a2944-c61f-384b-823e-58b04554b5b1/why-sandisk-stock-soared-today.html",
-          "publishedAt": "2026-06-22T16:13:20.000Z",
+          "title": "Why Micron (MU) Stock Is Up Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-micron-mu-stock-today-221119459.html",
+          "publishedAt": "2026-06-22T22:11:19.000Z",
           "type": "STORY",
           "relatedTickers": [
             "MU",
+            "WDC",
             "SNDK",
-            "NVDA"
+            "005930.KS",
+            "000660.KS"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CNC.V": {
-      "fetchedAt": "2026-06-22T18:20:42.793Z",
-      "headlines": [
-        {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Chase the Surge in Micron (MU) Stock as Its Q3 Results Approach?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/chase-surge-micron-mu-stock-180100508.html",
+          "publishedAt": "2026-06-22T18:01:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
-            "GOOG"
+            "MU",
+            "GOOGL",
+            "META",
+            "AMZN",
+            "MSFT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-22T18:20:42.793Z",
+      "fetchedAt": "2026-06-22T23:00:57.179Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-22T18:20:42.967Z",
-      "headlines": [
-        {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-22T18:20:42.967Z",
-      "headlines": [
-        {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }
@@ -254,34 +197,73 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-22T18:20:42.967Z",
+      "fetchedAt": "2026-06-22T23:00:59.151Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "headlines": [
+        {
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }
@@ -289,34 +271,73 @@
       "sourceAgent": "mining-manager"
     },
     "MNB.AX": {
-      "fetchedAt": "2026-06-22T18:20:42.967Z",
+      "fetchedAt": "2026-06-22T23:00:59.151Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "headlines": [
+        {
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }
@@ -324,34 +345,36 @@
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-22T18:20:42.967Z",
+      "fetchedAt": "2026-06-22T23:00:59.151Z",
       "headlines": [
         {
-          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
+          "publisher": "Yahoo Personal Finance",
+          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
+          "publishedAt": "2026-06-22T22:56:07.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
-          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
+          "publisher": "The Conversation",
+          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
+          "publishedAt": "2026-06-22T22:53:41.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
-          "publisher": "The Wall Street Journal",
-          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
-          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
+          "publishedAt": "2026-06-22T22:51:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "^IXIC",
-            "SPCX",
-            "^DJI",
+            "PLTR",
+            "MSFT",
+            "CRM",
+            "ADBE",
+            "ACN",
             "GOOG"
           ]
         }

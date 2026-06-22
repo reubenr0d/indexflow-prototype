@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-22T21:23:12.010Z",
+  "lastRunAt": "2026-06-22T23:06:43.423Z",
   "thesis": "- **Pre-Hedge Ratio**: N/A (no positions)\n- **Post-Hedge Ratio**: N/A (no positions)\n- **mETH Yield Realized Since Last Run**: $0.00\n- **Funding Rate Context**: N/A (no positions)\n\nI will exit without taking any actions due to the inability to read the reserve state.",
-  "lastThesisUpdate": "2026-06-22T21:23:12.010Z"
+  "lastThesisUpdate": "2026-06-22T23:06:43.423Z"
 }
