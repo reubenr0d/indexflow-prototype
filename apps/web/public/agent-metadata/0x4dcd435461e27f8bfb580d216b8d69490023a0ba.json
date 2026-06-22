@@ -5,12 +5,12 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
-  "lastRunAt": "2026-06-22T01:42:18.688Z",
+  "lastRunAt": "2026-06-22T07:42:12.960Z",
   "latestRun": {
-    "runId": "2026-06-22T01:42:18.688Z",
-    "finishedAt": "2026-06-22T01:42:18.688Z",
-    "summary": "It seems there was an issue accessing the Atlas ML API, resulting in a \"502 Bad Gateway\" error. This means I couldn't retrieve the recent Atlas ML run history, the current horizon recommendation, model info, latest Atlas ML top picks, or Atlas ML short picks. Without this data, I am unable to proceed with the planned actions for this run, such as wiring new assets, updating the tracked-asset list, or opening new positions.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,345.48 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 6\n\n### Next Steps\n- Retry accessing the Atlas ML API in the next run to gather the necessary data for decision-making.\n- Once the API is accessible, proceed with the planned actions: selecting top picks, wiring new assets, setting the tracked-asset list, allocating capital, and opening positions based on the latest ML signals.\n\nI will monitor the situation and attempt to retrieve the necessary data in the next scheduled run.",
-    "startedAt": "2026-06-22T01:41:33.589Z",
+    "runId": "2026-06-22T07:42:12.960Z",
+    "finishedAt": "2026-06-22T07:42:12.960Z",
+    "summary": "It seems there was an issue accessing the Atlas ML API, resulting in a \"502 Bad Gateway\" error. This means I couldn't retrieve the recent Atlas ML run history, the current horizon recommendation, model info, latest Atlas ML top picks, or Atlas ML short picks. Without this data, I cannot proceed with the planned actions such as wiring new assets, setting the tracked-asset list, or opening new positions based on the Atlas model.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,345.48 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n### Next Steps\n1. **Retry Atlas API**: We need to wait for the Atlas ML API to become available again to retrieve the necessary data for decision-making.\n2. **Monitor API Status**: Keep an eye on the Atlas API status to ensure it is back online for the next scheduled run.\n3. **Prepare for Next Run**: Once the API is available, proceed with the planned actions: retrieving top picks, wiring new assets, setting the tracked-asset list, and opening new positions based on the Atlas model.\n\nFor now, I will monitor the situation and attempt to proceed with the planned actions once the Atlas ML API is accessible.",
+    "startedAt": "2026-06-22T07:41:35.659Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -62,6 +62,61 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-22T07:42:12.960Z",
+      "startedAt": "2026-06-22T07:41:35.659Z",
+      "finishedAt": "2026-06-22T07:42:12.960Z",
+      "summary": "It seems there was an issue accessing the Atlas ML API, resulting in a \"502 Bad Gateway\" error. This means I couldn't retrieve the recent Atlas ML run history, the current horizon recommendation, model info, latest Atlas ML top picks, or Atlas ML short picks. Without this data, I cannot proceed with the planned actions such as wiring new assets, setting the tracked-asset list, or opening new positions based on the Atlas model.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,345.48 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n### Next Steps\n1. **Retry Atlas API**: We need to wait for the Atlas ML API to become available again to retrieve the necessary data for decision-making.\n2. **Monitor API Status**: Keep an eye on the Atlas API status to ensure it is back online for the next scheduled run.\n3. **Prepare for Next Run**: Once the API is available, proceed with the planned actions: retrieving top picks, wiring new assets, setting the tracked-asset list, and opening new positions based on the Atlas model.\n\nFor now, I will monitor the situation and attempt to proceed with the planned actions once the Atlas ML API is accessible.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_runs",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_HTTP_ERROR\",\n  \"message\": \"Atlas API 502 Bad Gateway: <html>\\r\\n<head><title>502 Bad Gateway</title></head>\\r\\n<body>\\r\\n<center><h1>502 Bad Gateway</h1></center>\\r\\n<hr><center>nginx/1.28.3</center>\\r\\n</body>\\r\\n</html>\\r\\n\"\n}",
+          "errorCode": "ATLAS_HTTP_ERROR"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-06-22T01:42:18.688Z",
       "startedAt": "2026-06-22T01:41:33.589Z",
