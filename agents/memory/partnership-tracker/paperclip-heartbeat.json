@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-06-15T14:51:07.474Z",
-  "startedAt": "2026-06-15T14:51:03.129Z",
-  "finishedAt": "2026-06-15T14:51:07.474Z",
+  "runId": "2026-06-22T14:19:07.690Z",
+  "startedAt": "2026-06-22T14:18:54.943Z",
+  "finishedAt": "2026-06-22T14:19:07.690Z",
   "status": "succeeded",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": null,
-  "summary": "Issue context is missing (`.agent-self-improvement/issue-context.json` unavailable), so I’m pausing this sweep without proposing any changes. Once the context file is populated, I can resume the partnership review.",
+  "summary": "## Blockers surfaced\n- Sweep skipped — `.agent-self-improvement/issue-context.json` is missing, so no blockers assessed this run.\n\n## Frontmatter refreshed\n- None.\n\n## Skipped (already open)\n- N/A\n\n## Aging signal\n- Unable to compute — partner sweep not run because issue context was unavailable.",
   "writeActions": [],
   "errors": []
 }
