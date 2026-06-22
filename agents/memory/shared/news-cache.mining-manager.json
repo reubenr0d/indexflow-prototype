@@ -1,418 +1,359 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-22T13:46:57.810Z",
+  "updatedAt": "2026-06-22T18:20:42.967Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
-      "headlines": [
-        {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "GSR.V": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
+      "fetchedAt": "2026-06-22T18:20:42.793Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "CNC.V": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
-      "headlines": [
-        {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
         },
         {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HBM": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
-      "headlines": [
-        {
-          "title": "Micron Q3 Earnings Preview: What to Expect From Upcoming Report",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/micron-q3-earnings-preview-expect-131951647.html",
-          "publishedAt": "2026-06-22T13:19:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU"
-          ]
         },
         {
-          "title": "Micron and Anthropic Announce Strategic Agreement to Scale Next-Generation AI Infrastructure",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/micron-anthropic-announce-strategic-agreement-130000301.html",
-          "publishedAt": "2026-06-22T13:00:00.000Z",
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "SK Hynix overtakes Samsung to become South Korea's most valuable company",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/sk-hynix-overtakes-samsung-to-become-koreas-most-valuable-company-043834467.html",
-          "publishedAt": "2026-06-22T04:38:34.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "005930.KS",
-            "NVDA",
-            "GOOGL",
-            "MU",
+            "^IXIC",
+            "SPCX",
+            "^DJI",
             "GOOG"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "ARIS.TO": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-22T18:20:42.793Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HBM": {
+      "fetchedAt": "2026-06-22T18:20:42.793Z",
+      "headlines": [
+        {
+          "title": "AI Boom and HBM Demand to Boost Micron's DRAM Revenues in Q3",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/technology/ai/articles/ai-boom-hbm-demand-boost-131300285.html",
+          "publishedAt": "2026-06-22T13:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "AMD",
+            "MRVL"
+          ]
+        },
+        {
+          "title": "ONTO vs. KLAC: Which Semiconductor Equipment Stock is the Better Bet?",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/onto-vs-klac-semiconductor-equipment-140900213.html",
+          "publishedAt": "2026-06-22T14:09:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "KLAC",
+            "ONTO"
+          ]
+        },
+        {
+          "title": "Why Sandisk Stock Soared Today",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/952a2944-c61f-384b-823e-58b04554b5b1/why-sandisk-stock-soared-today.html",
+          "publishedAt": "2026-06-22T16:13:20.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "SNDK",
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-22T18:20:42.793Z",
+      "headlines": [
+        {
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-22T13:46:55.637Z",
+      "fetchedAt": "2026-06-22T18:20:42.793Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
-      "headlines": [
-        {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
         },
         {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
-      "headlines": [
-        {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
         },
         {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SPCX"
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
           ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
-      "headlines": [
-        {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "fetchedAt": "2026-06-22T18:20:42.967Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "EUZ.JO": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-22T18:20:42.967Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-22T18:20:42.967Z",
+      "headlines": [
+        {
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-22T18:20:42.967Z",
+      "headlines": [
+        {
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-22T13:46:57.810Z",
+      "fetchedAt": "2026-06-22T18:20:42.967Z",
       "headlines": [
         {
-          "title": "Net Asset Value(s)",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/net-asset-value-134400655.html",
-          "publishedAt": "2026-06-22T13:44:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "FOCT"
-          ]
-        },
-        {
-          "title": "SpaceX debuts bond sale to raise $20 billion after IPO",
-          "publisher": "Quartz",
-          "link": "https://finance.yahoo.com/m/292bbd15-5a20-3c29-a1d8-0028815b0e76/spacex-debuts-bond-sale-to.html",
-          "publishedAt": "2026-06-22T13:42:01.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX"
-          ]
-        },
-        {
-          "title": "Canada’s core retail sales fall 0.7% in April despite overall monthly gain",
-          "publisher": "Retail Insight Network",
-          "link": "https://finance.yahoo.com/m/6d8e7ae8-e30e-3dcd-8a94-826e38cb47c8/canada%E2%80%99s-core-retail-sales.html",
-          "publishedAt": "2026-06-22T13:41:26.000Z",
+          "title": "EV Charging Infrastructure Market Projected to Reach USD 238.82 Billion by 2033 As Public and Private Sector Investments Propel Global EV Charging Infrastructure Expansion",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/energy/articles/ev-charging-infrastructure-market-projected-181600310.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
           "type": "STORY",
           "relatedTickers": []
+        },
+        {
+          "title": "HelloNation Article Explains Renters Insurance Coverage With Insights From Insurance Expert Aileen Dugan",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/real-estate/articles/hellonation-article-explains-renters-insurance-181600431.html",
+          "publishedAt": "2026-06-22T18:16:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Stocks Mixed After Signs of Progress in U.S.-Iran Talks",
+          "publisher": "The Wall Street Journal",
+          "link": "https://finance.yahoo.com/m/9247c4d2-3435-3cf4-879e-f809c3aed429/stocks-mixed-after-signs-of.html",
+          "publishedAt": "2026-06-22T18:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "^IXIC",
+            "SPCX",
+            "^DJI",
+            "GOOG"
+          ]
         }
       ],
       "sourceAgent": "mining-manager"

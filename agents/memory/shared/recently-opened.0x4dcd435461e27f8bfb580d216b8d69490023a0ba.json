@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-22T13:48:14.328Z",
+  "updatedAt": "2026-06-22T18:21:25.850Z",
   "opens": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6:long": {
       "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
@@ -72,7 +72,7 @@
       "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
       "ticker": "ARIS.TO",
       "isLong": true,
-      "openedAt": "2026-06-22T13:48:14.328Z"
+      "openedAt": "2026-06-22T18:21:25.850Z"
     }
   }
 }

@@ -7,47 +7,39 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-22T13:48:28.003Z",
-  "startedAt": "2026-06-22T13:44:03.599Z",
-  "finishedAt": "2026-06-22T13:48:28.003Z",
+  "runId": "2026-06-22T18:21:39.671Z",
+  "startedAt": "2026-06-22T18:18:27.465Z",
+  "finishedAt": "2026-06-22T18:21:39.671Z",
   "status": "succeeded",
   "usage": {
-    "turns": 14,
-    "toolCalls": 17,
+    "turns": 11,
+    "toolCalls": 15,
     "errors": 0,
-    "softFailures": 0,
+    "softFailures": 2,
     "writeActions": 3
   },
-  "thesis": "## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor news for any significant developments that could impact the selected positions.\n- Re-evaluate the short position if new long candidates emerge with higher profit potential.\n- Continue leveraging the Atlas ML model's insights for both long and short strategies.",
-  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault \"Minestarters ML Picks\" has a NAV of $4,343.77 USDC with a current allocation of $12,954.90 USDC to perpetual contracts. The available collateral has been fully utilized for the new positions.\n\n2. **Positions Opened**:\n   - **Gold Strike Resources Corp. (GSR.V)**: Long position opened with a size of $13,629.23 and collateral of $1,362.92 USDC.\n   - **Amarc Resources Ltd. (AHR.V)**: Long position opened with a size of $9,086.15 and collateral of $908.62 USDC.\n   - **Aris Mining Corporation (ARIS.TO)**: Long position opened with a size of $6,057.44 and collateral of $605.74 USDC.\n\n3. **Atlas ML Model**: The model continues to show strong predictive power with a mean Spearman IC of 0.3658 and a hit rate of 56%. The selected long positions are based on high ML scores and predicted returns.\n\n### Thesis\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor news for any significant developments that could impact the selected positions.\n- Re-evaluate the short position if new long candidates emerge with higher profit potential.\n- Continue leveraging the Atlas ML model's insights for both long and short strategies.",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
+  "summary": "### Summary of Actions\n\n1. **Vault State**: The vault \"Minestarters ML Picks\" has a NAV of $5,248.56 USDC with a current allocation of $12,954.90 USDC to perpetual contracts. The available collateral for new positions is currently $0.00 USDC, indicating no free capital for new allocations without closing existing positions.\n\n2. **Atlas ML Model**: The latest model was trained on June 19, 2026, with a 180-day horizon using raw features. It shows a mean Spearman IC of 0.3659 and a hit rate of 56.02%, indicating strong predictive capabilities.\n\n3. **Top Picks**: The top Atlas ML picks include:\n   - **Canada Nickel Company Inc. (CNC.V)**: ML Score 99.9, Predicted Return 42.88%\n   - **Sage Potash Corp. (SAGE.V)**: ML Score 99.8, Predicted Return 41.04%\n   - **Hudbay Minerals (HBM)**: ML Score 99.7, Predicted Return 40.50%\n\n4. **Short Picks**: The top short candidates are:\n   - **Homeland Uranium Corp. (HLU.V)**: ML Score 0.1, Predicted Return -39.89%\n   - **SOLIS FPO (SLM.AX)**: ML Score 0.2, Predicted Return -39.14%\n\n5. **News Context**: No significant news impacting the selected long or short candidates was found that would alter the trading strategy.\n\n6. **Actions Taken**:\n   - **Opened a long position on ARIS.TO** due to its high ML score and predicted return, leveraging the available collateral effectively.\n\n### Recommendations for Next Run\n- Monitor the available collateral and consider closing less profitable positions to free up capital for high-potential new entrants.\n- Continue leveraging the Atlas ML model's insights for both long and short strategies.\n- Stay updated on news that might affect the selected stocks to adjust positions accordingly.\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "writeActions": [
     {
-      "tool": "open_position",
-      "txHash": "0x73113677cbb19331d54e01b295cc245c097d134f19187c8449411a24babdce70",
-      "justification": "Opening a long position on Gold Strike Resources Corp. (GSR.V) based on its high ML score and predicted return, leveraging the available collateral efficiently.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The long position on GSR.V uses 33.3% of available collateral ($1,362.92 of $4,088.77), within acceptable limits and aligned with the metals_risk_off regime."
-      },
+      "tool": "close_position",
+      "txHash": "0x565d4486434d50c8a668b51f91102924eb87028feda8fd914d9c3128a6a2bd76",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "close_position",
+      "txHash": "0x7283f4f33c3c39ad2aa21470b1132200433deac07b717d34ecd6f410556e15aa",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x4ab7218d83859229bd4cbccf515ce0470a1be0771250b27ffd2cb2dca7baa6ac",
-      "justification": "Opening a long position on Amarc Resources Ltd. (AHR.V) based on its strong ML score and predicted return, utilizing available collateral efficiently.",
+      "txHash": "0x98d2e05cc799f4a487c3ec7528d9148312e592eb5317ae05c24151caf5a86642",
+      "justification": "Opening a long position on ARIS.TO due to its high ML score and predicted return, leveraging the available collateral effectively.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "The long position on AHR.V uses 22.2% of available collateral ($908.62 out of $4088.77), which is within acceptable limits given the metals risk-off regime."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0xa53efb13927dbcc4319165becf30e79003d42612984c98e5cf6235150be273e7",
-      "justification": "Opening a long position on Aris Mining Corporation (ARIS.TO) due to its high ML score and predicted return, optimizing the use of available collateral.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The long position uses 14.8% of available collateral ($605.74 of $4088.77), within safe limits and aligned with the longBonus of 1."
+        "reason": "The proposed long position on ARIS.TO uses 33.3% of available collateral ($1417.64 of $4252.91), within acceptable limits and aligned with the longBonus regime."
       },
       "kind": "vault-tx"
     }
