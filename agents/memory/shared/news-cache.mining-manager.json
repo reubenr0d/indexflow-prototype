@@ -1,381 +1,110 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T00:24:21.269Z",
+  "updatedAt": "2026-06-23T08:40:46.473Z",
   "entries": {
-    "GSR.V": {
-      "fetchedAt": "2026-06-23T00:24:21.098Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "CNC.V": {
-      "fetchedAt": "2026-06-23T00:24:21.098Z",
+      "fetchedAt": "2026-06-23T08:40:46.473Z",
       "headlines": [
         {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
+          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005930.KS"
+            "NVDA"
           ]
         },
         {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
+          "publishedAt": "2026-06-23T08:34:12.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMGN"
+            "CVX",
+            "MSFT",
+            "CAT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-23T00:24:21.098Z",
+      "fetchedAt": "2026-06-23T08:40:46.473Z",
       "headlines": [
         {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
+          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005930.KS"
+            "NVDA"
           ]
         },
         {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
+          "publishedAt": "2026-06-23T08:34:12.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-23T00:24:21.098Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HBM": {
-      "fetchedAt": "2026-06-23T00:24:21.098Z",
-      "headlines": [
-        {
-          "title": "AI Boom and HBM Demand to Boost Micron's DRAM Revenues in Q3",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/technology/ai/articles/ai-boom-hbm-demand-boost-131300285.html",
-          "publishedAt": "2026-06-22T13:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "AMD",
-            "MRVL"
-          ]
-        },
-        {
-          "title": "Why Micron (MU) Stock Is Up Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-micron-mu-stock-today-221119459.html",
-          "publishedAt": "2026-06-22T22:11:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "WDC",
-            "SNDK",
-            "005930.KS",
-            "000660.KS"
-          ]
-        },
-        {
-          "title": "Chase the Surge in Micron (MU) Stock as Its Q3 Results Approach?",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/chase-surge-micron-mu-stock-180100508.html",
-          "publishedAt": "2026-06-22T18:01:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MU",
-            "GOOGL",
-            "META",
-            "AMZN",
-            "MSFT"
+            "CVX",
+            "MSFT",
+            "CAT"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-23T00:24:21.269Z",
+      "fetchedAt": "2026-06-23T08:40:46.473Z",
       "headlines": [
         {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
+          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
+          "publisher": "Motley Fool",
+          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "005930.KS"
+            "NVDA"
           ]
         },
         {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
+          "publishedAt": "2026-06-23T08:35:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
+          "publishedAt": "2026-06-23T08:34:12.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-23T00:24:21.269Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-23T00:24:21.269Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-23T00:24:21.269Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-23T00:24:21.269Z",
-      "headlines": [
-        {
-          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
-          "publisher": "Business Wire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
-          "publishedAt": "2026-06-23T00:18:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "005930.KS"
-          ]
-        },
-        {
-          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
-          "publishedAt": "2026-06-23T00:13:53.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "INSM",
-            "^NDX"
-          ]
-        },
-        {
-          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
-          "publisher": "Simply Wall St.",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
-          "publishedAt": "2026-06-23T00:13:51.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMGN"
+            "CVX",
+            "MSFT",
+            "CAT"
           ]
         }
       ],
