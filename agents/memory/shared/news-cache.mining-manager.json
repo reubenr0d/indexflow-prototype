@@ -1,364 +1,292 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T12:17:38.294Z",
+  "updatedAt": "2026-06-23T18:16:58.951Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-23T12:17:36.603Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-23T12:17:36.603Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "CNC.V": {
-      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "fetchedAt": "2026-06-23T18:16:58.577Z",
       "headlines": [
         {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SHOP"
+            "V",
+            "COIN"
           ]
         },
         {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMZN"
+            "BF-A",
+            "BF-B"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SAGE.V": {
+      "fetchedAt": "2026-06-23T18:16:58.577Z",
+      "headlines": [
+        {
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "COIN"
           ]
         },
         {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMOD"
+            "BF-A",
+            "BF-B"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "fetchedAt": "2026-06-23T18:16:58.577Z",
       "headlines": [
         {
-          "title": "Micron to report third quarter earnings amid sky-high demand from data centers",
-          "publisher": "Yahoo Finance",
-          "link": "https://finance.yahoo.com/technology/article/micron-to-report-third-quarter-earnings-amid-sky-high-demand-from-data-centers-113000152.html",
-          "publishedAt": "2026-06-23T11:30:00.000Z",
+          "title": "Why ASMPT Limited’s (ASMVY) Repeat TCB Tool Order Deepens Its Role in HBM and AI Packaging",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/why-asmpt-limited-asmvy-repeat-161019873.html",
+          "publishedAt": "2026-06-23T16:10:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU",
-            "000660.KS"
+            "0522.HK",
+            "ASMVF",
+            "ASMVY"
           ]
         },
         {
-          "title": "Zacks Industry Outlook Highlights Texas and Amtech",
-          "publisher": "Zacks",
-          "link": "https://finance.yahoo.com/technology/articles/zacks-industry-outlook-highlights-texas-082900396.html",
-          "publishedAt": "2026-06-23T08:29:00.000Z",
+          "title": "Why TSMC’s CoWoS Role Keeps Taiwan Semiconductor (TSM) Central to the HBM-Driven AI Chip Boom",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/why-tsmc-cowos-role-keeps-161005521.html",
+          "publishedAt": "2026-06-23T16:10:05.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "ASYS",
-            "TXN"
+            "TSM"
           ]
         },
         {
-          "title": "Micron ties its future to Anthropic in supply deal",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/2f459a35-a99a-36ba-b952-d16c5dea70b0/micron-ties-its-future-to.html",
-          "publishedAt": "2026-06-23T09:03:00.000Z",
+          "title": "How Marvell Technology (MRVL) Is Using Teralynx T100 to Target AI Data-Center Bandwidth Bottlenecks",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/marvell-technology-mrvl-using-teralynx-161034353.html",
+          "publishedAt": "2026-06-23T16:10:34.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "MRVL"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-23T18:16:58.577Z",
+      "headlines": [
+        {
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "COIN"
+          ]
+        },
+        {
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BF-A",
+            "BF-B"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "fetchedAt": "2026-06-23T18:16:58.577Z",
       "headlines": [
         {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SHOP"
+            "V",
+            "COIN"
           ]
         },
         {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-23T12:17:38.294Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-23T12:17:38.294Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-23T12:17:38.294Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-23T12:17:38.294Z",
-      "headlines": [
-        {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SHOP"
-          ]
-        },
-        {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMZN"
-          ]
-        },
-        {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMOD"
+            "BF-A",
+            "BF-B"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-23T12:17:38.294Z",
+      "fetchedAt": "2026-06-23T18:16:58.951Z",
       "headlines": [
         {
-          "title": "Shopify Moves Toward Vape Ban",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
-          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SHOP"
+            "V",
+            "COIN"
           ]
         },
         {
-          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
-          "publisher": "GuruFocus.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
-          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMZN"
+            "BF-A",
+            "BF-B"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-23T18:16:58.951Z",
+      "headlines": [
+        {
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "COIN"
           ]
         },
         {
-          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
-          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "AMOD"
+            "BF-A",
+            "BF-B"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-23T18:16:58.951Z",
+      "headlines": [
+        {
+          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
+          "publisher": "Bankless",
+          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
+          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "V",
+            "COIN"
+          ]
+        },
+        {
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
+          "publishedAt": "2026-06-23T18:08:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "BF-A",
+            "BF-B"
           ]
         }
       ],
