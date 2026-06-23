@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-23T20:37:27.835Z",
-  "startedAt": "2026-06-23T20:36:49.173Z",
-  "finishedAt": "2026-06-23T20:37:27.835Z",
+  "runId": "2026-06-23T22:45:44.799Z",
+  "startedAt": "2026-06-23T22:44:43.769Z",
+  "finishedAt": "2026-06-23T22:45:44.799Z",
   "status": "succeeded",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. The metals market is in a \"metals_risk_off\" regime, which suggests caution in opening new positions. As there are no trade-ready picks available, no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "summary": "## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. The metals market is in a \"metals_risk_off\" regime, which suggests caution in opening new positions. As there are no trade-ready picks available, no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Actions Taken\n- **Trade-Ready Picks**: No picks met the criteria for trade readiness (minCompositeScore: 75, minTradeReadinessScore: 75).\n- **Positions Opened**: None\n- **Positions Closed**: None\n\n### Recommendations for Next Run\n- Monitor the availability of trade-ready picks from the Atlas API.\n- Reassess the market regime and adjust strategy accordingly if the regime changes.\n- Continue to wait for trade-ready picks to proceed with any trading actions.",
+  "summary": "### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Grounding\nThe quality matrix is grounded in the analyst's tier definitions, with categories weighted as follows: Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), and Construction (5%). Categories that are not empirically calibrated are discounted by a provenance factor of 0.7.\n\n### Trade-Ready Picks\nUnfortunately, there are no trade-ready picks available at this time. This means there are no new long positions to open based on the current quality matrix and trade-timing filters.\n\n### Summary and Thesis\n## Thesis\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. The metals market is in a \"metals_risk_off\" regime, which suggests caution in opening new positions. As there are no trade-ready picks available, no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n### Recommendations for Next Run\n- Monitor the availability of trade-ready picks in future runs.\n- Keep an eye on any updates to the quality matrix that might affect the scoring.\n- Reassess the market regime to determine the appropriate timing for opening new positions.",
   "writeActions": [],
   "errors": []
 }

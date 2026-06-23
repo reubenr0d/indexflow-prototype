@@ -1,124 +1,115 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T20:29:00.627Z",
+  "updatedAt": "2026-06-23T22:40:16.154Z",
   "entries": {
-    "HLU.V": {
-      "fetchedAt": "2026-06-23T20:29:00.627Z",
-      "headlines": [
-        {
-          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
-          "publishedAt": "2026-06-23T20:25:55.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "ASTS",
-            "RKLB",
-            "LUNR",
-            "VOYG"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T20:25:49.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
-          "publishedAt": "2026-06-23T20:21:52.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "CL=F"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "SAGE.V": {
-      "fetchedAt": "2026-06-23T20:29:00.627Z",
+      "fetchedAt": "2026-06-23T22:40:15.928Z",
       "headlines": [
         {
-          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
-          "publishedAt": "2026-06-23T20:25:55.000Z",
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
             "SPCX",
-            "ASTS",
-            "RKLB",
-            "LUNR",
-            "VOYG"
+            "9984.T"
           ]
         },
         {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T20:25:49.000Z",
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
         },
         {
-          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
-          "publishedAt": "2026-06-23T20:21:52.000Z",
-          "type": "VIDEO",
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "CL=F"
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CNC.V": {
-      "fetchedAt": "2026-06-23T20:29:00.627Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-23T22:40:15.928Z",
       "headlines": [
         {
-          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
-          "publisher": "Investor's Business Daily",
-          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
-          "publishedAt": "2026-06-23T20:25:55.000Z",
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
           "type": "STORY",
           "relatedTickers": [
             "SPCX",
-            "ASTS",
-            "RKLB",
-            "LUNR",
-            "VOYG"
+            "9984.T"
           ]
         },
         {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T20:25:49.000Z",
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
         },
         {
-          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
-          "publishedAt": "2026-06-23T20:21:52.000Z",
-          "type": "VIDEO",
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "CL=F"
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-23T20:29:00.627Z",
+      "fetchedAt": "2026-06-23T22:40:15.928Z",
       "headlines": [
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        },
         {
           "title": "Why ASMPT Limited’s (ASMVY) Repeat TCB Tool Order Deepens Its Role in HBM and AI Packaging",
           "publisher": "Insider Monkey",
@@ -132,31 +123,331 @@
           ]
         },
         {
-          "title": "Why TSMC’s CoWoS Role Keeps Taiwan Semiconductor (TSM) Central to the HBM-Driven AI Chip Boom",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/why-tsmc-cowos-role-keeps-161005521.html",
-          "publishedAt": "2026-06-23T16:10:05.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "TSM"
-          ]
-        },
-        {
-          "title": "KLA Corporation, onsemi, and Nova Shares Are Falling, What You Need To Know",
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/kla-corporation-onsemi-nova-shares-194446161.html",
-          "publishedAt": "2026-06-23T19:44:46.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
           "type": "STORY",
           "relatedTickers": [
             "000660.KS",
-            "KLAC",
+            "AVGO",
             "005930.KS",
-            "NVMI",
-            "ON",
-            "ASML",
-            "IFX.DE",
-            "ASM.AS",
-            "STM"
+            "NVDA"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-23T22:40:15.928Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-23T22:40:15.928Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "headlines": [
+        {
+          "title": "SoftBank's founder picks side in space data center fight",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
+          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SPCX",
+            "9984.T"
+          ]
+        },
+        {
+          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "AVGO",
+            "005930.KS",
+            "NVDA"
+          ]
+        },
+        {
+          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
+          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
+            "NVDA",
+            "MTSI",
+            "005930.KS",
+            "SMTC",
+            "PLAB"
           ]
         }
       ],

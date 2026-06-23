@@ -22,3 +22,17 @@
     }
   }
 }
+0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30": {
+      "ticker": "CNC.V",
+      "isLong": true,
+      "closedAt": "2026-06-23T22:41:14.037Z",
+      "closedReason": "llm_judged: Closing CNC.V to free up collateral for new positions as per policy enforcement."
+    },
+    "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d": {
+      "ticker": "SAGE.V",
+      "isLong": true,
+      "closedAt": "2026-06-23T22:43:25.300Z",
+      "closedReason": "llm_judged: Closing SAGE.V to free up collateral for new positions as per policy enforcement."
+    }
+  }
+}
