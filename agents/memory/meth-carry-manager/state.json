@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-23T12:23:31.638Z",
+  "lastRunAt": "2026-06-23T15:48:54.507Z",
   "thesis": "The current hedge ratio is not applicable as there are no positions currently open. The mETH yield realized since the last run is $0.00. The funding rate context is also unavailable due to the absence of positions. The vault remains idle with no actions taken.",
   "lastThesisUpdate": "2026-06-23T12:23:31.638Z"
 }
