@@ -1,120 +1,157 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-22T23:00:59.151Z",
+  "updatedAt": "2026-06-23T00:24:21.269Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-22T23:00:57.179Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-23T00:24:21.098Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-22T23:00:57.179Z",
+      "fetchedAt": "2026-06-23T00:24:21.098Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "GSR.V": {
-      "fetchedAt": "2026-06-22T23:00:57.179Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-23T00:24:21.098Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-23T00:24:21.098Z",
+      "headlines": [
+        {
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-22T23:00:57.179Z",
+      "fetchedAt": "2026-06-23T00:24:21.098Z",
       "headlines": [
         {
           "title": "AI Boom and HBM Demand to Boost Micron's DRAM Revenues in Q3",
@@ -159,223 +196,186 @@
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-22T23:00:57.179Z",
-      "headlines": [
-        {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
     "HLU.V": {
-      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "fetchedAt": "2026-06-23T00:24:21.269Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
           ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-22T23:00:59.151Z",
-      "headlines": [
-        {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
         },
         {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "MNB.AX": {
-      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "fetchedAt": "2026-06-23T00:24:21.269Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "fetchedAt": "2026-06-23T00:24:21.269Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-23T00:24:21.269Z",
+      "headlines": [
+        {
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AVM.AX": {
-      "fetchedAt": "2026-06-22T23:00:59.151Z",
+      "fetchedAt": "2026-06-23T00:24:21.269Z",
       "headlines": [
         {
-          "title": "PSLF in 2026: What's new and what to do if you're in SAVE",
-          "publisher": "Yahoo Personal Finance",
-          "link": "https://finance.yahoo.com/personal-finance/student-loans/article/pslf-in-2026-whats-new-and-what-to-do-if-youre-in-save-225607997.html",
-          "publishedAt": "2026-06-22T22:56:07.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Deed fraud can cause vulnerable Detroiters to lose their homes – here’s why it’s hard to catch the thieves",
-          "publisher": "The Conversation",
-          "link": "https://finance.yahoo.com/m/0f7ad2a7-7ef3-350f-a178-cba9aae76485/deed-fraud-can-cause.html",
-          "publishedAt": "2026-06-22T22:53:41.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Why Palantir Technologies (PLTR) Shares Are Trading Lower Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-palantir-technologies-pltr-shares-225119693.html",
-          "publishedAt": "2026-06-22T22:51:19.000Z",
+          "title": "Samsung Unveils Industry's Fastest UFS 5.0 Solution for Next-Gen On-Device AI Applications",
+          "publisher": "Business Wire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/samsung-unveils-industrys-fastest-ufs-001800259.html",
+          "publishedAt": "2026-06-23T00:18:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "PLTR",
-            "MSFT",
-            "CRM",
-            "ADBE",
-            "ACN",
-            "GOOG"
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Should Insmed’s (INSM) NASDAQ-100 Exit and TPIP Focus Require Action From Investors?",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/insmed-insm-nasdaq-100-exit-001353962.html",
+          "publishedAt": "2026-06-23T00:13:53.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "INSM",
+            "^NDX"
+          ]
+        },
+        {
+          "title": "Willful Patent Infringement Verdict Might Change The Case For Investing In Amgen (AMGN)",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/willful-patent-infringement-verdict-might-001351754.html",
+          "publishedAt": "2026-06-23T00:13:51.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMGN"
           ]
         }
       ],
