@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-23T00:25:38.392Z",
+  "updatedAt": "2026-06-23T05:19:39.867Z",
   "opens": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6:long": {
       "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
@@ -48,13 +48,13 @@
       "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
       "ticker": "AHR.V",
       "isLong": true,
-      "openedAt": "2026-06-23T00:25:12.829Z"
+      "openedAt": "2026-06-23T05:19:26.781Z"
     },
     "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245:long": {
       "assetId": "0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245",
       "ticker": "GSR.V",
       "isLong": true,
-      "openedAt": "2026-06-23T00:25:01.675Z"
+      "openedAt": "2026-06-23T05:19:12.755Z"
     },
     "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d:long": {
       "assetId": "0xa68f29fbfcd00698d69790d4349a95e876f43a4cab43e780790e74743f432a3d",
@@ -72,7 +72,7 @@
       "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
       "ticker": "ARIS.TO",
       "isLong": true,
-      "openedAt": "2026-06-23T00:25:38.392Z"
+      "openedAt": "2026-06-23T05:19:39.867Z"
     }
   }
 }
