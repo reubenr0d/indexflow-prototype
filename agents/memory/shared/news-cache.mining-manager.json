@@ -1,81 +1,123 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T18:16:58.951Z",
+  "updatedAt": "2026-06-23T20:29:00.627Z",
   "entries": {
-    "CNC.V": {
-      "fetchedAt": "2026-06-23T18:16:58.577Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-23T20:29:00.627Z",
       "headlines": [
         {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
+          "publishedAt": "2026-06-23T20:25:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V",
-            "COIN"
+            "SPCX",
+            "ASTS",
+            "RKLB",
+            "LUNR",
+            "VOYG"
           ]
         },
         {
           "title": "Latest developments in Europe's heatwave",
           "publisher": "AFP",
           "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "publishedAt": "2026-06-23T20:25:49.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
-          "type": "STORY",
+          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
+          "publishedAt": "2026-06-23T20:21:52.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "BF-A",
-            "BF-B"
+            "CL=F"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-23T18:16:58.577Z",
+      "fetchedAt": "2026-06-23T20:29:00.627Z",
       "headlines": [
         {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
+          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
+          "publishedAt": "2026-06-23T20:25:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "V",
-            "COIN"
+            "SPCX",
+            "ASTS",
+            "RKLB",
+            "LUNR",
+            "VOYG"
           ]
         },
         {
           "title": "Latest developments in Europe's heatwave",
           "publisher": "AFP",
           "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
+          "publishedAt": "2026-06-23T20:25:49.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
+          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
+          "publishedAt": "2026-06-23T20:21:52.000Z",
+          "type": "VIDEO",
+          "relatedTickers": [
+            "CL=F"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-23T20:29:00.627Z",
+      "headlines": [
+        {
+          "title": "SpaceX Conducts Starfall Cargo Test, Lands Next AST SpaceMobile Launch",
+          "publisher": "Investor's Business Daily",
+          "link": "https://finance.yahoo.com/m/e8242209-6d4c-355a-bd43-89c565895502/spacex-conducts-starfall.html",
+          "publishedAt": "2026-06-23T20:25:55.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BF-A",
-            "BF-B"
+            "SPCX",
+            "ASTS",
+            "RKLB",
+            "LUNR",
+            "VOYG"
+          ]
+        },
+        {
+          "title": "Latest developments in Europe's heatwave",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
+          "publishedAt": "2026-06-23T20:25:49.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "3 reasons jet fuel prices will remain high — even as the Strait of Hormuz reopens",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-jet-fuel-prices-202152289.html",
+          "publishedAt": "2026-06-23T20:21:52.000Z",
+          "type": "VIDEO",
+          "relatedTickers": [
+            "CL=F"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-23T18:16:58.577Z",
+      "fetchedAt": "2026-06-23T20:29:00.627Z",
       "headlines": [
         {
           "title": "Why ASMPT Limited’s (ASMVY) Repeat TCB Tool Order Deepens Its Role in HBM and AI Packaging",
@@ -100,193 +142,21 @@
           ]
         },
         {
-          "title": "How Marvell Technology (MRVL) Is Using Teralynx T100 to Target AI Data-Center Bandwidth Bottlenecks",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/marvell-technology-mrvl-using-teralynx-161034353.html",
-          "publishedAt": "2026-06-23T16:10:34.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "MRVL"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-23T18:16:58.577Z",
-      "headlines": [
-        {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "COIN"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
+          "title": "KLA Corporation, onsemi, and Nova Shares Are Falling, What You Need To Know",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/kla-corporation-onsemi-nova-shares-194446161.html",
+          "publishedAt": "2026-06-23T19:44:46.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "BF-A",
-            "BF-B"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "AHR.V": {
-      "fetchedAt": "2026-06-23T18:16:58.577Z",
-      "headlines": [
-        {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "COIN"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BF-A",
-            "BF-B"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-23T18:16:58.951Z",
-      "headlines": [
-        {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "COIN"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BF-A",
-            "BF-B"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-23T18:16:58.951Z",
-      "headlines": [
-        {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "COIN"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BF-A",
-            "BF-B"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-23T18:16:58.951Z",
-      "headlines": [
-        {
-          "title": "Allium Raises $40M as Crypto Data Sector Consolidates",
-          "publisher": "Bankless",
-          "link": "https://finance.yahoo.com/m/312ebf90-7be2-327e-913f-2c5367e52371/allium-raises-%2440m-as-crypto.html",
-          "publishedAt": "2026-06-23T18:10:25.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "V",
-            "COIN"
-          ]
-        },
-        {
-          "title": "Latest developments in Europe's heatwave",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/b4280a9c-a296-36b0-bdc9-0d9a7d4a3b6e/latest-developments-in.html",
-          "publishedAt": "2026-06-23T18:09:01.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/winners-losers-q3-brown-forman-180846282.html",
-          "publishedAt": "2026-06-23T18:08:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "BF-A",
-            "BF-B"
+            "000660.KS",
+            "KLAC",
+            "005930.KS",
+            "NVMI",
+            "ON",
+            "ASML",
+            "IFX.DE",
+            "ASM.AS",
+            "STM"
           ]
         }
       ],

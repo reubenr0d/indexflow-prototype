@@ -7,50 +7,107 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-23T18:18:58.297Z",
-  "startedAt": "2026-06-23T18:14:48.793Z",
-  "finishedAt": "2026-06-23T18:18:58.297Z",
-  "status": "succeeded",
+  "runId": "2026-06-23T20:36:10.486Z",
+  "startedAt": "2026-06-23T20:22:46.898Z",
+  "finishedAt": "2026-06-23T20:36:10.486Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 12,
-    "toolCalls": 21,
-    "errors": 0,
-    "softFailures": 3,
-    "writeActions": 3
+    "turns": 25,
+    "toolCalls": 33,
+    "errors": 2,
+    "softFailures": 6,
+    "writeActions": 9
   },
-  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
-  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $3,274.97 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 8\n\n#### Recent Actions\n- **Opened Long Positions**:\n  - **GSR.V**: Opened a long position with a size of $10,335.91 and collateral of $1,033.59 USDC. Churn-guard bypass was active due to re-evaluation based on updated ML scores.\n  - **AHR.V**: Opened a long position with a size of $10,335.91 and collateral of $1,033.59 USDC. Churn-guard bypass was active due to re-evaluation based on updated ML scores.\n  - **ARIS.TO**: Opened a long position with a size of $10,335.91 and collateral of $1,033.59 USDC. Churn-guard bypass was active due to re-evaluation based on updated ML scores.\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
+  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,555.14 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 3\n\n#### Actions Taken\n- **Opened Long Positions**: Successfully opened long positions on:\n  - **Canada Nickel Company Inc. (CNC.V)** with a size of $12,179.34 and collateral of $1,217.93 USDC.\n  - **Sage Potash Corp. (SAGE.V)** with a size of $12,179.34 and collateral of $1,217.93 USDC.\n\n#### Current Strategy\n- **Long Candidates**: Canada Nickel Company Inc. and Sage Potash Corp. are strong candidates based on ML scores and predicted returns.\n- **Short Candidates**: Homeland Uranium Corp. remains a viable short candidate due to its negative predicted return.\n\n#### Recommendations for Next Run\n- **Monitor Existing Positions**: Keep an eye on the performance of the newly opened positions.\n- **Explore Other Top Picks**: Consider other eligible assets from the top ML picks that are not under cooldown.\n- **Remain Vigilant**: Continue monitoring market news and trends to support decision-making.\n\n#### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
   "writeActions": [
     {
-      "tool": "open_position",
-      "txHash": "0x14b5517057b52bbeb4d8ee22d0b324816ac56bf5c913f30cafaed6f4ef96e8cf",
-      "justification": "Opening a long position on GSR.V based on re-evaluation and updated ML scores indicating strong potential. Churn-guard bypass active.",
+      "tool": "close_position",
+      "txHash": "0x0806b4f31d8d451b993b6701b4f158205db8adcae2a87ae663f327df2a68618e",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "close_position",
+      "txHash": "0x840b24ec110cbbb5bbfdf4bd084302b3386abc0e5a30f68d1634fe86b3dcda47",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "close_position",
+      "txHash": "0x24cd4ba6f16f76d91cc89736a2f616c0bad7d34c1551147a56c0d4213db705d6",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)",
+      "kind": "vault-tx"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Canada Nickel Company Inc. due to strong ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new longs is 99.99% of available collateral ($3100.77), but regime longBonus=2 supports high conviction long positions."
+        "reason": "Batch aligns with available collateral ($2435.87) and regime (longBonus=2, shortPenalty=0); no recent losses on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Sage Potash Corp. due to strong ML score and predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch aligns with available collateral ($2435.87) and regime (longBonus=2, shortPenalty=0); no recent losses on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "wire_asset",
+      "txHash": null,
+      "justification": "Wiring Homeland Uranium Corp. for short due to negative predicted return.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch aligns with available collateral ($2435.87) and regime (longBonus=2, shortPenalty=0); no recent losses on proposed tickers."
+      },
+      "kind": "file-diff"
+    },
+    {
+      "tool": "set_vault_assets",
+      "txHash": "0xf01c0885a3e9e38922c80fe680ef15f00192b0ebc4bd94ee9619cf3706e8e83f",
+      "justification": "Updating tracked assets to include top ML picks and short candidates.",
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Batch only updates tracked assets; no financial exposure changes. Consistent with available collateral $2435.87 and regime longBonus 2."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x2fa75c4653a210b7ed08e777c8840d0230f9942d8f1f8e36455912015d872094",
-      "justification": "Opening a long position on AHR.V based on re-evaluation and updated ML scores indicating strong potential. Churn-guard bypass active.",
+      "txHash": "0x2e2e7578be6b34ea6afc33d21f6f9f7d57c8c2cb2040690d7927e8ea1f8515db",
+      "justification": "Opening long position on Canada Nickel Company Inc. due to strong ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new longs is 99.99% of available collateral ($3100.77), but regime longBonus=2 supports high conviction long positions."
+        "reason": "Both positions use 50% of available collateral each (1217.93 USDC), aligning with longBonus=2 in metals_risk_off regime."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": "0x2491442ab20e1f8651d899861e949cb313bbf82e1ffaf5df26dad2708de48222",
-      "justification": "Opening a long position on ARIS.TO based on re-evaluation and updated ML scores indicating strong potential. Churn-guard bypass active.",
+      "txHash": "0xb9a3dfe1a806c3d637cd7ee069ecbfc17fdf48cb207ace2ebcdaf2f449fd37a5",
+      "justification": "Opening long position on Sage Potash Corp. due to strong ML score and predicted return.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Total collateral for new longs is 99.99% of available collateral ($3100.77), but regime longBonus=2 supports high conviction long positions."
+        "reason": "Both positions use 50% of available collateral each (1217.93 USDC), aligning with longBonus=2 in metals_risk_off regime."
       },
       "kind": "vault-tx"
     }
   ],
-  "errors": []
+  "errors": [
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    },
+    {
+      "tool": "get_oracle_assets",
+      "error": "MCP error -32001: Request timed out"
+    }
+  ]
 }
