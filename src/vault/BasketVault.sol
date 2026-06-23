@@ -154,10 +154,7 @@ contract BasketVault is BaseVault {
 
     function setRWAAdapter(address _rwaAdapter) external onlyOwner {
         if (_rwaAdapter != address(0)) {
-            require(
-                IRWAReserveAdapter(_rwaAdapter).vault() == address(this),
-                "Adapter not bound to this vault"
-            );
+            require(IRWAReserveAdapter(_rwaAdapter).vault() == address(this), "Adapter not bound to this vault");
         }
         rwaAdapter = IRWAReserveAdapter(_rwaAdapter);
         emit RWAAdapterSet(_rwaAdapter);

@@ -11,7 +11,7 @@ on:
 
 env:
   FOUNDRY_PROFILE: ci
-  FOUNDRY_VERSION: nightly
+  FOUNDRY_VERSION: stable
 
 # npm ci requires package-lock.json in the repo root; keep it committed.
 
