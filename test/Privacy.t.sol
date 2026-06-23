@@ -508,7 +508,7 @@ contract PrivacyTest is Test {
     }
 
     function test_setFees_capAt500Bps() public {
-        vm.expectRevert("Fee too high");
+        vm.expectRevert("Deposit fee too high");
         vault.setFees(501, 0);
     }
 
@@ -530,7 +530,7 @@ contract PrivacyTest is Test {
     }
 
     function test_setMinReserveBps_aboveDenominatorReverts() public {
-        vm.expectRevert("Invalid bps");
+        vm.expectRevert("Invalid reserve bps");
         vault.setMinReserveBps(10_001);
     }
 
@@ -540,7 +540,7 @@ contract PrivacyTest is Test {
     }
 
     function test_setMinDepositWeightBps_aboveDenominatorReverts() public {
-        vm.expectRevert("Invalid bps");
+        vm.expectRevert("Invalid weight bps");
         vault.setMinDepositWeightBps(10_001);
     }
 
@@ -926,7 +926,7 @@ contract PrivacyTest is Test {
         vault.setVaultAccounting(address(perp));
         vault.setMaxPerpAllocation(2_000e6);
         _depositAs(alice, 10_000e6);
-        vm.expectRevert("Exceeds cap");
+        vm.expectRevert("Exceeds max perp allocation");
         vault.allocateToPerp(2_001e6);
     }
 
