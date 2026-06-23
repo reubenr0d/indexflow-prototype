@@ -1,110 +1,364 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T08:40:46.473Z",
+  "updatedAt": "2026-06-23T12:17:38.294Z",
   "entries": {
-    "CNC.V": {
-      "fetchedAt": "2026-06-23T08:40:46.473Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-23T12:17:36.603Z",
       "headlines": [
         {
-          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA"
+            "SHOP"
           ]
         },
         {
-          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
-          "publishedAt": "2026-06-23T08:34:12.000Z",
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CVX",
-            "MSFT",
-            "CAT"
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-23T08:40:46.473Z",
+    "GSR.V": {
+      "fetchedAt": "2026-06-23T12:17:36.603Z",
       "headlines": [
         {
-          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA"
+            "SHOP"
           ]
         },
         {
-          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
-          "publishedAt": "2026-06-23T08:34:12.000Z",
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CVX",
-            "MSFT",
-            "CAT"
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "CNC.V": {
+      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HBM": {
+      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "headlines": [
+        {
+          "title": "Micron to report third quarter earnings amid sky-high demand from data centers",
+          "publisher": "Yahoo Finance",
+          "link": "https://finance.yahoo.com/technology/article/micron-to-report-third-quarter-earnings-amid-sky-high-demand-from-data-centers-113000152.html",
+          "publishedAt": "2026-06-23T11:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU",
+            "000660.KS"
+          ]
+        },
+        {
+          "title": "Zacks Industry Outlook Highlights Texas and Amtech",
+          "publisher": "Zacks",
+          "link": "https://finance.yahoo.com/technology/articles/zacks-industry-outlook-highlights-texas-082900396.html",
+          "publishedAt": "2026-06-23T08:29:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "ASYS",
+            "TXN"
+          ]
+        },
+        {
+          "title": "Micron ties its future to Anthropic in supply deal",
+          "publisher": "TheStreet",
+          "link": "https://finance.yahoo.com/m/2f459a35-a99a-36ba-b952-d16c5dea70b0/micron-ties-its-future-to.html",
+          "publishedAt": "2026-06-23T09:03:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-23T12:17:36.603Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-23T12:17:38.294Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-23T08:40:46.473Z",
+      "fetchedAt": "2026-06-23T12:17:38.294Z",
       "headlines": [
         {
-          "title": "2 Incredibly Costly Mistakes Too Many Investors Are Making Right Now",
-          "publisher": "Motley Fool",
-          "link": "https://finance.yahoo.com/m/2b408fe9-0680-3407-aae0-a7514e1dad7e/2-incredibly-costly-mistakes.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "NVDA"
+            "SHOP"
           ]
         },
         {
-          "title": "Enteric Disease Testing Market Worth USD 5.86 Billion by 2035 | SNS Insider",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/enteric-disease-testing-market-worth-083500702.html",
-          "publishedAt": "2026-06-23T08:35:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Chevron and Microsoft sign power deal for data centre in Texas, US",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/c3948f2d-8ba3-333b-8696-d66d5b718f47/chevron-and-microsoft-sign.html",
-          "publishedAt": "2026-06-23T08:34:12.000Z",
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "CVX",
-            "MSFT",
-            "CAT"
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SLM.AX": {
+      "fetchedAt": "2026-06-23T12:17:38.294Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-23T12:17:38.294Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-23T12:17:38.294Z",
+      "headlines": [
+        {
+          "title": "Shopify Moves Toward Vape Ban",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/shopify-moves-toward-vape-ban-121525598.html",
+          "publishedAt": "2026-06-23T12:15:25.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SHOP"
+          ]
+        },
+        {
+          "title": "Amazon Stock Slumps Ahead of Prime Day as AI Spending Fears Return",
+          "publisher": "GuruFocus.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/amazon-stock-slumps-ahead-prime-121319634.html",
+          "publishedAt": "2026-06-23T12:13:19.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMZN"
+          ]
+        },
+        {
+          "title": "Alpha Cash Comes Home: North Carolina Approval Takes Seven-State Footprint Past 3 Million Unbanked Households",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/small-business/articles/alpha-cash-comes-home-north-121300668.html",
+          "publishedAt": "2026-06-23T12:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMOD"
           ]
         }
       ],
