@@ -4,20 +4,20 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. is a top pick due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current metals regime is risk-off, with miners deeply in the red, which suggests a potential for recovery and supports a long bias.\n\nFor the short side, Homeland Uranium Corp. was identified as a strong short candidate based on its negative predicted return. The absence of significant bullish news for this company supports the short rationale, providing an opportunity to capitalize on its expected underperformance.",
-  "lastRunAt": "2026-06-24T04:38:41.314Z",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. (CNC.V) remains a top pick due to its high ML score of 99.9 and predicted return of 42.88%, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current metals regime is risk-off, with miners deeply in the red, which suggests a potential for recovery and supports a long bias.",
+  "lastRunAt": "2026-06-24T08:36:55.203Z",
   "latestRun": {
-    "runId": "2026-06-24T04:38:41.314Z",
-    "finishedAt": "2026-06-24T04:38:41.314Z",
-    "summary": "## Thesis\n\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. is a top pick due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current metals regime is risk-off, with miners deeply in the red, which suggests a potential for recovery and supports a long bias.\n\nFor the short side, Homeland Uranium Corp. was identified as a strong short candidate based on its negative predicted return. The absence of significant bullish news for this company supports the short rationale, providing an opportunity to capitalize on its expected underperformance.\n\n## Vault Summary\n\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,462.78 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: CNC.V, SAGE.V, HBM\n\n## Actions Taken\n\n### Long Position Opened\n- **Canada Nickel Company Inc. (CNC.V)**: ML Score 99.9, Predicted Return +42.88%\n\n### Short Position Opened\n- **Homeland Uranium Corp. (HLU.V)**: ML Score 0.1, Predicted Return -39.89%\n\n## Recommendations for Next Run\n\n- Monitor the performance of newly opened positions and adjust based on market conditions and updated ML signals.\n- Continue to leverage the Atlas ML model for identifying high-potential long and short candidates.\n- Reassess the eligibility of assets and the status of the churn guard to optimize the portfolio further.",
-    "startedAt": "2026-06-24T04:35:47.946Z",
+    "runId": "2026-06-24T08:36:55.203Z",
+    "finishedAt": "2026-06-24T08:36:55.203Z",
+    "summary": "## Thesis\n\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. (CNC.V) remains a top pick due to its high ML score of 99.9 and predicted return of 42.88%, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current metals regime is risk-off, with miners deeply in the red, which suggests a potential for recovery and supports a long bias.\n\n## Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,454.95 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n## Actions Taken\n- **Long Position Opened**:\n  - **Canada Nickel Company Inc. (CNC.V)**: ML Score 99.9, Predicted Return 42.88%\n\n## Recommendations for Next Run\n- Monitor the Atlas ML top picks for any changes in predicted returns or ML scores.\n- Keep an eye on any emerging news that could impact the current positions, particularly any bullish news that might affect the short positions.\n- Re-evaluate the short positions regularly to ensure they remain aligned with the Atlas model's predictions and market conditions.\n- Consider re-opening Sage Potash Corp. (SAGE.V) after the churn guard cooldown ends if its potential remains high.",
+    "startedAt": "2026-06-24T08:33:35.224Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 10,
+    "turns": 11,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -30,12 +30,12 @@
       "yfinance_news",
       "get_perp_capital_snapshot",
       "plan_open_position",
-      "open_position",
       "plan_open_position",
+      "open_position",
       "get_vault_state"
     ],
-    "actionCount": 2,
-    "onChainActionCount": 2,
+    "actionCount": 1,
+    "onChainActionCount": 1,
     "offChainActionCount": 0,
     "reasoningSummaries": [],
     "errors": [],
@@ -48,9 +48,9 @@
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 7,
+        "turn": 9,
         "verdict": "approve",
-        "reason": "The proposed long position on CNC.V uses 50% of available collateral ($1198.16 of $2396.33) and aligns with the metals_risk_off regime's longBonus of 2.",
+        "reason": "The proposed long position on CNC.V uses 100% of available collateral ($1198.16), aligning with the metals_risk_off regime's longBonus of 2.",
         "proposedTools": [
           "open_position"
         ]
@@ -58,7 +58,7 @@
     ],
     "confirmationBatches": [
       {
-        "turn": 7,
+        "turn": 9,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
@@ -69,6 +69,68 @@
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-24T08:36:55.203Z",
+      "startedAt": "2026-06-24T08:33:35.224Z",
+      "finishedAt": "2026-06-24T08:36:55.203Z",
+      "summary": "## Thesis\n\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. (CNC.V) remains a top pick due to its high ML score of 99.9 and predicted return of 42.88%, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current metals regime is risk-off, with miners deeply in the red, which suggests a potential for recovery and supports a long bias.\n\n## Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,454.95 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n## Actions Taken\n- **Long Position Opened**:\n  - **Canada Nickel Company Inc. (CNC.V)**: ML Score 99.9, Predicted Return 42.88%\n\n## Recommendations for Next Run\n- Monitor the Atlas ML top picks for any changes in predicted returns or ML scores.\n- Keep an eye on any emerging news that could impact the current positions, particularly any bullish news that might affect the short positions.\n- Re-evaluate the short positions regularly to ensure they remain aligned with the Atlas model's predictions and market conditions.\n- Consider re-opening Sage Potash Corp. (SAGE.V) after the churn guard cooldown ends if its potential remains high.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 11,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_news",
+        "yfinance_news",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 1,
+      "onChainActionCount": 1,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "plan_open_position",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d, isLong=true) is blocked: a close was recorded at 2026-06-24T04:37:14.932Z (auto-rebalance: profit rotation: closing #2 long SAGE.V (potential 0.4104, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-24T08:37:14.932Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d\",\n  \"isLong\": true,\n  \"ticker\": \"SAGE.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-24T04:37:14.932Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing #2 long SAGE.V (potential 0.4104, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T08:37:14.932Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+          "errorCode": "CHURN_GUARD_COOLDOWN"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 9,
+          "verdict": "approve",
+          "reason": "The proposed long position on CNC.V uses 100% of available collateral ($1198.16), aligning with the metals_risk_off regime's longBonus of 2.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 9,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-24T04:38:41.314Z",
       "startedAt": "2026-06-24T04:35:47.946Z",
@@ -2203,72 +2265,28 @@
           ]
         }
       ]
-    },
-    {
-      "runId": "2026-06-20T22:39:27.804Z",
-      "startedAt": "2026-06-20T22:35:15.154Z",
-      "finishedAt": "2026-06-20T22:39:27.804Z",
-      "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,349.26 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n### Actions Taken\n1. **Opened Long Positions**:\n   - **Gold Strike Resources Corp. (GSR.V)**: Opened with a collateral of $1,362.84 USDC.\n   - **Amarc Resources Ltd. (AHR.V)**: Opened with a collateral of $1,362.84 USDC.\n   - **Aris Mining Corporation (ARIS.TO)**: Opened with a collateral of $1,362.84 USDC.\n\n### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n### Recommendations for Next Run\n- Monitor the performance of newly opened positions and adjust based on updated ML signals and market conditions.\n- Continue to scan for news that might impact the selected assets, particularly for any significant changes in the mining sector.\n- Evaluate the potential for opening new positions if the model identifies high-potential opportunities and capital becomes available.",
-      "agentName": "mining-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 9,
-      "toolCalls": [
-        "get_vault_state",
-        "get_ml_runs",
-        "get_ml_horizon_recommendation",
-        "get_ml_model_info",
-        "get_ml_top_picks",
-        "get_ml_short_picks",
-        "get_oracle_assets",
-        "yfinance_news",
-        "yfinance_news",
-        "get_perp_capital_snapshot",
-        "plan_open_position",
-        "plan_open_position",
-        "plan_open_position",
-        "open_position",
-        "open_position",
-        "open_position",
-        "get_vault_state"
-      ],
-      "actionCount": 3,
-      "onChainActionCount": 3,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [
-        {
-          "turn": 7,
-          "verdict": "approve",
-          "reason": "Total collateral for new longs is 40.0% of available collateral ($4088.51), within safe limits and aligned with metals_risk_off regime favoring longs.",
-          "proposedTools": [
-            "open_position",
-            "open_position",
-            "open_position"
-          ]
-        }
-      ],
-      "confirmationBatches": [
-        {
-          "turn": 7,
-          "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position",
-            "open_position",
-            "open_position"
-          ]
-        }
-      ]
     }
   ],
   "recentActions": [
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on Canada Nickel Company Inc. (CNC.V) based on its high ML score of 99.9 and predicted return of 42.88%. This aligns with the Atlas model's strong potential for recovery in the mining sector.",
+      "timestamp": "2026-06-24T08:36:55.203Z",
+      "txHash": "0x4a00a6fad507e8f5e63fd66b714a756c6d3a450a0a2f499aba9e3a0fab79d119",
+      "agentName": "mining-manager",
+      "runId": "2026-06-24T08:36:55.203Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30",
+        "isLong": true,
+        "size": "11981634750000000000000000000000000",
+        "collateral": "1198163475"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The proposed long position on CNC.V uses 100% of available collateral ($1198.16), aligning with the metals_risk_off regime's longBonus of 2."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "auto-rebalance: profit rotation: closing #2 long SAGE.V (potential 0.4104, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
@@ -3985,21 +4003,6 @@
       "riskOfficer": {
         "verdict": "approve",
         "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.84 of $4088.51), aligning with the metals_risk_off regime's longBonus=1."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N long ABRA.TO (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
-      "timestamp": "2026-06-20T14:32:46.494Z",
-      "txHash": "0xc9db7c7cf7fe822a17fca9b6f6fbc44a876b2f02ee91387032c81856118c1a4e",
-      "agentName": "mining-manager",
-      "runId": "2026-06-20T14:32:46.494Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
-        "isLong": true,
-        "sizeDelta": "13628816460000000000000000000000000",
-        "collateralDelta": "1362881646"
       }
     }
   ]

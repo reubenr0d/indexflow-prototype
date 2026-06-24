@@ -1,61 +1,65 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-24T04:37:51.952Z",
+  "updatedAt": "2026-06-24T08:36:14.737Z",
   "entries": {
-    "SAGE.V": {
-      "fetchedAt": "2026-06-24T04:37:51.816Z",
+    "CNC.V": {
+      "fetchedAt": "2026-06-24T08:36:14.611Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "CNC.V": {
-      "fetchedAt": "2026-06-24T04:37:51.816Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-24T08:36:14.611Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -63,29 +67,31 @@
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-06-24T04:37:51.816Z",
+      "fetchedAt": "2026-06-24T08:36:14.611Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -93,8 +99,16 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-24T04:37:51.816Z",
+      "fetchedAt": "2026-06-24T08:36:14.611Z",
       "headlines": [
+        {
+          "title": "Chinese supercomputer powered by homegrown chips tops US models in global ranking",
+          "publisher": "CNN Business",
+          "link": "https://finance.yahoo.com/m/299c0a03-5675-3017-b9b0-1b7f10062797/chinese-supercomputer-powered.html",
+          "publishedAt": "2026-06-24T07:27:26.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
         {
           "title": "Monolithic Power Systems, Power Integrations, and Amkor Stocks Trade Down, What You Need To Know",
           "publisher": "StockStory",
@@ -122,77 +136,36 @@
             "NVDA",
             "005930.KS"
           ]
-        },
-        {
-          "title": "Why Seagate (STX) Stock Is Falling Today",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-seagate-stx-stock-falling-235246236.html",
-          "publishedAt": "2026-06-23T23:52:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "STX",
-            "000660.KS",
-            "NVDA",
-            "005930.KS"
-          ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-24T04:37:51.816Z",
+      "fetchedAt": "2026-06-24T08:36:14.611Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-24T04:37:51.952Z",
-      "headlines": [
-        {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -200,29 +173,63 @@
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-24T04:37:51.952Z",
+      "fetchedAt": "2026-06-24T08:36:14.737Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "KNOX.V": {
+      "fetchedAt": "2026-06-24T08:36:14.737Z",
+      "headlines": [
+        {
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -230,29 +237,31 @@
       "sourceAgent": "mining-manager"
     },
     "HLU.V": {
-      "fetchedAt": "2026-06-24T04:37:51.952Z",
+      "fetchedAt": "2026-06-24T08:36:14.737Z",
       "headlines": [
         {
-          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
-          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
+          "publishedAt": "2026-06-24T08:31:52.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "AMBQ"
+          ]
+        },
+        {
+          "title": "Matrix completes $1.3bn US solar and battery financing",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
+          "publishedAt": "2026-06-24T08:31:04.000Z",
           "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "Japan PM heckled at WWII memorial",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
-          "publishedAt": "2026-06-24T04:27:50.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
-          "publisher": "Reuters",
-          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
-          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
+          "publishedAt": "2026-06-24T08:31:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
