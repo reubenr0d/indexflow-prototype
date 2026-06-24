@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-06-23T22:43:57.274Z",
-  "thesis": "The Atlas ML model highlights strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. The strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends.",
-  "lastThesisUpdate": "2026-06-23T22:43:57.274Z"
+  "lastRunAt": "2026-06-24T00:16:28.219Z",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
+  "lastThesisUpdate": "2026-06-24T00:16:28.219Z"
 }

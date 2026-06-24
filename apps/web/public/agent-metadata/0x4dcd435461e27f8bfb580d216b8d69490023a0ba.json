@@ -4,20 +4,20 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
-  "lastRunAt": "2026-06-23T20:36:10.486Z",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
+  "lastRunAt": "2026-06-24T00:16:28.219Z",
   "latestRun": {
-    "runId": "2026-06-23T20:36:10.486Z",
-    "finishedAt": "2026-06-23T20:36:10.486Z",
-    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,555.14 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 3\n\n#### Actions Taken\n- **Opened Long Positions**: Successfully opened long positions on:\n  - **Canada Nickel Company Inc. (CNC.V)** with a size of $12,179.34 and collateral of $1,217.93 USDC.\n  - **Sage Potash Corp. (SAGE.V)** with a size of $12,179.34 and collateral of $1,217.93 USDC.\n\n#### Current Strategy\n- **Long Candidates**: Canada Nickel Company Inc. and Sage Potash Corp. are strong candidates based on ML scores and predicted returns.\n- **Short Candidates**: Homeland Uranium Corp. remains a viable short candidate due to its negative predicted return.\n\n#### Recommendations for Next Run\n- **Monitor Existing Positions**: Keep an eye on the performance of the newly opened positions.\n- **Explore Other Top Picks**: Consider other eligible assets from the top ML picks that are not under cooldown.\n- **Remain Vigilant**: Continue monitoring market news and trends to support decision-making.\n\n#### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, aligning with the model's insights.\n\nThis strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. The current focus remains on managing existing positions and preparing for future opportunities as the churn guard cooldowns expire.",
-    "startedAt": "2026-06-23T20:22:46.898Z",
+    "runId": "2026-06-24T00:16:28.219Z",
+    "finishedAt": "2026-06-24T00:16:28.219Z",
+    "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,458.45 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 3\n\n#### Actions Taken\n- **Closed Position**: Closed the long position on Canada Nickel Company Inc. (CNC.V) to free up collateral for new opportunities.\n- **Opened Position**: Successfully opened a long position on Sage Potash Corp. (SAGE.V) due to its strong ML score and predicted return.\n\n#### Current Strategy\n- **Eligible Assets**: Focus on assets within the eligible set defined by the Atlas ML score filtering.\n- **Churn Guard**: CNC.V is currently under a churn guard cooldown, preventing re-opening until the cooldown period expires.\n- **Market Monitoring**: Continue to monitor the market and Atlas ML updates for any changes in eligible assets or new opportunities.\n\n### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
+    "startedAt": "2026-06-24T00:11:59.881Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
     "network": "sepolia",
     "dryRun": false,
     "confirmWrites": true,
-    "turns": 25,
+    "turns": 18,
     "toolCalls": [
       "get_vault_state",
       "get_ml_runs",
@@ -26,23 +26,15 @@
       "get_ml_top_picks",
       "get_ml_short_picks",
       "get_oracle_assets",
-      "get_oracle_assets",
-      "get_oracle_assets",
       "yfinance_quote",
-      "yfinance_news",
-      "wire_asset",
-      "wire_asset",
-      "wire_asset",
-      "set_vault_assets",
+      "yfinance_quote",
+      "yfinance_quote",
+      "yfinance_quote",
+      "yfinance_quote",
+      "list_open_positions",
       "get_perp_capital_snapshot",
-      "plan_open_position",
-      "plan_open_position",
-      "plan_open_position",
-      "get_ml_top_picks",
-      "get_ml_top_picks",
-      "get_ml_top_picks",
+      "close_position",
       "get_perp_capital_snapshot",
-      "plan_open_position",
       "plan_open_position",
       "plan_open_position",
       "get_vault_state",
@@ -50,118 +42,209 @@
       "plan_open_position",
       "plan_open_position",
       "open_position",
-      "open_position",
       "get_vault_state"
     ],
-    "actionCount": 9,
-    "onChainActionCount": 6,
-    "offChainActionCount": 3,
+    "actionCount": 2,
+    "onChainActionCount": 2,
+    "offChainActionCount": 0,
     "reasoningSummaries": [],
-    "errors": [
-      {
-        "tool": "get_oracle_assets",
-        "error": "MCP error -32001: Request timed out"
-      },
-      {
-        "tool": "get_oracle_assets",
-        "error": "MCP error -32001: Request timed out"
-      }
-    ],
+    "errors": [],
     "softFailures": [
       {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"CNC.V\\\" is already wired in OracleAdapter at assetId 0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30 (active=true).\",\n  \"symbol\": \"CNC.V\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"SAGE.V\\\" is already wired in OracleAdapter at assetId 0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d (active=true).\",\n  \"symbol\": \"SAGE.V\",\n  \"assetId\": \"0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
-        "tool": "wire_asset",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"ALREADY_WIRED\",\n  \"message\": \"Symbol \\\"HLU.V\\\" is already wired in OracleAdapter at assetId 0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09 (active=true).\",\n  \"symbol\": \"HLU.V\",\n  \"assetId\": \"0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09\",\n  \"recovery_hint\": \"This symbol is already wired. Skip wire_asset for this pick and pass the existing assetId to set_vault_assets / open_position instead.\"\n}",
-        "errorCode": "ALREADY_WIRED"
-      },
-      {
         "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245, isLong=true) is blocked: a close was recorded at 2026-06-23T20:25:00.829Z (auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)). Cooldown ends at 2026-06-24T00:25:00.829Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245\",\n  \"isLong\": true,\n  \"ticker\": \"GSR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-23T20:25:00.829Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T00:25:00.829Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30, isLong=true) is blocked: a close was recorded at 2026-06-24T00:15:12.970Z (llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.). Cooldown ends at 2026-06-24T04:15:12.970Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"isLong\": true,\n  \"ticker\": \"CNC.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-24T00:15:12.970Z\",\n    \"closedReason\": \"llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T04:15:12.970Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
         "errorCode": "CHURN_GUARD_COOLDOWN"
       },
       {
         "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6, isLong=true) is blocked: a close was recorded at 2026-06-23T20:24:48.783Z (auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-24T00:24:48.783Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"isLong\": true,\n  \"ticker\": \"AHR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-23T20:24:48.783Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T00:24:48.783Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-        "errorCode": "CHURN_GUARD_COOLDOWN"
-      },
-      {
-        "tool": "plan_open_position",
-        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907, isLong=true) is blocked: a close was recorded at 2026-06-23T20:25:12.850Z (auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)). Cooldown ends at 2026-06-24T00:25:12.850Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"isLong\": true,\n  \"ticker\": \"ARIS.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-23T20:25:12.850Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T00:25:12.850Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+        "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30, isLong=true) is blocked: a close was recorded at 2026-06-24T00:15:12.970Z (llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.). Cooldown ends at 2026-06-24T04:15:12.970Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"isLong\": true,\n  \"ticker\": \"CNC.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-24T00:15:12.970Z\",\n    \"closedReason\": \"llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T04:15:12.970Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
         "errorCode": "CHURN_GUARD_COOLDOWN"
       }
     ],
     "riskOfficerVerdicts": [
       {
-        "turn": 6,
-        "verdict": "approve",
-        "reason": "Batch aligns with available collateral ($2435.87) and regime (longBonus=2, shortPenalty=0); no recent losses on proposed tickers.",
+        "turn": 4,
+        "verdict": "veto",
+        "reason": "Available collateral is $0, preventing any new positions from being opened.",
         "proposedTools": [
+          "wire_asset",
+          "wire_asset",
           "wire_asset",
           "wire_asset",
           "wire_asset"
         ]
       },
       {
-        "turn": 7,
+        "turn": 8,
         "verdict": "approve",
-        "reason": "Batch only updates tracked assets; no financial exposure changes. Consistent with available collateral $2435.87 and regime longBonus 2.",
+        "reason": "Closing CNC.V frees up $2401.29 collateral, aligning with metals_risk_off regime favoring long positions.",
         "proposedTools": [
-          "set_vault_assets"
+          "close_position"
         ]
       },
       {
-        "turn": 23,
+        "turn": 16,
         "verdict": "approve",
-        "reason": "Both positions use 50% of available collateral each (1217.93 USDC), aligning with longBonus=2 in metals_risk_off regime.",
+        "reason": "The long position on SAGE.V uses 50% of available collateral ($1196.48 of $2392.96), aligning with the metals_risk_off regime's longBonus of 2.",
         "proposedTools": [
-          "open_position",
           "open_position"
         ]
       }
     ],
     "confirmationBatches": [
       {
-        "turn": 6,
+        "turn": 4,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
+          "wire_asset",
+          "wire_asset",
           "wire_asset",
           "wire_asset",
           "wire_asset"
         ]
       },
       {
-        "turn": 7,
+        "turn": 8,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
-          "set_vault_assets"
+          "close_position"
         ]
       },
       {
-        "turn": 23,
+        "turn": 16,
         "status": "bypassed-non-interactive-execute",
         "interactive": false,
         "refinementRounds": 0,
         "proposedWriteTools": [
-          "open_position",
           "open_position"
         ]
       }
     ]
   },
   "recentRuns": [
+    {
+      "runId": "2026-06-24T00:16:28.219Z",
+      "startedAt": "2026-06-24T00:11:59.881Z",
+      "finishedAt": "2026-06-24T00:16:28.219Z",
+      "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,458.45 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 3\n\n#### Actions Taken\n- **Closed Position**: Closed the long position on Canada Nickel Company Inc. (CNC.V) to free up collateral for new opportunities.\n- **Opened Position**: Successfully opened a long position on Sage Potash Corp. (SAGE.V) due to its strong ML score and predicted return.\n\n#### Current Strategy\n- **Eligible Assets**: Focus on assets within the eligible set defined by the Atlas ML score filtering.\n- **Churn Guard**: CNC.V is currently under a churn guard cooldown, preventing re-opening until the cooldown period expires.\n- **Market Monitoring**: Continue to monitor the market and Atlas ML updates for any changes in eligible assets or new opportunities.\n\n### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 18,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks",
+        "get_oracle_assets",
+        "yfinance_quote",
+        "yfinance_quote",
+        "yfinance_quote",
+        "yfinance_quote",
+        "yfinance_quote",
+        "list_open_positions",
+        "get_perp_capital_snapshot",
+        "close_position",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "get_vault_state",
+        "get_perp_capital_snapshot",
+        "plan_open_position",
+        "plan_open_position",
+        "open_position",
+        "get_vault_state"
+      ],
+      "actionCount": 2,
+      "onChainActionCount": 2,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [],
+      "softFailures": [
+        {
+          "tool": "plan_open_position",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30, isLong=true) is blocked: a close was recorded at 2026-06-24T00:15:12.970Z (llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.). Cooldown ends at 2026-06-24T04:15:12.970Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"isLong\": true,\n  \"ticker\": \"CNC.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-24T00:15:12.970Z\",\n    \"closedReason\": \"llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T04:15:12.970Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+          "errorCode": "CHURN_GUARD_COOLDOWN"
+        },
+        {
+          "tool": "plan_open_position",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30, isLong=true) is blocked: a close was recorded at 2026-06-24T00:15:12.970Z (llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.). Cooldown ends at 2026-06-24T04:15:12.970Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30\",\n  \"isLong\": true,\n  \"ticker\": \"CNC.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-24T00:15:12.970Z\",\n    \"closedReason\": \"llm_judged: Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-24T04:15:12.970Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
+          "errorCode": "CHURN_GUARD_COOLDOWN"
+        }
+      ],
+      "riskOfficerVerdicts": [
+        {
+          "turn": 4,
+          "verdict": "veto",
+          "reason": "Available collateral is $0, preventing any new positions from being opened.",
+          "proposedTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 8,
+          "verdict": "approve",
+          "reason": "Closing CNC.V frees up $2401.29 collateral, aligning with metals_risk_off regime favoring long positions.",
+          "proposedTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 16,
+          "verdict": "approve",
+          "reason": "The long position on SAGE.V uses 50% of available collateral ($1196.48 of $2392.96), aligning with the metals_risk_off regime's longBonus of 2.",
+          "proposedTools": [
+            "open_position"
+          ]
+        }
+      ],
+      "confirmationBatches": [
+        {
+          "turn": 4,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset",
+            "wire_asset"
+          ]
+        },
+        {
+          "turn": 8,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "close_position"
+          ]
+        },
+        {
+          "turn": 16,
+          "status": "bypassed-non-interactive-execute",
+          "interactive": false,
+          "refinementRounds": 0,
+          "proposedWriteTools": [
+            "open_position"
+          ]
+        }
+      ]
+    },
     {
       "runId": "2026-06-23T20:36:10.486Z",
       "startedAt": "2026-06-23T20:22:46.898Z",
@@ -1789,96 +1872,6 @@
       "confirmationBatches": []
     },
     {
-      "runId": "2026-06-21T15:22:23.269Z",
-      "startedAt": "2026-06-21T15:17:17.836Z",
-      "finishedAt": "2026-06-21T15:22:23.269Z",
-      "summary": "### Summary and Next Steps\n\n#### Current Situation\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $4,356.28 USDC\n- **Perp Allocated**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n\n#### Actions Taken\n- **Opened Positions**: Successfully opened long positions in:\n  - **GSR.V**: Based on high ML score and predicted return.\n  - **AHR.V**: Based on high ML score and predicted return.\n- **Failed Transaction**: Attempt to open a position in **ARIS.TO** failed due to a transaction error (\"replacement transaction underpriced\").\n\n#### Next Steps\n1. **Monitor and Retry**: Re-attempt opening a position in ARIS.TO after addressing the transaction error.\n2. **Position Management**: Continue monitoring existing positions and close any that fall outside the [-6%, +8%] PnL band.\n3. **Capital Allocation**: Once available, re-evaluate the potential for opening positions in other high-potential assets, ensuring alignment with the latest ML model predictions.\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.",
-      "agentName": "mining-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 14,
-      "toolCalls": [
-        "get_vault_state",
-        "get_ml_runs",
-        "get_ml_horizon_recommendation",
-        "get_ml_model_info",
-        "get_ml_top_picks",
-        "get_ml_short_picks",
-        "get_oracle_assets",
-        "yfinance_news",
-        "yfinance_news",
-        "get_perp_capital_snapshot",
-        "plan_open_position",
-        "plan_open_position",
-        "plan_open_position",
-        "get_vault_state",
-        "list_open_positions",
-        "plan_open_position",
-        "plan_open_position",
-        "plan_open_position",
-        "open_position",
-        "open_position",
-        "open_position",
-        "get_vault_state"
-      ],
-      "actionCount": 6,
-      "onChainActionCount": 5,
-      "offChainActionCount": 1,
-      "reasoningSummaries": [],
-      "errors": [
-        {
-          "tool": "open_position",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"TX_FAILED\",\n  \"message\": \"Command failed: cast send 0xC4A01a3EaDA32f8EbE1cc05407Cd7ef9c2dc86d8 openPosition(address,bytes32,bool,uint256,uint256) 0x4dcd435461e27f8bfb580d216b8d69490023a0ba 0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907 true 13650160640000000000000000000000000 1365016064 --private-key [REDACTED_KEY] --rpc-url https://eth-sepolia.g.alchemy.com/v2/bdF7qBu81tW0nrjFVnAAJ --json\\nError: server returned an error response: error code -32000: replacement transaction underpriced\\n\"\n}",
-          "errorCode": "TX_FAILED"
-        }
-      ],
-      "softFailures": [
-        {
-          "tool": "plan_open_position",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245, isLong=true) is blocked: a close was recorded at 2026-06-21T15:19:13.022Z (auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)). Cooldown ends at 2026-06-21T19:19:13.022Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x165172deb918184492c76b77c8e69f07dbdddeb00d99acd1a720b31adaa72245\",\n  \"isLong\": true,\n  \"ticker\": \"GSR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-21T15:19:13.022Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long GSR.V (potential missing, pnl 0.00%) to free room for #2 long SAGE.V (potential 0.4104)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-21T19:19:13.022Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-          "errorCode": "CHURN_GUARD_COOLDOWN"
-        },
-        {
-          "tool": "plan_open_position",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6, isLong=true) is blocked: a close was recorded at 2026-06-21T15:19:01.440Z (auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)). Cooldown ends at 2026-06-21T19:19:01.440Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6\",\n  \"isLong\": true,\n  \"ticker\": \"AHR.V\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-21T15:19:01.440Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-21T19:19:01.440Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-          "errorCode": "CHURN_GUARD_COOLDOWN"
-        },
-        {
-          "tool": "plan_open_position",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"CHURN_GUARD_COOLDOWN\",\n  \"message\": \"Re-opening (vault=0x4dcd435461e27f8bfb580d216b8d69490023a0ba, assetId=0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907, isLong=true) is blocked: a close was recorded at 2026-06-21T15:19:37.213Z (auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)). Cooldown ends at 2026-06-21T19:19:37.213Z (window 240 min).\",\n  \"vault\": \"0x4dcd435461e27f8bfb580d216b8d69490023a0ba\",\n  \"assetId\": \"0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907\",\n  \"isLong\": true,\n  \"ticker\": \"ARIS.TO\",\n  \"lastClose\": {\n    \"closedAt\": \"2026-06-21T15:19:37.213Z\",\n    \"closedReason\": \"auto-rebalance: profit rotation: closing off-top-N long ARIS.TO (potential missing, pnl 0.00%) to free room for #3 long HBM (potential 0.4050)\",\n    \"isLong\": true\n  },\n  \"cooldownEndsAt\": \"2026-06-21T19:19:37.213Z\",\n  \"cooldownWindowMs\": 14400000,\n  \"recovery_hint\": \"Skip this ticker for the rest of the run unless your fresh signal genuinely contradicts the rank-swap / pnl-band / LLM-judged close that just removed it. To override, retry plan_open_position with `bypassChurnGuard: true` AND `bypassReason: '<short audit string>'`. The bypass + reason are persisted alongside the next open in agent-metadata.\"\n}",
-          "errorCode": "CHURN_GUARD_COOLDOWN"
-        }
-      ],
-      "riskOfficerVerdicts": [
-        {
-          "turn": 12,
-          "verdict": "approve",
-          "reason": "Total collateral for new positions is 4095.02, which is within available collateral of 4095.05. Market regime supports long positions with longBonus=1.",
-          "proposedTools": [
-            "open_position",
-            "open_position",
-            "open_position"
-          ]
-        }
-      ],
-      "confirmationBatches": [
-        {
-          "turn": 12,
-          "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position",
-            "open_position",
-            "open_position"
-          ]
-        }
-      ]
-    },
-    {
       "runId": "2026-06-21T12:24:45.552Z",
       "startedAt": "2026-06-21T12:21:39.309Z",
       "finishedAt": "2026-06-21T12:24:45.552Z",
@@ -2333,6 +2326,44 @@
     }
   ],
   "recentActions": [
+    {
+      "tool": "close_position",
+      "justification": "Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.",
+      "timestamp": "2026-06-24T00:16:28.219Z",
+      "txHash": "0x83c4e28205ab9004b91716375bae84b2921163d5baf49f87774d0c45807d90a8",
+      "agentName": "mining-manager",
+      "runId": "2026-06-24T00:16:28.219Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30",
+        "isLong": true,
+        "sizeDelta": "24012853300000000000000000000000000",
+        "collateralDelta": "2401285330"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Closing CNC.V frees up $2401.29 collateral, aligning with metals_risk_off regime favoring long positions."
+      }
+    },
+    {
+      "tool": "open_position",
+      "justification": "Opening a long position on SAGE.V due to strong ML score and predicted return, utilizing available collateral after closing CNC.V.",
+      "timestamp": "2026-06-24T00:16:28.219Z",
+      "txHash": "0x4af824aa923397ddf388e81c7e327eab1f1fe567bf366edfc6c1867459267ea9",
+      "agentName": "mining-manager",
+      "runId": "2026-06-24T00:16:28.219Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d",
+        "isLong": true,
+        "size": "11964794710000000000000000000000000",
+        "collateral": "1196479471"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "The long position on SAGE.V uses 50% of available collateral ($1196.48 of $2392.96), aligning with the metals_risk_off regime's longBonus of 2."
+      }
+    },
     {
       "tool": "close_position",
       "justification": "Closing CNC.V to free up collateral for new positions as per policy enforcement.",
@@ -4026,40 +4057,6 @@
         "isLong": false,
         "sizeDelta": "6814408230000000000000000000000000",
         "collateralDelta": "1362881646"
-      }
-    },
-    {
-      "tool": "open_position",
-      "justification": "Opening long position on AbraSilver Resource (ABRA.TO) based on high ML score and predicted return. This aligns with the current strategy to capitalize on strong ML signals.",
-      "timestamp": "2026-06-20T12:11:06.820Z",
-      "txHash": "0x3d428d14b285b4b617d2c50ceeba1d3ab8dbc0a83f26dcf76050ffb1e2041e21",
-      "agentName": "mining-manager",
-      "runId": "2026-06-20T12:11:06.820Z",
-      "params": {
-        "kind": "open_position",
-        "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
-        "isLong": true,
-        "size": "13628816460000000000000000000000000",
-        "collateral": "1362881646"
-      },
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "The proposed long position on ABRA.TO uses 33.3% of available collateral ($1362.88 of $4088.64), which is within acceptable limits and aligns with the metals_risk_off regime."
-      }
-    },
-    {
-      "tool": "close_position",
-      "justification": "auto-rebalance: profit rotation: closing off-top-N short HLU.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
-      "timestamp": "2026-06-20T09:42:28.735Z",
-      "txHash": "0x46e467fe325e037a6bae9b56aba3d175b04f5f4a9c500f89169674cc2489047c",
-      "agentName": "mining-manager",
-      "runId": "2026-06-20T09:42:28.735Z",
-      "params": {
-        "kind": "close_position",
-        "assetId": "0x6cc92460d47f07f396314db271887c0e9abf95445c591152d3760a2557842a09",
-        "isLong": false,
-        "sizeDelta": "20423014030000000000000000000000000",
-        "collateralDelta": "4084602806"
       }
     }
   ]

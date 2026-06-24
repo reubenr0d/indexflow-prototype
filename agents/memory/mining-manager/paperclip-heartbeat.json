@@ -7,86 +7,40 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-06-23T22:43:57.274Z",
-  "startedAt": "2026-06-23T22:38:27.179Z",
-  "finishedAt": "2026-06-23T22:43:57.274Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-06-24T00:16:28.219Z",
+  "startedAt": "2026-06-24T00:11:59.881Z",
+  "finishedAt": "2026-06-24T00:16:28.219Z",
+  "status": "succeeded",
   "usage": {
-    "turns": 28,
-    "toolCalls": 28,
-    "errors": 1,
-    "softFailures": 6,
-    "writeActions": 5
+    "turns": 18,
+    "toolCalls": 24,
+    "errors": 0,
+    "softFailures": 2,
+    "writeActions": 2
   },
-  "thesis": "The Atlas ML model highlights strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. The strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends.",
-  "summary": "### Final Summary\n\n#### Thesis\nThe Atlas ML model highlights strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. The strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends.\n\n#### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,467.67 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: CNC.V, SAGE.V\n\n#### Positions\n- **Long Positions**: CNC.V\n- **Short Positions**: None\n\n#### Actions Taken\n- Successfully re-opened a long position on CNC.V due to its strong ML score and predicted return, using the churn-guard bypass.\n- Attempted to re-open a position on SAGE.V, but it failed due to insufficient collateral after the CNC.V position was opened.\n\n#### Recommendations\n- Monitor the CNC.V position for any changes in ML predictions or news context.\n- Consider re-opening SAGE.V in the future if capital becomes available and it remains a top pick.\n- Continue to leverage the Atlas model's insights for future opportunities.",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
+  "summary": "### Final Summary\n\n#### Vault State\n- **Vault Name**: Minestarters ML Picks\n- **NAV**: $2,458.45 USDC\n- **Perpetual Allocation**: $12,954.90 USDC\n- **Available for Perp**: $0.00 USDC\n- **Tracked Assets**: 3\n\n#### Actions Taken\n- **Closed Position**: Closed the long position on Canada Nickel Company Inc. (CNC.V) to free up collateral for new opportunities.\n- **Opened Position**: Successfully opened a long position on Sage Potash Corp. (SAGE.V) due to its strong ML score and predicted return.\n\n#### Current Strategy\n- **Eligible Assets**: Focus on assets within the eligible set defined by the Atlas ML score filtering.\n- **Churn Guard**: CNC.V is currently under a churn guard cooldown, preventing re-opening until the cooldown period expires.\n- **Market Monitoring**: Continue to monitor the market and Atlas ML updates for any changes in eligible assets or new opportunities.\n\n### Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Sage Potash Corp. has been added to the portfolio due to its high ML score and predicted return, leveraging the predictive capabilities of the Atlas model while remaining vigilant to market news and trends. \n\nFor the next run, we will reassess the eligibility of assets and the status of the churn guard on CNC.V to optimize our portfolio further.",
   "writeActions": [
     {
       "tool": "close_position",
-      "txHash": "0xa280ee5138f34dd930d3d81c21cb9bb8e45d350a97a906ff9d30a1aa9150cd7c",
-      "justification": "Closing CNC.V to free up collateral for new positions as per policy enforcement.",
+      "txHash": "0x83c4e28205ab9004b91716375bae84b2921163d5baf49f87774d0c45807d90a8",
+      "justification": "Closing CNC.V position to free up collateral for new opportunities with higher ML scores and predicted returns.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Closing CNC.V frees up $1217.93 collateral, aligning with policy to manage available collateral at $0."
+        "reason": "Closing CNC.V frees up $2401.29 collateral, aligning with metals_risk_off regime favoring long positions."
       },
       "kind": "vault-tx"
     },
     {
       "tool": "open_position",
-      "txHash": null,
-      "justification": "Opening a long position on SAGE.V due to its high ML score and predicted return, leveraging available collateral effectively.",
-      "riskOfficer": {
-        "verdict": "downsize",
-        "reason": "Proposed long on SAGE.V uses 100% of available collateral ($1178.81), exceeding 90% threshold for a single name.",
-        "downsizeFactor": 0.75,
-        "downsize": {
-          "tool": "open_position",
-          "assetId": "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d",
-          "isLong": true,
-          "beforeCollateral": "1178807780",
-          "afterCollateral": "884105835",
-          "beforeSize": "11788077800000000000000000000000000",
-          "afterSize": "8841058350000000000000000000000000",
-          "downsizeFactor": 0.75
-        }
-      },
-      "kind": "file-diff"
-    },
-    {
-      "tool": "close_position",
-      "txHash": "0x057a63b9e36abf8ff94b8c6115a826c6d7f06abc253c7c23a690f6d062bd4de5",
-      "justification": "Closing SAGE.V to free up collateral for new positions as per policy enforcement.",
+      "txHash": "0x4af824aa923397ddf388e81c7e327eab1f1fe567bf366edfc6c1867459267ea9",
+      "justification": "Opening a long position on SAGE.V due to strong ML score and predicted return, utilizing available collateral after closing CNC.V.",
       "riskOfficer": {
         "verdict": "approve",
-        "reason": "Closing SAGE.V aligns with freeing up $1217.93 collateral for new positions; no conflicting recent losses or regime issues."
+        "reason": "The long position on SAGE.V uses 50% of available collateral ($1196.48 of $2392.96), aligning with the metals_risk_off regime's longBonus of 2."
       },
       "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": "0x9eed0ea98f1b5761bb4a25764f54d11412b77677f75ca642d90fae7eb9270a12",
-      "justification": "Re-opening CNC.V due to strong ML score and predicted return. Churn-guard bypass active.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 100% of available collateral ($2401.29) each, but regime longBonus=2 supports long positions."
-      },
-      "kind": "vault-tx"
-    },
-    {
-      "tool": "open_position",
-      "txHash": null,
-      "justification": "Re-opening SAGE.V due to strong ML score and predicted return. Churn-guard bypass active.",
-      "riskOfficer": {
-        "verdict": "approve",
-        "reason": "Both positions use 100% of available collateral ($2401.29) each, but regime longBonus=2 supports long positions."
-      },
-      "kind": "file-diff"
     }
   ],
-  "errors": [
-    {
-      "tool": "open_position",
-      "error": "MCP error -32001: Request timed out"
-    }
-  ]
+  "errors": []
 }
