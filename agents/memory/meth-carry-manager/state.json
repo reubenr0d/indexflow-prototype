@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-24T21:04:57.872Z",
-  "thesis": "Update",
-  "lastThesisUpdate": "2026-06-24T19:09:19.644Z"
+  "lastRunAt": "2026-06-24T22:45:55.396Z",
+  "thesis": "Due to the inability to read the reserve state, I cannot compute the hedge ratio or assess the mETH yield. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions.",
+  "lastThesisUpdate": "2026-06-24T22:45:55.396Z"
 }
