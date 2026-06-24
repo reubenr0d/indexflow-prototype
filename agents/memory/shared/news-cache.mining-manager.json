@@ -1,268 +1,266 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-24T08:36:14.737Z",
+  "updatedAt": "2026-06-24T12:03:04.946Z",
   "entries": {
     "CNC.V": {
-      "fetchedAt": "2026-06-24T08:36:14.611Z",
+      "fetchedAt": "2026-06-24T12:03:04.756Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SAGE.V": {
-      "fetchedAt": "2026-06-24T08:36:14.611Z",
+      "fetchedAt": "2026-06-24T12:03:04.756Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-06-24T08:36:14.611Z",
+      "fetchedAt": "2026-06-24T12:03:04.756Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AHR.V": {
+      "fetchedAt": "2026-06-24T12:03:04.756Z",
+      "headlines": [
+        {
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
+          "relatedTickers": [
+            "MU"
+          ]
+        },
+        {
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
+          "relatedTickers": []
+        },
+        {
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-24T08:36:14.611Z",
+      "fetchedAt": "2026-06-24T12:03:04.756Z",
       "headlines": [
         {
-          "title": "Chinese supercomputer powered by homegrown chips tops US models in global ranking",
-          "publisher": "CNN Business",
-          "link": "https://finance.yahoo.com/m/299c0a03-5675-3017-b9b0-1b7f10062797/chinese-supercomputer-powered.html",
-          "publishedAt": "2026-06-24T07:27:26.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Monolithic Power Systems, Power Integrations, and Amkor Stocks Trade Down, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/monolithic-power-systems-power-integrations-234446160.html",
-          "publishedAt": "2026-06-23T23:44:46.000Z",
+          "title": "All eyes on Micron earnings tonight as sell-off raises stakes for AI memory trade",
+          "publisher": "Investing.com",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/eyes-micron-earnings-tonight-sell-100640539.html",
+          "publishedAt": "2026-06-24T10:06:40.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "000660.KS",
-            "MPWR",
-            "AMKR",
-            "POWI",
-            "NVDA",
-            "005930.KS"
+            "MU",
+            "000660.KS"
           ]
         },
         {
-          "title": "Why Intel (INTC) Stock Is Nosediving",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/why-intel-intc-stock-nosediving-231246035.html",
-          "publishedAt": "2026-06-23T23:12:46.000Z",
+          "title": "SK Hynix Targets $29B Nasdaq Offering – DRAM Jumps Over 4% Ahead Of Micron's Report",
+          "publisher": "Stocktwits",
+          "link": "https://finance.yahoo.com/m/a1e745a2-3173-34d2-b481-2e9f2bf389f2/sk-hynix-targets-%2429b-nasdaq.html",
+          "publishedAt": "2026-06-24T10:03:00.000Z",
           "type": "STORY",
           "relatedTickers": [
             "000660.KS",
-            "INTC",
+            "MU"
+          ]
+        },
+        {
+          "title": "S.Korea chip giant SK hynix seeks $29 bn in Nasdaq listing: regulatory filing",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/korea-chip-giant-sk-hynix-095930760.html",
+          "publishedAt": "2026-06-24T09:59:30.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
             "NVDA",
-            "005930.KS"
+            "^IXIC"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-24T08:36:14.611Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-24T12:03:04.946Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SLM.AX": {
-      "fetchedAt": "2026-06-24T08:36:14.737Z",
-      "headlines": [
-        {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "AMBQ"
-          ]
-        },
-        {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-24T08:36:14.737Z",
+      "fetchedAt": "2026-06-24T12:03:04.946Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HLU.V": {
-      "fetchedAt": "2026-06-24T08:36:14.737Z",
+    "SLM.AX": {
+      "fetchedAt": "2026-06-24T12:03:04.946Z",
       "headlines": [
         {
-          "title": "Ambiq Micro Prices Upsized Offering at $78 a Share",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/ambiq-micro-prices-upsized-offering-083152099.html",
-          "publishedAt": "2026-06-24T08:31:52.000Z",
-          "type": "STORY",
+          "title": "Micron to report Q3 earnings after market close: What to expect",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": [
-            "AMBQ"
+            "MU"
           ]
         },
         {
-          "title": "Matrix completes $1.3bn US solar and battery financing",
-          "publisher": "Power Technology",
-          "link": "https://finance.yahoo.com/m/93191d15-195a-3deb-b15b-a25bda5f073b/matrix-completes-%241.3bn-us.html",
-          "publishedAt": "2026-06-24T08:31:04.000Z",
-          "type": "STORY",
+          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         },
         {
-          "title": "LincNutri Introduces New Liposomal Glutathione Formula Tailored to Women’s Growing Demand for Antioxidant Wellness Support",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/healthcare/articles/lincnutri-introduces-liposomal-glutathione-formula-083100844.html",
-          "publishedAt": "2026-06-24T08:31:00.000Z",
-          "type": "STORY",
+          "title": "How wearable tech aims to innovate women's health care",
+          "publisher": "Yahoo Finance Video",
+          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
+          "publishedAt": "2026-06-24T12:00:00.000Z",
+          "type": "VIDEO",
           "relatedTickers": []
         }
       ],

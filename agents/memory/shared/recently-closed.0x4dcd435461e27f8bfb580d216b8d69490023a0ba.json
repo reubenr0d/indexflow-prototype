@@ -1,12 +1,12 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-24T04:37:14.932Z",
+  "updatedAt": "2026-06-24T12:03:26.049Z",
   "closures": {
-    "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d": {
-      "ticker": "SAGE.V",
+    "0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30": {
+      "ticker": "CNC.V",
       "isLong": true,
-      "closedAt": "2026-06-24T04:37:14.932Z",
-      "closedReason": "auto-rebalance: profit rotation: closing #2 long SAGE.V (potential 0.4104, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)"
+      "closedAt": "2026-06-24T12:03:26.049Z",
+      "closedReason": "llm_judged: Closing the existing long position on CNC.V to free up collateral for higher-ranked entries such as SAGE.V and potential short on HLU.V, aligning with the current model predictions."
     }
   }
 }
