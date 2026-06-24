@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-24T00:20:50.408Z",
-  "startedAt": "2026-06-24T00:19:31.966Z",
-  "finishedAt": "2026-06-24T00:20:50.408Z",
+  "runId": "2026-06-24T04:41:51.249Z",
+  "startedAt": "2026-06-24T04:41:05.315Z",
+  "finishedAt": "2026-06-24T04:41:51.249Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 5,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The current hedge ratio is not applicable as there are no positions currently open. The mETH yield realized since the last run is $0.00. The funding rate context is also unavailable due to the absence of positions.",
-  "summary": "## Thesis\nThe current hedge ratio is not applicable as there are no positions currently open. The mETH yield realized since the last run is $0.00. The funding rate context is also unavailable due to the absence of positions.\n\n### Current State Summary\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n- **Current ETH-USD Price**: $1667.50\n\n### Next Steps\nSince there are no open positions and the available collateral is $0.00, I will not be able to open a new short position at this time. \n\nI will update the memory and exit without taking any actions.",
+  "summary": "## Thesis\nThe current hedge ratio is not applicable as there are no positions currently open. The mETH yield realized since the last run is $0.00. The funding rate context is also unavailable due to the absence of positions.\n\n### Current State Summary\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Available USDC for Perp**: $0.00\n- **Open Positions**: None\n- **Current ETH-USD Price**: $1662.94\n\n### Hedge Ratio Calculation\n- **Long Leg USD Value**: Not applicable (no mETH balance available)\n- **Short Notional USD**: Not applicable (no short position exists)\n- **Hedge Ratio**: Not applicable (no positions)\n\n### Action Plan\nSince there are no positions currently open and the available collateral is $0.00, I will not be able to open a new short position at this time. The vault remains idle without any active trades. \n\nNext steps will involve monitoring the vault for any changes in state or available collateral.",
   "writeActions": [],
   "errors": [
     {

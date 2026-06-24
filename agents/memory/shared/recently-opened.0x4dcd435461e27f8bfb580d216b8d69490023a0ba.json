@@ -1,6 +1,6 @@
 {
   "vault": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
-  "updatedAt": "2026-06-24T00:16:04.048Z",
+  "updatedAt": "2026-06-24T04:38:26.112Z",
   "opens": {
     "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6:long": {
       "assetId": "0xa6be26f2f0db3e12391cd889acdf77da4aeb4abc318d736e8d36f4392bb0a0e6",
@@ -78,7 +78,7 @@
       "assetId": "0xb2518f1da49b5d2b8dca0e903d5bde6b500938c5b027e517e47754a918430e30",
       "ticker": "CNC.V",
       "isLong": true,
-      "openedAt": "2026-06-23T20:35:26.370Z"
+      "openedAt": "2026-06-24T04:38:26.112Z"
     },
     "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d:long": {
       "assetId": "0x35a19ae6afae507f4acdd4cdbdbb2b712bd49b8423a1c344527d4e435f71a25d",

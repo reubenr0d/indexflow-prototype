@@ -1,454 +1,260 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-23T22:40:16.154Z",
+  "updatedAt": "2026-06-24T04:37:51.952Z",
   "entries": {
     "SAGE.V": {
-      "fetchedAt": "2026-06-23T22:40:15.928Z",
+      "fetchedAt": "2026-06-24T04:37:51.816Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-23T22:40:15.928Z",
-      "headlines": [
-        {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
-        },
-        {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HBM": {
-      "fetchedAt": "2026-06-23T22:40:15.928Z",
-      "headlines": [
-        {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
-        },
-        {
-          "title": "Why ASMPT Limited’s (ASMVY) Repeat TCB Tool Order Deepens Its Role in HBM and AI Packaging",
-          "publisher": "Insider Monkey",
-          "link": "https://finance.yahoo.com/technology/ai/articles/why-asmpt-limited-asmvy-repeat-161019873.html",
-          "publishedAt": "2026-06-23T16:10:19.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "0522.HK",
-            "ASMVF",
-            "ASMVY"
-          ]
-        },
-        {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "CNC.V": {
-      "fetchedAt": "2026-06-23T22:40:15.928Z",
+      "fetchedAt": "2026-06-24T04:37:51.816Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-24T04:37:51.816Z",
+      "headlines": [
+        {
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HBM": {
+      "fetchedAt": "2026-06-24T04:37:51.816Z",
+      "headlines": [
+        {
+          "title": "Monolithic Power Systems, Power Integrations, and Amkor Stocks Trade Down, What You Need To Know",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/monolithic-power-systems-power-integrations-234446160.html",
+          "publishedAt": "2026-06-23T23:44:46.000Z",
           "type": "STORY",
           "relatedTickers": [
             "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
+            "MPWR",
+            "AMKR",
+            "POWI",
+            "NVDA",
+            "005930.KS"
           ]
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
+          "title": "Why Intel (INTC) Stock Is Nosediving",
           "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-intel-intc-stock-nosediving-231246035.html",
+          "publishedAt": "2026-06-23T23:12:46.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "000660.KS",
+            "INTC",
+            "NVDA",
+            "005930.KS"
+          ]
+        },
+        {
+          "title": "Why Seagate (STX) Stock Is Falling Today",
+          "publisher": "StockStory",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/why-seagate-stx-stock-falling-235246236.html",
+          "publishedAt": "2026-06-23T23:52:46.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "STX",
             "000660.KS",
             "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
+            "005930.KS"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-23T22:40:15.928Z",
+      "fetchedAt": "2026-06-24T04:37:51.816Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-23T22:40:16.154Z",
-      "headlines": [
-        {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
-        },
-        {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-23T22:40:16.154Z",
-      "headlines": [
-        {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
-        },
-        {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
-        },
-        {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "fetchedAt": "2026-06-24T04:37:51.952Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-23T22:40:16.154Z",
+      "fetchedAt": "2026-06-24T04:37:51.952Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-23T22:40:16.154Z",
+    "HLU.V": {
+      "fetchedAt": "2026-06-24T04:37:51.952Z",
       "headlines": [
         {
-          "title": "SoftBank's founder picks side in space data center fight",
-          "publisher": "TheStreet",
-          "link": "https://finance.yahoo.com/m/8f89bb90-b45d-3f3a-9f43-65e0d450d4bd/softbank%27s-founder-picks-side.html",
-          "publishedAt": "2026-06-23T22:33:00.000Z",
+          "title": "GroYouth Launches AI-Powered HR Marketplace Connecting Hiring Organizations, Service Providers, Job Seekers and Institutions",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/ai/articles/groyouth-launches-ai-powered-hr-043000939.html",
+          "publishedAt": "2026-06-24T04:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "SPCX",
-            "9984.T"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "Broadcom (AVGO) Stock Trades Down, Here Is Why",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/broadcom-avgo-stock-trades-down-223246211.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Japan PM heckled at WWII memorial",
+          "publisher": "AFP",
+          "link": "https://finance.yahoo.com/m/e3b6bc63-6ee6-3383-9b61-b267a768dd80/japan-pm-heckled-at-wwii.html",
+          "publishedAt": "2026-06-24T04:27:50.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "AVGO",
-            "005930.KS",
-            "NVDA"
-          ]
+          "relatedTickers": []
         },
         {
-          "title": "MACOM, Semtech, and Photronics Shares Plummet, What You Need To Know",
-          "publisher": "StockStory",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/macom-semtech-photronics-shares-plummet-223246646.html",
-          "publishedAt": "2026-06-23T22:32:46.000Z",
+          "title": "Premature to talk about rate hikes, India cenbank chief tells ET Now",
+          "publisher": "Reuters",
+          "link": "https://finance.yahoo.com/economy/policy/articles/premature-talk-rate-hikes-india-042523469.html",
+          "publishedAt": "2026-06-24T04:25:23.000Z",
           "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "NVDA",
-            "MTSI",
-            "005930.KS",
-            "SMTC",
-            "PLAB"
-          ]
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
