@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-06-24T17:29:50.451Z",
-  "thesis": "The current hedge ratio is not applicable as there are no positions currently open. The mETH yield realized since the last run is $0.00. The funding rate context is also unavailable due to the inability to read the reserve state.\n\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **Current State**: No positions open, no collateral available.\n- **Pre-action Hedge Ratio**: N/A\n- **Post-action Hedge Ratio**: N/A\n- **Recommendations for Next Run**: Monitor for any incoming deposits to increase available collateral, or consider reallocating idle USDC if possible.",
-  "lastThesisUpdate": "2026-06-24T15:16:41.179Z"
+  "lastRunAt": "2026-06-24T19:09:19.644Z",
+  "thesis": "Update",
+  "lastThesisUpdate": "2026-06-24T19:09:19.644Z"
 }
