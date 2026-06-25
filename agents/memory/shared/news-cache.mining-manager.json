@@ -1,266 +1,331 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-24T12:03:04.946Z",
+  "updatedAt": "2026-06-25T00:24:29.343Z",
   "entries": {
     "CNC.V": {
-      "fetchedAt": "2026-06-24T12:03:04.756Z",
+      "fetchedAt": "2026-06-25T00:24:29.130Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-24T12:03:04.756Z",
-      "headlines": [
-        {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
-          "relatedTickers": [
-            "MU"
-          ]
-        },
-        {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
-          "relatedTickers": []
-        },
-        {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "GSR.V": {
-      "fetchedAt": "2026-06-24T12:03:04.756Z",
+      "fetchedAt": "2026-06-25T00:24:29.130Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AHR.V": {
-      "fetchedAt": "2026-06-24T12:03:04.756Z",
+    "SAGE.V": {
+      "fetchedAt": "2026-06-25T00:24:29.130Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-24T12:03:04.756Z",
+      "fetchedAt": "2026-06-25T00:24:29.130Z",
       "headlines": [
         {
-          "title": "All eyes on Micron earnings tonight as sell-off raises stakes for AI memory trade",
-          "publisher": "Investing.com",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/eyes-micron-earnings-tonight-sell-100640539.html",
-          "publishedAt": "2026-06-24T10:06:40.000Z",
+          "title": "Hudbay Completes Offering of US$52 Million of 4.50% Municipal Bonds for Copper World",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-completes-offering-us-52-200000072.html",
+          "publishedAt": "2026-06-24T20:00:00.000Z",
           "type": "STORY",
           "relatedTickers": [
+            "HBM"
+          ]
+        },
+        {
+          "title": "Hudbay Minerals Closes Acquisition of Arizona Sonoran",
+          "publisher": "MT Newswires",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/hudbay-minerals-closes-acquisition-arizona-143621497.html",
+          "publishedAt": "2026-06-24T14:36:21.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "HBM",
+            "ASCU.TO",
+            "HG=F"
+          ]
+        },
+        {
+          "title": "Time to Dump Micron? SK hynix to Begin Trading on Nasdaq July 10",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/72b9e7cc-578b-3ee8-b2cc-5f0063219a84/time-to-dump-micron%3F-sk-hynix.html",
+          "publishedAt": "2026-06-24T14:36:22.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "000660.KS",
             "MU",
-            "000660.KS"
-          ]
-        },
-        {
-          "title": "SK Hynix Targets $29B Nasdaq Offering – DRAM Jumps Over 4% Ahead Of Micron's Report",
-          "publisher": "Stocktwits",
-          "link": "https://finance.yahoo.com/m/a1e745a2-3173-34d2-b481-2e9f2bf389f2/sk-hynix-targets-%2429b-nasdaq.html",
-          "publishedAt": "2026-06-24T10:03:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
-            "MU"
-          ]
-        },
-        {
-          "title": "S.Korea chip giant SK hynix seeks $29 bn in Nasdaq listing: regulatory filing",
-          "publisher": "AFP",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/korea-chip-giant-sk-hynix-095930760.html",
-          "publishedAt": "2026-06-24T09:59:30.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "000660.KS",
             "NVDA",
-            "^IXIC"
+            "AMD"
           ]
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "HLU.V": {
-      "fetchedAt": "2026-06-24T12:03:04.946Z",
+    "AHR.V": {
+      "fetchedAt": "2026-06-25T00:24:29.130Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "MNB.AX": {
+      "fetchedAt": "2026-06-25T00:24:29.343Z",
+      "headlines": [
+        {
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SVM"
+          ]
+        },
+        {
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-25T00:24:29.343Z",
+      "headlines": [
+        {
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SVM"
+          ]
+        },
+        {
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "KNOX.V": {
-      "fetchedAt": "2026-06-24T12:03:04.946Z",
+      "fetchedAt": "2026-06-25T00:24:29.343Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-24T12:03:04.946Z",
+      "fetchedAt": "2026-06-25T00:24:29.343Z",
       "headlines": [
         {
-          "title": "Micron to report Q3 earnings after market close: What to expect",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/micron-report-q3-earnings-market-120000593.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
           "relatedTickers": [
-            "MU"
+            "SVM"
           ]
         },
         {
-          "title": "3 reasons Americans finally believe it's better to buy a home than rent: BofA",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/3-reasons-americans-finally-believe-120000269.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
           "relatedTickers": []
         },
         {
-          "title": "How wearable tech aims to innovate women's health care",
-          "publisher": "Yahoo Finance Video",
-          "link": "https://finance.yahoo.com/video/wearable-tech-aims-innovate-womens-120000084.html",
-          "publishedAt": "2026-06-24T12:00:00.000Z",
-          "type": "VIDEO",
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "AVM.AX": {
+      "fetchedAt": "2026-06-25T00:24:29.343Z",
+      "headlines": [
+        {
+          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
+          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "SVM"
+          ]
+        },
+        {
+          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
+          "publisher": "GlobeNewswire",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
+          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        },
+        {
+          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
+          "publisher": "24/7 Wall St.",
+          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
+          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "type": "STORY",
           "relatedTickers": []
         }
       ],

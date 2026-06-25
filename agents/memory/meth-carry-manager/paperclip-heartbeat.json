@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-06-24T22:45:55.396Z",
-  "startedAt": "2026-06-24T22:44:59.212Z",
-  "finishedAt": "2026-06-24T22:45:55.396Z",
+  "runId": "2026-06-25T00:29:18.233Z",
+  "startedAt": "2026-06-25T00:28:26.915Z",
+  "finishedAt": "2026-06-25T00:29:18.233Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 4,
@@ -18,8 +18,8 @@
     "softFailures": 0,
     "writeActions": 0
   },
-  "thesis": "Due to the inability to read the reserve state, I cannot compute the hedge ratio or assess the mETH yield. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions.",
-  "summary": "It seems that I encountered an error while trying to read the reserve state for the vault. This prevents me from obtaining the necessary information about the mETH balance and mETH/USD price. \n\nGiven that there are currently no open positions and the available collateral is $0.00, I cannot proceed with opening a short position. \n\n### Current Vault State:\n- **Vault Address**: 0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f\n- **NAV**: $0.00\n- **Available Collateral**: $0.00\n- **Open Positions**: None\n\n### Thesis\nDue to the inability to read the reserve state, I cannot compute the hedge ratio or assess the mETH yield. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions. \n\n### Recommendations for Next Run\n- Attempt to read the reserve state again to gather necessary information for managing the vault effectively.",
+  "thesis": "The hedge ratio cannot be computed due to the inability to read the reserve state. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions.",
+  "summary": "It seems that I encountered an error while trying to read the reserve state for the vault. This prevents me from obtaining the necessary information about the mETH balance and mETH/USD price. \n\nGiven that the vault currently has no open positions and the available collateral is $0.00, I cannot proceed with opening a short position or executing any other actions.\n\n## Thesis\nThe hedge ratio cannot be computed due to the inability to read the reserve state. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions. \n\n### Current Vault State\n- Vault Address: `0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f`\n- NAV: $0.00\n- Available Collateral: $0.00\n- Open Positions: None\n\n### Recommendations for Next Run\n- Attempt to read the reserve state again to gather necessary data for decision-making.\n- Monitor for any changes in the vault's available collateral or market conditions.",
   "writeActions": [],
   "errors": [
     {
