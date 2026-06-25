@@ -1,97 +1,35 @@
 {
   "agentName": "mining-manager",
-  "updatedAt": "2026-06-25T00:24:29.343Z",
+  "updatedAt": "2026-06-25T08:33:54.531Z",
   "entries": {
     "CNC.V": {
-      "fetchedAt": "2026-06-25T00:24:29.130Z",
+      "fetchedAt": "2026-06-25T08:33:54.424Z",
       "headlines": [
         {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "VWS.CO"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "GSR.V": {
-      "fetchedAt": "2026-06-25T00:24:29.130Z",
-      "headlines": [
-        {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "QDT.PA"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "SAGE.V": {
-      "fetchedAt": "2026-06-25T00:24:29.130Z",
-      "headlines": [
-        {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SVM"
-          ]
-        },
-        {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -99,168 +37,138 @@
       "sourceAgent": "mining-manager"
     },
     "HBM": {
-      "fetchedAt": "2026-06-25T00:24:29.130Z",
+      "fetchedAt": "2026-06-25T08:33:54.424Z",
       "headlines": [
         {
-          "title": "Hudbay Completes Offering of US$52 Million of 4.50% Municipal Bonds for Copper World",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/hudbay-completes-offering-us-52-200000072.html",
-          "publishedAt": "2026-06-24T20:00:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HBM"
-          ]
-        },
-        {
-          "title": "Hudbay Minerals Closes Acquisition of Arizona Sonoran",
-          "publisher": "MT Newswires",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/hudbay-minerals-closes-acquisition-arizona-143621497.html",
-          "publishedAt": "2026-06-24T14:36:21.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "HBM",
-            "ASCU.TO",
-            "HG=F"
-          ]
-        },
-        {
-          "title": "Time to Dump Micron? SK hynix to Begin Trading on Nasdaq July 10",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/72b9e7cc-578b-3ee8-b2cc-5f0063219a84/time-to-dump-micron%3F-sk-hynix.html",
-          "publishedAt": "2026-06-24T14:36:22.000Z",
+          "title": "SK hynix (KOSE:A000660) Announces $29.4 Billion ADS Equity Offering",
+          "publisher": "Simply Wall St.",
+          "link": "https://finance.yahoo.com/markets/stocks/articles/sk-hynix-kose-a000660-announces-070924661.html",
+          "publishedAt": "2026-06-25T07:09:24.000Z",
           "type": "STORY",
           "relatedTickers": [
             "000660.KS",
-            "MU",
-            "NVDA",
-            "AMD"
+            "A000660"
           ]
+        },
+        {
+          "title": "No Stopping Micron For Now: Top Analysts Break Down Biggest Takeaways From Blowout Q3",
+          "publisher": "Stocktwits",
+          "link": "https://finance.yahoo.com/m/0769f5d7-fb74-3c73-be31-514fc767f2e3/no-stopping-micron-for-now%3A.html",
+          "publishedAt": "2026-06-25T06:00:11.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU"
+          ]
+        },
+        {
+          "title": "Micron Technology (MU) Announces Collaboration with Anthropic to Scale Next Generation AI Infrastructure",
+          "publisher": "Insider Monkey",
+          "link": "https://finance.yahoo.com/technology/ai/articles/micron-technology-mu-announces-collaboration-062406354.html",
+          "publishedAt": "2026-06-25T06:24:06.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "MU"
+          ]
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "SAGE.V": {
+      "fetchedAt": "2026-06-25T08:33:54.424Z",
+      "headlines": [
+        {
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VWS.CO"
+          ]
+        },
+        {
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QDT.PA"
+          ]
+        },
+        {
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "GSR.V": {
+      "fetchedAt": "2026-06-25T08:33:54.424Z",
+      "headlines": [
+        {
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VWS.CO"
+          ]
+        },
+        {
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QDT.PA"
+          ]
+        },
+        {
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
     "AHR.V": {
-      "fetchedAt": "2026-06-25T00:24:29.130Z",
+      "fetchedAt": "2026-06-25T08:33:54.424Z",
       "headlines": [
         {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "VWS.CO"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "MNB.AX": {
-      "fetchedAt": "2026-06-25T00:24:29.343Z",
-      "headlines": [
-        {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
           "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "QDT.PA"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "HLU.V": {
-      "fetchedAt": "2026-06-25T00:24:29.343Z",
-      "headlines": [
-        {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SVM"
-          ]
-        },
-        {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        }
-      ],
-      "sourceAgent": "mining-manager"
-    },
-    "KNOX.V": {
-      "fetchedAt": "2026-06-25T00:24:29.343Z",
-      "headlines": [
-        {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
-          "type": "STORY",
-          "relatedTickers": [
-            "SVM"
-          ]
-        },
-        {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
-          "type": "STORY",
-          "relatedTickers": []
-        },
-        {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
@@ -268,63 +176,101 @@
       "sourceAgent": "mining-manager"
     },
     "SLM.AX": {
-      "fetchedAt": "2026-06-25T00:24:29.343Z",
+      "fetchedAt": "2026-06-25T08:33:54.531Z",
       "headlines": [
         {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "VWS.CO"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "QDT.PA"
+          ]
         },
         {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
       ],
       "sourceAgent": "mining-manager"
     },
-    "AVM.AX": {
-      "fetchedAt": "2026-06-25T00:24:29.343Z",
+    "KNOX.V": {
+      "fetchedAt": "2026-06-25T08:33:54.531Z",
       "headlines": [
         {
-          "title": "Silvercorp Announces Filing of Updated Technical Reports",
-          "publisher": "PR Newswire",
-          "link": "https://finance.yahoo.com/markets/commodities/articles/silvercorp-announces-filing-updated-technical-001400602.html",
-          "publishedAt": "2026-06-25T00:14:00.000Z",
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
           "type": "STORY",
           "relatedTickers": [
-            "SVM"
+            "VWS.CO"
           ]
         },
         {
-          "title": "Cartesian Growth Corporation IV Announces Pricing of  $250 Million Initial Public Offering",
-          "publisher": "GlobeNewswire",
-          "link": "https://finance.yahoo.com/markets/stocks/articles/cartesian-growth-corporation-iv-announces-001300449.html",
-          "publishedAt": "2026-06-25T00:13:00.000Z",
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
-          "relatedTickers": []
+          "relatedTickers": [
+            "QDT.PA"
+          ]
         },
         {
-          "title": "Here’s How You Can Retire to Key West, Florida, at 62 on $1.6 Million and Never Feel Cold Again",
-          "publisher": "24/7 Wall St.",
-          "link": "https://finance.yahoo.com/m/631d82df-8fb8-3bbc-9e4c-af5f19bc0028/here%E2%80%99s-how-you-can-retire-to.html",
-          "publishedAt": "2026-06-25T00:11:29.000Z",
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": []
+        }
+      ],
+      "sourceAgent": "mining-manager"
+    },
+    "HLU.V": {
+      "fetchedAt": "2026-06-25T08:33:54.531Z",
+      "headlines": [
+        {
+          "title": "DeepOcean completes inter-array cable work at 660MW Nordseecluster A",
+          "publisher": "Power Technology",
+          "link": "https://finance.yahoo.com/m/1af97a2d-b025-34bd-a84a-d5f23e2a8997/deepocean-completes.html",
+          "publishedAt": "2026-06-25T08:31:10.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "VWS.CO"
+          ]
+        },
+        {
+          "title": "Quadient Positioned as the Leader in the SPARK Matrix™: Accounts Receivable Application (ARA), 2026 by QKS Group",
+          "publisher": "PR Newswire",
+          "link": "https://finance.yahoo.com/technology/articles/quadient-positioned-leader-spark-matrix-083000089.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
+          "type": "STORY",
+          "relatedTickers": [
+            "QDT.PA"
+          ]
+        },
+        {
+          "title": "Q&A: Inside PLS’ Pilgangoora, how lithium ore sorting became a core process",
+          "publisher": "Mining Technology",
+          "link": "https://finance.yahoo.com/m/5ae41804-a339-3bfe-9055-853d8a05b764/q%26a%3A-inside-pls%E2%80%99-pilgangoora%2C.html",
+          "publishedAt": "2026-06-25T08:30:00.000Z",
           "type": "STORY",
           "relatedTickers": []
         }
