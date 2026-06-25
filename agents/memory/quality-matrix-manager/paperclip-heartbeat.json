@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-06-25T08:35:59.024Z",
-  "startedAt": "2026-06-25T08:35:10.731Z",
-  "finishedAt": "2026-06-25T08:35:59.024Z",
-  "status": "succeeded",
+  "runId": "2026-06-25T11:53:28.844Z",
+  "startedAt": "2026-06-25T11:52:34.612Z",
+  "finishedAt": "2026-06-25T11:53:28.844Z",
+  "status": "failed",
   "usage": {
-    "turns": 3,
-    "toolCalls": 3,
-    "errors": 0,
+    "turns": 1,
+    "toolCalls": 0,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the metals market being in a \"metals_risk_on\" regime, which suggests potential opportunities for long positions, the lack of eligible trade-ready picks means no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "summary": "### Current Vault State\n\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\n\nThe analyst's quality matrix is grounded in eight categories with specific weights: Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), and Construction (5%). Categories with only PUBLISHED_REFERENCE_ONLY signals are discounted by a provenance factor of 0.7.\n\n### Trade-Ready Picks\n\nUnfortunately, there are no trade-ready picks available at this time. The filtering criteria include a minimum composite score of 75 and a minimum trade readiness score of 75, but no companies met these criteria in the current run.\n\n### Summary\n\n## Thesis\n\nThe current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the metals market being in a \"metals_risk_on\" regime, which suggests potential opportunities for long positions, the lack of eligible trade-ready picks means no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.\n\n### Recommendations for Next Run\n\n- Monitor the availability of trade-ready picks in future runs.\n- Continue to check for any changes in the quality matrix that may affect the scoring of potential picks.\n- Stay updated on the metals market regime to align with potential opportunities for long positions.",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "_agent",
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n"
+    }
+  ]
 }
