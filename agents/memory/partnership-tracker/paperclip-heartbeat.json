@@ -7,19 +7,24 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-06-22T14:19:07.690Z",
-  "startedAt": "2026-06-22T14:18:54.943Z",
-  "finishedAt": "2026-06-22T14:19:07.690Z",
-  "status": "succeeded",
+  "runId": "2026-06-29T12:54:07.559Z",
+  "startedAt": "2026-06-29T12:53:35.478Z",
+  "finishedAt": "2026-06-29T12:54:07.559Z",
+  "status": "failed",
   "usage": {
-    "turns": 2,
-    "toolCalls": 2,
-    "errors": 0,
+    "turns": 1,
+    "toolCalls": 0,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": null,
-  "summary": "## Blockers surfaced\n- Sweep skipped — `.agent-self-improvement/issue-context.json` is missing, so no blockers assessed this run.\n\n## Frontmatter refreshed\n- None.\n\n## Skipped (already open)\n- N/A\n\n## Aging signal\n- Unable to compute — partner sweep not run because issue context was unavailable.",
+  "summary": "FAILED: LLM API 429: {\n  \"error\": {\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"insufficient_quota\"\n  }\n}",
   "writeActions": [],
-  "errors": []
+  "errors": [
+    {
+      "tool": "_agent",
+      "error": "LLM API 429: {\n  \"error\": {\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n    \"type\": \"insufficient_quota\",\n    \"param\": null,\n    \"code\": \"insufficient_quota\"\n  }\n}"
+    }
+  ]
 }
