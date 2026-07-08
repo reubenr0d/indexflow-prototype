@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-07-08T03:45:57.102Z",
-  "startedAt": "2026-07-08T03:43:52.391Z",
-  "finishedAt": "2026-07-08T03:45:57.102Z",
+  "runId": "2026-07-08T06:40:09.026Z",
+  "startedAt": "2026-07-08T06:38:32.782Z",
+  "finishedAt": "2026-07-08T06:40:09.026Z",
   "status": "failed",
   "usage": {
     "turns": 1,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
-  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
       "tool": "_agent",
-      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n"
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n"
     }
   ]
 }

@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-07-08T03:47:14.606Z",
-  "startedAt": "2026-07-08T03:46:27.055Z",
-  "finishedAt": "2026-07-08T03:47:14.606Z",
+  "runId": "2026-07-08T06:41:49.820Z",
+  "startedAt": "2026-07-08T06:40:56.317Z",
+  "finishedAt": "2026-07-08T06:41:49.820Z",
   "status": "failed",
   "usage": {
     "turns": 1,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": "The current strategy remains on hold due to the absence of trade-ready picks from the Atlas API. Despite the metals market being in a \"metals_risk_on\" regime, which suggests potential opportunities for long positions, the lack of eligible trade-ready picks means no new long positions will be opened this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. No short positions are considered due to the absence of Red-Flag signals and bearish news headlines.",
-  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
       "tool": "_agent",
-      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n"
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n"
     }
   ]
 }

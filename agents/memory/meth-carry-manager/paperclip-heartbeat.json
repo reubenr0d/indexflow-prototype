@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-07-08T03:48:34.783Z",
-  "startedAt": "2026-07-08T03:48:18.889Z",
-  "finishedAt": "2026-07-08T03:48:34.783Z",
+  "runId": "2026-07-08T06:44:26.277Z",
+  "startedAt": "2026-07-08T06:44:01.581Z",
+  "finishedAt": "2026-07-08T06:44:26.277Z",
   "status": "failed",
   "usage": {
     "turns": 1,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": "The hedge ratio cannot be computed due to the inability to read the reserve state. The vault remains unhedged with no positions open. I will need to address the reserve state issue in the next run to proceed with any actions.",
-  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
       "tool": "_agent",
-      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"insufficient_quota\"\n    }\n}\n"
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n"
     }
   ]
 }
