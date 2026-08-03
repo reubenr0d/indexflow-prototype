@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-07-27T12:04:17.743Z",
-  "startedAt": "2026-07-27T12:04:16.077Z",
-  "finishedAt": "2026-07-27T12:04:17.743Z",
+  "runId": "2026-08-03T12:07:59.968Z",
+  "startedAt": "2026-08-03T12:07:59.215Z",
+  "finishedAt": "2026-08-03T12:07:59.968Z",
   "status": "failed",
   "usage": {
     "turns": 1,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": null,
-  "summary": "FAILED: LLM API 404: {\n  \"error\": {\n    \"message\": \"The model `gpt-5-codex` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"model_not_found\"\n  }\n}",
+  "summary": "FAILED: LLM API 404: {\n  \"error\": {\n    \"message\": \"Model not found gpt-5-codex\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"model\",\n    \"code\": null\n  }\n}",
   "writeActions": [],
   "errors": [
     {
       "tool": "_agent",
-      "error": "LLM API 404: {\n  \"error\": {\n    \"message\": \"The model `gpt-5-codex` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"model_not_found\"\n  }\n}"
+      "error": "LLM API 404: {\n  \"error\": {\n    \"message\": \"Model not found gpt-5-codex\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"model\",\n    \"code\": null\n  }\n}"
     }
   ]
 }
