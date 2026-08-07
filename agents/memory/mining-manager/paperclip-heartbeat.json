@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-08-06T15:29:39.705Z",
-  "startedAt": "2026-08-06T15:27:43.744Z",
-  "finishedAt": "2026-08-06T15:29:39.705Z",
+  "runId": "2026-08-07T00:16:29.387Z",
+  "startedAt": "2026-08-07T00:14:56.085Z",
+  "finishedAt": "2026-08-07T00:16:29.387Z",
   "status": "failed",
   "usage": {
     "turns": 1,
