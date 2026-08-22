@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f",
   "vaultName": "IndexFlow mETH Carry",
-  "runId": "2026-08-22T03:11:37.677Z",
-  "startedAt": "2026-08-22T03:11:20.645Z",
-  "finishedAt": "2026-08-22T03:11:37.677Z",
+  "runId": "2026-08-22T04:01:40.451Z",
+  "startedAt": "2026-08-22T04:01:14.527Z",
+  "finishedAt": "2026-08-22T04:01:40.451Z",
   "status": "failed",
   "usage": {
     "turns": 1,
