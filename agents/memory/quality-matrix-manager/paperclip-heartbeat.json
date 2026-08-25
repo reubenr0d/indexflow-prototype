@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-08-25T04:56:46.509Z",
-  "startedAt": "2026-08-25T04:55:28.694Z",
-  "finishedAt": "2026-08-25T04:56:46.509Z",
+  "runId": "2026-08-25T05:50:11.730Z",
+  "startedAt": "2026-08-25T05:49:22.798Z",
+  "finishedAt": "2026-08-25T05:50:11.730Z",
   "status": "failed",
   "usage": {
     "turns": 1,
