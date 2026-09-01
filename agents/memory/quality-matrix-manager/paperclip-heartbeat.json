@@ -7,14 +7,14 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-09-01T10:09:15.718Z",
-  "startedAt": "2026-09-01T10:07:53.955Z",
-  "finishedAt": "2026-09-01T10:09:15.718Z",
+  "runId": "2026-09-01T14:56:14.909Z",
+  "startedAt": "2026-09-01T14:55:21.014Z",
+  "finishedAt": "2026-09-01T14:56:14.909Z",
   "status": "failed",
   "usage": {
     "turns": 1,
     "toolCalls": 0,
-    "errors": 2,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
@@ -22,10 +22,6 @@
   "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
-    {
-      "tool": "_auto_rebalance",
-      "error": "MCP error -32001: Request timed out"
-    },
     {
       "tool": "_agent",
       "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"Your account is not active, please check your billing details on our website.\",\n        \"type\": \"billing_not_active\",\n        \"param\": null,\n        \"code\": \"billing_not_active\"\n    }\n}\n"
