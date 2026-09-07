@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-08-31T16:25:10.223Z",
-  "startedAt": "2026-08-31T16:25:08.707Z",
-  "finishedAt": "2026-08-31T16:25:10.223Z",
+  "runId": "2026-09-07T14:29:36.654Z",
+  "startedAt": "2026-09-07T14:29:34.958Z",
+  "finishedAt": "2026-09-07T14:29:36.654Z",
   "status": "failed",
   "usage": {
     "turns": 1,
@@ -19,12 +19,12 @@
     "writeActions": 0
   },
   "thesis": null,
-  "summary": "FAILED: LLM API 404: {\n  \"error\": {\n    \"message\": \"Model not found gpt-5-codex\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"model\",\n    \"code\": null\n  }\n}",
+  "summary": "FAILED: LLM API 404: {\n  \"error\": {\n    \"message\": \"The model `gpt-5-codex` does not exist or you do not have access to it.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"model_not_found\"\n  }\n}",
   "writeActions": [],
   "errors": [
     {
       "tool": "_agent",
-      "error": "LLM API 404: {\n  \"error\": {\n    \"message\": \"Model not found gpt-5-codex\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"model\",\n    \"code\": null\n  }\n}"
+      "error": "LLM API 404: {\n  \"error\": {\n    \"message\": \"The model `gpt-5-codex` does not exist or you do not have access to it.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": \"model_not_found\"\n  }\n}"
     }
   ]
 }
