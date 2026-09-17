@@ -70,6 +70,8 @@ const ISSUE_MANIFEST_REL = ".agent-self-improvement/proposed-issues.json";
 const ISSUE_MANIFEST_PATH = resolve(PROJECT_ROOT, ISSUE_MANIFEST_REL);
 const ISSUE_CONTEXT_REL = ".agent-self-improvement/issue-context.json";
 const ISSUE_CONTEXT_PATH = resolve(PROJECT_ROOT, ISSUE_CONTEXT_REL);
+const AUDIT_CONTEXT_REL = ".agent-audit/audit-context.json";
+const AUDIT_CONTEXT_PATH = resolve(PROJECT_ROOT, AUDIT_CONTEXT_REL);
 const SIGNAL_DETECTOR_SCRIPT = resolve(PROJECT_ROOT, "scripts", "detect-self-improvement-signal.mjs");
 const MAX_FILE_READ_BYTES = 256 * 1024; // 256 KB is more than enough for any agent .md or runner section
 const MAX_RUN_LOG_LIMIT = 200;
@@ -263,6 +265,39 @@ server.registerTool(
       return toolText({ available: true, ...parsed });
     } catch (err) {
       return toolError("ISSUE_CONTEXT_READ_FAILED", err.message);
+    }
+  },
+);
+
+server.registerTool(
+  "get_audit_context",
+  {
+    title: "Get Security Audit Context",
+    description:
+      "Reads `.agent-audit/audit-context.json` written by scripts/build-audit-context.mjs before this agent runs. Returns `{ available, mode: 'diff'|'full_repo', pr?: { number, title, url }, changedFiles[], diff?, files[]: { path, exists, content, truncated } }`. Call this FIRST — if `available` is false, stop without producing a report. NOTE: this is the only sanctioned way for this agent to see contract source — `read_repo_file` denies all `.sol` paths by design (see allowlist.js), so the diff/file contents here were fetched by the trusted CI script, not by this agent.",
+    inputSchema: {},
+  },
+  async () => {
+    if (!existsSync(AUDIT_CONTEXT_PATH)) {
+      return toolText({
+        available: false,
+        error_code: "AUDIT_CONTEXT_MISSING",
+        message: `No audit context at ${AUDIT_CONTEXT_REL}. The security-audit workflow must run scripts/build-audit-context.mjs first.`,
+      });
+    }
+    try {
+      const raw = readFileSync(AUDIT_CONTEXT_PATH, "utf8");
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") {
+        return toolText({
+          available: false,
+          error_code: "AUDIT_CONTEXT_INVALID",
+          message: "audit-context.json is not a valid object",
+        });
+      }
+      return toolText({ available: true, ...parsed });
+    } catch (err) {
+      return toolError("AUDIT_CONTEXT_READ_FAILED", err.message);
     }
   },
 );
