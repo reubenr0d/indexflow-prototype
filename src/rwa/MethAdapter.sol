@@ -132,7 +132,7 @@ contract MethAdapter is Ownable {
 
     function _readMethPrice1e30() internal view returns (uint256 price) {
         require(!oracleAdapter.isStale(methUsdcAssetId), "mETH price stale");
-        (price, ) = oracleAdapter.getPrice(methUsdcAssetId);
+        (price,) = oracleAdapter.getPrice(methUsdcAssetId);
         require(price > 0, "mETH price zero");
     }
 }
