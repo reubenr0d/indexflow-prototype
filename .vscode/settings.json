@@ -1,0 +1,15 @@
+{
+	"wake.compiler.solc.remappings": [
+		"@openzeppelin/contracts@5.0.2/=node_modules/@openzeppelin/contracts-5.0.2/",
+		"@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/",
+		"@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/",
+		"@chainlink/contracts-ccip/=node_modules/@chainlink/contracts-ccip/",
+		"forge-std/=lib/forge-std/src/",
+		"solady/=lib/solady/src/",
+		"@arbitrum/=node_modules/@arbitrum/",
+		"@eth-optimism/=node_modules/@chainlink/contracts/node_modules/@eth-optimism/",
+		"@offchainlabs/=node_modules/@offchainlabs/",
+		"@scroll-tech/=node_modules/@scroll-tech/",
+		"@zksync/=node_modules/@zksync/"
+	]
+}

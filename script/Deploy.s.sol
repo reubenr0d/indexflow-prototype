@@ -257,8 +257,7 @@ contract Deploy is Script {
         oa.configureAsset("USDY-USDC", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 1000, 8);
         oa.configureAsset("METH-USDC", address(0), IOracleAdapter.FeedType.CustomRelayer, 3600, 1000, 8);
 
-        MockUSDYInstantManager usdyManager =
-            new MockUSDYInstantManager(d.usdc, d.oracleAdapter, usdyId);
+        MockUSDYInstantManager usdyManager = new MockUSDYInstantManager(d.usdc, d.oracleAdapter, usdyId);
         MockUSDY usdy = new MockUSDY(address(usdyManager));
         usdyManager.setUSDY(address(usdy));
         d.usdyManager = address(usdyManager);
@@ -366,25 +365,37 @@ contract Deploy is Script {
         if (d.usdy != address(0)) {
             p3 = string.concat(
                 '  "rwa": {\n',
-                '    "usdy": "', vm.toString(d.usdy), '",\n',
-                '    "usdyManager": "', vm.toString(d.usdyManager), '",\n',
-                '    "musd": "', vm.toString(d.musd), '",\n',
-                '    "musdWrapper": "', vm.toString(d.musdWrapper), '",\n',
-                '    "meth": "', vm.toString(d.meth), '",\n',
-                '    "methAdapter": "', vm.toString(d.methAdapter), '"\n',
-                '  },\n',
+                '    "usdy": "',
+                vm.toString(d.usdy),
+                '",\n',
+                '    "usdyManager": "',
+                vm.toString(d.usdyManager),
+                '",\n',
+                '    "musd": "',
+                vm.toString(d.musd),
+                '",\n',
+                '    "musdWrapper": "',
+                vm.toString(d.musdWrapper),
+                '",\n',
+                '    "meth": "',
+                vm.toString(d.meth),
+                '",\n',
+                '    "methAdapter": "',
+                vm.toString(d.methAdapter),
+                '"\n',
+                "  },\n",
                 '  "rwaAssetIds": {\n',
-                '    "USDY": "', vm.toString(d.usdyUsdcAssetId), '",\n',
-                '    "METH": "', vm.toString(d.methUsdcAssetId), '"\n',
-                '  }\n',
+                '    "USDY": "',
+                vm.toString(d.usdyUsdcAssetId),
+                '",\n',
+                '    "METH": "',
+                vm.toString(d.methUsdcAssetId),
+                '"\n',
+                "  }\n",
                 "}\n"
             );
         } else {
-            p3 = string.concat(
-                '  "rwa": null,\n',
-                '  "rwaAssetIds": null\n',
-                "}\n"
-            );
+            p3 = string.concat('  "rwa": null,\n', '  "rwaAssetIds": null\n', "}\n");
         }
         return string.concat(p1, p2, p3);
     }
