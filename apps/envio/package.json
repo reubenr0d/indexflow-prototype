@@ -13,17 +13,15 @@
     "gen-local-config": "node scripts/gen-local-config.mjs"
   },
   "dependencies": {
-    "envio": "2.32.12",
+    "envio": "3.2.1",
     "viem": "2.38.3"
-  },
-  "optionalDependencies": {
-    "generated": "./generated"
   },
   "devDependencies": {
     "@types/node": "^20.8.8",
     "typescript": "5.2.2"
   },
   "engines": {
-    "node": ">=18.0.0"
-  }
+    "node": ">=22.0.0"
+  },
+  "type": "module"
 }
