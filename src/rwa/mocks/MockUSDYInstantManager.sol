@@ -84,7 +84,7 @@ contract MockUSDYInstantManager is IUSDYInstantManager {
     ///      stale prices.
     function _readUsdyPrice1e30() internal view returns (uint256 price) {
         require(!oracleAdapter.isStale(usdyUsdcAssetId), "USDY price stale");
-        (price, ) = oracleAdapter.getPrice(usdyUsdcAssetId);
+        (price,) = oracleAdapter.getPrice(usdyUsdcAssetId);
         require(price > 0, "USDY price zero");
     }
 }

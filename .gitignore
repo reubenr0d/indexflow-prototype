@@ -30,3 +30,8 @@ apps/web/playwright-report/
 # by .github/workflows/vault-agent.yml `self-improve` job and uploaded as
 # the `self-improver-artefacts` artefact for audit; never committed.
 .agent-self-improvement/
+
+# Security-audit workflow scratch dir (diff/full-repo context for the
+# security-auditor agent). Regenerated every run by
+# .github/workflows/security-audit.yml; never committed.
+.agent-audit/
