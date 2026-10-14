@@ -52,7 +52,7 @@ contracts:
     events:
       - event: StateUpdated
 
-networks:
+chains:
   - id: 11155111 # Sepolia
     start_block: 10891752
     contracts:
@@ -106,6 +106,4 @@ networks:
         start_block: 39077789
       - name: BasketVault
 
-unordered_multichain_mode: true
-preload_handlers: false
 address_format: lowercase

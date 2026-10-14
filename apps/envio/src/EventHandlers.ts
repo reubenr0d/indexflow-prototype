@@ -1,17 +1,4 @@
-import {
-  BasketFactory,
-  BasketVault,
-  VaultAccounting,
-  OracleAdapter,
-  StateRelay,
-  type Basket,
-  type User,
-  type UserBasketPosition,
-  type BasketExposure,
-  type ProtocolState,
-  type VaultStateCurrent,
-  type AssetBasketMembership,
-} from "generated";
+import { indexer, BasketFactory, BasketVault, VaultAccounting, OracleAdapter, StateRelay, type Basket, type User, type UserBasketPosition, type BasketExposure, type ProtocolState, type VaultStateCurrent, type AssetBasketMembership } from "envio";
 import { type Address } from "viem";
 import {
   readBasketAssetAt,
@@ -525,11 +512,16 @@ async function syncExposure(
   });
 }
 
-BasketFactory.BasketCreated.contractRegister(({ event, context }) => {
-  context.addBasketVault(lc(event.params.vault));
-});
+indexer.contractRegister(
+  { contract: "BasketFactory", event: "BasketCreated" },
+  async ({ event, context }) => {
+  context.chain.BasketVault.add(lc(event.params.vault));
+}
+);
 
-BasketFactory.BasketCreated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketFactory", event: "BasketCreated" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const vaultAddress = lc(event.params.vault);
   const basket = await refreshBasketFromChain(context, chainId, vaultAddress, event.block);
@@ -557,9 +549,12 @@ BasketFactory.BasketCreated.handler(async ({ event, context }) => {
       error: String(error),
     });
   }
-});
+}
+);
 
-BasketVault.Deposited.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "Deposited" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await refreshBasketFromChain(context, chainId, event.srcAddress, event.block);
 
@@ -586,9 +581,12 @@ BasketVault.Deposited.handler(async ({ event, context }) => {
     amountUsdc: event.params.usdcAmount,
     shares: event.params.sharesMinted,
   });
-});
+}
+);
 
-BasketVault.Redeemed.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "Redeemed" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await refreshBasketFromChain(context, chainId, event.srcAddress, event.block);
 
@@ -619,31 +617,43 @@ BasketVault.Redeemed.handler(async ({ event, context }) => {
     amountUsdc: event.params.usdcReturned,
     shares: event.params.sharesBurned,
   });
-});
+}
+);
 
-BasketVault.AllocatedToPerp.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "AllocatedToPerp" },
+  async ({ event, context }) => {
   const basket = await refreshBasketFromChain(context, toInt(event.chainId), event.srcAddress, event.block);
   await createActivity(context, event, basket, "allocateToPerp", {
     amountUsdc: event.params.amount,
   });
-});
+}
+);
 
-BasketVault.WithdrawnFromPerp.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "WithdrawnFromPerp" },
+  async ({ event, context }) => {
   const basket = await refreshBasketFromChain(context, toInt(event.chainId), event.srcAddress, event.block);
   await createActivity(context, event, basket, "withdrawFromPerp", {
     amountUsdc: event.params.amount,
   });
-});
+}
+);
 
-BasketVault.AssetsUpdated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "AssetsUpdated" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   await syncBasketAssets(context, chainId, event.srcAddress, event.block);
 
   const basket = await getOrCreateBasket(context, chainId, event.srcAddress, event.block);
   await createActivity(context, event, basket, "assetsUpdated");
-});
+}
+);
 
-BasketVault.FeesCollected.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "FeesCollected" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await refreshBasketFromChain(context, chainId, event.srcAddress, event.block);
 
@@ -656,9 +666,12 @@ BasketVault.FeesCollected.handler(async ({ event, context }) => {
     amountUsdc: event.params.amount,
     recipient: lc(event.params.to),
   });
-});
+}
+);
 
-BasketVault.ReservePolicyUpdated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "ReservePolicyUpdated" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await refreshBasketFromChain(context, chainId, event.srcAddress, event.block);
 
@@ -670,9 +683,12 @@ BasketVault.ReservePolicyUpdated.handler(async ({ event, context }) => {
   await createActivity(context, event, basket, "reservePolicyUpdated", {
     amountUsdc: event.params.minReserveBps,
   });
-});
+}
+);
 
-BasketVault.ReserveToppedUp.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "BasketVault", event: "ReserveToppedUp" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await refreshBasketFromChain(context, chainId, event.srcAddress, event.block);
 
@@ -686,9 +702,12 @@ BasketVault.ReserveToppedUp.handler(async ({ event, context }) => {
     user_id: user.id,
     amountUsdc: event.params.amount,
   });
-});
+}
+);
 
-VaultAccounting.VaultRegistered.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "VaultRegistered" },
+  async ({ event, context }) => {
   const basket = await syncVaultState(
     context,
     toInt(event.chainId),
@@ -697,9 +716,12 @@ VaultAccounting.VaultRegistered.handler(async ({ event, context }) => {
     event.block,
   );
   await createActivity(context, event, basket, "vaultRegistered");
-});
+}
+);
 
-VaultAccounting.VaultDeregistered.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "VaultDeregistered" },
+  async ({ event, context }) => {
   const basket = await syncVaultState(
     context,
     toInt(event.chainId),
@@ -708,9 +730,12 @@ VaultAccounting.VaultDeregistered.handler(async ({ event, context }) => {
     event.block,
   );
   await createActivity(context, event, basket, "vaultDeregistered");
-});
+}
+);
 
-VaultAccounting.AssetTokenMapped.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "AssetTokenMapped" },
+  async ({ event, context }) => {
   context.AssetTokenMapUpdate.set({
     id: activityId(event),
     chainId: toInt(event.chainId),
@@ -721,9 +746,12 @@ VaultAccounting.AssetTokenMapped.handler(async ({ event, context }) => {
     logIndex: BigInt(event.logIndex),
     createdAt: ts(event.block),
   });
-});
+}
+);
 
-VaultAccounting.CapitalDeposited.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "CapitalDeposited" },
+  async ({ event, context }) => {
   const basket = await syncVaultState(
     context,
     toInt(event.chainId),
@@ -734,9 +762,12 @@ VaultAccounting.CapitalDeposited.handler(async ({ event, context }) => {
   await createActivity(context, event, basket, "capitalDeposited", {
     amountUsdc: event.params.amount,
   });
-});
+}
+);
 
-VaultAccounting.CapitalWithdrawn.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "CapitalWithdrawn" },
+  async ({ event, context }) => {
   const basket = await syncVaultState(
     context,
     toInt(event.chainId),
@@ -747,9 +778,12 @@ VaultAccounting.CapitalWithdrawn.handler(async ({ event, context }) => {
   await createActivity(context, event, basket, "capitalWithdrawn", {
     amountUsdc: event.params.amount,
   });
-});
+}
+);
 
-VaultAccounting.PositionOpened.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "PositionOpened" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await syncVaultState(
     context,
@@ -775,9 +809,12 @@ VaultAccounting.PositionOpened.handler(async ({ event, context }) => {
     size: event.params.size,
     collateral: event.params.collateral,
   });
-});
+}
+);
 
-VaultAccounting.PositionClosed.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "PositionClosed" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const basket = await syncVaultState(
     context,
@@ -802,9 +839,12 @@ VaultAccounting.PositionClosed.handler(async ({ event, context }) => {
     isLong: event.params.isLong,
     pnl: event.params.realisedPnL,
   });
-});
+}
+);
 
-VaultAccounting.PnLRealized.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "PnLRealized" },
+  async ({ event, context }) => {
   const basket = await syncVaultState(
     context,
     toInt(event.chainId),
@@ -815,9 +855,12 @@ VaultAccounting.PnLRealized.handler(async ({ event, context }) => {
   await createActivity(context, event, basket, "pnlRealized", {
     pnl: event.params.amount,
   });
-});
+}
+);
 
-VaultAccounting.PauseToggled.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "PauseToggled" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const current = await getOrCreateProtocolState(context, chainId, event.block);
   context.ProtocolState.set({
@@ -826,23 +869,32 @@ VaultAccounting.PauseToggled.handler(async ({ event, context }) => {
     updatedAt: ts(event.block),
     updatedBlock: bn(event.block),
   });
-});
+}
+);
 
-VaultAccounting.MaxOpenInterestSet.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "MaxOpenInterestSet" },
+  async ({ event, context }) => {
   const basket = await getOrCreateBasket(context, toInt(event.chainId), event.params.vault, event.block);
   await createActivity(context, event, basket, "maxOpenInterestSet", {
     size: event.params.cap,
   });
-});
+}
+);
 
-VaultAccounting.MaxPositionSizeSet.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "VaultAccounting", event: "MaxPositionSizeSet" },
+  async ({ event, context }) => {
   const basket = await getOrCreateBasket(context, toInt(event.chainId), event.params.vault, event.block);
   await createActivity(context, event, basket, "maxPositionSizeSet", {
     size: event.params.cap,
   });
-});
+}
+);
 
-OracleAdapter.AssetConfigured.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "OracleAdapter", event: "AssetConfigured" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const id = assetMetaId(chainId, event.params.assetId);
   const current = await context.AssetMeta.get(id);
@@ -860,9 +912,12 @@ OracleAdapter.AssetConfigured.handler(async ({ event, context }) => {
     updatedAt: ts(event.block),
     updatedBlock: bn(event.block),
   });
-});
+}
+);
 
-OracleAdapter.AssetRemoved.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "OracleAdapter", event: "AssetRemoved" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const id = assetMetaId(chainId, event.params.assetId);
   const current = await context.AssetMeta.get(id);
@@ -880,9 +935,12 @@ OracleAdapter.AssetRemoved.handler(async ({ event, context }) => {
     updatedAt: ts(event.block),
     updatedBlock: bn(event.block),
   });
-});
+}
+);
 
-OracleAdapter.PriceUpdated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "OracleAdapter", event: "PriceUpdated" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const id = assetMetaId(chainId, event.params.assetId);
   const current = await context.AssetMeta.get(id);
@@ -914,9 +972,12 @@ OracleAdapter.PriceUpdated.handler(async ({ event, context }) => {
   });
 
   await refreshBasketsForPriceUpdate(context, chainId, event.params.assetId, event.block);
-});
+}
+);
 
-StateRelay.StateUpdated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "StateRelay", event: "StateUpdated" },
+  async ({ event, context }) => {
   const chainId = toInt(event.chainId);
   const routing = await readRoutingWeights(chainId, lc(event.srcAddress) as Address);
   if (!routing) return;
@@ -941,4 +1002,5 @@ StateRelay.StateUpdated.handler(async ({ event, context }) => {
       updatedAt: ts(event.block),
     });
   }
-});
+}
+);
