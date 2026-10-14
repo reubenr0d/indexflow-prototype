@@ -15,7 +15,7 @@
     },
     "strategyFingerprint": "58bfa090460a7f48a5356e3d14197499cd449aaec10ec31aff0ed63183c5071d",
     "nextSuggestedAction": "trigger_and_wait",
-    "refreshReason": "no_terminal_result,last_job_terminal_failure,explicit_refresh_requested",
+    "refreshReason": "no_terminal_result,explicit_refresh_requested",
     "cooldownUntil": "2026-06-17T17:54:15.342Z",
     "lastJob": {
       "id": "3fe2296f745c4628b548be3f8f4eefcc",
@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:01:09.114Z",
-  "lastRunAt": "2026-10-14T18:39:21.381Z",
+  "lastRunAt": "2026-10-14T22:20:07.668Z",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
   "lastThesisUpdate": "2026-06-25T08:34:34.172Z"
 }
