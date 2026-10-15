@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-10-15T00:36:18.970Z",
-  "startedAt": "2026-10-15T00:34:23.911Z",
-  "finishedAt": "2026-10-15T00:36:18.970Z",
+  "runId": "2026-10-15T05:56:13.875Z",
+  "startedAt": "2026-10-15T05:54:26.129Z",
+  "finishedAt": "2026-10-15T05:56:13.875Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
-  "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with the planned actions such as wiring new assets, setting the tracked-asset list, or opening new positions based on the latest Atlas ML signals.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,023.59\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\n- **Data Retrieval**: Resolve the issue with the Atlas ML system to access the necessary data for decision-making.\n- **Execution Plan**: Once data is available, proceed with wiring selected entrants, updating the tracked-asset list, and opening positions as per the strategy.\n\nI recommend checking the Atlas ML system's status and ensuring connectivity for the next run. If the issue persists, further investigation into the Atlas ML system's availability and integration may be required.",
+  "summary": "It seems that there was an issue with fetching the necessary data from the Atlas ML system. All requests related to the Atlas ML model, including recent run history, horizon recommendation, model info, latest top picks, and short picks, have failed. This prevents me from proceeding with the analysis and trading actions for this run.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,023.59\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\nGiven the failure to retrieve the necessary data from the Atlas ML system, I recommend the following actions for the next run:\n1. **Retry Data Fetch**: Ensure that the Atlas ML system is operational and attempt to fetch the data again.\n2. **Monitor System Status**: Check for any updates or notifications from the Atlas ML system regarding service disruptions or maintenance.\n3. **Prepare for Next Run**: Once the data is available, proceed with the planned actions, including wiring new assets, setting the tracked-asset list, allocating capital, and opening positions based on the latest ML signals.\n\nI will await further instructions or a successful data fetch in the next run to proceed with the trading strategy.",
   "writeActions": [],
   "errors": [
     {

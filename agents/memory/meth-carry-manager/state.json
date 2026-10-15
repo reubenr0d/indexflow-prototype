@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-10-15T00:50:01.845Z",
-  "thesis": "The vault currently has no available collateral and no open positions, resulting in an undefined hedge ratio. The mETH yield realized since the last run is also unavailable due to the lack of activity. The funding rate context cannot be assessed as there are no positions to evaluate. \n\nI will continue to monitor the situation and attempt to gather the necessary data in the next run.",
-  "lastThesisUpdate": "2026-10-15T00:50:01.845Z"
+  "lastRunAt": "2026-10-15T05:58:55.937Z",
+  "thesis": "The vault currently has no available collateral and no open positions, resulting in an undefined hedge ratio. The mETH yield realized since the last run is also unavailable due to the lack of activity. The funding rate context cannot be assessed as there are no positions to evaluate. \n\nI will update this thesis in the next run if the situation changes.",
+  "lastThesisUpdate": "2026-10-15T05:58:55.937Z"
 }

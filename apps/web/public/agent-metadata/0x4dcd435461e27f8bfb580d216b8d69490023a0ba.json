@@ -5,12 +5,12 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
-  "lastRunAt": "2026-10-15T00:36:18.970Z",
+  "lastRunAt": "2026-10-15T05:56:13.875Z",
   "latestRun": {
-    "runId": "2026-10-15T00:36:18.970Z",
-    "finishedAt": "2026-10-15T00:36:18.970Z",
-    "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with the planned actions such as wiring new assets, setting the tracked-asset list, or opening new positions based on the latest Atlas ML signals.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,023.59\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\n- **Data Retrieval**: Resolve the issue with the Atlas ML system to access the necessary data for decision-making.\n- **Execution Plan**: Once data is available, proceed with wiring selected entrants, updating the tracked-asset list, and opening positions as per the strategy.\n\nI recommend checking the Atlas ML system's status and ensuring connectivity for the next run. If the issue persists, further investigation into the Atlas ML system's availability and integration may be required.",
-    "startedAt": "2026-10-15T00:34:23.911Z",
+    "runId": "2026-10-15T05:56:13.875Z",
+    "finishedAt": "2026-10-15T05:56:13.875Z",
+    "summary": "It seems that there was an issue with fetching the necessary data from the Atlas ML system. All requests related to the Atlas ML model, including recent run history, horizon recommendation, model info, latest top picks, and short picks, have failed. This prevents me from proceeding with the analysis and trading actions for this run.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,023.59\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\nGiven the failure to retrieve the necessary data from the Atlas ML system, I recommend the following actions for the next run:\n1. **Retry Data Fetch**: Ensure that the Atlas ML system is operational and attempt to fetch the data again.\n2. **Monitor System Status**: Check for any updates or notifications from the Atlas ML system regarding service disruptions or maintenance.\n3. **Prepare for Next Run**: Once the data is available, proceed with the planned actions, including wiring new assets, setting the tracked-asset list, allocating capital, and opening positions based on the latest ML signals.\n\nI will await further instructions or a successful data fetch in the next run to proceed with the trading strategy.",
+    "startedAt": "2026-10-15T05:54:26.129Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -62,6 +62,61 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-10-15T05:56:13.875Z",
+      "startedAt": "2026-10-15T05:54:26.129Z",
+      "finishedAt": "2026-10-15T05:56:13.875Z",
+      "summary": "It seems that there was an issue with fetching the necessary data from the Atlas ML system. All requests related to the Atlas ML model, including recent run history, horizon recommendation, model info, latest top picks, and short picks, have failed. This prevents me from proceeding with the analysis and trading actions for this run.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $1,023.59\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Tracked Assets**: 3\n\n### Next Steps\nGiven the failure to retrieve the necessary data from the Atlas ML system, I recommend the following actions for the next run:\n1. **Retry Data Fetch**: Ensure that the Atlas ML system is operational and attempt to fetch the data again.\n2. **Monitor System Status**: Check for any updates or notifications from the Atlas ML system regarding service disruptions or maintenance.\n3. **Prepare for Next Run**: Once the data is available, proceed with the planned actions, including wiring new assets, setting the tracked-asset list, allocating capital, and opening positions based on the latest ML signals.\n\nI will await further instructions or a successful data fetch in the next run to proceed with the trading strategy.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_runs",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-10-15T00:36:18.970Z",
       "startedAt": "2026-10-15T00:34:23.911Z",
@@ -2210,99 +2265,6 @@
           ]
         }
       ]
-    },
-    {
-      "runId": "2026-06-22T13:48:28.003Z",
-      "startedAt": "2026-06-22T13:44:03.599Z",
-      "finishedAt": "2026-06-22T13:48:28.003Z",
-      "summary": "### Summary of Actions\n\n1. **Vault State**: The vault \"Minestarters ML Picks\" has a NAV of $4,343.77 USDC with a current allocation of $12,954.90 USDC to perpetual contracts. The available collateral has been fully utilized for the new positions.\n\n2. **Positions Opened**:\n   - **Gold Strike Resources Corp. (GSR.V)**: Long position opened with a size of $13,629.23 and collateral of $1,362.92 USDC.\n   - **Amarc Resources Ltd. (AHR.V)**: Long position opened with a size of $9,086.15 and collateral of $908.62 USDC.\n   - **Aris Mining Corporation (ARIS.TO)**: Long position opened with a size of $6,057.44 and collateral of $605.74 USDC.\n\n3. **Atlas ML Model**: The model continues to show strong predictive power with a mean Spearman IC of 0.3658 and a hit rate of 56%. The selected long positions are based on high ML scores and predicted returns.\n\n### Thesis\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel and diversified metals. Canada Nickel Company Inc. and Sage Potash Corp. are poised for significant growth, supported by high ML scores and predicted returns. On the short side, Homeland Uranium Corp. presents a compelling short opportunity due to its negative predicted return, suggesting a downturn in the uranium sector. This strategy leverages the robust predictive capabilities of the Atlas model while remaining vigilant to market news and trends. Future actions should focus on optimizing the portfolio by rotating capital into the highest potential opportunities as identified by the model.\n\n**Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n\n**Recommendations for Next Run**:\n- Monitor news for any significant developments that could impact the selected positions.\n- Re-evaluate the short position if new long candidates emerge with higher profit potential.\n- Continue leveraging the Atlas ML model's insights for both long and short strategies.",
-      "agentName": "mining-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 14,
-      "toolCalls": [
-        "get_vault_state",
-        "get_ml_runs",
-        "get_ml_horizon_recommendation",
-        "get_ml_model_info",
-        "get_ml_top_picks",
-        "get_ml_short_picks",
-        "get_oracle_assets",
-        "get_perp_capital_snapshot",
-        "yfinance_news",
-        "yfinance_news",
-        "plan_open_position",
-        "open_position",
-        "plan_open_position",
-        "open_position",
-        "plan_open_position",
-        "open_position",
-        "get_vault_state"
-      ],
-      "actionCount": 3,
-      "onChainActionCount": 3,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [],
-      "softFailures": [],
-      "riskOfficerVerdicts": [
-        {
-          "turn": 8,
-          "verdict": "approve",
-          "reason": "The long position on GSR.V uses 33.3% of available collateral ($1,362.92 of $4,088.77), within acceptable limits and aligned with the metals_risk_off regime.",
-          "proposedTools": [
-            "open_position"
-          ]
-        },
-        {
-          "turn": 10,
-          "verdict": "approve",
-          "reason": "The long position on AHR.V uses 22.2% of available collateral ($908.62 out of $4088.77), which is within acceptable limits given the metals risk-off regime.",
-          "proposedTools": [
-            "open_position"
-          ]
-        },
-        {
-          "turn": 12,
-          "verdict": "approve",
-          "reason": "The long position uses 14.8% of available collateral ($605.74 of $4088.77), within safe limits and aligned with the longBonus of 1.",
-          "proposedTools": [
-            "open_position"
-          ]
-        }
-      ],
-      "confirmationBatches": [
-        {
-          "turn": 8,
-          "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position"
-          ]
-        },
-        {
-          "turn": 10,
-          "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position"
-          ]
-        },
-        {
-          "turn": 12,
-          "status": "bypassed-non-interactive-execute",
-          "interactive": false,
-          "refinementRounds": 0,
-          "proposedWriteTools": [
-            "open_position"
-          ]
-        }
-      ]
     }
   ],
   "recentActions": [
@@ -4023,6 +3985,38 @@
       "justification": "Opening long position on ARIS.TO due to fresh ML signal with high predicted return. Churn-guard bypass active.",
       "timestamp": "2026-06-21T06:22:22.811Z",
       "txHash": "0xc8be78c8553c3574075bc8b4d60b7f952e7c07c39d047a2571fd18186d8bf042",
+      "agentName": "mining-manager",
+      "runId": "2026-06-21T06:22:22.811Z",
+      "params": {
+        "kind": "open_position",
+        "assetId": "0x61a8e56fdf474829a511bcde8826404be86e537d6aecc671fde526a2c8a8b907",
+        "isLong": true,
+        "size": "13624818790000000000000000000000000",
+        "collateral": "1362481879"
+      },
+      "riskOfficer": {
+        "verdict": "approve",
+        "reason": "Total collateral for new longs is 40.0% of available collateral ($4087.45), consistent with regime's longBonus=1."
+      }
+    },
+    {
+      "tool": "close_position",
+      "justification": "auto-rebalance: profit rotation: closing off-top-N long AHR.V (potential missing, pnl 0.00%) to free room for #1 long CNC.V (potential 0.4288)",
+      "timestamp": "2026-06-21T00:24:56.965Z",
+      "txHash": "0x11f00044ffff0a87c46a592013f272a067c326c3373335549770aefc9f075d52",
+      "agentName": "mining-manager",
+      "runId": "2026-06-21T00:24:56.965Z",
+      "params": {
+        "kind": "close_position",
+        "assetId": "0x7557d8b4b2347d33b4ebf35476c1a988024bfdc83b89ea7aa4d85372a4ddd1f6",
+        "isLong": true,
+        "sizeDelta": "13628362170000000000000000000000000",
+        "collateralDelta": "1362836217"
+      }
+    }
+  ]
+}
+186d8bf042",
       "agentName": "mining-manager",
       "runId": "2026-06-21T06:22:22.811Z",
       "params": {
