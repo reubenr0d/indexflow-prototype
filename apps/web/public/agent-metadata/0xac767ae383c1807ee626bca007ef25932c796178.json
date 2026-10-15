@@ -5,12 +5,12 @@
   "signalSource": "atlas-quality",
   "entryMode": "quality_score",
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
-  "lastRunAt": "2026-10-14T22:21:09.511Z",
+  "lastRunAt": "2026-10-15T11:30:10.192Z",
   "latestRun": {
-    "runId": "2026-10-14T22:21:09.511Z",
-    "finishedAt": "2026-10-14T22:21:09.511Z",
-    "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked asset list, or opening new positions at this time.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocation**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nI have grounded in the analyst's tier definitions, which include:\n- **Composite Weights**: Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), Construction (5%).\n- **Provenance Discount**: 0.7 for categories not yet empirically calibrated.\n- **Tier Scores**: Exceptional (100), Strong (80), Moderate (60), Weak (35), RedFlag (10).\n\n### Next Steps\n- Await resolution of the Atlas API issue to proceed with retrieving trade-ready picks.\n- Once resolved, I will execute the planned strategy to wire new entrants, update the tracked asset list, allocate capital, and open positions based on the latest trade-ready picks.\n\n### Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
-    "startedAt": "2026-10-14T22:20:38.249Z",
+    "runId": "2026-10-15T11:30:10.192Z",
+    "finishedAt": "2026-10-15T11:30:10.192Z",
+    "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API has failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked asset list, or opening new positions this run. \n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nI have successfully retrieved the quality matrix definition, which provides the tier scores and weights for each category. This ensures that when the API is functional, I can accurately assess the quality of mining companies based on the analyst's criteria.\n\n### Next Steps\n- **Await API Resolution**: I will need to wait until the Atlas API is operational again to proceed with any trading actions.\n- **Monitor Metals Regime**: The current \"metals_risk_off\" regime suggests caution, but with the inability to retrieve actionable data, no new positions will be opened this run.\n\n### Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
+    "startedAt": "2026-10-15T11:29:36.915Z",
     "agentName": "quality-matrix-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -39,6 +39,38 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-10-15T11:30:10.192Z",
+      "startedAt": "2026-10-15T11:29:36.915Z",
+      "finishedAt": "2026-10-15T11:30:10.192Z",
+      "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API has failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked asset list, or opening new positions this run. \n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nI have successfully retrieved the quality matrix definition, which provides the tier scores and weights for each category. This ensures that when the API is functional, I can accurately assess the quality of mining companies based on the analyst's criteria.\n\n### Next Steps\n- **Await API Resolution**: I will need to wait until the Atlas API is operational again to proceed with any trading actions.\n- **Monitor Metals Regime**: The current \"metals_risk_off\" regime suggests caution, but with the inability to retrieve actionable data, no new positions will be opened this run.\n\n### Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
+      "agentName": "quality-matrix-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 3,
+      "toolCalls": [
+        "get_vault_state",
+        "get_quality_matrix_definition",
+        "get_quality_trade_ready_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_quality_trade_ready_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-10-14T22:21:09.511Z",
       "startedAt": "2026-10-14T22:20:38.249Z",
