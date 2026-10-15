@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-10-14T22:21:09.511Z",
-  "startedAt": "2026-10-14T22:20:38.249Z",
-  "finishedAt": "2026-10-14T22:21:09.511Z",
+  "runId": "2026-10-15T00:37:33.048Z",
+  "startedAt": "2026-10-15T00:36:58.115Z",
+  "finishedAt": "2026-10-15T00:37:33.048Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
-  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked asset list, or opening new positions at this time.\n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocation**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nI have grounded in the analyst's tier definitions, which include:\n- **Composite Weights**: Drilling (35%), Resources (20%), Economic Studies (15%), Metallurgy (10%), Permitting (5%), Offtake (5%), Capital Raises (5%), Construction (5%).\n- **Provenance Discount**: 0.7 for categories not yet empirically calibrated.\n- **Tier Scores**: Exceptional (100), Strong (80), Moderate (60), Weak (35), RedFlag (10).\n\n### Next Steps\n- Await resolution of the Atlas API issue to proceed with retrieving trade-ready picks.\n- Once resolved, I will execute the planned strategy to wire new entrants, update the tracked asset list, allocate capital, and open positions based on the latest trade-ready picks.\n\n### Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, but without actionable data, no new positions will be opened this run.",
+  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked assets, or opening new positions this run. \n\n### Current Vault State\n- **Vault Name**: Minestarters Quality Matrix\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Quality Matrix Definition\nThe quality matrix is grounded in the analyst's definitions, with composite weights across eight categories and a provenance discount applied to categories not yet empirically calibrated.\n\n### Next Steps\n- Await successful retrieval of trade-ready picks to proceed with any trading actions.\n- Monitor the metals market regime, which is currently in a \"metals_risk_off\" state, suggesting caution but with a potential long bonus due to miners being deeply red.\n\nI will maintain the current state and await the availability of trade-ready picks to proceed with any trading actions.",
   "writeActions": [],
   "errors": [
     {
