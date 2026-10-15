@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-10-15T17:05:27.044Z",
+  "lastRunAt": "2026-10-15T20:25:07.554Z",
   "thesis": "The vault currently has no available collateral and no open positions, resulting in an undefined hedge ratio. The mETH yield realized since the last run is also unavailable due to the lack of activity. The funding rate context cannot be assessed as there are no positions to evaluate.\n\n- **Vault Address**: `0xcc2c466da6cdd4b03dd92988ad7f1dbfa7d1c33f`\n- **Current State**: No action taken due to lack of collateral and positions.\n- **Next Run Recommendation**: Monitor for available collateral and mETH balance updates.",
-  "lastThesisUpdate": "2026-10-15T17:05:27.044Z"
+  "lastThesisUpdate": "2026-10-15T20:25:07.554Z"
 }
