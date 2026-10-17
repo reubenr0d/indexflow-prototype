@@ -5,12 +5,12 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
-  "lastRunAt": "2026-10-17T05:37:58.343Z",
+  "lastRunAt": "2026-10-17T10:44:17.610Z",
   "latestRun": {
-    "runId": "2026-10-17T05:37:58.343Z",
-    "finishedAt": "2026-10-17T05:37:58.343Z",
-    "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with the selection and trading operations for this run. \n\nHere's the current state of your vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Share Price**: $0.000766\n- **Total Supply**: $70,399.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Collected Fees**: $65.10\n- **Assets Count**: 3\n\nGiven the failure to retrieve the necessary Atlas ML data, I am unable to wire new assets, adjust the tracked asset list, allocate capital, or open/close positions. I recommend attempting to fetch the Atlas ML data again in the next run to proceed with the necessary actions.\n\nIf you have any specific instructions or need further assistance, please let me know!",
-    "startedAt": "2026-10-17T05:35:57.379Z",
+    "runId": "2026-10-17T10:44:17.610Z",
+    "finishedAt": "2026-10-17T10:44:17.610Z",
+    "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with any trading actions or updating the vault's strategy. Without this data, I cannot wire new assets, adjust the tracked-asset list, or open/close positions based on the latest model insights.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- I will need to retry fetching the Atlas ML data in the next run. This data is crucial for making informed decisions on asset wiring, position management, and capital allocation.\n- Once the data is available, I will proceed with the planned actions: wiring new assets, updating the tracked list, and managing positions based on the latest ML insights and market conditions.\n\nPlease ensure that the Atlas ML system is operational for the next run to enable a full strategy update and execution.",
+    "startedAt": "2026-10-17T10:42:16.863Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -62,6 +62,61 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-10-17T10:44:17.610Z",
+      "startedAt": "2026-10-17T10:42:16.863Z",
+      "finishedAt": "2026-10-17T10:44:17.610Z",
+      "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with any trading actions or updating the vault's strategy. Without this data, I cannot wire new assets, adjust the tracked-asset list, or open/close positions based on the latest model insights.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- I will need to retry fetching the Atlas ML data in the next run. This data is crucial for making informed decisions on asset wiring, position management, and capital allocation.\n- Once the data is available, I will proceed with the planned actions: wiring new assets, updating the tracked list, and managing positions based on the latest ML insights and market conditions.\n\nPlease ensure that the Atlas ML system is operational for the next run to enable a full strategy update and execution.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_runs",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-10-17T05:37:58.343Z",
       "startedAt": "2026-10-17T05:35:57.379Z",
