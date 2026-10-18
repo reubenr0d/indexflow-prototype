@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-10-18T14:09:07.564Z",
+  "lastRunAt": "2026-10-18T17:28:11.648Z",
   "thesis": "The current hedge ratio is undefined due to the absence of open positions and available collateral. The vault has not realized any mETH yield since the last run, and the funding rate context cannot be assessed. The ETH-USD price is $2415.80, but without collateral, no actions can be taken.",
   "lastThesisUpdate": "2026-10-18T04:36:47.072Z"
 }
