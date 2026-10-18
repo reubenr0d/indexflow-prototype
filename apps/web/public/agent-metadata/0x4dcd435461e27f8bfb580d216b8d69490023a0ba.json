@@ -4,13 +4,13 @@
   "agentDescription": "Mining-focused long/short vault driven by the Atlas ML engine and live news context",
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
-  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. Canada Nickel Company Inc. (CNC.V) and Sage Potash Corp. (SAGE.V) remain top picks due to their high ML scores and predicted returns. Hudbay Minerals Inc. (HBM.TO) has been added to the tracked assets, aligning with the model's predictions and current metals regime, which suggests a potential for recovery and supports a long bias.\n\nOn the short side, Homeland Uranium Corp. (HLU.V) presents a compelling short opportunity with a significant negative predicted return. Despite the lack of specific bearish news, the model's confidence in the negative outlook for this uranium-focused company justifies a short position.",
-  "lastRunAt": "2026-10-17T22:19:17.671Z",
+  "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
+  "lastRunAt": "2026-10-18T00:07:02.914Z",
   "latestRun": {
-    "runId": "2026-10-17T22:19:17.671Z",
-    "finishedAt": "2026-10-17T22:19:17.671Z",
-    "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents me from proceeding with the full workflow as requested.\n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Share Price**: $0.000766\n- **Total Supply**: 70,399.00 USDC\n- **Asset Count**: 3\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Collected Fees**: $65.10\n- **Deposit Fee**: 0.50%\n- **Redeem Fee**: 0.50%\n\nUnfortunately, without the Atlas ML data, I cannot proceed with selecting new entrants, wiring assets, or making trading decisions. I recommend checking the Atlas ML system for any connectivity issues or data availability problems.\n\nPlease let me know if there's anything else you'd like to do or if you have any specific instructions given the current limitations.",
-    "startedAt": "2026-10-17T22:17:20.608Z",
+    "runId": "2026-10-18T00:07:02.914Z",
+    "finishedAt": "2026-10-18T00:07:02.914Z",
+    "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with the planned operations like wiring new assets, setting the tracked-asset list, allocating capital, and opening new positions.\n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\nGiven the current state, we cannot proceed with any new trading actions without the latest Atlas ML data. I recommend trying again later once the data retrieval issue is resolved. \n\nFor now, I will summarize the current situation:\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.\n\n### Recommendations for Next Run\n- Attempt to retrieve the latest Atlas ML data again.\n- Once data is available, proceed with wiring new assets, setting the tracked-asset list, allocating capital, and opening new positions as planned.\n- Monitor any changes in the metals regime or market conditions that could impact our strategy.",
+    "startedAt": "2026-10-18T00:04:47.450Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -62,6 +62,61 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-10-18T00:07:02.914Z",
+      "startedAt": "2026-10-18T00:04:47.450Z",
+      "finishedAt": "2026-10-18T00:07:02.914Z",
+      "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with the planned operations like wiring new assets, setting the tracked-asset list, allocating capital, and opening new positions.\n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\nGiven the current state, we cannot proceed with any new trading actions without the latest Atlas ML data. I recommend trying again later once the data retrieval issue is resolved. \n\nFor now, I will summarize the current situation:\n\n## Thesis\nThe Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.\n\n### Recommendations for Next Run\n- Attempt to retrieve the latest Atlas ML data again.\n- Once data is available, proceed with wiring new assets, setting the tracked-asset list, allocating capital, and opening new positions as planned.\n- Monitor any changes in the metals regime or market conditions that could impact our strategy.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_runs",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-10-17T22:19:17.671Z",
       "startedAt": "2026-10-17T22:17:20.608Z",
