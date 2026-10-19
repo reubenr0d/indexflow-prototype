@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-10-19T06:16:01.623Z",
-  "startedAt": "2026-10-19T06:14:15.078Z",
-  "finishedAt": "2026-10-19T06:16:01.623Z",
+  "runId": "2026-10-19T13:16:25.639Z",
+  "startedAt": "2026-10-19T13:14:12.819Z",
+  "finishedAt": "2026-10-19T13:16:25.639Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "It seems there is an ongoing issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with the planned actions for today. \n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $72.93\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n\nGiven the inability to access the Atlas ML data, we cannot proceed with wiring new assets, setting tracked assets, allocating capital, or opening new positions. We will need to revisit these actions once the Atlas ML system is accessible again.\n\n### Next Steps\n- Monitor the status of the Atlas ML system to determine when it becomes operational.\n- Once operational, reattempt fetching the necessary data and proceed with the planned actions.\n\nIf the system remains inaccessible, consider reaching out to technical support to resolve the issue.",
+  "summary": "It seems there is an ongoing issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with any trading actions or updates to the vault's tracked asset list. \n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $129.79\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Assets Tracked**: 3\n\n### Next Steps\n- Once the Atlas ML system is accessible again, we will need to:\n  - Retrieve the latest Atlas ML top picks and short picks.\n  - Wire any new selected long or short entrants.\n  - Update the vault's tracked asset list.\n  - Allocate capital to the perp trading account.\n  - Open new positions based on the highest profit potential.\n  - Scan news for support or veto context.\n  - Close any positions with unrealized PnL outside the set thresholds.\n\nUnfortunately, without the Atlas ML data, we cannot proceed with these actions at this time. Please check back later when the system is operational.",
   "writeActions": [],
   "errors": [
     {
