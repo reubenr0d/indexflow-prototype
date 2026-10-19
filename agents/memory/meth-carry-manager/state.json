@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-10-19T13:20:14.220Z",
+  "lastRunAt": "2026-10-19T19:25:54.830Z",
   "thesis": "The current hedge ratio is undefined due to the inability to read the reserve state and the absence of open positions. The vault has not realized any mETH yield since the last run, and the funding rate context cannot be assessed. I will attempt to gather the necessary data in the next run.",
   "lastThesisUpdate": "2026-10-18T23:17:01.436Z"
 }
