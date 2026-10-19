@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-10-19T19:23:30.582Z",
+  "lastRunAt": "2026-10-19T23:43:26.308Z",
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests a cautious environment for miners, but without actionable data, no new positions will be opened this run.",
-  "lastThesisUpdate": "2026-10-19T19:23:30.582Z"
+  "lastThesisUpdate": "2026-10-19T23:43:26.308Z"
 }
