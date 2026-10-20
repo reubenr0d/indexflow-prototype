@@ -7,14 +7,14 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-10-20T04:52:07.298Z",
-  "startedAt": "2026-10-20T04:49:04.442Z",
-  "finishedAt": "2026-10-20T04:52:07.298Z",
+  "runId": "2026-10-20T10:04:34.132Z",
+  "startedAt": "2026-10-20T10:03:20.110Z",
+  "finishedAt": "2026-10-20T10:04:34.132Z",
   "status": "failed",
   "usage": {
-    "turns": 2,
-    "toolCalls": 7,
-    "errors": 6,
+    "turns": 1,
+    "toolCalls": 0,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
@@ -22,26 +22,6 @@
   "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
-    {
-      "tool": "get_ml_runs",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_horizon_recommendation",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_model_info",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_top_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_short_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
     {
       "tool": "_agent",
       "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
