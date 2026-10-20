@@ -7,19 +7,19 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-10-19T23:42:01.945Z",
-  "startedAt": "2026-10-19T23:40:00.769Z",
-  "finishedAt": "2026-10-19T23:42:01.945Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-10-20T04:52:07.298Z",
+  "startedAt": "2026-10-20T04:49:04.442Z",
+  "finishedAt": "2026-10-20T04:52:07.298Z",
+  "status": "failed",
   "usage": {
     "turns": 2,
-    "toolCalls": 6,
-    "errors": 5,
+    "toolCalls": 7,
+    "errors": 6,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "It seems there is an ongoing issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. Without this data, I am unable to proceed with the selection and execution of trades or updates to the vault's asset list.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Total Supply**: 70,399.00 USDC\n\n### Next Steps\n1. **Data Retrieval**: We need to resolve the data retrieval issue with the Atlas ML system to proceed with any trading actions.\n2. **Re-evaluation**: Once the data is accessible, re-evaluate the top picks and short candidates, and proceed with the trading strategy as planned.\n3. **Monitoring**: Keep an eye on the system status for any updates or resolutions to the data access issue.\n\nI recommend checking back later to see if the data retrieval issue has been resolved so we can proceed with the intended actions.",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
@@ -41,6 +41,10 @@
     {
       "tool": "get_ml_short_picks",
       "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+    },
+    {
+      "tool": "_agent",
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
     }
   ]
 }

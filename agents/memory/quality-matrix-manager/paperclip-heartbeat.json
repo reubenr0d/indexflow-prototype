@@ -7,24 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-10-19T23:43:26.308Z",
-  "startedAt": "2026-10-19T23:42:46.778Z",
-  "finishedAt": "2026-10-19T23:43:26.308Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-10-20T04:53:19.202Z",
+  "startedAt": "2026-10-20T04:52:38.404Z",
+  "finishedAt": "2026-10-20T04:53:19.202Z",
+  "status": "failed",
   "usage": {
-    "turns": 3,
-    "toolCalls": 3,
+    "turns": 1,
+    "toolCalls": 0,
     "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests a cautious environment for miners, but without actionable data, no new positions will be opened this run.",
-  "summary": "The attempt to retrieve the latest trade-ready picks from the Atlas API has failed due to a request error (`ATLAS_REQUEST_FAILED`). This means I cannot proceed with wiring new entrants, updating the tracked-asset list, or opening new positions this run. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests a cautious environment for miners, but without actionable data, no new positions will be opened this run.\n\n## Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n## Recommendations for Next Run\n- Retry fetching trade-ready picks from the Atlas API.\n- Once data is available, proceed with wiring new entrants, updating the tracked-asset list, and opening new positions based on the latest trade-ready picks.",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
-      "tool": "get_quality_trade_ready_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+      "tool": "_agent",
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
     }
   ]
 }
