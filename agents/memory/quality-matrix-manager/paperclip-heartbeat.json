@@ -7,24 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-11-03T09:33:46.092Z",
-  "startedAt": "2026-11-03T09:33:08.036Z",
-  "finishedAt": "2026-11-03T09:33:46.092Z",
-  "status": "failed",
+  "runId": "2026-11-03T17:54:11.625Z",
+  "startedAt": "2026-11-03T17:53:36.152Z",
+  "finishedAt": "2026-11-03T17:54:11.625Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 1,
-    "toolCalls": 0,
+    "turns": 3,
+    "toolCalls": 3,
     "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests a cautious environment for miners, but without actionable data, no new positions will be opened this run.",
-  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
+  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the vault's tracked-asset list, allocating capital, or opening new positions. \n\nGiven this situation, the strategy will remain on hold until the trade-ready picks can be successfully retrieved. The vault will maintain its current state, and no new positions will be opened this run. The metals market is currently in a \"metals_risk_off\" regime, which suggests a cautious environment for miners. \n\nI will update the thesis to reflect this status and await the availability of actionable data in future runs.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests a cautious environment for miners, but without actionable data, no new positions will be opened this run.",
   "writeActions": [],
   "errors": [
     {
-      "tool": "_agent",
-      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
+      "tool": "get_quality_trade_ready_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
     }
   ]
 }

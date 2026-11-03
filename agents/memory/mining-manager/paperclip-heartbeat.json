@@ -7,24 +7,40 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-11-03T09:32:30.714Z",
-  "startedAt": "2026-11-03T09:31:22.333Z",
-  "finishedAt": "2026-11-03T09:32:30.714Z",
-  "status": "failed",
+  "runId": "2026-11-03T17:52:54.757Z",
+  "startedAt": "2026-11-03T17:50:50.329Z",
+  "finishedAt": "2026-11-03T17:52:54.757Z",
+  "status": "succeeded_with_errors",
   "usage": {
-    "turns": 1,
-    "toolCalls": 0,
-    "errors": 1,
+    "turns": 2,
+    "toolCalls": 6,
+    "errors": 5,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
+  "summary": "It appears that there was a failure in fetching the necessary data from the Atlas ML system, which includes the recent model runs, horizon recommendation, model information, top picks, and short picks. This means I am unable to proceed with the planned actions such as wiring new assets, setting the tracked-asset list, allocating capital, and opening new positions based on the latest Atlas ML insights.\n\nGiven this situation, I recommend the following steps for the next run:\n\n1. **Ensure Data Accessibility**: Verify that the Atlas ML system is operational and accessible to ensure data can be retrieved successfully in future runs.\n\n2. **Review System Logs**: Check for any specific error messages or logs that might indicate why the Atlas requests failed. This could provide insights into resolving the issue.\n\n3. **Retry Data Fetch**: Once the data accessibility issue is resolved, rerun the process to fetch the necessary data and proceed with the planned actions.\n\n4. **Monitor System Health**: Regularly check the system's health and connectivity to prevent similar issues in the future.\n\n5. **Prepare for Manual Intervention**: In case of persistent issues, consider manual intervention or alternative data sources to maintain operational continuity.\n\nI will update the thesis and strategy once the Atlas ML data is accessible again.",
   "writeActions": [],
   "errors": [
     {
-      "tool": "_agent",
-      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
+      "tool": "get_ml_runs",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+    },
+    {
+      "tool": "get_ml_horizon_recommendation",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+    },
+    {
+      "tool": "get_ml_model_info",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+    },
+    {
+      "tool": "get_ml_top_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+    },
+    {
+      "tool": "get_ml_short_picks",
+      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
     }
   ]
 }
