@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-11-05T02:30:28.217Z",
-  "startedAt": "2026-11-05T02:29:46.077Z",
-  "finishedAt": "2026-11-05T02:30:28.217Z",
+  "runId": "2026-11-05T10:56:52.280Z",
+  "startedAt": "2026-11-05T10:56:15.537Z",
+  "finishedAt": "2026-11-05T10:56:52.280Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for miners, but without actionable data, no new positions will be opened this run.",
-  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the tracked asset list, allocating capital, or opening new positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for miners, but without actionable data, no new positions will be opened this run.\n\n### Current Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: None\n\n### Recommendations for Next Run\n- Await successful retrieval of trade-ready picks to proceed with asset wiring and position openings.\n- Monitor the metals market regime for any significant changes that could influence trading decisions once data becomes available.",
+  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the tracked asset list, or opening new long positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for miners, but without actionable data, no new positions will be opened this run.\n\n### Vault State\n- **Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n- **NAV**: $0.00\n- **Perp Allocated**: $0.00\n- **Tracked Assets**: 0\n\n### Recommendations\n- Monitor the availability of trade-ready picks in future runs.\n- Reassess the strategy once the data becomes available to capitalize on the favorable metals market regime.",
   "writeActions": [],
   "errors": [
     {
