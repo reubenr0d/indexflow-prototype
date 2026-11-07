@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-11-06T20:57:03.785Z",
-  "startedAt": "2026-11-06T20:56:24.355Z",
-  "finishedAt": "2026-11-06T20:57:03.785Z",
+  "runId": "2026-11-07T00:59:09.640Z",
+  "startedAt": "2026-11-07T00:58:36.734Z",
+  "finishedAt": "2026-11-07T00:59:09.640Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, especially with short positions, but without actionable data, no new positions will be opened this run.\n\nPlease let me know if there are any other actions or checks you would like to perform.",
-  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the tracked-asset list, or opening new positions. The vault's current state remains unchanged with no assets tracked and no capital allocated to perpetual trading.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, especially with short positions, but without actionable data, no new positions will be opened this run.\n\nPlease let me know if there are any other actions or checks you would like to perform.",
+  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the tracked-asset list, or opening new positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution, especially with short positions, but without actionable data, no new positions will be opened this run.\n\nPlease let me know if there are any other actions or checks you would like to perform.",
   "writeActions": [],
   "errors": [
     {
