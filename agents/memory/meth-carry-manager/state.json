@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:07:51.365Z",
-  "lastRunAt": "2026-11-07T07:14:36.834Z",
+  "lastRunAt": "2026-11-07T14:05:58.145Z",
   "thesis": "- **Pre-Hedge Ratio**: N/A (no positions)\n- **Post-Hedge Ratio**: N/A (no positions)\n- **mETH Balance**: N/A (unable to read reserve state)\n- **Funding Rate Context**: N/A (unable to read reserve state)\n- **Realised mETH Yield**: N/A (no activity)\n\nThe vault remains inactive due to the inability to access necessary data. Further actions will be contingent on resolving the access issue.",
-  "lastThesisUpdate": "2026-11-07T01:01:34.771Z"
+  "lastThesisUpdate": "2026-11-07T14:05:58.145Z"
 }
