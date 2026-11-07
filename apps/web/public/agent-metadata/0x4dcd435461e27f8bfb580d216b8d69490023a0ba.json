@@ -5,12 +5,12 @@
   "signalSource": "atlas-ml",
   "entryMode": "ml_score",
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "lastRunAt": "2026-11-07T14:02:37.129Z",
+  "lastRunAt": "2026-11-07T18:49:03.677Z",
   "latestRun": {
-    "runId": "2026-11-07T14:02:37.129Z",
-    "finishedAt": "2026-11-07T14:02:37.129Z",
-    "summary": "It seems there was a failure in fetching the necessary data from the Atlas ML system, which includes the recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the selection and wiring of new entrants, updating the tracked-asset list, or opening new positions.\n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Total Supply**: 70,399.00 USDC\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Collected Fees**: $65.10\n- **Deposit Fee**: 0.50%\n- **Redeem Fee**: 0.50%\n\nDue to the data retrieval issue, I am unable to update our thesis or make any trading decisions at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-    "startedAt": "2026-11-07T14:00:36.496Z",
+    "runId": "2026-11-07T18:49:03.677Z",
+    "finishedAt": "2026-11-07T18:49:03.677Z",
+    "summary": "There was a failure in fetching the necessary data from the Atlas ML system, including recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the selection and execution of trades, or to update the vault's tracked assets and positions.\n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Total Supply**: $70,399.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Collected Fees**: $65.10\n- **Assets Tracked**: 3\n\n### Next Steps\n- Resolve the data retrieval issue with the Atlas ML system to access the latest model insights and top picks.\n- Once data is accessible, proceed with selecting long and short entrants based on the Atlas ML model, wire new assets, set the tracked asset list, allocate capital, and open positions as per the strategy.\n- Scan news for support/veto context and manage positions accordingly.\n\nI will attempt to retrieve the necessary data again in the next run.",
+    "startedAt": "2026-11-07T18:47:04.033Z",
     "agentName": "mining-manager",
     "model": "gpt-4o",
     "modelSource": "env-global",
@@ -62,6 +62,61 @@
     "confirmationBatches": []
   },
   "recentRuns": [
+    {
+      "runId": "2026-11-07T18:49:03.677Z",
+      "startedAt": "2026-11-07T18:47:04.033Z",
+      "finishedAt": "2026-11-07T18:49:03.677Z",
+      "summary": "There was a failure in fetching the necessary data from the Atlas ML system, including recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the selection and execution of trades, or to update the vault's tracked assets and positions.\n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Total Supply**: $70,399.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Collected Fees**: $65.10\n- **Assets Tracked**: 3\n\n### Next Steps\n- Resolve the data retrieval issue with the Atlas ML system to access the latest model insights and top picks.\n- Once data is accessible, proceed with selecting long and short entrants based on the Atlas ML model, wire new assets, set the tracked asset list, allocate capital, and open positions as per the strategy.\n- Scan news for support/veto context and manage positions accordingly.\n\nI will attempt to retrieve the necessary data again in the next run.",
+      "agentName": "mining-manager",
+      "model": "gpt-4o",
+      "modelSource": "env-global",
+      "network": "sepolia",
+      "dryRun": false,
+      "confirmWrites": true,
+      "turns": 2,
+      "toolCalls": [
+        "get_vault_state",
+        "get_ml_runs",
+        "get_ml_horizon_recommendation",
+        "get_ml_model_info",
+        "get_ml_top_picks",
+        "get_ml_short_picks"
+      ],
+      "actionCount": 0,
+      "onChainActionCount": 0,
+      "offChainActionCount": 0,
+      "reasoningSummaries": [],
+      "errors": [
+        {
+          "tool": "get_ml_runs",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_horizon_recommendation",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_model_info",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_top_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        },
+        {
+          "tool": "get_ml_short_picks",
+          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
+          "errorCode": "ATLAS_REQUEST_FAILED"
+        }
+      ],
+      "softFailures": [],
+      "riskOfficerVerdicts": [],
+      "confirmationBatches": []
+    },
     {
       "runId": "2026-11-07T14:02:37.129Z",
       "startedAt": "2026-11-07T14:00:36.496Z",
@@ -1332,61 +1387,6 @@
       "startedAt": "2026-10-18T09:37:00.090Z",
       "finishedAt": "2026-10-18T09:38:50.084Z",
       "summary": "It seems there is an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with the selection of new entrants, wiring assets, setting tracked assets, and opening new positions. \n\nHere's a summary of the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.93\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n\nDue to the data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.\n\n### Next Steps\n- Monitor the status of the Atlas ML system and attempt to retrieve the necessary data once it becomes available.\n- Reassess the vault's strategy and positions based on the latest available data from Atlas ML when possible.\n\nPlease let me know if there's anything else you'd like to do in the meantime.",
-      "agentName": "mining-manager",
-      "model": "gpt-4o",
-      "modelSource": "env-global",
-      "network": "sepolia",
-      "dryRun": false,
-      "confirmWrites": true,
-      "turns": 2,
-      "toolCalls": [
-        "get_vault_state",
-        "get_ml_runs",
-        "get_ml_horizon_recommendation",
-        "get_ml_model_info",
-        "get_ml_top_picks",
-        "get_ml_short_picks"
-      ],
-      "actionCount": 0,
-      "onChainActionCount": 0,
-      "offChainActionCount": 0,
-      "reasoningSummaries": [],
-      "errors": [
-        {
-          "tool": "get_ml_runs",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
-          "errorCode": "ATLAS_REQUEST_FAILED"
-        },
-        {
-          "tool": "get_ml_horizon_recommendation",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
-          "errorCode": "ATLAS_REQUEST_FAILED"
-        },
-        {
-          "tool": "get_ml_model_info",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
-          "errorCode": "ATLAS_REQUEST_FAILED"
-        },
-        {
-          "tool": "get_ml_top_picks",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
-          "errorCode": "ATLAS_REQUEST_FAILED"
-        },
-        {
-          "tool": "get_ml_short_picks",
-          "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}",
-          "errorCode": "ATLAS_REQUEST_FAILED"
-        }
-      ],
-      "softFailures": [],
-      "riskOfficerVerdicts": [],
-      "confirmationBatches": []
-    },
-    {
-      "runId": "2026-10-18T04:33:17.734Z",
-      "startedAt": "2026-10-18T04:31:29.152Z",
-      "finishedAt": "2026-10-18T04:33:17.734Z",
-      "summary": "It seems there was an issue with fetching the necessary data from the Atlas ML system, including recent run history, horizon recommendation, model info, latest top picks, and short picks. This prevents us from proceeding with any trading actions based on the Atlas ML signals.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $53.92\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Assets Tracked**: 3\n\n### Next Steps\n- Since we cannot proceed with the trading actions due to the data retrieval issue, we will need to wait until the Atlas ML system is accessible again.\n- Once the system is back online, we can reattempt to fetch the necessary data and proceed with the trading strategy as planned.\n\nIf there are any specific actions or checks you would like to perform in the meantime, please let me know!",
       "agentName": "mining-manager",
       "model": "gpt-4o",
       "modelSource": "env-global",

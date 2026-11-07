@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0xac767ae383c1807ee626bca007ef25932c796178",
   "vaultName": "Minestarters Quality Matrix",
-  "runId": "2026-11-07T14:03:48.578Z",
-  "startedAt": "2026-11-07T14:03:08.745Z",
-  "finishedAt": "2026-11-07T14:03:48.578Z",
+  "runId": "2026-11-07T18:50:12.099Z",
+  "startedAt": "2026-11-07T18:49:40.526Z",
+  "finishedAt": "2026-11-07T18:50:12.099Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 3,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for long positions, but without actionable data, no new positions will be opened this run.\n\n**Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n**Current State**: No positions open, awaiting trade-ready picks.",
-  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the vault's tracked assets, allocating capital, or opening new positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for long positions, but without actionable data, no new positions will be opened this run.\n\n**Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n**Current State**: No positions open, awaiting trade-ready picks.",
+  "summary": "The attempt to retrieve the latest trade-ready picks failed due to an error with the Atlas request. As a result, I am unable to proceed with the planned actions such as wiring new entrants, setting the tracked-asset list, allocating capital, or opening new positions. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions.\n\n## Thesis\nThe strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_on\" regime, which suggests a favorable environment for long positions, but without actionable data, no new positions will be opened this run.\n\n**Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n**Current State**: No positions open, awaiting trade-ready picks.",
   "writeActions": [],
   "errors": [
     {
