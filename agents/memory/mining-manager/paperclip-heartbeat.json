@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-11-08T17:04:56.230Z",
-  "startedAt": "2026-11-08T17:02:55.242Z",
-  "finishedAt": "2026-11-08T17:04:56.230Z",
+  "runId": "2026-11-08T21:11:43.225Z",
+  "startedAt": "2026-11-08T21:09:42.375Z",
+  "finishedAt": "2026-11-08T21:11:43.225Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "There was a failure in fetching the necessary data from the Atlas ML system, which includes the recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with selecting new entrants or making informed decisions on opening or closing positions.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- **Data Retrieval**: We need to resolve the issue with the Atlas ML system to fetch the necessary data for making informed trading decisions.\n- **Reattempt**: Once the data is available, reattempt the process of selecting new entrants, wiring assets, setting tracked assets, allocating capital, and opening positions.\n\nI recommend monitoring the system for updates and re-running the process once the data retrieval issue is resolved.",
+  "summary": "There was a failure in fetching the necessary data from the Atlas ML system, which includes recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with wiring new assets, setting the vault's tracked-asset list, allocating capital, or opening new positions.\n\nHere's the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Total Supply**: $70,399.00\n- **Collected Fees**: $65.10\n- **Assets Tracked**: 3\n\nGiven the current situation, I recommend attempting to fetch the Atlas ML data again in the next run. This will allow us to update the vault's strategy and make informed decisions based on the latest model insights and market conditions.\n\nIf you have any specific actions or adjustments you'd like to make in the meantime, please let me know.",
   "writeActions": [],
   "errors": [
     {
