@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": null,
   "vaultName": null,
-  "runId": "2026-11-02T18:53:21.997Z",
-  "startedAt": "2026-11-02T18:53:21.096Z",
-  "finishedAt": "2026-11-02T18:53:21.997Z",
+  "runId": "2026-11-09T19:15:01.723Z",
+  "startedAt": "2026-11-09T19:15:00.882Z",
+  "finishedAt": "2026-11-09T19:15:01.723Z",
   "status": "failed",
   "usage": {
     "turns": 1,
