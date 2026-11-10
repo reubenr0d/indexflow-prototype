@@ -29,7 +29,7 @@
     "lastResultAt": null
   },
   "deployedAt": "2026-05-28T08:05:25.024Z",
-  "lastRunAt": "2026-11-10T09:51:13.849Z",
+  "lastRunAt": "2026-11-10T17:50:35.228Z",
   "thesis": "The strategy remains on hold due to the inability to retrieve trade-ready picks. The vault will maintain its current state and await the availability of trade-ready picks to proceed with any trading actions. The metals market is in a \"metals_risk_off\" regime, which suggests caution for short positions, but without actionable data, no new positions will be opened this run.\n\n**Vault Address**: 0xac767ae383c1807ee626bca007ef25932c796178\n**Current State**: No positions open, awaiting trade-ready picks.\n\nI will attempt to retrieve the trade-ready picks again in the next run.",
-  "lastThesisUpdate": "2026-11-10T09:51:13.849Z"
+  "lastThesisUpdate": "2026-11-10T17:50:35.228Z"
 }
