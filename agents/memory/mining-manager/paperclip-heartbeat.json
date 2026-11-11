@@ -7,40 +7,24 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-11-11T14:24:54.259Z",
-  "startedAt": "2026-11-11T14:23:04.446Z",
-  "finishedAt": "2026-11-11T14:24:54.259Z",
-  "status": "succeeded_with_errors",
+  "runId": "2026-11-11T21:57:51.920Z",
+  "startedAt": "2026-11-11T21:56:41.780Z",
+  "finishedAt": "2026-11-11T21:57:51.920Z",
+  "status": "failed",
   "usage": {
-    "turns": 2,
-    "toolCalls": 6,
-    "errors": 5,
+    "turns": 1,
+    "toolCalls": 0,
+    "errors": 1,
     "softFailures": 0,
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "It seems there was a failure in fetching the necessary data from the Atlas ML system, which includes recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the selection of new entrants, asset wiring, or position management.\n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- I recommend attempting to fetch the Atlas ML data again in the next run to update the strategy and make informed decisions based on the latest model insights.\n- Once the data is available, proceed with the selection of new entrants, asset wiring, and position management as initially planned.\n\nIf you have any specific actions or adjustments you'd like to make in the meantime, please let me know!",
+  "summary": "FAILED: LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n",
   "writeActions": [],
   "errors": [
     {
-      "tool": "get_ml_runs",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_horizon_recommendation",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_model_info",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_top_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
-    },
-    {
-      "tool": "get_ml_short_picks",
-      "error": "{\n  \"success\": false,\n  \"error_code\": \"ATLAS_REQUEST_FAILED\",\n  \"message\": \"fetch failed\"\n}"
+      "tool": "_agent",
+      "error": "LLM API 429: {\n    \"error\": {\n        \"message\": \"You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.\",\n        \"type\": \"insufficient_quota\",\n        \"param\": null,\n        \"code\": \"credit_balance_exhausted\"\n    }\n}\n"
     }
   ]
 }
