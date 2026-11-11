@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-11-11T06:16:56.391Z",
-  "startedAt": "2026-11-11T06:14:54.547Z",
-  "finishedAt": "2026-11-11T06:16:56.391Z",
+  "runId": "2026-11-11T14:24:54.259Z",
+  "startedAt": "2026-11-11T14:23:04.446Z",
+  "finishedAt": "2026-11-11T14:24:54.259Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "It seems there was a failure in fetching the necessary data from the Atlas ML system, which includes the recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with selecting new entrants, wiring assets, or making any trading decisions.\n\nHere is the current state of the vault:\n\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Total Supply**: 70,399.00 USDC\n- **Asset Count**: 3\n\nUnfortunately, due to the data retrieval issue, I cannot update the tracked assets, allocate capital, or open/close positions at this time. I recommend revisiting the Atlas ML system to resolve the data access issue before attempting further actions.\n\nIf you have any specific instructions or need further assistance, please let me know!",
+  "summary": "It seems there was a failure in fetching the necessary data from the Atlas ML system, which includes recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the selection of new entrants, asset wiring, or position management.\n\n### Current Vault State\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Asset Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- I recommend attempting to fetch the Atlas ML data again in the next run to update the strategy and make informed decisions based on the latest model insights.\n- Once the data is available, proceed with the selection of new entrants, asset wiring, and position management as initially planned.\n\nIf you have any specific actions or adjustments you'd like to make in the meantime, please let me know!",
   "writeActions": [],
   "errors": [
     {
