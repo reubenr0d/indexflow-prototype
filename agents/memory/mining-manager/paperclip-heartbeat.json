@@ -7,9 +7,9 @@
   "network": "sepolia",
   "vaultAddress": "0x4dcd435461e27f8bfb580d216b8d69490023a0ba",
   "vaultName": "Minestarters ML Picks",
-  "runId": "2026-11-10T17:49:40.236Z",
-  "startedAt": "2026-11-10T17:49:02.180Z",
-  "finishedAt": "2026-11-10T17:49:40.236Z",
+  "runId": "2026-11-10T23:20:53.329Z",
+  "startedAt": "2026-11-10T23:18:47.425Z",
+  "finishedAt": "2026-11-10T23:20:53.329Z",
   "status": "succeeded_with_errors",
   "usage": {
     "turns": 2,
@@ -19,7 +19,7 @@
     "writeActions": 0
   },
   "thesis": "The Atlas ML model continues to highlight strong potential in the mining sector, particularly for companies involved in nickel, diversified metals, and copper. However, due to a data retrieval issue, we are unable to update our thesis with the latest model insights or news context at this time. We will need to revisit this once the Atlas ML system is accessible again.",
-  "summary": "There was a failure in fetching the necessary data from the Atlas ML system, which includes recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I am unable to proceed with the tasks related to wiring new assets, setting the tracked-asset list, allocating capital, or opening new positions.\n\n### Current Vault State\n- **Vault Name**: Minestarters ML Picks\n- **Vault Address**: 0x4dcd435461e27f8bfb580d216b8d69490023a0ba\n- **NAV**: $0.00\n- **Perp Allocated**: $12,954.90\n- **Available for Perp**: $0.00\n- **Assets Count**: 3\n- **Collected Fees**: $65.10\n\n### Next Steps\n- **Data Retrieval**: Ensure that the Atlas ML system is accessible and operational for the next run to obtain the necessary model insights and recommendations.\n- **Review**: Once the data is available, proceed with the steps for asset wiring, capital allocation, and position management as outlined in the workflow.\n\nI recommend checking the connectivity and access to the Atlas ML system before the next scheduled run to prevent similar issues.",
+  "summary": "It seems there was a failure in fetching the necessary data from the Atlas ML system, which includes recent model runs, horizon recommendation, model information, top picks, and short picks. Without this data, I cannot proceed with the selection of new entrants, allocation, or opening of positions. Additionally, the vault state indicates that there is no available capital for new allocations at this time.\n\nGiven these constraints, I recommend the following actions for the next run:\n\n1. **Retry Data Fetch**: Ensure that the Atlas ML system is accessible and retry fetching the necessary data. This is critical for making informed decisions based on the latest model insights.\n\n2. **Monitor Capital Availability**: Check if there is any change in the available capital for allocations in the next run. This will determine the ability to open new positions.\n\n3. **Review Current Positions**: Without the ability to fetch current model insights or news context, it's important to ensure that any existing positions are managed according to the predefined PnL bands.\n\n4. **System Check**: Investigate the cause of the repeated failures in accessing the Atlas ML system to prevent similar issues in future runs.\n\nI will update the thesis and proceed with the necessary actions once the data retrieval issue is resolved.",
   "writeActions": [],
   "errors": [
     {
