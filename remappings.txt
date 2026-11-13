@@ -2,5 +2,8 @@
 @openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/
 @openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
 @chainlink/contracts-ccip/=node_modules/@chainlink/contracts-ccip/
+@iexec-nox/nox-confidential-contracts/=node_modules/@iexec-nox/nox-confidential-contracts/
+@iexec-nox/nox-protocol-contracts/=node_modules/@iexec-nox/nox-protocol-contracts/
+encrypted-types/=node_modules/encrypted-types/
 forge-std/=lib/forge-std/src/
 solady/=lib/solady/src/

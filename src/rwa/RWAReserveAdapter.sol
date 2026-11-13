@@ -125,13 +125,7 @@ contract RWAReserveAdapter is IRWAReserveAdapter, ReentrancyGuard {
     }
 
     /// @inheritdoc IRWAReserveAdapter
-    function withdraw(uint256 usdcAmount)
-        external
-        override
-        onlyVault
-        nonReentrant
-        returns (uint256 usdcDelivered)
-    {
+    function withdraw(uint256 usdcAmount) external override onlyVault nonReentrant returns (uint256 usdcDelivered) {
         require(usdcAmount > 0, "amount required");
         uint256 reserveSpent;
         (usdcDelivered, reserveSpent) = _withdrawCurrent(usdcAmount);
@@ -148,7 +142,7 @@ contract RWAReserveAdapter is IRWAReserveAdapter, ReentrancyGuard {
         uint256 currentBalance = _balanceOf(oldToken);
         uint256 freedUsdc;
         if (currentBalance > 0) {
-            (freedUsdc, ) = _redeemAll(oldToken);
+            (freedUsdc,) = _redeemAll(oldToken);
         }
 
         reserveToken = newToken;
@@ -212,7 +206,7 @@ contract RWAReserveAdapter is IRWAReserveAdapter, ReentrancyGuard {
 
     function _readPrice1e30(bytes32 assetId) internal view returns (uint256 price) {
         require(!oracleAdapter.isStale(assetId), "RWA price stale");
-        (price, ) = oracleAdapter.getPrice(assetId);
+        (price,) = oracleAdapter.getPrice(assetId);
         require(price > 0, "RWA price zero");
     }
 
@@ -236,10 +230,7 @@ contract RWAReserveAdapter is IRWAReserveAdapter, ReentrancyGuard {
     ///      deliver `usdcAmount` (or more, due to rounding) USDC into this
     ///      adapter's balance. Returns the actual USDC freed plus the amount
     ///      of reserve token spent.
-    function _withdrawCurrent(uint256 usdcAmount)
-        internal
-        returns (uint256 usdcDelivered, uint256 reserveSpent)
-    {
+    function _withdrawCurrent(uint256 usdcAmount) internal returns (uint256 usdcDelivered, uint256 reserveSpent) {
         ReserveToken token = reserveToken;
         if (token == ReserveToken.USDY) {
             // Figure out USDY needed: usdyAmount = usdcAmount * 1e12 * 1e30 / price

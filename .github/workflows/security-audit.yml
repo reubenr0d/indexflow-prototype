@@ -1,0 +1,90 @@
+name: Security Audit
+
+on:
+  pull_request:
+    paths:
+      - "src/**/*.sol"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to audit in diff mode. Leave empty to audit every contract under src/."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: security-audit-${{ github.event.pull_request.number || github.event.inputs.pr_number || 'full-repo' }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: AI contract security audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Setup CI environment (cached)
+        uses: ./.github/actions/setup-snx
+
+      - name: Resolve audit mode and refs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER_INPUT: ${{ github.event.inputs.pr_number }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+            git fetch origin "$BASE_BRANCH" --depth=1
+            echo "AUDIT_MODE=diff" >> "$GITHUB_ENV"
+            echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> "$GITHUB_ENV"
+            echo "PR_TITLE=${{ github.event.pull_request.title }}" >> "$GITHUB_ENV"
+            echo "PR_URL=${{ github.event.pull_request.html_url }}" >> "$GITHUB_ENV"
+            echo "BASE_REF=origin/$BASE_BRANCH" >> "$GITHUB_ENV"
+            echo "HEAD_REF=${{ github.event.pull_request.head.sha }}" >> "$GITHUB_ENV"
+          elif [ -n "$PR_NUMBER_INPUT" ]; then
+            BASE_BRANCH=$(gh pr view "$PR_NUMBER_INPUT" --json baseRefName --jq .baseRefName)
+            HEAD_SHA=$(gh pr view "$PR_NUMBER_INPUT" --json headRefOid --jq .headRefOid)
+            TITLE=$(gh pr view "$PR_NUMBER_INPUT" --json title --jq .title)
+            URL=$(gh pr view "$PR_NUMBER_INPUT" --json url --jq .url)
+            git fetch origin "$BASE_BRANCH" --depth=1
+            git fetch origin "$HEAD_SHA" --depth=1
+            git checkout "$HEAD_SHA"
+            echo "AUDIT_MODE=diff" >> "$GITHUB_ENV"
+            echo "PR_NUMBER=$PR_NUMBER_INPUT" >> "$GITHUB_ENV"
+            echo "PR_TITLE=$TITLE" >> "$GITHUB_ENV"
+            echo "PR_URL=$URL" >> "$GITHUB_ENV"
+            echo "BASE_REF=origin/$BASE_BRANCH" >> "$GITHUB_ENV"
+            echo "HEAD_REF=$HEAD_SHA" >> "$GITHUB_ENV"
+          else
+            echo "AUDIT_MODE=full_repo" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build audit context
+        env:
+          PROJECT_ROOT: ${{ github.workspace }}
+        run: node scripts/build-audit-context.mjs
+
+      - name: Run security-auditor
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL_SECURITY_AUDITOR: ${{ secrets.LLM_MODEL_SECURITY_AUDITOR }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_NETWORK: "audit"
+        run: node scripts/agent-runner.mjs security-auditor
+
+      - name: Post audit report
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_ROOT: ${{ github.workspace }}
+          AGENT_NETWORK: "audit"
+          PR_NUMBER: ${{ env.PR_NUMBER }}
+        run: node scripts/post-security-audit-reply.mjs
