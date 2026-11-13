@@ -34,3 +34,4 @@ build
 generated
 .env
 config.local.generated.yaml
+.envio/
